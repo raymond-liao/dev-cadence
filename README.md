@@ -1539,20 +1539,40 @@ specs/{task_id}/runs/{run_id}/
 - prompt / workflow A/B testing
 - 自动化质量分析
 
-## 16. 后续讨论方向
+## 16. Skill 编制前置规格
 
-后续可以继续展开以下主题：
+第 16 节不再作为开放讨论清单处理。
 
-1. `Supervisor` 的状态机设计
-2. Agent Blueprint 模板
-3. Workflow DSL 设计
-4. Context Pack 标准格式
-5. Spec 模板设计
-6. Quality Gate 规则集
-7. Skill 结构、目标版目录结构和脚手架
-8. 与 Codex CLI / Claude Code / OpenHands 的集成方式
-9. 基于 LangGraph 的最小可运行原型
-10. 企业级权限、审计和成本控制设计
+在正式编制目标版 Skill 之前，以下内容已经先沉淀为英文前置规格：
+
+```text
+docs/skill-authoring-prespec.md
+```
+
+该文档用于稳定 Skill 编制前必须明确的执行契约，包括：
+
+1. `Supervisor` state machine
+2. Task class rules
+3. Context Pack contract
+4. Harness Run Context contract
+5. Agent Blueprint contracts
+6. Spec template contracts
+7. Quality Gate and Human Gate contracts
+8. Target Skill package shape
+9. Repo-local `.ai/` and `specs/` output structure
+
+这些内容应作为后续创建 `ai-native-software-delivery-framework` Skill 的直接输入。
+
+仍然后置的主题包括：
+
+1. Workflow DSL 设计
+2. 与 Codex CLI / Claude Code / OpenHands 的深度适配
+3. 基于 LangGraph 或 Microsoft Agent Framework 的最小原型
+4. 企业级 RBAC、SSO、审计和成本控制
+5. 自动 issue / PR 调度
+6. 自动发布执行
+
+这些主题不应阻塞第一版 repo-local Skill。它们应在 Skill 规则经过真实任务验证后再进入平台化设计。
 
 ## 17. 一句话总结
 
