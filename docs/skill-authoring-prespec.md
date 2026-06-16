@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-This document defines the pre-authoring specification for the future `ai-native-software-delivery-framework` Skill.
+This document defines the pre-authoring specification for the future `dev-cadence` Skill.
 
 The goal is to stabilize the contracts that the Skill must implement before creating the actual Skill package. This document is not the Skill itself. It is the design input for the Skill's `SKILL.md`, references, templates, workflow files, and repo-local `.ai/` structure.
 
@@ -16,6 +16,10 @@ The goal is to stabilize the contracts that the Skill must implement before crea
 - Core Worker Agents: `Planner`, `Architect`, `Developer`, `Tester`, `Reviewer`.
 - Optional Worker Agent: `Researcher`.
 - Non-Agent roles: `Human`, `Supervisor`, `Harness`, `Quality Gate`, `Human Gate`.
+- Invocation boundary: the system-level Skill may be implicitly selected only when the user asks to install, initialize, set up, or prepare repository-level AI-assisted delivery rules, workflows, gates, or templates. The user does not need to name `$dev-cadence` for initial setup.
+- Update, sync, repair, inspect, diagnose, and other maintenance operations require explicit Skill-name invocation with `$dev-cadence` or `dev-cadence`.
+- Product implementation work, general engineering advice, and maintenance requests that do not name the Skill should not implicitly trigger the Skill.
+- Initialization boundary: setup, sync, repair, and diagnosis may write only root `AGENTS.md`, `.ai/**`, and `specs/.gitkeep` by default; they must not modify product code or create task-specific specs unless the user explicitly requests delivery work in the same turn.
 
 ## 3. Non-Negotiable Principles
 
@@ -28,14 +32,22 @@ The goal is to stabilize the contracts that the Skill must implement before crea
 7. Fix loops have a hard maximum of three iterations.
 8. High-risk actions require Human Gate approval.
 9. Missing evidence is a workflow state, not an approval.
-10. Platform automation is deferred until repo-local Skill rules are validated on real work.
+10. Incomplete verification is blocked until a named Human accepts the residual risk.
+11. Supervisor, Harness, Developer, Tester, and Reviewer cannot be recorded as final accepter.
+12. Workflow can be inferred, but unclear product intent cannot be guessed. Ambiguous goal, scope, non-goals, reference behavior, or acceptance criteria require user clarification before implementation.
+13. Assumptions must be recorded separately and must not become scope, non-goals, or acceptance criteria without a named Human decision.
+14. Requirements readiness must be checked before implementation. Broad or comparative wording such as "not as expected", "inconsistent", "same as", "match", "align", "parity", or "fix this issue" is not enough unless expected behavior and comparison dimension are explicit.
+15. Clarification should be analysis-backed. The agent should inspect relevant code, docs, specs, or behavior, then present candidate interpretations and a recommended option rather than asking the user to discover the ambiguity from scratch.
+16. Repository evidence can support candidate interpretations, but it cannot clarify user intent, accept requirements, or pass G1. When clarification is required, G1 must name the Human who selected or deferred the interpretation.
+17. If the user rejects or corrects a prior result, requirements must be reopened and clarified before more implementation.
+18. Platform automation is deferred until repo-local Skill rules are validated on real work.
 
 ## 4. Target Skill Package Shape
 
 The future Skill should use progressive disclosure. `SKILL.md` should stay concise and route the agent to focused reference files only when needed.
 
 ```text
-ai-native-software-delivery-framework/
+dev-cadence/
   SKILL.md
   references/
     principles.md
@@ -53,11 +65,15 @@ ai-native-software-delivery-framework/
 
 The Skill should not include generic README, installation guide, changelog, or narrative research documents. Those belong in the framework repository, not in the distributable Skill.
 
+The Skill package should be safe to install at system scope. Its metadata must not describe ordinary feature, bugfix, review, refactor, research, or incident execution as a global trigger. Those workflows become automatic only through repo-local `AGENTS.md` and `.ai/` files after initialization.
+
 ## 5. Repo-Local Output Shape
 
 When applied to a target repository, the Skill should create or update this structure:
 
 ```text
+AGENTS.md
+
 .ai/
   control/
     supervisor.md
@@ -122,7 +138,11 @@ specs/
         permission-decisions.md
 ```
 
-`.ai/` stores stable collaboration rules. `specs/` stores task-specific artifacts and Harness evidence.
+`AGENTS.md` activates the repo-local delivery workflow for normal Codex tasks. `.ai/` stores stable collaboration rules. `specs/` stores task-specific artifacts and Harness evidence.
+
+The initialized repository must not require users to invoke the Skill name for every feature, bugfix, refactor, review, research, or incident request. Root `AGENTS.md` should route normal software delivery work to `.ai/control/supervisor.md`, and Supervisor should infer `selected_workflow` from the request.
+
+Framework initialization, synchronization, repair, and diagnosis are not delivery tasks. They should not create `specs/{task_id}/` or touch product source, tests, migrations, build scripts, deployment files, or application configuration unless the same user request explicitly asks for a concrete delivery task.
 
 ## 6. Supervisor State Machine
 
@@ -139,16 +159,19 @@ The Supervisor must operate from explicit workflow state, not from conversationa
 | `test` | Tester via Harness | diff, implementation notes, test plan | `04-test-plan.md`, `06-test-report.md`, execution report | verification status is recorded with evidence | `review` or `fix` |
 | `review` | Reviewer via Harness | diff, test report, implementation notes | `07-review-report.md`, execution report | no unresolved blocker or major issue | `acceptance` or `fix` |
 | `fix` | Developer via Harness | structured issue list | patch, updated implementation notes, execution report | fix is scoped to known issues and loop count is within limit | `test` |
-| `acceptance` | Human and Supervisor | all artifacts and reports | `08-acceptance.md` | human accepts result and residual risk | `done` |
+| `acceptance` | Human with Supervisor recording | all artifacts and reports | `08-acceptance.md` | named human accepts result and residual risk | `done` |
 | `blocked` | Supervisor and Human | blocker evidence | escalation decision | human decides continue, split, defer, or stop | selected state |
 
 ### State Machine Rules
 
 - Every Worker Agent state must be executed through Harness.
-- Every Harness run must produce a `run-context.md` and an `execution-report.md`.
+- Every Harness run must produce `run-context.md`, `execution-report.md`, `tool-log.md`, and `permission-decisions.md`; runs that change files must also produce `diff-summary.md`; runs that execute commands or tests must also produce `test-log.md`.
 - Supervisor cannot replace missing Worker Agent artifacts with its own summary.
 - Any skipped state must record the reason and residual risk.
 - Any conflict affecting scope, architecture, security, permissions, test validity, or acceptance must enter a Human Gate.
+- `S2` work cannot start implementation until required Human Gate approvals are recorded.
+- Any verification status other than `verified` must enter Human Gate before review approval or final acceptance.
+- Final acceptance must name a Human accepter; `accepted_by: supervisor` or any Worker Agent is invalid.
 - `fix` can run at most three times per task before escalation.
 
 ## 7. Task Classes
@@ -159,7 +182,7 @@ Task class determines workflow strength.
 |---|---|---|---|---|
 | `S0 trivial` | text edits, comments, low-risk config, tiny reversible changes | Developer; Reviewer optional | brief, implementation notes, test evidence or not-verified reason, acceptance | final acceptance |
 | `S1 normal` | normal feature, bugfix, local refactor, ordinary code review | Planner, Developer, Tester, Reviewer | requirements, tasks, implementation, test report, review report, acceptance | requirement acceptance, final acceptance |
-| `S2 high-risk` | architecture, security, permissions, CI, data migration, cross-module changes | Planner, Architect, Developer, Tester, Reviewer | requirements, design or ADR, tasks, implementation, test report, review report, acceptance | requirement, architecture, permission, merge or release approval |
+| `S2 high-risk` | architecture, security, permissions, CI, data migration, cross-module changes | Planner, Architect, Developer, Tester, Reviewer | requirements, design or ADR, tasks, implementation, test report, review report, acceptance | requirement, architecture or risk approval before implementation, permission approval when needed, final human acceptance |
 | `research-spike` | technical selection, unknown feasibility, comparative research | Researcher, Architect optional | research report, options comparison, recommendation, open questions | decision review |
 | `incident` | urgent production or critical failure fix | Supervisor, Developer, Tester and Reviewer as needed | triage, minimal patch, smoke test, emergency approval, post-incident backfill | emergency approval, post-incident acceptance |
 
@@ -169,7 +192,9 @@ Context Pack defines what the Agent should know. It does not define what the Age
 
 ```yaml
 task_id:
-workflow_type:
+workflow_hint:
+selected_workflow:
+selection_reason:
 task_class:
 agent_role:
 goal:
@@ -390,7 +415,9 @@ goal:
 background:
 constraints:
 initial_risks:
-requested_workflow:
+workflow_hint:
+selected_workflow:
+selection_reason:
 ```
 
 ### `01-requirements.md`
@@ -433,7 +460,7 @@ Required fields:
 ```yaml
 status:
 task_class:
-workflow_type:
+selected_workflow:
 tasks:
 dependencies:
 target_files:
@@ -522,10 +549,11 @@ Required fields:
 
 ```yaml
 status:
-accepted_by:
+accepted_by_human:
 accepted_at:
 accepted_scope:
 evidence_reviewed:
+human_gate_decisions:
 residual_risk_accepted:
 merge_or_release_decision:
 follow_up:
@@ -540,9 +568,9 @@ Each gate must define required inputs, required outputs, pass condition, fail co
 | `G1` | requirements accepted | scope, non-goals, constraints, and acceptance criteria are approved or explicitly accepted for lightweight work |
 | `G2` | design accepted when required | high-risk or architecture-sensitive tasks have design or ADR approval |
 | `G3` | task executable | tasks include inputs, outputs, target files, acceptance mapping, verification plan, and forbidden actions |
-| `G4` | test evidence complete and reproducible | test commands, environment, results, coverage, skipped checks, and residual risk are recorded |
-| `G5` | review has no unresolved blocker or major issue | Reviewer decision is `approved` or `approved_with_minor_notes` |
-| `G6` | human accepts result | Human has accepted final output and residual risk |
+| `G4` | test evidence complete and reproducible | verification status is `verified`, or a named Human Gate accepts incomplete verification |
+| `G5` | review has no unresolved blocker or major issue | G4 is passed or overridden by Human Gate, and Reviewer decision is `approved` or `approved_with_minor_notes` |
+| `G6` | human accepts result | named Human has accepted final output and residual risk |
 
 Verification status must be one of:
 
@@ -553,7 +581,7 @@ not_verified
 blocked_by_environment
 ```
 
-Any status other than `verified` must record gap, residual risk, recommended follow-up, and whether Human acceptance is allowed.
+Any status other than `verified` must record gap, residual risk, recommended follow-up, and whether Human acceptance is allowed. It does not pass G4 without a named Human Gate override.
 
 ## 13. Human Gate Contracts
 
@@ -566,7 +594,7 @@ Human Gate type must be explicit.
 | `info_required` | missing information blocks correct execution | ambiguous requirement, unclear acceptance criterion, conflicting business rule |
 | `notify_only` | human is informed but workflow is not blocked | low-risk retry, status update, non-critical environment issue |
 
-Human decisions must be written into requirements, design, ADR, or acceptance artifacts.
+Human decisions must be written into requirements, design, ADR, or acceptance artifacts. Do not record Supervisor, Harness, Developer, Tester, Reviewer, or an unspecified agent as the Human decision owner.
 
 ## 14. Workflow Coverage
 
@@ -603,4 +631,3 @@ These decisions can be made while drafting the Skill package:
 3. Whether templates should be pure Markdown headings, YAML-frontmatter plus Markdown body, or YAML-like field blocks.
 4. Whether a lightweight validation script is worth including after the first manual version.
 5. Which real task should be used as the first validation run.
-

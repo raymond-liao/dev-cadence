@@ -106,7 +106,7 @@ Governance Layer
 Supervisor 负责：
 
 - 识别任务类型
-- 选择工作流
+- 判定并路由工作流
 - 调度 Agent
 - 控制上下文包
 - 控制循环次数
@@ -460,14 +460,19 @@ Supervisor 根据当前状态决定下一步，Harness 负责执行每个 Agent 
 关键规则：
 
 - 每个 Agent 执行状态都必须经过 Harness。
-- 每个 Harness run 都必须生成 `run-context.md` 和 `execution-report.md`。
+- 每个 Harness run 都必须生成 `run-context.md`、`execution-report.md`、`tool-log.md` 和 `permission-decisions.md`；有文件变更时还必须生成 `diff-summary.md`；有命令或测试时还必须生成 `test-log.md`。
 - Supervisor 只能根据产物和 Gate 决定下一步，不能代替 Agent 产出内容。
 - Human Gate 的决定必须写入 `requirements.md`、ADR 或 `acceptance.md`。
+- `S2` 任务在实现前必须记录必要的需求、架构、风险或权限 Human Gate。
+- 非 `verified` 的验证状态不能自动进入 Review approved 或 final acceptance，除非具名 Human Gate 接受剩余风险。
+- `acceptance.md` 不能写成 Supervisor、Harness 或 Worker Agent 验收，必须记录具名 Human accepter。
 - `fix` 状态最多循环 3 次，超限进入 `blocked`。
 
-### 6.4 工作流选择
+### 6.4 工作流判定与路由
 
-不同任务应走不同工作流。
+不同任务应走不同工作流，但不要求用户手动选择。
+
+用户只需要描述目标、背景、约束和期望结果。Supervisor 根据请求内容和风险自动判定 `selected_workflow`，记录 `selection_reason`；如果用户明确说“只做 review”“先调研”“按 incident 处理”，则将其作为 `workflow_hint` 处理，而不是要求用户承担流程选择责任。
 
 ```text
 feature-dev
@@ -499,7 +504,7 @@ incident-fix
 |---|---|---|---|---|
 | `S0 trivial` | 文案、注释、低风险配置、可快速回滚的小修 | Developer，Reviewer 按需 | brief、implementation、test evidence 或 not verified reason、acceptance | final acceptance |
 | `S1 normal` | 普通 feature、bugfix、code-review、局部重构 | Planner、Developer、Tester、Reviewer | requirements、tasks、implementation、test_report、review_report、acceptance | requirement acceptance、final acceptance |
-| `S2 high-risk` | 架构、安全、权限、CI、数据迁移、跨模块变更 | Planner、Architect、Developer、Tester、Reviewer | requirements、design/ADR、tasks、implementation、test_report、review_report、acceptance | requirement、architecture、permission、merge/release approval |
+| `S2 high-risk` | 架构、安全、权限、CI、数据迁移、跨模块变更 | Planner、Architect、Developer、Tester、Reviewer | requirements、design/ADR、tasks、implementation、test_report、review_report、acceptance | 实现前 requirement / architecture / risk approval，必要时 permission approval，最终 human acceptance |
 | `research-spike` | 技术选型、未知风险探索、方案比较 | Researcher、Architect 按需 | research_report、options comparison、recommendation、open questions | decision review |
 | `incident` | 紧急生产修复或高压故障恢复 | Supervisor、Developer、Tester/Reviewer 按需 | triage、minimal patch、smoke test、emergency approval、post-incident backfill | emergency approval、post-incident acceptance |
 
@@ -755,6 +760,8 @@ Harness Run Context 必须在每次执行前确定，并随 Execution Report 一
 ### 10.1 推荐目录结构
 
 ```text
+AGENTS.md
+
 .ai/
   control/
     supervisor.md
@@ -880,7 +887,7 @@ escalation:
 
 质量门禁不能只读取 Agent 自述，还必须读取对应 Harness run 的 `execution-report.md`、`tool-log.md`、`test-log.md`、`diff-summary.md` 和 `permission-decisions.md`。
 
-缺少 Harness execution report 的 Agent 执行，不能进入 `approved`。
+缺少任一必需 Harness evidence 的 Agent 执行，不能进入 `approved`。`execution-report.md` 中的摘要不能替代 `tool-log.md`、`test-log.md`、`diff-summary.md` 或 `permission-decisions.md`。
 
 ### 11.2 验证状态
 
@@ -902,6 +909,8 @@ blocked_by_environment
 - 建议如何补测。
 - 是否允许进入人工验收。
 - 如果允许，谁接受了该风险。
+
+非 `verified` 状态不能自行通过质量门禁。必须进入 Human Gate，由具名 Human 接受缺口和剩余风险后，才能继续 Review 或 Acceptance。
 
 ### 11.3 Developer 必须提交的内容
 
@@ -1087,36 +1096,51 @@ AI-Native Software Delivery Framework Skill
 推荐 Skill 自身采用以下结构：
 
 ```text
-ai-native-development-framework/
+skills/dev-cadence/
   SKILL.md
+  agents/
+    openai.yaml
   references/
     principles.md
-    agent-blueprints.md
+    supervisor-state-machine.md
     task-classes.md
+    agent-blueprints.md
     workflows.md
+    context-pack.md
     harness.md
     quality-gates.md
     human-gates.md
-    context-pack.md
     spec-templates.md
+    skill-layout.md
 ```
 
 其中：
 
 | 文件 | 作用 |
 |---|---|
-| `SKILL.md` | 定义 Skill 何时触发、如何初始化框架、如何选择工作流 |
+| `SKILL.md` | 定义 Skill 何时触发、如何初始化框架、如何进行工作流判定与路由 |
+| `agents/openai.yaml` | 定义 Skill 在 OpenAI/Codex 相关界面中的展示元数据 |
 | `principles.md` | 记录本框架的核心原则和不可突破的边界 |
+| `supervisor-state-machine.md` | 记录 Supervisor 状态机、状态流转、跳过状态和 blocked 规则 |
 | `agent-blueprints.md` | 记录各类 Agent Blueprint 的模板和职责边界 |
 | `task-classes.md` | 记录 S0/S1/S2、research-spike、incident 等任务分级规则 |
 | `workflows.md` | 记录 feature-dev、bugfix、refactor、code-review、incident-fix 等工作流 |
+| `context-pack.md` | 记录 Agent 最小上下文包格式、来源优先级和冲突规则 |
 | `harness.md` | 记录 Harness 职责、run context、工具策略和执行报告格式 |
 | `quality-gates.md` | 记录质量门禁、循环限制、人工升级规则 |
 | `human-gates.md` | 记录 approval_required、review_required、info_required、notify_only 的触发规则 |
-| `context-pack.md` | 记录 Agent 最小上下文包格式 |
 | `spec-templates.md` | 记录 requirements、design、tasks、test report、review report 模板 |
+| `skill-layout.md` | 记录 Skill 包结构和目标仓库 `AGENTS.md`、`.ai/`、`specs/` 落地结构 |
 
-Skill 的设计重点是渐进式加载：`SKILL.md` 保持精简，只放工作流入口和选择规则；详细模板和规范放在 `references/` 中，只有需要时再读取。
+Skill 的设计重点是渐进式加载：`SKILL.md` 保持精简，只放工作流入口和路由规则；详细模板和规范放在 `references/` 中，只有需要时再读取。
+
+系统层级 Skill 的触发边界必须收窄：隐式触发只覆盖仓库级 AI 交付规则的初始化或安装，用户初始化时不需要写 `$dev-cadence`。更新、同步、修复、检查、诊断等维护动作必须要求用户明确点名 `$dev-cadence` 或 `dev-cadence`。普通开发请求只有在仓库已经通过 `AGENTS.md` 和 `.ai/` 初始化后，才由仓库本地规则自动进入流程。
+
+仓库本地规则必须区分 workflow 推断和产品意图推断：Agent 可以自动判定 workflow，但不能猜测不明确的产品意图。只要目标、范围、非目标、参考行为或验收标准存在多种合理解释，就必须进入 `info_required` Human Gate，在实现前向用户澄清。未经确认的假设只能记录在 `assumptions` 或 `open_questions` 中，不能写成 `scope`、`non_goals` 或 `acceptance_criteria`。
+
+实现前必须有 Requirements Readiness Check：预期行为、参考行为、范围、非目标、验收标准和验证方式都要明确且可追溯。用户说“不符合预期”“不一致”“和某端一样”“match/align/parity”或“修复这个问题”时，如果没有明确比较维度和预期结果，必须先问用户；不能通过读代码自行推断。用户否定前一次结果时，之前的 G1 失效，必须回到 requirements。
+
+但澄清不能变成把问题丢回给用户。Agent 应先做有限的只读分析，检查相关代码、文档或既有 spec，提出 2-4 个候选解释、证据路径和推荐选项，再请用户确认。代码证据只能支持候选解释，不能替代用户确认；当需要澄清时，G1 必须记录 named Human 的选择或显式延期，不能记录为 repository evidence、code inspection、Supervisor 或 Worker Agent。澄清阶段不得修改产品代码。
 
 ### 13.4 Skill 在代码仓库中生成的结构
 
@@ -1132,7 +1156,7 @@ Skill 的设计重点是渐进式加载：`SKILL.md` 保持精简，只放工作
     developer.md
     tester.md
     reviewer.md
-    researcher.md      # optional
+    researcher.md
   workflows/
     feature-dev.md
     bugfix.md
@@ -1177,6 +1201,8 @@ specs/
       ADR-001.md
 ```
 
+`AGENTS.md` 是仓库级自动入口，用于让 Codex 在普通开发请求中默认读取 `.ai/control/supervisor.md`。
+
 `.ai/` 目录用于保存长期稳定的协作规则。
 
 `specs/` 目录用于保存每个任务的运行产物。
@@ -1189,7 +1215,11 @@ Agent 之间不依赖聊天记录交接，而是通过 `specs/{task_id}/` 下的
 
 ### 13.5 Skill 的使用方式
 
-推荐 Skill 支持三类使用方式。
+推荐 Skill 支持三类使用方式，但系统层级 Skill 的隐式触发只负责框架初始化或安装；更新、同步、修复、检查、诊断等维护动作必须显式点名 Skill。日常使用不应要求用户每次显式输入 Skill 名称，而应由已初始化仓库中的 `AGENTS.md` 自动路由。
+
+初始化或安装不要求用户点名 Skill，只要意图是设置仓库级 AI 交付规则即可。更新、同步、修复、检查、诊断等维护动作必须显式点名 Skill。初始化完成后的普通任务不再点名 Skill。这样系统层 Skill 不会因为普通产品开发请求而误触发。
+
+初始化、同步、修复或诊断本框架时，Skill 本身必须默认限制写入范围：只允许写入根目录 `AGENTS.md`、`.ai/**`，以及必要时的 `specs/.gitkeep`。除非用户在同一轮明确要求执行具体交付任务，否则不得修改产品代码、测试、迁移、构建脚本、部署文件、应用配置，也不得创建 `specs/{task_id}/` 任务目录。
 
 #### 初始化项目
 
@@ -1208,21 +1238,26 @@ risk_level:
 输出：
 
 ```text
+AGENTS.md
 .ai/
 specs/
 ```
 
-以及一份初始化说明。
+其中 `AGENTS.md` 必须作为自动入口：普通 feature、bugfix、refactor、review、research 或 incident 请求，应自动进入 `.ai/control/supervisor.md`，再由 Supervisor 判定 `selected_workflow`。
+
+如果仓库已有 `AGENTS.md`，初始化过程应保留原有项目指令，只追加或合并 AI delivery workflow 入口。
 
 #### 创建任务工作区
 
-用于为一个具体需求、缺陷或重构任务创建 spec 工作区。
+用于为一个具体需求、缺陷或重构任务创建 spec 工作区。初始化完成后，这一步应由仓库级 `AGENTS.md` 和 `.ai/control/supervisor.md` 自动触发，而不是要求用户手动指定 Skill。
 
 输入：
 
 ```text
 task_id:
-workflow_type:
+workflow_hint:
+selected_workflow:
+selection_reason:
 user_goal:
 constraints:
 ```
@@ -1244,7 +1279,7 @@ specs/{task_id}/03-tasks.md
 ```text
 Human
   ↓
-Supervisor reads .ai/workflows/{workflow_type}.md
+Supervisor routes selected_workflow and reads .ai/workflows/{selected_workflow}.md
   ↓
 Supervisor creates context pack
   ↓
@@ -1273,7 +1308,9 @@ Please read `.ai/agents/developer.md` and execute strictly according to that Blu
 Parameters:
 - task_id:
 - spec_path:
-- workflow_type:
+- workflow_hint:
+- selected_workflow:
+- selection_reason:
 - target_files:
 - constraints:
 - run_context_path:
@@ -1459,7 +1496,7 @@ specs/{task_id}/runs/{run_id}/
   permission-decisions.md
 ```
 
-质量门禁不应只读取 Agent 自述，还必须读取 Harness execution report。
+质量门禁不应只读取 Agent 自述，还必须读取 Harness execution report 和对应 evidence 文件。缺少 evidence 时，状态应进入 `blocked` 或 Human Gate，而不是进入 acceptance。
 
 ## 15. 企业级演进路线图
 
@@ -1561,7 +1598,13 @@ docs/skill-authoring-prespec.md
 8. Target Skill package shape
 9. Repo-local `.ai/` and `specs/` output structure
 
-这些内容应作为后续创建 `ai-native-software-delivery-framework` Skill 的直接输入。
+第一版 Skill 已根据该前置规格创建：
+
+```text
+skills/dev-cadence/
+```
+
+该 Skill 当前包含 `SKILL.md`、`agents/openai.yaml` 和按主题拆分的 `references/` 文件，可作为后续真实任务验证和迭代的起点。
 
 仍然后置的主题包括：
 

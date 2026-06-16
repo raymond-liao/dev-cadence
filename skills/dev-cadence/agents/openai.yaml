@@ -1,0 +1,6 @@
+interface:
+  display_name: "Dev Cadence"
+  short_description: "Install AI delivery repo rules"
+  default_prompt: "Use $dev-cadence to install Dev Cadence repository rules here."
+policy:
+  allow_implicit_invocation: true
