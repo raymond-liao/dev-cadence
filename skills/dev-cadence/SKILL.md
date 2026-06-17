@@ -30,7 +30,7 @@ After initialization, ordinary delivery requests should not invoke this Skill. T
 1. Inspect repository instructions, existing docs, `AGENTS.md`, `.ai/`, and `specs/`.
 2. Determine whether the user is asking to install or initialize the named framework, or whether the user explicitly invoked this Skill for maintenance.
 3. For installation or initialization, apply the Initialization Boundary below, read `references/skill-layout.md`, and generate or update repo-local `AGENTS.md` plus `.ai/` rules and templates.
-4. For explicit Skill-name maintenance, compare repo-local `AGENTS.md` and `.ai/` rules against the relevant references and report or patch drift.
+4. For explicit Skill-name maintenance, read `references/repository-rule-sync.md`, compare repo-local `AGENTS.md` and `.ai/` rules against the relevant references, preserve local overlays, and report or patch drift.
 5. For explicit delivery-task requests in an already initialized repository, follow the repo-local `AGENTS.md` and `.ai/control/supervisor.md` entrypoint; do not require the user to choose a workflow.
 6. If the repository is not initialized and the user asks only for ordinary feature, bugfix, review, refactor, research, or incident work, do not initialize this framework unless the user explicitly requests it.
 
@@ -55,7 +55,7 @@ If a user asks only to install, initialize, or add this framework, treat that as
 ## Mode Routing
 
 - **Install or initialize a repository**: apply the Initialization Boundary; read `references/skill-layout.md`; create or update `AGENTS.md` plus `.ai/` rules and templates. Do not create task specs or modify product files unless the user asks for a concrete delivery task in the same turn.
-- **Explicit Skill-name maintenance**: when the user invokes `$dev-cadence` or names `dev-cadence`, update, synchronize, repair, inspect, or diagnose generated repo-local framework rules without touching product code.
+- **Explicit Skill-name maintenance**: when the user invokes `$dev-cadence` or names `dev-cadence`, read `references/repository-rule-sync.md`; update, synchronize, repair, inspect, or diagnose generated repo-local framework rules without touching product code.
 - **Route an explicit delivery task in an initialized repository**: defer to the repo-local `AGENTS.md` and `.ai/control/supervisor.md`; use the Skill references only to fill missing framework guidance.
 - **Define or revise agent behavior**: read `references/agent-blueprints.md`.
 - **Verify, review, or accept work**: read `references/quality-gates.md` and `references/human-gates.md`.
@@ -123,6 +123,7 @@ Enter `blocked` or a Human Gate before continuing when any hard stop applies:
 - `references/human-gates.md`: approval, review, information, and notification gate contracts.
 - `references/spec-templates.md`: task artifact templates.
 - `references/skill-layout.md`: Skill package structure and target repo-local `AGENTS.md`, `.ai/`, and `specs/` layout.
+- `references/repository-rule-sync.md`: explicit maintenance, drift detection, metadata, local overlay preservation, and sync/update reporting.
 
 ## Task ID and Run ID
 

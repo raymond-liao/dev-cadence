@@ -1,6 +1,6 @@
 # Spec Templates
 
-Use these templates under `specs/{task_id}/`. Copy only the artifacts required by the task class and workflow.
+Use these templates for task artifacts under `specs/{task_id}/` and framework sync records under `.ai/`. Copy only the artifacts required by the task class, workflow, or maintenance mode.
 
 Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reproducible and path-based.
 
@@ -15,6 +15,7 @@ Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reprodu
 - [`06-test-report.md`](#06-test-reportmd)
 - [`07-review-report.md`](#07-review-reportmd)
 - [`08-acceptance.md`](#08-acceptancemd)
+- [`.ai/dev-cadence.md`](#aidev-cadencemd)
 - [`decisions/ADR-001.md`](#decisionsadr-001md)
 - [`runs/{run_id}/run-context.md`](#runsrun_idrun-contextmd)
 - [`runs/{run_id}/execution-report.md`](#runsrun_idexecution-reportmd)
@@ -319,6 +320,41 @@ human_accepter:
 decision:
 residual_risk:
 escalation:
+```
+````
+
+## `.ai/dev-cadence.md`
+
+````markdown
+# Dev Cadence Rule Sync
+
+```yaml
+schema: dev-cadence.rule-sync.v1
+record_type: rule_sync_audit
+runtime_authority:
+  - AGENTS.md
+  - .ai/**
+skill_source:
+  name: dev-cadence
+  version:
+    value:
+    status: not_versioned
+    reason:
+  commit:
+    value:
+    status: not_recorded
+    reason:
+sync:
+  mode:
+  synced_at:
+  actor:
+local_overlays:
+  - path:
+    disposition: preserved
+    reason:
+manual_review_required:
+  - path:
+    reason:
 ```
 ````
 

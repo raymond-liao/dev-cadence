@@ -10,6 +10,7 @@ This file defines the distributable Skill package shape and the repo-local outpu
 - [Initialization Rules](#initialization-rules)
 - [Automatic Entrypoint](#automatic-entrypoint)
 - [Initialization Source Map](#initialization-source-map)
+- [Repository Rule Sync](#repository-rule-sync)
 - [Generated Hard Rules](#generated-hard-rules)
 - [Minimal `.ai/` File Responsibilities](#minimal-ai-file-responsibilities)
 - [Versioning](#versioning)
@@ -33,6 +34,7 @@ dev-cadence/
     human-gates.md
     spec-templates.md
     skill-layout.md
+    repository-rule-sync.md
 ```
 
 Do not add generic `README.md`, installation guide, changelog, or narrative research documents to the Skill package.
@@ -55,6 +57,7 @@ When initializing the framework in a repository, create or update:
 AGENTS.md
 
 .ai/
+  dev-cadence.md
   control/
     supervisor.md
   agents/
@@ -174,12 +177,24 @@ Use these Skill references as the source of generated repo-local files:
 | `.ai/policies/escalation-policy.md` | `supervisor-state-machine.md`, `quality-gates.md`, `human-gates.md` |
 | `.ai/policies/harness-policy.md` | `harness.md` |
 | `.ai/templates/**` | `spec-templates.md`, `context-pack.md`, `harness.md` |
+| `.ai/dev-cadence.md` | `repository-rule-sync.md`, `skill-layout.md` |
+
+## Repository Rule Sync
+
+After initialization, target repositories use their own root `AGENTS.md` and `.ai/**` rules for ordinary delivery work. The Skill source is used again only when the user explicitly invokes `$dev-cadence` or names `dev-cadence` for maintenance.
+
+For update, sync, repair, inspect, or diagnose, read `repository-rule-sync.md` first. Maintenance must preserve local overlays, write only framework files, and produce the required sync report.
+
+Generate `.ai/dev-cadence.md` as a rule sync audit record during initialization and update it during sync/update when possible. It is not runtime configuration; repo-local `AGENTS.md` and `.ai/**` remain runtime authority. If an existing repository lacks this record, treat it as inspectable and repairable; absence of the record is drift, not failure.
 
 ## Generated Hard Rules
 
 Generated repo-local `.ai/` rules must include these hard stops:
 
-- Keep initialization separate from delivery work.
+- Keep initialization and rule maintenance separate from delivery work.
+- After initialization, ordinary delivery work must follow repo-local `AGENTS.md` and `.ai/control/supervisor.md`; do not use Skill source as runtime authority.
+- Update, sync, repair, inspect, and diagnose require explicit `$dev-cadence` or `dev-cadence` invocation and must follow `repository-rule-sync.md`.
+- Rule maintenance must produce a sync report that lists files added, updated, preserved, conflicts, local overlays, manual review needs, and forbidden product changes avoided.
 - Generated initialization logic must limit setup writes to root `AGENTS.md`, `.ai/**`, and `specs/.gitkeep` unless a same-turn user request explicitly authorizes delivery work.
 - Generated initialization logic must not modify product code, tests, migrations, build scripts, deployment files, or application configuration.
 - Do not infer unclear product intent. If goal, scope, non-goals, reference behavior, or acceptance has multiple reasonable interpretations, enter Human Gate `info_required` before implementation.
