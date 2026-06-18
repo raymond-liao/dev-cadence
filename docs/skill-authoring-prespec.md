@@ -19,7 +19,7 @@ The goal is to stabilize the contracts that the Skill must implement before crea
 - Invocation boundary: the system-level Skill may be implicitly selected only when the user asks to install, initialize, set up, or prepare repository-level AI-assisted delivery rules, workflows, gates, or templates. The user does not need to name `$dev-cadence` for initial setup.
 - Update, sync, repair, inspect, diagnose, and other maintenance operations require explicit Skill-name invocation with `$dev-cadence` or `dev-cadence`.
 - Product implementation work, general engineering advice, and maintenance requests that do not name the Skill should not implicitly trigger the Skill.
-- Initialization boundary: setup, sync, repair, and diagnosis may write only root `AGENTS.md`, `.ai/**`, and `specs/.gitkeep` by default; they must not modify product code or create task-specific specs unless the user explicitly requests delivery work in the same turn.
+- Initialization boundary: setup, sync, repair, and diagnosis may write only root `AGENTS.md`, root `.gitignore` entry for `.ai/local.yaml`, `.ai/**`, and `specs/.gitkeep` by default; they must not modify product code or task-specific specs unless the user explicitly requests delivery work in the same turn.
 
 ## 3. Non-Negotiable Principles
 
@@ -73,8 +73,11 @@ When applied to a target repository, the Skill should create or update this stru
 
 ```text
 AGENTS.md
+.gitignore
 
 .ai/
+  config.yaml
+  local.yaml
   control/
     supervisor.md
   agents/
@@ -138,7 +141,26 @@ specs/
         permission-decisions.md
 ```
 
-`AGENTS.md` activates the repo-local delivery workflow for normal Codex tasks. `.ai/` stores stable collaboration rules. `specs/` stores task-specific artifacts and Harness evidence.
+`AGENTS.md` activates the repo-local delivery workflow for normal Codex tasks. `.ai/` stores stable collaboration rules and team defaults. `specs/` stores task-specific artifacts and Harness evidence.
+
+`.ai/config.yaml` should include:
+
+```yaml
+artifact_language: en
+```
+
+`.ai/local.yaml` should be generated with commented local preference fields:
+
+```yaml
+# Local Dev Cadence preferences.
+# Uncomment and change this value to override generated artifact prose language for your local work.
+# Supported values:
+# - en: English
+# - zh: Chinese, Simplified Chinese by default
+# artifact_language: en
+```
+
+Supported values are `en` and `zh`. An uncommented value in `.ai/local.yaml` overrides `.ai/config.yaml`. Initialization and update should add `.ai/local.yaml` to `.gitignore` while preserving existing ignore rules.
 
 The initialized repository must not require users to invoke the Skill name for every feature, bugfix, refactor, review, research, or incident request. Root `AGENTS.md` should route normal software delivery work to `.ai/control/supervisor.md`, and Supervisor should infer `selected_workflow` from the request.
 

@@ -761,8 +761,11 @@ Harness Run Context 必须在每次执行前确定，并随 Execution Report 一
 
 ```text
 AGENTS.md
+.gitignore
 
 .ai/
+  config.yaml
+  local.yaml
   control/
     supervisor.md
   agents/
@@ -814,6 +817,25 @@ specs/
     decisions/
       ADR-001.md
 ```
+
+`.ai/config.yaml` 保存团队默认配置：
+
+```yaml
+artifact_language: en
+```
+
+`.ai/local.yaml` 保存用户本地偏好，初始化时默认生成注释示例：
+
+```yaml
+# Local Dev Cadence preferences.
+# Uncomment and change this value to override generated artifact prose language for your local work.
+# Supported values:
+# - en: English
+# - zh: Chinese, Simplified Chinese by default
+# artifact_language: en
+```
+
+`artifact_language` 支持 `en` 和 `zh`。它只控制 spec、测试报告、review 报告等任务产物中的自然语言正文；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 仍保持英文。如果用户取消注释 `.ai/local.yaml` 中的 `artifact_language`，它优先于 `.ai/config.yaml`。初始化或更新时应把 `.ai/local.yaml` 加入 `.gitignore`。
 
 ### 10.2 核心文档
 
@@ -1148,6 +1170,8 @@ Skill 的设计重点是渐进式加载：`SKILL.md` 保持精简，只放工作
 
 ```text
 .ai/
+  config.yaml
+  local.yaml
   control/
     supervisor.md
   agents/
@@ -1203,9 +1227,11 @@ specs/
 
 `AGENTS.md` 是仓库级自动入口，用于让 Codex 在普通开发请求中默认读取 `.ai/control/supervisor.md`。
 
-`.ai/` 目录用于保存长期稳定的协作规则。
+`.ai/` 目录用于保存长期稳定的协作规则和团队默认配置。
 
 `specs/` 目录用于保存每个任务的运行产物。
+
+`.ai/config.yaml` 默认包含 `artifact_language: en`。`.ai/local.yaml` 默认包含注释掉的本地偏好示例，并由 `.gitignore` 忽略。如果用户希望后续任务产物正文使用中文，可以取消注释并改为 `artifact_language: zh`。该配置只影响自然语言正文，不改变 artifact 路径、结构化字段、状态枚举或门禁 ID。
 
 Agent 之间不依赖聊天记录交接，而是通过 `specs/{task_id}/` 下的结构化产物交接。
 
@@ -1219,7 +1245,7 @@ Agent 之间不依赖聊天记录交接，而是通过 `specs/{task_id}/` 下的
 
 初始化或安装不要求用户点名 Skill，只要意图是设置仓库级 AI 交付规则即可。更新、同步、修复、检查、诊断等维护动作必须显式点名 Skill。初始化完成后的普通任务不再点名 Skill。这样系统层 Skill 不会因为普通产品开发请求而误触发。
 
-初始化、同步、修复或诊断本框架时，Skill 本身必须默认限制写入范围：只允许写入根目录 `AGENTS.md`、`.ai/**`，以及必要时的 `specs/.gitkeep`。除非用户在同一轮明确要求执行具体交付任务，否则不得修改产品代码、测试、迁移、构建脚本、部署文件、应用配置，也不得创建 `specs/{task_id}/` 任务目录。
+初始化、同步、修复或诊断本框架时，Skill 本身必须默认限制写入范围：只允许写入根目录 `AGENTS.md`、`.gitignore` 中的 `.ai/local.yaml` 忽略项、`.ai/**`，以及必要时的 `specs/.gitkeep`。除非用户在同一轮明确要求执行具体交付任务，否则不得修改产品代码、测试、迁移、构建脚本、部署文件、应用配置，也不得创建 `specs/{task_id}/` 任务目录。
 
 #### 初始化项目
 

@@ -55,8 +55,11 @@ When initializing the framework in a repository, create or update:
 
 ```text
 AGENTS.md
+.gitignore
 
 .ai/
+  config.yaml
+  local.yaml
   dev-cadence.md
   control/
     supervisor.md
@@ -127,14 +130,40 @@ specs/
         permission-decisions.md
 ```
 
-`AGENTS.md` activates the repo-local rules for normal Codex work. `.ai/` stores durable collaboration rules. `specs/` stores task-specific artifacts and Harness evidence.
+`AGENTS.md` activates the repo-local rules for normal Codex work. `.ai/` stores durable collaboration rules and team defaults. `specs/` stores task-specific artifacts and Harness evidence.
+
+`.ai/config.yaml` stores team defaults:
+
+```yaml
+artifact_language: en
+```
+
+Supported `artifact_language` values are `en` and `zh`. `en` is the framework default. `zh` means Chinese prose and defaults to Simplified Chinese unless repository rules say otherwise.
+
+`.ai/local.yaml` stores user-local overrides. Generate it with commented examples only:
+
+```yaml
+# Local Dev Cadence preferences.
+# Uncomment and change this value to override generated artifact prose language for your local work.
+# Supported values:
+# - en: English
+# - zh: Chinese, Simplified Chinese by default
+# artifact_language: en
+```
+
+When `.ai/local.yaml` contains an uncommented supported `artifact_language`, it overrides `.ai/config.yaml`. Add `.ai/local.yaml` to `.gitignore` during initialization or update so user-local preferences are not committed by default.
+
+Artifact language applies to Markdown prose, notes, acceptance criteria text, reports, and human-readable explanations. Keep filenames, paths, YAML keys, schema fields, status values, workflow IDs, gate IDs, and command/code identifiers in English for interoperability.
 
 ## Initialization Rules
 
 - Create or update root `AGENTS.md` so normal software delivery requests automatically use `.ai/control/supervisor.md`.
+- Create `.ai/config.yaml` with `artifact_language: en` unless an equivalent config already exists.
+- Create `.ai/local.yaml` with commented user preference fields unless it already exists.
+- Create or update `.gitignore` to include `.ai/local.yaml`, preserving existing ignore rules.
 - Create `researcher.md` by default for full initialization; use it only for `research-spike` or evidence-heavy tasks.
 - Create `release.md` as a placeholder workflow only.
-- During initialization, synchronization, repair, or diagnosis, write only root `AGENTS.md`, `.ai/**`, and `specs/.gitkeep` when needed.
+- During initialization, synchronization, repair, or diagnosis, write only root `AGENTS.md`, root `.gitignore` entry for `.ai/local.yaml`, `.ai/**`, and `specs/.gitkeep` when needed.
 - Do not modify product source, tests, migrations, build scripts, deployment files, or application configuration during framework initialization unless the user explicitly requests delivery work in the same turn.
 - Do not create task-specific specs during framework initialization unless the user explicitly requests a concrete delivery task in the same turn.
 - Do not infer a hidden product task from repository contents when the user asks only to prepare, initialize, apply, install, update, sync, repair, inspect, or diagnose the framework.
@@ -166,6 +195,9 @@ Use these Skill references as the source of generated repo-local files:
 
 | Target | Source |
 | --- | --- |
+| `.gitignore` | `skill-layout.md` |
+| `.ai/config.yaml` | `skill-layout.md` |
+| `.ai/local.yaml` | `skill-layout.md` |
 | `.ai/control/supervisor.md` | `supervisor-state-machine.md`, `principles.md`, `task-classes.md`, `workflows.md` |
 | `.ai/agents/*.md` | `agent-blueprints.md` |
 | `.ai/workflows/*.md` | `workflows.md`, strengthened by `task-classes.md` |
@@ -195,8 +227,11 @@ Generated repo-local `.ai/` rules must include these hard stops:
 - After initialization, ordinary delivery work must follow repo-local `AGENTS.md` and `.ai/control/supervisor.md`; do not use Skill source as runtime authority.
 - Update, sync, repair, inspect, and diagnose require explicit `$dev-cadence` or `dev-cadence` invocation and must follow `repository-rule-sync.md`.
 - Rule maintenance must produce a sync report that lists files added, updated, preserved, conflicts, local overlays, manual review needs, and forbidden product changes avoided.
-- Generated initialization logic must limit setup writes to root `AGENTS.md`, `.ai/**`, and `specs/.gitkeep` unless a same-turn user request explicitly authorizes delivery work.
+- Generated initialization logic must limit setup writes to root `AGENTS.md`, `.gitignore`, `.ai/**`, and `specs/.gitkeep` unless a same-turn user request explicitly authorizes delivery work.
 - Generated initialization logic must not modify product code, tests, migrations, build scripts, deployment files, or application configuration.
+- Resolve artifact prose language from uncommented `.ai/local.yaml` value, then `.ai/config.yaml`, then default `en`; support only `en` and `zh` unless local rules extend this.
+- Ensure `.ai/local.yaml` is ignored by Git during initialization and maintenance.
+- Keep artifact structure identifiers in English even when artifact prose language is `zh`.
 - Do not infer unclear product intent. If goal, scope, non-goals, reference behavior, or acceptance has multiple reasonable interpretations, enter Human Gate `info_required` before implementation.
 - Do not convert unconfirmed assumptions into scope, non-goals, tasks, or acceptance criteria.
 - Require a Requirements Readiness Check before planning or implementation. It must confirm expected behavior, reference behavior, scope, non-goals, acceptance criteria, and verification approach.
@@ -220,6 +255,8 @@ Generated repo-local `.ai/` rules must include these hard stops:
 ## Minimal `.ai/` File Responsibilities
 
 - `control/supervisor.md`: state machine, task classification, skipped-state policy, blocked handling.
+- `config.yaml`: team default configuration, including `artifact_language`.
+- `local.yaml`: ignored user-local overrides, generated with commented examples.
 - `agents/*.md`: role-specific blueprint contracts.
 - `workflows/*.md`: workflow sequence and required artifacts.
 - `policies/task-classes.md`: classification rules and escalation.

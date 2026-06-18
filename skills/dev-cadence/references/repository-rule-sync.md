@@ -22,6 +22,9 @@ Maintenance modes are forbidden unless the user explicitly invokes `$dev-cadence
 Allowed writes during rule maintenance:
 
 - root `AGENTS.md` AI delivery entrypoint section;
+- root `.gitignore` entry for `.ai/local.yaml`;
+- `.ai/config.yaml`;
+- `.ai/local.yaml`;
 - `.ai/control/**`;
 - `.ai/agents/**`;
 - `.ai/workflows/**`;
@@ -100,6 +103,9 @@ Use `local_overlay` when the target repository intentionally adds project-specif
 ## Merge Rules
 
 - Preserve repository-specific instructions in root `AGENTS.md`; add or update only the AI delivery entrypoint section.
+- Preserve existing `.ai/config.yaml` values unless they are unsupported. Supported `artifact_language` values are `en` and `zh`; report unsupported values for manual review instead of guessing.
+- Create `.ai/local.yaml` with commented preference fields when missing. Preserve existing uncommented user values when the file already exists.
+- Ensure `.gitignore` contains `.ai/local.yaml`, preserving existing ignore rules.
 - Preserve documented local overlays in `.ai/control/supervisor.md` and policy files when they add stricter or project-specific constraints.
 - Do not delete unknown `.ai/` files by default. Report them as `unknown` unless they conflict with generated responsibilities.
 - Prefer patching generated sections over replacing whole files when local overlays exist.
@@ -129,6 +135,8 @@ next_steps:
 Verification should include at least:
 
 - root `AGENTS.md` still routes normal delivery to `.ai/control/supervisor.md`;
+- `.ai/config.yaml` exists or an equivalent repo-local config is documented;
+- `.ai/local.yaml` exists and `.gitignore` ignores it;
 - `.ai/control/supervisor.md` exists;
 - required `.ai/agents`, `.ai/workflows`, `.ai/policies`, and `.ai/templates` files exist;
 - generated hard rules are present;

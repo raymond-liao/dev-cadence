@@ -4,8 +4,14 @@ Use these templates for task artifacts under `specs/{task_id}/` and framework sy
 
 Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reproducible and path-based.
 
+Before writing artifact prose, resolve `artifact_language` from an uncommented supported value in `.ai/local.yaml`, then `.ai/config.yaml`, then default to `en`. Supported values are `en` and `zh`.
+
+`artifact_language` controls human-readable Markdown prose, notes, acceptance criteria text, reports, and explanations. Keep template filenames, headings, YAML keys, schema fields, status values, workflow IDs, gate IDs, and command/code identifiers in English.
+
 ## Contents
 
+- [`.ai/config.yaml`](#aiconfigyaml)
+- [`.ai/local.yaml`](#ailocalyaml)
 - [`00-brief.md`](#00-briefmd)
 - [`01-requirements.md`](#01-requirementsmd)
 - [`02-design.md`](#02-designmd)
@@ -23,6 +29,30 @@ Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reprodu
 - [`runs/{run_id}/test-log.md`](#runsrun_idtest-logmd)
 - [`runs/{run_id}/diff-summary.md`](#runsrun_iddiff-summarymd)
 - [`runs/{run_id}/permission-decisions.md`](#runsrun_idpermission-decisionsmd)
+
+## `.ai/config.yaml`
+
+```yaml
+artifact_language: en
+```
+
+Allowed values:
+
+- `en`: English prose. This is the default.
+- `zh`: Chinese prose. Use Simplified Chinese unless repository rules say otherwise.
+
+## `.ai/local.yaml`
+
+```yaml
+# Local Dev Cadence preferences.
+# Uncomment and change this value to override generated artifact prose language for your local work.
+# Supported values:
+# - en: English
+# - zh: Chinese, Simplified Chinese by default
+# artifact_language: en
+```
+
+`.ai/local.yaml` must be ignored by Git during initialization or update. If the file contains an uncommented supported `artifact_language`, it overrides `.ai/config.yaml`.
 
 ## `00-brief.md`
 

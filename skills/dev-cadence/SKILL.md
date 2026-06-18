@@ -42,6 +42,7 @@ Allowed writes:
 
 - root `AGENTS.md`;
 - `.ai/**` framework rules, policies, workflows, agents, and templates;
+- `.gitignore` only to ignore `.ai/local.yaml`;
 - `specs/.gitkeep` only when an empty `specs/` directory must be represented.
 
 Forbidden writes unless the user explicitly requests delivery work in the same turn:
@@ -71,6 +72,7 @@ After repository initialization, the user should not need to invoke this Skill b
 
 - Keep repository initialization separate from delivery work. Initialization creates or updates `AGENTS.md` and `.ai/`; it must not create task specs or change product code unless the user also asks for a concrete delivery task.
 - Keep context to the smallest sufficient set for the current state.
+- Resolve `artifact_language` before writing task artifacts. Use `.ai/local.yaml` when it contains an uncommented supported value, then `.ai/config.yaml`, then default to `en`.
 - Infer workflow, but do not infer unclear product intent. If goal, scope, acceptance, reference behavior, or non-goals have multiple reasonable interpretations, enter Human Gate `info_required` before implementation.
 - Record assumptions and open questions separately. Do not convert an unconfirmed assumption into `scope`, `non_goals`, or `acceptance_criteria`.
 - Run a Requirements Readiness Check before planning or implementation. Implementation may start only when expected behavior, reference behavior, scope, non-goals, acceptance criteria, and verification approach are explicit and source-attributed.
@@ -143,6 +145,13 @@ specs/{task_id}/
 ```
 
 If the target repository already has an approved task/spec convention, adapt to it and record the mapping in `00-brief.md` or `.ai/control/supervisor.md`.
+
+Artifact language controls prose in task artifacts, reports, and free-form notes. Supported values are:
+
+- `en`: English. This is the default.
+- `zh`: Chinese. Use Simplified Chinese unless repository rules say otherwise.
+
+Keep filenames, paths, YAML keys, schema fields, status values, workflow IDs, gate IDs, and command/code identifiers in English for interoperability. Initialize `.ai/local.yaml` with commented user preferences and add `.ai/local.yaml` to `.gitignore` so users can edit it without committing personal defaults.
 
 Minimum artifact strength by class:
 
