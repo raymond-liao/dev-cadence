@@ -1,0 +1,32 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Editor and local tool state
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+.cache/
+.tmp/
+tmp/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Language/tooling artifacts
+node_modules/
+dist/
+build/
+coverage/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
