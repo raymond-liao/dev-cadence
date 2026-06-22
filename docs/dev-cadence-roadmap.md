@@ -165,7 +165,7 @@
 
 ### R6. 改善 Acceptance 展示体验
 
-状态：`pending`
+状态：`done`
 
 目标：
 把需要 Human 验收的信息直接汇总展示给用户，而不是要求用户自己去多个 artifact 文件里寻找。
@@ -183,6 +183,9 @@
 - 不再把 Supervisor、Harness 或 Worker Agent 记录为 final accepter。
 
 依赖：R5。
+
+备注：
+已完成。`skills/dev-cadence/scripts/summarize-acceptance.mjs` 已新增，按 `task_id` 读取 task artifacts 和 Harness run evidence，输出面向 Human 的 Markdown 摘要或 JSON。摘要包含 goal、workflow、task class、implementation status、scope reconciliation、verification status、review decision、acceptance status、changed files、created artifacts、skipped checks、blockers、residual risk、available evidence，以及需要写入 `08-acceptance.md` 的 Human confirmation 字段。验证覆盖 blocked acceptance、已记录 named Human acceptance、JSON 输出和缺失 task 报错；脚本保持 read-only，不修改 `08-acceptance.md`。
 
 ### R7. 真实验证 Visual Companion
 

@@ -153,6 +153,7 @@ Enter `blocked` or a Human Gate before continuing when any hard stop applies:
 - `scripts/init-task-artifacts.mjs`: deterministic initialization of task and Harness run artifacts from bundled templates.
 - `scripts/sync-repo-contract.mjs`: deterministic inspect, init, sync, repair, and diagnose operations for the thin repo-local contract.
 - `scripts/run-delivery-dry-run.mjs`: minimal initialized-repository delivery dry run for workflow inference, artifact generation, Harness evidence, scope reconciliation, and blocked acceptance behavior.
+- `scripts/summarize-acceptance.mjs`: read-only Human-facing acceptance summary from task artifacts and Harness evidence.
 - `scripts/visual-companion/`: optional local browser companion server for visual clarification during intent and design work.
 
 ## Task ID and Run ID

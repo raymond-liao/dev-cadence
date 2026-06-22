@@ -1,0 +1,316 @@
+#!/usr/bin/env node
+import fs from 'node:fs';
+import path from 'node:path';
+
+const REQUIRED_FILES = [
+  '00-brief.md',
+  '05-implementation.md',
+  '06-test-report.md',
+  '07-review-report.md',
+  '08-acceptance.md',
+];
+
+function printHelp() {
+  console.log(`Usage: summarize-acceptance.mjs --task-id <task-id> [options]
+
+Prints a Human-facing acceptance summary from Dev Cadence task artifacts.
+
+Required:
+  --task-id <id>       Task directory name under the specs directory.
+
+Options:
+  --specs-dir <dir>    Specs directory. Defaults to specs.
+  --json               Print machine-readable JSON.
+  -h, --help           Show this help text.
+
+The summary is read-only. It does not accept work or modify 08-acceptance.md.`);
+}
+
+if (process.argv.includes('--help') || process.argv.includes('-h')) {
+  printHelp();
+  process.exit(0);
+}
+
+function parseArgs(argv) {
+  const options = {
+    specsDir: path.resolve('specs'),
+    taskId: null,
+    json: false,
+  };
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+    if (arg === '--task-id') {
+      options.taskId = readValue(argv, index, arg);
+      index += 1;
+    } else if (arg === '--specs-dir') {
+      options.specsDir = path.resolve(readValue(argv, index, arg));
+      index += 1;
+    } else if (arg === '--json') {
+      options.json = true;
+    } else {
+      throw new Error(`Unknown option: ${arg}`);
+    }
+  }
+
+  validateId('task-id', options.taskId);
+  return options;
+}
+
+function readValue(argv, index, arg) {
+  const value = argv[index + 1];
+  if (!value || value.startsWith('--')) {
+    throw new Error(`${arg} requires a value`);
+  }
+  return value;
+}
+
+function validateId(label, value) {
+  if (!value) {
+    throw new Error(`Missing required --${label}`);
+  }
+  if (!/^[a-z0-9][a-z0-9._-]*$/.test(value)) {
+    throw new Error(`Invalid ${label}: use lowercase letters, digits, dots, underscores, and hyphens only`);
+  }
+}
+
+function rel(baseDir, filePath) {
+  return path.relative(baseDir, filePath) || '.';
+}
+
+function firstYamlBlock(text) {
+  const match = text.match(/```ya?ml\n([\s\S]*?)```/);
+  return match ? match[1] : '';
+}
+
+function parseScalarYaml(block) {
+  const data = {};
+  const lines = block.split('\n');
+  let currentListKey = null;
+
+  for (const line of lines) {
+    if (!line.trim() || line.trim().startsWith('#')) continue;
+
+    const listItem = line.match(/^\s*-\s+(.*)$/);
+    if (listItem && currentListKey) {
+      if (!Array.isArray(data[currentListKey])) data[currentListKey] = [];
+      data[currentListKey].push(cleanValue(listItem[1]));
+      continue;
+    }
+
+    const keyValue = line.match(/^([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
+    if (!keyValue) continue;
+
+    const key = keyValue[1];
+    const rawValue = keyValue[2] || '';
+    if (rawValue.trim() === '') {
+      data[key] = [];
+      currentListKey = key;
+    } else {
+      data[key] = cleanValue(rawValue);
+      currentListKey = null;
+    }
+  }
+
+  return data;
+}
+
+function cleanValue(value) {
+  const trimmed = value.trim();
+  if (trimmed === 'null') return null;
+  if (trimmed === '[]') return [];
+  if (trimmed === 'true') return true;
+  if (trimmed === 'false') return false;
+  if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+function readArtifact(taskDir, fileName) {
+  const filePath = path.join(taskDir, fileName);
+  if (!fs.existsSync(filePath)) {
+    return { fileName, path: filePath, exists: false, data: {}, text: '' };
+  }
+  const text = fs.readFileSync(filePath, 'utf8');
+  return {
+    fileName,
+    path: filePath,
+    exists: true,
+    data: parseScalarYaml(firstYamlBlock(text)),
+    text,
+  };
+}
+
+function runFiles(taskDir) {
+  const runsDir = path.join(taskDir, 'runs');
+  if (!fs.existsSync(runsDir)) return [];
+
+  const result = [];
+  for (const runId of fs.readdirSync(runsDir).sort()) {
+    const runDir = path.join(runsDir, runId);
+    if (!fs.statSync(runDir).isDirectory()) continue;
+    for (const file of fs.readdirSync(runDir).sort()) {
+      const fullPath = path.join(runDir, file);
+      if (fs.statSync(fullPath).isFile()) {
+        result.push(fullPath);
+      }
+    }
+  }
+  return result;
+}
+
+function asList(value) {
+  if (Array.isArray(value)) return value;
+  if (value === null || value === undefined || value === '') return [];
+  return [value];
+}
+
+function summarize(options) {
+  const taskDir = path.join(options.specsDir, options.taskId);
+  if (!fs.existsSync(taskDir)) {
+    throw new Error(`Task artifacts not found: ${taskDir}`);
+  }
+
+  const artifacts = Object.fromEntries(REQUIRED_FILES.map((file) => [file, readArtifact(taskDir, file)]));
+  const missing = Object.values(artifacts).filter((artifact) => !artifact.exists).map((artifact) => artifact.fileName);
+  const runs = runFiles(taskDir);
+
+  const brief = artifacts['00-brief.md'].data;
+  const implementation = artifacts['05-implementation.md'].data;
+  const testReport = artifacts['06-test-report.md'].data;
+  const reviewReport = artifacts['07-review-report.md'].data;
+  const acceptance = artifacts['08-acceptance.md'].data;
+
+  const needsHumanAcceptance = !acceptance.accepted_by_human || acceptance.status === 'blocked_pending_named_human';
+  const residualRisk = [
+    ...asList(testReport.residual_risk),
+    ...asList(reviewReport.residual_risk),
+    ...asList(acceptance.residual_risk_accepted),
+  ].filter(Boolean);
+  const evidence = [
+    ...Object.values(artifacts).filter((artifact) => artifact.exists).map((artifact) => rel(options.specsDir, artifact.path)),
+    ...runs.map((filePath) => rel(options.specsDir, filePath)),
+  ];
+
+  return {
+    task_id: options.taskId,
+    task_dir: rel(options.specsDir, taskDir),
+    goal: brief.goal || null,
+    selected_workflow: brief.selected_workflow || null,
+    task_class: brief.task_class || null,
+    implementation_status: implementation.status || null,
+    scope_reconciliation: implementation.scope_reconciliation || null,
+    verification_status: testReport.verification_status || null,
+    review_decision: reviewReport.decision || null,
+    acceptance_status: acceptance.status || null,
+    accepted_by_human: acceptance.accepted_by_human || null,
+    changed_files: asList(implementation.changed_files),
+    created_artifact_files: asList(implementation.created_artifact_files),
+    skipped_checks: asList(testReport.skipped_checks),
+    blockers: asList(reviewReport.blockers),
+    residual_risk: uniqueNormalized(residualRisk),
+    evidence_reviewed: asList(acceptance.evidence_reviewed),
+    evidence_available: evidence,
+    missing_artifacts: missing,
+    needs_human_acceptance: needsHumanAcceptance,
+    confirmation_to_record: needsHumanAcceptance
+      ? {
+          target_file: rel(options.specsDir, artifacts['08-acceptance.md'].path),
+          required_fields: [
+            'accepted_by_human',
+            'accepted_at',
+            'accepted_scope',
+            'evidence_reviewed',
+            'residual_risk_accepted',
+            'Gate G6 human_accepter',
+          ],
+        }
+      : null,
+  };
+}
+
+function uniqueNormalized(items) {
+  const seen = new Set();
+  const result = [];
+  for (const item of items) {
+    const key = String(item).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(item);
+  }
+  return result;
+}
+
+function printList(items, fallback = 'None') {
+  if (!items || items.length === 0) {
+    console.log(`- ${fallback}`);
+    return;
+  }
+  for (const item of items) {
+    console.log(`- ${item}`);
+  }
+}
+
+function printMarkdown(summary) {
+  console.log(`# Acceptance Summary: ${summary.task_id}`);
+  console.log('');
+  console.log(`Goal: ${summary.goal || 'Unknown'}`);
+  console.log(`Workflow: ${summary.selected_workflow || 'Unknown'}`);
+  console.log(`Task class: ${summary.task_class || 'Unknown'}`);
+  console.log(`Implementation: ${summary.implementation_status || 'Unknown'}`);
+  console.log(`Scope reconciliation: ${summary.scope_reconciliation || 'Unknown'}`);
+  console.log(`Verification: ${summary.verification_status || 'Unknown'}`);
+  console.log(`Review decision: ${summary.review_decision || 'Unknown'}`);
+  console.log(`Acceptance: ${summary.acceptance_status || 'Unknown'}`);
+  console.log(`Accepted by: ${summary.accepted_by_human || 'Not recorded'}`);
+
+  console.log('\n## Changed Files');
+  printList(summary.changed_files);
+
+  console.log('\n## Created Artifact Files');
+  printList(summary.created_artifact_files);
+
+  console.log('\n## Skipped Checks');
+  printList(summary.skipped_checks);
+
+  console.log('\n## Blockers');
+  printList(summary.blockers);
+
+  console.log('\n## Residual Risk');
+  printList(summary.residual_risk);
+
+  console.log('\n## Evidence Available');
+  printList(summary.evidence_available);
+
+  if (summary.missing_artifacts.length > 0) {
+    console.log('\n## Missing Artifacts');
+    printList(summary.missing_artifacts);
+  }
+
+  console.log('\n## Human Confirmation');
+  if (summary.needs_human_acceptance) {
+    console.log(`A named Human acceptance is still required. Record confirmation in ${summary.confirmation_to_record.target_file}.`);
+    console.log('Required fields:');
+    printList(summary.confirmation_to_record.required_fields);
+  } else {
+    console.log(`Acceptance is already recorded for ${summary.accepted_by_human}.`);
+  }
+}
+
+try {
+  const options = parseArgs(process.argv.slice(2));
+  const summary = summarize(options);
+  if (options.json) {
+    console.log(JSON.stringify(summary, null, 2));
+  } else {
+    printMarkdown(summary);
+  }
+  if (summary.missing_artifacts.length > 0) {
+    process.exit(1);
+  }
+} catch (error) {
+  console.error(`ERROR ${error.message}`);
+  console.error('Run with --help for usage.');
+  process.exit(2);
+}

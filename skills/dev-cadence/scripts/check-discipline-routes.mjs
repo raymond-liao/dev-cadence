@@ -193,6 +193,7 @@ function checkSkillReferenceMap() {
     'scripts/init-task-artifacts.mjs',
     'scripts/sync-repo-contract.mjs',
     'scripts/run-delivery-dry-run.mjs',
+    'scripts/summarize-acceptance.mjs',
     'scripts/visual-companion/',
   ];
   for (const item of expected) {

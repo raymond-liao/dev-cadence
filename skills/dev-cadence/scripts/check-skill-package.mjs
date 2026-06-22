@@ -245,6 +245,14 @@ function checkCliHelp() {
         '--accepted-by <name>',
       ],
     },
+    {
+      script: 'scripts/summarize-acceptance.mjs',
+      requiredText: [
+        'Usage: summarize-acceptance.mjs --task-id <task-id> [options]',
+        'Human-facing acceptance summary',
+        'does not accept work',
+      ],
+    },
   ];
 
   for (const command of commands) {
