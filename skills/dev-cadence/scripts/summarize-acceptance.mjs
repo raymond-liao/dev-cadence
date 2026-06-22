@@ -87,6 +87,7 @@ function parseScalarYaml(block) {
   const data = {};
   const lines = block.split('\n');
   let currentListKey = null;
+  let currentObjectKey = null;
 
   for (const line of lines) {
     if (!line.trim() || line.trim().startsWith('#')) continue;
@@ -98,6 +99,17 @@ function parseScalarYaml(block) {
       continue;
     }
 
+    const nestedKeyValue = line.match(/^\s+([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
+    if (nestedKeyValue && currentObjectKey) {
+      const key = nestedKeyValue[1];
+      const rawValue = nestedKeyValue[2] || '';
+      if (!data[currentObjectKey] || Array.isArray(data[currentObjectKey])) {
+        data[currentObjectKey] = {};
+      }
+      data[currentObjectKey][key] = cleanValue(rawValue);
+      continue;
+    }
+
     const keyValue = line.match(/^([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
     if (!keyValue) continue;
 
@@ -106,9 +118,11 @@ function parseScalarYaml(block) {
     if (rawValue.trim() === '') {
       data[key] = [];
       currentListKey = key;
+      currentObjectKey = key;
     } else {
       data[key] = cleanValue(rawValue);
       currentListKey = null;
+      currentObjectKey = null;
     }
   }
 
@@ -166,6 +180,14 @@ function asList(value) {
   return [value];
 }
 
+function scopeReconciliationStatus(value) {
+  if (!value) return null;
+  if (typeof value === 'string') return value;
+  if (Array.isArray(value)) return value.length > 0 ? value.join(', ') : null;
+  if (typeof value === 'object') return value.status || value.decision || null;
+  return String(value);
+}
+
 function summarize(options) {
   const taskDir = path.join(options.specsDir, options.taskId);
   if (!fs.existsSync(taskDir)) {
@@ -188,6 +210,9 @@ function summarize(options) {
     ...asList(reviewReport.residual_risk),
     ...asList(acceptance.residual_risk_accepted),
   ].filter(Boolean);
+  const displayResidualRisk = needsHumanAcceptance
+    ? residualRisk
+    : residualRisk.filter((item) => !isPendingAcceptanceRisk(item));
   const evidence = [
     ...Object.values(artifacts).filter((artifact) => artifact.exists).map((artifact) => rel(options.specsDir, artifact.path)),
     ...runs.map((filePath) => rel(options.specsDir, filePath)),
@@ -200,7 +225,7 @@ function summarize(options) {
     selected_workflow: brief.selected_workflow || null,
     task_class: brief.task_class || null,
     implementation_status: implementation.status || null,
-    scope_reconciliation: implementation.scope_reconciliation || null,
+    scope_reconciliation: scopeReconciliationStatus(implementation.scope_reconciliation),
     verification_status: testReport.verification_status || null,
     review_decision: reviewReport.decision || null,
     acceptance_status: acceptance.status || null,
@@ -209,7 +234,7 @@ function summarize(options) {
     created_artifact_files: asList(implementation.created_artifact_files),
     skipped_checks: asList(testReport.skipped_checks),
     blockers: asList(reviewReport.blockers),
-    residual_risk: uniqueNormalized(residualRisk),
+    residual_risk: uniqueNormalized(displayResidualRisk),
     evidence_reviewed: asList(acceptance.evidence_reviewed),
     evidence_available: evidence,
     missing_artifacts: missing,
@@ -228,6 +253,15 @@ function summarize(options) {
         }
       : null,
   };
+}
+
+function isPendingAcceptanceRisk(item) {
+  const text = String(item).toLowerCase();
+  return (
+    text.includes('pending human acceptance') ||
+    text.includes('pending raymond') ||
+    text.includes('final acceptance is not complete')
+  );
 }
 
 function uniqueNormalized(items) {
