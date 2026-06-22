@@ -143,6 +143,8 @@ Enter `blocked` or a Human Gate before continuing when any hard stop applies:
 - `references/spec-templates.md`: task artifact templates.
 - `references/skill-layout.md`: target Plugin package structure, thin repo-local contract, and `specs/` layout.
 - `references/repository-rule-sync.md`: explicit maintenance, drift detection, local overlay preservation, and sync/update reporting.
+- `templates/spec/`: reusable task artifact templates for brief, requirements, design, tasks, test plan, implementation, test report, review report, and acceptance.
+- `templates/runs/`: reusable Harness evidence templates for run context, execution report, tool log, test log, diff summary, and permission decisions.
 - `templates/prompts/`: reusable prompt templates for spec document review, plan document review, implementation, spec-compliance review, code-quality review, and general code review.
 - `scripts/check-skill-package.mjs`: package validation for frontmatter, language boundary, script syntax, executable bits, and runtime Skill clutter.
 - `scripts/check-discipline-routes.mjs`: route validation for discipline references, prompt templates, visual companion resources, and Reference Map entries.

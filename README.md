@@ -1244,7 +1244,7 @@ dev-cadence-plugin/
 | `scripts/visual-companion/` | 提供可选本地浏览器 companion，用于 mockup、diagram 和视觉方案对比 |
 | `skill-layout.md` | 记录 Plugin 包结构和薄仓库契约 |
 
-Plugin 的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；Worker 调度和 review 使用 `templates/prompts/` 中的模板；package self-check 由 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
+Plugin 的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 调度和 review 使用 `templates/prompts/` 中的模板；package self-check 由 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
 
 ### 13.5 目标仓库薄契约
 
@@ -1351,7 +1351,7 @@ dev_cadence:
 - 只有在多个问题域彼此独立时才并行调度 Worker。
 - 维护 Dev Cadence 自身 Skill 或 references 时，使用面向 Skill 行为的验证纪律。
 
-内置规则不是对外部 Skill 的引用，而是 Dev Cadence 自己持有的 reference、prompt template 和 optional scripts。当前默认 discipline 的加载入口是 `delivery-disciplines.md`，它会按状态加载 `intent-and-design-discipline.md`、`visual-companion.md`、`planning-discipline.md`、`implementation-discipline.md`、`debugging-discipline.md`、`review-discipline.md`、`verification-discipline.md` 和 `authoring-discipline.md` 等细分规则。Skill package 自身通过 `scripts/check-skill-package.mjs` 和 `scripts/check-discipline-routes.mjs` 做轻量本地校验，避免 package 语言边界、路由引用或 prompt template 在后续演进中漂移。
+内置规则不是对外部 Skill 的引用，而是 Dev Cadence 自己持有的 reference、artifact template、prompt template 和 optional scripts。当前默认 discipline 的加载入口是 `delivery-disciplines.md`，它会按状态加载 `intent-and-design-discipline.md`、`visual-companion.md`、`planning-discipline.md`、`implementation-discipline.md`、`debugging-discipline.md`、`review-discipline.md`、`verification-discipline.md` 和 `authoring-discipline.md` 等细分规则。Skill package 自身通过 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 做轻量本地校验，避免 package 语言边界、路由引用、artifact template 或 prompt template 在后续演进中漂移。
 
 日常实现阶段的默认路径是：
 
@@ -1652,7 +1652,7 @@ docs/plugin-skill-modularization.md
 skills/dev-cadence/
 ```
 
-该 Skill 当前包含 `SKILL.md`、`agents/openai.yaml`、按主题拆分的 `references/` 文件、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 package self-check 和 visual companion 工具。后续应按本方案拆分为 `dev-cadence-init`、`dev-cadence-deliver`、`dev-cadence-maintain` 和可选的 `dev-cadence-authoring`。
+该 Skill 当前包含 `SKILL.md`、`agents/openai.yaml`、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 package self-check 和 visual companion 工具。后续应按本方案拆分为 `dev-cadence-init`、`dev-cadence-deliver`、`dev-cadence-maintain` 和可选的 `dev-cadence-authoring`。
 
 语言边界：
 

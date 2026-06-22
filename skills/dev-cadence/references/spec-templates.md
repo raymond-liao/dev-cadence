@@ -2,6 +2,24 @@
 
 Use these templates for task artifacts under `specs/{task_id}/`. Copy only the artifacts required by the task class, workflow, or maintenance mode.
 
+The reusable template files live under:
+
+- `templates/spec/00-brief.md`
+- `templates/spec/01-requirements.md`
+- `templates/spec/02-design.md`
+- `templates/spec/03-tasks.md`
+- `templates/spec/04-test-plan.md`
+- `templates/spec/05-implementation.md`
+- `templates/spec/06-test-report.md`
+- `templates/spec/07-review-report.md`
+- `templates/spec/08-acceptance.md`
+- `templates/runs/run-context.md`
+- `templates/runs/execution-report.md`
+- `templates/runs/tool-log.md`
+- `templates/runs/test-log.md`
+- `templates/runs/diff-summary.md`
+- `templates/runs/permission-decisions.md`
+
 Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reproducible and path-based.
 
 Before writing artifact prose, resolve `artifact_language` from an uncommented supported `dev_cadence.artifact_language` value in `.ai/local.yaml`, then `.ai/config.yaml`, then default to `en`. Supported values are `en` and `zh`.

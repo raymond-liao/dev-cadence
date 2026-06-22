@@ -120,6 +120,39 @@ function checkPromptTemplates() {
   }
 }
 
+function checkArtifactTemplates() {
+  const required = [
+    'templates/spec/00-brief.md',
+    'templates/spec/01-requirements.md',
+    'templates/spec/02-design.md',
+    'templates/spec/03-tasks.md',
+    'templates/spec/04-test-plan.md',
+    'templates/spec/05-implementation.md',
+    'templates/spec/06-test-report.md',
+    'templates/spec/07-review-report.md',
+    'templates/spec/08-acceptance.md',
+    'templates/runs/run-context.md',
+    'templates/runs/execution-report.md',
+    'templates/runs/tool-log.md',
+    'templates/runs/test-log.md',
+    'templates/runs/diff-summary.md',
+    'templates/runs/permission-decisions.md',
+  ];
+
+  for (const relativePath of required) {
+    if (!exists(relativePath)) {
+      fail(`missing artifact template: ${relativePath}`);
+    }
+  }
+
+  const specsRef = readText('references/spec-templates.md');
+  for (const relativePath of required) {
+    if (!specsRef.includes(relativePath)) {
+      fail(`artifact template is not referenced by spec-templates.md: ${relativePath}`);
+    }
+  }
+}
+
 function checkVisualCompanionScripts() {
   const required = [
     'references/visual-companion.md',
@@ -149,6 +182,8 @@ function checkSkillReferenceMap() {
   const expected = [
     'references/delivery-disciplines.md',
     'references/visual-companion.md',
+    'templates/spec/',
+    'templates/runs/',
     'templates/prompts/',
     'scripts/check-skill-package.mjs',
     'scripts/check-discipline-routes.mjs',
@@ -173,6 +208,7 @@ checkPathReferences('references/visual-companion.md');
 checkPathReferences('references/skill-layout.md');
 checkDeliveryStateTable();
 checkPromptTemplates();
+checkArtifactTemplates();
 checkVisualCompanionScripts();
 checkSkillReferenceMap();
 

@@ -18,6 +18,7 @@ Checks:
   - absence of legacy external naming
   - absence of runtime auxiliary docs such as README.md
   - JavaScript syntax and shell executable bits under scripts/
+  - artifact template fenced yaml blocks have no duplicate keys
   - agents/openai.yaml metadata fields when present`);
 }
 
@@ -233,6 +234,24 @@ function checkCliHelp() {
   }
 }
 
+function checkArtifactTemplateBlocks() {
+  const scriptPath = path.join(skillDir, 'scripts', 'check-spec-artifacts.mjs');
+  const templatesDir = path.join(skillDir, 'templates');
+  if (!fs.existsSync(scriptPath)) {
+    fail('scripts/check-spec-artifacts.mjs: missing script for template artifact validation');
+    return;
+  }
+  if (!fs.existsSync(templatesDir)) {
+    fail('templates/: missing required template directory');
+    return;
+  }
+
+  const result = spawnSync(process.execPath, [scriptPath, templatesDir], { encoding: 'utf8' });
+  if (result.status !== 0) {
+    fail(`templates/: artifact template validation failed\n${result.stderr || result.stdout}`);
+  }
+}
+
 function checkOpenAiYaml() {
   const openAiYaml = path.join(skillDir, 'agents', 'openai.yaml');
   if (!fs.existsSync(openAiYaml)) {
@@ -259,6 +278,7 @@ checkForbiddenLegacyNames(files);
 checkNoAuxiliaryDocs(files);
 checkScripts();
 checkCliHelp();
+checkArtifactTemplateBlocks();
 checkOpenAiYaml();
 
 for (const message of warnings) {
