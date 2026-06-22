@@ -13,7 +13,7 @@ Arguments:
              of this script.
 
 Checks:
-  - SKILL.md frontmatter name and description
+  - root and entrypoint SKILL.md frontmatter name and description
   - English-only shipped skill package content
   - absence of legacy external naming
   - absence of runtime auxiliary docs such as README.md
@@ -88,34 +88,44 @@ function parseSimpleYamlFrontmatter(text, filePath) {
 }
 
 function checkFrontmatter() {
-  const skillPath = path.join(skillDir, 'SKILL.md');
-  if (!fs.existsSync(skillPath)) {
-    fail('SKILL.md: missing required file');
-    return;
-  }
+  const expected = [
+    { relativePath: 'SKILL.md', name: 'dev-cadence' },
+    { relativePath: 'skills/dev-cadence-init/SKILL.md', name: 'dev-cadence-init' },
+    { relativePath: 'skills/dev-cadence-deliver/SKILL.md', name: 'dev-cadence-deliver' },
+    { relativePath: 'skills/dev-cadence-maintain/SKILL.md', name: 'dev-cadence-maintain' },
+    { relativePath: 'skills/dev-cadence-authoring/SKILL.md', name: 'dev-cadence-authoring' },
+  ];
 
-  const frontmatter = parseSimpleYamlFrontmatter(readText(skillPath), skillPath);
-  if (!frontmatter) return;
-
-  const allowedKeys = new Set(['name', 'description']);
-  for (const key of Object.keys(frontmatter)) {
-    if (!allowedKeys.has(key)) {
-      fail(`SKILL.md: unexpected frontmatter key '${key}'`);
+  for (const item of expected) {
+    const skillPath = path.join(skillDir, item.relativePath);
+    if (!fs.existsSync(skillPath)) {
+      fail(`${item.relativePath}: missing required file`);
+      continue;
     }
-  }
 
-  if (frontmatter.name !== 'dev-cadence') {
-    fail(`SKILL.md: expected name 'dev-cadence', got '${frontmatter.name || ''}'`);
-  }
+    const frontmatter = parseSimpleYamlFrontmatter(readText(skillPath), skillPath);
+    if (!frontmatter) continue;
 
-  if (!frontmatter.description) {
-    fail('SKILL.md: missing description');
-  } else if (frontmatter.description.length > 1024) {
-    fail(`SKILL.md: description too long (${frontmatter.description.length} characters)`);
-  }
+    const allowedKeys = new Set(['name', 'description']);
+    for (const key of Object.keys(frontmatter)) {
+      if (!allowedKeys.has(key)) {
+        fail(`${item.relativePath}: unexpected frontmatter key '${key}'`);
+      }
+    }
 
-  if (frontmatter.name && !/^[a-z0-9-]+$/.test(frontmatter.name)) {
-    fail(`SKILL.md: name must use lowercase letters, digits, and hyphens only`);
+    if (frontmatter.name !== item.name) {
+      fail(`${item.relativePath}: expected name '${item.name}', got '${frontmatter.name || ''}'`);
+    }
+
+    if (!frontmatter.description) {
+      fail(`${item.relativePath}: missing description`);
+    } else if (frontmatter.description.length > 1024) {
+      fail(`${item.relativePath}: description too long (${frontmatter.description.length} characters)`);
+    }
+
+    if (frontmatter.name && !/^[a-z0-9-]+$/.test(frontmatter.name)) {
+      fail(`${item.relativePath}: name must use lowercase letters, digits, and hyphens only`);
+    }
   }
 }
 
@@ -262,15 +272,25 @@ function checkArtifactTemplateBlocks() {
 }
 
 function checkOpenAiYaml() {
-  const openAiYaml = path.join(skillDir, 'agents', 'openai.yaml');
-  if (!fs.existsSync(openAiYaml)) {
-    warn('agents/openai.yaml: missing optional UI metadata');
-    return;
-  }
-  const text = readText(openAiYaml);
-  for (const required of ['display_name:', 'short_description:', 'default_prompt:']) {
-    if (!text.includes(required)) {
-      fail(`agents/openai.yaml: missing ${required}`);
+  const expected = [
+    'agents/openai.yaml',
+    'skills/dev-cadence-init/agents/openai.yaml',
+    'skills/dev-cadence-deliver/agents/openai.yaml',
+    'skills/dev-cadence-maintain/agents/openai.yaml',
+    'skills/dev-cadence-authoring/agents/openai.yaml',
+  ];
+
+  for (const relativePath of expected) {
+    const openAiYaml = path.join(skillDir, relativePath);
+    if (!fs.existsSync(openAiYaml)) {
+      warn(`${relativePath}: missing optional UI metadata`);
+      continue;
+    }
+    const text = readText(openAiYaml);
+    for (const required of ['display_name:', 'short_description:', 'default_prompt:']) {
+      if (!text.includes(required)) {
+        fail(`${relativePath}: missing ${required}`);
+      }
     }
   }
 }

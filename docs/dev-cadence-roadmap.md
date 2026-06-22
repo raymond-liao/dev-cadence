@@ -85,7 +85,7 @@
 
 ### R3. 拆分入口 Skills
 
-状态：`pending`
+状态：`done`
 
 目标：
 把当前单一 `dev-cadence` Skill 拆成目标架构中的少量 user-facing skills。
@@ -106,6 +106,9 @@
 - Package self-check 能识别多入口结构，或有明确过渡检查。
 
 依赖：R1、R2。
+
+备注：
+已完成。当前 package 保留根 `dev-cadence` 兼容入口，同时新增 `skills/dev-cadence/skills/dev-cadence-init`、`dev-cadence-deliver`、`dev-cadence-maintain` 和 `dev-cadence-authoring` 四个 user-facing entrypoint skills。共享 references、templates 和 scripts 仍留在 package root。`check-skill-package.mjs` 已验证根入口和子入口 frontmatter/openai metadata，`check-discipline-routes.mjs` 已验证入口 skill resource 和 `skill-layout.md` 目标声明。
 
 ### R4. 实现 Thin Repo 初始化与维护 Runtime
 

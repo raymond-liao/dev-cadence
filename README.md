@@ -1646,13 +1646,19 @@ docs/plugin-skill-modularization.md
 8. Target Plugin package shape
 9. Thin repo-local contract and `specs/` output structure
 
-当前第一版 Skill 目录是后续 Plugin 化拆分的起点：
+当前过渡版 Skill package 已经包含多入口 Skill 结构：
 
 ```text
 skills/dev-cadence/
+  SKILL.md
+  skills/
+    dev-cadence-init/
+    dev-cadence-deliver/
+    dev-cadence-maintain/
+    dev-cadence-authoring/
 ```
 
-该 Skill 当前包含 `SKILL.md`、`agents/openai.yaml`、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 package self-check 和 visual companion 工具。后续应按本方案拆分为 `dev-cadence-init`、`dev-cadence-deliver`、`dev-cadence-maintain` 和可选的 `dev-cadence-authoring`。
+该 package 当前包含兼容根入口 `SKILL.md`、四个 user-facing entrypoint skills、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 package self-check、artifact 初始化和 visual companion 工具。后续仍应按本方案演进为正式 Plugin 分发形态。
 
 语言边界：
 

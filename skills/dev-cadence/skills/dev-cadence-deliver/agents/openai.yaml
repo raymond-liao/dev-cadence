@@ -1,0 +1,6 @@
+interface:
+  display_name: "Dev Cadence Deliver"
+  short_description: "Run governed delivery workflow"
+  default_prompt: "Use $dev-cadence-deliver to run this repository task through Dev Cadence."
+policy:
+  allow_implicit_invocation: false

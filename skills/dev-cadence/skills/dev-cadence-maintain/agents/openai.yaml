@@ -1,0 +1,6 @@
+interface:
+  display_name: "Dev Cadence Maintain"
+  short_description: "Maintain Dev Cadence config"
+  default_prompt: "Use $dev-cadence-maintain to inspect, sync, repair, or diagnose Dev Cadence configuration."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Dev Cadence Init"
+  short_description: "Initialize Dev Cadence repo rules"
+  default_prompt: "Use $dev-cadence-init to initialize Dev Cadence in this repository."
+policy:
+  allow_implicit_invocation: true

@@ -200,6 +200,32 @@ function checkSkillReferenceMap() {
   }
 }
 
+function checkEntrypointSkills() {
+  const required = [
+    'skills/dev-cadence-init/SKILL.md',
+    'skills/dev-cadence-init/agents/openai.yaml',
+    'skills/dev-cadence-deliver/SKILL.md',
+    'skills/dev-cadence-deliver/agents/openai.yaml',
+    'skills/dev-cadence-maintain/SKILL.md',
+    'skills/dev-cadence-maintain/agents/openai.yaml',
+    'skills/dev-cadence-authoring/SKILL.md',
+    'skills/dev-cadence-authoring/agents/openai.yaml',
+  ];
+
+  for (const relativePath of required) {
+    if (!exists(relativePath)) {
+      fail(`missing entrypoint skill resource: ${relativePath}`);
+    }
+  }
+
+  const layoutText = readText('references/skill-layout.md');
+  for (const skillName of ['dev-cadence-init', 'dev-cadence-deliver', 'dev-cadence-maintain', 'dev-cadence-authoring']) {
+    if (!layoutText.includes(`${skillName}/`)) {
+      fail(`references/skill-layout.md: missing target entrypoint ${skillName}/`);
+    }
+  }
+}
+
 if (!exists('SKILL.md')) {
   console.error(`Skill directory not found or missing SKILL.md: ${skillDir}`);
   process.exit(2);
@@ -214,6 +240,7 @@ checkPromptTemplates();
 checkArtifactTemplates();
 checkVisualCompanionScripts();
 checkSkillReferenceMap();
+checkEntrypointSkills();
 
 if (errors.length > 0) {
   for (const message of errors) {

@@ -105,6 +105,19 @@ The current first version is still packaged as:
 skills/dev-cadence/
   SKILL.md
   agents/openai.yaml
+  skills/
+    dev-cadence-init/
+      SKILL.md
+      agents/openai.yaml
+    dev-cadence-deliver/
+      SKILL.md
+      agents/openai.yaml
+    dev-cadence-maintain/
+      SKILL.md
+      agents/openai.yaml
+    dev-cadence-authoring/
+      SKILL.md
+      agents/openai.yaml
   references/
     ...
   templates/
@@ -118,7 +131,7 @@ skills/dev-cadence/
     ...
 ```
 
-Treat that shape as the source to refactor into the target plugin package.
+Treat that shape as the current transitional package. The nested entrypoint skills define the target user-facing boundaries while shared references, templates, and scripts remain in the package root until the final plugin distribution shape is introduced.
 
 Do not add generic `README.md`, installation guide, changelog, or narrative research documents to runtime Skill folders. Keep narrative design documents in the framework repository.
 
