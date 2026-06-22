@@ -152,6 +152,7 @@ function checkSkillReferenceMap() {
     'templates/prompts/',
     'scripts/check-skill-package.mjs',
     'scripts/check-discipline-routes.mjs',
+    'scripts/check-spec-artifacts.mjs',
     'scripts/visual-companion/',
   ];
   for (const item of expected) {

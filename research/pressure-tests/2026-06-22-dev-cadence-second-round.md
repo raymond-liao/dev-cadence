@@ -173,6 +173,7 @@ Smoke test 结果：
 
 - `skills/dev-cadence/scripts/check-skill-package.mjs`
 - `skills/dev-cadence/scripts/check-discipline-routes.mjs`
+- `skills/dev-cadence/scripts/check-spec-artifacts.mjs`
 
 覆盖范围：
 
@@ -183,5 +184,6 @@ Smoke test 结果：
 - `agents/openai.yaml` 基础 UI metadata。
 - `delivery-disciplines.md` 到各 discipline reference 的路由。
 - prompt templates 和 visual companion bundled resources 的存在性和索引关系。
+- task artifact fenced YAML-like blocks 中同一层级的重复 key。
 
 这一步替代了依赖外部 `PyYAML` 的基础 package validation，但不替代 forward-test 或真实任务 dry run。

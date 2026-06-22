@@ -126,6 +126,7 @@ dev-cadence-plugin/
   scripts/
     check-skill-package.mjs
     check-discipline-routes.mjs
+    check-spec-artifacts.mjs
     visual-companion/
       start-server.sh
       stop-server.sh
@@ -136,7 +137,7 @@ dev-cadence-plugin/
 
 Plugin package 不应包含通用 README、installation guide、changelog 或叙事性研究文档，除非插件发布格式要求。这些内容属于框架仓库，不属于 runtime Skill body。
 
-`delivery-disciplines.md` 应作为默认交付纪律的路由入口。具体规则放在细分 reference 中，prompt template 放在 `templates/prompts/`，由 Harness 在 Worker 或 reviewer run 中装载。`scripts/check-skill-package.mjs` 和 `scripts/check-discipline-routes.mjs` 应提供轻量 package self-check，覆盖语言边界、metadata、脚本语法、discipline route、prompt template 和 bundled resource。
+`delivery-disciplines.md` 应作为默认交付纪律的路由入口。具体规则放在细分 reference 中，prompt template 放在 `templates/prompts/`，由 Harness 在 Worker 或 reviewer run 中装载。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 应提供轻量 package self-check，覆盖语言边界、metadata、脚本语法、discipline route、prompt template、bundled resource 和 task artifact。
 
 `visual-companion.md` 与 `scripts/visual-companion/` 是 intent/design 阶段的可选视觉对齐能力。它可以用于 mockup、diagram、layout comparison 等场景，但不能替代 requirements，也不能成为 G1 必需条件。环境不可用时必须降级为 text-only clarification。
 

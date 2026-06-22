@@ -201,6 +201,14 @@ function checkCliHelp() {
         'discipline routing',
       ],
     },
+    {
+      script: 'scripts/check-spec-artifacts.mjs',
+      requiredText: [
+        'Usage: check-spec-artifacts.mjs [specs-dir]',
+        'fenced yaml blocks',
+        'duplicate keys',
+      ],
+    },
   ];
 
   for (const command of commands) {

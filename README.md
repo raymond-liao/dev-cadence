@@ -1212,6 +1212,7 @@ dev-cadence-plugin/
   scripts/
     check-skill-package.mjs
     check-discipline-routes.mjs
+    check-spec-artifacts.mjs
     visual-companion/
       start-server.sh
       stop-server.sh
@@ -1239,11 +1240,11 @@ dev-cadence-plugin/
 | `human-gates.md` | 记录 approval_required、review_required、info_required、notify_only 的触发规则 |
 | `adapters.md` | 记录可替换执行纪律如何接入 Worker 阶段 |
 | `templates/` | 提供任务 artifact、Harness evidence 和 Worker/reviewer prompt 模板 |
-| `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` | 提供 Skill package、discipline route、prompt template 和 bundled resource 的本地校验 |
+| `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs` | 提供 Skill package、discipline route、prompt template、bundled resource 和 task artifact 的本地校验 |
 | `scripts/visual-companion/` | 提供可选本地浏览器 companion，用于 mockup、diagram 和视觉方案对比 |
 | `skill-layout.md` | 记录 Plugin 包结构和薄仓库契约 |
 
-Plugin 的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；Worker 调度和 review 使用 `templates/prompts/` 中的模板；package self-check 由 `scripts/check-skill-package.mjs` 和 `scripts/check-discipline-routes.mjs` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
+Plugin 的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；Worker 调度和 review 使用 `templates/prompts/` 中的模板；package self-check 由 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
 
 ### 13.5 目标仓库薄契约
 

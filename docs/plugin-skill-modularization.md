@@ -119,6 +119,7 @@ templates/
 scripts/
   check-skill-package.mjs
   check-discipline-routes.mjs
+  check-spec-artifacts.mjs
   visual-companion/
     start-server.sh
     stop-server.sh
@@ -129,7 +130,7 @@ scripts/
 
 这些文件在相关入口 Skill 需要时加载。它们不应复制到目标仓库。
 
-`delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在调度具体 run 时使用。`scripts/check-skill-package.mjs` 和 `scripts/check-discipline-routes.mjs` 提供 package self-check，校验语言边界、入口 metadata、脚本语法、discipline route、prompt template 和 bundled resource 是否一致。
+`delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在调度具体 run 时使用。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 提供 package self-check，校验语言边界、入口 metadata、脚本语法、discipline route、prompt template、bundled resource 和 task artifact 是否一致。
 
 `visual-companion.md` 和 `scripts/visual-companion/` 提供可选浏览器视觉对齐能力，用于 mockup、diagram 和视觉方案对比。它帮助 Human 和 AI 对齐难以纯文字表达的需求，但不能成为 G1 的硬条件。缺少 Node、浏览器或可访问 URL 时，流程必须降级为 text-only clarification。
 

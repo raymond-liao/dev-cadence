@@ -36,7 +36,6 @@ required_inputs:
 evidence:
   - specs/20260622-self-check-help/06-test-report.md
   - specs/20260622-self-check-help/07-review-report.md
-human_accepter: null
 human_accepter: Raymond
 decision: accepted
 residual_risk:
