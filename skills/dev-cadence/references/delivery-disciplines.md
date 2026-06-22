@@ -39,7 +39,7 @@ Load these references by state or condition:
 | visual clarification would materially improve alignment | `visual-companion.md` |
 | `planning` | `planning-discipline.md` |
 | `implementation` for testable behavior | `implementation-discipline.md`; load `testing-anti-patterns.md` when writing tests or mocks |
-| Worker dispatch, inline execution, subagent execution, parallel candidates | `execution-orchestration.md` |
+| Worker dispatch, inline execution, subagent execution, parallel candidates | `execution-orchestration.md`; load `adapters.md` when an external adapter is configured or requested |
 | `bugfix`, `incident-fix`, unexpected behavior, failing tests | `debugging-discipline.md` |
 | Deep symptom, unclear origin, bad value propagation | `root-cause-tracing.md` |
 | Flaky async tests or arbitrary sleeps | `condition-based-waiting.md` |
@@ -60,7 +60,7 @@ Use `visual-companion.md` for server lifecycle, port and host handling, session 
 
 ## Adapter Boundary
 
-External adapters are optional replacement points for Worker execution techniques. They must not weaken:
+External adapters are optional replacement points for Worker execution techniques. Load `adapters.md` before selecting or invoking one. They must not weaken:
 
 - named Human final acceptance;
 - Requirements Readiness Check;

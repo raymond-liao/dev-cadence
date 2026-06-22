@@ -77,6 +77,7 @@ function checkDeliveryStateTable() {
     'verification-discipline.md',
     'authoring-discipline.md',
     'skill-pressure-testing.md',
+    'adapters.md',
   ];
 
   for (const fileName of required) {
@@ -181,6 +182,7 @@ function checkSkillReferenceMap() {
   const skillText = readText('SKILL.md');
   const expected = [
     'references/delivery-disciplines.md',
+    'references/adapters.md',
     'references/visual-companion.md',
     'templates/spec/',
     'templates/runs/',

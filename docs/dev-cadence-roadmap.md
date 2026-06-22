@@ -33,7 +33,7 @@
 
 ### R1. 补齐 Adapter Reference
 
-状态：`pending`
+状态：`done`
 
 目标：
 补齐 `skills/dev-cadence/references/adapters.md`，让方案中的 Adapter 模型成为 Skill package 的稳定 reference，而不是只散落在设计文档和 `delivery-disciplines.md` 的边界说明中。
@@ -54,7 +54,7 @@
 依赖：无。
 
 备注：
-这是当前最小结构缺口，应先做。
+已完成。`skills/dev-cadence/references/adapters.md` 已新增，并接入 `SKILL.md` Reference Map、`delivery-disciplines.md` state loading contract 和 `check-discipline-routes.mjs`。验证证据：`check-skill-package.mjs`、`check-discipline-routes.mjs`、`check-spec-artifacts.mjs specs`、`check-spec-artifacts.mjs skills/dev-cadence/templates`、`git diff --check`。
 
 ### R2. 实现 Artifact 初始化脚本
 

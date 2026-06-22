@@ -140,6 +140,7 @@ Enter `blocked` or a Human Gate before continuing when any hard stop applies:
 - `references/harness.md`: Harness Run Context, evidence capture, execution report, and permission decisions.
 - `references/quality-gates.md`: G1-G6 quality gates and verification status semantics.
 - `references/human-gates.md`: approval, review, information, and notification gate contracts.
+- `references/adapters.md`: optional Worker execution adapter selection, contracts, conflict rules, and forbidden overrides.
 - `references/spec-templates.md`: task artifact templates.
 - `references/skill-layout.md`: target Plugin package structure, thin repo-local contract, and `specs/` layout.
 - `references/repository-rule-sync.md`: explicit maintenance, drift detection, local overlay preservation, and sync/update reporting.
