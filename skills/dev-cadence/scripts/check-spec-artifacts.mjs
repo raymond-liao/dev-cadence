@@ -43,7 +43,11 @@ function walk(dir) {
 }
 
 function relative(filePath) {
-  return path.relative(process.cwd(), filePath) || filePath;
+  const relativePath = path.relative(process.cwd(), filePath);
+  if (!relativePath || relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+    return filePath;
+  }
+  return relativePath;
 }
 
 function yamlBlocks(text) {
@@ -121,4 +125,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`OK checked spec artifacts in ${path.relative(process.cwd(), specsDir) || specsDir}`);
+console.log(`OK checked spec artifacts in ${relative(specsDir)}`);

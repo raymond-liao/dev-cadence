@@ -18,6 +18,7 @@ Checks:
   - absence of legacy external naming
   - absence of runtime auxiliary docs such as README.md
   - JavaScript syntax and shell executable bits under scripts/
+  - CLI help for package scripts
   - artifact template fenced yaml blocks have no duplicate keys
   - agents/openai.yaml metadata fields when present`);
 }
@@ -208,6 +209,14 @@ function checkCliHelp() {
         'Usage: check-spec-artifacts.mjs [specs-dir]',
         'fenced yaml blocks',
         'duplicate keys',
+      ],
+    },
+    {
+      script: 'scripts/init-task-artifacts.mjs',
+      requiredText: [
+        'Usage: init-task-artifacts.mjs --task-id <task-id> [options]',
+        'Initializes Dev Cadence task artifacts',
+        '--run-id <id>',
       ],
     },
   ];

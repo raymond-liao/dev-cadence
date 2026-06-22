@@ -58,7 +58,7 @@
 
 ### R2. 实现 Artifact 初始化脚本
 
-状态：`pending`
+状态：`done`
 
 目标：
 提供一个最小脚本，用 bundled templates 初始化 `specs/{task_id}/` 和 `runs/{run_id}/`，避免 artifact contract 只停留在模板文件层。
@@ -79,6 +79,9 @@
 - `check-skill-package.mjs`、`check-discipline-routes.mjs` 和 `check-spec-artifacts.mjs` 通过。
 
 依赖：R1 可并行，但建议 R1 先完成。
+
+备注：
+已完成。`skills/dev-cadence/scripts/init-task-artifacts.mjs` 已新增，并接入 `SKILL.md` Reference Map 和 `check-skill-package.mjs` CLI help 验证。行为验证覆盖 help、dry-run、实际写入、重复运行 skip、`--overwrite`、非法 ID 拦截，以及对生成 fixture 运行 `check-spec-artifacts.mjs`。
 
 ### R3. 拆分入口 Skills
 

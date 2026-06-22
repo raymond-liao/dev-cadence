@@ -150,6 +150,7 @@ Enter `blocked` or a Human Gate before continuing when any hard stop applies:
 - `scripts/check-skill-package.mjs`: package validation for frontmatter, language boundary, script syntax, executable bits, and runtime Skill clutter.
 - `scripts/check-discipline-routes.mjs`: route validation for discipline references, prompt templates, visual companion resources, and Reference Map entries.
 - `scripts/check-spec-artifacts.mjs`: task artifact validation for duplicate YAML-like keys in fenced YAML blocks.
+- `scripts/init-task-artifacts.mjs`: deterministic initialization of task and Harness run artifacts from bundled templates.
 - `scripts/visual-companion/`: optional local browser companion server for visual clarification during intent and design work.
 
 ## Task ID and Run ID
