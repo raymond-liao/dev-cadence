@@ -139,7 +139,7 @@
 
 ### R5. 实现 Delivery Runtime 最小闭环
 
-状态：`pending`
+状态：`done`
 
 目标：
 让 `dev-cadence-deliver` 能按当前规则执行一个最小交付闭环，而不是只依赖人工记忆流程。
@@ -159,6 +159,9 @@
 - 缺失验证、未命名 Human acceptance、unplanned diff 等情况能被阻断或记录为 blocked。
 
 依赖：R2、R3、R4。
+
+备注：
+已完成。`skills/dev-cadence/scripts/run-delivery-dry-run.mjs` 已新增，支持在已初始化 fixture repo 中读取 thin contract、推断 `selected_workflow` 和 `task_class`、创建 task artifacts 和 Harness run evidence、记录 scope reconciliation、verification status、review decision 和 acceptance status。fixture 验证覆盖未初始化仓库报错、`feature-dev`/`S1` 推断、security goal 升级为 `S2`、无 named accepter 时 G6 blocked、提供 named accepter 时仅接受 dry-run scope，以及对生成 specs 运行 `check-spec-artifacts.mjs`。
 
 ### R6. 改善 Acceptance 展示体验
 

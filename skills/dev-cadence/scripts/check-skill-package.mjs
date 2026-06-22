@@ -237,6 +237,14 @@ function checkCliHelp() {
         'inspect',
       ],
     },
+    {
+      script: 'scripts/run-delivery-dry-run.mjs',
+      requiredText: [
+        'Usage: run-delivery-dry-run.mjs --task-id <task-id> --goal <goal> [options]',
+        'Creates a minimal Dev Cadence delivery dry run',
+        '--accepted-by <name>',
+      ],
+    },
   ];
 
   for (const command of commands) {
