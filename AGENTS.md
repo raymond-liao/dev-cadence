@@ -17,6 +17,8 @@
 
 - `rg --files`：快速列出项目文件。
 - `rg "term" README.md skills docs research`：搜索框架术语，避免定义冲突。
+- `node skills/dev-cadence/scripts/check-skill-package.mjs skills/dev-cadence`：校验 Skill package 结构、语言边界和脚本状态。
+- `node skills/dev-cadence/scripts/check-discipline-routes.mjs skills/dev-cadence`：校验 discipline routes、prompt templates 和 bundled resources。
 - `git diff -- README.md skills docs research`：提交前检查文档和 Skill 变更。
 
 如果新增生成产物或脚本，请在同一次变更中记录对应命令。

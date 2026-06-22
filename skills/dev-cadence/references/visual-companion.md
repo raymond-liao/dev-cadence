@@ -47,6 +47,14 @@ Required:
 
 If any requirement is missing or the URL is unreachable, use the fallback path.
 
+## Bundled Resources
+
+- `scripts/visual-companion/start-server.sh`: starts the local companion server and creates the session directories.
+- `scripts/visual-companion/stop-server.sh`: stops a running session and removes temporary sessions.
+- `scripts/visual-companion/server.cjs`: serves screen files and records browser events.
+- `scripts/visual-companion/helper.js`: injects client-side helpers for click and selection events.
+- `scripts/visual-companion/frame-template.html`: wraps fragment screens in a stable browser frame.
+
 ## Start a Session
 
 From the skill directory:

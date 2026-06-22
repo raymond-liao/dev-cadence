@@ -88,6 +88,8 @@ dev-cadence-plugin/
       code-quality-reviewer.md
       code-reviewer.md
   scripts/
+    check-skill-package.mjs
+    check-discipline-routes.mjs
     visual-companion/
       start-server.sh
       stop-server.sh
@@ -107,6 +109,8 @@ skills/dev-cadence/
   templates/
     prompts/
       ...
+  scripts/
+    ...
 ```
 
 Treat that shape as the source to refactor into the target plugin package.
@@ -291,7 +295,7 @@ dev_cadence:
 - use parallel Worker runs only for independent domains;
 - use Dev Cadence authoring validation when changing this plugin's own skills and references.
 
-`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Worker and reviewer prompt templates live under `templates/prompts/` and should be used through the Harness when dispatching Worker runs. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
+`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Worker and reviewer prompt templates live under `templates/prompts/` and should be used through the Harness when dispatching Worker runs. Package self-checks live in `scripts/check-skill-package.mjs` and `scripts/check-discipline-routes.mjs`. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
 
 External adapters are optional replacement points for Worker execution techniques. Dev Cadence still controls Supervisor routing, Harness evidence, Quality Gate, Human Gate, scope reconciliation, and final acceptance.
 

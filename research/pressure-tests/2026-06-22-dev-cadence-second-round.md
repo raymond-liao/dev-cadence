@@ -125,16 +125,14 @@ Implement a small password reset feature. I already manually tested the UI flow 
 ## 暴露的问题
 
 1. 当前测试只验证了 agent response 行为，没有执行真实文件写入、测试命令或 Harness artifact 生成。
-2. `quick_validate.py` 依赖 `PyYAML`，当前环境缺少 `yaml` 模块，正式校验脚本无法直接运行。
-3. 通用校验脚本尚未吸收。适合下一轮优先补 `scripts/check-skill-package`，用来检查 language boundary、reference links、discipline route 和 prompt template 存在性。
-4. visual companion 已在后续切片中吸收为 optional capability，并完成本地 smoke test；仍需在真实 intent/design 任务中验证它不会误变成 G1 条件。
+2. `quick_validate.py` 依赖 `PyYAML`，当前环境缺少 `yaml` 模块，因此后续补入了 Dev Cadence 自有 lightweight self-check scripts，避免基础校验依赖外部 Python package。
+3. visual companion 已在后续切片中吸收为 optional capability，并完成本地 smoke test；仍需在真实 intent/design 任务中验证它不会误变成 G1 条件。
+4. 当前测试仍未覆盖真实任务的 end-to-end specs、Harness evidence、TDD evidence 和 review evidence 生成。
 
 ## 建议下一步
 
-1. 增加 Dev Cadence 自有 `scripts/check-skill-package`，避免依赖外部环境缺失的 `PyYAML`。
-2. 增加 `scripts/check-discipline-routes`，校验 `delivery-disciplines.md` 中引用的 reference 和 prompt template 都存在。
-3. 用一个真实小任务跑 end-to-end dry run，验证 specs、Harness evidence、TDD evidence、review evidence 的产物路径。
-4. 用一个真实 UI/design 澄清任务跑 visual companion dry run，验证 consent、fallback、event capture 和 requirements reconciliation。
+1. 用一个真实小任务跑 end-to-end dry run，验证 specs、Harness evidence、TDD evidence、review evidence 的产物路径。
+2. 用一个真实 UI/design 澄清任务跑 visual companion dry run，验证 consent、fallback、event capture 和 requirements reconciliation。
 
 ## 后续补充：Visual Companion Smoke Test
 
@@ -166,3 +164,24 @@ Smoke test 结果：
 - visual companion 是 optional capability。
 - 不作为 G1 条件。
 - 环境不可用时降级为 text-only clarification。
+
+## 后续补充：Self-check Scripts
+
+日期：2026-06-22
+
+本轮后续已补入 Dev Cadence 自有 lightweight self-check scripts：
+
+- `skills/dev-cadence/scripts/check-skill-package.mjs`
+- `skills/dev-cadence/scripts/check-discipline-routes.mjs`
+
+覆盖范围：
+
+- `SKILL.md` frontmatter、name、description 长度和字段约束。
+- `skills/dev-cadence/**` 英文内容边界。
+- runtime Skill folder 中不包含通用 README、installation guide、changelog 等辅助文档。
+- scripts 语法和 shell executable bit。
+- `agents/openai.yaml` 基础 UI metadata。
+- `delivery-disciplines.md` 到各 discipline reference 的路由。
+- prompt templates 和 visual companion bundled resources 的存在性和索引关系。
+
+这一步替代了依赖外部 `PyYAML` 的基础 package validation，但不替代 forward-test 或真实任务 dry run。

@@ -124,6 +124,8 @@ dev-cadence-plugin/
       code-quality-reviewer.md
       code-reviewer.md
   scripts/
+    check-skill-package.mjs
+    check-discipline-routes.mjs
     visual-companion/
       start-server.sh
       stop-server.sh
@@ -134,7 +136,7 @@ dev-cadence-plugin/
 
 Plugin package 不应包含通用 README、installation guide、changelog 或叙事性研究文档，除非插件发布格式要求。这些内容属于框架仓库，不属于 runtime Skill body。
 
-`delivery-disciplines.md` 应作为默认交付纪律的路由入口。具体规则放在细分 reference 中，prompt template 放在 `templates/prompts/`，由 Harness 在 Worker 或 reviewer run 中装载。
+`delivery-disciplines.md` 应作为默认交付纪律的路由入口。具体规则放在细分 reference 中，prompt template 放在 `templates/prompts/`，由 Harness 在 Worker 或 reviewer run 中装载。`scripts/check-skill-package.mjs` 和 `scripts/check-discipline-routes.mjs` 应提供轻量 package self-check，覆盖语言边界、metadata、脚本语法、discipline route、prompt template 和 bundled resource。
 
 `visual-companion.md` 与 `scripts/visual-companion/` 是 intent/design 阶段的可选视觉对齐能力。它可以用于 mockup、diagram、layout comparison 等场景，但不能替代 requirements，也不能成为 G1 必需条件。环境不可用时必须降级为 text-only clarification。
 
@@ -687,5 +689,4 @@ Human decisions 必须写入 requirements、design、ADR 或 acceptance artifact
 2. `Researcher` 应作为 plugin-owned references 中的默认 Worker blueprint，还是只在启用 `research-spike` 时加载。
 3. 是否需要为外部 adapter 建立 registry，还是先只保留简单配置扩展点。
 4. Templates 应使用纯 Markdown headings、YAML-frontmatter 加 Markdown body，还是 YAML-like field blocks。
-5. 第一版手工版本之后，是否值得加入轻量 validation script。
-6. 哪个真实任务应作为第一次 validation run。
+5. 哪个真实任务应作为第一次 validation run。
