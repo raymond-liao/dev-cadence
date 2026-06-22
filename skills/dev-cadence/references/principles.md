@@ -19,26 +19,28 @@ Use these principles whenever process rules conflict or a workflow choice is unc
 13. Prefer repo-local Markdown rules and templates before platform automation.
 14. Repository evidence can support candidate interpretations, but it cannot clarify user intent, accept requirements, or pass G1 when clarification is required.
 
-## XP and TDD Discipline
+## Delivery Discipline
 
-Use Extreme Programming as engineering discipline inside the delivery framework, not as a replacement for Supervisor, Harness, Quality Gate, or Human Gate responsibilities.
+Use strict engineering discipline inside the delivery framework, not as a replacement for Supervisor, Harness, Quality Gate, or Human Gate responsibilities. The detailed default rules live in `delivery-disciplines.md`.
 
-XP values apply to Worker Agent execution:
+These values apply to Worker Agent execution:
 
 - **Communication**: make goal, scope, acceptance, and handoff context explicit.
 - **Simplicity**: choose the smallest design and workflow that satisfy safety, evidence, and handoff needs.
 - **Feedback**: define the verification signal before changing implementation.
-- **Test First**: for testable code behavior, prefer a failing test before production changes.
+- **Test First**: for testable behavior changes, write and verify a failing test before production changes.
 - **Courage**: stop or escalate when intent, acceptance, verification, or risk is unclear.
 - **Respect**: protect user intent, existing behavior, repository conventions, and the next maintainer.
 
-For testable code changes, Developer should default to:
+For testable behavior changes, Developer must default to strict Red-Green-Refactor:
 
 ```text
 Red -> Green -> Refactor
 ```
 
-If strict TDD does not fit, record why before changing implementation and define substitute feedback such as build, type check, manual inspection, screenshot, log, review, or generated-output validation.
+If strict TDD does not fit, record a named Human Gate exception before changing implementation and define substitute feedback such as build, type check, manual inspection, screenshot, log, review, or generated-output validation.
+
+Workspace, branch, worktree, commit, merge, and PR lifecycle management are not part of the default Dev Cadence discipline yet. Preserve existing repository policy and user instructions while still recording Harness evidence.
 
 ## Source Priority
 

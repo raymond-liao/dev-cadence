@@ -21,8 +21,9 @@ The user does not need to choose a workflow. Supervisor infers `selected_workflo
 - Classify task before planning.
 - Record `workflow_hint`, `selected_workflow`, and `selection_reason`.
 - Use the smallest workflow that preserves safety, evidence, reviewability, and handoff quality.
+- Apply `delivery-disciplines.md` unless a named Human Gate records an exception.
 - Define the feedback signal before implementation.
-- Prefer Test First / TDD for testable code behavior; record substitute feedback when TDD does not fit.
+- Use strict Red-Green-Refactor for testable behavior changes.
 - Reconcile actual changed files against planned target files before test, review, and acceptance.
 - Use `S2` rules whenever high-risk triggers appear.
 - Use Harness for Worker Agent states.
@@ -63,7 +64,7 @@ Required focus:
 - acceptance criteria;
 - affected files or components;
 - verification plan;
-- test-first path for new behavior when practical;
+- test-first path for new behavior;
 - affected-component verification coverage;
 - regression risk;
 - review decision.
@@ -86,6 +87,7 @@ Required focus:
 - expected behavior;
 - reproduction or characterization before the fix;
 - root cause when knowable;
+- regression test before production changes when feasible;
 - regression verification.
 
 If reproduction is impossible, record the evidence gap and use `partially_verified` or `not_verified`.

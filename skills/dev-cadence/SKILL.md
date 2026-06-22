@@ -1,6 +1,6 @@
 ---
 name: dev-cadence
-description: Install or initialize Dev Cadence repository rules. Use when the user asks to install, initialize, set up, or add repository-level AGENTS.md and .ai workflow rules, policies, gates, and templates for AI-assisted software delivery.
+description: Install or initialize Dev Cadence repository rules. Use when the user asks to install, initialize, set up, or add repository-level AGENTS.md, .ai configuration, overrides, specs, workflow rules, policies, gates, or templates for AI-assisted software delivery.
 ---
 
 # Dev Cadence
@@ -9,9 +9,9 @@ description: Install or initialize Dev Cadence repository rules. Use when the us
 
 Use artifact-first delivery. Chat can clarify intent, but stable decisions, evidence, and acceptance must be written to artifacts under `specs/{task_id}/` or stable rules under `.ai/`.
 
-This Skill defines repo-local collaboration rules and templates. Repository initialization must create an `AGENTS.md` entrypoint so normal software delivery requests automatically use `.ai/` without requiring the user to invoke this Skill by name.
+This Skill defines the thin repo-local contract for Dev Cadence. Repository initialization must create an `AGENTS.md` entrypoint so normal software delivery requests automatically use Dev Cadence without requiring the user to invoke this Skill by name.
 
-Use this Skill as the global installer for the framework, not as the automatic runtime for unrelated repositories. Maintenance operations are available only when the user explicitly invokes this Skill by name. Ordinary delivery work should enter this framework only after the repository has been initialized and its root `AGENTS.md` routes the request to `.ai/control/supervisor.md`.
+Use this Skill as the global installer for the current framework implementation, not as the automatic runtime for unrelated repositories. Maintenance operations are available only when the user explicitly invokes this Skill by name. Ordinary delivery work should enter this framework only after the repository has been initialized and its root `AGENTS.md` routes the request to the Dev Cadence delivery entrypoint.
 
 It is not a platform, CI system, issue tracker, or release automation layer. Preserve the target repository's existing conventions unless they conflict with this Skill's safety rules.
 
@@ -23,15 +23,15 @@ Use update, sync, repair, inspect, diagnose, or maintenance modes only when the 
 
 Do not select this Skill for product implementation requests, framework maintenance requests that do not name this Skill, or general engineering advice. Those prompts should not install or maintain repository rules.
 
-After initialization, ordinary delivery requests should not invoke this Skill. They should be routed by the target repository's root `AGENTS.md` to `.ai/control/supervisor.md`.
+After initialization, ordinary delivery requests should not invoke the installer Skill. They should be routed by the target repository's root `AGENTS.md` to the configured Dev Cadence delivery entrypoint.
 
 ## Quick Start
 
 1. Inspect repository instructions, existing docs, `AGENTS.md`, `.ai/`, and `specs/`.
 2. Determine whether the user is asking to install or initialize the named framework, or whether the user explicitly invoked this Skill for maintenance.
-3. For installation or initialization, apply the Initialization Boundary below, read `references/skill-layout.md`, and generate or update repo-local `AGENTS.md` plus `.ai/` rules and templates.
-4. For explicit Skill-name maintenance, read `references/repository-rule-sync.md`, compare repo-local `AGENTS.md` and `.ai/` rules against the relevant references, preserve local overlays, and report or patch drift.
-5. For explicit delivery-task requests in an already initialized repository, follow the repo-local `AGENTS.md` and `.ai/control/supervisor.md` entrypoint; do not require the user to choose a workflow.
+3. For installation or initialization, apply the Initialization Boundary below, read `references/skill-layout.md`, and generate or update the repo-local Dev Cadence entrypoint and configuration.
+4. For explicit Skill-name maintenance, read `references/repository-rule-sync.md`, preserve local overlays, and report or patch drift.
+5. For explicit delivery-task requests in an already initialized repository, follow the repo-local `AGENTS.md` Dev Cadence entrypoint; do not require the user to choose a workflow.
 6. If the repository is not initialized and the user asks only for ordinary feature, bugfix, review, refactor, research, or incident work, do not initialize this framework unless the user explicitly requests it.
 
 ## Initialization Boundary
@@ -41,7 +41,7 @@ Installation and initialization are repository-level framework operations by def
 Allowed writes:
 
 - root `AGENTS.md`;
-- `.ai/**` framework rules, policies, workflows, agents, and templates;
+- `.ai/config.yaml`, `.ai/local.yaml`, and `.ai/overrides/**`;
 - `.gitignore` only to ignore `.ai/local.yaml`;
 - `specs/.gitkeep` only when an empty `specs/` directory must be represented.
 
@@ -55,27 +55,29 @@ If a user asks only to install, initialize, or add this framework, treat that as
 
 ## Mode Routing
 
-- **Install or initialize a repository**: apply the Initialization Boundary; read `references/skill-layout.md`; create or update `AGENTS.md` plus `.ai/` rules and templates. Do not create task specs or modify product files unless the user asks for a concrete delivery task in the same turn.
-- **Explicit Skill-name maintenance**: when the user invokes `$dev-cadence` or names `dev-cadence`, read `references/repository-rule-sync.md`; update, synchronize, repair, inspect, or diagnose generated repo-local framework rules without touching product code.
-- **Route an explicit delivery task in an initialized repository**: defer to the repo-local `AGENTS.md` and `.ai/control/supervisor.md`; use the Skill references only to fill missing framework guidance.
+- **Install or initialize a repository**: apply the Initialization Boundary; read `references/skill-layout.md`; create or update `AGENTS.md`, `.ai/config.yaml`, `.ai/local.yaml`, `.ai/overrides/**`, and `specs/.gitkeep`. Do not create task specs or modify product files unless the user asks for a concrete delivery task in the same turn.
+- **Explicit Skill-name maintenance**: when the user invokes `$dev-cadence` or names `dev-cadence`, read `references/repository-rule-sync.md`; inspect, synchronize, repair, or diagnose thin-contract config without touching product code.
+- **Route an explicit delivery task in an initialized repository**: defer to the repo-local `AGENTS.md` Dev Cadence entrypoint; use the Skill references only to fill missing framework guidance.
 - **Define or revise agent behavior**: read `references/agent-blueprints.md`.
+- **Define or revise delivery discipline**: read `references/delivery-disciplines.md`.
 - **Verify, review, or accept work**: read `references/quality-gates.md` and `references/human-gates.md`.
 - **Resolve unclear process decisions**: read `references/principles.md`, then the narrow reference file for the current state.
 
-Do not use this Skill as an implicit trigger for ordinary delivery work in repositories that do not contain this framework. The system-level Skill handles installation and maintenance; initialized repositories handle day-to-day execution through their own `AGENTS.md` and `.ai/` files.
+Do not use this Skill as an implicit trigger for ordinary delivery work in repositories that do not contain this framework. The system-level Skill handles installation and maintenance; initialized repositories handle day-to-day execution through their own `AGENTS.md`, `.ai/config.yaml`, `.ai/overrides/**`, `specs/**`, and the configured Dev Cadence delivery entrypoint.
 
 The user does not need to choose a workflow. Supervisor infers `selected_workflow` from the request, records `selection_reason`, and preserves any user-provided workflow preference as `workflow_hint`.
 
-After repository initialization, the user should not need to invoke this Skill by name for normal feature, bugfix, refactor, review, research, or incident requests. The repo-local `AGENTS.md` entrypoint must direct Codex to `.ai/control/supervisor.md`, which then routes the task through `.ai/` policies and workflows.
+After repository initialization, the user should not need to invoke this Skill by name for normal feature, bugfix, refactor, review, research, or incident requests. The repo-local `AGENTS.md` entrypoint must direct Codex to the Dev Cadence delivery entrypoint.
 
 ## Required Practices
 
-- Keep repository initialization separate from delivery work. Initialization creates or updates `AGENTS.md` and `.ai/`; it must not create task specs or change product code unless the user also asks for a concrete delivery task.
+- Keep repository initialization separate from delivery work. Initialization creates or updates the thin repo-local contract; it must not create task specs or change product code unless the user also asks for a concrete delivery task.
 - Keep context to the smallest sufficient set for the current state.
-- Resolve `artifact_language` before writing task artifacts. Use `.ai/local.yaml` when it contains an uncommented supported value, then `.ai/config.yaml`, then default to `en`.
+- Resolve `artifact_language` before writing task artifacts. Use `.ai/local.yaml` when it contains an uncommented supported `dev_cadence.artifact_language` value, then `.ai/config.yaml`, then default to `en`.
 - Infer workflow, but do not infer unclear product intent. If goal, scope, acceptance, reference behavior, or non-goals have multiple reasonable interpretations, enter Human Gate `info_required` before implementation.
 - Record assumptions and open questions separately. Do not convert an unconfirmed assumption into `scope`, `non_goals`, or `acceptance_criteria`.
 - Run a Requirements Readiness Check before planning or implementation. Implementation may start only when expected behavior, reference behavior, scope, non-goals, acceptance criteria, and verification approach are explicit and source-attributed.
+- Apply the built-in Dev Cadence delivery discipline for ordinary delivery work: executable planning, strict Red-Green-Refactor for testable behavior changes, reproduce-before-fix debugging, spec-compliance review before code-quality review, verification before completion claims, and conditional parallel Worker execution only for independent domains.
 - When intent is unclear, perform limited read-only analysis first, then ask for confirmation with candidate interpretations, evidence paths, and a recommended option. Do not ask the user to discover the ambiguity from scratch.
 - Repository evidence can support candidate interpretations, but it cannot clarify user intent or pass G1. When clarification is required, G1 needs a named Human decision that selects or defers the interpretation.
 - Treat any-language wording equivalent to "not as expected", "inconsistent", "same as", "match", "align", "parity", or "fix this issue" as requiring analysis-backed clarification unless the expected behavior and comparison dimension are already explicit.
@@ -119,13 +121,30 @@ Enter `blocked` or a Human Gate before continuing when any hard stop applies:
 - `references/task-classes.md`: `S0`, `S1`, `S2`, `research-spike`, and `incident` classification.
 - `references/agent-blueprints.md`: Planner, Architect, Developer, Tester, Reviewer, and Researcher contracts.
 - `references/workflows.md`: feature development, bugfix, code review, refactor, research spike, incident fix, and release placeholder.
+- `references/delivery-disciplines.md`: routing entrypoint for built-in planning, implementation, execution, debugging, review, verification, and authoring disciplines.
+- `references/intent-and-design-discipline.md`: intent clarification, collaborative exploration, alternatives, design validation, and requirements readiness.
+- `references/visual-companion.md`: optional browser-based visual alignment for mockups, diagrams, and visual comparisons, with text-only fallback.
+- `references/planning-discipline.md`: executable task planning and plan review.
+- `references/implementation-discipline.md`: strict Red-Green-Refactor for testable behavior changes.
+- `references/testing-anti-patterns.md`: test and mock pitfalls to avoid during implementation.
+- `references/execution-orchestration.md`: inline, sequential Worker, and parallel Worker execution rules.
+- `references/debugging-discipline.md`: reproduce-before-fix debugging workflow.
+- `references/root-cause-tracing.md`: trace bad values or symptoms to their origin.
+- `references/condition-based-waiting.md`: replace arbitrary sleeps with condition-based waits.
+- `references/defense-in-depth.md`: validate unsafe state at every relevant boundary.
+- `references/review-discipline.md`: spec-compliance review before code-quality review.
+- `references/verification-discipline.md`: evidence requirements before claiming fixed, passing, approved, done, or complete.
+- `references/authoring-discipline.md`: Dev Cadence skill, reference, template, adapter, and policy authoring discipline.
+- `references/skill-pressure-testing.md`: pressure-testing method for discipline-enforcing Skill changes.
 - `references/context-pack.md`: Context Pack schema, source priority, and conflict rules.
 - `references/harness.md`: Harness Run Context, evidence capture, execution report, and permission decisions.
 - `references/quality-gates.md`: G1-G6 quality gates and verification status semantics.
 - `references/human-gates.md`: approval, review, information, and notification gate contracts.
 - `references/spec-templates.md`: task artifact templates.
-- `references/skill-layout.md`: Skill package structure and target repo-local `AGENTS.md`, `.ai/`, and `specs/` layout.
-- `references/repository-rule-sync.md`: explicit maintenance, drift detection, metadata, local overlay preservation, and sync/update reporting.
+- `references/skill-layout.md`: target Plugin package structure, thin repo-local contract, and `specs/` layout.
+- `references/repository-rule-sync.md`: explicit maintenance, drift detection, local overlay preservation, and sync/update reporting.
+- `templates/prompts/`: reusable prompt templates for spec document review, plan document review, implementation, spec-compliance review, code-quality review, and general code review.
+- `scripts/visual-companion/`: optional local browser companion server for visual clarification during intent and design work.
 
 ## Task ID and Run ID
 
@@ -144,7 +163,7 @@ Preferred task location:
 specs/{task_id}/
 ```
 
-If the target repository already has an approved task/spec convention, adapt to it and record the mapping in `00-brief.md` or `.ai/control/supervisor.md`.
+If the target repository already has an approved task/spec convention, adapt to it and record the mapping in `00-brief.md` or `.ai/overrides/**`.
 
 Artifact language controls prose in task artifacts, reports, and free-form notes. Supported values are:
 

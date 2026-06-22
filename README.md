@@ -496,7 +496,7 @@ incident-fix
 
 ### 6.5 任务分级与工作流强度
 
-目标版 Skill 应支持完整角色体系，但不要求每个任务都走同样重量的流程。
+目标版 Plugin 应支持完整角色体系，但不要求每个任务都走同样重量的流程。
 
 任务应先由 Supervisor 分类，再决定需要哪些 Agent、产物和 Human Gate。
 
@@ -508,7 +508,7 @@ incident-fix
 | `research-spike` | 技术选型、未知风险探索、方案比较 | Researcher、Architect 按需 | research_report、options comparison、recommendation、open questions | decision review |
 | `incident` | 紧急生产修复或高压故障恢复 | Supervisor、Developer、Tester/Reviewer 按需 | triage、minimal patch、smoke test、emergency approval、post-incident backfill | emergency approval、post-incident acceptance |
 
-这不是把目标版 Skill 拆成简化版，而是让同一个目标版 Skill 根据风险自动调整流程强度。
+这不是把目标版 Plugin 拆成简化版，而是让同一个目标版 Plugin 根据风险自动调整流程强度。
 
 核心规则：
 
@@ -766,34 +766,8 @@ AGENTS.md
 .ai/
   config.yaml
   local.yaml
-  control/
-    supervisor.md
-  agents/
-    planner.md
-    architect.md
-    developer.md
-    tester.md
-    reviewer.md
-    researcher.md   # optional
-  workflows/
-    feature-dev.md
-    bugfix.md
-    code-review.md
-    refactor.md
-    research-spike.md
-    release.md
-    incident-fix.md
-  policies/
-    task-classes.md
-    quality-gates.md
-    permission-policy.md
-    context-policy.md
-    escalation-policy.md
-    harness-policy.md
-  templates/
-    context-pack.md
-    run-context.md
-    execution-report.md
+  overrides/
+    .gitkeep
 
 specs/
   feature-x/
@@ -818,11 +792,20 @@ specs/
       ADR-001.md
 ```
 
-`.ai/config.yaml` 保存团队默认配置：
+这是目标版 thin repo-local contract。通用工作流、Agent blueprint、gate、Harness 和模板由 Dev Cadence Plugin 持有；业务仓库只保存入口、配置、项目覆盖规则和任务证据。
+
+`.ai/config.yaml` 保存项目默认配置：
 
 ```yaml
-artifact_language: en
+dev_cadence:
+  artifact_language: en
+  specs_dir: specs
+  implementation_discipline: default
+  verification_discipline: default
+  review_profile: normal
 ```
+
+这里的 `default` 表示 Dev Cadence 内置交付纪律，不依赖外部 Skill。
 
 `.ai/local.yaml` 保存用户本地偏好，初始化时默认生成注释示例：
 
@@ -832,10 +815,11 @@ artifact_language: en
 # Supported values:
 # - en: English
 # - zh: Chinese, Simplified Chinese by default
-# artifact_language: en
+# dev_cadence:
+#   artifact_language: en
 ```
 
-`artifact_language` 支持 `en` 和 `zh`。它只控制 spec、测试报告、review 报告等任务产物中的自然语言正文；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 仍保持英文。如果用户取消注释 `.ai/local.yaml` 中的 `artifact_language`，它优先于 `.ai/config.yaml`。初始化或更新时应把 `.ai/local.yaml` 加入 `.gitignore`。
+`artifact_language` 支持 `en` 和 `zh`。它只控制 spec、测试报告、review 报告等任务产物中的自然语言正文；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 仍保持英文。如果用户取消注释 `.ai/local.yaml` 中的 `dev_cadence.artifact_language`，它优先于 `.ai/config.yaml`。初始化或更新时应把 `.ai/local.yaml` 加入 `.gitignore`。
 
 ### 10.2 核心文档
 
@@ -1069,139 +1053,239 @@ Integration: MCP / A2A
 Governance: Entra ID / RBAC / audit
 ```
 
-## 13. 交付形态：团队 Skill
+## 13. 交付形态：Dev Cadence Plugin
 
 本框架的最终产出不应只是一个说明文档，也不应一开始就做成完整平台。
 
-推荐将可共享产物设计为一个团队 Skill：
+推荐将可共享产物设计为：
 
 ```text
-AI-Native Software Delivery Framework Skill
+Dev Cadence Plugin
+  + 少量 user-facing skills
+  + plugin-owned references/templates/adapters
+  + thin repo-local contract
 ```
 
-这个 Skill 的作用是把本方案中的 Agent 角色、工作流、上下文规则、质量门禁和 spec 模板，沉淀为团队成员可以在不同代码仓库中复用的 AI 协作规范。
+这个 Plugin 的作用是把本方案中的 Agent 角色、工作流、上下文规则、质量门禁、Harness 契约和 artifact 模板，沉淀为团队成员可以在不同代码仓库中复用的 AI 协作规范。
 
-### 13.1 为什么交付为 Skill
+关键设计是：
 
-团队 Skill 适合承载本框架的原因：
+```text
+Dev Cadence Plugin
+  -> Plugin 持有通用规则、模板、adapter
+  -> 目标仓库只保留薄入口、项目配置、overrides 和任务证据
+```
+
+`specs/{task_id}/` 仍然是任务事实、执行证据和验收记录的 durable source of truth。变化的是：通用框架规则不再默认复制到每个业务仓库。
+
+### 13.1 为什么交付为 Plugin
+
+Plugin 适合承载本框架的原因：
 
 - 它可以被团队成员直接安装和共享。
-- 它可以把研发协作规则变成 AI 可执行的工作说明。
-- 它可以在不同项目中生成一致的 `.ai/` 和 `specs/` 结构。
+- 它可以包含多个 Skill、references、templates、scripts 和 adapter。
+- 它可以把通用流程规则放在一个可升级的位置，而不是复制进每个仓库。
+- 它可以让不同项目只保存本项目特有配置和证据。
+- 它可以内置默认交付纪律，同时保留未来替换 Worker 执行纪律的 adapter 扩展点。
 - 它不绑定某个具体业务系统或技术栈。
 - 它允许框架先以轻量方式落地，再逐步演进为平台。
 
-也就是说，Skill 是本框架从“理念”进入“团队日常使用”的第一种交付形态。
+也就是说，Plugin 是本框架从“理念”进入“团队日常使用”的第一种交付形态；平台化应在真实任务验证后再推进。
 
-### 13.2 Skill 的职责边界
+### 13.2 Skill 拆分原则
 
-这个 Skill 负责：
+不要把每个内部流程状态都拆成 Codex Skill。
 
-- 初始化项目内的 AI 协作目录结构。
-- 生成 Agent Blueprint 模板。
-- 生成标准 workflow 模板。
-- 生成 spec / ADR / review / test report 模板。
-- 生成 Harness policy、run context 和 execution report 模板。
-- 指导 Supervisor 如何调度 Planner、Architect、Developer、Tester、Reviewer 以及可选的 Researcher。
-- 定义质量门禁、上下文包和人工确认点。
-
-这个 Skill 不负责：
-
-- 直接替代项目管理系统。
-- 直接实现企业级 Agent 编排平台。
-- 直接替代 CI、代码平台或发布系统。
-- 为某个具体技术栈生成固定工程结构。
-- 绕过人的需求确认、架构确认、权限确认和 merge 决策。
-
-### 13.3 Skill 自身结构
-
-推荐 Skill 自身采用以下结构：
+不推荐：
 
 ```text
-skills/dev-cadence/
-  SKILL.md
-  agents/
-    openai.yaml
+dev-cadence-requirements-gate
+dev-cadence-planning
+dev-cadence-harness-run
+dev-cadence-test-verification
+dev-cadence-review
+dev-cadence-human-gate
+```
+
+这些是 Supervisor 状态和框架模块，不是用户直接请求的能力。拆太细会导致触发噪声、上下文碎片、版本兼容负担和 gate 语义分散。
+
+推荐原则：
+
+```text
+Skill 按用户意图拆。
+Reference 按流程环节拆。
+Template 按产物类型拆。
+Adapter 按可替换执行纪律拆。
+```
+
+### 13.3 推荐 Skill 集合
+
+推荐 Plugin 先提供少量 user-facing skills：
+
+```text
+dev-cadence-init
+  初始化仓库薄入口、项目配置和 artifact 目录。
+
+dev-cadence-deliver
+  日常 feature、bugfix、refactor、review、research-spike、incident 的总入口。
+
+dev-cadence-maintain
+  显式 inspect、sync、repair、diagnose 或升级 repo-local 配置。
+
+dev-cadence-authoring
+  可选。维护 Dev Cadence 框架自身和 Plugin 包。
+```
+
+`dev-cadence-deliver` 是日常开发主入口。它内部执行 Supervisor 状态机、加载 references/templates、创建 task artifacts、控制 Quality Gate 和 Human Gate，并在 Worker 阶段通过 Harness 运行具体 Agent 或 adapter。
+
+### 13.4 Plugin 自身结构
+
+推荐 Plugin 自身采用以下结构：
+
+```text
+dev-cadence-plugin/
+  skills/
+    dev-cadence-init/
+      SKILL.md
+      agents/openai.yaml
+    dev-cadence-deliver/
+      SKILL.md
+      agents/openai.yaml
+    dev-cadence-maintain/
+      SKILL.md
+      agents/openai.yaml
+    dev-cadence-authoring/
+      SKILL.md
+      agents/openai.yaml
   references/
     principles.md
     supervisor-state-machine.md
     task-classes.md
     agent-blueprints.md
     workflows.md
+    delivery-disciplines.md
+    intent-and-design-discipline.md
+    visual-companion.md
+    planning-discipline.md
+    implementation-discipline.md
+    testing-anti-patterns.md
+    execution-orchestration.md
+    debugging-discipline.md
+    root-cause-tracing.md
+    condition-based-waiting.md
+    defense-in-depth.md
+    review-discipline.md
+    verification-discipline.md
+    authoring-discipline.md
+    skill-pressure-testing.md
     context-pack.md
     harness.md
     quality-gates.md
     human-gates.md
-    spec-templates.md
+    adapters.md
     skill-layout.md
+  templates/
+    spec/
+      00-brief.md
+      01-requirements.md
+      02-design.md
+      03-tasks.md
+      04-test-plan.md
+      05-implementation.md
+      06-test-report.md
+      07-review-report.md
+      08-acceptance.md
+    runs/
+      run-context.md
+      execution-report.md
+      tool-log.md
+      test-log.md
+      diff-summary.md
+      permission-decisions.md
+    prompts/
+      spec-document-reviewer.md
+      plan-document-reviewer.md
+      implementer.md
+      spec-compliance-reviewer.md
+      code-quality-reviewer.md
+      code-reviewer.md
+  scripts/
+    visual-companion/
+      start-server.sh
+      stop-server.sh
+      server.cjs
+      helper.js
+      frame-template.html
 ```
 
 其中：
 
 | 文件 | 作用 |
 |---|---|
-| `SKILL.md` | 定义 Skill 何时触发、如何初始化框架、如何进行工作流判定与路由 |
-| `agents/openai.yaml` | 定义 Skill 在 OpenAI/Codex 相关界面中的展示元数据 |
+| `skills/*/SKILL.md` | 定义用户意图入口和该入口需要加载哪些 references/templates |
 | `principles.md` | 记录本框架的核心原则和不可突破的边界 |
 | `supervisor-state-machine.md` | 记录 Supervisor 状态机、状态流转、跳过状态和 blocked 规则 |
-| `agent-blueprints.md` | 记录各类 Agent Blueprint 的模板和职责边界 |
+| `agent-blueprints.md` | 记录各类 Worker Agent 的职责边界 |
 | `task-classes.md` | 记录 S0/S1/S2、research-spike、incident 等任务分级规则 |
 | `workflows.md` | 记录 feature-dev、bugfix、refactor、code-review、incident-fix 等工作流 |
+| `delivery-disciplines.md` | 内置交付纪律的路由入口，按 workflow state 指向具体 discipline reference |
+| `*-discipline.md`、`root-cause-tracing.md` 等细分 reference | 记录已吸收的意图澄清、planning、TDD、debugging、review、verification、authoring 等具体执行纪律 |
+| `visual-companion.md` | 记录可选浏览器视觉对齐能力、环境要求、降级策略和 Harness evidence |
 | `context-pack.md` | 记录 Agent 最小上下文包格式、来源优先级和冲突规则 |
 | `harness.md` | 记录 Harness 职责、run context、工具策略和执行报告格式 |
 | `quality-gates.md` | 记录质量门禁、循环限制、人工升级规则 |
 | `human-gates.md` | 记录 approval_required、review_required、info_required、notify_only 的触发规则 |
-| `spec-templates.md` | 记录 requirements、design、tasks、test report、review report 模板 |
-| `skill-layout.md` | 记录 Skill 包结构和目标仓库 `AGENTS.md`、`.ai/`、`specs/` 落地结构 |
+| `adapters.md` | 记录可替换执行纪律如何接入 Worker 阶段 |
+| `templates/` | 提供任务 artifact、Harness evidence 和 Worker/reviewer prompt 模板 |
+| `scripts/visual-companion/` | 提供可选本地浏览器 companion，用于 mockup、diagram 和视觉方案对比 |
+| `skill-layout.md` | 记录 Plugin 包结构和薄仓库契约 |
 
-Skill 的设计重点是渐进式加载：`SKILL.md` 保持精简，只放工作流入口和路由规则；详细模板和规范放在 `references/` 中，只有需要时再读取。
+Plugin 的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；Worker 调度和 review 使用 `templates/prompts/` 中的模板。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
 
-系统层级 Skill 的触发边界必须收窄：隐式触发只覆盖仓库级 AI 交付规则的初始化或安装，用户初始化时不需要写 `$dev-cadence`。更新、同步、修复、检查、诊断等维护动作必须要求用户明确点名 `$dev-cadence` 或 `dev-cadence`。普通开发请求只有在仓库已经通过 `AGENTS.md` 和 `.ai/` 初始化后，才由仓库本地规则自动进入流程。
+### 13.5 目标仓库薄契约
 
-仓库本地规则必须区分 workflow 推断和产品意图推断：Agent 可以自动判定 workflow，但不能猜测不明确的产品意图。只要目标、范围、非目标、参考行为或验收标准存在多种合理解释，就必须进入 `info_required` Human Gate，在实现前向用户澄清。未经确认的假设只能记录在 `assumptions` 或 `open_questions` 中，不能写成 `scope`、`non_goals` 或 `acceptance_criteria`。
-
-实现前必须有 Requirements Readiness Check：预期行为、参考行为、范围、非目标、验收标准和验证方式都要明确且可追溯。用户说“不符合预期”“不一致”“和某端一样”“match/align/parity”或“修复这个问题”时，如果没有明确比较维度和预期结果，必须先问用户；不能通过读代码自行推断。用户否定前一次结果时，之前的 G1 失效，必须回到 requirements。
-
-但澄清不能变成把问题丢回给用户。Agent 应先做有限的只读分析，检查相关代码、文档或既有 spec，提出 2-4 个候选解释、证据路径和推荐选项，再请用户确认。代码证据只能支持候选解释，不能替代用户确认；当需要澄清时，G1 必须记录 named Human 的选择或显式延期，不能记录为 repository evidence、code inspection、Supervisor 或 Worker Agent。澄清阶段不得修改产品代码。
-
-### 13.4 Skill 在代码仓库中生成的结构
-
-当团队在某个代码仓库中使用该 Skill 时，推荐生成以下结构：
+当团队在某个代码仓库中启用 Dev Cadence 时，默认只生成薄契约：
 
 ```text
+AGENTS.md
+.gitignore
+
 .ai/
   config.yaml
   local.yaml
-  control/
-    supervisor.md
-  agents/
-    planner.md
-    architect.md
-    developer.md
-    tester.md
-    reviewer.md
-    researcher.md
-  workflows/
-    feature-dev.md
-    bugfix.md
-    refactor.md
-    code-review.md
-    research-spike.md
-    release.md
-    incident-fix.md
-  policies/
-    task-classes.md
-    human-gates.md
-    quality-gates.md
-    permission-policy.md
-    context-policy.md
-    escalation-policy.md
-    harness-policy.md
-  templates/
-    context-pack.md
-    run-context.md
-    execution-report.md
+  overrides/
+    .gitkeep
 
+specs/
+  .gitkeep
+```
+
+`AGENTS.md` 是仓库级自动入口，用于让 Codex 在普通交付请求中默认使用 Dev Cadence Plugin，而不是复制完整框架。
+
+`.ai/config.yaml` 保存项目级默认配置，例如：
+
+```yaml
+dev_cadence:
+  artifact_language: en
+  specs_dir: specs
+  implementation_discipline: default
+  verification_discipline: default
+  review_profile: normal
+```
+
+`.ai/local.yaml` 保存用户本地偏好，由 `.gitignore` 忽略。
+
+`.ai/overrides/` 只保存本仓库特有或更严格的规则，不保存通用框架默认规则。
+
+如果使用持久化 visual companion session，目标仓库还应忽略：
+
+```text
+.dev-cadence/visual-companion/
+```
+
+`specs/` 目录用于保存每个任务的运行产物：
+
+```text
 specs/
   {task_id}/
     00-brief.md
@@ -1225,164 +1309,86 @@ specs/
       ADR-001.md
 ```
 
-`AGENTS.md` 是仓库级自动入口，用于让 Codex 在普通开发请求中默认读取 `.ai/control/supervisor.md`。
+Agent 之间不依赖聊天记录交接，而是通过 `specs/{task_id}/` 下的结构化产物交接。`specs/{task_id}/runs/` 记录每次 Harness 执行用了什么上下文、允许了什么工具、执行了什么命令、产生了什么 diff、测试结果是什么、是否触发过权限审批。
 
-`.ai/` 目录用于保存长期稳定的协作规则和团队默认配置。
+### 13.6 Runtime Authority
 
-`specs/` 目录用于保存每个任务的运行产物。
+运行时规则优先级应分层：
 
-`.ai/config.yaml` 默认包含 `artifact_language: en`。`.ai/local.yaml` 默认包含注释掉的本地偏好示例，并由 `.gitignore` 忽略。如果用户希望后续任务产物正文使用中文，可以取消注释并改为 `artifact_language: zh`。该配置只影响自然语言正文，不改变 artifact 路径、结构化字段、状态枚举或门禁 ID。
+1. 当前用户请求和显式仓库指令。
+2. 仓库本地 `AGENTS.md`、`.ai/config.yaml`、`.ai/overrides/**`。
+3. 当前任务 artifacts：`specs/{task_id}/**`。
+4. Dev Cadence Plugin 的 references、templates、内置交付纪律和 adapter。
+5. 被显式配置的外部 adapter。
 
-Agent 之间不依赖聊天记录交接，而是通过 `specs/{task_id}/` 下的结构化产物交接。
+Plugin 提供默认流程规则。Repo-local overlays 可以增加更严格或更项目化的约束，但不能削弱 named Human acceptance、证据要求、权限门禁、Requirements Readiness Check 或 Harness evidence。
 
-`specs/{task_id}/runs/` 用于保存每次 Harness 执行记录。
+### 13.7 内置交付纪律与 Adapter 模型
 
-它记录一次 Agent 运行时用了什么上下文、允许了什么工具、执行了什么命令、产生了什么 diff、测试结果是什么、是否触发过权限审批。
+Dev Cadence 默认内置一套严格交付纪律。Adapter 是未来替换某个 Worker 执行技术的扩展点，不是默认纪律的来源。
 
-### 13.5 Skill 的使用方式
+默认 `.ai/config.yaml` 配置：
 
-推荐 Skill 支持三类使用方式，但系统层级 Skill 的隐式触发只负责框架初始化或安装；更新、同步、修复、检查、诊断等维护动作必须显式点名 Skill。日常使用不应要求用户每次显式输入 Skill 名称，而应由已初始化仓库中的 `AGENTS.md` 自动路由。
-
-初始化或安装不要求用户点名 Skill，只要意图是设置仓库级 AI 交付规则即可。更新、同步、修复、检查、诊断等维护动作必须显式点名 Skill。初始化完成后的普通任务不再点名 Skill。这样系统层 Skill 不会因为普通产品开发请求而误触发。
-
-初始化、同步、修复或诊断本框架时，Skill 本身必须默认限制写入范围：只允许写入根目录 `AGENTS.md`、`.gitignore` 中的 `.ai/local.yaml` 忽略项、`.ai/**`，以及必要时的 `specs/.gitkeep`。除非用户在同一轮明确要求执行具体交付任务，否则不得修改产品代码、测试、迁移、构建脚本、部署文件、应用配置，也不得创建 `specs/{task_id}/` 任务目录。
-
-#### 初始化项目
-
-用于第一次在仓库中引入 AI-Native 软件交付协作框架。
-
-输入：
-
-```text
-project_type:
-team_size:
-tech_stack:
-preferred_workflows:
-risk_level:
+```yaml
+dev_cadence:
+  implementation_discipline: default
+  verification_discipline: default
+  review_profile: normal
 ```
 
-输出：
+`default` 表示 Dev Cadence 自己的内置规则：
+
+- 实现前澄清意图、范围、非目标和验收标准。
+- Planning 必须拆成可执行小任务，包含具体文件、行为、验证命令和预期结果。
+- Testable behavior changes 默认执行严格 Red-Green-Refactor。
+- Bugfix 和 incident 先复现或刻画问题，再修复。
+- Review 先检查 spec compliance，再检查 code quality。
+- Completion claim 之前必须有验证证据。
+- 只有在多个问题域彼此独立时才并行调度 Worker。
+- 维护 Dev Cadence 自身 Skill 或 references 时，使用面向 Skill 行为的验证纪律。
+
+内置规则不是对外部 Skill 的引用，而是 Dev Cadence 自己持有的 reference、prompt template 和 optional scripts。当前默认 discipline 的加载入口是 `delivery-disciplines.md`，它会按状态加载 `intent-and-design-discipline.md`、`visual-companion.md`、`planning-discipline.md`、`implementation-discipline.md`、`debugging-discipline.md`、`review-discipline.md`、`verification-discipline.md` 和 `authoring-discipline.md` 等细分规则。
+
+日常实现阶段的默认路径是：
 
 ```text
-AGENTS.md
-.ai/
-specs/
+dev-cadence-deliver
+  ↓
+Supervisor 确认 G1/G2/G3 已满足
+  ↓
+Harness 创建 Developer run context
+  ↓
+Developer 阶段执行 Red-Green-Refactor
+  ↓
+记录 failing-test evidence、implementation diff、passing-test evidence、refactor evidence
+  ↓
+回到 Dev Cadence 的 test/review/acceptance gates
 ```
 
-其中 `AGENTS.md` 必须作为自动入口：普通 feature、bugfix、refactor、review、research 或 incident 请求，应自动进入 `.ai/control/supervisor.md`，再由 Supervisor 判定 `selected_workflow`。
-
-如果仓库已有 `AGENTS.md`，初始化过程应保留原有项目指令，只追加或合并 AI delivery workflow 入口。
-
-#### 创建任务工作区
-
-用于为一个具体需求、缺陷或重构任务创建 spec 工作区。初始化完成后，这一步应由仓库级 `AGENTS.md` 和 `.ai/control/supervisor.md` 自动触发，而不是要求用户手动指定 Skill。
-
-输入：
+也就是说：
 
 ```text
-task_id:
-workflow_hint:
-selected_workflow:
-selection_reason:
-user_goal:
-constraints:
+Dev Cadence 管“什么时候做什么、证据放哪里、谁能批准”。
+内置交付纪律管“默认应该怎么做”。
+Adapter 只在显式配置时替换某个 Worker 阶段的执行技术。
 ```
 
-输出：
+Adapter 不能覆盖最终 Human Gate、Quality Gate、Harness evidence、权限审批、Requirements Readiness Check 和 scope reconciliation。
 
-```text
-specs/{task_id}/00-brief.md
-specs/{task_id}/01-requirements.md
-specs/{task_id}/03-tasks.md
-```
+### 13.8 从 Plugin 到平台
 
-#### 执行工作流
-
-用于根据任务类型启动对应的 Agent 协作流程。
-
-典型流程：
-
-```text
-Human
-  ↓
-Supervisor routes selected_workflow and reads .ai/workflows/{selected_workflow}.md
-  ↓
-Supervisor creates context pack
-  ↓
-Supervisor creates harness run context
-  ↓
-Harness invokes role Agent by Blueprint
-  ↓
-Agent writes required artifact
-  ↓
-Harness writes execution report
-  ↓
-Supervisor checks gate
-  ↓
-Next stage or human escalation
-```
-
-Supervisor 发起一次 Agent 执行时，只传递参数，不转述、不简化、不重写对方 Blueprint。
-
-实际执行由 Harness 根据 run context 装载 Blueprint、注入 Context Pack、绑定工具并记录 execution report。
-
-标准调用形式：
-
-```text
-Please read `.ai/agents/developer.md` and execute strictly according to that Blueprint.
-
-Parameters:
-- task_id:
-- spec_path:
-- workflow_hint:
-- selected_workflow:
-- selection_reason:
-- target_files:
-- constraints:
-- run_context_path:
-```
-
-### 13.6 Skill 的版本化
-
-团队 Skill 应该像代码一样版本化。
-
-建议版本化内容包括：
-
-- Agent Blueprint
-- workflow 定义
-- spec 模板
-- harness policy
-- run context 模板
-- execution report 模板
-- task class 规则
-- human gate 规则
-- quality gate 规则
-- permission policy
-- context policy
-- escalation policy
-
-每次框架规则调整，都应该能回答：
-
-- 哪个规则变了？
-- 为什么变？
-- 影响哪些工作流？
-- 是否需要更新历史任务模板？
-- 是否需要增加新的质量回归样例？
-
-### 13.7 从 Skill 到平台
-
-Skill 是主要交付形态，但不是最终平台形态的全部。
+Plugin 是主要交付形态，但不是最终平台形态的全部。
 
 推荐演进路径：
 
 ```text
 README 方案
   ↓
-Team Skill
+Dev Cadence Plugin
   ↓
-Repo-local .ai/ + specs
+Thin repo-local contract + specs
   ↓
-Repo-local Harness
+Protocol Harness
   ↓
 Workflow Automation
   ↓
@@ -1391,37 +1397,35 @@ Agent Orchestration Platform
 Enterprise Control Plane
 ```
 
-在平台化之前，先通过 Skill 固化协作规范，可以避免过早工程化。
-
-当多个团队、多个仓库、多个 Agent 工作流都稳定后，再把高频、稳定、可度量的部分下沉到编排平台中。
+在平台化之前，先通过 Plugin 固化协作规范，可以避免过早工程化。
 
 平台化准入条件：
 
-- 目标版 Skill 已在一批真实任务中跑通，覆盖 feature-dev、bugfix、code-review、refactor 和 incident-fix 中的主要路径。
+- Dev Cadence Plugin 已在一批真实任务中跑通，覆盖 feature-dev、bugfix、code-review、refactor 和 incident-fix 中的主要路径。
 - 任务分级、Human Gate、Quality Gate 和 Harness execution report 的规则变化已经趋稳。
+- 默认交付纪律已经在真实任务中稳定运行，且 adapter 模型不会破坏治理边界。
 - 关键指标可以记录，包括 cycle time、test evidence completeness、fix loop count、defect escape、human intervention frequency、workflow friction。
 - 高风险权限、密钥、数据库、CI、发布等操作已有明确审批和审计规则。
-- 团队确认 repo-local Skill 的流程收益大于流程负担。
+- 团队确认流程收益大于流程负担。
 - 平台能力来自稳定重复的流程需求，而不是为了提前工程化而工程化。
 
-## 14. 目标版 Skill 方案
+## 14. 目标版 Plugin 方案
 
 ### 14.1 目标
 
-本方案直接面向目标版 Skill 设计，不再把 Skill 拆成单独的试验版和最终版。
+目标版 Plugin 不等于完整平台。它应完整表达本框架的核心职责分离：
 
-目标版 Skill 不等于完整平台。它仍然是 repo-local 的团队协作能力，但应完整表达本框架的核心职责分离：
+- Supervisor 是否能控制状态、分级、workflow、gate 和升级。
+- Harness 是否能约束上下文、工具、权限和证据采集。
+- Worker Agents 是否能通过 artifacts 协作。
+- Developer、Tester、Reviewer 是否能形成有效质量闭环。
+- Human Gate 是否能控制需求、风险、权限和最终验收。
+- Quality Gate 是否能减少错误交付。
+- Adapter 是否能替换 Worker 执行纪律而不破坏治理边界。
 
-- Agent 是否能通过 spec 协作
-- Architect 是否能约束关键设计决策
-- Developer、Tester、Reviewer 是否能形成有效质量闭环
-- Harness 是否能稳定约束上下文、工具、权限和证据采集
-- Human Gate 是否能控制风险
-- 质量门禁是否能减少错误交付
+### 14.2 目标版角色
 
-### 14.2 目标版 Agent
-
-目标版 Skill 默认包含 5 个核心 Worker Agent：
+目标版 Plugin 默认支持 5 个核心 Worker Agent：
 
 ```text
 Planner
@@ -1431,21 +1435,19 @@ Tester
 Reviewer
 ```
 
-Supervisor 不是 Worker Agent，而是 Skill 内部的流程控制逻辑。
+Supervisor 不是 Worker Agent，而是 `dev-cadence-deliver` 内部的流程控制逻辑。
 
-Harness 也不是 Agent，不参与需求、设计、实现或 Review 判断。
-
-目标版 Skill 中 Harness 是执行边界：
+Harness 也不是 Agent，不参与需求、设计、实现或 Review 判断。它是执行边界：
 
 ```text
-Context Pack + Run Context + Tool Policy + Execution Report
+Context Pack + Run Context + Tool Policy + Permission Policy + Execution Evidence
 ```
 
 Researcher 是可选 Agent，只在 `research-spike` 或技术选型场景启用。
 
 ### 14.3 目标版工作流
 
-目标版 Skill 应支持以下工作流：
+目标版 Plugin 应支持以下工作流：
 
 ```text
 feature-dev
@@ -1457,23 +1459,26 @@ release
 incident-fix
 ```
 
-### 14.4 目标版文档产物
+用户不需要选择工作流。Supervisor 根据请求推断 `selected_workflow`，记录 `selection_reason`，并保留用户表达的 `workflow_hint`。
 
-目标版 Skill 应沉淀以下业务产物：
+### 14.4 目标版 artifact
+
+目标版 Plugin 应沉淀以下任务产物：
 
 ```text
-requirements.md
-design.md
-tasks.md
-implementation.md
-test_plan.md
-test_report.md
-review_report.md
-acceptance.md
+00-brief.md
+01-requirements.md
+02-design.md
+03-tasks.md
+04-test-plan.md
+05-implementation.md
+06-test-report.md
+07-review-report.md
+08-acceptance.md
 decisions/ADR-001.md
 ```
 
-同时每次 Agent 执行必须沉淀 Harness 执行产物：
+同时每次 Worker 或 adapter 执行必须沉淀 Harness 执行产物：
 
 ```text
 runs/{run_id}/run-context.md
@@ -1484,31 +1489,33 @@ runs/{run_id}/diff-summary.md
 runs/{run_id}/permission-decisions.md
 ```
 
+这些 artifact 存在于目标仓库的 `specs/{task_id}/` 下，跟随代码版本演进。
+
 ### 14.5 质量闭环
 
-目标版 Skill 的质量闭环为：
+目标版 Plugin 的质量闭环为：
 
 ```text
-Developer → Tester → Reviewer → Fix → Tester → Reviewer
+Developer -> Tester -> Reviewer -> Fix -> Tester -> Reviewer
 ```
 
 最多 3 次，失败后升级给人。
 
-每一轮 Developer、Tester 或 Reviewer 执行都必须形成一份 Harness execution report。
+每一轮 Developer、Tester、Reviewer 或外部 adapter 执行都必须形成一份 Harness execution report。缺少 evidence 时，状态应进入 `blocked` 或 Human Gate，而不是进入 acceptance。
 
 ### 14.6 Harness
 
-目标版 Skill 中的 Harness 不需要做成独立平台，但必须定义 repo-local 运行契约。
+目标版 Plugin 中的 Harness 可以先是协议化 Harness，不需要一开始做成独立运行时平台。
 
 必需能力：
 
-- 为每次 Agent 执行生成 `run_id`
-- 记录 `blueprint_path` 和 `context_pack_path`
-- 限制可读写路径
-- 定义允许和禁止的工具
-- 对高风险工具调用触发人工审批
-- 记录命令、日志、diff、测试结果
-- 输出 `execution_report.md`
+- 为每次 Worker 或 adapter 执行生成 `run_id`。
+- 记录 Context Pack 和 Run Context。
+- 限制可读写路径。
+- 定义允许和禁止的工具。
+- 对高风险工具调用触发人工审批。
+- 记录命令、日志、diff、测试结果。
+- 输出 execution report。
 
 Harness 产物：
 
@@ -1522,7 +1529,17 @@ specs/{task_id}/runs/{run_id}/
   permission-decisions.md
 ```
 
-质量门禁不应只读取 Agent 自述，还必须读取 Harness execution report 和对应 evidence 文件。缺少 evidence 时，状态应进入 `blocked` 或 Human Gate，而不是进入 acceptance。
+质量门禁不应只读取 Agent 自述，还必须读取 Harness execution report 和对应 evidence 文件。
+
+### 14.7 实施切片
+
+后续实现按目标架构直接推进：
+
+1. 将 Plugin 化目标和 thin repo-local contract 固化到方案文档和 Skill references。
+2. 实现 `dev-cadence-init` 的薄初始化，只生成 `AGENTS.md`、`.ai/config.yaml`、`.ai/local.yaml`、`.ai/overrides/` 和 `specs/`。
+3. 实现 `dev-cadence-deliver` 的 plugin-owned runtime，由它加载 references、templates 和 adapters。
+4. 增加并验证 `delivery-disciplines.md`、细分 discipline references、Worker/reviewer prompt templates 和 `adapters.md`，先跑通内置默认交付纪律，再决定是否接入外部 adapter。
+5. 更新维护流程，让 inspect/sync/repair 只面向 thin repo-local contract。
 
 ## 15. 企业级演进路线图
 
@@ -1602,17 +1619,18 @@ specs/{task_id}/runs/{run_id}/
 - prompt / workflow A/B testing
 - 自动化质量分析
 
-## 16. Skill 编制前置规格
+## 16. Plugin 编制前置规格
 
 第 16 节不再作为开放讨论清单处理。
 
-在正式编制目标版 Skill 之前，以下内容已经先沉淀为英文前置规格：
+在正式编制目标版 Plugin 之前，以下内容已经先沉淀为中文设计规格：
 
 ```text
 docs/skill-authoring-prespec.md
+docs/plugin-skill-modularization.md
 ```
 
-该文档用于稳定 Skill 编制前必须明确的执行契约，包括：
+这些文档用于稳定 Plugin 编制前必须明确的执行契约，包括：
 
 1. `Supervisor` state machine
 2. Task class rules
@@ -1621,16 +1639,22 @@ docs/skill-authoring-prespec.md
 5. Agent Blueprint contracts
 6. Spec template contracts
 7. Quality Gate and Human Gate contracts
-8. Target Skill package shape
-9. Repo-local `.ai/` and `specs/` output structure
+8. Target Plugin package shape
+9. Thin repo-local contract and `specs/` output structure
 
-第一版 Skill 已根据该前置规格创建：
+当前第一版 Skill 目录是后续 Plugin 化拆分的起点：
 
 ```text
 skills/dev-cadence/
 ```
 
-该 Skill 当前包含 `SKILL.md`、`agents/openai.yaml` 和按主题拆分的 `references/` 文件，可作为后续真实任务验证和迭代的起点。
+该 Skill 当前包含 `SKILL.md`、`agents/openai.yaml`、按主题拆分的 `references/` 文件，以及 `templates/prompts/` 下的 Worker/reviewer prompt templates。后续应按本方案拆分为 `dev-cadence-init`、`dev-cadence-deliver`、`dev-cadence-maintain` 和可选的 `dev-cadence-authoring`。
+
+语言边界：
+
+- 项目方案文档使用中文，包括 `README.md` 和 `docs/**`。
+- 可发布 Skill 内容使用英文，包括 `skills/dev-cadence/**` 下的 `SKILL.md`、`agents/`、`references/` 和模板说明。
+- 任务 artifact 的自然语言正文由 `artifact_language` 决定；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 保持英文。
 
 仍然后置的主题包括：
 
@@ -1641,7 +1665,7 @@ skills/dev-cadence/
 5. 自动 issue / PR 调度
 6. 自动发布执行
 
-这些主题不应阻塞第一版 repo-local Skill。它们应在 Skill 规则经过真实任务验证后再进入平台化设计。
+这些主题不应阻塞第一版 Plugin 化实践。它们应在 Dev Cadence 规则、thin repo-local contract 和 adapter 模型经过真实任务验证后再进入平台化设计。
 
 ## 17. 一句话总结
 

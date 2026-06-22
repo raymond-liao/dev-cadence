@@ -1,6 +1,6 @@
 # Agent Blueprints
 
-Use these contracts when creating `.ai/agents/*.md`, Context Packs, or role-specific execution instructions.
+Use these contracts when loading plugin-owned Worker role guidance, creating Context Packs, or writing role-specific execution instructions.
 
 ## Contents
 
@@ -42,6 +42,7 @@ Clarify goal, scope, constraints, acceptance criteria, and executable task break
 - Identify constraints, risks, assumptions, and open questions.
 - Split work into bounded tasks.
 - Map tasks to acceptance criteria and verification.
+- Include concrete file paths, behavior, test-first or characterization steps, verification commands, and expected results for implementation tasks.
 
 ### Inputs
 
@@ -72,6 +73,8 @@ Clarify goal, scope, constraints, acceptance criteria, and executable task break
 ### Handoff Format
 
 Hand off requirements, task list, acceptance criteria, risks, and unresolved questions to Architect or Developer.
+
+When dispatching a plan document review through Harness, use `templates/prompts/plan-document-reviewer.md`.
 
 ### Escalation Conditions
 
@@ -134,7 +137,7 @@ Implement scoped changes and produce implementation evidence.
 
 - Implement only approved scope.
 - Preserve existing repository conventions.
-- Use Test First / TDD for testable behavior changes by default.
+- Use strict Red-Green-Refactor for testable behavior changes by default.
 - Choose the smallest implementation slice that can satisfy the next acceptance signal.
 - Reconcile actual changed files against planned target files before handoff.
 - Stop and update artifacts when implementation touches unplanned components, platforms, APIs, schemas, permissions, CI/CD, release, or production behavior.
@@ -153,7 +156,7 @@ Implement scoped changes and produce implementation evidence.
 
 - code diff;
 - `05-implementation.md`;
-- TDD evidence for testable changes, or a recorded reason and substitute feedback when TDD does not fit;
+- Red evidence, Green evidence, and Refactor evidence for testable changes, or a named Human Gate exception and substitute feedback when TDD does not fit;
 - scope reconciliation covering planned files, changed files, unplanned changes, deleted files, and added components;
 - test command and result or not-verified reason;
 - Harness execution report.
@@ -169,8 +172,10 @@ Implement scoped changes and produce implementation evidence.
 ### Evidence Requirements
 
 - changed files;
-- failing test or characterization evidence before production changes when applicable;
-- passing test, build, type check, manual check, or other defined feedback after changes;
+- failing test or characterization evidence before production changes for testable behavior;
+- passing test evidence after minimal implementation;
+- refactor evidence showing tests remained green when cleanup changed code;
+- named Human Gate exception and substitute feedback when strict TDD does not fit;
 - command logs;
 - diff summary;
 - verification result;
@@ -178,7 +183,9 @@ Implement scoped changes and produce implementation evidence.
 
 ### Handoff Format
 
-Hand off diff summary, implementation notes, TDD or substitute-feedback evidence, verification evidence, skipped checks, and risks to Tester.
+Hand off diff summary, implementation notes, Red-Green-Refactor or substitute-feedback evidence, verification evidence, skipped checks, and risks to Tester.
+
+When dispatching an implementer Worker through Harness, use `templates/prompts/implementer.md`.
 
 ### Escalation Conditions
 
@@ -246,6 +253,7 @@ Review code, architecture fit, maintainability, security, and residual risk.
 - Review relevant diff and artifacts.
 - Classify findings by severity.
 - Check architecture, security, maintainability, scope reconciliation, and test evidence.
+- Review spec compliance before code quality when implementation work is under review.
 - Verify that actual diff, task plan, implementation notes, and verification coverage agree before approval.
 - Decide approved, approved with minor notes, changes requested, or blocked.
 
@@ -280,6 +288,8 @@ Review code, architecture fit, maintainability, security, and residual risk.
 ### Handoff Format
 
 Hand off review decision, findings, residual risk, and required fixes to Supervisor or Developer.
+
+When dispatching reviewer Workers through Harness, use `templates/prompts/spec-compliance-reviewer.md`, then `templates/prompts/code-quality-reviewer.md` or `templates/prompts/code-reviewer.md` after spec compliance passes.
 
 ### Escalation Conditions
 
