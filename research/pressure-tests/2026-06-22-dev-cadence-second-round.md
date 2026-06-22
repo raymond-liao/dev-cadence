@@ -187,3 +187,32 @@ Smoke test 结果：
 - task artifact fenced YAML-like blocks 中同一层级的重复 key。
 
 这一步替代了依赖外部 `PyYAML` 的基础 package validation，但不替代 forward-test 或真实任务 dry run。
+
+## 后续补充：Visual Companion Intent/Design Dry Run
+
+日期：2026-06-22
+
+本轮对 visual companion 做了一次更接近 intent/design 场景的 dry run：
+
+- 场景：为“登录功能”展示两个需求澄清视图选择：
+  - `State Machine`
+  - `Artifact Flow`
+- 目的：验证 visual companion 能承载视觉化选择，但不会替代 requirements 或 G1 Human decision。
+- Session 使用 `/tmp` 临时目录，避免写入目标仓库持久文件。
+
+验证结果：
+
+- `start-server.sh` 提权后启动成功，返回本地 URL、`screen_dir` 和 `state_dir`。
+- 写入 `workflow-options.html` fragment 后，通过本地 HTTP 请求验证页面包含 Dev Cadence frame、`State Machine` 和 `Artifact Flow` 内容。
+- 沙箱内直接连接 localhost 返回 `EPERM`，符合“环境不可用时 fallback”的预期风险。
+- 提权访问 localhost 成功，说明该环境中 visual companion 可用但需要权限。
+- 通过 WebSocket 发送一次 `artifact-flow` choice，`state/events` 成功记录事件：
+  - `{"type":"choice","choice":"artifact-flow","text":"Artifact Flow selected"}`
+- `stop-server.sh` 成功停止并清理 `/tmp` session。
+
+结论：
+
+- visual companion 可作为 intent/design 阶段的 optional capability。
+- 浏览器事件只能作为 clarification evidence，不能作为 final acceptance。
+- 当 localhost 访问受限或用户无法打开 URL 时，流程必须降级为 text-only clarification。
+- G1 仍只基于已澄清 intent、requirements artifact 和 named Human decision，不基于是否打开 visual companion。

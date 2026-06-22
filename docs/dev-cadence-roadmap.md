@@ -189,7 +189,7 @@
 
 ### R7. 真实验证 Visual Companion
 
-状态：`pending`
+状态：`done`
 
 目标：
 用真实 intent/design 任务验证 visual companion 的 optional capability，不让它变成 G1 硬依赖。
@@ -207,6 +207,9 @@
 - 更新 pressure test 或对应 artifact 证据。
 
 依赖：R5 可后置；也可在 R5 前作为独立能力验证。
+
+备注：
+已完成。已在 `research/pressure-tests/2026-06-22-dev-cadence-second-round.md` 追加 intent/design dry run 证据：启动 visual companion、写入登录功能 workflow clarification screen、验证 HTTP 页面渲染、记录 sandbox localhost `EPERM` fallback、提权访问成功、WebSocket choice event 写入 `state/events`、停止并清理 `/tmp` session。结论保持 visual companion 为 optional capability；event 只是 clarification evidence，不是 G1 或 final acceptance。
 
 ## 维护规则
 
