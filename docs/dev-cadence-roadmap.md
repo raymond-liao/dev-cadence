@@ -112,7 +112,7 @@
 
 ### R4. 实现 Thin Repo 初始化与维护 Runtime
 
-状态：`pending`
+状态：`done`
 
 目标：
 让 `dev-cadence-init` 和 `dev-cadence-maintain` 不只是规则说明，而能实际创建、检查和修复 thin repo-local contract。
@@ -133,6 +133,9 @@
 - 维护模式能报告 drift、local overlay 和 manual review 项。
 
 依赖：R3。
+
+备注：
+已完成。`skills/dev-cadence/scripts/sync-repo-contract.mjs` 已新增，支持 `inspect`、`init`、`sync`、`repair` 和 `diagnose`，写入边界限定为 thin repo-local contract。fixture 验证覆盖缺失仓库报错、空仓库 inspect、init 写入、重复 init 幂等、diagnose、local overlay 报告、marker conflict 阻断且不继续写其它文件。脚本已接入 `SKILL.md` Reference Map、`check-skill-package.mjs` CLI help 验证和 `check-discipline-routes.mjs` Reference Map 检查。
 
 ### R5. 实现 Delivery Runtime 最小闭环
 

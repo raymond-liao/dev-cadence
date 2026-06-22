@@ -191,6 +191,7 @@ function checkSkillReferenceMap() {
     'scripts/check-discipline-routes.mjs',
     'scripts/check-spec-artifacts.mjs',
     'scripts/init-task-artifacts.mjs',
+    'scripts/sync-repo-contract.mjs',
     'scripts/visual-companion/',
   ];
   for (const item of expected) {

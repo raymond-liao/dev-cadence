@@ -229,6 +229,14 @@ function checkCliHelp() {
         '--run-id <id>',
       ],
     },
+    {
+      script: 'scripts/sync-repo-contract.mjs',
+      requiredText: [
+        'Usage: sync-repo-contract.mjs --mode <mode> [options]',
+        'Initializes, inspects, or repairs',
+        'inspect',
+      ],
+    },
   ];
 
   for (const command of commands) {
