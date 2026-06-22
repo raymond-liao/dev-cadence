@@ -8,6 +8,8 @@
 
 状态说明：目标架构见 [Plugin Skill 模块化](plugin-skill-modularization.md)。通用框架规则放在 plugin-owned resources 中；目标仓库只保留薄入口、配置、overrides 和任务 artifacts。
 
+当前剩余工作的稳定路线图见 [Dev Cadence 路线图](dev-cadence-roadmap.md)。后续完成状态以路线图为准，本文不追踪逐项执行进度。
+
 ## 2. 设计假设
 
 - 受众：可复用的团队 Plugin，包含少量面向用户意图的 Skills。
