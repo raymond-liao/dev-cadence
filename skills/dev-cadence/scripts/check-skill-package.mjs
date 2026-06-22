@@ -3,6 +3,29 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
+function printHelp() {
+  console.log(`Usage: check-skill-package.mjs [skill-dir]
+
+Validates the Dev Cadence skill package structure and basic runtime hygiene.
+
+Arguments:
+  skill-dir  Skill package directory to check. Defaults to the parent directory
+             of this script.
+
+Checks:
+  - SKILL.md frontmatter name and description
+  - English-only shipped skill package content
+  - absence of legacy external naming
+  - absence of runtime auxiliary docs such as README.md
+  - JavaScript syntax and shell executable bits under scripts/
+  - agents/openai.yaml metadata fields when present`);
+}
+
+if (process.argv.includes('--help') || process.argv.includes('-h')) {
+  printHelp();
+  process.exit(0);
+}
+
 const skillDir = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
 const errors = [];
 const warnings = [];
@@ -160,6 +183,48 @@ function checkScripts() {
   }
 }
 
+function checkCliHelp() {
+  const commands = [
+    {
+      script: 'scripts/check-skill-package.mjs',
+      requiredText: [
+        'Usage: check-skill-package.mjs [skill-dir]',
+        'Defaults to the parent directory',
+        'SKILL.md frontmatter',
+      ],
+    },
+    {
+      script: 'scripts/check-discipline-routes.mjs',
+      requiredText: [
+        'Usage: check-discipline-routes.mjs [skill-dir]',
+        'Defaults to the parent directory',
+        'discipline routing',
+      ],
+    },
+  ];
+
+  for (const command of commands) {
+    const scriptPath = path.join(skillDir, command.script);
+    if (!fs.existsSync(scriptPath)) {
+      fail(`${command.script}: missing script for help validation`);
+      continue;
+    }
+
+    for (const flag of ['--help', '-h']) {
+      const result = spawnSync(process.execPath, [scriptPath, flag], { encoding: 'utf8' });
+      if (result.status !== 0) {
+        fail(`${command.script} ${flag}: expected exit 0, got ${result.status}`);
+        continue;
+      }
+      for (const expected of command.requiredText) {
+        if (!result.stdout.includes(expected)) {
+          fail(`${command.script} ${flag}: help output missing '${expected}'`);
+        }
+      }
+    }
+  }
+}
+
 function checkOpenAiYaml() {
   const openAiYaml = path.join(skillDir, 'agents', 'openai.yaml');
   if (!fs.existsSync(openAiYaml)) {
@@ -185,6 +250,7 @@ checkLanguageBoundary(files);
 checkForbiddenLegacyNames(files);
 checkNoAuxiliaryDocs(files);
 checkScripts();
+checkCliHelp();
 checkOpenAiYaml();
 
 for (const message of warnings) {

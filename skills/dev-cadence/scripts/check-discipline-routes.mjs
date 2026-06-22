@@ -2,6 +2,28 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+function printHelp() {
+  console.log(`Usage: check-discipline-routes.mjs [skill-dir]
+
+Validates Dev Cadence discipline routing and bundled resource references.
+
+Arguments:
+  skill-dir  Skill package directory to check. Defaults to the parent directory
+             of this script.
+
+Checks:
+  - referenced references/, templates/, and scripts/ paths exist
+  - delivery-disciplines.md routes to required discipline references
+  - required prompt templates exist and are referenced
+  - visual companion resources exist and are indexed
+  - SKILL.md Reference Map lists key package resources`);
+}
+
+if (process.argv.includes('--help') || process.argv.includes('-h')) {
+  printHelp();
+  process.exit(0);
+}
+
 const skillDir = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
 const errors = [];
 

@@ -23,7 +23,8 @@ Use explicit state, not conversational judgment. Any skipped state must record i
 - Start every delivery task at `intake`.
 - Run every Worker Agent state through Harness.
 - Produce required Harness evidence for every run: `run-context.md`, `execution-report.md`, `tool-log.md`, `permission-decisions.md`, plus `diff-summary.md` when files change and `test-log.md` when commands or tests run.
-- After implementation and before test, reconcile actual changed files, deleted files, new components, and new platforms against `02-design.md`, `03-tasks.md`, and `05-implementation.md`.
+- After implementation and before test, reconcile actual changed files, untracked files, created artifact files, deleted files, new components, and new platforms against `02-design.md`, `03-tasks.md`, and `05-implementation.md`.
+- Do not rely only on tracked diffs for scope reconciliation. New `specs/{task_id}/` artifacts, generated files, and new source files can be untracked until staged, but still must be classified as planned, unplanned, or evidence-only files.
 - If actual diff exceeds planned scope, pause before review and update requirements, design, tasks, and test plan, or record a named Human decision accepting the narrowed evidence.
 - Test evidence must cover every changed component or explicitly record skipped checks, residual risk, and whether Human acceptance is allowed.
 - Reviewer must check scope reconciliation and verification coverage before approving.

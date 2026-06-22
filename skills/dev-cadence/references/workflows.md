@@ -35,9 +35,13 @@ The user does not need to choose a workflow. Supervisor infers `selected_workflo
 
 Before `test`, `review`, and `acceptance`, compare the actual diff with `02-design.md`, `03-tasks.md`, and `05-implementation.md`.
 
+Use both tracked and untracked file evidence. A Git diff can omit newly created untracked artifacts, generated files, or new source files, so inspect worktree status or file lists when new files are expected.
+
 Record in `05-implementation.md` and `runs/{run_id}/diff-summary.md`:
 
 - files planned and changed;
+- planned artifact files and created artifact files;
+- untracked files that belong to the task;
 - files changed outside the planned target list;
 - deleted files;
 - affected components added during implementation;
