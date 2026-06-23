@@ -22,7 +22,7 @@
 
 - `rg --files`：快速列出项目文件。
 - `rg "term" README.md skills docs research`：搜索框架术语，避免定义冲突。
-- `bash tests/run-all.sh`：运行 Codex Plugin manifest、package 边界、session hook、repo contract、delivery dry-run、Plugin source、artifact templates 和 diff whitespace 回归检查。
+- `bash tests/run-all.sh`：运行 Codex Plugin manifest、package 边界、session hook、repo contract、delivery dry-run、`dev-cadence` source、artifact templates 和 diff whitespace 回归检查。
 - `node scripts/check-skill-package.mjs .`、`node scripts/check-discipline-routes.mjs .`、`node scripts/check-spec-artifacts.mjs specs`：定位问题时可单独运行。
 - `git diff -- README.md docs AGENTS.md .codex-plugin hooks skills references templates scripts research`：提交前检查文档和 Plugin 变更。
 

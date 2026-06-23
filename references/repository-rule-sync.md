@@ -4,7 +4,7 @@ Use this reference only when the user explicitly invokes `$dev-cadence` or names
 
 ## Core Model
 
-After initialization, normal delivery work is routed by the target repository's root `AGENTS.md` to the Dev Cadence plugin. Runtime authority is layered across repo-local entrypoint, optional local override file, task artifacts, plugin-owned references/templates/built-in delivery disciplines/adapters, and configured adapters.
+After initialization, normal delivery work is routed by the target repository's root `AGENTS.md` to `dev-cadence`. Runtime authority is layered across repo-local entrypoint, optional local override file, task artifacts, `dev-cadence` references/templates/built-in delivery disciplines/adapters, and configured adapters.
 
 The maintenance Skill becomes active again only for repository-rule maintenance. In that mode, update the thin repo-local contract so future ordinary work uses the intended runtime path.
 
@@ -95,4 +95,4 @@ Verification should include at least:
 
 ## Runtime Reminder
 
-After sync/update completes, future normal work should use the target repository's updated `AGENTS.md` route plus `.dev-cadence.yaml` when present, `specs/**`, and Dev Cadence plugin-owned references/templates/built-in delivery disciplines/adapters. Do not continue into product delivery unless the user asks for a concrete delivery task in the same turn.
+After sync/update completes, future normal work should use the target repository's updated `AGENTS.md` route plus `.dev-cadence.yaml` when present, `specs/**`, and `dev-cadence` references/templates/built-in delivery disciplines/adapters. Do not continue into product delivery unless the user asks for a concrete delivery task in the same turn.

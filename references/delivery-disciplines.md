@@ -46,7 +46,7 @@ Load these references by state or condition:
 | Invalid data, unsafe state, boundary failures | `defense-in-depth.md` |
 | `review`, checkpoint review, final implementation review | `review-discipline.md` |
 | before claiming fixed, done, passing, approved, or complete | `verification-discipline.md` |
-| Dev Cadence Skill/plugin/reference/template/policy authoring | `authoring-discipline.md`; load `skill-pressure-testing.md` for validation |
+| Dev Cadence skill/reference/template/script/policy authoring | `authoring-discipline.md`; load `skill-pressure-testing.md` for validation |
 
 Prompt templates live under `templates/prompts/` and should be used when dispatching Worker or reviewer runs through Harness.
 

@@ -49,7 +49,7 @@ Force concrete choices. Avoid academic questions that only ask the agent to reci
 
 ## Authoring Checklist
 
-Before shipping a Dev Cadence Skill behavior change:
+Before shipping a Dev Cadence behavior change:
 
 - triggering context is clear;
 - loading contract is explicit;

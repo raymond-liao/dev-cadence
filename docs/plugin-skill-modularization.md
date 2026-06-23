@@ -2,9 +2,9 @@
 
 ## 目标
 
-本文记录 `dev-cadence` 在调整 Codex Skill / Plugin 包结构之前的目标架构。
+本文记录 `dev-cadence` 在调整 Codex Plugin 发布结构之前的目标架构。
 
-目标是让 Dev Cadence Core 保持平台无关，同时让首个 Codex Plugin 实现更容易演进、与其他 Codex Skill 组合使用，并避免在每个目标仓库里生成大段重复规则。
+目标是让 Dev Cadence Core 保持平台无关，同时让 `dev-cadence` 当前 Codex Plugin 发布形态更容易演进、与其他 Codex Skill 组合使用，并避免在每个目标仓库里生成大段重复规则。
 
 当前剩余工作的稳定路线图见 [Dev Cadence 路线图](dev-cadence-roadmap.md)。后续执行状态以路线图为准，本文只记录目标架构。
 
@@ -14,8 +14,9 @@
 Dev Cadence Core
   -> 定义平台无关 workflow、roles、gates、Harness、artifacts 和 adapter contract
 
-Dev Cadence Codex Plugin
-  -> 持有 Codex 侧可复用 workflow rules、gates、templates 和 adapters
+dev-cadence
+  -> 跨运行时保持一致的项目 slug、包名和插件名
+  -> 当前 Codex 发布形态持有可复用 workflow rules、gates、templates 和 adapters
   -> 安装薄 repo-local entrypoint、本地覆盖配置和 artifact space
 ```
 
@@ -57,7 +58,7 @@ dev-cadence-maintain
   检查、同步、修复、诊断或升级仓库本地 Dev Cadence 配置。
 
 dev-cadence-authoring
-  可选。维护 Dev Cadence Core、Codex Plugin package 及其 references。
+  可选。维护 Dev Cadence Core、`dev-cadence` 发布内容及其 references。
 ```
 
 具体名称可以在实现时调整。重点是：Skill 是粗粒度入口，不是每个工作流状态。
@@ -135,7 +136,7 @@ scripts/
 
 这些文件在相关入口 Skill 需要时加载。它们不应复制到目标仓库，也不应被理解为 Dev Cadence Core 只能在 Codex 中运行。
 
-`delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或调度具体 run 时使用。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 提供 plugin source self-check，校验语言边界、入口 metadata、脚本语法、discipline route、artifact template、prompt template、bundled resource 和 task artifact 是否一致。
+`delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或调度具体 run 时使用。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 提供 `dev-cadence` source self-check，校验语言边界、入口 metadata、脚本语法、discipline route、artifact template、prompt template、bundled resource 和 task artifact 是否一致。
 
 `visual-companion.md` 和 `scripts/visual-companion/` 提供可选浏览器视觉对齐能力，用于 mockup、diagram 和视觉方案对比。它帮助 Human 和 AI 对齐难以纯文字表达的需求，但不能成为 G1 的硬条件。缺少 Node、浏览器或可访问 URL 时，流程必须降级为 text-only clarification。
 
@@ -154,7 +155,7 @@ specs/
 
 `AGENTS.md` 应把 Codex 中的交付工作路由到 `dev-cadence` Codex Plugin。它不应包含完整框架。
 
-`.dev-cadence.yaml` 保存未提交的个人覆盖配置，并保持 Git 忽略。默认配置由 Dev Cadence Codex Plugin 持有，例如：
+`.dev-cadence.yaml` 保存未提交的个人覆盖配置，并保持 Git 忽略。默认配置由 `dev-cadence` 持有，例如：
 
 ```yaml
 dev_cadence:
@@ -176,7 +177,7 @@ dev_cadence:
 1. 当前用户请求和显式仓库指令。
 2. 仓库本地 `AGENTS.md` 和 `.dev-cadence.yaml`。
 3. `specs/{task_id}/` 下的任务产物。
-4. Dev Cadence Codex Plugin 的 references、templates、内置交付纪律和 adapters。
+4. `dev-cadence` 的 references、templates、内置交付纪律和 adapters。
 5. 被显式配置的外部 adapter。
 
 Codex Plugin 提供默认流程规则。Repo-local overlays 可以增加更严格或更项目化的约束，但不能削弱 Dev Cadence Core 定义的 named Human acceptance、证据要求或权限门禁等硬安全规则。

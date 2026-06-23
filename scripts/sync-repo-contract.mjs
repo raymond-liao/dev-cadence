@@ -8,7 +8,7 @@ const END_MARKER = '<!-- dev-cadence:end -->';
 const AGENTS_SECTION = `${START_MARKER}
 ## AI Delivery Workflow
 
-For software delivery tasks in this repository, use the Dev Cadence plugin.
+For software delivery tasks in this repository, use \`dev-cadence\`.
 
 This applies to feature development, bugfixes, refactoring, code review, research spikes, incident fixes, and any request that changes or evaluates repository behavior.
 
@@ -302,7 +302,7 @@ function verify(options, report) {
 
   report.verification.push({
     check: 'AGENTS.md routes normal delivery to Dev Cadence',
-    status: agents.includes(START_MARKER) && agents.includes('Dev Cadence plugin') ? 'pass' : 'missing',
+    status: agents.includes(START_MARKER) && agents.includes('dev-cadence') ? 'pass' : 'missing',
   });
   report.verification.push({
     check: '.dev-cadence.yaml exists and is ignored',

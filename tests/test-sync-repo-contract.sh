@@ -16,7 +16,7 @@ test -f "${REPO_DIR}/.dev-cadence.yaml"
 test -d "${REPO_DIR}/specs"
 test -f "${REPO_DIR}/specs/.gitkeep"
 test ! -e "${REPO_DIR}/.ai"
-grep -q "Dev Cadence plugin" "${REPO_DIR}/AGENTS.md"
+grep -q "dev-cadence" "${REPO_DIR}/AGENTS.md"
 grep -qx ".dev-cadence.yaml" "${REPO_DIR}/.gitignore"
 
 node "${ROOT_DIR}/scripts/sync-repo-contract.mjs" inspect --repo-dir "${REPO_DIR}" --json > "${INSPECT_JSON}"

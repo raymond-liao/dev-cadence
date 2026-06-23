@@ -1,6 +1,6 @@
 # Skill Layout
 
-This file defines the Dev Cadence Codex plugin source shape and the thin repo-local output shape created when applying Dev Cadence to a target repository.
+This file defines the current Codex Plugin publishing shape for `dev-cadence` and the thin repo-local output shape created when applying Dev Cadence to a target repository.
 
 ## Contents
 
@@ -125,7 +125,7 @@ Recommended user-facing skills:
 - `dev-cadence-init`: initialize a repository with the thin entrypoint, local override file, and artifact directory.
 - `dev-cadence-deliver`: run normal delivery work after initialization.
 - `dev-cadence-maintain`: inspect, sync, repair, diagnose, or upgrade Dev Cadence repository configuration.
-- `dev-cadence-authoring`: maintain this framework and Codex plugin source.
+- `dev-cadence-authoring`: maintain this framework and `dev-cadence` publishing content.
 
 ## Invocation Boundary
 
@@ -150,7 +150,7 @@ specs/
   .gitkeep
 ```
 
-`AGENTS.md` routes normal delivery work to the Dev Cadence plugin.
+`AGENTS.md` routes normal delivery work to `dev-cadence`.
 
 Default Dev Cadence behavior is plugin-owned. Target repositories do not need a generated default config file.
 
@@ -226,7 +226,7 @@ Add this section to root `AGENTS.md`, adapting wording only when the repository 
 ```markdown
 ## AI Delivery Workflow
 
-For software delivery tasks in this repository, use the Dev Cadence plugin.
+For software delivery tasks in this repository, use `dev-cadence`.
 
 This applies to feature development, bugfixes, refactoring, code review, research spikes, incident fixes, and any request that changes or evaluates repository behavior.
 
@@ -244,7 +244,7 @@ Resolve runtime rules in this order:
 1. Current user request and explicit repository instructions.
 2. Repo-local `AGENTS.md` and `.dev-cadence.yaml`.
 3. Current task artifacts under `specs/{task_id}/`.
-4. Dev Cadence plugin references, templates, built-in delivery disciplines, and adapters.
+4. `dev-cadence` references, templates, built-in delivery disciplines, and adapters.
 5. Configured adapters when selected.
 
 Repo-local overlays may add stricter or project-specific constraints. They must not weaken hard safety rules such as named Human acceptance, evidence requirements, permission gates, Requirements Readiness Check, or required Harness evidence.
@@ -271,7 +271,7 @@ dev_cadence:
 - use parallel Worker runs only for independent domains;
 - use Dev Cadence authoring validation when changing this plugin's own skills and references.
 
-`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. Plugin source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, and `scripts/check-spec-artifacts.mjs`. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
+`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, and `scripts/check-spec-artifacts.mjs`. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
 
 External adapters are optional replacement points for Worker execution techniques. Dev Cadence still controls Supervisor routing, Harness evidence, Quality Gate, Human Gate, scope reconciliation, and final acceptance.
 

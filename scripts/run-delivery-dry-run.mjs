@@ -14,7 +14,7 @@ Required:
 
 Options:
   --repo-dir <dir>        Target initialized repository. Defaults to current working directory.
-  --plugin-dir <dir>      Dev Cadence plugin source directory. Defaults to parent directory.
+  --plugin-dir <dir>      dev-cadence source directory. Defaults to parent directory.
   --skill-dir <dir>       Deprecated alias for --plugin-dir.
   --run-id <id>           Harness run id. Defaults to <task-id>-dry-run-1.
   --requested-by <name>   Requesting Human name. Defaults to Unknown.
@@ -134,8 +134,8 @@ function assertInitialized(repoDir) {
   }
 
   const agents = readText(path.join(repoDir, 'AGENTS.md'));
-  if (!agents.includes('Dev Cadence plugin')) {
-    throw new Error('Repository AGENTS.md does not route delivery to Dev Cadence');
+  if (!agents.includes('dev-cadence')) {
+    throw new Error('Repository AGENTS.md does not route delivery to dev-cadence');
   }
 }
 

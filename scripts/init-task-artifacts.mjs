@@ -34,7 +34,7 @@ Required:
 Options:
   --run-id <id>        Also initialize Harness evidence under runs/<run-id>.
   --specs-dir <dir>    Specs output directory. Defaults to specs.
-  --plugin-dir <dir>   Dev Cadence plugin source directory. Defaults to the
+  --plugin-dir <dir>   dev-cadence source directory. Defaults to the
                        parent directory of this script.
   --skill-dir <dir>    Deprecated alias for --plugin-dir.
   --overwrite          Replace existing artifact files. Defaults to skip.

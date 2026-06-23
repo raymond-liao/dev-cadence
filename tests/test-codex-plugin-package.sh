@@ -103,5 +103,5 @@ assert(!shippedFiles.some((file) => file.startsWith('tests/')), 'package must ex
 assert(!shippedFiles.includes('AGENTS.md'), 'package must exclude repo-local AGENTS.md');
 assert(!shippedFiles.includes('README.md'), 'package must exclude project README');
 
-console.log('codex plugin package contract ok');
+console.log('codex package boundary ok');
 NODE

@@ -54,9 +54,9 @@
 22. Completion claim 必须先有验证证据；缺失验证不能用自述替代。
 23. 平台自动化应延后，直到 Plugin-owned rules、thin repo-local contracts 和 artifact workflows 在真实任务中得到验证。
 
-## 4. 目标 Codex Plugin 源码结构
+## 4. 目标 Codex Plugin 发布结构
 
-Codex Plugin source 应使用 progressive disclosure。Skill entrypoints 应保持精简，只在需要时路由到聚焦的 reference files、templates 和 adapters。
+`dev-cadence` 当前 Codex Plugin 发布形态应使用 progressive disclosure。Skill entrypoints 应保持精简，只在需要时路由到聚焦的 reference files、templates 和 adapters。
 
 ```text
 dev-cadence/
@@ -145,7 +145,7 @@ dev-cadence/
 
 发布用 Plugin 内容不应包含通用 README、installation guide、changelog 或叙事性研究文档，除非插件发布格式要求。这些内容属于框架仓库，不属于 runtime Skill body。
 
-`delivery-disciplines.md` 应作为默认交付纪律的路由入口。具体规则放在细分 reference 中，任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，prompt template 放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或装载 Worker/reviewer run 时使用。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 应提供轻量 plugin source self-check，覆盖语言边界、metadata、脚本语法、discipline route、artifact template、prompt template、bundled resource 和 task artifact。
+`delivery-disciplines.md` 应作为默认交付纪律的路由入口。具体规则放在细分 reference 中，任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，prompt template 放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或装载 Worker/reviewer run 时使用。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 应提供轻量 `dev-cadence` source self-check，覆盖语言边界、metadata、脚本语法、discipline route、artifact template、prompt template、bundled resource 和 task artifact。
 
 `visual-companion.md` 与 `scripts/visual-companion/` 是 intent/design 阶段的可选视觉对齐能力。它可以用于 mockup、diagram、layout comparison 等场景，但不能替代 requirements，也不能成为 G1 必需条件。环境不可用时必须降级为 text-only clarification。
 
@@ -164,9 +164,9 @@ specs/
   .gitkeep
 ```
 
-`AGENTS.md` 将 Codex 中的普通交付工作路由到 Dev Cadence Codex Plugin。`.dev-cadence.yaml` 保存被忽略的用户本地覆盖配置。默认配置由插件持有，不在目标仓库生成 `.ai/` 目录。`specs/` 保存任务 artifacts 和 Harness evidence。`.dev-cadence/visual-companion/` 只保存可选 visual companion session，应由 `.gitignore` 忽略。
+`AGENTS.md` 将 Codex 中的普通交付工作路由到 `dev-cadence`。`.dev-cadence.yaml` 保存被忽略的用户本地覆盖配置。默认配置由 `dev-cadence` 持有，不在目标仓库生成 `.ai/` 目录。`specs/` 保存任务 artifacts 和 Harness evidence。`.dev-cadence/visual-companion/` 只保存可选 visual companion session，应由 `.gitignore` 忽略。
 
-Dev Cadence Core 本身不绑定 Codex。Codex Plugin 是当前首个实现形态；其他 agent runtime 可以实现同一 Core contract，但不需要继承 Codex 的 Skill 触发、AGENTS.md 入口或 plugin package 结构。
+Dev Cadence Core 本身不绑定 Codex。`dev-cadence` 当前优先支持 Codex Plugin 发布形态；其他 agent runtime 可以实现同一 Core contract，并继续沿用 `dev-cadence` 名字，但不需要继承 Codex 的 Skill 触发、AGENTS.md 入口或 plugin package 结构。
 
 `.dev-cadence.yaml` 应生成带注释的本地偏好字段：
 
@@ -682,7 +682,7 @@ Human decisions 必须写入 requirements、design、ADR 或 acceptance artifact
 
 ## 16. Plugin 编制前的待决问题
 
-这些决策可以在起草 Plugin package 时确定：
+这些决策可以在起草 `dev-cadence` 发布包时确定：
 
 1. `release` 应作为最小 workflow 纳入，还是只作为 future work 引用。
 2. `Researcher` 应作为 plugin-owned references 中的默认 Worker blueprint，还是只在启用 `research-spike` 时加载。

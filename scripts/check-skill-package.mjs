@@ -6,10 +6,10 @@ import { spawnSync } from 'node:child_process';
 function printHelp() {
   console.log(`Usage: check-skill-package.mjs [plugin-dir]
 
-Validates the Dev Cadence Codex plugin source layout and basic runtime hygiene.
+Validates the current Codex Plugin publishing shape for dev-cadence and basic runtime hygiene.
 
 Arguments:
-  plugin-dir  Plugin source directory to check. Defaults to the parent directory
+  plugin-dir  dev-cadence source directory to check. Defaults to the parent directory
               of this script.
 
 Checks:
@@ -258,7 +258,7 @@ function checkCliHelp() {
       script: 'scripts/check-skill-package.mjs',
       requiredText: [
         'Usage: check-skill-package.mjs [plugin-dir]',
-        'Plugin source directory',
+        'dev-cadence source directory',
         'SKILL.md frontmatter',
       ],
     },
@@ -266,7 +266,7 @@ function checkCliHelp() {
       script: 'scripts/check-discipline-routes.mjs',
       requiredText: [
         'Usage: check-discipline-routes.mjs [plugin-dir]',
-        'Plugin source directory',
+        'dev-cadence source directory',
         'discipline routing',
       ],
     },

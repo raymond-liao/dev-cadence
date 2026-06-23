@@ -15,14 +15,14 @@ escape_for_json() {
 }
 
 bootstrap=$(cat <<'EOF'
-You have Dev Cadence available as a Codex plugin.
+You have `dev-cadence` available. It is the current Codex Plugin publishing shape for Dev Cadence.
 
 Use these entrypoint skills by task intent:
 
 - dev-cadence-init: repository initialization and thin contract setup.
 - dev-cadence-deliver: ordinary initialized-repository delivery work.
 - dev-cadence-maintain: explicit inspect, sync, repair, diagnose, or update requests.
-- dev-cadence-authoring: maintenance of Dev Cadence plugin skills, references, templates, scripts, and policy.
+- dev-cadence-authoring: maintenance of Dev Cadence skills, references, templates, scripts, and policy.
 
 Do not treat Dev Cadence as one monolithic skill. The plugin owns reusable rules, references, templates, scripts, and gates. Target repositories keep only a thin contract: AGENTS.md, .gitignore, specs/, and an optional ignored .dev-cadence.yaml local override.
 

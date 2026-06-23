@@ -21,7 +21,7 @@ function assert(condition, message) {
 }
 
 assert(payload.hookSpecificOutput?.hookEventName === 'SessionStart', 'hook event must be SessionStart');
-assert(context.includes('Dev Cadence available as a Codex plugin'), 'bootstrap must identify Dev Cadence plugin');
+assert(context.includes('`dev-cadence` available'), 'bootstrap must identify dev-cadence');
 assert(context.includes('dev-cadence-init'), 'bootstrap must list init skill');
 assert(context.includes('dev-cadence-deliver'), 'bootstrap must list deliver skill');
 assert(context.includes('dev-cadence-maintain'), 'bootstrap must list maintain skill');

@@ -5,7 +5,7 @@
 当前阶段的验收目标是确认：
 
 - 方案路线图 R1-R7 已闭环；
-- Codex Plugin source layout、routes、templates 和 specs 仍然可校验；
+- `dev-cadence` Codex 发布结构、routes、templates 和 specs 仍然可校验；
 - thin repo-local contract 可以初始化；
 - delivery dry run 可以生成 task artifacts、Harness evidence 和 acceptance summary；
 - 用户可以直接阅读验收摘要，不需要自己翻多个 artifact 文件。
@@ -40,7 +40,7 @@ bash tests/run-all.sh
 
 预期结果：
 
-- `tests/run-all.sh` 依次输出 manifest、Codex plugin package、session hook、repo contract 和 delivery dry-run 测试通过
+- `tests/run-all.sh` 依次输出 manifest、Codex package boundary、session hook、repo contract 和 delivery dry-run 测试通过
 - `check-skill-package.mjs` 输出 `OK checked ... plugin files in ...`
 - `check-discipline-routes.mjs` 输出 `OK discipline routes verified for ...`
 - 两次 `check-spec-artifacts.mjs` 都输出 `OK checked spec artifacts ...`

@@ -1,6 +1,6 @@
 ---
 name: dev-cadence-authoring
-description: Maintain the Dev Cadence framework or Codex plugin source. Use when changing Dev Cadence skills, shared references, templates, scripts, adapters, roadmap, validation, or policy behavior.
+description: Maintain Dev Cadence itself. Use when changing Dev Cadence skills, shared references, templates, scripts, adapters, roadmap, validation, or policy behavior.
 ---
 
 # Dev Cadence Authoring
@@ -26,7 +26,7 @@ Keep project design documents in Chinese under `docs/`. Keep shipped plugin cont
 
 Treat process documentation like code. Prefer narrow, validated changes over broad doctrine.
 
-Run plugin source validation before completion:
+Run `dev-cadence` source validation before completion:
 
 ```bash
 bash tests/run-all.sh

@@ -8,7 +8,7 @@ function printHelp() {
 Validates Dev Cadence discipline routing and bundled resource references.
 
 Arguments:
-  plugin-dir  Plugin source directory to check. Defaults to the parent directory
+  plugin-dir  dev-cadence source directory to check. Defaults to the parent directory
               of this script.
 
 Checks:
