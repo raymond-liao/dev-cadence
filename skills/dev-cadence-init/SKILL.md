@@ -19,10 +19,8 @@ Read these shared plugin resources before changing files:
 Initialize or update only the thin repo-local contract:
 
 - root `AGENTS.md`;
-- root `.gitignore` entry for `.ai/local.yaml`;
-- `.ai/config.yaml`;
-- `.ai/local.yaml`;
-- `.ai/overrides/.gitkeep`;
+- root `.gitignore` entry for `.dev-cadence.yaml`;
+- root `.dev-cadence.yaml`;
 - `specs/.gitkeep`.
 
 Do not create task-specific specs, Harness runs, or product changes unless the same user turn explicitly requests a concrete delivery task.
@@ -31,6 +29,6 @@ Do not create task-specific specs, Harness runs, or product changes unless the s
 
 Preserve existing repository instructions. Add or update only the scoped Dev Cadence delivery entrypoint.
 
-Generate `.ai/local.yaml` with commented local preference examples only. Ensure `.ai/local.yaml` is ignored by Git.
+Generate `.dev-cadence.yaml` with commented local preference examples only. Ensure `.dev-cadence.yaml` is ignored by Git.
 
 After initialization, ordinary delivery work should be routed by the repository's `AGENTS.md` to Dev Cadence delivery behavior. The user should not need to invoke this initialization Skill for normal feature, bugfix, refactor, review, research, or incident requests.

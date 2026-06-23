@@ -173,4 +173,4 @@ Adapters must not weaken or bypass:
 - the three-iteration fix loop limit;
 - initialization and maintenance write boundaries.
 
-Do not let adapter configuration in `.ai/config.yaml`, `.ai/local.yaml`, `.ai/overrides/**`, or task artifacts override these boundaries.
+Do not let adapter configuration in `.dev-cadence.yaml`, legacy `.ai/**`, or task artifacts override these boundaries.

@@ -14,7 +14,8 @@ Required:
 
 Options:
   --repo-dir <dir>        Target initialized repository. Defaults to current working directory.
-  --skill-dir <dir>       Dev Cadence skill package directory. Defaults to parent directory.
+  --plugin-dir <dir>      Dev Cadence plugin source directory. Defaults to parent directory.
+  --skill-dir <dir>       Deprecated alias for --plugin-dir.
   --run-id <id>           Harness run id. Defaults to <task-id>-dry-run-1.
   --requested-by <name>   Requesting Human name. Defaults to Unknown.
   --accepted-by <name>    Named Human accepter. If omitted, G6 remains blocked.
@@ -34,7 +35,7 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 function parseArgs(argv) {
   const options = {
     repoDir: process.cwd(),
-    skillDir: path.resolve(path.join(import.meta.dirname, '..')),
+    pluginDir: path.resolve(path.join(import.meta.dirname, '..')),
     taskId: null,
     runId: null,
     goal: null,
@@ -54,8 +55,11 @@ function parseArgs(argv) {
     } else if (arg === '--repo-dir') {
       options.repoDir = readValue(argv, index, arg);
       index += 1;
+    } else if (arg === '--plugin-dir') {
+      options.pluginDir = readValue(argv, index, arg);
+      index += 1;
     } else if (arg === '--skill-dir') {
-      options.skillDir = readValue(argv, index, arg);
+      options.pluginDir = readValue(argv, index, arg);
       index += 1;
     } else if (arg === '--run-id') {
       options.runId = readValue(argv, index, arg);
@@ -83,7 +87,7 @@ function parseArgs(argv) {
   validateId('run-id', options.runId);
 
   options.repoDir = path.resolve(options.repoDir);
-  options.skillDir = path.resolve(options.skillDir);
+  options.pluginDir = path.resolve(options.pluginDir);
   return options;
 }
 
@@ -120,9 +124,7 @@ function writeText(filePath, text) {
 function assertInitialized(repoDir) {
   const required = [
     'AGENTS.md',
-    '.ai/config.yaml',
-    '.ai/local.yaml',
-    '.ai/overrides',
+    '.dev-cadence.yaml',
     'specs',
   ];
 
@@ -197,7 +199,7 @@ function block(title, fields, body = '') {
 }
 
 function initArtifacts(options) {
-  const script = path.join(options.skillDir, 'scripts', 'init-task-artifacts.mjs');
+  const script = path.join(options.pluginDir, 'scripts', 'init-task-artifacts.mjs');
   const result = spawnSync(process.execPath, [
     script,
     '--task-id',
@@ -207,7 +209,7 @@ function initArtifacts(options) {
     '--specs-dir',
     path.join(options.repoDir, 'specs'),
     '--skill-dir',
-    options.skillDir,
+    options.pluginDir,
     '--json',
   ], { encoding: 'utf8' });
 
@@ -298,7 +300,7 @@ analysis_performed:
   - Inferred workflow and task class from goal text.
 evidence_paths:
   - AGENTS.md
-  - .ai/config.yaml
+  - .dev-cadence.yaml
 candidate_interpretations: []
 recommended_option: ${workflow}
 clarified_by_human: ${yamlValue(options.requestedBy)}
@@ -380,7 +382,7 @@ G3 passed for dry-run execution because tasks, artifacts, forbidden actions, and
     status: 'complete_for_dry_run',
     scope: ['Generated artifacts and run evidence'],
     test_strategy: ['Validate YAML-like artifact blocks with check-spec-artifacts.mjs'],
-    test_commands: [`node ${path.relative(options.repoDir, path.join(options.skillDir, 'scripts', 'check-spec-artifacts.mjs'))} specs`],
+    test_commands: [`node ${path.relative(options.repoDir, path.join(options.pluginDir, 'scripts', 'check-spec-artifacts.mjs'))} specs`],
     test_data: [`specs/${options.taskId}`],
     environment: ['local fixture repository'],
     coverage_targets: ['Task artifact schema', 'Harness evidence schema'],
@@ -524,7 +526,7 @@ escalation: ${acceptanceBlocked ? 'named Human acceptance required' : 'none'}
     blueprint_path: 'references/supervisor-state-machine.md',
     context_pack_path: `specs/${options.taskId}/00-brief.md`,
     workspace_path: rel(options.repoDir, options.repoDir),
-    allowed_read_paths: ['AGENTS.md', '.ai/config.yaml', '.ai/overrides/**', 'specs/**'],
+    allowed_read_paths: ['AGENTS.md', '.dev-cadence.yaml', 'specs/**'],
     allowed_write_paths: [`specs/${options.taskId}/**`],
     denied_paths: ['product source files'],
     allowed_tools: ['node', 'filesystem writes under specs'],

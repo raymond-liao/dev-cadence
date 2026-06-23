@@ -4,17 +4,17 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 function printHelp() {
-  console.log(`Usage: check-skill-package.mjs [skill-dir]
+  console.log(`Usage: check-skill-package.mjs [plugin-dir]
 
-Validates the Dev Cadence skill package structure and basic runtime hygiene.
+Validates the Dev Cadence Codex plugin source layout and basic runtime hygiene.
 
 Arguments:
-  skill-dir  Skill package directory to check. Defaults to the parent directory
-             of this script.
+  plugin-dir  Plugin source directory to check. Defaults to the parent directory
+              of this script.
 
 Checks:
-  - root and entrypoint SKILL.md frontmatter name and description
-  - English-only shipped skill package content
+  - Codex plugin manifest and entrypoint SKILL.md frontmatter
+  - English-only shipped plugin content
   - absence of legacy external naming
   - absence of runtime auxiliary docs such as README.md
   - JavaScript syntax and shell executable bits under scripts/
@@ -28,7 +28,7 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
   process.exit(0);
 }
 
-const skillDir = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
+const pluginDir = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
 const errors = [];
 const warnings = [];
 
@@ -59,7 +59,7 @@ function walk(dir) {
 }
 
 function rel(filePath) {
-  return path.relative(skillDir, filePath);
+  return path.relative(pluginDir, filePath);
 }
 
 function parseSimpleYamlFrontmatter(text, filePath) {
@@ -89,7 +89,6 @@ function parseSimpleYamlFrontmatter(text, filePath) {
 
 function checkFrontmatter() {
   const expected = [
-    { relativePath: 'SKILL.md', name: 'dev-cadence' },
     { relativePath: 'skills/dev-cadence-init/SKILL.md', name: 'dev-cadence-init' },
     { relativePath: 'skills/dev-cadence-deliver/SKILL.md', name: 'dev-cadence-deliver' },
     { relativePath: 'skills/dev-cadence-maintain/SKILL.md', name: 'dev-cadence-maintain' },
@@ -97,7 +96,7 @@ function checkFrontmatter() {
   ];
 
   for (const item of expected) {
-    const skillPath = path.join(skillDir, item.relativePath);
+    const skillPath = path.join(pluginDir, item.relativePath);
     if (!fs.existsSync(skillPath)) {
       fail(`${item.relativePath}: missing required file`);
       continue;
@@ -129,13 +128,71 @@ function checkFrontmatter() {
   }
 }
 
+function checkPluginManifest() {
+  const manifestPath = path.join(pluginDir, '.codex-plugin', 'plugin.json');
+  if (!fs.existsSync(manifestPath)) {
+    fail('.codex-plugin/plugin.json: missing required Codex plugin manifest');
+    return;
+  }
+
+  let manifest;
+  try {
+    manifest = JSON.parse(readText(manifestPath));
+  } catch (error) {
+    fail(`.codex-plugin/plugin.json: invalid JSON: ${error.message}`);
+    return;
+  }
+
+  const required = [
+    'name',
+    'version',
+    'description',
+    'author',
+    'skills',
+    'interface',
+  ];
+  for (const key of required) {
+    if (manifest[key] === undefined) {
+      fail(`.codex-plugin/plugin.json: missing ${key}`);
+    }
+  }
+  if (manifest.name !== 'dev-cadence') {
+    fail(`.codex-plugin/plugin.json: expected name 'dev-cadence', got '${manifest.name || ''}'`);
+  }
+  if (manifest.skills !== './skills/') {
+    fail(`.codex-plugin/plugin.json: expected skills './skills/', got '${manifest.skills || ''}'`);
+  }
+  if (manifest.hooks !== './hooks/hooks-codex.json') {
+    fail(`.codex-plugin/plugin.json: expected hooks './hooks/hooks-codex.json', got '${manifest.hooks || ''}'`);
+  }
+}
+
+function shippedFiles() {
+  const roots = [
+    '.codex-plugin',
+    'hooks',
+    'skills',
+    'references',
+    'templates',
+    'scripts',
+  ];
+  const files = [];
+  for (const root of roots) {
+    const rootPath = path.join(pluginDir, root);
+    if (fs.existsSync(rootPath)) {
+      files.push(...walk(rootPath));
+    }
+  }
+  return files;
+}
+
 function checkLanguageBoundary(files) {
   const chinese = /[\u3400-\u9fff]/;
   for (const filePath of files) {
     if (/\.(png|jpg|jpeg|gif|svg)$/i.test(filePath)) continue;
     const text = readText(filePath);
     if (chinese.test(text)) {
-      fail(`${rel(filePath)}: Skill package content must be English; found Chinese characters`);
+      fail(`${rel(filePath)}: shipped plugin content must be English; found Chinese characters`);
     }
   }
 }
@@ -170,13 +227,13 @@ function checkNoAuxiliaryDocs(files) {
   ]);
   for (const filePath of files) {
     if (forbiddenBasenames.has(path.basename(filePath))) {
-      fail(`${rel(filePath)}: runtime Skill packages should not include auxiliary docs`);
+      fail(`${rel(filePath)}: runtime plugin content should not include auxiliary docs`);
     }
   }
 }
 
 function checkScripts() {
-  const scriptsDir = path.join(skillDir, 'scripts');
+  const scriptsDir = path.join(pluginDir, 'scripts');
   if (!fs.existsSync(scriptsDir)) return;
 
   for (const filePath of walk(scriptsDir)) {
@@ -200,16 +257,16 @@ function checkCliHelp() {
     {
       script: 'scripts/check-skill-package.mjs',
       requiredText: [
-        'Usage: check-skill-package.mjs [skill-dir]',
-        'Defaults to the parent directory',
+        'Usage: check-skill-package.mjs [plugin-dir]',
+        'Plugin source directory',
         'SKILL.md frontmatter',
       ],
     },
     {
       script: 'scripts/check-discipline-routes.mjs',
       requiredText: [
-        'Usage: check-discipline-routes.mjs [skill-dir]',
-        'Defaults to the parent directory',
+        'Usage: check-discipline-routes.mjs [plugin-dir]',
+        'Plugin source directory',
         'discipline routing',
       ],
     },
@@ -232,7 +289,7 @@ function checkCliHelp() {
     {
       script: 'scripts/sync-repo-contract.mjs',
       requiredText: [
-        'Usage: sync-repo-contract.mjs --mode <mode> [options]',
+        'Usage: sync-repo-contract.mjs <mode> [options]',
         'Initializes, inspects, or repairs',
         'inspect',
       ],
@@ -256,7 +313,7 @@ function checkCliHelp() {
   ];
 
   for (const command of commands) {
-    const scriptPath = path.join(skillDir, command.script);
+    const scriptPath = path.join(pluginDir, command.script);
     if (!fs.existsSync(scriptPath)) {
       fail(`${command.script}: missing script for help validation`);
       continue;
@@ -278,8 +335,8 @@ function checkCliHelp() {
 }
 
 function checkArtifactTemplateBlocks() {
-  const scriptPath = path.join(skillDir, 'scripts', 'check-spec-artifacts.mjs');
-  const templatesDir = path.join(skillDir, 'templates');
+  const scriptPath = path.join(pluginDir, 'scripts', 'check-spec-artifacts.mjs');
+  const templatesDir = path.join(pluginDir, 'templates');
   if (!fs.existsSync(scriptPath)) {
     fail('scripts/check-spec-artifacts.mjs: missing script for template artifact validation');
     return;
@@ -297,7 +354,6 @@ function checkArtifactTemplateBlocks() {
 
 function checkOpenAiYaml() {
   const expected = [
-    'agents/openai.yaml',
     'skills/dev-cadence-init/agents/openai.yaml',
     'skills/dev-cadence-deliver/agents/openai.yaml',
     'skills/dev-cadence-maintain/agents/openai.yaml',
@@ -305,7 +361,7 @@ function checkOpenAiYaml() {
   ];
 
   for (const relativePath of expected) {
-    const openAiYaml = path.join(skillDir, relativePath);
+    const openAiYaml = path.join(pluginDir, relativePath);
     if (!fs.existsSync(openAiYaml)) {
       warn(`${relativePath}: missing optional UI metadata`);
       continue;
@@ -319,12 +375,13 @@ function checkOpenAiYaml() {
   }
 }
 
-if (!fs.existsSync(skillDir)) {
-  console.error(`Skill directory not found: ${skillDir}`);
+if (!fs.existsSync(pluginDir)) {
+  console.error(`Plugin directory not found: ${pluginDir}`);
   process.exit(2);
 }
 
-const files = walk(skillDir);
+const files = shippedFiles();
+checkPluginManifest();
 checkFrontmatter();
 checkLanguageBoundary(files);
 checkForbiddenLegacyNames(files);
@@ -346,4 +403,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`OK checked ${files.length} files in ${path.relative(process.cwd(), skillDir) || skillDir}`);
+console.log(`OK checked ${files.length} plugin files in ${path.relative(process.cwd(), pluginDir) || pluginDir}`);

@@ -6,7 +6,7 @@
 
 目标是在调整包结构之前，先稳定 Skill 或 Plugin 必须实现的契约。本文不是 Skill 本身，而是 Skill 入口、references、templates、adapters 和 repo-local artifact 契约的设计输入。
 
-状态说明：目标架构见 [Plugin Skill 模块化](plugin-skill-modularization.md)。通用框架规则放在 plugin-owned resources 中；目标仓库只保留薄入口、配置、overrides 和任务 artifacts。
+状态说明：目标架构见 [Plugin Skill 模块化](plugin-skill-modularization.md)。通用框架规则放在 plugin-owned resources 中；目标仓库只保留薄入口、本地覆盖配置和任务 artifacts。
 
 当前剩余工作的稳定路线图见 [Dev Cadence 路线图](dev-cadence-roadmap.md)。后续完成状态以路线图为准，本文不追踪逐项执行进度。
 
@@ -26,7 +26,7 @@
 - `dev-cadence-deliver` 是初始化仓库后的普通交付入口，处理 feature、bugfix、review、refactor、research 和 incident 工作。
 - `implementation_discipline: default` 和 `verification_discipline: default` 表示 Dev Cadence 内置交付纪律，不依赖外部 Skill。
 - 未初始化仓库中的产品实现请求不应隐式触发安装。
-- 初始化边界：setup、sync、repair、diagnosis 默认只能写 root `AGENTS.md`、root `.gitignore` 中的 `.ai/local.yaml` 忽略项、`.ai/config.yaml`、`.ai/local.yaml`、`.ai/overrides/**` 和 `specs/.gitkeep`；除非用户同一轮明确要求交付工作，否则不得修改产品代码或 task-specific specs。
+- 初始化边界：setup、sync、repair、diagnosis 默认只能写 root `AGENTS.md`、root `.gitignore` 中的 `.dev-cadence.yaml` 忽略项、root `.dev-cadence.yaml` 和 `specs/.gitkeep`；除非用户同一轮明确要求交付工作，否则不得修改产品代码或 task-specific specs。
 
 ## 3. 不可协商原则
 
@@ -54,12 +54,18 @@
 22. Completion claim 必须先有验证证据；缺失验证不能用自述替代。
 23. 平台自动化应延后，直到 Plugin-owned rules、thin repo-local contracts 和 artifact workflows 在真实任务中得到验证。
 
-## 4. 目标 Plugin 包结构
+## 4. 目标 Codex Plugin 源码结构
 
-未来 package 应使用 progressive disclosure。Skill entrypoints 应保持精简，只在需要时路由到聚焦的 reference files、templates 和 adapters。
+Codex Plugin source 应使用 progressive disclosure。Skill entrypoints 应保持精简，只在需要时路由到聚焦的 reference files、templates 和 adapters。
 
 ```text
-dev-cadence-plugin/
+dev-cadence/
+  .codex-plugin/
+    plugin.json
+  hooks/
+    hooks-codex.json
+    run-hook.cmd
+    session-start-codex
   skills/
     dev-cadence-init/
       SKILL.md
@@ -137,13 +143,13 @@ dev-cadence-plugin/
       frame-template.html
 ```
 
-Plugin package 不应包含通用 README、installation guide、changelog 或叙事性研究文档，除非插件发布格式要求。这些内容属于框架仓库，不属于 runtime Skill body。
+发布用 Plugin 内容不应包含通用 README、installation guide、changelog 或叙事性研究文档，除非插件发布格式要求。这些内容属于框架仓库，不属于 runtime Skill body。
 
-`delivery-disciplines.md` 应作为默认交付纪律的路由入口。具体规则放在细分 reference 中，任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，prompt template 放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或装载 Worker/reviewer run 时使用。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 应提供轻量 package self-check，覆盖语言边界、metadata、脚本语法、discipline route、artifact template、prompt template、bundled resource 和 task artifact。
+`delivery-disciplines.md` 应作为默认交付纪律的路由入口。具体规则放在细分 reference 中，任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，prompt template 放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或装载 Worker/reviewer run 时使用。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 应提供轻量 plugin source self-check，覆盖语言边界、metadata、脚本语法、discipline route、artifact template、prompt template、bundled resource 和 task artifact。
 
 `visual-companion.md` 与 `scripts/visual-companion/` 是 intent/design 阶段的可选视觉对齐能力。它可以用于 mockup、diagram、layout comparison 等场景，但不能替代 requirements，也不能成为 G1 必需条件。环境不可用时必须降级为 text-only clarification。
 
-Plugin package 应能安全地安装在 system scope。`dev-cadence-init` 的 metadata 不得把普通 feature、bugfix、review、refactor、research 或 incident execution 描述为全局触发。只有仓库初始化完成，并且 `AGENTS.md` 将交付工作路由到 `dev-cadence-deliver` 后，这些 workflow 才自动生效。
+Codex Plugin 应能安全地安装在 system scope。`dev-cadence-init` 的 metadata 不得把普通 feature、bugfix、review、refactor、research 或 incident execution 描述为全局触发。只有仓库初始化完成，并且 `AGENTS.md` 将交付工作路由到 `dev-cadence-deliver` 后，这些 workflow 才自动生效。
 
 ## 5. 仓库本地输出结构
 
@@ -152,35 +158,17 @@ Plugin package 应能安全地安装在 system scope。`dev-cadence-init` 的 me
 ```text
 AGENTS.md
 .gitignore
-
-.ai/
-  config.yaml
-  local.yaml
-  overrides/
-    .gitkeep
+.dev-cadence.yaml
 
 specs/
   .gitkeep
 ```
 
-`AGENTS.md` 将普通交付工作路由到 Dev Cadence Plugin。`.ai/config.yaml` 保存项目默认配置。`.ai/local.yaml` 保存被忽略的用户本地覆盖配置。`.ai/overrides/**` 只保存项目特有或更严格的策略。`specs/` 保存任务 artifacts 和 Harness evidence。`.dev-cadence/visual-companion/` 只保存可选 visual companion session，应由 `.gitignore` 忽略。
+`AGENTS.md` 将 Codex 中的普通交付工作路由到 Dev Cadence Codex Plugin。`.dev-cadence.yaml` 保存被忽略的用户本地覆盖配置。默认配置由插件持有，不在目标仓库生成 `.ai/` 目录。`specs/` 保存任务 artifacts 和 Harness evidence。`.dev-cadence/visual-companion/` 只保存可选 visual companion session，应由 `.gitignore` 忽略。
 
-`.ai/config.yaml` 应包含：
+Dev Cadence Core 本身不绑定 Codex。Codex Plugin 是当前首个实现形态；其他 agent runtime 可以实现同一 Core contract，但不需要继承 Codex 的 Skill 触发、AGENTS.md 入口或 plugin package 结构。
 
-```yaml
-dev_cadence:
-  artifact_language: en
-  specs_dir: specs
-  implementation_discipline: default
-  verification_discipline: default
-  review_profile: normal
-```
-
-`default` discipline 表示使用 Dev Cadence 内置交付纪律：澄清意图、可执行 planning、严格 Red-Green-Refactor、复现优先 debugging、两阶段 review、完成前验证，以及只对独立问题域并行执行。
-
-内置交付纪律应由 Dev Cadence 自己持有，不依赖外部 Skill。默认加载路径是 `delivery-disciplines.md`，再按状态进入细分 reference、optional visual companion 和 prompt template。
-
-`.ai/local.yaml` 应生成带注释的本地偏好字段：
+`.dev-cadence.yaml` 应生成带注释的本地偏好字段：
 
 ```yaml
 # Local Dev Cadence preferences.
@@ -190,9 +178,17 @@ dev_cadence:
 # - zh: Chinese, Simplified Chinese by default
 # dev_cadence:
 #   artifact_language: en
+#   specs_dir: specs
+#   implementation_discipline: default
+#   verification_discipline: default
+#   review_profile: normal
 ```
 
-`artifact_language` 支持 `en` 和 `zh`。`.ai/local.yaml` 中未注释的 `dev_cadence.artifact_language` 会覆盖 `.ai/config.yaml`。初始化和更新应把 `.ai/local.yaml` 加入 `.gitignore`，并保留已有 ignore rules。
+`default` discipline 表示使用 Dev Cadence 内置交付纪律：澄清意图、可执行 planning、严格 Red-Green-Refactor、复现优先 debugging、两阶段 review、完成前验证，以及只对独立问题域并行执行。
+
+内置交付纪律应由 Dev Cadence 自己持有，不依赖外部 Skill。默认加载路径是 `delivery-disciplines.md`，再按状态进入细分 reference、optional visual companion 和 prompt template。
+
+`artifact_language` 支持 `en` 和 `zh`。`.dev-cadence.yaml` 中未注释的 `dev_cadence.artifact_language` 会覆盖插件默认值。初始化和更新应把 `.dev-cadence.yaml` 加入 `.gitignore`，并保留已有 ignore rules。
 
 初始化后的仓库不应要求用户为每个 feature、bugfix、refactor、review、research 或 incident request 显式调用 Skill 名称。Root `AGENTS.md` 应将普通软件交付工作路由到 `dev-cadence-deliver`，Supervisor 从请求中推断 `selected_workflow`。
 

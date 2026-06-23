@@ -22,14 +22,13 @@ The reusable template files live under:
 
 Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reproducible and path-based.
 
-Before writing artifact prose, resolve `artifact_language` from an uncommented supported `dev_cadence.artifact_language` value in `.ai/local.yaml`, then `.ai/config.yaml`, then default to `en`. Supported values are `en` and `zh`.
+Before writing artifact prose, resolve `artifact_language` from an uncommented supported `dev_cadence.artifact_language` value in root `.dev-cadence.yaml`, then default to `en`. Supported values are `en` and `zh`.
 
 `artifact_language` controls human-readable Markdown prose, notes, acceptance criteria text, reports, and explanations. Keep template filenames, headings, YAML keys, schema fields, status values, workflow IDs, gate IDs, and command/code identifiers in English.
 
 ## Contents
 
-- [`.ai/config.yaml`](#aiconfigyaml)
-- [`.ai/local.yaml`](#ailocalyaml)
+- [`.dev-cadence.yaml`](#dev-cadenceyaml)
 - [`00-brief.md`](#00-briefmd)
 - [`01-requirements.md`](#01-requirementsmd)
 - [`02-design.md`](#02-designmd)
@@ -47,25 +46,7 @@ Before writing artifact prose, resolve `artifact_language` from an uncommented s
 - [`runs/{run_id}/diff-summary.md`](#runsrun_iddiff-summarymd)
 - [`runs/{run_id}/permission-decisions.md`](#runsrun_idpermission-decisionsmd)
 
-## `.ai/config.yaml`
-
-```yaml
-dev_cadence:
-  artifact_language: en
-  specs_dir: specs
-  implementation_discipline: default
-  verification_discipline: default
-  review_profile: normal
-```
-
-Allowed values:
-
-- `en`: English prose. This is the default.
-- `zh`: Chinese prose. Use Simplified Chinese unless repository rules say otherwise.
-
-For discipline fields, `default` means Dev Cadence's built-in delivery discipline.
-
-## `.ai/local.yaml`
+## `.dev-cadence.yaml`
 
 ```yaml
 # Local Dev Cadence preferences.
@@ -75,9 +56,20 @@ For discipline fields, `default` means Dev Cadence's built-in delivery disciplin
 # - zh: Chinese, Simplified Chinese by default
 # dev_cadence:
 #   artifact_language: en
+#   specs_dir: specs
+#   implementation_discipline: default
+#   verification_discipline: default
+#   review_profile: normal
 ```
 
-`.ai/local.yaml` must be ignored by Git during initialization or update. If the file contains an uncommented supported `dev_cadence.artifact_language`, it overrides `.ai/config.yaml`.
+Allowed `artifact_language` values:
+
+- `en`: English prose. This is the default.
+- `zh`: Chinese prose. Use Simplified Chinese unless repository rules say otherwise.
+
+For discipline fields, `default` means Dev Cadence's built-in delivery discipline.
+
+`.dev-cadence.yaml` must be ignored by Git during initialization or update. If the file contains an uncommented supported `dev_cadence.artifact_language`, it overrides the plugin default.
 
 ## `00-brief.md`
 

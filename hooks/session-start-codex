@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+escape_for_json() {
+  local value="$1"
+  value="${value//\\/\\\\}"
+  value="${value//\"/\\\"}"
+  value="${value//$'\n'/\\n}"
+  value="${value//$'\r'/\\r}"
+  value="${value//$'\t'/\\t}"
+  printf '%s' "$value"
+}
+
+bootstrap=$(cat <<'EOF'
+You have Dev Cadence available as a Codex plugin.
+
+Use these entrypoint skills by task intent:
+
+- dev-cadence-init: repository initialization and thin contract setup.
+- dev-cadence-deliver: ordinary initialized-repository delivery work.
+- dev-cadence-maintain: explicit inspect, sync, repair, diagnose, or update requests.
+- dev-cadence-authoring: maintenance of Dev Cadence plugin skills, references, templates, scripts, and policy.
+
+Do not treat Dev Cadence as one monolithic skill. The plugin owns reusable rules, references, templates, scripts, and gates. Target repositories keep only a thin contract: AGENTS.md, .gitignore, specs/, and an optional ignored .dev-cadence.yaml local override.
+
+For software delivery tasks in an initialized repository, route through dev-cadence-deliver and keep evidence under specs/{task_id}/. Do not create a .ai/ directory for Dev Cadence defaults.
+EOF
+)
+
+bootstrap_escaped=$(escape_for_json "$bootstrap")
+session_context="<EXTREMELY_IMPORTANT>\n${bootstrap_escaped}\n</EXTREMELY_IMPORTANT>"
+
+printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$session_context"

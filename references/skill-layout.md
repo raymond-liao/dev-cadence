@@ -1,6 +1,6 @@
 # Skill Layout
 
-This file defines the Dev Cadence plugin package shape and the thin repo-local output shape created when applying Dev Cadence to a target repository.
+This file defines the Dev Cadence Codex plugin source shape and the thin repo-local output shape created when applying Dev Cadence to a target repository.
 
 ## Contents
 
@@ -21,7 +21,13 @@ This file defines the Dev Cadence plugin package shape and the thin repo-local o
 The target distributable shape is a plugin with a small set of user-facing skills and shared plugin-owned resources:
 
 ```text
-dev-cadence-plugin/
+dev-cadence/
+  .codex-plugin/
+    plugin.json
+  hooks/
+    hooks-codex.json
+    run-hook.cmd
+    session-start-codex
   skills/
     dev-cadence-init/
       SKILL.md
@@ -99,40 +105,6 @@ dev-cadence-plugin/
       frame-template.html
 ```
 
-The current first version is still packaged as:
-
-```text
-skills/dev-cadence/
-  SKILL.md
-  agents/openai.yaml
-  skills/
-    dev-cadence-init/
-      SKILL.md
-      agents/openai.yaml
-    dev-cadence-deliver/
-      SKILL.md
-      agents/openai.yaml
-    dev-cadence-maintain/
-      SKILL.md
-      agents/openai.yaml
-    dev-cadence-authoring/
-      SKILL.md
-      agents/openai.yaml
-  references/
-    ...
-  templates/
-    spec/
-      ...
-    runs/
-      ...
-    prompts/
-      ...
-  scripts/
-    ...
-```
-
-Treat that shape as the current transitional package. The nested entrypoint skills define the target user-facing boundaries while shared references, templates, and scripts remain in the package root until the final plugin distribution shape is introduced.
-
 Do not add generic `README.md`, installation guide, changelog, or narrative research documents to runtime Skill folders. Keep narrative design documents in the framework repository.
 
 ## Skill Boundaries
@@ -150,10 +122,10 @@ Do not create one Skill per internal Supervisor state such as `requirements-gate
 
 Recommended user-facing skills:
 
-- `dev-cadence-init`: initialize a repository with the thin entrypoint, project config, and artifact directories.
+- `dev-cadence-init`: initialize a repository with the thin entrypoint, local override file, and artifact directory.
 - `dev-cadence-deliver`: run normal delivery work after initialization.
 - `dev-cadence-maintain`: inspect, sync, repair, diagnose, or upgrade Dev Cadence repository configuration.
-- `dev-cadence-authoring`: maintain this framework and plugin package.
+- `dev-cadence-authoring`: maintain this framework and Codex plugin source.
 
 ## Invocation Boundary
 
@@ -172,12 +144,7 @@ For new repositories, create or update only the thin repo-local contract:
 ```text
 AGENTS.md
 .gitignore
-
-.ai/
-  config.yaml
-  local.yaml
-  overrides/
-    .gitkeep
+.dev-cadence.yaml
 
 specs/
   .gitkeep
@@ -185,22 +152,13 @@ specs/
 
 `AGENTS.md` routes normal delivery work to the Dev Cadence plugin.
 
-`.ai/config.yaml` stores project defaults:
-
-```yaml
-dev_cadence:
-  artifact_language: en
-  specs_dir: specs
-  implementation_discipline: default
-  verification_discipline: default
-  review_profile: normal
-```
+Default Dev Cadence behavior is plugin-owned. Target repositories do not need a generated default config file.
 
 `default` means the built-in Dev Cadence delivery discipline in `delivery-disciplines.md`.
 
 Supported `artifact_language` values are `en` and `zh`. `en` is the framework default. `zh` means Chinese prose and defaults to Simplified Chinese unless repository rules say otherwise.
 
-`.ai/local.yaml` stores user-local overrides. Generate it with commented examples only:
+`.dev-cadence.yaml` stores user-local overrides. Generate it with commented examples only and keep it ignored by Git:
 
 ```yaml
 # Local Dev Cadence preferences.
@@ -210,11 +168,13 @@ Supported `artifact_language` values are `en` and `zh`. `en` is the framework de
 # - zh: Chinese, Simplified Chinese by default
 # dev_cadence:
 #   artifact_language: en
+#   specs_dir: specs
+#   implementation_discipline: default
+#   verification_discipline: default
+#   review_profile: normal
 ```
 
-When `.ai/local.yaml` contains an uncommented supported `dev_cadence.artifact_language`, it overrides `.ai/config.yaml`. Add `.ai/local.yaml` to `.gitignore` during initialization or maintenance so user-local preferences are not committed by default.
-
-`.ai/overrides/**` stores project-specific or stricter policy only. Do not copy generic framework defaults into this directory.
+When `.dev-cadence.yaml` contains an uncommented supported `dev_cadence.artifact_language`, it overrides the plugin default. Add `.dev-cadence.yaml` to `.gitignore` during initialization or maintenance so user-local preferences are not committed by default.
 
 If persistent visual companion sessions are used, add `.dev-cadence/visual-companion/` to `.gitignore`. The visual companion remains optional and must not be required for G1.
 
@@ -249,17 +209,15 @@ Artifact language applies to Markdown prose, notes, acceptance criteria text, re
 ## Initialization Rules
 
 - Create or update root `AGENTS.md` so normal software delivery requests route to Dev Cadence.
-- Create `.ai/config.yaml` with `dev_cadence.artifact_language: en` and default discipline settings unless an equivalent config already exists.
-- Create `.ai/local.yaml` with commented user preference fields unless it already exists.
-- Create `.ai/overrides/.gitkeep` when no overrides exist.
+- Create `.dev-cadence.yaml` with commented user preference fields unless it already exists.
 - Create `specs/.gitkeep` when needed to represent an empty specs directory.
-- Create or update `.gitignore` to include `.ai/local.yaml`, preserving existing ignore rules.
-- During initialization, synchronization, repair, or diagnosis, write only root `AGENTS.md`, root `.gitignore` entry for `.ai/local.yaml`, `.ai/config.yaml`, `.ai/local.yaml`, `.ai/overrides/**`, and `specs/.gitkeep` by default.
+- Create or update `.gitignore` to include `.dev-cadence.yaml`, preserving existing ignore rules.
+- During initialization, synchronization, repair, or diagnosis, write only root `AGENTS.md`, root `.gitignore` entry for `.dev-cadence.yaml`, root `.dev-cadence.yaml`, and `specs/.gitkeep` by default.
 - Do not modify product source, tests, migrations, build scripts, deployment files, or application configuration during framework initialization unless the user explicitly requests delivery work in the same turn.
 - Do not create task-specific specs during framework initialization unless the user explicitly requests a concrete delivery task in the same turn.
 - Do not infer a hidden product task from repository contents when the user asks only to prepare, initialize, apply, install, update, sync, repair, inspect, or diagnose the framework.
 - If `AGENTS.md` already exists, preserve existing repository instructions and add only a scoped AI delivery entrypoint section.
-- Preserve existing `.ai/` conventions and merge carefully. Unknown `.ai/` files are local project files unless they conflict with hard safety rules.
+- Preserve existing legacy `.ai/` conventions if already present, but do not create `.ai/` as the default Dev Cadence contract. Report legacy `.ai/` content as a local overlay for manual review when it appears relevant.
 
 ## Automatic Entrypoint
 
@@ -272,7 +230,7 @@ For software delivery tasks in this repository, use the Dev Cadence plugin.
 
 This applies to feature development, bugfixes, refactoring, code review, research spikes, incident fixes, and any request that changes or evaluates repository behavior.
 
-Read `.ai/config.yaml` and `.ai/overrides/**` when present. Write task artifacts and Harness evidence under `specs/{task_id}/`.
+Read root `.dev-cadence.yaml` when present for local overrides. Write task artifacts and Harness evidence under `specs/{task_id}/`.
 
 The user does not need to invoke a Skill name or choose a workflow. Dev Cadence infers `workflow_hint`, routes `selected_workflow`, records `selection_reason`, and follows its plugin-owned policies, templates, and gates.
 
@@ -284,7 +242,7 @@ Use direct execution without task specs only for explicitly trivial questions or
 Resolve runtime rules in this order:
 
 1. Current user request and explicit repository instructions.
-2. Repo-local `AGENTS.md`, `.ai/config.yaml`, and `.ai/overrides/**`.
+2. Repo-local `AGENTS.md` and `.dev-cadence.yaml`.
 3. Current task artifacts under `specs/{task_id}/`.
 4. Dev Cadence plugin references, templates, built-in delivery disciplines, and adapters.
 5. Configured adapters when selected.
@@ -313,7 +271,7 @@ dev_cadence:
 - use parallel Worker runs only for independent domains;
 - use Dev Cadence authoring validation when changing this plugin's own skills and references.
 
-`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. Package self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, and `scripts/check-spec-artifacts.mjs`. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
+`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. Plugin source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, and `scripts/check-spec-artifacts.mjs`. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
 
 External adapters are optional replacement points for Worker execution techniques. Dev Cadence still controls Supervisor routing, Harness evidence, Quality Gate, Human Gate, scope reconciliation, and final acceptance.
 
@@ -324,10 +282,8 @@ When an adapter is selected, the stricter compatible rule wins inside that Worke
 Maintenance may update:
 
 - root `AGENTS.md` AI delivery entrypoint section;
-- root `.gitignore` entry for `.ai/local.yaml`;
-- `.ai/config.yaml`;
-- `.ai/local.yaml`;
-- `.ai/overrides/.gitkeep`;
+- root `.gitignore` entry for `.dev-cadence.yaml`;
+- root `.dev-cadence.yaml`;
 - `specs/.gitkeep`.
 
 Maintenance must not touch product code or task-specific `specs/{task_id}/` artifacts unless the same user turn explicitly requests delivery work.

@@ -3,20 +3,20 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 function printHelp() {
-  console.log(`Usage: check-discipline-routes.mjs [skill-dir]
+  console.log(`Usage: check-discipline-routes.mjs [plugin-dir]
 
 Validates Dev Cadence discipline routing and bundled resource references.
 
 Arguments:
-  skill-dir  Skill package directory to check. Defaults to the parent directory
-             of this script.
+  plugin-dir  Plugin source directory to check. Defaults to the parent directory
+              of this script.
 
 Checks:
   - referenced references/, templates/, and scripts/ paths exist
   - delivery-disciplines.md routes to required discipline references
   - required prompt templates exist and are referenced
   - visual companion resources exist and are indexed
-  - SKILL.md Reference Map lists key package resources`);
+  - entrypoint skills reference required shared resources`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -24,7 +24,7 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
   process.exit(0);
 }
 
-const skillDir = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
+const pluginDir = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
 const errors = [];
 
 function fail(message) {
@@ -32,11 +32,11 @@ function fail(message) {
 }
 
 function readText(relativePath) {
-  return fs.readFileSync(path.join(skillDir, relativePath), 'utf8');
+  return fs.readFileSync(path.join(pluginDir, relativePath), 'utf8');
 }
 
 function exists(relativePath) {
-  return fs.existsSync(path.join(skillDir, relativePath));
+  return fs.existsSync(path.join(pluginDir, relativePath));
 }
 
 function extractBacktickPaths(text) {
@@ -178,27 +178,22 @@ function checkVisualCompanionScripts() {
   }
 }
 
-function checkSkillReferenceMap() {
-  const skillText = readText('SKILL.md');
+function checkEntrypointReferenceMap() {
+  const skillText = [
+    'skills/dev-cadence-init/SKILL.md',
+    'skills/dev-cadence-deliver/SKILL.md',
+    'skills/dev-cadence-maintain/SKILL.md',
+    'skills/dev-cadence-authoring/SKILL.md',
+  ].map(readText).join('\n');
   const expected = [
     'references/delivery-disciplines.md',
-    'references/adapters.md',
-    'references/visual-companion.md',
-    'templates/spec/',
-    'templates/runs/',
-    'templates/prompts/',
-    'scripts/check-skill-package.mjs',
-    'scripts/check-discipline-routes.mjs',
-    'scripts/check-spec-artifacts.mjs',
-    'scripts/init-task-artifacts.mjs',
-    'scripts/sync-repo-contract.mjs',
-    'scripts/run-delivery-dry-run.mjs',
-    'scripts/summarize-acceptance.mjs',
-    'scripts/visual-companion/',
+    'references/repository-rule-sync.md',
+    'references/authoring-discipline.md',
+    'references/skill-layout.md',
   ];
   for (const item of expected) {
     if (!skillText.includes(item)) {
-      fail(`SKILL.md: Reference Map missing ${item}`);
+      fail(`entrypoint skills: missing reference to ${item}`);
     }
   }
 }
@@ -229,12 +224,26 @@ function checkEntrypointSkills() {
   }
 }
 
-if (!exists('SKILL.md')) {
-  console.error(`Skill directory not found or missing SKILL.md: ${skillDir}`);
+function checkPluginSurface() {
+  const required = [
+    '.codex-plugin/plugin.json',
+    'hooks/hooks-codex.json',
+    'hooks/run-hook.cmd',
+    'hooks/session-start-codex',
+  ];
+  for (const relativePath of required) {
+    if (!exists(relativePath)) {
+      fail(`missing plugin surface resource: ${relativePath}`);
+    }
+  }
+}
+
+if (!fs.existsSync(pluginDir)) {
+  console.error(`Plugin directory not found: ${pluginDir}`);
   process.exit(2);
 }
 
-checkPathReferences('SKILL.md');
+checkPluginSurface();
 checkPathReferences('references/delivery-disciplines.md');
 checkPathReferences('references/visual-companion.md');
 checkPathReferences('references/skill-layout.md');
@@ -242,7 +251,7 @@ checkDeliveryStateTable();
 checkPromptTemplates();
 checkArtifactTemplates();
 checkVisualCompanionScripts();
-checkSkillReferenceMap();
+checkEntrypointReferenceMap();
 checkEntrypointSkills();
 
 if (errors.length > 0) {
@@ -253,4 +262,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`OK discipline routes verified for ${path.relative(process.cwd(), skillDir) || skillDir}`);
+console.log(`OK discipline routes verified for ${path.relative(process.cwd(), pluginDir) || pluginDir}`);

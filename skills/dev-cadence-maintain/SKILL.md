@@ -20,10 +20,8 @@ Read these shared plugin resources before reporting or changing files:
 Inspect, synchronize, repair, or diagnose the thin repo-local contract:
 
 - root `AGENTS.md`;
-- root `.gitignore` entry for `.ai/local.yaml`;
-- `.ai/config.yaml`;
-- `.ai/local.yaml`;
-- `.ai/overrides/**`;
+- root `.gitignore` entry for `.dev-cadence.yaml`;
+- root `.dev-cadence.yaml`;
 - `specs/.gitkeep`.
 
 Do not touch product source, tests, migrations, runtime configuration, dependency manifests, task-specific specs, commits, pushes, releases, databases, or production systems.

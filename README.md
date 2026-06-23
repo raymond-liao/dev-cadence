@@ -762,12 +762,7 @@ Harness Run Context 必须在每次执行前确定，并随 Execution Report 一
 ```text
 AGENTS.md
 .gitignore
-
-.ai/
-  config.yaml
-  local.yaml
-  overrides/
-    .gitkeep
+.dev-cadence.yaml
 
 specs/
   feature-x/
@@ -792,22 +787,9 @@ specs/
       ADR-001.md
 ```
 
-这是目标版 thin repo-local contract。通用工作流、Agent blueprint、gate、Harness 和模板由 Dev Cadence Plugin 持有；业务仓库只保存入口、配置、项目覆盖规则和任务证据。
+这是目标版 thin repo-local contract。通用工作流、Agent blueprint、gate、Harness、默认配置和模板由 Dev Cadence Plugin 持有；业务仓库只保存入口、本地覆盖配置和任务证据。
 
-`.ai/config.yaml` 保存项目默认配置：
-
-```yaml
-dev_cadence:
-  artifact_language: en
-  specs_dir: specs
-  implementation_discipline: default
-  verification_discipline: default
-  review_profile: normal
-```
-
-这里的 `default` 表示 Dev Cadence 内置交付纪律，不依赖外部 Skill。
-
-`.ai/local.yaml` 保存用户本地偏好，初始化时默认生成注释示例：
+`.dev-cadence.yaml` 保存被 Git 忽略的用户本地偏好，初始化时默认生成注释示例：
 
 ```yaml
 # Local Dev Cadence preferences.
@@ -817,9 +799,13 @@ dev_cadence:
 # - zh: Chinese, Simplified Chinese by default
 # dev_cadence:
 #   artifact_language: en
+#   specs_dir: specs
+#   implementation_discipline: default
+#   verification_discipline: default
+#   review_profile: normal
 ```
 
-`artifact_language` 支持 `en` 和 `zh`。它只控制 spec、测试报告、review 报告等任务产物中的自然语言正文；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 仍保持英文。如果用户取消注释 `.ai/local.yaml` 中的 `dev_cadence.artifact_language`，它优先于 `.ai/config.yaml`。初始化或更新时应把 `.ai/local.yaml` 加入 `.gitignore`。
+`artifact_language` 支持 `en` 和 `zh`。它只控制 spec、测试报告、review 报告等任务产物中的自然语言正文；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 仍保持英文。如果用户取消注释 `.dev-cadence.yaml` 中的 `dev_cadence.artifact_language`，它优先于插件默认值。初始化或更新时应把 `.dev-cadence.yaml` 加入 `.gitignore`。
 
 ### 10.2 核心文档
 
@@ -1053,36 +1039,53 @@ Integration: MCP / A2A
 Governance: Entra ID / RBAC / audit
 ```
 
-## 13. 交付形态：Dev Cadence Plugin
+## 13. 交付形态：Core 与 Codex Plugin
 
 本框架的最终产出不应只是一个说明文档，也不应一开始就做成完整平台。
 
-推荐将可共享产物设计为：
+Dev Cadence 本身应被理解为一套平台无关的 AI-native 软件交付协议和协作框架，而不是某一个 Codex Plugin。
+
+推荐分成两层：
 
 ```text
-Dev Cadence Plugin
+Dev Cadence Core
+  -> 平台无关的工作流、角色、门禁、Harness、artifact 和 adapter 契约
+
+Dev Cadence Codex Plugin
+  -> Dev Cadence Core 在 Codex 中的首个实现形态
+```
+
+也就是说，Codex Plugin 是当前阶段最合适的落地方式，但不是 Dev Cadence 的全部边界。后续可以继续出现 Claude Code adapter、OpenHands adapter、CI runner、LangGraph runtime、Microsoft Agent Framework runtime 或企业平台实现。
+
+当前建议将第一版可共享实现设计为：
+
+```text
+Dev Cadence Codex Plugin
   + 少量 user-facing skills
   + plugin-owned references/templates/adapters
   + thin repo-local contract
 ```
 
-这个 Plugin 的作用是把本方案中的 Agent 角色、工作流、上下文规则、质量门禁、Harness 契约和 artifact 模板，沉淀为团队成员可以在不同代码仓库中复用的 AI 协作规范。
+这个 Codex Plugin 的作用是把 Dev Cadence Core 中的 Agent 角色、工作流、上下文规则、质量门禁、Harness 契约和 artifact 模板，沉淀为团队成员可以在 Codex 中跨代码仓库复用的 AI 协作规范。
 
 关键设计是：
 
 ```text
-Dev Cadence Plugin
-  -> Plugin 持有通用规则、模板、adapter
-  -> 目标仓库只保留薄入口、项目配置、overrides 和任务证据
+Dev Cadence Core
+  -> 定义稳定协议和治理边界
+
+Dev Cadence Codex Plugin
+  -> 持有 Codex 侧通用规则、模板、adapter 和 helper scripts
+  -> 目标仓库只保留薄入口、本地覆盖配置和任务证据
 ```
 
 `specs/{task_id}/` 仍然是任务事实、执行证据和验收记录的 durable source of truth。变化的是：通用框架规则不再默认复制到每个业务仓库。
 
-### 13.1 为什么交付为 Plugin
+### 13.1 为什么首个实现选择 Codex Plugin
 
-Plugin 适合承载本框架的原因：
+Codex Plugin 适合作为首个实现形态的原因：
 
-- 它可以被团队成员直接安装和共享。
+- 它可以被 Codex 用户直接安装和共享。
 - 它可以包含多个 Skill、references、templates、scripts 和 adapter。
 - 它可以把通用流程规则放在一个可升级的位置，而不是复制进每个仓库。
 - 它可以让不同项目只保存本项目特有配置和证据。
@@ -1090,7 +1093,7 @@ Plugin 适合承载本框架的原因：
 - 它不绑定某个具体业务系统或技术栈。
 - 它允许框架先以轻量方式落地，再逐步演进为平台。
 
-也就是说，Plugin 是本框架从“理念”进入“团队日常使用”的第一种交付形态；平台化应在真实任务验证后再推进。
+也就是说，Codex Plugin 是 Dev Cadence 从“理念”进入“团队日常使用”的第一种实现形态；平台化和其他 agent runtime 的实现应在真实任务验证后再推进。
 
 ### 13.2 Skill 拆分原则
 
@@ -1120,11 +1123,11 @@ Adapter 按可替换执行纪律拆。
 
 ### 13.3 推荐 Skill 集合
 
-推荐 Plugin 先提供少量 user-facing skills：
+推荐 Codex Plugin 先提供少量 user-facing skills：
 
 ```text
 dev-cadence-init
-  初始化仓库薄入口、项目配置和 artifact 目录。
+  初始化仓库薄入口、本地覆盖配置和 artifact 目录。
 
 dev-cadence-deliver
   日常 feature、bugfix、refactor、review、research-spike、incident 的总入口。
@@ -1133,17 +1136,23 @@ dev-cadence-maintain
   显式 inspect、sync、repair、diagnose 或升级 repo-local 配置。
 
 dev-cadence-authoring
-  可选。维护 Dev Cadence 框架自身和 Plugin 包。
+  可选。维护 Dev Cadence Core、Codex Plugin 包和相关 references。
 ```
 
 `dev-cadence-deliver` 是日常开发主入口。它内部执行 Supervisor 状态机、加载 references/templates、创建 task artifacts、控制 Quality Gate 和 Human Gate，并在 Worker 阶段通过 Harness 运行具体 Agent 或 adapter。
 
-### 13.4 Plugin 自身结构
+### 13.4 Codex Plugin 自身结构
 
-推荐 Plugin 自身采用以下结构：
+推荐 Codex Plugin 自身采用以下结构：
 
 ```text
-dev-cadence-plugin/
+dev-cadence/
+  .codex-plugin/
+    plugin.json
+  hooks/
+    hooks-codex.json
+    run-hook.cmd
+    session-start-codex
   skills/
     dev-cadence-init/
       SKILL.md
@@ -1240,11 +1249,11 @@ dev-cadence-plugin/
 | `human-gates.md` | 记录 approval_required、review_required、info_required、notify_only 的触发规则 |
 | `adapters.md` | 记录可替换执行纪律如何接入 Worker 阶段 |
 | `templates/` | 提供任务 artifact、Harness evidence 和 Worker/reviewer prompt 模板 |
-| `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs` | 提供 Skill package、discipline route、prompt template、bundled resource 和 task artifact 的本地校验 |
+| `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs` | 提供 Plugin source layout、discipline route、prompt template、bundled resource 和 task artifact 的本地校验 |
 | `scripts/visual-companion/` | 提供可选本地浏览器 companion，用于 mockup、diagram 和视觉方案对比 |
 | `skill-layout.md` | 记录 Plugin 包结构和薄仓库契约 |
 
-Plugin 的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 调度和 review 使用 `templates/prompts/` 中的模板；package self-check 由 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
+Codex Plugin 的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 调度和 review 使用 `templates/prompts/` 中的模板；plugin source self-check 由 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
 
 ### 13.5 目标仓库薄契约
 
@@ -1253,33 +1262,15 @@ Plugin 的设计重点是渐进式加载：入口 Skill 保持精简，只放触
 ```text
 AGENTS.md
 .gitignore
-
-.ai/
-  config.yaml
-  local.yaml
-  overrides/
-    .gitkeep
+.dev-cadence.yaml
 
 specs/
   .gitkeep
 ```
 
-`AGENTS.md` 是仓库级自动入口，用于让 Codex 在普通交付请求中默认使用 Dev Cadence Plugin，而不是复制完整框架。
+`AGENTS.md` 是仓库级自动入口，用于让 Codex 在普通交付请求中默认使用 Dev Cadence Codex Plugin，而不是复制完整框架。
 
-`.ai/config.yaml` 保存项目级默认配置，例如：
-
-```yaml
-dev_cadence:
-  artifact_language: en
-  specs_dir: specs
-  implementation_discipline: default
-  verification_discipline: default
-  review_profile: normal
-```
-
-`.ai/local.yaml` 保存用户本地偏好，由 `.gitignore` 忽略。
-
-`.ai/overrides/` 只保存本仓库特有或更严格的规则，不保存通用框架默认规则。
+`.dev-cadence.yaml` 保存用户本地偏好，由 `.gitignore` 忽略。默认规则和默认配置由 Dev Cadence Codex Plugin 持有，不在目标仓库生成 `.ai/` 目录。
 
 如果使用持久化 visual companion session，目标仓库还应忽略：
 
@@ -1320,21 +1311,23 @@ Agent 之间不依赖聊天记录交接，而是通过 `specs/{task_id}/` 下的
 运行时规则优先级应分层：
 
 1. 当前用户请求和显式仓库指令。
-2. 仓库本地 `AGENTS.md`、`.ai/config.yaml`、`.ai/overrides/**`。
+2. 仓库本地 `AGENTS.md` 和 `.dev-cadence.yaml`。
 3. 当前任务 artifacts：`specs/{task_id}/**`。
-4. Dev Cadence Plugin 的 references、templates、内置交付纪律和 adapter。
+4. Dev Cadence Codex Plugin 的 references、templates、内置交付纪律和 adapter。
 5. 被显式配置的外部 adapter。
 
-Plugin 提供默认流程规则。Repo-local overlays 可以增加更严格或更项目化的约束，但不能削弱 named Human acceptance、证据要求、权限门禁、Requirements Readiness Check 或 Harness evidence。
+Codex Plugin 提供默认流程规则。Repo-local overlays 可以增加更严格或更项目化的约束，但不能削弱 Dev Cadence Core 定义的 named Human acceptance、证据要求、权限门禁、Requirements Readiness Check 或 Harness evidence。
 
 ### 13.7 内置交付纪律与 Adapter 模型
 
 Dev Cadence 默认内置一套严格交付纪律。Adapter 是未来替换某个 Worker 执行技术的扩展点，不是默认纪律的来源。
 
-默认 `.ai/config.yaml` 配置：
+默认配置由插件持有；`.dev-cadence.yaml` 只保存本地覆盖：
 
 ```yaml
 dev_cadence:
+  artifact_language: en
+  specs_dir: specs
   implementation_discipline: default
   verification_discipline: default
   review_profile: normal
@@ -1351,7 +1344,7 @@ dev_cadence:
 - 只有在多个问题域彼此独立时才并行调度 Worker。
 - 维护 Dev Cadence 自身 Skill 或 references 时，使用面向 Skill 行为的验证纪律。
 
-内置规则不是对外部 Skill 的引用，而是 Dev Cadence 自己持有的 reference、artifact template、prompt template 和 optional scripts。当前默认 discipline 的加载入口是 `delivery-disciplines.md`，它会按状态加载 `intent-and-design-discipline.md`、`visual-companion.md`、`planning-discipline.md`、`implementation-discipline.md`、`debugging-discipline.md`、`review-discipline.md`、`verification-discipline.md` 和 `authoring-discipline.md` 等细分规则。Skill package 自身通过 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 做轻量本地校验，避免 package 语言边界、路由引用、artifact template 或 prompt template 在后续演进中漂移。
+内置规则不是对外部 Skill 的引用，而是 Dev Cadence 自己持有的 reference、artifact template、prompt template 和 optional scripts。当前默认 discipline 的加载入口是 `delivery-disciplines.md`，它会按状态加载 `intent-and-design-discipline.md`、`visual-companion.md`、`planning-discipline.md`、`implementation-discipline.md`、`debugging-discipline.md`、`review-discipline.md`、`verification-discipline.md` 和 `authoring-discipline.md` 等细分规则。Plugin source 自身通过 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 做轻量本地校验，避免 package 语言边界、路由引用、artifact template 或 prompt template 在后续演进中漂移。
 
 日常实现阶段的默认路径是：
 
@@ -1379,16 +1372,18 @@ Adapter 只在显式配置时替换某个 Worker 阶段的执行技术。
 
 Adapter 不能覆盖最终 Human Gate、Quality Gate、Harness evidence、权限审批、Requirements Readiness Check 和 scope reconciliation。
 
-### 13.8 从 Plugin 到平台
+### 13.8 从 Codex Plugin 到其他运行时和平台
 
-Plugin 是主要交付形态，但不是最终平台形态的全部。
+Codex Plugin 是当前第一实现形态，但不是最终平台形态的全部，也不是 Dev Cadence Core 的唯一实现。
 
 推荐演进路径：
 
 ```text
 README 方案
   ↓
-Dev Cadence Plugin
+Dev Cadence Core
+  ↓
+Dev Cadence Codex Plugin
   ↓
 Thin repo-local contract + specs
   ↓
@@ -1401,11 +1396,11 @@ Agent Orchestration Platform
 Enterprise Control Plane
 ```
 
-在平台化之前，先通过 Plugin 固化协作规范，可以避免过早工程化。
+在平台化或支持更多 agent runtime 之前，先通过 Codex Plugin 固化协作规范，可以避免过早工程化。
 
 平台化准入条件：
 
-- Dev Cadence Plugin 已在一批真实任务中跑通，覆盖 feature-dev、bugfix、code-review、refactor 和 incident-fix 中的主要路径。
+- Dev Cadence Codex Plugin 已在一批真实任务中跑通，覆盖 feature-dev、bugfix、code-review、refactor 和 incident-fix 中的主要路径。
 - 任务分级、Human Gate、Quality Gate 和 Harness execution report 的规则变化已经趋稳。
 - 默认交付纪律已经在真实任务中稳定运行，且 adapter 模型不会破坏治理边界。
 - 关键指标可以记录，包括 cycle time、test evidence completeness、fix loop count、defect escape、human intervention frequency、workflow friction。
@@ -1413,11 +1408,11 @@ Enterprise Control Plane
 - 团队确认流程收益大于流程负担。
 - 平台能力来自稳定重复的流程需求，而不是为了提前工程化而工程化。
 
-## 14. 目标版 Plugin 方案
+## 14. 目标版 Codex Plugin 方案
 
 ### 14.1 目标
 
-目标版 Plugin 不等于完整平台。它应完整表达本框架的核心职责分离：
+目标版 Codex Plugin 不等于 Dev Cadence Core，也不等于完整平台。它应在 Codex 中完整表达本框架的核心职责分离：
 
 - Supervisor 是否能控制状态、分级、workflow、gate 和升级。
 - Harness 是否能约束上下文、工具、权限和证据采集。
@@ -1540,7 +1535,7 @@ specs/{task_id}/runs/{run_id}/
 后续实现按目标架构直接推进：
 
 1. 将 Plugin 化目标和 thin repo-local contract 固化到方案文档和 Skill references。
-2. 实现 `dev-cadence-init` 的薄初始化，只生成 `AGENTS.md`、`.ai/config.yaml`、`.ai/local.yaml`、`.ai/overrides/` 和 `specs/`。
+2. 实现 `dev-cadence-init` 的薄初始化，只生成 `AGENTS.md`、`.gitignore`、`.dev-cadence.yaml` 和 `specs/`。
 3. 实现 `dev-cadence-deliver` 的 plugin-owned runtime，由它加载 references、templates 和 adapters。
 4. 增加并验证 `delivery-disciplines.md`、细分 discipline references、Worker/reviewer prompt templates 和 `adapters.md`，先跑通内置默认交付纪律，再决定是否接入外部 adapter。
 5. 更新维护流程，让 inspect/sync/repair 只面向 thin repo-local contract。
@@ -1646,24 +1641,28 @@ docs/plugin-skill-modularization.md
 8. Target Plugin package shape
 9. Thin repo-local contract and `specs/` output structure
 
-当前过渡版 Skill package 已经包含多入口 Skill 结构：
+当前 Codex Plugin source 已经采用 root-level plugin 结构：
 
 ```text
-skills/dev-cadence/
-  SKILL.md
+dev-cadence/
+  .codex-plugin/plugin.json
+  hooks/
   skills/
     dev-cadence-init/
     dev-cadence-deliver/
     dev-cadence-maintain/
     dev-cadence-authoring/
+  references/
+  templates/
+  scripts/
 ```
 
-该 package 当前包含兼容根入口 `SKILL.md`、四个 user-facing entrypoint skills、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 package self-check、artifact 初始化和 visual companion 工具。后续仍应按本方案演进为正式 Plugin 分发形态。
+该 plugin source 当前包含 Codex manifest、session-start hook、四个 user-facing entrypoint skills、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 plugin source self-check、artifact 初始化和 visual companion 工具。
 
 语言边界：
 
 - 项目方案文档使用中文，包括 `README.md` 和 `docs/**`。
-- 可发布 Skill 内容使用英文，包括 `skills/dev-cadence/**` 下的 `SKILL.md`、`agents/`、`references/` 和模板说明。
+- 可发布 Plugin 内容使用英文，包括 `skills/**`、`references/**`、`templates/**`、`scripts/**` 和 `hooks/**`。
 - 任务 artifact 的自然语言正文由 `artifact_language` 决定；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 保持英文。
 
 仍然后置的主题包括：

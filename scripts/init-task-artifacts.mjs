@@ -34,8 +34,9 @@ Required:
 Options:
   --run-id <id>        Also initialize Harness evidence under runs/<run-id>.
   --specs-dir <dir>    Specs output directory. Defaults to specs.
-  --skill-dir <dir>    Dev Cadence skill package directory. Defaults to the
+  --plugin-dir <dir>   Dev Cadence plugin source directory. Defaults to the
                        parent directory of this script.
+  --skill-dir <dir>    Deprecated alias for --plugin-dir.
   --overwrite          Replace existing artifact files. Defaults to skip.
   --dry-run            Report planned writes without creating files.
   --json               Print machine-readable JSON report.
@@ -54,7 +55,7 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 
 function parseArgs(argv) {
   const options = {
-    skillDir: path.resolve(path.join(import.meta.dirname, '..')),
+    pluginDir: path.resolve(path.join(import.meta.dirname, '..')),
     specsDir: path.resolve('specs'),
     taskId: null,
     runId: null,
@@ -74,8 +75,11 @@ function parseArgs(argv) {
     } else if (arg === '--specs-dir') {
       options.specsDir = path.resolve(readValue(argv, index, arg));
       index += 1;
+    } else if (arg === '--plugin-dir') {
+      options.pluginDir = path.resolve(readValue(argv, index, arg));
+      index += 1;
     } else if (arg === '--skill-dir') {
-      options.skillDir = path.resolve(readValue(argv, index, arg));
+      options.pluginDir = path.resolve(readValue(argv, index, arg));
       index += 1;
     } else if (arg === '--overwrite') {
       options.overwrite = true;
@@ -172,8 +176,8 @@ function copyTemplates(options, report, templateDir, destinationDir, templateNam
 
 function initialize(options) {
   const report = createReport(options);
-  const specTemplateDir = path.join(options.skillDir, 'templates', 'spec');
-  const runTemplateDir = path.join(options.skillDir, 'templates', 'runs');
+  const specTemplateDir = path.join(options.pluginDir, 'templates', 'spec');
+  const runTemplateDir = path.join(options.pluginDir, 'templates', 'runs');
   const taskDir = path.join(options.specsDir, options.taskId);
 
   copyTemplates(options, report, specTemplateDir, taskDir, SPEC_TEMPLATES);

@@ -5,7 +5,7 @@
 当前阶段的验收目标是确认：
 
 - 方案路线图 R1-R7 已闭环；
-- Skill package 结构、routes、templates 和 specs 仍然可校验；
+- Codex Plugin source layout、routes、templates 和 specs 仍然可校验；
 - thin repo-local contract 可以初始化；
 - delivery dry run 可以生成 task artifacts、Harness evidence 和 acceptance summary；
 - 用户可以直接阅读验收摘要，不需要自己翻多个 artifact 文件。
@@ -35,17 +35,17 @@ sed -n '1,240p' docs/dev-cadence-roadmap.md
 在仓库根目录执行：
 
 ```bash
-node skills/dev-cadence/scripts/check-skill-package.mjs skills/dev-cadence
-node skills/dev-cadence/scripts/check-discipline-routes.mjs skills/dev-cadence
-node skills/dev-cadence/scripts/check-spec-artifacts.mjs specs
-node skills/dev-cadence/scripts/check-spec-artifacts.mjs skills/dev-cadence/templates
+node scripts/check-skill-package.mjs .
+node scripts/check-discipline-routes.mjs .
+node scripts/check-spec-artifacts.mjs specs
+node scripts/check-spec-artifacts.mjs templates
 git diff --check
 ```
 
 预期结果：
 
-- `check-skill-package.mjs` 输出 `OK checked ... files in skills/dev-cadence`
-- `check-discipline-routes.mjs` 输出 `OK discipline routes verified for skills/dev-cadence`
+- `check-skill-package.mjs` 输出 `OK checked ... plugin files in ...`
+- `check-discipline-routes.mjs` 输出 `OK discipline routes verified for ...`
 - 两次 `check-spec-artifacts.mjs` 都输出 `OK checked spec artifacts ...`
 - `git diff --check` 没有输出并且退出码为 0
 
@@ -62,19 +62,7 @@ tmp="$(mktemp -d /tmp/dev-cadence-acceptance.XXXXXX)"
 初始化 thin repo-local contract：
 
 ```bash
-node skills/dev-cadence/scripts/sync-repo-contract.mjs --mode init --repo-dir "$tmp"
-```
-
-注意：`init` 是 `--mode` 的值，不是位置参数。下面这种写法是错误的：
-
-```bash
-node skills/dev-cadence/scripts/sync-repo-contract.mjs init --repo-dir "$tmp"
-```
-
-如果写成位置参数，脚本会返回：
-
-```text
-ERROR Unknown option: init
+node scripts/sync-repo-contract.mjs init --repo-dir "$tmp"
 ```
 
 初始化成功时，输出里应包含：
@@ -89,16 +77,14 @@ Initialized: yes
 ```text
 AGENTS.md
 .gitignore
-.ai/config.yaml
-.ai/local.yaml
-.ai/overrides/.gitkeep
+.dev-cadence.yaml
 specs/.gitkeep
 ```
 
 然后运行一次 delivery dry run：
 
 ```bash
-node skills/dev-cadence/scripts/run-delivery-dry-run.mjs \
+node scripts/run-delivery-dry-run.mjs \
   --repo-dir "$tmp" \
   --task-id acceptance-login \
   --goal "Develop a login feature" \
@@ -122,7 +108,7 @@ Scope reconciliation: passed_no_product_changes
 执行：
 
 ```bash
-node skills/dev-cadence/scripts/summarize-acceptance.mjs \
+node scripts/summarize-acceptance.mjs \
   --specs-dir "$tmp/specs" \
   --task-id acceptance-login
 ```
@@ -165,7 +151,7 @@ Product behavior remains unverified.
 可选执行：
 
 ```bash
-node skills/dev-cadence/scripts/check-spec-artifacts.mjs "$tmp/specs"
+node scripts/check-spec-artifacts.mjs "$tmp/specs"
 ```
 
 预期输出：
@@ -204,7 +190,7 @@ find "$tmp/specs/acceptance-login" -type f | sort
 
 - R1-R7 在路线图中都是 `done`；
 - 核心检查命令全部通过；
-- `sync-repo-contract.mjs --mode init` 能初始化临时目录；
+- `sync-repo-contract.mjs init` 能初始化临时目录；
 - delivery dry run 能生成 artifacts 和 run evidence；
 - acceptance summary 能直接显示目标、workflow、task class、scope reconciliation、verification、review、acceptance、blockers 和 residual risk；
 - summary 明确说明 dry run 不验证产品行为；
@@ -215,7 +201,7 @@ find "$tmp/specs/acceptance-login" -type f | sort
 出现以下情况时，不应验收通过：
 
 - 核心检查命令失败；
-- `sync-repo-contract.mjs --mode init` 没有生成 thin contract；
+- `sync-repo-contract.mjs init` 没有生成 thin contract；
 - dry run 没有生成 `specs/{task_id}/` 或 `runs/{run_id}/`；
 - summary 需要用户手动翻多个文件才能判断是否接受；
 - summary 没有显示 residual risk；

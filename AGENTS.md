@@ -2,14 +2,19 @@
 
 ## 项目结构与模块组织
 
-本仓库记录一套 AI-native 软件交付框架，并打包 `dev-cadence` Codex Skill。
+本仓库记录一套 AI-native 软件交付框架，并打包 `dev-cadence` Codex Plugin。
 
 - `README.md`：主要框架方案和架构概览。
 - `docs/`：支撑性设计说明。
-- `skills/dev-cadence/`：Skill package，包含 `SKILL.md`、`agents/` 和 `references/`。
+- `.codex-plugin/plugin.json`：Codex Plugin manifest。
+- `hooks/`：Codex plugin session-start hook。
+- `skills/`：发布用入口 Skills。
+- `references/`：发布用框架 references。
+- `templates/`：发布用 task artifacts、Harness evidence 和 prompt templates。
+- `scripts/`：发布用校验、初始化和辅助脚本。
 - `research/`：研究、agent prompts、材料、分析、验证和报告。
 
-新增框架 reference 时，放在最相关的现有 reference 附近。探索性或研究专用材料放在 `research/` 下，不要放进 `skills/`，除非它属于要发布的 Skill。
+新增框架 reference 时，放在 `references/` 下最相关的现有 reference 附近。探索性或研究专用材料放在 `research/` 下，不要放进发布用 plugin 目录，除非它属于要发布的能力。
 
 ## 构建、测试与开发命令
 
@@ -17,10 +22,10 @@
 
 - `rg --files`：快速列出项目文件。
 - `rg "term" README.md skills docs research`：搜索框架术语，避免定义冲突。
-- `node skills/dev-cadence/scripts/check-skill-package.mjs skills/dev-cadence`：校验 Skill package 结构、语言边界和脚本状态。
-- `node skills/dev-cadence/scripts/check-discipline-routes.mjs skills/dev-cadence`：校验 discipline routes、prompt templates 和 bundled resources。
-- `node skills/dev-cadence/scripts/check-spec-artifacts.mjs specs`：校验 task artifact 中 fenced YAML-like blocks 的重复键。
-- `git diff -- README.md skills docs research`：提交前检查文档和 Skill 变更。
+- `node scripts/check-skill-package.mjs .`：校验 Plugin source layout、语言边界和脚本状态。
+- `node scripts/check-discipline-routes.mjs .`：校验 discipline routes、prompt templates 和 bundled resources。
+- `node scripts/check-spec-artifacts.mjs specs`：校验 task artifact 中 fenced YAML-like blocks 的重复键。
+- `git diff -- README.md docs AGENTS.md .codex-plugin hooks skills references templates scripts research`：提交前检查文档和 Plugin 变更。
 
 如果新增生成产物或脚本，请在同一次变更中记录对应命令。
 
@@ -31,14 +36,14 @@
 语言边界：
 
 - 项目文档使用中文，包括 `README.md`、`docs/**` 和本文件。
-- 发布用 Skill package 内容使用英文，包括 `skills/dev-cadence/**` 下的 `SKILL.md`、`agents/`、`references/`、模板说明、YAML keys、status values、workflow IDs 和 gate IDs。
+- 发布用 Plugin 内容使用英文，包括 `.codex-plugin/**`、`hooks/**`、`skills/**`、`references/**`、`templates/**`、`scripts/**` 下的说明文字、YAML keys、status values、workflow IDs 和 gate IDs。
 - 任务 artifact 的自然语言正文由 `artifact_language` 决定；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 保持英文。
 
 Markdown reference 文件名使用小写连字符，例如 `quality-gates.md` 或 `skill-layout.md`。保留 research agent 文件的现有编号前缀，例如 `00.orchestrator.md`。
 
 ## 测试指南
 
-当前未配置自动化测试。通过阅读渲染后的 Markdown、检查链接和路径、搜索重复或冲突规则来验证变更。涉及 Skill 行为变更时，检查 `skills/dev-cadence/SKILL.md` 以及它直接引用的 `skills/dev-cadence/references/` 文件。
+当前未配置自动化测试。通过阅读渲染后的 Markdown、检查链接和路径、搜索重复或冲突规则来验证变更。涉及 Skill 行为变更时，检查对应 `skills/*/SKILL.md` 以及它直接引用的 `references/` 文件。
 
 未来如果加入代码示例或工具，优先使用 TDD。如果 TDD 不适合文档类工作，说明采用的替代反馈。
 

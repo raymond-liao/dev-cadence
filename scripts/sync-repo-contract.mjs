@@ -12,20 +12,12 @@ For software delivery tasks in this repository, use the Dev Cadence plugin.
 
 This applies to feature development, bugfixes, refactoring, code review, research spikes, incident fixes, and any request that changes or evaluates repository behavior.
 
-Read \`.ai/config.yaml\` and \`.ai/overrides/**\` when present. Write task artifacts and Harness evidence under \`specs/{task_id}/\`.
+Read root \`.dev-cadence.yaml\` when present for local overrides. Write task artifacts and Harness evidence under \`specs/{task_id}/\`.
 
 The user does not need to invoke a Skill name or choose a workflow. Dev Cadence infers \`workflow_hint\`, routes \`selected_workflow\`, records \`selection_reason\`, and follows its plugin-owned policies, templates, and gates.
 
 Use direct execution without task specs only for explicitly trivial questions or non-delivery requests.
 ${END_MARKER}
-`;
-
-const CONFIG_YAML = `dev_cadence:
-  artifact_language: en
-  specs_dir: specs
-  implementation_discipline: default
-  verification_discipline: default
-  review_profile: normal
 `;
 
 const LOCAL_YAML = `# Local Dev Cadence preferences.
@@ -35,10 +27,14 @@ const LOCAL_YAML = `# Local Dev Cadence preferences.
 # - zh: Chinese, Simplified Chinese by default
 # dev_cadence:
 #   artifact_language: en
+#   specs_dir: specs
+#   implementation_discipline: default
+#   verification_discipline: default
+#   review_profile: normal
 `;
 
 function printHelp() {
-  console.log(`Usage: sync-repo-contract.mjs --mode <mode> [options]
+  console.log(`Usage: sync-repo-contract.mjs <mode> [options]
 
 Initializes, inspects, or repairs the Dev Cadence thin repo-local contract.
 
@@ -55,8 +51,8 @@ Options:
   --json             Print machine-readable JSON report.
   -h, --help         Show this help text.
 
-Writes are limited to root AGENTS.md, root .gitignore, .ai/config.yaml,
-.ai/local.yaml, .ai/overrides/.gitkeep, and specs/.gitkeep.`);
+Writes are limited to root AGENTS.md, root .gitignore, root .dev-cadence.yaml,
+and specs/.gitkeep.`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -74,9 +70,8 @@ function parseArgs(argv) {
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
-    if (arg === '--mode') {
-      options.mode = readValue(argv, index, arg);
-      index += 1;
+    if (supportedModes.has(arg) && options.mode === null) {
+      options.mode = arg;
     } else if (arg === '--repo-dir') {
       options.repoDir = readValue(argv, index, arg);
       index += 1;
@@ -89,9 +84,8 @@ function parseArgs(argv) {
     }
   }
 
-  const supportedModes = new Set(['inspect', 'init', 'sync', 'repair', 'diagnose']);
   if (!options.mode || !supportedModes.has(options.mode)) {
-    throw new Error(`Missing or unsupported --mode. Use one of: ${[...supportedModes].join(', ')}`);
+    throw new Error(`Missing or unsupported mode. Use one of: ${[...supportedModes].join(', ')}`);
   }
 
   options.repoDir = path.resolve(options.repoDir);
@@ -152,6 +146,8 @@ function createReport(options) {
     next_steps: [],
   };
 }
+
+const supportedModes = new Set(['inspect', 'init', 'sync', 'repair', 'diagnose']);
 
 function record(report, field, repoDir, filePath) {
   const value = rel(repoDir, filePath);
@@ -230,13 +226,13 @@ function reconcileGitignore(options, report) {
   const gitignorePath = path.join(options.repoDir, '.gitignore');
   const existing = readIfExists(gitignorePath);
   const lines = existing ? existing.split(/\r?\n/) : [];
-  const hasEntry = lines.some((line) => line.trim() === '.ai/local.yaml');
+  const hasEntry = lines.some((line) => line.trim() === '.dev-cadence.yaml');
 
   if (!shouldWrite(options.mode)) {
     if (hasEntry) {
       record(report, 'files_preserved', options.repoDir, gitignorePath);
     } else {
-      report.next_steps.push('Add .ai/local.yaml to .gitignore');
+      report.next_steps.push('Add .dev-cadence.yaml to .gitignore');
     }
     return;
   }
@@ -247,40 +243,24 @@ function reconcileGitignore(options, report) {
   }
 
   const base = existing === null ? '' : existing.trimEnd();
-  const next = `${base}${base ? '\n' : ''}.ai/local.yaml\n`;
+  const next = `${base}${base ? '\n' : ''}.dev-cadence.yaml\n`;
   writeFileIfNeeded(options, report, gitignorePath, next);
 }
 
-function reconcileConfig(options, report) {
-  const configPath = path.join(options.repoDir, '.ai', 'config.yaml');
-  const existing = readIfExists(configPath);
-
-  if (existing !== null) {
-    record(report, 'files_preserved', options.repoDir, configPath);
-    if (!existing.includes('dev_cadence:')) {
-      report.conflicts.push('.ai/config.yaml exists without dev_cadence key');
-      report.manual_review_required.push('Review .ai/config.yaml before automatic config merge');
+function reconcileLocal(options, report) {
+  const localPath = path.join(options.repoDir, '.dev-cadence.yaml');
+  if (fs.existsSync(localPath)) {
+    record(report, 'files_preserved', options.repoDir, localPath);
+    const existing = readIfExists(localPath);
+    if (existing && !existing.includes('dev_cadence:') && /[A-Za-z0-9_]+:/.test(existing)) {
+      report.conflicts.push('.dev-cadence.yaml exists without dev_cadence key');
+      report.manual_review_required.push('Review .dev-cadence.yaml before automatic config merge');
     }
     return;
   }
 
   if (!shouldWrite(options.mode)) {
-    report.next_steps.push('Create .ai/config.yaml with Dev Cadence defaults');
-    return;
-  }
-
-  writeFileIfNeeded(options, report, configPath, CONFIG_YAML);
-}
-
-function reconcileLocal(options, report) {
-  const localPath = path.join(options.repoDir, '.ai', 'local.yaml');
-  if (fs.existsSync(localPath)) {
-    record(report, 'files_preserved', options.repoDir, localPath);
-    return;
-  }
-
-  if (!shouldWrite(options.mode)) {
-    report.next_steps.push('Create .ai/local.yaml with commented local preferences');
+    report.next_steps.push('Create .dev-cadence.yaml with commented local preferences');
     return;
   }
 
@@ -306,24 +286,18 @@ function reconcileGitkeep(options, report, dir, gitkeepPath) {
   writeFileIfNeeded(options, report, gitkeepPath, '');
 }
 
-function inspectUnknownAi(options, report) {
+function inspectLegacyAi(options, report) {
   const aiDir = path.join(options.repoDir, '.ai');
-  if (!fs.existsSync(aiDir)) return;
-
-  const known = new Set(['config.yaml', 'local.yaml', 'overrides']);
-  for (const entry of fs.readdirSync(aiDir)) {
-    if (!known.has(entry)) {
-      record(report, 'local_overlays', options.repoDir, path.join(aiDir, entry));
-    }
+  if (fs.existsSync(aiDir)) {
+    record(report, 'local_overlays', options.repoDir, aiDir);
+    report.manual_review_required.push('Legacy .ai/ directory is not part of the default Dev Cadence contract; preserve or migrate it manually if it contains project-owned policy.');
   }
 }
 
 function verify(options, report) {
   const agents = readIfExists(path.join(options.repoDir, 'AGENTS.md')) || '';
   const gitignore = readIfExists(path.join(options.repoDir, '.gitignore')) || '';
-  const configExists = fs.existsSync(path.join(options.repoDir, '.ai', 'config.yaml'));
-  const localExists = fs.existsSync(path.join(options.repoDir, '.ai', 'local.yaml'));
-  const overridesExists = fs.existsSync(path.join(options.repoDir, '.ai', 'overrides'));
+  const localExists = fs.existsSync(path.join(options.repoDir, '.dev-cadence.yaml'));
   const specsExists = fs.existsSync(path.join(options.repoDir, 'specs'));
 
   report.verification.push({
@@ -331,16 +305,8 @@ function verify(options, report) {
     status: agents.includes(START_MARKER) && agents.includes('Dev Cadence plugin') ? 'pass' : 'missing',
   });
   report.verification.push({
-    check: '.ai/config.yaml exists',
-    status: configExists ? 'pass' : 'missing',
-  });
-  report.verification.push({
-    check: '.ai/local.yaml exists and is ignored',
-    status: localExists && gitignore.split(/\r?\n/).some((line) => line.trim() === '.ai/local.yaml') ? 'pass' : 'missing',
-  });
-  report.verification.push({
-    check: '.ai/overrides/ exists',
-    status: overridesExists ? 'pass' : 'missing',
+    check: '.dev-cadence.yaml exists and is ignored',
+    status: localExists && gitignore.split(/\r?\n/).some((line) => line.trim() === '.dev-cadence.yaml') ? 'pass' : 'missing',
   });
   report.verification.push({
     check: 'specs/ exists',
@@ -368,18 +334,16 @@ function reconcile(options) {
 
   const agentsOk = reconcileAgents(options, report);
   if (!agentsOk) {
-    inspectUnknownAi(options, report);
+    inspectLegacyAi(options, report);
     verify(options, report);
     report.next_steps.push('Repair AGENTS.md marker conflict before running sync or repair again');
     return report;
   }
 
   reconcileGitignore(options, report);
-  reconcileConfig(options, report);
   reconcileLocal(options, report);
-  reconcileGitkeep(options, report, path.join(options.repoDir, '.ai', 'overrides'), path.join(options.repoDir, '.ai', 'overrides', '.gitkeep'));
   reconcileGitkeep(options, report, path.join(options.repoDir, 'specs'), path.join(options.repoDir, 'specs', '.gitkeep'));
-  inspectUnknownAi(options, report);
+  inspectLegacyAi(options, report);
   verify(options, report);
 
   if (report.initialized) {
