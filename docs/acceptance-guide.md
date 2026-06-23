@@ -5,7 +5,7 @@
 当前阶段的验收目标是确认：
 
 - 方案路线图 R1-R7 已闭环；
-- `dev-cadence` Codex 发布结构、routes、templates 和 specs 仍然可校验；
+- `dev-cadence` Codex 发布结构、routes、templates 和 dry-run 生成的 specs 仍然可校验；
 - thin repo-local contract 可以初始化；
 - delivery dry run 可以生成 task artifacts、Harness evidence 和 acceptance summary；
 - 用户可以直接阅读验收摘要，不需要自己翻多个 artifact 文件。
@@ -44,10 +44,11 @@ bash tests/run-all.sh
 - `tests/run-all.sh` 内部会调用 `package-codex-plugin.mjs` 并验证生成包边界
 - `check-skill-package.mjs` 输出 `OK checked ... plugin files in ...`
 - `check-discipline-routes.mjs` 输出 `OK discipline routes verified for ...`
-- 两次 `check-spec-artifacts.mjs` 都输出 `OK checked spec artifacts ...`
+- `test-dry-run.sh` 会对临时生成的 `specs/` 运行 artifact 检查
+- `check-spec-artifacts.mjs templates` 输出 `OK checked spec artifacts ...`
 - `git diff --check` 没有输出并且退出码为 0
 
-这些检查证明包结构、发布边界、引用关系、artifact 格式、核心脚本行为和 diff whitespace 没有结构性错误；它们不证明真实用户产品功能行为。
+这些检查证明包结构、发布边界、引用关系、artifact 模板、临时生成 artifact、核心脚本行为和 diff whitespace 没有结构性错误；它们不证明真实用户产品功能行为。
 
 ## 3. 生成本地 Codex 发布包
 

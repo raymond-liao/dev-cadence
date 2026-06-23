@@ -21,13 +21,13 @@
 截至当前基线，已经完成：
 
 - 方案文档已中文化，并记录 Plugin 化目标、thin repo-local contract、Supervisor、Harness、Quality Gate、Human Gate 和 Adapter 模型。
-- 单一 `skills/dev-cadence/` Skill 已作为当前 installer/maintenance 入口存在。
+- `skills/dev-cadence-init`、`skills/dev-cadence-deliver`、`skills/dev-cadence-maintain` 和 `skills/dev-cadence-authoring` 已作为当前 user-facing 入口存在。
 - Plugin-owned references 已落地，包括 delivery disciplines、workflow、task classes、agent blueprints、Harness、gates、review、verification、debugging、visual companion 等。
 - `templates/spec/`、`templates/runs/` 和 `templates/prompts/` 已落地。
 - Package self-check、discipline route check 和 artifact check 脚本已落地并通过。
-- `specs/20260622-self-check-help/` 已作为一次内部 dry-run evidence 存在。
+- 内部 dry-run evidence 已由自动化测试在临时目录生成；仓库不再长期追踪历史 `specs/` 运行产物。
 
-当前核心缺口是：资源和规则已经在单一 Skill 包内基本齐备，但目标多入口 Skill、repo-local 初始化器、delivery runtime、maintenance runtime 和 adapter reference 尚未全部实现。
+当前阶段 R1-R7 已完成。后续如果新增工作，应追加新的路线图条目，而不是把历史已完成计划改写成新的临时列表。
 
 ## 路线图
 
@@ -36,7 +36,7 @@
 状态：`done`
 
 目标：
-补齐 `skills/dev-cadence/references/adapters.md`，让方案中的 Adapter 模型成为 Skill package 的稳定 reference，而不是只散落在设计文档和 `delivery-disciplines.md` 的边界说明中。
+补齐 `references/adapters.md`，让方案中的 Adapter 模型成为 Plugin package 的稳定 reference，而不是只散落在设计文档和 `delivery-disciplines.md` 的边界说明中。
 
 范围：
 
@@ -54,7 +54,7 @@
 依赖：无。
 
 备注：
-已完成。`skills/dev-cadence/references/adapters.md` 已新增，并接入 `SKILL.md` Reference Map、`delivery-disciplines.md` state loading contract 和 `check-discipline-routes.mjs`。验证证据：`check-skill-package.mjs`、`check-discipline-routes.mjs`、`check-spec-artifacts.mjs specs`、`check-spec-artifacts.mjs skills/dev-cadence/templates`、`git diff --check`。
+已完成。`references/adapters.md` 已新增，并接入 Reference Map、`delivery-disciplines.md` state loading contract 和 `check-discipline-routes.mjs`。验证证据：`check-skill-package.mjs`、`check-discipline-routes.mjs`、`check-spec-artifacts.mjs templates`、临时 dry-run specs 检查和 `git diff --check`。
 
 ### R2. 实现 Artifact 初始化脚本
 
@@ -81,7 +81,7 @@
 依赖：R1 可并行，但建议 R1 先完成。
 
 备注：
-已完成。`skills/dev-cadence/scripts/init-task-artifacts.mjs` 已新增，并接入 `SKILL.md` Reference Map 和 `check-skill-package.mjs` CLI help 验证。行为验证覆盖 help、dry-run、实际写入、重复运行 skip、`--overwrite`、非法 ID 拦截，以及对生成 fixture 运行 `check-spec-artifacts.mjs`。
+已完成。`scripts/init-task-artifacts.mjs` 已新增，并接入 `check-skill-package.mjs` CLI help 验证。行为验证覆盖 help、dry-run、实际写入、重复运行 skip、`--overwrite`、非法 ID 拦截，以及对生成 fixture 运行 `check-spec-artifacts.mjs`。
 
 ### R3. 拆分入口 Skills
 
@@ -108,7 +108,7 @@
 依赖：R1、R2。
 
 备注：
-已完成。当前 package 保留根 `dev-cadence` 兼容入口，同时新增 `skills/dev-cadence/skills/dev-cadence-init`、`dev-cadence-deliver`、`dev-cadence-maintain` 和 `dev-cadence-authoring` 四个 user-facing entrypoint skills。共享 references、templates 和 scripts 仍留在 package root。`check-skill-package.mjs` 已验证根入口和子入口 frontmatter/openai metadata，`check-discipline-routes.mjs` 已验证入口 skill resource 和 `skill-layout.md` 目标声明。
+已完成。当前 package 包含 `skills/dev-cadence-init`、`skills/dev-cadence-deliver`、`skills/dev-cadence-maintain` 和 `skills/dev-cadence-authoring` 四个 user-facing entrypoint skills。共享 references、templates 和 scripts 位于 package root。`check-skill-package.mjs` 已验证入口 frontmatter/openai metadata，`check-discipline-routes.mjs` 已验证入口 skill resource 和 `skill-layout.md` 目标声明。
 
 ### R4. 实现 Thin Repo 初始化与维护 Runtime
 
@@ -120,8 +120,9 @@
 范围：
 
 - 生成或更新 root `AGENTS.md` 的 Dev Cadence 入口段落。
-- 生成 `.ai/config.yaml`、`.ai/local.yaml`、`.ai/overrides/.gitkeep` 和 `specs/.gitkeep`。
-- 更新 `.gitignore`，确保 `.ai/local.yaml` 被忽略。
+- 生成或维护 `specs/.gitkeep`。
+- 可选生成 `.dev-cadence.yaml` 作为本地覆盖配置。
+- 更新 `.gitignore`，确保 `.dev-cadence.yaml` 被忽略。
 - 实现 inspect/sync/repair/diagnose 的最小行为。
 - 保留已有仓库指令和 local overlays。
 
@@ -135,7 +136,7 @@
 依赖：R3。
 
 备注：
-已完成。`skills/dev-cadence/scripts/sync-repo-contract.mjs` 已新增，支持 `inspect`、`init`、`sync`、`repair` 和 `diagnose`，写入边界限定为 thin repo-local contract。fixture 验证覆盖缺失仓库报错、空仓库 inspect、init 写入、重复 init 幂等、diagnose、local overlay 报告、marker conflict 阻断且不继续写其它文件。脚本已接入 `SKILL.md` Reference Map、`check-skill-package.mjs` CLI help 验证和 `check-discipline-routes.mjs` Reference Map 检查。
+已完成。`scripts/sync-repo-contract.mjs` 已新增，支持 `inspect`、`init`、`sync`、`repair` 和 `diagnose`，写入边界限定为 thin repo-local contract。fixture 验证覆盖缺失仓库报错、空仓库 inspect、init 写入、重复 init 幂等、diagnose、local overlay 报告、marker conflict 阻断且不继续写其它文件。脚本已接入 `check-skill-package.mjs` CLI help 验证和 `check-discipline-routes.mjs` Reference Map 检查。
 
 ### R5. 实现 Delivery Runtime 最小闭环
 
@@ -146,7 +147,7 @@
 
 范围：
 
-- 读取 repo-local `AGENTS.md`、`.ai/config.yaml` 和 `.ai/overrides/**`。
+- 读取 repo-local `AGENTS.md`、`.dev-cadence.yaml` 和 legacy `.ai/**` overlay（如果存在）。
 - 推断 `selected_workflow` 和 `task_class`。
 - 创建 `specs/{task_id}/` 和首个 Harness run。
 - 使用 `delivery-disciplines.md` 路由状态。
@@ -161,7 +162,7 @@
 依赖：R2、R3、R4。
 
 备注：
-已完成。`skills/dev-cadence/scripts/run-delivery-dry-run.mjs` 已新增，支持在已初始化 fixture repo 中读取 thin contract、推断 `selected_workflow` 和 `task_class`、创建 task artifacts 和 Harness run evidence、记录 scope reconciliation、verification status、review decision 和 acceptance status。fixture 验证覆盖未初始化仓库报错、`feature-dev`/`S1` 推断、security goal 升级为 `S2`、无 named accepter 时 G6 blocked、提供 named accepter 时仅接受 dry-run scope，以及对生成 specs 运行 `check-spec-artifacts.mjs`。
+已完成。`scripts/run-delivery-dry-run.mjs` 已新增，支持在已初始化 fixture repo 中读取 thin contract、推断 `selected_workflow` 和 `task_class`、创建 task artifacts 和 Harness run evidence、记录 scope reconciliation、verification status、review decision 和 acceptance status。fixture 验证覆盖未初始化仓库报错、`feature-dev`/`S1` 推断、security goal 升级为 `S2`、无 named accepter 时 G6 blocked、提供 named accepter 时仅接受 dry-run scope，以及对生成 specs 运行 `check-spec-artifacts.mjs`。
 
 ### R6. 改善 Acceptance 展示体验
 
@@ -185,7 +186,7 @@
 依赖：R5。
 
 备注：
-已完成。`skills/dev-cadence/scripts/summarize-acceptance.mjs` 已新增，按 `task_id` 读取 task artifacts 和 Harness run evidence，输出面向 Human 的 Markdown 摘要或 JSON。摘要包含 goal、workflow、task class、implementation status、scope reconciliation、verification status、review decision、acceptance status、changed files、created artifacts、skipped checks、blockers、residual risk、available evidence，以及需要写入 `08-acceptance.md` 的 Human confirmation 字段。验证覆盖 blocked acceptance、已记录 named Human acceptance、JSON 输出和缺失 task 报错；脚本保持 read-only，不修改 `08-acceptance.md`。
+已完成。`scripts/summarize-acceptance.mjs` 已新增，按 `task_id` 读取 task artifacts 和 Harness run evidence，输出面向 Human 的 Markdown 摘要或 JSON。摘要包含 goal、workflow、task class、implementation status、scope reconciliation、verification status、review decision、acceptance status、changed files、created artifacts、skipped checks、blockers、residual risk、available evidence，以及需要写入 `08-acceptance.md` 的 Human confirmation 字段。验证覆盖 blocked acceptance、已记录 named Human acceptance、JSON 输出和缺失 task 报错；脚本保持 read-only，不修改 `08-acceptance.md`。
 
 ### R7. 真实验证 Visual Companion
 
@@ -209,7 +210,7 @@
 依赖：R5 可后置；也可在 R5 前作为独立能力验证。
 
 备注：
-已完成。已在 `research/pressure-tests/2026-06-22-dev-cadence-second-round.md` 追加 intent/design dry run 证据：启动 visual companion、写入登录功能 workflow clarification screen、验证 HTTP 页面渲染、记录 sandbox localhost `EPERM` fallback、提权访问成功、WebSocket choice event 写入 `state/events`、停止并清理 `/tmp` session。结论保持 visual companion 为 optional capability；event 只是 clarification evidence，不是 G1 或 final acceptance。
+已完成。稳定验证结论已迁移到 `docs/validation-notes.md`：visual companion 能启动、渲染 clarification screen、记录 choice event、清理 session；sandbox localhost 可能受限并触发 fallback。结论保持 visual companion 为 optional capability；event 只是 clarification evidence，不是 G1 或 final acceptance。
 
 ## 维护规则
 

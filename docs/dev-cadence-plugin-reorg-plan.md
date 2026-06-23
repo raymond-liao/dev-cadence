@@ -9,7 +9,8 @@
 - 发布用 skills 放在仓库根目录 `skills/*`，共享资源放在仓库根目录 `references/`、`templates/`、`scripts/`、`hooks/`。
 - 用户仓库默认不创建 `.ai/`。仓库契约只包含 `AGENTS.md`、`.gitignore`、`specs/` 和可选的根目录 `.dev-cadence.yaml`。
 - `.dev-cadence.yaml` 是本地覆盖配置，默认加入 `.gitignore`；默认配置由 `dev-cadence` 自身管理。
-- 旧的 `specs/**` 运行证据不批量改写，保留历史路径和当时状态。
+- `specs/` 是运行时生成目录，不作为源码仓库长期追踪内容。
+- `research/` 是探索过程目录；稳定结论沉淀到 `docs/`。
 
 ## 目标目录
 
@@ -32,8 +33,6 @@ dev-cadence/
     prompts/
   scripts/
   docs/
-  research/
-  specs/
 ```
 
 ## 执行计划
@@ -75,13 +74,13 @@ dev-cadence/
   - 修改 `scripts/check-skill-package.mjs` 以验证 root-level publishing layout。
   - 修改 `scripts/check-discipline-routes.mjs` 的路径假设。
   - 修改 `docs/acceptance-guide.md`、`AGENTS.md` 中的命令路径。
-  - 不批量改写旧 `specs/**` 历史证据。
+  - 不依赖仓库根目录下的历史 `specs/**` 运行证据。
 
 - [x] **任务 7：验证与提交**
   - 运行：
     - `node scripts/check-skill-package.mjs .`
     - `node scripts/check-discipline-routes.mjs .`
-    - `node scripts/check-spec-artifacts.mjs specs`
+    - `node scripts/check-spec-artifacts.mjs templates`
     - `node scripts/sync-repo-contract.mjs init --repo-dir "$(mktemp -d)"`
   - 检查 `git diff`。
   - 使用 Conventional Commit 提交。

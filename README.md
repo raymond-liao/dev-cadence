@@ -1291,6 +1291,8 @@ scripts/
 
 不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`research/`、`specs/`、`tests/`、`.git/` 等开发和历史材料。
 
+源码仓库本身也不长期追踪运行过程目录。`specs/` 是 Dev Cadence 在目标仓库或本地 dry run 中生成的任务 artifact；`research/` 是临时探索工作区。稳定模板保留在 `templates/`，稳定设计依据和验证结论保留在 `docs/`，例如 `docs/research-findings.md` 和 `docs/validation-notes.md`。
+
 本地安装时，让 Codex 指向生成后的 marketplace root：
 
 ```bash

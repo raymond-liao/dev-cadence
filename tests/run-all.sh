@@ -21,7 +21,6 @@ run_test "tests/test-sync-repo-contract.sh"
 run_test "tests/test-dry-run.sh"
 run_command node scripts/check-skill-package.mjs .
 run_command node scripts/check-discipline-routes.mjs .
-run_command node scripts/check-spec-artifacts.mjs specs
 run_command node scripts/check-spec-artifacts.mjs templates
 run_command git diff --check
 

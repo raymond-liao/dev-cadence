@@ -19,6 +19,10 @@ tmp/
 # Dev Cadence local visual companion sessions
 .dev-cadence/visual-companion/
 
+# Local Dev Cadence work artifacts and research workspaces
+/specs/
+/research/
+
 # Local environment and secrets
 .env
 .env.*
