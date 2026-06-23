@@ -4,8 +4,8 @@
 
 本仓库记录一套 AI-native 软件交付框架，并打包 `dev-cadence` Codex Plugin。
 
-- `README.md`：主要框架方案和架构概览。
-- `docs/`：支撑性设计说明。
+- `README.md`：项目入口、安装、验证和文档导航。
+- `docs/`：完整框架方案、支撑性设计说明和稳定验证结论。
 - `.codex-plugin/plugin.json`：Codex Plugin manifest。
 - `hooks/`：Codex plugin session-start hook。
 - `skills/`：发布用入口 Skills。
@@ -22,7 +22,7 @@
 - `rg --files`：快速列出项目文件。
 - `rg "term" README.md docs AGENTS.md .codex-plugin hooks skills references templates scripts tests`：搜索框架术语，避免定义冲突。
 - `bash tests/run-all.sh`：运行 Codex Plugin manifest、package 边界、session hook、repo contract、delivery dry-run、`dev-cadence` source、artifact templates 和 diff whitespace 回归检查。
-- `node scripts/package-codex-plugin.mjs --clean`：生成本地 Codex marketplace 发布包到 `dist/codex`。
+- `node scripts/package-codex-plugin.mjs --clean`：生成本地 Codex marketplace source 到 `dist/codex`，用于本机安装，不会上传发布。
 - `node scripts/check-skill-package.mjs .`、`node scripts/check-discipline-routes.mjs .`、`node scripts/check-spec-artifacts.mjs templates`：定位问题时可单独运行。
 - `git diff -- README.md docs AGENTS.md .gitignore .codex-plugin hooks skills references templates scripts tests`：提交前检查文档、测试和 Plugin 变更。
 

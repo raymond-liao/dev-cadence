@@ -1,6 +1,6 @@
 # `dev-cadence` Codex 发布结构重组计划
 
-**目标**：将当前 `dev-cadence` 从“单个 Skill 外壳”调整为参考 Superpowers 的 Codex Plugin 源码组织方式，并同步优化用户仓库契约。
+**目标**：将当前 `dev-cadence` 从“单个 Skill 外壳”调整为 root-level Codex Plugin 源码组织方式，并同步优化用户仓库契约。
 
 **核心决策**：
 
@@ -41,7 +41,7 @@ dev-cadence/
   - 修改 `README.md`、`docs/plugin-skill-modularization.md`、`docs/skill-authoring-prespec.md`。
   - 明确 Dev Cadence 近期交付形态是 Codex Plugin。
   - 明确 Core 是长期抽象，不在本轮实现多平台 adapter。
-  - 明确目录结构参考 Superpowers 的 root-level publishing layout。
+  - 明确目录结构采用 root-level publishing layout。
 
 - [x] **任务 2：迁移目录结构**
   - 将 `skills/dev-cadence/skills/*` 移到根目录 `skills/*`。
