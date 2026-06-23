@@ -29,9 +29,7 @@ Treat process documentation like code. Prefer narrow, validated changes over bro
 Run plugin source validation before completion:
 
 ```bash
-node scripts/check-skill-package.mjs .
-node scripts/check-discipline-routes.mjs .
-node scripts/check-spec-artifacts.mjs specs
+bash tests/run-all.sh
 ```
 
 Update `docs/dev-cadence-roadmap.md` when roadmap item state changes.

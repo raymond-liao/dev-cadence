@@ -35,21 +35,18 @@ sed -n '1,240p' docs/dev-cadence-roadmap.md
 在仓库根目录执行：
 
 ```bash
-node scripts/check-skill-package.mjs .
-node scripts/check-discipline-routes.mjs .
-node scripts/check-spec-artifacts.mjs specs
-node scripts/check-spec-artifacts.mjs templates
-git diff --check
+bash tests/run-all.sh
 ```
 
 预期结果：
 
+- `tests/run-all.sh` 依次输出 manifest、Codex plugin package、session hook、repo contract 和 delivery dry-run 测试通过
 - `check-skill-package.mjs` 输出 `OK checked ... plugin files in ...`
 - `check-discipline-routes.mjs` 输出 `OK discipline routes verified for ...`
 - 两次 `check-spec-artifacts.mjs` 都输出 `OK checked spec artifacts ...`
 - `git diff --check` 没有输出并且退出码为 0
 
-这些检查只证明包结构、引用关系、artifact 格式和 diff whitespace 没有结构性错误；它们不证明业务功能行为。
+这些检查证明包结构、发布边界、引用关系、artifact 格式、核心脚本行为和 diff whitespace 没有结构性错误；它们不证明真实用户产品功能行为。
 
 ## 3. 运行最小 dry run
 
