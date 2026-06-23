@@ -27,10 +27,10 @@ Options:
   --json                Print machine-readable JSON report.
   -h, --help            Show this help text.
 
-The package creates marketplace.json and plugins/dev-cadence/. The plugin payload
-includes only .codex-plugin/, hooks/, skills/, references/, templates/, and
-scripts/. It excludes repository docs, tests, specs, research, Git metadata, and
-local development files.`);
+The package creates .agents/plugins/marketplace.json and plugins/dev-cadence/.
+The plugin payload includes only .codex-plugin/, hooks/, skills/, references/,
+templates/, and scripts/. It excludes repository docs, tests, specs, research,
+Git metadata, and local development files.`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -106,6 +106,9 @@ function ensureInsideOutputBoundary(sourceDir, outputDir) {
 }
 
 function writeMarketplace(outputDir) {
+  const marketplaceDir = path.join(outputDir, '.agents', 'plugins');
+  const marketplaceFile = path.join(marketplaceDir, 'marketplace.json');
+  const legacyMarketplaceFile = path.join(outputDir, 'marketplace.json');
   const marketplace = {
     name: MARKETPLACE_NAME,
     interface: {
@@ -127,10 +130,20 @@ function writeMarketplace(outputDir) {
     ],
   };
 
+  if (fs.existsSync(legacyMarketplaceFile)) {
+    const stat = fs.lstatSync(legacyMarketplaceFile);
+    if (!stat.isFile() && !stat.isSymbolicLink()) {
+      throw new Error('Refusing to replace legacy marketplace.json because it is not a file');
+    }
+    fs.rmSync(legacyMarketplaceFile);
+  }
+
+  fs.mkdirSync(marketplaceDir, { recursive: true });
   fs.writeFileSync(
-    path.join(outputDir, 'marketplace.json'),
+    marketplaceFile,
     `${JSON.stringify(marketplace, null, 2)}\n`,
   );
+  return marketplaceFile;
 }
 
 function copyRecursive(sourcePath, targetPath, copied) {
@@ -173,7 +186,7 @@ function main() {
     fs.rmSync(options.outputDir, { recursive: true, force: true });
   }
   fs.mkdirSync(options.outputDir, { recursive: true });
-  writeMarketplace(options.outputDir);
+  const marketplaceFile = writeMarketplace(options.outputDir);
 
   for (const item of INCLUDED_PATHS) {
     const sourcePath = path.join(options.sourceDir, item);
@@ -194,7 +207,7 @@ function main() {
   const report = {
     source_dir: options.sourceDir,
     output_dir: options.outputDir,
-    marketplace_file: path.join(options.outputDir, 'marketplace.json'),
+    marketplace_file: marketplaceFile,
     marketplace_name: MARKETPLACE_NAME,
     plugin_dir: pluginDir,
     plugin_name: PLUGIN_NAME,

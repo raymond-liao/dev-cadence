@@ -1273,12 +1273,14 @@ node scripts/package-codex-plugin.mjs --clean
 
 ```text
 dist/codex/
-  marketplace.json
+  .agents/
+    plugins/
+      marketplace.json
   plugins/
     dev-cadence/
 ```
 
-其中 `dist/codex/plugins/dev-cadence/` 是实际 plugin payload，只包含 Codex 运行需要的内容：
+其中 `dist/codex/` 是 Codex marketplace root，Codex CLI 读取其中的 `.agents/plugins/marketplace.json`；`dist/codex/plugins/dev-cadence/` 是实际 plugin payload，只包含 Codex 运行需要的内容：
 
 ```text
 .codex-plugin/
@@ -1293,12 +1295,12 @@ scripts/
 
 源码仓库本身也不长期追踪运行过程目录。`specs/` 是 Dev Cadence 在目标仓库或本地 dry run 中生成的任务 artifact；`research/` 是临时探索工作区。稳定模板保留在 `templates/`，稳定设计依据和验证结论保留在 `docs/`，例如 `docs/research-findings.md` 和 `docs/validation-notes.md`。
 
-这里的 `marketplace` 是 Codex CLI 的插件来源目录，不是公开市场发布。`codex plugin marketplace add dist/codex` 只会把该目录注册到本机 Codex 配置中，不会上传插件。
+这里的 `marketplace` 是 Codex CLI 的插件来源目录，不是公开市场发布。`codex plugin marketplace add ./dist/codex` 只会把该目录注册到本机 Codex 配置中，不会上传插件。本地相对路径必须带 `./`；否则 Codex CLI 可能会把 `dist/codex` 解析成 GitHub 仓库名。
 
 本地安装时，让 Codex 指向生成后的 marketplace root：
 
 ```bash
-codex plugin marketplace add dist/codex
+codex plugin marketplace add ./dist/codex
 codex plugin add dev-cadence@dev-cadence-local
 ```
 

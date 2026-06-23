@@ -62,12 +62,14 @@ node scripts/package-codex-plugin.mjs --clean
 
 ```text
 dist/codex/
-  marketplace.json
+  .agents/
+    plugins/
+      marketplace.json
   plugins/
     dev-cadence/
 ```
 
-`dist/codex/` 是本地 marketplace root；`dist/codex/plugins/dev-cadence/` 是实际 plugin payload。plugin payload 应只包含 `.codex-plugin/`、`hooks/`、`skills/`、`references/`、`templates/` 和 `scripts/`，不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`research/`、`specs/`、`tests/` 或 `.git/`。
+`dist/codex/` 是本地 marketplace root，Codex CLI 读取其中的 `.agents/plugins/marketplace.json`；`dist/codex/plugins/dev-cadence/` 是实际 plugin payload。plugin payload 应只包含 `.codex-plugin/`、`hooks/`、`skills/`、`references/`、`templates/` 和 `scripts/`，不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`research/`、`specs/`、`tests/` 或 `.git/`。
 
 ## 4. 运行最小 dry run
 

@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PACKAGE_DIR="$(mktemp -d /private/tmp/dev-cadence-codex-plugin.XXXXXX)"
 PLUGIN_DIR="${PACKAGE_DIR}/plugins/dev-cadence"
+MARKETPLACE_FILE="${PACKAGE_DIR}/.agents/plugins/marketplace.json"
 SAFETY_ROOT="$(mktemp -d /private/tmp/dev-cadence-package-safety.XXXXXX)"
 trap 'rm -rf "${PACKAGE_DIR}" "${SAFETY_ROOT}"' EXIT
 
@@ -62,8 +63,13 @@ assert_command_fails_with \
 
 node "${ROOT_DIR}/scripts/package-codex-plugin.mjs" --output-dir "${PACKAGE_DIR}" --clean --json > "${PACKAGE_DIR}/package-report.json"
 
-test -f "${PACKAGE_DIR}/marketplace.json" || {
-  echo "missing expected marketplace.json" >&2
+test -f "${MARKETPLACE_FILE}" || {
+  echo "missing expected .agents/plugins/marketplace.json" >&2
+  exit 1
+}
+
+test ! -e "${PACKAGE_DIR}/marketplace.json" || {
+  echo "unexpected legacy root marketplace.json" >&2
   exit 1
 }
 
@@ -104,7 +110,7 @@ import path from 'node:path';
 
 const packageDir = process.argv[2];
 const pluginDir = process.argv[3];
-const marketplace = JSON.parse(fs.readFileSync(path.join(packageDir, 'marketplace.json'), 'utf8'));
+const marketplace = JSON.parse(fs.readFileSync(path.join(packageDir, '.agents/plugins/marketplace.json'), 'utf8'));
 const manifest = JSON.parse(fs.readFileSync(path.join(pluginDir, '.codex-plugin/plugin.json'), 'utf8'));
 
 function assert(condition, message) {

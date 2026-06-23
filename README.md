@@ -87,24 +87,28 @@ node scripts/package-codex-plugin.mjs --clean
 
 ```text
 dist/codex/
-  marketplace.json
+  .agents/
+    plugins/
+      marketplace.json
   plugins/
     dev-cadence/
 ```
 
-`dist/codex/plugins/dev-cadence/` 是实际 Codex Plugin payload，只包含运行所需的 `.codex-plugin/`、`hooks/`、`skills/`、`references/`、`templates/` 和 `scripts/`。
+`dist/codex/` 是 Codex marketplace root；Codex CLI 读取其中的 `.agents/plugins/marketplace.json`。`dist/codex/plugins/dev-cadence/` 是实际 Codex Plugin payload，只包含运行所需的 `.codex-plugin/`、`hooks/`、`skills/`、`references/`、`templates/` 和 `scripts/`。
 
 源码仓库中的 `README.md`、`AGENTS.md`、`docs/`、`tests/`、`.git/`、本地 `specs/` 和本地 `research/` 不进入发布包。
 
 ## 本地安装到 Codex
 
-这里的 `marketplace` 是 Codex CLI 的本地插件来源目录。`codex plugin marketplace add dist/codex` 只会把 `dist/codex` 注册到本机 Codex 配置中，不会上传插件，也不会发布到公开市场。
+这里的 `marketplace` 是 Codex CLI 的本地插件来源目录。`codex plugin marketplace add ./dist/codex` 只会把 `dist/codex` 注册到本机 Codex 配置中，不会上传插件，也不会发布到公开市场。
+
+本地相对路径必须带 `./`。如果写成 `dist/codex`，Codex CLI 可能会把它解析成 GitHub 仓库名 `dist/codex`。
 
 首次安装：
 
 ```bash
 node scripts/package-codex-plugin.mjs --clean
-codex plugin marketplace add dist/codex
+codex plugin marketplace add ./dist/codex
 codex plugin add dev-cadence@dev-cadence-local
 ```
 
