@@ -255,6 +255,14 @@ function checkScripts() {
 function checkCliHelp() {
   const commands = [
     {
+      script: 'scripts/package-codex-plugin.mjs',
+      requiredText: [
+        'Usage: package-codex-plugin.mjs [options]',
+        'Builds the Codex Plugin publishing package',
+        '--output-dir <dir>',
+      ],
+    },
+    {
       script: 'scripts/check-skill-package.mjs',
       requiredText: [
         'Usage: check-skill-package.mjs [plugin-dir]',

@@ -1222,6 +1222,7 @@ dev-cadence/
       code-quality-reviewer.md
       code-reviewer.md
   scripts/
+    package-codex-plugin.mjs
     check-skill-package.mjs
     check-discipline-routes.mjs
     check-spec-artifacts.mjs
@@ -1252,14 +1253,61 @@ dev-cadence/
 | `human-gates.md` | 记录 approval_required、review_required、info_required、notify_only 的触发规则 |
 | `adapters.md` | 记录可替换执行纪律如何接入 Worker 阶段 |
 | `templates/` | 提供任务 artifact、Harness evidence 和 Worker/reviewer prompt 模板 |
+| `scripts/package-codex-plugin.mjs` | 生成本地 Codex marketplace 发布包，默认输出到 `dist/codex` |
 | `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs` | 提供 `dev-cadence` Codex 发布结构、discipline route、prompt template、bundled resource 和 task artifact 的本地校验 |
 | `tests/run-all.sh` | 运行 Codex Plugin manifest、package 边界、session hook、repo contract、delivery dry-run、`dev-cadence` 发布结构、artifact templates 和 diff whitespace 回归检查 |
 | `scripts/visual-companion/` | 提供可选本地浏览器 companion，用于 mockup、diagram 和视觉方案对比 |
 | `skill-layout.md` | 记录 Plugin 包结构和薄仓库契约 |
 
-当前 Codex 发布形态的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 调度和 review 使用 `templates/prompts/` 中的模板；`dev-cadence` source self-check 由 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs` 和 `tests/run-all.sh` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
+当前 Codex 发布形态的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 调度和 review 使用 `templates/prompts/` 中的模板；`dev-cadence` source self-check 由 `scripts/package-codex-plugin.mjs`、`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs` 和 `tests/run-all.sh` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
 
-### 13.5 目标仓库薄契约
+### 13.5 本地 Codex 发布包安装
+
+本地开发时不要把源码仓库根目录直接作为 Codex plugin 安装源。应先生成发布包，再让 Codex marketplace 指向发布目录：
+
+```bash
+node scripts/package-codex-plugin.mjs --clean
+```
+
+默认输出一个完整的本地 marketplace root：
+
+```text
+dist/codex/
+  marketplace.json
+  plugins/
+    dev-cadence/
+```
+
+其中 `dist/codex/plugins/dev-cadence/` 是实际 plugin payload，只包含 Codex 运行需要的内容：
+
+```text
+.codex-plugin/
+hooks/
+skills/
+references/
+templates/
+scripts/
+```
+
+不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`research/`、`specs/`、`tests/`、`.git/` 等开发和历史材料。
+
+本地安装时，让 Codex 指向生成后的 marketplace root：
+
+```bash
+codex plugin marketplace add dist/codex
+codex plugin add dev-cadence@dev-cadence-local
+```
+
+更新发布包后，重新执行：
+
+```bash
+node scripts/package-codex-plugin.mjs --clean
+codex plugin add dev-cadence@dev-cadence-local
+```
+
+安装或更新后新开 Codex thread，以便 Codex 重新加载 skills 和 hook。
+
+### 13.6 目标仓库薄契约
 
 当团队在某个代码仓库中启用 Dev Cadence 时，默认只生成薄契约：
 
@@ -1310,7 +1358,7 @@ specs/
 
 Agent 之间不依赖聊天记录交接，而是通过 `specs/{task_id}/` 下的结构化产物交接。`specs/{task_id}/runs/` 记录每次 Harness 执行用了什么上下文、允许了什么工具、执行了什么命令、产生了什么 diff、测试结果是什么、是否触发过权限审批。
 
-### 13.6 Runtime Authority
+### 13.7 Runtime Authority
 
 运行时规则优先级应分层：
 
@@ -1322,7 +1370,7 @@ Agent 之间不依赖聊天记录交接，而是通过 `specs/{task_id}/` 下的
 
 Codex Plugin 提供默认流程规则。Repo-local overlays 可以增加更严格或更项目化的约束，但不能削弱 Dev Cadence Core 定义的 named Human acceptance、证据要求、权限门禁、Requirements Readiness Check 或 Harness evidence。
 
-### 13.7 内置交付纪律与 Adapter 模型
+### 13.8 内置交付纪律与 Adapter 模型
 
 Dev Cadence 默认内置一套严格交付纪律。Adapter 是未来替换某个 Worker 执行技术的扩展点，不是默认纪律的来源。
 
@@ -1376,7 +1424,7 @@ Adapter 只在显式配置时替换某个 Worker 阶段的执行技术。
 
 Adapter 不能覆盖最终 Human Gate、Quality Gate、Harness evidence、权限审批、Requirements Readiness Check 和 scope reconciliation。
 
-### 13.8 从 Codex Plugin 到其他运行时和平台
+### 13.9 从 Codex Plugin 到其他运行时和平台
 
 `dev-cadence` 当前优先支持 Codex Plugin 发布形态，但这不是最终平台形态的全部，也不是 Dev Cadence Core 的唯一运行时形态。
 

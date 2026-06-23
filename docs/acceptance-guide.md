@@ -41,6 +41,7 @@ bash tests/run-all.sh
 预期结果：
 
 - `tests/run-all.sh` 依次输出 manifest、Codex package boundary、session hook、repo contract 和 delivery dry-run 测试通过
+- `tests/run-all.sh` 内部会调用 `package-codex-plugin.mjs` 并验证生成包边界
 - `check-skill-package.mjs` 输出 `OK checked ... plugin files in ...`
 - `check-discipline-routes.mjs` 输出 `OK discipline routes verified for ...`
 - 两次 `check-spec-artifacts.mjs` 都输出 `OK checked spec artifacts ...`
@@ -48,7 +49,26 @@ bash tests/run-all.sh
 
 这些检查证明包结构、发布边界、引用关系、artifact 格式、核心脚本行为和 diff whitespace 没有结构性错误；它们不证明真实用户产品功能行为。
 
-## 3. 运行最小 dry run
+## 3. 生成本地 Codex 发布包
+
+在仓库根目录执行：
+
+```bash
+node scripts/package-codex-plugin.mjs --clean
+```
+
+预期生成：
+
+```text
+dist/codex/
+  marketplace.json
+  plugins/
+    dev-cadence/
+```
+
+`dist/codex/` 是本地 marketplace root；`dist/codex/plugins/dev-cadence/` 是实际 plugin payload。plugin payload 应只包含 `.codex-plugin/`、`hooks/`、`skills/`、`references/`、`templates/` 和 `scripts/`，不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`research/`、`specs/`、`tests/` 或 `.git/`。
+
+## 4. 运行最小 dry run
 
 创建临时仓库目录：
 
@@ -100,7 +120,7 @@ Scope reconciliation: passed_no_product_changes
 
 这里的 `accepted_for_dry_run_scope` 只表示 dry run 范围被接受，不表示登录功能已经开发完成。
 
-## 4. 查看验收摘要
+## 5. 查看验收摘要
 
 执行：
 
@@ -143,7 +163,7 @@ Product behavior remains unverified.
 
 这两个 residual risk 是预期结果，因为 dry run 的目标是验证 Dev Cadence 流程闭环，不是实现和验证真实登录功能。
 
-## 5. 检查 dry run 生成的 artifacts
+## 6. 检查 dry run 生成的 artifacts
 
 可选执行：
 
@@ -181,7 +201,7 @@ find "$tmp/specs/acceptance-login" -type f | sort
 - `runs/acceptance-login-dry-run-1/diff-summary.md`
 - `runs/acceptance-login-dry-run-1/permission-decisions.md`
 
-## 6. 通过标准
+## 7. 通过标准
 
 当前阶段可以接受，当以下条件都成立：
 
@@ -193,7 +213,7 @@ find "$tmp/specs/acceptance-login" -type f | sort
 - summary 明确说明 dry run 不验证产品行为；
 - 没有把 Supervisor、Harness、Developer、Tester 或 Reviewer 记录为 final human accepter。
 
-## 7. 不通过或需要反馈的情况
+## 8. 不通过或需要反馈的情况
 
 出现以下情况时，不应验收通过：
 
@@ -205,7 +225,7 @@ find "$tmp/specs/acceptance-login" -type f | sort
 - 没有 `--accepted-by` 时仍然显示 final acceptance passed；
 - 文档或脚本暗示 dry run 已经验证真实产品行为。
 
-## 8. 验收结论怎么表达
+## 9. 验收结论怎么表达
 
 如果以上都符合预期，可以回复：
 
