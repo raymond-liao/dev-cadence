@@ -1,0 +1,6 @@
+interface:
+  display_name: "Using Dev Cadence"
+  short_description: "Bootstrap Dev Cadence routing"
+  default_prompt: "Use $using-dev-cadence to route this task through Dev Cadence workflow, evidence, and gates."
+policy:
+  allow_implicit_invocation: true

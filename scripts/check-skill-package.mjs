@@ -3,6 +3,18 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
+const EXPECTED_SKILLS = [
+  'using-dev-cadence',
+  'cadence-clarify',
+  'cadence-plan',
+  'cadence-execute',
+  'cadence-tdd',
+  'cadence-debug',
+  'cadence-review',
+  'cadence-verify',
+  'cadence-sync',
+];
+
 function printHelp() {
   console.log(`Usage: check-skill-package.mjs [plugin-dir]
 
@@ -88,12 +100,10 @@ function parseSimpleYamlFrontmatter(text, filePath) {
 }
 
 function checkFrontmatter() {
-  const expected = [
-    { relativePath: 'skills/dev-cadence-init/SKILL.md', name: 'dev-cadence-init' },
-    { relativePath: 'skills/dev-cadence-deliver/SKILL.md', name: 'dev-cadence-deliver' },
-    { relativePath: 'skills/dev-cadence-maintain/SKILL.md', name: 'dev-cadence-maintain' },
-    { relativePath: 'skills/dev-cadence-authoring/SKILL.md', name: 'dev-cadence-authoring' },
-  ];
+  const expected = EXPECTED_SKILLS.map((name) => ({
+    relativePath: `skills/${name}/SKILL.md`,
+    name,
+  }));
 
   for (const item of expected) {
     const skillPath = path.join(pluginDir, item.relativePath);
@@ -361,12 +371,7 @@ function checkArtifactTemplateBlocks() {
 }
 
 function checkOpenAiYaml() {
-  const expected = [
-    'skills/dev-cadence-init/agents/openai.yaml',
-    'skills/dev-cadence-deliver/agents/openai.yaml',
-    'skills/dev-cadence-maintain/agents/openai.yaml',
-    'skills/dev-cadence-authoring/agents/openai.yaml',
-  ];
+  const expected = EXPECTED_SKILLS.map((name) => `skills/${name}/agents/openai.yaml`);
 
   for (const relativePath of expected) {
     const openAiYaml = path.join(pluginDir, relativePath);

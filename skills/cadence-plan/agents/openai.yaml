@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cadence Plan"
+  short_description: "Write delivery plans"
+  default_prompt: "Use $cadence-plan to turn clarified design into executable delivery tasks and verification steps."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cadence Sync"
+  short_description: "Sync repo contract"
+  default_prompt: "Use $cadence-sync to initialize, inspect, sync, repair, or diagnose Dev Cadence repository contract files."
+policy:
+  allow_implicit_invocation: true

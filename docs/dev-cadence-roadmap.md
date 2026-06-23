@@ -21,7 +21,7 @@
 截至当前基线，已经完成：
 
 - 方案文档已中文化，并记录 Plugin 化目标、thin repo-local contract、Supervisor、Harness、Quality Gate、Human Gate 和 Adapter 模型。
-- `skills/dev-cadence-init`、`skills/dev-cadence-deliver`、`skills/dev-cadence-maintain` 和 `skills/dev-cadence-authoring` 已作为当前 user-facing 入口存在。
+- 历史四入口 `dev-cadence-init`、`dev-cadence-deliver`、`dev-cadence-maintain` 和 `dev-cadence-authoring` 曾作为 user-facing 入口存在；当前已决定迁移到 `using-dev-cadence` + `cadence-*` 工作纪律 Skills。
 - Plugin-owned references 已落地，包括 delivery disciplines、workflow、task classes、agent blueprints、Harness、gates、review、verification、debugging、visual companion 等。
 - `templates/spec/`、`templates/runs/` 和 `templates/prompts/` 已落地。
 - Package self-check、discipline route check 和 artifact check 脚本已落地并通过。
@@ -211,6 +211,33 @@
 
 备注：
 已完成。稳定验证结论已迁移到 `docs/validation-notes.md`：visual companion 能启动、渲染 clarification screen、记录 choice event、清理 session；sandbox localhost 可能受限并触发 fallback。结论保持 visual companion 为 optional capability；event 只是 clarification evidence，不是 G1 或 final acceptance。
+
+### R8. 重构为 Bootstrap + Cadence Discipline Skills
+
+状态：`done`
+
+目标：
+按 `docs/dev-cadence-target-model.md`，把发布用 Skill 从旧的产品菜单式四入口迁移为 `using-dev-cadence` bootstrap 加 `cadence-*` 工作纪律 Skills。
+
+范围：
+
+- 新增 `using-dev-cadence` session-start bootstrap Skill。
+- 将普通交付能力拆到 `cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review` 和 `cadence-verify`。
+- 将初始化、inspect、sync、repair、diagnose 迁移到 `cadence-sync`。
+- 不再把 `dev-cadence-authoring` 作为普通用户发布 Skill。
+- 更新 hooks、package checks、route checks、tests、README 和发布结构 reference。
+
+完成定义：
+
+- Codex package 只发布目标 Skill 集合。
+- session-start hook 注入 `using-dev-cadence`，不再注入旧四入口菜单。
+- `bash tests/run-all.sh` 通过。
+- 本地发布包能通过 `scripts/package-codex-plugin.mjs --clean` 生成并通过 package checks。
+
+依赖：`docs/dev-cadence-target-model.md`。
+
+备注：
+已完成。发布用 Skill 已迁移为 `using-dev-cadence`、`cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review`、`cadence-verify` 和 `cadence-sync`。旧四入口已从发布包移除，`dev-cadence-authoring` 不作为普通用户 Skill 发布。session-start hook 已改为注入 `using-dev-cadence`。验证证据：`bash tests/run-all.sh` 和 `node scripts/package-codex-plugin.mjs --clean` 均通过。
 
 ## 维护规则
 

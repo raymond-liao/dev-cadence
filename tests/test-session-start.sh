@@ -21,13 +21,15 @@ function assert(condition, message) {
 }
 
 assert(payload.hookSpecificOutput?.hookEventName === 'SessionStart', 'hook event must be SessionStart');
-assert(context.includes('`dev-cadence` available'), 'bootstrap must identify dev-cadence');
-assert(context.includes('dev-cadence-init'), 'bootstrap must list init skill');
-assert(context.includes('dev-cadence-deliver'), 'bootstrap must list deliver skill');
-assert(context.includes('dev-cadence-maintain'), 'bootstrap must list maintain skill');
-assert(context.includes('dev-cadence-authoring'), 'bootstrap must list authoring skill');
-assert(context.includes('AGENTS.md, .gitignore, specs/'), 'bootstrap must describe thin repo contract');
-assert(context.includes('Do not create a .ai/ directory'), 'bootstrap must prohibit default .ai creation');
+assert(context.includes('You have dev-cadence'), 'bootstrap must identify dev-cadence');
+assert(context.includes('using-dev-cadence'), 'bootstrap must inject using-dev-cadence');
+assert(context.includes('cadence-sync'), 'bootstrap must route repository contract work');
+assert(context.includes('cadence-clarify'), 'bootstrap must route clarification work');
+assert(context.includes('cadence-tdd'), 'bootstrap must route TDD work');
+assert(context.includes('cadence-verify'), 'bootstrap must route verification work');
+assert(context.includes('Quality Gates'), 'bootstrap must mention Quality Gates');
+assert(context.includes('Human Gates'), 'bootstrap must mention Human Gates');
+assert(!context.includes('dev-cadence-authoring'), 'bootstrap must not expose authoring as a user skill');
 
 console.log('session-start hook ok');
 NODE

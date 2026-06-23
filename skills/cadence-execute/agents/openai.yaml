@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cadence Execute"
+  short_description: "Execute delivery plans"
+  default_prompt: "Use $cadence-execute to implement an approved Dev Cadence plan through Harness evidence."
+policy:
+  allow_implicit_invocation: false

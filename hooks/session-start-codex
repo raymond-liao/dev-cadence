@@ -14,23 +14,9 @@ escape_for_json() {
   printf '%s' "$value"
 }
 
-bootstrap=$(cat <<'EOF'
-You have `dev-cadence` available. It is the current Codex Plugin publishing shape for Dev Cadence.
+using_dev_cadence_content=$(cat "${PLUGIN_ROOT}/skills/using-dev-cadence/SKILL.md" 2>&1 || echo "Error reading using-dev-cadence skill")
+using_dev_cadence_escaped=$(escape_for_json "$using_dev_cadence_content")
 
-Use these entrypoint skills by task intent:
-
-- dev-cadence-init: repository initialization and thin contract setup.
-- dev-cadence-deliver: ordinary initialized-repository delivery work.
-- dev-cadence-maintain: explicit inspect, sync, repair, diagnose, or update requests.
-- dev-cadence-authoring: maintenance of Dev Cadence skills, references, templates, scripts, and policy.
-
-Do not treat Dev Cadence as one monolithic skill. The plugin owns reusable rules, references, templates, scripts, and gates. Target repositories keep only a thin contract: AGENTS.md, .gitignore, specs/, and an optional ignored .dev-cadence.yaml local override.
-
-For software delivery tasks in an initialized repository, route through dev-cadence-deliver and keep evidence under specs/{task_id}/. Do not create a .ai/ directory for Dev Cadence defaults.
-EOF
-)
-
-bootstrap_escaped=$(escape_for_json "$bootstrap")
-session_context="<EXTREMELY_IMPORTANT>\n${bootstrap_escaped}\n</EXTREMELY_IMPORTANT>"
+session_context="<EXTREMELY_IMPORTANT>\nYou have dev-cadence.\n\nBelow is the full content of your 'using-dev-cadence' bootstrap skill. Use it to route delivery tasks through Dev Cadence workflow, Harness evidence, Quality Gates, Human Gates, and the applicable cadence-* discipline Skills. For all other Dev Cadence Skills, follow Codex native skill-loading behavior when they apply.\n\n${using_dev_cadence_escaped}\n</EXTREMELY_IMPORTANT>"
 
 printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$session_context"

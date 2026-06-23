@@ -3,6 +3,8 @@
 ## 目标
 
 本文记录 `dev-cadence` 在调整 Codex Plugin 发布结构之前的目标架构。
+> 状态提示：本文记录过旧的四入口 Skill 方案。新的目标模型见 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md)：发布结构迁移为 `using-dev-cadence` + `cadence-*` 工作纪律 Skills，旧的 `init/deliver/maintain/authoring` 不再作为主要 Skill 边界。
+
 
 目标是让 Dev Cadence Core 保持平台无关，同时让 `dev-cadence` 当前 Codex Plugin 发布形态更容易演进、与其他 Codex Skill 组合使用，并避免在每个目标仓库里生成大段重复规则。
 
@@ -45,24 +47,23 @@ Adapter 边界跟随可替换执行纪律。
 
 ## 推荐 Skill 集合
 
-先提供少量面向用户意图的 Skill。
+本文早期推荐过按 `init/deliver/maintain/authoring` 拆分入口 Skill。该方案已被 `docs/dev-cadence-target-model.md` 取代。
+
+当前推荐模型是：
 
 ```text
-dev-cadence-init
-  使用薄入口、本地覆盖配置和 artifact 目录初始化仓库。
+using-dev-cadence
+  session-start bootstrap 和任务路由。
 
-dev-cadence-deliver
-  执行普通交付工作：feature、bugfix、refactor、review、research spike 和 incident handling。
+cadence-clarify / cadence-plan / cadence-execute / cadence-tdd
+cadence-debug / cadence-review / cadence-verify
+  按 Agent 工作动作和交付纪律拆分。
 
-dev-cadence-maintain
-  检查、同步、修复、诊断或升级仓库本地 Dev Cadence 配置。
-
-dev-cadence-authoring
-  可选。维护 Dev Cadence Core、`dev-cadence` 发布内容及其 references。
+cadence-sync
+  初始化、检查、同步、修复或诊断 thin repo-local contract。
 ```
 
-具体名称可以在实现时调整。重点是：Skill 是粗粒度入口，不是每个工作流状态。
-
+`Supervisor`、`Harness`、`Quality Gate`、`Human Gate`、artifact schema 和 task class policy 保持为 shared references，不作为用户 Skill 发布。`authoring` 不进入普通用户发布 Skill 集合。
 ## Codex Plugin 持有的资源
 
 Codex Plugin 应持有 Dev Cadence Core 在 Codex 中运行所需的可复用流程材料：
@@ -286,12 +287,7 @@ Adapter 不能覆盖：
 
 ## 实施计划
 
-1. 记录 plugin-owned rule model 和 adapter contract。
-2. 增加 `delivery-disciplines.md`、细分 discipline references、Worker/reviewer prompt templates、`adapters.md` 和 thin repo contract references。
-3. 实现 `dev-cadence-init`，只生成 thin repo-local contract。
-4. 实现 `dev-cadence-deliver`，在运行时加载 plugin-owned references。
-5. 在真实任务中验证默认交付纪律，再决定是否接入外部 adapter。
-
+本文件中的早期实施计划已完成并被后续 R8 重构取代。当前执行计划以 [Dev Cadence 路线图](dev-cadence-roadmap.md) 中的 R8 和 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md) 为准。
 ## 待决问题
 
 - Adapter 选择只放在 `.dev-cadence.yaml`，还是允许用户按任务选择？

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cadence TDD"
+  short_description: "Run test-first implementation"
+  default_prompt: "Use $cadence-tdd for testable behavior changes that should follow Red-Green-Refactor."
+policy:
+  allow_implicit_invocation: false

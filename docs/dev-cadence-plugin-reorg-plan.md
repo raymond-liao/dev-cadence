@@ -2,6 +2,8 @@
 
 **目标**：将当前 `dev-cadence` 从“单个 Skill 外壳”调整为 root-level Codex Plugin 源码组织方式，并同步优化用户仓库契约。
 
+> 状态提示：本文是历史重组计划，记录的是 root-level Plugin 迁移过程。当前发布 Skill 目标结构已迁移为 `using-dev-cadence` + `cadence-*`，以 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md) 和 [Dev Cadence 路线图](dev-cadence-roadmap.md) R8 为准。
+
 **核心决策**：
 
 - 本仓库是 `dev-cadence` 的源码仓库，当前优先支持 Codex Plugin 发布形态，不使用 `plugins/dev-cadence/` 作为开发目录。

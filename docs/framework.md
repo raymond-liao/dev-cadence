@@ -1126,23 +1126,40 @@ Adapter 按可替换执行纪律拆。
 
 ### 13.3 推荐 Skill 集合
 
-推荐 Codex Plugin 先提供少量 user-facing skills：
+Codex Plugin 发布形态采用一个 bootstrap Skill 加一组短前缀工作纪律 Skills。
 
 ```text
-dev-cadence-init
-  初始化仓库薄入口、本地覆盖配置和 artifact 目录。
+using-dev-cadence
+  session-start bootstrap 和任务路由，负责选择 workflow、task class、gates 和具体 discipline。
 
-dev-cadence-deliver
-  日常 feature、bugfix、refactor、review、research-spike、incident 的总入口。
+cadence-clarify
+  澄清目标、范围、非目标、设计、验收和验证方式。
 
-dev-cadence-maintain
-  显式 inspect、sync、repair、diagnose 或升级 repo-local 配置。
+cadence-plan
+  把已确认设计拆成可执行任务和测试计划。
 
-dev-cadence-authoring
-  可选。维护 Dev Cadence Core、`dev-cadence` 发布包和相关 references。
+cadence-execute
+  通过 Harness evidence 执行已批准计划。
+
+cadence-tdd
+  对可测试行为变更执行 Red-Green-Refactor。
+
+cadence-debug
+  处理 bug、incident、失败测试、回归和未知根因。
+
+cadence-review
+  检查 spec compliance 和 code quality。
+
+cadence-verify
+  完成前验证测试、范围、风险和 Human acceptance。
+
+cadence-sync
+  初始化、检查、同步、修复或诊断 thin repo-local contract。
 ```
 
-`dev-cadence-deliver` 是日常开发主入口。它内部执行 Supervisor 状态机、加载 references/templates、创建 task artifacts、控制 Quality Gate 和 Human Gate，并在 Worker 阶段通过 Harness 运行具体 Agent 或 adapter。
+`using-dev-cadence` 是唯一代表 Dev Cadence 整体的 Skill。`Supervisor`、`Harness`、`Quality Gate`、`Human Gate`、artifact schema 和 task class policy 不作为用户 Skill 发布，它们保留为共享 references，由 bootstrap 和各个 `cadence-*` Skill 引用。
+
+`authoring` 不作为普通用户发布 Skill。维护 Dev Cadence 自身的规则保留在源码仓库的文档、references 和测试流程中。
 
 ### 13.4 `dev-cadence` 当前 Codex 发布结构
 
@@ -1157,16 +1174,31 @@ dev-cadence/
     run-hook.cmd
     session-start-codex
   skills/
-    dev-cadence-init/
+    using-dev-cadence/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-deliver/
+    cadence-clarify/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-maintain/
+    cadence-plan/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-authoring/
+    cadence-execute/
+      SKILL.md
+      agents/openai.yaml
+    cadence-tdd/
+      SKILL.md
+      agents/openai.yaml
+    cadence-debug/
+      SKILL.md
+      agents/openai.yaml
+    cadence-review/
+      SKILL.md
+      agents/openai.yaml
+    cadence-verify/
+      SKILL.md
+      agents/openai.yaml
+    cadence-sync/
       SKILL.md
       agents/openai.yaml
   references/
@@ -1198,69 +1230,27 @@ dev-cadence/
     skill-layout.md
   templates/
     spec/
-      00-brief.md
-      01-requirements.md
-      02-design.md
-      03-tasks.md
-      04-test-plan.md
-      05-implementation.md
-      06-test-report.md
-      07-review-report.md
-      08-acceptance.md
     runs/
-      run-context.md
-      execution-report.md
-      tool-log.md
-      test-log.md
-      diff-summary.md
-      permission-decisions.md
     prompts/
-      spec-document-reviewer.md
-      plan-document-reviewer.md
-      implementer.md
-      spec-compliance-reviewer.md
-      code-quality-reviewer.md
-      code-reviewer.md
   scripts/
     package-codex-plugin.mjs
     check-skill-package.mjs
     check-discipline-routes.mjs
     check-spec-artifacts.mjs
+    init-task-artifacts.mjs
+    sync-repo-contract.mjs
+    run-delivery-dry-run.mjs
+    summarize-acceptance.mjs
     visual-companion/
-      start-server.sh
-      stop-server.sh
-      server.cjs
-      helper.js
-      frame-template.html
 ```
 
 其中：
 
-| 文件 | 作用 |
-|---|---|
-| `skills/*/SKILL.md` | 定义用户意图入口和该入口需要加载哪些 references/templates |
-| `principles.md` | 记录本框架的核心原则和不可突破的边界 |
-| `supervisor-state-machine.md` | 记录 Supervisor 状态机、状态流转、跳过状态和 blocked 规则 |
-| `agent-blueprints.md` | 记录各类 Worker Agent 的职责边界 |
-| `task-classes.md` | 记录 S0/S1/S2、research-spike、incident 等任务分级规则 |
-| `workflows.md` | 记录 feature-dev、bugfix、refactor、code-review、incident-fix 等工作流 |
-| `delivery-disciplines.md` | 内置交付纪律的路由入口，按 workflow state 指向具体 discipline reference |
-| `*-discipline.md`、`root-cause-tracing.md` 等细分 reference | 记录已内置的意图澄清、planning、TDD、debugging、review、verification、authoring 等具体执行纪律 |
-| `visual-companion.md` | 记录可选浏览器视觉对齐能力、环境要求、降级策略和 Harness evidence |
-| `context-pack.md` | 记录 Agent 最小上下文包格式、来源优先级和冲突规则 |
-| `harness.md` | 记录 Harness 职责、run context、工具策略和执行报告格式 |
-| `quality-gates.md` | 记录质量门禁、循环限制、人工升级规则 |
-| `human-gates.md` | 记录 approval_required、review_required、info_required、notify_only 的触发规则 |
-| `adapters.md` | 记录可替换执行纪律如何接入 Worker 阶段 |
-| `templates/` | 提供任务 artifact、Harness evidence 和 Worker/reviewer prompt 模板 |
-| `scripts/package-codex-plugin.mjs` | 生成本地 Codex marketplace 发布包，默认输出到 `dist/codex` |
-| `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs` | 提供 `dev-cadence` Codex 发布结构、discipline route、prompt template、bundled resource 和 task artifact 的本地校验 |
-| `tests/run-all.sh` | 运行 Codex Plugin manifest、package 边界、session hook、repo contract、delivery dry-run、`dev-cadence` 发布结构、artifact templates 和 diff whitespace 回归检查 |
-| `scripts/visual-companion/` | 提供可选本地浏览器 companion，用于 mockup、diagram 和视觉方案对比 |
-| `skill-layout.md` | 记录 Plugin 包结构和薄仓库契约 |
-
-当前 Codex 发布形态的设计重点是渐进式加载：入口 Skill 保持精简，只放触发边界和路由规则；`delivery-disciplines.md` 负责按状态路由到细分 reference；任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 调度和 review 使用 `templates/prompts/` 中的模板；`dev-cadence` source self-check 由 `scripts/package-codex-plugin.mjs`、`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs` 和 `tests/run-all.sh` 负责。视觉 companion 属于 intent/design 阶段的 optional capability，不能成为 G1 必需条件；没有 Node、浏览器或可访问 URL 时，应降级为 text-only clarification。
-
+- `session-start-codex` 注入 `using-dev-cadence`，让 Agent 在交付任务前检查 workflow、state、gate 和具体 discipline。
+- `cadence-*` Skills 是工作动作和纪律入口，不是产品菜单。
+- `references/` 承载 Supervisor、Harness、gates、workflow、task class 和 discipline 细节。
+- `templates/spec/` 保存任务 artifacts 模板，`templates/runs/` 保存 Harness evidence 模板，`templates/prompts/` 保存 Worker/reviewer prompt 模板。
+- `scripts/` 提供 package self-check、artifact 初始化、repo contract 同步、dry run、acceptance summary 和 optional visual companion 工具。
 ### 13.5 本地 Codex 发布包安装
 
 本地开发时不要把源码仓库根目录直接作为 Codex plugin 安装源。应先生成发布包，再让本机 Codex marketplace source 指向发布目录：
@@ -1402,12 +1392,14 @@ dev_cadence:
 - 只有在多个问题域彼此独立时才并行调度 Worker。
 - 维护 Dev Cadence 自身 Skill 或 references 时，使用面向 Skill 行为的验证纪律。
 
-内置规则不是对外部 Skill 的引用，而是 Dev Cadence 自己持有的 reference、artifact template、prompt template 和 optional scripts。当前默认 discipline 的加载入口是 `delivery-disciplines.md`，它会按状态加载 `intent-and-design-discipline.md`、`visual-companion.md`、`planning-discipline.md`、`implementation-discipline.md`、`debugging-discipline.md`、`review-discipline.md`、`verification-discipline.md` 和 `authoring-discipline.md` 等细分规则。`dev-cadence` source 自身通过 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 做轻量本地校验，避免发布内容语言边界、路由引用、artifact template 或 prompt template 在后续演进中漂移。
+内置规则不是对外部 Skill package 的引用，而是 Dev Cadence 自己持有的 `cadence-*` Skills、references、artifact templates、prompt templates 和 optional scripts。当前默认 discipline 的加载入口是 `using-dev-cadence` 和 `delivery-disciplines.md`：前者负责 bootstrap 和任务路由，后者按状态加载 `intent-and-design-discipline.md`、`visual-companion.md`、`planning-discipline.md`、`implementation-discipline.md`、`debugging-discipline.md`、`review-discipline.md`、`verification-discipline.md` 等细分规则。Dev Cadence source 自身通过 `scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 做轻量本地校验，避免发布内容语言边界、路由引用、artifact template 或 prompt template 在后续演进中漂移。
 
 日常实现阶段的默认路径是：
 
 ```text
-dev-cadence-deliver
+using-dev-cadence
+  ↓
+cadence-execute / cadence-tdd
   ↓
 Supervisor 确认 G1/G2/G3 已满足
   ↓
@@ -1492,7 +1484,7 @@ Tester
 Reviewer
 ```
 
-Supervisor 不是 Worker Agent，而是 `dev-cadence-deliver` 内部的流程控制逻辑。
+Supervisor 不是 Worker Agent，而是 Dev Cadence bootstrap 和 shared references 中定义的流程控制逻辑。
 
 Harness 也不是 Agent，不参与需求、设计、实现或 Review 判断。它是执行边界：
 
@@ -1593,10 +1585,10 @@ specs/{task_id}/runs/{run_id}/
 后续实现按目标架构直接推进：
 
 1. 将 Plugin 化目标和 thin repo-local contract 固化到方案文档和 Skill references。
-2. 实现 `dev-cadence-init` 的薄初始化，只生成 `AGENTS.md`、`.gitignore`、`.dev-cadence.yaml` 和 `specs/`。
-3. 实现 `dev-cadence-deliver` 的 plugin-owned runtime，由它加载 references、templates 和 adapters。
-4. 增加并验证 `delivery-disciplines.md`、细分 discipline references、Worker/reviewer prompt templates 和 `adapters.md`，先跑通内置默认交付纪律，再决定是否接入外部 adapter。
-5. 更新维护流程，让 inspect/sync/repair 只面向 thin repo-local contract。
+2. 实现 `using-dev-cadence` 的 session-start bootstrap，由它选择 workflow、task class、gates 和具体 `cadence-*` discipline。
+3. 将 repo contract 初始化、inspect、sync、repair 和 diagnose 收敛到 `cadence-sync`。
+4. 将日常交付拆到 `cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review` 和 `cadence-verify`。
+5. 增加并验证 `delivery-disciplines.md`、细分 discipline references、Worker/reviewer prompt templates 和 `adapters.md`，先跑通内置默认交付纪律，再决定是否接入外部 adapter。
 
 ## 15. 企业级演进路线图
 
@@ -1706,16 +1698,21 @@ dev-cadence/
   .codex-plugin/plugin.json
   hooks/
   skills/
-    dev-cadence-init/
-    dev-cadence-deliver/
-    dev-cadence-maintain/
-    dev-cadence-authoring/
+    using-dev-cadence/
+    cadence-clarify/
+    cadence-plan/
+    cadence-execute/
+    cadence-tdd/
+    cadence-debug/
+    cadence-review/
+    cadence-verify/
+    cadence-sync/
   references/
   templates/
   scripts/
 ```
 
-该 `dev-cadence` Codex source 当前包含 Codex manifest、session-start hook、四个 user-facing entrypoint skills、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 source self-check、artifact 初始化和 visual companion 工具。
+该 `dev-cadence` Codex source 当前包含 Codex manifest、session-start hook、`using-dev-cadence` bootstrap、`cadence-*` 工作纪律 Skills、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 source self-check、artifact 初始化、repo contract 同步和 visual companion 工具。
 
 语言边界：
 

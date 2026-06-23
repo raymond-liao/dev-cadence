@@ -18,7 +18,7 @@ This file defines the current Codex Plugin publishing shape for `dev-cadence` an
 
 ## Target Plugin Package
 
-The target distributable shape is a plugin with a small set of user-facing skills and shared plugin-owned resources:
+The target distributable shape is a plugin with a bootstrap Skill, short discipline Skills, and shared plugin-owned resources:
 
 ```text
 dev-cadence/
@@ -29,16 +29,31 @@ dev-cadence/
     run-hook.cmd
     session-start-codex
   skills/
-    dev-cadence-init/
+    using-dev-cadence/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-deliver/
+    cadence-clarify/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-maintain/
+    cadence-plan/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-authoring/
+    cadence-execute/
+      SKILL.md
+      agents/openai.yaml
+    cadence-tdd/
+      SKILL.md
+      agents/openai.yaml
+    cadence-debug/
+      SKILL.md
+      agents/openai.yaml
+    cadence-review/
+      SKILL.md
+      agents/openai.yaml
+    cadence-verify/
+      SKILL.md
+      agents/openai.yaml
+    cadence-sync/
       SKILL.md
       agents/openai.yaml
   references/
@@ -112,30 +127,38 @@ Do not add generic `README.md`, installation guide, changelog, or narrative rese
 Use this rule for modularization:
 
 ```text
-Skill boundaries follow user intent.
-Reference boundaries follow workflow internals.
+Bootstrap owns routing.
+Skill boundaries follow agent work actions and delivery disciplines.
+Reference boundaries follow workflow internals and governance protocols.
 Template boundaries follow artifact types.
-Adapter boundaries follow replaceable execution disciplines.
+Adapter boundaries follow replaceable execution techniques.
 ```
 
-Do not create one Skill per internal Supervisor state such as `requirements-gate`, `planning`, `harness-run`, `test-verification`, `review`, or `human-gate`.
+Do not create one Skill per internal Supervisor state such as `requirements-gate`, `planning-gate`, `harness-run`, `quality-gate`, or `human-gate`. Supervisor, Harness, Quality Gate, Human Gate, Context Pack, artifact schema, and task class policy are shared references, not user-facing Skills.
 
-Recommended user-facing skills:
+Published Skills:
 
-- `dev-cadence-init`: initialize a repository with the thin entrypoint, local override file, and artifact directory.
-- `dev-cadence-deliver`: run normal delivery work after initialization.
-- `dev-cadence-maintain`: inspect, sync, repair, diagnose, or upgrade Dev Cadence repository configuration.
-- `dev-cadence-authoring`: maintain this framework and `dev-cadence` publishing content.
+- `using-dev-cadence`: session-start bootstrap and task router. It selects workflow state, task class, evidence requirements, gates, and the applicable cadence discipline Skill.
+- `cadence-clarify`: clarify goal, scope, expected behavior, non-goals, design, acceptance, and verification before implementation.
+- `cadence-plan`: turn clarified design into executable tasks and verification steps.
+- `cadence-execute`: execute an approved plan through Harness evidence.
+- `cadence-tdd`: apply Red-Green-Refactor for testable behavior changes.
+- `cadence-debug`: diagnose bugs, incidents, failing tests, regressions, and unclear root cause.
+- `cadence-review`: review implementation for spec compliance and code quality.
+- `cadence-verify`: verify evidence, scope, skipped checks, residual risk, and Human acceptance before completion.
+- `cadence-sync`: initialize, inspect, sync, repair, or diagnose the thin repo-local contract.
+
+Dev Cadence authoring is not published as a normal user Skill. Authoring discipline remains available as shared source-maintenance guidance for this repository.
 
 ## Invocation Boundary
 
-`dev-cadence-init` may be selected implicitly only when the user asks to install, initialize, set up, or prepare repository-level AI-assisted delivery rules, workflows, gates, or templates. The user does not need to name `$dev-cadence` for initial setup.
+`using-dev-cadence` is injected by the session-start hook and is the only Skill that represents Dev Cadence as a whole. It must route ordinary delivery work to the applicable cadence discipline Skills before action.
 
-`dev-cadence-maintain` handles update, sync, repair, inspect, diagnose, and other maintenance modes only when the user explicitly invokes `$dev-cadence`, `dev-cadence`, or the maintenance Skill.
+`cadence-sync` may be selected implicitly when the user asks to install, initialize, set up, inspect, sync, repair, diagnose, or prepare Dev Cadence repository-level rules, local config, or artifact space.
 
-`dev-cadence-deliver` handles ordinary delivery work only after the repository has been initialized and its root `AGENTS.md` routes delivery work to Dev Cadence.
+Ordinary delivery work does not require prior repository initialization. If persistent artifacts are needed and the repo contract is missing, create low-risk artifact space directly when permissions allow, or use `cadence-sync` when contract files must be created or repaired.
 
-Do not use the initialization Skill as an implicit trigger for product implementation work, general engineering advice, maintenance requests that do not name Dev Cadence, or repositories that have not been initialized with this framework.
+Do not use `cadence-sync` as an implicit trigger for product implementation work. Do not infer a hidden product task from repository contents when the user asks only to prepare, initialize, apply, install, update, sync, repair, inspect, or diagnose the framework.
 
 ## Thin Target Repository Layout
 
@@ -269,7 +292,7 @@ dev_cadence:
 - review spec compliance before code quality;
 - verify before any completion claim;
 - use parallel Worker runs only for independent domains;
-- use Dev Cadence authoring validation when changing this plugin's own skills and references.
+- use Dev Cadence source validation when changing this plugin's own skills and references.
 
 `delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, and `scripts/check-spec-artifacts.mjs`. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
 
@@ -290,7 +313,7 @@ Maintenance must not touch product code or task-specific `specs/{task_id}/` arti
 
 ## Hard Rules
 
-- Keep initialization and rule maintenance separate from delivery work.
+- Keep repository contract synchronization separate from product delivery work unless the same user turn explicitly requests both.
 - Do not infer unclear product intent. If goal, scope, non-goals, reference behavior, or acceptance has multiple reasonable interpretations, enter Human Gate `info_required` before implementation.
 - Do not convert unconfirmed assumptions into scope, non-goals, tasks, or acceptance criteria.
 - Require a Requirements Readiness Check before planning or implementation. It must confirm expected behavior, reference behavior, scope, non-goals, acceptance criteria, and verification approach.

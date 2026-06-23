@@ -6,27 +6,27 @@
 
 目标是在调整包结构之前，先稳定 Skill 或 Plugin 必须实现的契约。本文不是 Skill 本身，而是 Skill 入口、references、templates、adapters 和 repo-local artifact 契约的设计输入。
 
-状态说明：目标架构见 [Plugin Skill 模块化](plugin-skill-modularization.md)。通用框架规则放在 plugin-owned resources 中；目标仓库只保留薄入口、本地覆盖配置和任务 artifacts。
+状态说明：目标架构见 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md)。通用框架规则放在 plugin-owned resources 中；目标仓库只保留薄入口、本地覆盖配置和任务 artifacts。
 
 当前剩余工作的稳定路线图见 [Dev Cadence 路线图](dev-cadence-roadmap.md)。后续完成状态以路线图为准，本文不追踪逐项执行进度。
 
 ## 2. 设计假设
 
-- 受众：可复用的团队 Plugin，包含少量面向用户意图的 Skills。
+- 受众：可复用的团队 Plugin，包含一个 bootstrap Skill 和少量面向工作动作/纪律的 Skills。
 - 语言：Skill instructions、templates、Blueprint 文件和生成 artifacts 使用英文标识；说明性文档可以使用中文。
 - 执行模型：executor-agnostic Harness，并提供可用于 Codex-style coding agents 的示例。
 - 交付模型：从 Plugin-owned rules、templates、adapters 和 repo-local artifacts 开始，而不是先做平台。
-- 演进方向：优先使用 plugin-owned reusable rules 加 thin repo-local contract，而不是把完整框架复制到每个目标仓库。见 [Plugin Skill 模块化](plugin-skill-modularization.md)。
+- 演进方向：优先使用 plugin-owned reusable rules 加 thin repo-local contract，而不是把完整框架复制到每个目标仓库。见 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md)。
 - 第一批工作流：`feature-dev`、`bugfix`、`code-review`、`refactor`、`research-spike`、`incident-fix`。
 - 核心 Worker Agents：`Planner`、`Architect`、`Developer`、`Tester`、`Reviewer`。
 - 可选 Worker Agent：`Researcher`。
 - 非 Agent 角色：`Human`、`Supervisor`、`Harness`、`Quality Gate`、`Human Gate`。
-- 触发边界：`dev-cadence-init` 只能在用户要求 install、initialize、set up 或 prepare repository-level AI-assisted delivery rules、workflows、gates、templates 时隐式触发。首次设置时用户不需要显式写 `$dev-cadence`。
-- `dev-cadence-maintain` 只在用户显式调用 `$dev-cadence`、`dev-cadence` 或 maintenance Skill 时处理 update、sync、repair、inspect、diagnose 等维护操作。
-- `dev-cadence-deliver` 是初始化仓库后的普通交付入口，处理 feature、bugfix、review、refactor、research 和 incident 工作。
+- 触发边界：`using-dev-cadence` 由 session-start hook 注入，是唯一代表 Dev Cadence 整体的 bootstrap/router。
+- `cadence-sync` 只处理 initialize、inspect、sync、repair、diagnose 和 thin repo-local contract 写入。
+- 普通 feature、bugfix、review、refactor、research 和 incident 工作由 `using-dev-cadence` 路由到 `cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review` 和 `cadence-verify`。
 - `implementation_discipline: default` 和 `verification_discipline: default` 表示 Dev Cadence 内置交付纪律，不依赖外部 Skill。
-- 未初始化仓库中的产品实现请求不应隐式触发安装。
-- 初始化边界：setup、sync、repair、diagnosis 默认只能写 root `AGENTS.md`、root `.gitignore` 中的 `.dev-cadence.yaml` 忽略项、root `.dev-cadence.yaml` 和 `specs/.gitkeep`；除非用户同一轮明确要求交付工作，否则不得修改产品代码或 task-specific specs。
+- 未初始化仓库中的产品实现请求不应因为缺少 thin repo-local contract 而被阻塞；需要持久 artifact 时再创建 `specs/` 或调用 `cadence-sync`。
+- Repo contract 边界：setup、sync、repair、diagnosis 默认只能写 root `AGENTS.md`、root `.gitignore` 中的 `.dev-cadence.yaml` 忽略项、root `.dev-cadence.yaml` 和 `specs/.gitkeep`；除非用户同一轮明确要求交付工作，否则不得修改产品代码或 task-specific specs。
 
 ## 3. 不可协商原则
 
@@ -56,7 +56,7 @@
 
 ## 4. 目标 Codex Plugin 发布结构
 
-`dev-cadence` 当前 Codex Plugin 发布形态应使用 progressive disclosure。Skill entrypoints 应保持精简，只在需要时路由到聚焦的 reference files、templates 和 adapters。
+`dev-cadence` 当前 Codex Plugin 发布形态应使用 progressive disclosure。`using-dev-cadence` 负责 bootstrap 和路由，`cadence-*` Skills 负责具体工作动作，references/templates/scripts 承载共享治理协议和可复用资源。
 
 ```text
 dev-cadence/
@@ -67,80 +67,36 @@ dev-cadence/
     run-hook.cmd
     session-start-codex
   skills/
-    dev-cadence-init/
+    using-dev-cadence/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-deliver/
+    cadence-clarify/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-maintain/
+    cadence-plan/
       SKILL.md
       agents/openai.yaml
-    dev-cadence-authoring/
+    cadence-execute/
+      SKILL.md
+      agents/openai.yaml
+    cadence-tdd/
+      SKILL.md
+      agents/openai.yaml
+    cadence-debug/
+      SKILL.md
+      agents/openai.yaml
+    cadence-review/
+      SKILL.md
+      agents/openai.yaml
+    cadence-verify/
+      SKILL.md
+      agents/openai.yaml
+    cadence-sync/
       SKILL.md
       agents/openai.yaml
   references/
-    principles.md
-    supervisor-state-machine.md
-    task-classes.md
-    agent-blueprints.md
-    workflows.md
-    delivery-disciplines.md
-    intent-and-design-discipline.md
-    visual-companion.md
-    planning-discipline.md
-    implementation-discipline.md
-    testing-anti-patterns.md
-    execution-orchestration.md
-    debugging-discipline.md
-    root-cause-tracing.md
-    condition-based-waiting.md
-    defense-in-depth.md
-    review-discipline.md
-    verification-discipline.md
-    authoring-discipline.md
-    skill-pressure-testing.md
-    context-pack.md
-    harness.md
-    quality-gates.md
-    human-gates.md
-    adapters.md
-    skill-layout.md
   templates/
-    spec/
-      00-brief.md
-      01-requirements.md
-      02-design.md
-      03-tasks.md
-      04-test-plan.md
-      05-implementation.md
-      06-test-report.md
-      07-review-report.md
-      08-acceptance.md
-    runs/
-      run-context.md
-      execution-report.md
-      tool-log.md
-      test-log.md
-      diff-summary.md
-      permission-decisions.md
-    prompts/
-      spec-document-reviewer.md
-      plan-document-reviewer.md
-      implementer.md
-      spec-compliance-reviewer.md
-      code-quality-reviewer.md
-      code-reviewer.md
   scripts/
-    check-skill-package.mjs
-    check-discipline-routes.mjs
-    check-spec-artifacts.mjs
-    visual-companion/
-      start-server.sh
-      stop-server.sh
-      server.cjs
-      helper.js
-      frame-template.html
 ```
 
 发布用 Plugin 内容不应包含通用 README、installation guide、changelog 或叙事性研究文档，除非插件发布格式要求。这些内容属于框架仓库，不属于 runtime Skill body。
@@ -149,11 +105,10 @@ dev-cadence/
 
 `visual-companion.md` 与 `scripts/visual-companion/` 是 intent/design 阶段的可选视觉对齐能力。它可以用于 mockup、diagram、layout comparison 等场景，但不能替代 requirements，也不能成为 G1 必需条件。环境不可用时必须降级为 text-only clarification。
 
-Codex Plugin 应能安全地安装在 system scope。`dev-cadence-init` 的 metadata 不得把普通 feature、bugfix、review、refactor、research 或 incident execution 描述为全局触发。只有仓库初始化完成，并且 `AGENTS.md` 将交付工作路由到 `dev-cadence-deliver` 后，这些 workflow 才自动生效。
-
+Codex Plugin 应能安全地安装在 system scope。`using-dev-cadence` 的 session-start bootstrap 可以全局生效，但它必须路由到具体 `cadence-*` Skills；`cadence-sync` 不得把普通 feature、bugfix、review、refactor、research 或 incident execution 描述为 repo contract 工作。
 ## 5. 仓库本地输出结构
 
-应用到目标仓库时，`dev-cadence-init` 应创建或更新 thin repo-local contract：
+应用到目标仓库时，`cadence-sync` 可创建或更新 thin repo-local contract：
 
 ```text
 AGENTS.md
@@ -190,7 +145,7 @@ Dev Cadence Core 本身不绑定 Codex。`dev-cadence` 当前优先支持 Codex 
 
 `artifact_language` 支持 `en` 和 `zh`。`.dev-cadence.yaml` 中未注释的 `dev_cadence.artifact_language` 会覆盖插件默认值。初始化和更新应把 `.dev-cadence.yaml` 加入 `.gitignore`，并保留已有 ignore rules。
 
-初始化后的仓库不应要求用户为每个 feature、bugfix、refactor、review、research 或 incident request 显式调用 Skill 名称。Root `AGENTS.md` 应将普通软件交付工作路由到 `dev-cadence-deliver`，Supervisor 从请求中推断 `selected_workflow`。
+仓库不应要求用户为每个 feature、bugfix、refactor、review、research 或 incident request 显式调用 Skill 名称。`using-dev-cadence` 从请求中推断 `selected_workflow`，并路由到具体 `cadence-*` Skill。Root `AGENTS.md` 只保存薄入口和项目特定约束，不复制完整框架规则。
 
 Framework initialization、synchronization、repair、diagnosis 不是 delivery task。除非同一轮用户明确要求具体交付任务，否则它们不应创建 `specs/{task_id}/`，也不应修改产品源代码、测试、迁移、构建脚本、部署文件或应用配置。
 

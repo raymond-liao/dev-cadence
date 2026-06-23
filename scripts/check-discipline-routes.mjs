@@ -2,6 +2,18 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+const EXPECTED_SKILLS = [
+  'using-dev-cadence',
+  'cadence-clarify',
+  'cadence-plan',
+  'cadence-execute',
+  'cadence-tdd',
+  'cadence-debug',
+  'cadence-review',
+  'cadence-verify',
+  'cadence-sync',
+];
+
 function printHelp() {
   console.log(`Usage: check-discipline-routes.mjs [plugin-dir]
 
@@ -179,17 +191,14 @@ function checkVisualCompanionScripts() {
 }
 
 function checkEntrypointReferenceMap() {
-  const skillText = [
-    'skills/dev-cadence-init/SKILL.md',
-    'skills/dev-cadence-deliver/SKILL.md',
-    'skills/dev-cadence-maintain/SKILL.md',
-    'skills/dev-cadence-authoring/SKILL.md',
-  ].map(readText).join('\n');
+  const skillText = EXPECTED_SKILLS.map((name) => readText(`skills/${name}/SKILL.md`)).join('\n');
   const expected = [
     'references/delivery-disciplines.md',
     'references/repository-rule-sync.md',
-    'references/authoring-discipline.md',
     'references/skill-layout.md',
+    'references/harness.md',
+    'references/quality-gates.md',
+    'references/human-gates.md',
   ];
   for (const item of expected) {
     if (!skillText.includes(item)) {
@@ -197,18 +206,11 @@ function checkEntrypointReferenceMap() {
     }
   }
 }
-
 function checkEntrypointSkills() {
-  const required = [
-    'skills/dev-cadence-init/SKILL.md',
-    'skills/dev-cadence-init/agents/openai.yaml',
-    'skills/dev-cadence-deliver/SKILL.md',
-    'skills/dev-cadence-deliver/agents/openai.yaml',
-    'skills/dev-cadence-maintain/SKILL.md',
-    'skills/dev-cadence-maintain/agents/openai.yaml',
-    'skills/dev-cadence-authoring/SKILL.md',
-    'skills/dev-cadence-authoring/agents/openai.yaml',
-  ];
+  const required = EXPECTED_SKILLS.flatMap((name) => [
+    `skills/${name}/SKILL.md`,
+    `skills/${name}/agents/openai.yaml`,
+  ]);
 
   for (const relativePath of required) {
     if (!exists(relativePath)) {
@@ -217,7 +219,7 @@ function checkEntrypointSkills() {
   }
 
   const layoutText = readText('references/skill-layout.md');
-  for (const skillName of ['dev-cadence-init', 'dev-cadence-deliver', 'dev-cadence-maintain', 'dev-cadence-authoring']) {
+  for (const skillName of EXPECTED_SKILLS) {
     if (!layoutText.includes(`${skillName}/`)) {
       fail(`references/skill-layout.md: missing target entrypoint ${skillName}/`);
     }

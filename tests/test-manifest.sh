@@ -28,10 +28,15 @@ assert(fs.statSync(skillsDir).isDirectory(), 'manifest skills directory must exi
 assert(fs.statSync(hooksPath).isFile(), 'manifest hooks file must exist');
 
 const requiredSkills = [
-  'dev-cadence-init',
-  'dev-cadence-deliver',
-  'dev-cadence-maintain',
-  'dev-cadence-authoring',
+  'using-dev-cadence',
+  'cadence-clarify',
+  'cadence-plan',
+  'cadence-execute',
+  'cadence-tdd',
+  'cadence-debug',
+  'cadence-review',
+  'cadence-verify',
+  'cadence-sync',
 ];
 
 for (const skill of requiredSkills) {

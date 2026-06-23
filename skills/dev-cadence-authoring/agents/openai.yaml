@@ -1,6 +1,0 @@
-interface:
-  display_name: "Dev Cadence Authoring"
-  short_description: "Maintain Dev Cadence package"
-  default_prompt: "Use $dev-cadence-authoring to maintain Dev Cadence skills, references, templates, scripts, or roadmap."
-policy:
-  allow_implicit_invocation: false

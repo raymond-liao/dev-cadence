@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cadence Review"
+  short_description: "Review delivery work"
+  default_prompt: "Use $cadence-review to review implementation against plan and code quality before completion."
+policy:
+  allow_implicit_invocation: false
