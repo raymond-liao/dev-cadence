@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 scripts=(
+  "deploy-local.sh"
 )
 
 while IFS= read -r script_path; do
