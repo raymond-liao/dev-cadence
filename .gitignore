@@ -22,6 +22,7 @@ tmp/
 # Local Dev Cadence work artifacts and research workspaces
 /specs/
 /research/
+.dev-cadence.yaml
 
 # Local environment and secrets
 .env
