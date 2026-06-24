@@ -229,9 +229,6 @@ function checkEntrypointSkills() {
 function checkPluginSurface() {
   const required = [
     '.codex-plugin/plugin.json',
-    'hooks/hooks-codex.json',
-    'hooks/run-hook.cmd',
-    'hooks/session-start-codex',
   ];
   for (const relativePath of required) {
     if (!exists(relativePath)) {

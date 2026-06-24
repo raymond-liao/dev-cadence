@@ -53,7 +53,7 @@ Adapter 边界跟随可替换执行纪律。
 
 ```text
 using-dev-cadence
-  session-start bootstrap 和任务路由。
+  Dev Cadence 入口 Skill 和任务路由。
 
 cadence-clarify / cadence-plan / cadence-execute / cadence-tdd
 cadence-debug / cadence-review / cadence-verify

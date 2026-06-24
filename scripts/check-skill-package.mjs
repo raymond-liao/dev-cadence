@@ -172,15 +172,14 @@ function checkPluginManifest() {
   if (manifest.skills !== './skills/') {
     fail(`.codex-plugin/plugin.json: expected skills './skills/', got '${manifest.skills || ''}'`);
   }
-  if (manifest.hooks !== './hooks/hooks-codex.json') {
-    fail(`.codex-plugin/plugin.json: expected hooks './hooks/hooks-codex.json', got '${manifest.hooks || ''}'`);
+  if (manifest.hooks !== undefined) {
+    fail('.codex-plugin/plugin.json: hooks must not be registered by the default plugin package');
   }
 }
 
 function shippedFiles() {
   const roots = [
     '.codex-plugin',
-    'hooks',
     'skills',
     'references',
     'templates',

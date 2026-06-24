@@ -24,10 +24,6 @@ The target distributable shape is a plugin with a bootstrap Skill, short discipl
 dev-cadence/
   .codex-plugin/
     plugin.json
-  hooks/
-    hooks-codex.json
-    run-hook.cmd
-    session-start-codex
   skills/
     using-dev-cadence/
       SKILL.md
@@ -138,7 +134,7 @@ Do not create one Skill per internal Supervisor state such as `requirements-gate
 
 Published Skills:
 
-- `using-dev-cadence`: session-start bootstrap and task router. It selects workflow state, task class, evidence requirements, gates, and the applicable cadence discipline Skill.
+- `using-dev-cadence`: Dev Cadence entrypoint and task router. It selects workflow state, task class, evidence requirements, gates, and the applicable cadence discipline Skill.
 - `cadence-clarify`: clarify goal, scope, expected behavior, non-goals, design, acceptance, and verification before implementation.
 - `cadence-plan`: turn clarified design into executable tasks and verification steps.
 - `cadence-execute`: execute an approved plan through Harness evidence.
@@ -152,7 +148,7 @@ Dev Cadence authoring is not published as a normal user Skill. Authoring discipl
 
 ## Invocation Boundary
 
-`using-dev-cadence` is injected by the session-start hook and is the only Skill that represents Dev Cadence as a whole. It must route ordinary delivery work to the applicable cadence discipline Skills before action.
+`using-dev-cadence` is the only Skill that represents Dev Cadence as a whole. It is selected through Codex native skill triggering or an explicit user request to use Dev Cadence, and it must route ordinary delivery work to the applicable cadence discipline Skills before action.
 
 `cadence-sync` may be selected implicitly when the user asks to install, initialize, set up, inspect, sync, repair, diagnose, or prepare Dev Cadence repository-level rules, local config, or artifact space.
 

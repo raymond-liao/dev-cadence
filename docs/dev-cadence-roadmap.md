@@ -221,23 +221,23 @@
 
 范围：
 
-- 新增 `using-dev-cadence` session-start bootstrap Skill。
+- 新增 `using-dev-cadence` 入口 Skill。
 - 将普通交付能力拆到 `cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review` 和 `cadence-verify`。
 - 将初始化、inspect、sync、repair、diagnose 迁移到 `cadence-sync`。
 - 不再把 `dev-cadence-authoring` 作为普通用户发布 Skill。
-- 更新 hooks、package checks、route checks、tests、README 和发布结构 reference。
+- 更新 package checks、route checks、tests、README 和发布结构 reference。
 
 完成定义：
 
 - Codex package 只发布目标 Skill 集合。
-- session-start hook 注入 `using-dev-cadence`，不再注入旧四入口菜单。
+- `using-dev-cadence` 作为唯一 Dev Cadence 入口 Skill，不再发布旧四入口菜单。
 - `bash tests/run-all.sh` 通过。
 - 本地发布包能通过 `scripts/package-codex-plugin.mjs --clean` 生成并通过 package checks。
 
 依赖：`docs/dev-cadence-target-model.md`。
 
 备注：
-已完成。发布用 Skill 已迁移为 `using-dev-cadence`、`cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review`、`cadence-verify` 和 `cadence-sync`。旧四入口已从发布包移除，`dev-cadence-authoring` 不作为普通用户 Skill 发布。session-start hook 已改为注入 `using-dev-cadence`。验证证据：`bash tests/run-all.sh` 和 `node scripts/package-codex-plugin.mjs --clean` 均通过。
+已完成。发布用 Skill 已迁移为 `using-dev-cadence`、`cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review`、`cadence-verify` 和 `cadence-sync`。旧四入口已从发布包移除，`dev-cadence-authoring` 不作为普通用户 Skill 发布。默认发布包不注册 session-start hook，依赖 Codex 原生 Skill 触发或用户显式要求使用 Dev Cadence。验证证据：`bash tests/run-all.sh` 和 `node scripts/package-codex-plugin.mjs --clean` 均通过。
 
 ## 维护规则
 

@@ -8,7 +8,6 @@ const MARKETPLACE_NAME = 'dev-cadence-local';
 const DEFAULT_OUTPUT = path.join('dist', 'codex');
 const INCLUDED_PATHS = [
   '.codex-plugin',
-  'hooks',
   'skills',
   'references',
   'templates',
@@ -28,8 +27,8 @@ Options:
   -h, --help            Show this help text.
 
 The package creates .agents/plugins/marketplace.json and plugins/dev-cadence/.
-The plugin payload includes only .codex-plugin/, hooks/, skills/, references/,
-templates/, and scripts/. It excludes repository docs, tests, specs, research,
+The plugin payload includes only .codex-plugin/, skills/, references/,
+templates/, and scripts/. It excludes repository docs, hooks, tests, specs, research,
 Git metadata, and local development files.`);
 }
 
@@ -186,6 +185,7 @@ function main() {
     fs.rmSync(options.outputDir, { recursive: true, force: true });
   }
   fs.mkdirSync(options.outputDir, { recursive: true });
+  fs.rmSync(pluginDir, { recursive: true, force: true });
   const marketplaceFile = writeMarketplace(options.outputDir);
 
   for (const item of INCLUDED_PATHS) {

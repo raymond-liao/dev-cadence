@@ -21,7 +21,7 @@
 - 核心 Worker Agents：`Planner`、`Architect`、`Developer`、`Tester`、`Reviewer`。
 - 可选 Worker Agent：`Researcher`。
 - 非 Agent 角色：`Human`、`Supervisor`、`Harness`、`Quality Gate`、`Human Gate`。
-- 触发边界：`using-dev-cadence` 由 session-start hook 注入，是唯一代表 Dev Cadence 整体的 bootstrap/router。
+- 触发边界：`using-dev-cadence` 是唯一代表 Dev Cadence 整体的入口 Skill/router，通过 Codex 原生 Skill 触发或用户显式要求使用 Dev Cadence 进入流程。
 - `cadence-sync` 只处理 initialize、inspect、sync、repair、diagnose 和 thin repo-local contract 写入。
 - 普通 feature、bugfix、review、refactor、research 和 incident 工作由 `using-dev-cadence` 路由到 `cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review` 和 `cadence-verify`。
 - `implementation_discipline: default` 和 `verification_discipline: default` 表示 Dev Cadence 内置交付纪律，不依赖外部 Skill。
@@ -62,10 +62,6 @@
 dev-cadence/
   .codex-plugin/
     plugin.json
-  hooks/
-    hooks-codex.json
-    run-hook.cmd
-    session-start-codex
   skills/
     using-dev-cadence/
       SKILL.md
@@ -105,7 +101,7 @@ dev-cadence/
 
 `visual-companion.md` 与 `scripts/visual-companion/` 是 intent/design 阶段的可选视觉对齐能力。它可以用于 mockup、diagram、layout comparison 等场景，但不能替代 requirements，也不能成为 G1 必需条件。环境不可用时必须降级为 text-only clarification。
 
-Codex Plugin 应能安全地安装在 system scope。`using-dev-cadence` 的 session-start bootstrap 可以全局生效，但它必须路由到具体 `cadence-*` Skills；`cadence-sync` 不得把普通 feature、bugfix、review、refactor、research 或 incident execution 描述为 repo contract 工作。
+Codex Plugin 应能安全地安装在 system scope。`using-dev-cadence` 通过 Codex 原生 Skill 触发或用户显式要求使用 Dev Cadence 进入流程，并必须路由到具体 `cadence-*` Skills；`cadence-sync` 不得把普通 feature、bugfix、review、refactor、research 或 incident execution 描述为 repo contract 工作。
 ## 5. 仓库本地输出结构
 
 应用到目标仓库时，`cadence-sync` 可创建或更新 thin repo-local contract：

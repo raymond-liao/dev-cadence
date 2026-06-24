@@ -8,7 +8,7 @@
 
 - 本仓库是 `dev-cadence` 的源码仓库，当前优先支持 Codex Plugin 发布形态，不使用 `plugins/dev-cadence/` 作为开发目录。
 - Plugin manifest 放在仓库根目录 `.codex-plugin/plugin.json`。
-- 发布用 skills 放在仓库根目录 `skills/*`，共享资源放在仓库根目录 `references/`、`templates/`、`scripts/`、`hooks/`。
+- 发布用 skills 放在仓库根目录 `skills/*`，共享资源放在仓库根目录 `references/`、`templates/`、`scripts/`。
 - 用户仓库默认不创建 `.ai/`。仓库契约只包含 `AGENTS.md`、`.gitignore`、`specs/` 和可选的根目录 `.dev-cadence.yaml`。
 - `.dev-cadence.yaml` 是本地覆盖配置，默认加入 `.gitignore`；默认配置由 `dev-cadence` 自身管理。
 - `specs/` 是运行时生成目录，不作为源码仓库长期追踪内容。
@@ -19,10 +19,6 @@
 ```text
 dev-cadence/
   .codex-plugin/plugin.json
-  hooks/
-    hooks-codex.json
-    session-start-codex
-    run-hook.cmd
   skills/
     dev-cadence-init/
     dev-cadence-deliver/
@@ -53,11 +49,9 @@ dev-cadence/
   - 移除旧的外层 `skills/dev-cadence/SKILL.md` 和 `skills/dev-cadence/agents/openai.yaml` 包装层。
   - 保持各 Skill 内部 `agents/openai.yaml`。
 
-- [x] **任务 3：新增 Codex Plugin manifest 与 hook**
+- [x] **任务 3：新增 Codex Plugin manifest**
   - 新增 `.codex-plugin/plugin.json`。
-  - 新增 `hooks/hooks-codex.json`。
-  - 新增 `hooks/session-start-codex` 和 `hooks/run-hook.cmd`。
-  - hook 只注入 Dev Cadence bootstrap/入口说明，不把用户仓库当作规则存储位置。
+  - 默认发布包不注册 session-start hook，避免安装确认和会话启动噪音。
 
 - [x] **任务 4：改造用户仓库契约**
   - 修改 `scripts/sync-repo-contract.mjs`。

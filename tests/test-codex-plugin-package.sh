@@ -63,6 +63,10 @@ assert_command_fails_with \
 
 node "${ROOT_DIR}/scripts/package-codex-plugin.mjs" --output-dir "${PACKAGE_DIR}" --clean --json > "${PACKAGE_DIR}/package-report.json"
 
+mkdir -p "${PLUGIN_DIR}/hooks"
+touch "${PLUGIN_DIR}/hooks/stale-hook"
+node "${ROOT_DIR}/scripts/package-codex-plugin.mjs" --output-dir "${PACKAGE_DIR}" --json > "${PACKAGE_DIR}/package-report-no-clean.json"
+
 test -f "${MARKETPLACE_FILE}" || {
   echo "missing expected .agents/plugins/marketplace.json" >&2
   exit 1
@@ -74,9 +78,6 @@ test ! -e "${PACKAGE_DIR}/marketplace.json" || {
 }
 
 assert_exists ".codex-plugin/plugin.json"
-assert_exists "hooks/hooks-codex.json"
-assert_exists "hooks/session-start-codex"
-assert_exists "hooks/run-hook.cmd"
 assert_exists "skills/using-dev-cadence/SKILL.md"
 assert_exists "skills/cadence-clarify/SKILL.md"
 assert_exists "skills/cadence-plan/SKILL.md"
@@ -98,6 +99,7 @@ assert_exists "scripts/run-delivery-dry-run.mjs"
 assert_exists "scripts/visual-companion/server.cjs"
 
 assert_absent "docs"
+assert_absent "hooks"
 assert_absent "research"
 assert_absent "specs"
 assert_absent "tests"
@@ -134,7 +136,7 @@ assert(marketplace.plugins[0].source.path === './plugins/dev-cadence', 'marketpl
 
 assert(manifest.name === 'dev-cadence', 'package manifest name must be dev-cadence');
 assert(manifest.skills === './skills/', 'package manifest must point at bundled skills');
-assert(manifest.hooks === './hooks/hooks-codex.json', 'package manifest must point at bundled hooks');
+assert(manifest.hooks === undefined, 'package manifest must not register hooks by default');
 
 const shippedFiles = [];
 function walk(dir) {
@@ -150,6 +152,7 @@ function walk(dir) {
 walk(pluginDir);
 
 assert(!shippedFiles.some((file) => file.startsWith('docs/')), 'package must exclude docs');
+assert(!shippedFiles.some((file) => file.startsWith('hooks/')), 'package must exclude hooks');
 assert(!shippedFiles.some((file) => file.startsWith('research/')), 'package must exclude research');
 assert(!shippedFiles.some((file) => file.startsWith('specs/')), 'package must exclude historical specs');
 assert(!shippedFiles.some((file) => file.startsWith('tests/')), 'package must exclude tests');

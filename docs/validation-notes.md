@@ -68,9 +68,8 @@
 
 - Codex Plugin manifest。
 - 发布包边界。
-- session-start hook。
+- 默认发布包不注册 session-start hook。
 - thin repo-local contract。
 - delivery dry run 生成的临时 specs 和 Harness evidence。
 - artifact templates。
 - diff whitespace。
-

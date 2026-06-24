@@ -40,7 +40,7 @@ bash tests/run-all.sh
 
 预期结果：
 
-- `tests/run-all.sh` 依次输出 manifest、Codex package boundary、session hook、repo contract 和 delivery dry-run 测试通过
+- `tests/run-all.sh` 依次输出 manifest、Codex package boundary、repo contract 和 delivery dry-run 测试通过
 - `tests/run-all.sh` 内部会调用 `package-codex-plugin.mjs` 并验证生成包边界
 - `check-skill-package.mjs` 输出 `OK checked ... plugin files in ...`
 - `check-discipline-routes.mjs` 输出 `OK discipline routes verified for ...`
@@ -69,7 +69,7 @@ dist/codex/
     dev-cadence/
 ```
 
-`dist/codex/` 是本地 marketplace root，Codex CLI 读取其中的 `.agents/plugins/marketplace.json`；`dist/codex/plugins/dev-cadence/` 是实际 plugin payload。plugin payload 应只包含 `.codex-plugin/`、`hooks/`、`skills/`、`references/`、`templates/` 和 `scripts/`，不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`research/`、`specs/`、`tests/` 或 `.git/`。
+`dist/codex/` 是本地 marketplace root，Codex CLI 读取其中的 `.agents/plugins/marketplace.json`；`dist/codex/plugins/dev-cadence/` 是实际 plugin payload。plugin payload 应只包含 `.codex-plugin/`、`skills/`、`references/`、`templates/` 和 `scripts/`，不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`hooks/`、`research/`、`specs/`、`tests/` 或 `.git/`。
 
 ## 4. 运行最小 dry run
 

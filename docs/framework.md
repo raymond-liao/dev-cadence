@@ -1063,7 +1063,7 @@ dev-cadence
 
 ```text
 dev-cadence
-  + Codex Plugin manifest 和 hooks
+  + Codex Plugin manifest
   + 少量 user-facing skills
   + 发布包内 references/templates/adapters
   + thin repo-local contract
@@ -1126,11 +1126,11 @@ Adapter 按可替换执行纪律拆。
 
 ### 13.3 推荐 Skill 集合
 
-Codex Plugin 发布形态采用一个 bootstrap Skill 加一组短前缀工作纪律 Skills。
+Codex Plugin 发布形态采用一个入口 Skill 加一组短前缀工作纪律 Skills。
 
 ```text
 using-dev-cadence
-  session-start bootstrap 和任务路由，负责选择 workflow、task class、gates 和具体 discipline。
+  Dev Cadence 入口 Skill 和任务路由，负责选择 workflow、task class、gates 和具体 discipline。
 
 cadence-clarify
   澄清目标、范围、非目标、设计、验收和验证方式。
@@ -1169,10 +1169,6 @@ cadence-sync
 dev-cadence/
   .codex-plugin/
     plugin.json
-  hooks/
-    hooks-codex.json
-    run-hook.cmd
-    session-start-codex
   skills/
     using-dev-cadence/
       SKILL.md
@@ -1246,7 +1242,7 @@ dev-cadence/
 
 其中：
 
-- `session-start-codex` 注入 `using-dev-cadence`，让 Agent 在交付任务前检查 workflow、state、gate 和具体 discipline。
+- `using-dev-cadence` 通过 Codex 原生 Skill 触发或用户显式要求使用 Dev Cadence 进入流程，让 Agent 在交付任务前检查 workflow、state、gate 和具体 discipline。
 - `cadence-*` Skills 是工作动作和纪律入口，不是产品菜单。
 - `references/` 承载 Supervisor、Harness、gates、workflow、task class 和 discipline 细节。
 - `templates/spec/` 保存任务 artifacts 模板，`templates/runs/` 保存 Harness evidence 模板，`templates/prompts/` 保存 Worker/reviewer prompt 模板。
@@ -1274,7 +1270,6 @@ dist/codex/
 
 ```text
 .codex-plugin/
-hooks/
 skills/
 references/
 templates/
@@ -1301,7 +1296,7 @@ node scripts/package-codex-plugin.mjs --clean
 codex plugin add dev-cadence@dev-cadence-local
 ```
 
-安装或更新后新开 Codex thread，以便 Codex 重新加载 skills 和 hook。
+安装或更新后新开 Codex thread，以便 Codex 重新加载 skills。
 
 ### 13.6 目标仓库薄契约
 
@@ -1585,7 +1580,7 @@ specs/{task_id}/runs/{run_id}/
 后续实现按目标架构直接推进：
 
 1. 将 Plugin 化目标和 thin repo-local contract 固化到方案文档和 Skill references。
-2. 实现 `using-dev-cadence` 的 session-start bootstrap，由它选择 workflow、task class、gates 和具体 `cadence-*` discipline。
+2. 实现 `using-dev-cadence` 入口 Skill，由它选择 workflow、task class、gates 和具体 `cadence-*` discipline。
 3. 将 repo contract 初始化、inspect、sync、repair 和 diagnose 收敛到 `cadence-sync`。
 4. 将日常交付拆到 `cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review` 和 `cadence-verify`。
 5. 增加并验证 `delivery-disciplines.md`、细分 discipline references、Worker/reviewer prompt templates 和 `adapters.md`，先跑通内置默认交付纪律，再决定是否接入外部 adapter。
@@ -1696,7 +1691,6 @@ docs/plugin-skill-modularization.md
 ```text
 dev-cadence/
   .codex-plugin/plugin.json
-  hooks/
   skills/
     using-dev-cadence/
     cadence-clarify/
@@ -1712,12 +1706,12 @@ dev-cadence/
   scripts/
 ```
 
-该 `dev-cadence` Codex source 当前包含 Codex manifest、session-start hook、`using-dev-cadence` bootstrap、`cadence-*` 工作纪律 Skills、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 source self-check、artifact 初始化、repo contract 同步和 visual companion 工具。
+该 `dev-cadence` Codex source 当前包含 Codex manifest、`using-dev-cadence` 入口 Skill、`cadence-*` 工作纪律 Skills、按主题拆分的 `references/` 文件、`templates/spec/` 下的任务 artifact templates、`templates/runs/` 下的 Harness evidence templates、`templates/prompts/` 下的 Worker/reviewer prompt templates，以及 `scripts/` 下的 source self-check、artifact 初始化、repo contract 同步和 visual companion 工具。
 
 语言边界：
 
 - 项目方案文档使用中文，包括 `README.md` 和 `docs/**`。
-- 可发布 Plugin 内容使用英文，包括 `skills/**`、`references/**`、`templates/**`、`scripts/**` 和 `hooks/**`。
+- 可发布 Plugin 内容使用英文，包括 `skills/**`、`references/**`、`templates/**` 和 `scripts/**`。
 - 任务 artifact 的自然语言正文由 `artifact_language` 决定；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 保持英文。
 
 仍然后置的主题包括：

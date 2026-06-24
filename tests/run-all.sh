@@ -15,10 +15,11 @@ run_command() {
 }
 
 run_test "tests/test-manifest.sh"
+run_test "tests/test-shell-syntax.sh"
 run_test "tests/test-codex-plugin-package.sh"
-run_test "tests/test-session-start.sh"
 run_test "tests/test-sync-repo-contract.sh"
 run_test "tests/test-dry-run.sh"
+run_test "tests/test-codex-install-smoke.sh"
 run_command node scripts/check-skill-package.mjs .
 run_command node scripts/check-discipline-routes.mjs .
 run_command node scripts/check-spec-artifacts.mjs templates
