@@ -109,6 +109,9 @@ codex plugin marketplace add ./dist/codex
 codex plugin add dev-cadence@dev-cadence-local
 ```
 
+版本号维护在 `.codex-plugin/plugin.json`。正式发布前保持 major 为 `0`；
+具体规则见 [references/skill-layout.md](references/skill-layout.md#versioning)。
+
 完整回归：
 
 ```bash

@@ -332,3 +332,23 @@ Maintenance must not touch product code or task-specific `specs/{task_id}/` arti
 ## Versioning
 
 Version the Plugin, Skills, references, templates, adapters, and repo-local config like code. Changes to rules, templates, adapters, or gates should be reviewed with the same care as workflow code because they affect delivery behavior.
+
+Use the version in `.codex-plugin/plugin.json` as the Plugin package version.
+Until the maintainer explicitly declares a formal public release, keep the major
+version at `0`.
+
+Version update rules:
+
+- patch (`0.x.y -> 0.x.y+1`): fixes, documentation corrections, packaging
+  fixes, tests, or behavior-preserving cleanup;
+- minor (`0.x.y -> 0.x+1.0`): compatible new Skills, references, templates,
+  scripts, workflow capabilities, or user-visible behavior;
+- pre-1.0 breaking change (`0.x.y -> 0.x+1.0`): incompatible workflow,
+  artifact, config, Skill, or package behavior before formal release. Document
+  the incompatibility in the release notes or commit body;
+- major (`1.0.0+`): only after the maintainer explicitly says Dev Cadence is
+  ready for a formal public release.
+
+Do not bump the Plugin version merely because local development commits exist.
+Bump it when preparing a release package, an installable handoff, or when the
+maintainer explicitly requests a version update.
