@@ -50,9 +50,62 @@ node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
 test -f "${REPO_DIR}/specs/${TASK_ID}/00-brief.md"
 test -f "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.md"
 test -d "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1"
+test -f "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/pre-implementation-status.md"
 test ! -e "${REPO_DIR}/.ai"
 grep -q "Accepted by: Raymond" "${SUMMARY_FILE}"
 grep -q "Acceptance: accepted_for_dry_run_scope" "${SUMMARY_FILE}"
+
+MISSING_BASELINE_REPO="${REPO_DIR}/missing-baseline-fixture"
+mkdir -p "${MISSING_BASELINE_REPO}/specs/missing-baseline/runs/implementation-001"
+cat > "${MISSING_BASELINE_REPO}/specs/missing-baseline/00-brief.md" <<'EOF'
+# Brief
+
+```yaml
+task_id: missing-baseline
+selected_workflow: bugfix
+task_class: S1
+```
+EOF
+cat > "${MISSING_BASELINE_REPO}/specs/missing-baseline/03-tasks.md" <<'EOF'
+# Tasks
+
+```yaml
+status: executable
+task_class: S1
+selected_workflow: bugfix
+target_files:
+  - src/app.py
+```
+EOF
+cat > "${MISSING_BASELINE_REPO}/specs/missing-baseline/05-implementation.md" <<'EOF'
+# Implementation
+
+```yaml
+status: implemented
+changed_files:
+  - src/app.py
+```
+EOF
+cat > "${MISSING_BASELINE_REPO}/specs/missing-baseline/runs/implementation-001/diff-summary.md" <<'EOF'
+# Diff Summary
+
+```yaml
+run_id: implementation-001
+planned_files:
+  - src/app.py
+files_changed:
+  - src/app.py
+unplanned_changed_files: []
+```
+EOF
+if node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${MISSING_BASELINE_REPO}/specs" > "${MISSING_BASELINE_REPO}/check.out" 2> "${MISSING_BASELINE_REPO}/check.err"; then
+  cat "${MISSING_BASELINE_REPO}/check.out" >&2
+  cat "${MISSING_BASELINE_REPO}/check.err" >&2
+  echo "missing baseline fixture should fail" >&2
+  exit 1
+fi
+grep -q "pre-implementation-status.md" "${MISSING_BASELINE_REPO}/check.err"
+grep -q "untracked_files" "${MISSING_BASELINE_REPO}/check.err"
 
 node --input-type=module - "${DRY_RUN_JSON}" <<'NODE'
 import fs from 'node:fs';

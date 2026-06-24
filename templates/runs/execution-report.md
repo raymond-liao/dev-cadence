@@ -12,10 +12,14 @@ outputs:
 planned_files:
 planned_artifact_files:
 files_changed:
+untracked_files:
 created_artifact_files:
 unplanned_changed_files:
 deleted_files:
 added_components:
+pre_implementation_status_path:
+implementation_authorized:
+post_hoc_backfill:
 scope_reconciliation_status:
 commands_run:
 tests_run:

@@ -14,6 +14,7 @@ The reusable template files live under:
 - `templates/spec/07-review-report.md`
 - `templates/spec/08-acceptance.md`
 - `templates/runs/run-context.md`
+- `templates/runs/pre-implementation-status.md`
 - `templates/runs/execution-report.md`
 - `templates/runs/tool-log.md`
 - `templates/runs/test-log.md`
@@ -40,6 +41,7 @@ Before writing artifact prose, resolve `artifact_language` from an uncommented s
 - [`08-acceptance.md`](#08-acceptancemd)
 - [`decisions/ADR-001.md`](#decisionsadr-001md)
 - [`runs/{run_id}/run-context.md`](#runsrun_idrun-contextmd)
+- [`runs/{run_id}/pre-implementation-status.md`](#runsrun_idpre-implementation-statusmd)
 - [`runs/{run_id}/execution-report.md`](#runsrun_idexecution-reportmd)
 - [`runs/{run_id}/tool-log.md`](#runsrun_idtool-logmd)
 - [`runs/{run_id}/test-log.md`](#runsrun_idtest-logmd)
@@ -421,10 +423,50 @@ budget:
 timeout:
 max_iterations:
 required_evidence:
+pre_implementation_status_path:
 expected_artifacts:
 log_paths:
 ```
 ````
+
+## `runs/{run_id}/pre-implementation-status.md`
+
+````markdown
+# Pre-Implementation Status
+
+```yaml
+run_id:
+task_id:
+captured_at:
+task_class:
+selected_workflow:
+implementation_state:
+git_status_before:
+untracked_files_before:
+authorized_target_files:
+authorized_artifact_files:
+g1_status:
+g2_status:
+g3_status:
+requirements_ready:
+blocking_questions:
+implementation_authorized:
+authorization_source:
+post_hoc_backfill:
+post_hoc_human_override_by:
+post_hoc_human_override_reason:
+residual_risk:
+```
+````
+
+For `S1` and `S2` implementation or fix runs, capture this file before the
+first product source, test, migration, build, deployment, or application
+configuration edit. `implementation_authorized` may be `true` only when the
+latest request is reconciled, required gates are passed or explicitly
+overridden by a named Human, and the planned target files cover the intended
+edit. If product files were already changed before this capture,
+`post_hoc_backfill` must be `true` and the affected gates remain blocked unless
+a named Human accepts the evidence gap in `post_hoc_human_override_by`.
 
 ## `runs/{run_id}/execution-report.md`
 
@@ -441,10 +483,16 @@ ended_at:
 inputs:
 outputs:
 planned_files:
+planned_artifact_files:
 files_changed:
+untracked_files:
+created_artifact_files:
 unplanned_changed_files:
 deleted_files:
 added_components:
+pre_implementation_status_path:
+implementation_authorized:
+post_hoc_backfill:
 scope_reconciliation_status:
 commands_run:
 tests_run:
@@ -496,7 +544,10 @@ skipped:
 ```yaml
 run_id:
 planned_files:
+planned_artifact_files:
 files_changed:
+untracked_files:
+created_artifact_files:
 unplanned_changed_files:
 deleted_files:
 added_components:

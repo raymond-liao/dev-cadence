@@ -5,6 +5,7 @@ run_id:
 planned_files:
 planned_artifact_files:
 files_changed:
+untracked_files:
 created_artifact_files:
 unplanned_changed_files:
 deleted_files:

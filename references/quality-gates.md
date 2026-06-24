@@ -84,6 +84,8 @@ Human override can accept residual risk but cannot erase missing evidence. The o
 - If any changed component, platform, API, schema, migration, security, permission, CI/CD, release, or production behavior lacks matching verification or explicit skipped-check risk, G4 is blocked.
 - If G4 is not passed or explicitly overridden, Reviewer decision must be `changes_requested` or `blocked`.
 - If required Harness evidence files are missing, G4 and G5 are blocked.
+- If an `S1` or `S2` implementation or fix run lacks `pre-implementation-status.md`, or it is marked `post_hoc_backfill: true` without named Human override, G4 and G5 are blocked.
+- If scope reconciliation omits tracked or untracked files that belong to the task, G4 and G5 are blocked until the diff summary is corrected or a named Human accepts the evidence gap.
 - If `08-acceptance.md` does not name a Human accepter, G6 is blocked.
 - If S2 lacks requirement, architecture, permission, or final Human Gate decisions required by its risk profile, G6 is blocked.
 

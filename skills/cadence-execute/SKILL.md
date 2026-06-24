@@ -26,6 +26,10 @@ Use `../../scripts/init-task-artifacts.mjs` when a new task or run artifact set 
 
 ## Required Behavior
 
+For `S1` and `S2` implementation or fix work, write or update
+`runs/{run_id}/pre-implementation-status.md` before the first product source,
+test, migration, build, deployment, or application configuration edit.
+
 Do not expand scope silently. Record scope reconciliation when changed files or behavior differ from the plan.
 
 For testable behavior changes, use `cadence-tdd` during implementation. For bugs, incidents, failing tests, or unclear cause, use `cadence-debug` before changing production code.

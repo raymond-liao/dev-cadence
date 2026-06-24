@@ -147,6 +147,7 @@ function checkArtifactTemplates() {
     'templates/spec/07-review-report.md',
     'templates/spec/08-acceptance.md',
     'templates/runs/run-context.md',
+    'templates/runs/pre-implementation-status.md',
     'templates/runs/execution-report.md',
     'templates/runs/tool-log.md',
     'templates/runs/test-log.md',

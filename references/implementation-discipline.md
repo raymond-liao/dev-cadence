@@ -100,6 +100,13 @@ Hard checks:
 
 ## Required Evidence
 
+For `S1` and `S2` behavior work, capture
+`runs/{run_id}/pre-implementation-status.md` before writing production code,
+tests, migrations, build scripts, deployment files, or application
+configuration. If code was changed before the baseline, mark
+`post_hoc_backfill: true` and treat the run as missing normal pre-work evidence
+until a named Human accepts the gap.
+
 `05-implementation.md` should record:
 
 ```yaml

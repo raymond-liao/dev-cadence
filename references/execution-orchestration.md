@@ -13,6 +13,7 @@ For each Worker run, provide:
 - task text or review target;
 - Context Pack;
 - Harness Run Context;
+- pre-implementation status for S1/S2 implementation or fix runs;
 - allowed files and forbidden actions;
 - expected artifacts;
 - required evidence;
@@ -45,6 +46,7 @@ Inline execution must still:
 
 - follow task order;
 - maintain Harness run evidence;
+- capture S1/S2 pre-implementation status before product edits;
 - perform Red-Green-Refactor when required;
 - run verification;
 - perform spec compliance and code quality review checkpoints;

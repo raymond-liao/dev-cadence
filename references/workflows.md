@@ -27,6 +27,7 @@ The user does not need to choose a workflow. Supervisor infers `selected_workflo
 - Reconcile actual changed files against planned target files before test, review, and acceptance.
 - Use `S2` rules whenever high-risk triggers appear.
 - Use Harness for Worker Agent states.
+- Capture `pre-implementation-status.md` before S1/S2 product edits.
 - Enforce hard stops from `SKILL.md` before implementation, review, and acceptance.
 - Record skipped states and residual risk.
 - End with acceptance or blocked escalation.
@@ -37,10 +38,17 @@ Before `test`, `review`, and `acceptance`, compare the actual diff with `02-desi
 
 Use both tracked and untracked file evidence. A Git diff can omit newly created untracked artifacts, generated files, or new source files, so inspect worktree status or file lists when new files are expected.
 
+For `S1` and `S2` implementation or fix runs, `pre-implementation-status.md`
+must establish the worktree baseline, authorized target files, artifact files,
+and G1/G3 status before the first product edit. If the baseline is missing or
+marked `post_hoc_backfill: true`, do not treat normal scope reconciliation as
+complete unless a named Human Gate accepts the evidence gap.
+
 Record in `05-implementation.md` and `runs/{run_id}/diff-summary.md`:
 
 - files planned and changed;
 - planned artifact files and created artifact files;
+- tracked and untracked files observed during reconciliation;
 - untracked files that belong to the task;
 - files changed outside the planned target list;
 - deleted files;

@@ -16,6 +16,12 @@ Use this Skill for testable behavior changes.
 
 ## Required Behavior
 
+For `S1` and `S2` implementation or fix work, capture
+`runs/{run_id}/pre-implementation-status.md` before writing the Red test or any
+product code. If test or production files were already changed, mark the
+baseline `post_hoc_backfill: true` and keep the relevant gates blocked unless a
+named Human accepts the evidence gap.
+
 Follow Red-Green-Refactor:
 
 1. RED: write the smallest failing test for the intended behavior and observe it fail for the expected reason.

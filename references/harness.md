@@ -7,6 +7,7 @@ Harness is not an Agent and must not make semantic approval decisions.
 ## Contents
 
 - [Run Context Schema](#run-context-schema)
+- [Pre-Implementation Status Schema](#pre-implementation-status-schema)
 - [Required Evidence](#required-evidence)
 - [Execution Report Schema](#execution-report-schema)
 - [Permission Policy](#permission-policy)
@@ -34,15 +35,54 @@ budget:
 timeout:
 max_iterations:
 required_evidence:
+pre_implementation_status_path:
 expected_artifacts:
 log_paths:
 ```
+
+## Pre-Implementation Status Schema
+
+For `S1` and `S2` implementation or fix runs, capture
+`pre-implementation-status.md` before the first product source, test, migration,
+build, deployment, or application configuration edit.
+
+```yaml
+run_id:
+task_id:
+captured_at:
+task_class:
+selected_workflow:
+implementation_state:
+git_status_before:
+untracked_files_before:
+authorized_target_files:
+authorized_artifact_files:
+g1_status:
+g2_status:
+g3_status:
+requirements_ready:
+blocking_questions:
+implementation_authorized:
+authorization_source:
+post_hoc_backfill:
+post_hoc_human_override_by:
+post_hoc_human_override_reason:
+residual_risk:
+```
+
+`implementation_authorized` may be `true` only when the latest request is
+reconciled, Requirements Readiness Check is complete, required gates are passed
+or explicitly overridden by a named Human, and the authorized target files cover
+the intended product edit. If this file is captured after product edits started,
+set `post_hoc_backfill: true`; the baseline is not equivalent to pre-work
+evidence.
 
 ## Required Evidence
 
 Capture or reference:
 
 - `run-context.md`;
+- `pre-implementation-status.md` before S1/S2 implementation or fix product edits;
 - `execution-report.md`;
 - `tool-log.md`;
 - `permission-decisions.md`, even when no permission was requested;

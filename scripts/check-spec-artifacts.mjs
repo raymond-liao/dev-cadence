@@ -14,6 +14,9 @@ Arguments:
 Checks:
   - fenced yaml blocks do not contain duplicate keys at the same indentation
     path
+  - S1/S2 implementation or fix artifacts include a pre-implementation
+    baseline before product edits can be treated as normally verified
+  - diff summaries explicitly account for tracked and untracked files
   - when .dev-cadence.yaml sets artifact_language: zh, Markdown prose that
     appears to be English-only is reported as a warning`);
 }
@@ -64,6 +67,54 @@ function yamlBlocks(text) {
     blocks.push(match[1]);
   }
   return blocks;
+}
+
+function firstYamlBlock(text) {
+  return yamlBlocks(text)[0] || '';
+}
+
+function parseScalar(value) {
+  const trimmed = value.trim();
+  if (trimmed === '') return '';
+  if (trimmed === '[]') return [];
+  if (trimmed === 'null') return null;
+  if (trimmed === 'true') return true;
+  if (trimmed === 'false') return false;
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"'))
+    || (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+function parseTopLevelYaml(block) {
+  const result = {};
+  const lines = block.split('\n');
+  let currentKey = null;
+
+  for (const line of lines) {
+    if (!line.trim() || line.trim().startsWith('#')) continue;
+
+    const keyMatch = line.match(/^([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
+    if (keyMatch) {
+      currentKey = keyMatch[1];
+      const rawValue = keyMatch[2] ?? '';
+      result[currentKey] = rawValue.trim() === '' ? [] : parseScalar(rawValue);
+      continue;
+    }
+
+    const listMatch = line.match(/^\s+-\s+(.*)$/);
+    if (listMatch && currentKey) {
+      if (!Array.isArray(result[currentKey])) {
+        result[currentKey] = [];
+      }
+      result[currentKey].push(parseScalar(listMatch[1]));
+    }
+  }
+
+  return result;
 }
 
 function findNearestConfig(startPath) {
@@ -230,6 +281,124 @@ function checkDuplicateKeys(filePath, block, blockIndex) {
   }
 }
 
+function taskDirectories(rootDir) {
+  const directories = [];
+  const entries = fs.readdirSync(rootDir, { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    const taskDir = path.join(rootDir, entry.name);
+    if (fs.existsSync(path.join(taskDir, '00-brief.md'))) {
+      directories.push(taskDir);
+    }
+  }
+  return directories;
+}
+
+function readArtifactYaml(filePath) {
+  if (!fs.existsSync(filePath)) return null;
+  return parseTopLevelYaml(firstYamlBlock(fs.readFileSync(filePath, 'utf8')));
+}
+
+function normalizeList(value) {
+  if (Array.isArray(value)) return value;
+  if (value === null || value === undefined || value === '') return [];
+  return [value];
+}
+
+function taskClassFor(taskDir) {
+  const tasks = readArtifactYaml(path.join(taskDir, '03-tasks.md')) || {};
+  const brief = readArtifactYaml(path.join(taskDir, '00-brief.md')) || {};
+  return String(tasks.task_class || brief.task_class || '').trim();
+}
+
+function selectedWorkflowFor(taskDir) {
+  const tasks = readArtifactYaml(path.join(taskDir, '03-tasks.md')) || {};
+  const brief = readArtifactYaml(path.join(taskDir, '00-brief.md')) || {};
+  return String(tasks.selected_workflow || brief.selected_workflow || '').trim();
+}
+
+function hasImplementationEvidence(taskDir) {
+  const implementation = readArtifactYaml(path.join(taskDir, '05-implementation.md'));
+  if (!implementation) return false;
+  const status = String(implementation.status || '').toLowerCase();
+  const changedFiles = normalizeList(implementation.changed_files);
+  return status.includes('implement') || changedFiles.length > 0;
+}
+
+function hasProductChangedFiles(taskDir) {
+  const implementation = readArtifactYaml(path.join(taskDir, '05-implementation.md'));
+  if (!implementation) return false;
+  return normalizeList(implementation.changed_files).length > 0;
+}
+
+function runDirectories(taskDir) {
+  const runsDir = path.join(taskDir, 'runs');
+  if (!fs.existsSync(runsDir)) return [];
+  return fs.readdirSync(runsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => path.join(runsDir, entry.name));
+}
+
+function checkPreImplementationBaseline(taskDir) {
+  const taskClass = taskClassFor(taskDir);
+  const workflow = selectedWorkflowFor(taskDir);
+  if (!['S1', 'S2'].includes(taskClass)) return;
+  if (workflow === 'incident-fix') return;
+  if (!hasImplementationEvidence(taskDir)) return;
+  const requiresProductAuthorization = hasProductChangedFiles(taskDir);
+
+  const runs = runDirectories(taskDir);
+  if (runs.length === 0) {
+    fail(`${relative(taskDir)}: S1/S2 implementation evidence requires runs/{run_id}/pre-implementation-status.md`);
+    return;
+  }
+
+  let foundBaseline = false;
+  for (const runDir of runs) {
+    const baselinePath = path.join(runDir, 'pre-implementation-status.md');
+    if (!fs.existsSync(baselinePath)) continue;
+    foundBaseline = true;
+    const baseline = readArtifactYaml(baselinePath) || {};
+    if (baseline.post_hoc_backfill === true || String(baseline.post_hoc_backfill).toLowerCase() === 'true') {
+      const overrideBy = String(baseline.post_hoc_human_override_by || '').trim();
+      if (!overrideBy) {
+        fail(`${relative(baselinePath)}: post_hoc_backfill requires post_hoc_human_override_by; normal G4/G5 cannot pass`);
+      }
+    }
+    if (
+      requiresProductAuthorization
+      && baseline.implementation_authorized !== true
+      && String(baseline.implementation_authorized).toLowerCase() !== 'true'
+    ) {
+      fail(`${relative(baselinePath)}: implementation_authorized must be true before S1/S2 product edits`);
+    }
+  }
+
+  if (!foundBaseline) {
+    fail(`${relative(taskDir)}: S1/S2 implementation evidence requires runs/{run_id}/pre-implementation-status.md`);
+  }
+}
+
+function checkDiffSummaries(taskDir) {
+  for (const runDir of runDirectories(taskDir)) {
+    const diffPath = path.join(runDir, 'diff-summary.md');
+    if (!fs.existsSync(diffPath)) continue;
+    const diff = readArtifactYaml(diffPath) || {};
+    const hasFilesChanged = Object.hasOwn(diff, 'files_changed');
+    const hasUntrackedFiles = Object.hasOwn(diff, 'untracked_files');
+    if (hasFilesChanged && !hasUntrackedFiles) {
+      fail(`${relative(diffPath)}: diff summary must include untracked_files, even when []`);
+    }
+  }
+}
+
+function checkTaskArtifacts(rootDir) {
+  for (const taskDir of taskDirectories(rootDir)) {
+    checkPreImplementationBaseline(taskDir);
+    checkDiffSummaries(taskDir);
+  }
+}
+
 if (!fs.existsSync(specsDir)) {
   console.error(`Specs directory not found: ${specsDir}`);
   process.exit(2);
@@ -248,6 +417,8 @@ for (const filePath of walk(specsDir)) {
     checkZhProse(filePath, text);
   }
 }
+
+checkTaskArtifacts(specsDir);
 
 if (errors.length > 0) {
   for (const message of errors) {

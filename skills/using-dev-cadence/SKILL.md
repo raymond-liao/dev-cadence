@@ -93,6 +93,7 @@ Stop and route through the applicable cadence Skill when any of these are true:
 - asking clarification questions before checking whether `cadence-clarify` applies;
 - reading files, checking git, or exploring the repository before checking the applicable cadence Skill;
 - starting with file edits, shell commands, or implementation before classifying workflow state and task class;
+- starting S1/S2 product edits before `runs/{run_id}/pre-implementation-status.md` captures the worktree baseline and authorization state;
 - thinking the request is too small, too obvious, or too urgent for a cadence Skill;
 - relying on memory of a Skill instead of activating the current Skill;
 - treating a terse continuation such as "continue", "start", or "finish it" as permission to skip the active cadence sequence;
@@ -105,6 +106,14 @@ Stop and route through the applicable cadence Skill when any of these are true:
 ## Hard Rules
 
 Do not bypass Supervisor state, Harness evidence, Quality Gates, Human Gates, scope reconciliation, or named Human final acceptance.
+
+For `S1` and `S2`, do not edit product source, tests, migrations, build scripts,
+deployment files, or application configuration until
+`pre-implementation-status.md` records the tracked and untracked worktree
+baseline, authorized target files, required gate status, and
+`implementation_authorized: true`. If this baseline is captured after product
+edits started, mark `post_hoc_backfill: true`; do not treat it as normal
+pre-work evidence without a named Human Gate override.
 
 Do not collapse the workflow to a single Skill when later Skills are required. A bugfix can require debug, TDD or execution, review, verify, and acceptance in the same delivery.
 

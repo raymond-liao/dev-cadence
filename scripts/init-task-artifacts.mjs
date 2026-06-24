@@ -16,6 +16,7 @@ const SPEC_TEMPLATES = [
 
 const RUN_TEMPLATES = [
   'run-context.md',
+  'pre-implementation-status.md',
   'execution-report.md',
   'tool-log.md',
   'test-log.md',
