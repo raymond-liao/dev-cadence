@@ -40,3 +40,9 @@ Do limited read-only analysis before asking questions. Present candidate interpr
 Do not convert assumptions into requirements. If unresolved ambiguity could materially change implementation or acceptance, enter Human Gate `info_required` and block implementation.
 
 Visual companion is optional. If unavailable, continue with text-only clarification and record the fallback when evidence is being written.
+
+## Supervisor Boundary
+
+This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
+
+When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate status, and recommended next state. Do not select the next cadence Skill from here.

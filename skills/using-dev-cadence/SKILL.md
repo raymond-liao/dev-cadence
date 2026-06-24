@@ -1,11 +1,37 @@
 ---
 name: using-dev-cadence
-description: Bootstrap Dev Cadence for software delivery work. Use at session start, before any feature, bugfix, refactor, review, research spike, incident, verification, acceptance, or repository contract request, and whenever deciding which Dev Cadence discipline Skill applies.
+description: Use when starting or continuing software delivery work, including features, bugfixes, refactors, reviews, research spikes, incidents, verification, acceptance, or Dev Cadence repository setup.
 ---
 
 # Using Dev Cadence
 
-Use this Skill as the Dev Cadence bootstrap and router. It is the only Skill that represents Dev Cadence as a whole.
+Use this Skill as the Dev Cadence Supervisor entrypoint. It is the only Skill that represents Dev Cadence as a whole.
+
+## Control Rule
+
+Before any response or action for software delivery work, classify the request, check all applicable cadence Skills, and enter the smallest workflow that preserves evidence, gates, and Human acceptance.
+
+User instructions define what to do. Dev Cadence defines how delivery work is controlled, evidenced, reviewed, verified, and accepted.
+
+If there is any reasonable chance a cadence Skill applies, use this Supervisor entrypoint before answering, asking clarification questions, reading files, running commands, or editing code.
+
+If a concrete cadence Skill applies, use it through this Supervisor entrypoint. Do not treat this bootstrap Skill as a replacement for the concrete discipline Skill.
+
+## Instruction Priority
+
+Follow this priority order:
+
+1. explicit user instructions, repository instructions, and direct constraints;
+2. Dev Cadence Supervisor, Harness, Quality Gate, Human Gate, and cadence Skill rules;
+3. default agent behavior.
+
+If user or repository instructions conflict with Dev Cadence discipline, follow the higher-priority instruction, record the conflict when evidence is being written, and keep affected gates blocked unless a named Human accepts the residual risk.
+
+## Skill Activation
+
+Use Codex native skill activation. Do not read `SKILL.md` files with ordinary file tools as a substitute for activating an applicable Skill.
+
+If a concrete cadence Skill was activated first, immediately return to this Supervisor entrypoint before doing that Skill's work.
 
 ## Required References
 
@@ -22,9 +48,9 @@ Load only the shared resources needed for the current routing decision:
 
 Load `../../references/delivery-disciplines.md` when selecting a detailed discipline.
 
-## Routing Rule
+## Supervisor Routing
 
-Before acting on software delivery work, identify the current workflow state, task class, evidence requirement, and applicable discipline Skill:
+Before acting on software delivery work, identify the current workflow state, task class, evidence requirement, gate status, and all applicable discipline Skills:
 
 - repository contract setup, inspection, sync, repair, or diagnosis -> `cadence-sync`;
 - unclear goal, scope, expected behavior, non-goals, design, or acceptance -> `cadence-clarify`;
@@ -35,7 +61,15 @@ Before acting on software delivery work, identify the current workflow state, ta
 - implementation checkpoint or final review -> `cadence-review`;
 - before claiming fixed, done, passing, approved, or complete -> `cadence-verify`.
 
-If multiple Skills apply, invoke the process Skill first, then the implementation-specific Skill.
+If multiple Skills apply, use them in workflow order. These Skills are cumulative, not alternatives.
+
+Common sequences:
+
+- feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-execute` -> `cadence-review` -> `cadence-verify` -> Human acceptance;
+- bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-execute` -> `cadence-review` -> `cadence-verify` -> Human acceptance;
+- review request: `cadence-review` -> `cadence-verify` -> Human acceptance when the user asks to accept or finish;
+- verification or completion claim: `cadence-verify` -> Human acceptance when final completion is requested;
+- repository setup or drift repair: `cadence-sync`, then return to the delivery sequence only if the same user turn requests product work.
 
 ## Repo Contract
 
@@ -51,8 +85,29 @@ Classify conservatively:
 
 When unsure, upgrade to `S1` or `S2`.
 
+## Red Flags
+
+Stop and route through the applicable cadence Skill when any of these are true:
+
+- responding to a feature, bugfix, refactor, review, research, incident, verification, acceptance, or repo contract request before checking Dev Cadence routing;
+- asking clarification questions before checking whether `cadence-clarify` applies;
+- reading files, checking git, or exploring the repository before checking the applicable cadence Skill;
+- starting with file edits, shell commands, or implementation before classifying workflow state and task class;
+- thinking the request is too small, too obvious, or too urgent for a cadence Skill;
+- relying on memory of a Skill instead of activating the current Skill;
+- treating a terse continuation such as "continue", "start", or "finish it" as permission to skip the active cadence sequence;
+- fixing a bug before root cause or reproducible behavior is recorded;
+- implementing testable behavior before deciding whether `cadence-tdd` applies;
+- claiming fixed, done, passing, ready, approved, or complete before `cadence-verify`;
+- treating missing verification, missing Harness evidence, or skipped checks as acceptable without a named Human Gate;
+- recording Supervisor, Harness, Developer, Tester, Reviewer, or an unspecified agent as the final accepter.
+
 ## Hard Rules
 
 Do not bypass Supervisor state, Harness evidence, Quality Gates, Human Gates, scope reconciliation, or named Human final acceptance.
+
+Do not collapse the workflow to a single Skill when later Skills are required. A bugfix can require debug, TDD or execution, review, verify, and acceptance in the same delivery.
+
+Do not self-accept final results. Final acceptance must name a Human accepter.
 
 Do not make visual companion usage a gate. It is an optional clarification capability for UI, diagram, mockup, or visual comparison tasks and must fall back to text-only clarification when unavailable.

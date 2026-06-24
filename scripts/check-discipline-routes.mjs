@@ -28,7 +28,9 @@ Checks:
   - delivery-disciplines.md routes to required discipline references
   - required prompt templates exist and are referenced
   - visual companion resources exist and are indexed
-  - entrypoint skills reference required shared resources`);
+  - entrypoint skills reference required shared resources
+  - using-dev-cadence preserves Supervisor sequencing rules
+  - concrete cadence skills return control to using-dev-cadence`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -226,6 +228,63 @@ function checkEntrypointSkills() {
   }
 }
 
+function checkUsingDevCadenceContract() {
+  const sourceFile = 'skills/using-dev-cadence/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'Supervisor entrypoint',
+    '## Control Rule',
+    'Before any response or action for software delivery work',
+    'If there is any reasonable chance a cadence Skill applies',
+    'before answering, asking clarification questions, reading files, running commands, or editing code.',
+    '## Instruction Priority',
+    'explicit user instructions, repository instructions, and direct constraints',
+    'Dev Cadence Supervisor, Harness, Quality Gate, Human Gate, and cadence Skill rules',
+    '## Skill Activation',
+    'Use Codex native skill activation.',
+    'Do not read `SKILL.md` files with ordinary file tools as a substitute for activating an applicable Skill.',
+    '## Supervisor Routing',
+    'If multiple Skills apply, use them in workflow order.',
+    'These Skills are cumulative, not alternatives.',
+    'Common sequences:',
+    'feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-execute` -> `cadence-review` -> `cadence-verify` -> Human acceptance',
+    'bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-execute` -> `cadence-review` -> `cadence-verify` -> Human acceptance',
+    '## Red Flags',
+    'reading files, checking git, or exploring the repository before checking the applicable cadence Skill',
+    'thinking the request is too small, too obvious, or too urgent for a cadence Skill',
+    'relying on memory of a Skill instead of activating the current Skill',
+    'Do not collapse the workflow to a single Skill when later Skills are required.',
+    'Do not self-accept final results.',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing Supervisor sequencing contract phrase: ${phrase}`);
+    }
+  }
+}
+
+function checkConcreteSkillSupervisorBoundary() {
+  const concreteSkills = EXPECTED_SKILLS.filter((name) => name !== 'using-dev-cadence');
+  const required = [
+    '## Supervisor Boundary',
+    'This Skill must run under `using-dev-cadence` Supervisor control.',
+    'If it was selected directly, first enter `using-dev-cadence`',
+    'When this Skill finishes, return a concise handoff to `using-dev-cadence`',
+    'Do not select the next cadence Skill from here.',
+  ];
+
+  for (const skillName of concreteSkills) {
+    const sourceFile = `skills/${skillName}/SKILL.md`;
+    const text = readText(sourceFile);
+    for (const phrase of required) {
+      if (!text.includes(phrase)) {
+        fail(`${sourceFile}: missing Supervisor boundary phrase: ${phrase}`);
+      }
+    }
+  }
+}
+
 function checkPluginSurface() {
   const required = [
     '.codex-plugin/plugin.json',
@@ -252,6 +311,8 @@ checkArtifactTemplates();
 checkVisualCompanionScripts();
 checkEntrypointReferenceMap();
 checkEntrypointSkills();
+checkUsingDevCadenceContract();
+checkConcreteSkillSupervisorBoundary();
 
 if (errors.length > 0) {
   for (const message of errors) {

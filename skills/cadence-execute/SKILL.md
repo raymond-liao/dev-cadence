@@ -30,4 +30,10 @@ Do not expand scope silently. Record scope reconciliation when changed files or 
 
 For testable behavior changes, use `cadence-tdd` during implementation. For bugs, incidents, failing tests, or unclear cause, use `cadence-debug` before changing production code.
 
-Do not claim completion. Route to `cadence-review` and `cadence-verify` before any completion claim.
+Do not claim completion. Return control to the Supervisor before any review, verification, or completion claim.
+
+## Supervisor Boundary
+
+This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
+
+When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate status, and recommended next state. Do not select the next cadence Skill from here.

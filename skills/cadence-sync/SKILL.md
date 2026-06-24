@@ -35,3 +35,9 @@ Create low-risk directories or contract files directly when permissions allow an
 Classify drift as `missing`, `matches_current`, `local_overlay`, `outdated_generated`, `conflict_needs_review`, or `unknown`.
 
 Repository contract setup is not a prerequisite for ordinary Dev Cadence help. Do not block delivery work just because the thin contract is absent.
+
+## Supervisor Boundary
+
+This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
+
+When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate status, and recommended next state. Do not select the next cadence Skill from here.

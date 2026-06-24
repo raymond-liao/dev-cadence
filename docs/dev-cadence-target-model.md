@@ -115,7 +115,8 @@ Plugin 层不应该表达业务流程细节。它只负责让 Codex 能发现、
 - 作为 Dev Cadence 的唯一入口 Skill；
 - 要求 Agent 在任何交付任务前检查相关 Skills；
 - 识别当前用户请求属于开发、修复、调试、Review、验证、仓库契约同步，还是纯问答；
-- 选择 workflow、task class 和下一步 discipline；
+- 选择 workflow、task class、gates 和需要按顺序执行的 discipline Skills；
+- 明确多个 discipline 是累积链路，不是互斥选项，例如 bugfix 通常需要 debug、execute/TDD、review、verify 和 Human acceptance；
 - 保证 `Supervisor`、`Harness`、`Quality Gate`、`Human Gate` 不被绕过。
 
 它不直接承载所有规则，而是加载必要 references。

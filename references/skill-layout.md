@@ -123,7 +123,7 @@ Do not add generic `README.md`, installation guide, changelog, or narrative rese
 Use this rule for modularization:
 
 ```text
-Bootstrap owns routing.
+Bootstrap owns Supervisor routing and discipline sequencing.
 Skill boundaries follow agent work actions and delivery disciplines.
 Reference boundaries follow workflow internals and governance protocols.
 Template boundaries follow artifact types.
@@ -134,7 +134,7 @@ Do not create one Skill per internal Supervisor state such as `requirements-gate
 
 Published Skills:
 
-- `using-dev-cadence`: Dev Cadence entrypoint and task router. It selects workflow state, task class, evidence requirements, gates, and the applicable cadence discipline Skill.
+- `using-dev-cadence`: Dev Cadence Supervisor entrypoint. It selects workflow state, task class, evidence requirements, gates, and the ordered set of applicable cadence discipline Skills.
 - `cadence-clarify`: clarify goal, scope, expected behavior, non-goals, design, acceptance, and verification before implementation.
 - `cadence-plan`: turn clarified design into executable tasks and verification steps.
 - `cadence-execute`: execute an approved plan through Harness evidence.
@@ -149,6 +149,12 @@ Dev Cadence authoring is not published as a normal user Skill. Authoring discipl
 ## Invocation Boundary
 
 `using-dev-cadence` is the only Skill that represents Dev Cadence as a whole. It is selected through Codex native skill triggering or an explicit user request to use Dev Cadence, and it must route ordinary delivery work to the applicable cadence discipline Skills before action.
+
+The bootstrap entrypoint is not a soft introduction. It owns the Supervisor obligation to check applicable Skills before any delivery response or action, preserve workflow order, and keep later gates reachable. Concrete discipline Skills remain independently triggerable, but they are not independent workflows.
+
+Before answering, asking clarification questions, reading files, running commands, or editing code for delivery work, the agent must check whether Dev Cadence and any concrete cadence Skill apply. User and repository instructions remain higher priority than Dev Cadence discipline; conflicts must be recorded when evidence is being written and affected gates remain blocked unless a named Human accepts the residual risk.
+
+Every concrete cadence Skill must run under `using-dev-cadence` Supervisor control. If selected directly, it must first enter `using-dev-cadence` so workflow state, task class, gates, and evidence requirements are established. When a concrete Skill finishes, it returns evidence produced, unresolved blockers, gate status, and recommended next state to `using-dev-cadence`; it must not choose the next cadence Skill by itself.
 
 `cadence-sync` may be selected implicitly when the user asks to install, initialize, set up, inspect, sync, repair, diagnose, or prepare Dev Cadence repository-level rules, local config, or artifact space.
 
