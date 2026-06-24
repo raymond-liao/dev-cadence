@@ -5,6 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPO_DIR="$(mktemp -d /private/tmp/dev-cadence-delivery.XXXXXX)"
 DRY_RUN_JSON="${REPO_DIR}/dry-run.json"
 SUMMARY_FILE="${REPO_DIR}/summary.txt"
+ZH_REPO_DIR="${REPO_DIR}/zh-warning-fixture"
 TASK_ID="acceptance-login"
 trap 'rm -rf "${REPO_DIR}"' EXIT
 
@@ -20,6 +21,27 @@ node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
   --json > "${DRY_RUN_JSON}"
 
 node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${REPO_DIR}/specs"
+
+mkdir -p "${ZH_REPO_DIR}/specs/sample"
+cat > "${ZH_REPO_DIR}/.dev-cadence.yaml" <<'EOF'
+dev_cadence:
+  artifact_language: zh
+EOF
+cat > "${ZH_REPO_DIR}/specs/sample/00-brief.md" <<'EOF'
+# Brief
+
+This review report should have been written in Chinese prose.
+
+```yaml
+status: passed
+```
+EOF
+if ! node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${ZH_REPO_DIR}/specs" > "${ZH_REPO_DIR}/check.out" 2> "${ZH_REPO_DIR}/check.err"; then
+  cat "${ZH_REPO_DIR}/check.out" >&2
+  cat "${ZH_REPO_DIR}/check.err" >&2
+  exit 1
+fi
+grep -q "English-looking prose in zh artifact_language" "${ZH_REPO_DIR}/check.err"
 
 node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
   --specs-dir "${REPO_DIR}/specs" \

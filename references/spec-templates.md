@@ -71,6 +71,11 @@ For discipline fields, `default` means Dev Cadence's built-in delivery disciplin
 
 `.dev-cadence.yaml` must be ignored by Git during initialization or update. If the file contains an uncommented supported `dev_cadence.artifact_language`, it overrides the plugin default.
 
+`scripts/check-spec-artifacts.mjs` reports warning-level findings when
+`artifact_language: zh` is configured and Markdown prose appears to be
+English-only. These warnings highlight localization drift; they do not fail the
+structural artifact check.
+
 ## `00-brief.md`
 
 ````markdown
