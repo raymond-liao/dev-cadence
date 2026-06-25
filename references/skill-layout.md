@@ -114,7 +114,14 @@ dev-cadence/
       server.cjs
       helper.js
       frame-template.html
+  assets/        # Optional: icons, logos, screenshots
+  .mcp.json      # Optional: bundled MCP server configuration
+  .app.json      # Optional: app or connector mappings
 ```
+
+The current published package does not include lifecycle hooks. Do not add
+`hooks/` or a manifest `hooks` entry unless a future approved design explicitly
+reintroduces plugin hooks.
 
 Do not add generic `README.md`, installation guide, changelog, or narrative research documents to runtime Skill folders. Keep narrative design documents in the framework repository.
 

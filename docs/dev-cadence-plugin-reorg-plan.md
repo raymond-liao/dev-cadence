@@ -51,7 +51,7 @@ dev-cadence/
 
 - [x] **任务 3：新增 Codex Plugin manifest**
   - 新增 `.codex-plugin/plugin.json`。
-  - 默认发布包不注册 session-start hook，避免安装确认和会话启动噪音。
+  - 发布包不包含 hooks，避免安装确认和会话启动噪音。
 
 - [x] **任务 4：改造用户仓库契约**
   - 修改 `scripts/sync-repo-contract.mjs`。

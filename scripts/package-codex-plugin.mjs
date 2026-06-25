@@ -13,6 +13,11 @@ const INCLUDED_PATHS = [
   'templates',
   'scripts',
 ];
+const OPTIONAL_INCLUDED_PATHS = [
+  'assets',
+  '.mcp.json',
+  '.app.json',
+];
 
 function printHelp() {
   console.log(`Usage: package-codex-plugin.mjs [options]
@@ -27,9 +32,9 @@ Options:
   -h, --help            Show this help text.
 
 The package creates .agents/plugins/marketplace.json and plugins/dev-cadence/.
-The plugin payload includes only .codex-plugin/, skills/, references/,
-templates/, and scripts/. It excludes repository docs, hooks, tests, specs, research,
-Git metadata, and local development files.`);
+The plugin payload includes .codex-plugin/, skills/, references/, templates/,
+scripts/, and optional assets/, .mcp.json, and .app.json. It excludes repository
+docs, hooks, tests, specs, research, Git metadata, and local development files.`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -196,6 +201,12 @@ function main() {
     }
     copyRecursive(sourcePath, path.join(pluginDir, item), copied);
   }
+  for (const item of OPTIONAL_INCLUDED_PATHS) {
+    const sourcePath = path.join(options.sourceDir, item);
+    if (fs.existsSync(sourcePath)) {
+      copyRecursive(sourcePath, path.join(pluginDir, item), copied);
+    }
+  }
 
   const checks = [
     runCheck(process.execPath, [path.join(options.sourceDir, 'scripts', 'check-skill-package.mjs'), pluginDir], options.sourceDir),
@@ -215,6 +226,7 @@ function main() {
     plugin_name: PLUGIN_NAME,
     clean: options.clean,
     included_paths: INCLUDED_PATHS,
+    optional_included_paths: OPTIONAL_INCLUDED_PATHS,
     files_copied: copied.map((filePath) => rel(pluginDir, filePath)).sort(),
     missing_paths: missing,
     checks,

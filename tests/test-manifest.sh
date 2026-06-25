@@ -20,7 +20,7 @@ function assert(condition, message) {
 
 assert(manifest.name === 'dev-cadence', 'manifest name must be dev-cadence');
 assert(manifest.skills === './skills/', 'manifest skills path must be ./skills/');
-assert(manifest.hooks === undefined, 'manifest must not register hooks by default');
+assert(manifest.hooks === undefined, 'manifest must not register hooks');
 
 const skillsDir = path.join(root, manifest.skills);
 assert(fs.statSync(skillsDir).isDirectory(), 'manifest skills directory must exist');

@@ -69,7 +69,7 @@ dist/codex/
     dev-cadence/
 ```
 
-`dist/codex/` 是本地 marketplace root，Codex CLI 读取其中的 `.agents/plugins/marketplace.json`；`dist/codex/plugins/dev-cadence/` 是实际 plugin payload。plugin payload 应只包含 `.codex-plugin/`、`skills/`、`references/`、`templates/` 和 `scripts/`，不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`hooks/`、`research/`、`specs/`、`tests/` 或 `.git/`。
+`dist/codex/` 是本地 marketplace root，Codex CLI 读取其中的 `.agents/plugins/marketplace.json`；`dist/codex/plugins/dev-cadence/` 是实际 plugin payload。plugin payload 应包含 `.codex-plugin/`、`skills/`、`references/`、`templates/`、`scripts/`，以及未来按需加入的 `assets/`、`.mcp.json` 或 `.app.json`。它不包含源码仓库的 `README.md`、`AGENTS.md`、`docs/`、`hooks/`、`research/`、`specs/`、`tests/` 或 `.git/`。
 
 ## 4. 运行最小 dry run
 

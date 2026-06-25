@@ -63,8 +63,6 @@ assert_command_fails_with \
 
 node "${ROOT_DIR}/scripts/package-codex-plugin.mjs" --output-dir "${PACKAGE_DIR}" --clean --json > "${PACKAGE_DIR}/package-report.json"
 
-mkdir -p "${PLUGIN_DIR}/hooks"
-touch "${PLUGIN_DIR}/hooks/stale-hook"
 node "${ROOT_DIR}/scripts/package-codex-plugin.mjs" --output-dir "${PACKAGE_DIR}" --json > "${PACKAGE_DIR}/package-report-no-clean.json"
 
 test -f "${MARKETPLACE_FILE}" || {
@@ -100,6 +98,19 @@ assert_exists "scripts/run-delivery-dry-run.mjs"
 assert_exists "scripts/check-gates.mjs"
 assert_exists "scripts/check-before-commit.mjs"
 assert_exists "scripts/visual-companion/server.cjs"
+
+test ! -e "${PLUGIN_DIR}/assets" || {
+  echo "unexpected optional assets directory in package fixture" >&2
+  exit 1
+}
+test ! -e "${PLUGIN_DIR}/.mcp.json" || {
+  echo "unexpected optional .mcp.json in package fixture" >&2
+  exit 1
+}
+test ! -e "${PLUGIN_DIR}/.app.json" || {
+  echo "unexpected optional .app.json in package fixture" >&2
+  exit 1
+}
 
 assert_absent "docs"
 assert_absent "hooks"
@@ -139,7 +150,9 @@ assert(marketplace.plugins[0].source.path === './plugins/dev-cadence', 'marketpl
 
 assert(manifest.name === 'dev-cadence', 'package manifest name must be dev-cadence');
 assert(manifest.skills === './skills/', 'package manifest must point at bundled skills');
-assert(manifest.hooks === undefined, 'package manifest must not register hooks by default');
+assert(manifest.hooks === undefined, 'package manifest must not register hooks');
+assert(manifest.mcpServers === undefined, 'package manifest must not reference missing MCP config');
+assert(manifest.apps === undefined, 'package manifest must not reference missing app config');
 
 const shippedFiles = [];
 function walk(dir) {

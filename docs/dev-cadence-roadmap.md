@@ -237,7 +237,7 @@
 依赖：`docs/dev-cadence-target-model.md`。
 
 备注：
-已完成。发布用 Skill 已迁移为 `using-dev-cadence`、`cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review`、`cadence-verify` 和 `cadence-sync`。旧四入口已从发布包移除，`dev-cadence-authoring` 不作为普通用户 Skill 发布。默认发布包不注册 session-start hook，依赖 Codex 原生 Skill 触发或用户显式要求使用 Dev Cadence。验证证据：`bash tests/run-all.sh` 和 `node scripts/package-codex-plugin.mjs --clean` 均通过。
+已完成。发布用 Skill 已迁移为 `using-dev-cadence`、`cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review`、`cadence-verify` 和 `cadence-sync`。旧四入口已从发布包移除，`dev-cadence-authoring` 不作为普通用户 Skill 发布。发布包不包含 hooks，依赖 Codex 原生 Skill 触发或用户显式要求使用 Dev Cadence。验证证据：`bash tests/run-all.sh` 和 `node scripts/package-codex-plugin.mjs --clean` 均通过。
 
 ## 维护规则
 
