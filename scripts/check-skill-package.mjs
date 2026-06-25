@@ -293,6 +293,23 @@ function checkCliHelp() {
         'Usage: check-spec-artifacts.mjs [specs-dir]',
         'fenced yaml blocks',
         'duplicate keys',
+        '--warnings-as-errors',
+      ],
+    },
+    {
+      script: 'scripts/check-gates.mjs',
+      requiredText: [
+        'Usage: check-gates.mjs --task-id <task-id> [options]',
+        'Quality Gate and Human Gate',
+        '--allow-pending-acceptance',
+      ],
+    },
+    {
+      script: 'scripts/check-before-commit.mjs',
+      requiredText: [
+        'Usage: check-before-commit.mjs [options]',
+        'Checks Dev Cadence readiness before creating a Git commit',
+        '--task-id <id>',
       ],
     },
     {

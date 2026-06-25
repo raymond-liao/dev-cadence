@@ -63,6 +63,10 @@ Write human decisions into the artifact that owns the decision:
 - final acceptance in `08-acceptance.md`.
 
 Do not treat an informal chat acknowledgement as durable approval unless it is copied into the relevant artifact.
+Do not treat a request to commit code as final Human acceptance. A commit can
+be requested while G6 is still pending, but the agent must say that final Human
+acceptance is pending unless `08-acceptance.md` records the named Human
+accepter and accepted residual risk.
 
 Do not treat an agent assumption as a Human decision. If a missing answer affects product behavior or acceptance, record `info_required` and wait.
 Do not treat source-code inspection as a substitute for Human clarification when user intent is unclear.

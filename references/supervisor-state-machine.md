@@ -32,6 +32,8 @@ Use explicit state, not conversational judgment. Any skipped state must record i
 - If task class is strengthened during execution, record previous class, new class, reason, extra gates, and Human decisions before continuing.
 - Do not let Supervisor replace missing Worker Agent artifacts with summaries.
 - Enter `blocked` when required inputs, permissions, evidence, or decisions are missing.
+- Run `scripts/check-gates.mjs --task-id <task_id>` before any completion, approval, or acceptance claim when task artifacts exist.
+- Run `scripts/check-before-commit.mjs --task-id <task_id>` before creating a Git commit for a dirty worktree. If G6 is pending, block the commit and ask the Human to accept the result and residual risk before committing.
 - Enter a Human Gate for conflicts affecting scope, architecture, security, permissions, test validity, production, release, or final acceptance.
 - Enter Human Gate `info_required` when product intent, scope, non-goals, reference behavior, or acceptance criteria have multiple reasonable interpretations.
 - Do not convert an unconfirmed assumption into scope, non-goal, task, or acceptance criteria.

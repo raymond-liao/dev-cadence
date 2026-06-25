@@ -328,6 +328,21 @@ blocking_questions: []
 
 ## Gate G1
 
+\`\`\`yaml
+gate_id: G1
+status: passed
+required_inputs:
+  - 01-requirements.md
+evidence:
+  - specs/${options.taskId}/01-requirements.md
+pass_condition: dry_run_requirements_ready
+fail_condition: dry_run_scope_unknown
+decision: passed
+human_override: null
+residual_risk: []
+escalation: none
+\`\`\`
+
 G1 is treated as passed for the dry-run scope only.`));
 
   writeText(path.join(taskDir, '02-design.md'), block('Design', {
@@ -376,6 +391,21 @@ G2 is not required for this dry-run task unless real high-risk product work is a
 Executed as delivery runtime dry run.
 
 ## Gate G3
+
+\`\`\`yaml
+gate_id: G3
+status: passed
+required_inputs:
+  - 03-tasks.md
+evidence:
+  - specs/${options.taskId}/03-tasks.md
+pass_condition: dry_run_tasks_are_executable
+fail_condition: dry_run_tasks_missing_scope_or_verification
+decision: passed
+human_override: null
+residual_risk: []
+escalation: none
+\`\`\`
 
 G3 passed for dry-run execution because tasks, artifacts, forbidden actions, and verification plan are explicit.`));
 
@@ -443,7 +473,7 @@ Run \`check-spec-artifacts.mjs\` against the repository specs directory.
 
 \`\`\`yaml
 gate_id: G4
-status: ${options.acceptedBy ? 'human_override_for_dry_run' : 'blocked_pending_human_acceptance'}
+status: ${options.acceptedBy ? 'passed' : 'blocked'}
 required_inputs:
   - 04-test-plan.md
   - 06-test-report.md
@@ -479,7 +509,7 @@ No code findings because no product files changed.
 
 \`\`\`yaml
 gate_id: G5
-status: ${acceptanceBlocked ? 'blocked' : 'passed_for_dry_run_scope'}
+status: ${acceptanceBlocked ? 'blocked' : 'passed'}
 required_inputs:
   - 06-test-report.md
   - 07-review-report.md
@@ -508,7 +538,7 @@ escalation: ${acceptanceBlocked ? 'named Human acceptance required' : 'none'}
 
 \`\`\`yaml
 gate_id: G6
-status: ${acceptanceBlocked ? 'blocked' : 'passed_for_dry_run_scope'}
+status: ${acceptanceBlocked ? 'blocked' : 'passed'}
 required_inputs:
   - 08-acceptance.md
 evidence:

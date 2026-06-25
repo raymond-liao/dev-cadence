@@ -100,6 +100,7 @@ Stop and route through the applicable cadence Skill when any of these are true:
 - fixing a bug before root cause or reproducible behavior is recorded;
 - implementing testable behavior before deciding whether `cadence-tdd` applies;
 - claiming fixed, done, passing, ready, approved, or complete before `cadence-verify`;
+- creating a Git commit for a dirty worktree before `scripts/check-before-commit.mjs --task-id <task_id>` passes;
 - treating missing verification, missing Harness evidence, or skipped checks as acceptable without a named Human Gate;
 - recording Supervisor, Harness, Developer, Tester, Reviewer, or an unspecified agent as the final accepter.
 
@@ -118,5 +119,12 @@ pre-work evidence without a named Human Gate override.
 Do not collapse the workflow to a single Skill when later Skills are required. A bugfix can require debug, TDD or execution, review, verify, and acceptance in the same delivery.
 
 Do not self-accept final results. Final acceptance must name a Human accepter.
+
+Do not treat a request to commit code as final acceptance. Before committing a
+dirty worktree, run `scripts/check-before-commit.mjs --task-id <task_id>`.
+This check must fail on selected-task artifact language warnings as well as
+blocked gates or uncovered dirty paths.
+If G6 is pending, block the commit and ask the Human to accept the result and
+residual risk before committing.
 
 Do not make visual companion usage a gate. It is an optional clarification capability for UI, diagram, mockup, or visual comparison tasks and must fall back to text-only clarification when unavailable.

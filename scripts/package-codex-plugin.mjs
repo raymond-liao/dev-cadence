@@ -201,6 +201,8 @@ function main() {
     runCheck(process.execPath, [path.join(options.sourceDir, 'scripts', 'check-skill-package.mjs'), pluginDir], options.sourceDir),
     runCheck(process.execPath, [path.join(options.sourceDir, 'scripts', 'check-discipline-routes.mjs'), pluginDir], options.sourceDir),
     runCheck(process.execPath, [path.join(options.sourceDir, 'scripts', 'check-spec-artifacts.mjs'), path.join(pluginDir, 'templates')], options.sourceDir),
+    runCheck(process.execPath, [path.join(options.sourceDir, 'scripts', 'check-gates.mjs'), '--help'], options.sourceDir),
+    runCheck(process.execPath, [path.join(options.sourceDir, 'scripts', 'check-before-commit.mjs'), '--help'], options.sourceDir),
   ];
 
   const failedChecks = checks.filter((check) => check.status !== 0);

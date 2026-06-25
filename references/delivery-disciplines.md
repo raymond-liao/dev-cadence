@@ -27,7 +27,19 @@ follow_up:
 
 Worker Agents must not treat shortcuts as equivalent evidence. Missing evidence is a blocked workflow state until a named Human accepts the gap.
 
-Workspace, branch, worktree, commit, merge, and PR lifecycle management are outside the default discipline for now. Preserve existing repository policy and user instructions. Continue to record Harness evidence and scope reconciliation even when no Git checkpoint is created.
+Workspace, branch, worktree, merge, and PR lifecycle management are outside the
+default discipline for now. Git commit readiness is inside the evidence
+discipline: before creating a commit for a dirty worktree, run
+`scripts/check-before-commit.mjs --task-id <task_id>` and report any blocked
+Quality Gate, pending Human Gate, artifact language violation, or uncovered
+changed path. This check does not bypass pending G6; commit is blocked until
+final Human acceptance is recorded in `08-acceptance.md`.
+
+Preserve existing repository policy and user instructions. Continue to record
+Harness evidence and scope reconciliation even when no Git checkpoint is
+created. A request to commit code is not final Human acceptance unless the
+Human explicitly says they accept the result and residual risk, and that
+decision is recorded in `08-acceptance.md`.
 
 ## State Loading Contract
 

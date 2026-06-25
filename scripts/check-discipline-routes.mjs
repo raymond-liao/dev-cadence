@@ -202,6 +202,8 @@ function checkEntrypointReferenceMap() {
     'references/harness.md',
     'references/quality-gates.md',
     'references/human-gates.md',
+    'scripts/check-gates.mjs',
+    'scripts/check-before-commit.mjs',
   ];
   for (const item of expected) {
     if (!skillText.includes(item)) {

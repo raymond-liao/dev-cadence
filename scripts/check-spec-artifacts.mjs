@@ -11,6 +11,12 @@ Arguments:
   specs-dir  Specs directory to check. Defaults to specs in the current working
              directory.
 
+Options:
+  --warnings-as-errors
+             Treat warnings, including artifact_language prose warnings, as
+             failures.
+  -h, --help Show this help text.
+
 Checks:
   - fenced yaml blocks do not contain duplicate keys at the same indentation
     path
@@ -26,7 +32,36 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
   process.exit(0);
 }
 
-const specsDir = path.resolve(process.argv[2] || 'specs');
+function parseArgs(argv) {
+  const options = {
+    specsDir: 'specs',
+    warningsAsErrors: false,
+  };
+
+  for (const arg of argv) {
+    if (arg === '--warnings-as-errors') {
+      options.warningsAsErrors = true;
+    } else if (arg.startsWith('--')) {
+      throw new Error(`Unknown option: ${arg}`);
+    } else {
+      options.specsDir = arg;
+    }
+  }
+
+  options.specsDir = path.resolve(options.specsDir);
+  return options;
+}
+
+let options;
+try {
+  options = parseArgs(process.argv.slice(2));
+} catch (error) {
+  console.error(`ERROR ${error.message}`);
+  console.error('Run with --help for usage.');
+  process.exit(2);
+}
+
+const specsDir = options.specsDir;
 const errors = [];
 const warnings = [];
 
@@ -283,6 +318,9 @@ function checkDuplicateKeys(filePath, block, blockIndex) {
 
 function taskDirectories(rootDir) {
   const directories = [];
+  if (fs.existsSync(path.join(rootDir, '00-brief.md'))) {
+    directories.push(rootDir);
+  }
   const entries = fs.readdirSync(rootDir, { withFileTypes: true });
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
@@ -430,6 +468,11 @@ if (errors.length > 0) {
 
 for (const message of warnings) {
   console.error(`WARN ${message}`);
+}
+
+if (options.warningsAsErrors && warnings.length > 0) {
+  console.error(`\n${warnings.length} warning(s) treated as failure`);
+  process.exit(1);
 }
 
 const warningSummary = warnings.length > 0 ? ` with ${warnings.length} warning(s)` : '';

@@ -97,6 +97,8 @@ assert_exists "templates/prompts/implementer.md"
 assert_exists "scripts/sync-repo-contract.mjs"
 assert_exists "scripts/package-codex-plugin.mjs"
 assert_exists "scripts/run-delivery-dry-run.mjs"
+assert_exists "scripts/check-gates.mjs"
+assert_exists "scripts/check-before-commit.mjs"
 assert_exists "scripts/visual-companion/server.cjs"
 
 assert_absent "docs"

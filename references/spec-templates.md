@@ -21,6 +21,12 @@ The reusable template files live under:
 - `templates/runs/diff-summary.md`
 - `templates/runs/permission-decisions.md`
 
+Executable artifact and gate checks:
+
+- `scripts/check-spec-artifacts.mjs specs`
+- `scripts/check-gates.mjs --task-id <task_id>`
+- `scripts/check-before-commit.mjs --task-id <task_id>`
+
 Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reproducible and path-based.
 
 Before writing artifact prose, resolve `artifact_language` from an uncommented supported `dev_cadence.artifact_language` value in root `.dev-cadence.yaml`, then default to `en`. Supported values are `en` and `zh`.
@@ -77,6 +83,12 @@ For discipline fields, `default` means Dev Cadence's built-in delivery disciplin
 `artifact_language: zh` is configured and Markdown prose appears to be
 English-only. These warnings highlight localization drift; they do not fail the
 structural artifact check.
+
+`scripts/check-gates.mjs` validates G1-G6 and Human acceptance state for one
+task. `scripts/check-before-commit.mjs` validates artifact structure, gate
+state, artifact language warnings as failures for the selected task, and dirty
+worktree path coverage before a Git commit. It requires G6 final Human
+acceptance to pass; pending acceptance blocks commit readiness.
 
 ## `00-brief.md`
 

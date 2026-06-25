@@ -21,6 +21,9 @@ node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
   --json > "${DRY_RUN_JSON}"
 
 node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${REPO_DIR}/specs"
+node "${ROOT_DIR}/scripts/check-gates.mjs" \
+  --specs-dir "${REPO_DIR}/specs" \
+  --task-id "${TASK_ID}"
 
 mkdir -p "${ZH_REPO_DIR}/specs/sample"
 cat > "${ZH_REPO_DIR}/.dev-cadence.yaml" <<'EOF'
@@ -106,6 +109,14 @@ if node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${MISSING_BASELINE_REPO}
 fi
 grep -q "pre-implementation-status.md" "${MISSING_BASELINE_REPO}/check.err"
 grep -q "untracked_files" "${MISSING_BASELINE_REPO}/check.err"
+
+if node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${MISSING_BASELINE_REPO}/specs/missing-baseline" > "${MISSING_BASELINE_REPO}/task-check.out" 2> "${MISSING_BASELINE_REPO}/task-check.err"; then
+  cat "${MISSING_BASELINE_REPO}/task-check.out" >&2
+  cat "${MISSING_BASELINE_REPO}/task-check.err" >&2
+  echo "task directory missing baseline fixture should fail" >&2
+  exit 1
+fi
+grep -q "pre-implementation-status.md" "${MISSING_BASELINE_REPO}/task-check.err"
 
 node --input-type=module - "${DRY_RUN_JSON}" <<'NODE'
 import fs from 'node:fs';

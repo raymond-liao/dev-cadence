@@ -28,6 +28,8 @@ The user does not need to choose a workflow. Supervisor infers `selected_workflo
 - Use `S2` rules whenever high-risk triggers appear.
 - Use Harness for Worker Agent states.
 - Capture `pre-implementation-status.md` before S1/S2 product edits.
+- Run `scripts/check-gates.mjs --task-id <task_id>` before claiming completion, approval, acceptance, or readiness.
+- Run `scripts/check-before-commit.mjs --task-id <task_id>` before creating a Git commit for a dirty worktree.
 - Enforce hard stops from `SKILL.md` before implementation, review, and acceptance.
 - Record skipped states and residual risk.
 - End with acceptance or blocked escalation.

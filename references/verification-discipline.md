@@ -22,6 +22,14 @@ Before claiming any work state:
 
 Skipping a step means the workflow is not verified.
 
+When task artifacts exist, run
+`scripts/check-gates.mjs --task-id <task_id>` before claiming fixed, complete,
+approved, accepted, or ready. Before creating a Git commit for a dirty
+worktree, run `scripts/check-before-commit.mjs --task-id <task_id>`; this also
+treats selected-task artifact language warnings as failures. If G6 final Human
+acceptance is pending, do not commit; report the required Human acceptance
+fields instead.
+
 ## Claim Matrix
 
 | Claim | Requires | Not sufficient |

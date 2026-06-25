@@ -19,6 +19,7 @@ run_test "tests/test-shell-syntax.sh"
 run_test "tests/test-codex-plugin-package.sh"
 run_test "tests/test-sync-repo-contract.sh"
 run_test "tests/test-dry-run.sh"
+run_test "tests/test-gate-enforcement.sh"
 run_test "tests/test-codex-install-smoke.sh"
 run_command node scripts/check-skill-package.mjs .
 run_command node scripts/check-discipline-routes.mjs .

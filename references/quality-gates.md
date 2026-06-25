@@ -39,6 +39,11 @@ blocked
 skipped
 ```
 
+Run `scripts/check-gates.mjs --task-id <task_id>` before any completion,
+approval, or final status claim for a task with persistent artifacts. The
+checker is read-only; it reports blocked Quality Gates and pending Human Gate
+acceptance but does not approve or accept work.
+
 ## Verification Status
 
 Verification status must be one of:
@@ -87,6 +92,7 @@ Human override can accept residual risk but cannot erase missing evidence. The o
 - If an `S1` or `S2` implementation or fix run lacks `pre-implementation-status.md`, or it is marked `post_hoc_backfill: true` without named Human override, G4 and G5 are blocked.
 - If scope reconciliation omits tracked or untracked files that belong to the task, G4 and G5 are blocked until the diff summary is corrected or a named Human accepts the evidence gap.
 - If `08-acceptance.md` does not name a Human accepter, G6 is blocked.
+- If `scripts/check-gates.mjs --task-id <task_id>` fails, do not claim the task is fixed, complete, approved, accepted, or ready.
 - If S2 lacks requirement, architecture, permission, or final Human Gate decisions required by its risk profile, G6 is blocked.
 
 ## Escalation

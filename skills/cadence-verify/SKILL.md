@@ -25,6 +25,12 @@ Verify:
 - residual risks are explicit;
 - final acceptance, when required, names a Human accepter.
 
+When persistent artifacts exist, run `scripts/check-gates.mjs --task-id
+<task_id>` and include the Gate Summary in the handoff. Before creating a Git
+commit for a dirty worktree, run `scripts/check-before-commit.mjs --task-id
+<task_id>`. If G6 final Human acceptance is pending, block the commit and ask
+the Human to accept the result and residual risk before committing.
+
 Update `specs/{task_id}/06-test-report.md` and acceptance summary artifacts when persistent artifacts are being used.
 
 Do not treat `partially_verified`, `not_verified`, or `blocked_by_environment` as complete unless a named Human accepts the gap.
