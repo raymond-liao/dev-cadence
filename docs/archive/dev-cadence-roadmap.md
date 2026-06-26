@@ -1,10 +1,12 @@
 # Dev Cadence 路线图
 
+> 历史归档：本文记录已经完成的阶段性路线图，不再作为当前执行计划。当前验证、安装和卸载命令见 [../validation.md](../validation.md)。
+
 ## 目的
 
-本文是 Dev Cadence 当前剩余工作的稳定路线图。
+本文曾作为 Dev Cadence 阶段性剩余工作的稳定路线图。
 
-后续询问“还剩什么计划”时，应以本文为准，而不是重新生成新的临时列表。完成一项工作后，只更新对应条目的状态、证据和备注；除非目标架构变化，不要新增一组替代性的同类计划。
+历史阶段内，后续询问“还剩什么计划”时，以本文为准，而不是重新生成新的临时列表。当前维护工作不再从本文派生。
 
 ## 状态约定
 
@@ -101,7 +103,7 @@
 完成定义：
 
 - 每个入口 Skill 有独立 `SKILL.md` 和 `agents/openai.yaml`。
-- 触发边界符合 `docs/plugin-skill-modularization.md` 和 `docs/skill-authoring-prespec.md`。
+- 触发边界符合 `docs/plugin-skill-modularization.md` 和 `docs/archive/skill-authoring-prespec.md`。
 - 初始化、交付、维护、框架编制的入口语义不互相污染。
 - Package self-check 能识别多入口结构，或有明确过渡检查。
 
@@ -210,14 +212,14 @@
 依赖：R5 可后置；也可在 R5 前作为独立能力验证。
 
 备注：
-已完成。稳定验证结论已迁移到 `docs/validation-notes.md`：visual companion 能启动、渲染 clarification screen、记录 choice event、清理 session；sandbox localhost 可能受限并触发 fallback。结论保持 visual companion 为 optional capability；event 只是 clarification evidence，不是 G1 或 final acceptance。
+已完成。稳定验证结论已迁移到 `docs/archive/validation-notes.md`：visual companion 能启动、渲染 clarification screen、记录 choice event、清理 session；sandbox localhost 可能受限并触发 fallback。结论保持 visual companion 为 optional capability；event 只是 clarification evidence，不是 G1 或 final acceptance。
 
 ### R8. 重构为 Bootstrap + Cadence Discipline Skills
 
 状态：`done`
 
 目标：
-按 `docs/dev-cadence-target-model.md`，把发布用 Skill 从旧的产品菜单式四入口迁移为 `using-dev-cadence` bootstrap 加 `cadence-*` 工作纪律 Skills。
+按 `docs/archive/dev-cadence-target-model.md`，把发布用 Skill 从旧的产品菜单式四入口迁移为 `using-dev-cadence` bootstrap 加 `cadence-*` 工作纪律 Skills。
 
 范围：
 
@@ -234,7 +236,7 @@
 - `bash tests/run-all.sh` 通过。
 - 本地发布包能通过 `scripts/package-codex-plugin.mjs --clean` 生成并通过 package checks。
 
-依赖：`docs/dev-cadence-target-model.md`。
+依赖：`docs/archive/dev-cadence-target-model.md`。
 
 备注：
 已完成。发布用 Skill 已迁移为 `using-dev-cadence`、`cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review`、`cadence-verify` 和 `cadence-sync`。旧四入口已从发布包移除，`dev-cadence-authoring` 不作为普通用户 Skill 发布。发布包不包含 hooks，依赖 Codex 原生 Skill 触发或用户显式要求使用 Dev Cadence。验证证据：`bash tests/run-all.sh` 和 `node scripts/package-codex-plugin.mjs --clean` 均通过。

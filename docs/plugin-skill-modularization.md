@@ -2,13 +2,12 @@
 
 ## 目标
 
-本文记录 `dev-cadence` 在调整 Codex Plugin 发布结构之前的目标架构。
-> 状态提示：本文记录过旧的四入口 Skill 方案。新的目标模型见 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md)：发布结构迁移为 `using-dev-cadence` + `cadence-*` 工作纪律 Skills，旧的 `init/deliver/maintain/authoring` 不再作为主要 Skill 边界。
-
+本文记录 `dev-cadence` 当前 Codex Plugin 的模块边界，以及它和目标仓库薄契约的关系。
+> 状态提示：旧的四入口 Skill 方案和目标模型草案已归档到 [docs/archive/](archive/)。当前发布结构是 `using-dev-cadence` + `cadence-*` 工作纪律 Skills，旧的 `init/deliver/maintain/authoring` 不再作为主要 Skill 边界。
 
 目标是让 Dev Cadence Core 保持平台无关，同时让 `dev-cadence` 当前 Codex Plugin 发布形态更容易演进、与其他 Codex Skill 组合使用，并避免在每个目标仓库里生成大段重复规则。
 
-当前剩余工作的稳定路线图见 [Dev Cadence 路线图](dev-cadence-roadmap.md)。后续执行状态以路线图为准，本文只记录目标架构。
+当前验证、安装和卸载命令见 [Dev Cadence 当前验证](validation.md)。历史计划和完成状态见 [docs/archive/](archive/)。
 
 ## 核心决策
 
@@ -47,7 +46,7 @@ Adapter 边界跟随可替换执行纪律。
 
 ## 推荐 Skill 集合
 
-本文早期推荐过按 `init/deliver/maintain/authoring` 拆分入口 Skill。该方案已被 `docs/dev-cadence-target-model.md` 取代。
+本文早期推荐过按 `init/deliver/maintain/authoring` 拆分入口 Skill。该方案已被当前 `using-dev-cadence` + `cadence-*` 发布结构取代，历史草案见 [docs/archive/dev-cadence-target-model.md](archive/dev-cadence-target-model.md)。
 
 当前推荐模型是：
 
@@ -64,6 +63,7 @@ cadence-sync
 ```
 
 `Supervisor`、`Harness`、`Quality Gate`、`Human Gate`、artifact schema 和 task class policy 保持为 shared references，不作为用户 Skill 发布。`authoring` 不进入普通用户发布 Skill 集合。
+
 ## Codex Plugin 持有的资源
 
 Codex Plugin 应持有 Dev Cadence Core 在 Codex 中运行所需的可复用流程材料：
@@ -287,7 +287,7 @@ Adapter 不能覆盖：
 
 ## 实施计划
 
-本文件中的早期实施计划已完成并被后续 R8 重构取代。当前执行计划以 [Dev Cadence 路线图](dev-cadence-roadmap.md) 中的 R8 和 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md) 为准。
+本文件中的早期实施计划已完成并归档。当前验证入口见 [Dev Cadence 当前验证](validation.md)，历史路线图和目标草案见 [docs/archive/](archive/)。
 ## 待决问题
 
 - Adapter 选择只放在 `.dev-cadence.yaml`，还是允许用户按任务选择？

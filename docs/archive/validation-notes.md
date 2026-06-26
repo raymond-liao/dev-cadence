@@ -1,5 +1,7 @@
 # Dev Cadence 验证记录
 
+> 历史归档：本文记录早期 pressure test 和 visual companion 验证结论。当前验证命令见 [../validation.md](../validation.md)。
+
 本文记录从原 `research/` 工作区迁移出来的稳定验证结论。原始 pressure test、workspace 和运行过程材料不再作为仓库长期结构保留。
 
 ## 第二轮吸收 Pressure Test

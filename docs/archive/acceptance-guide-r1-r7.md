@@ -1,5 +1,7 @@
 # Dev Cadence 验收指南
 
+> 历史归档：本文是 R1-R7 阶段的人工验收 runbook，不是当前安装、使用或维护入口。当前验证命令见 [../validation.md](../validation.md)。
+
 本文用于验收当前阶段的 Dev Cadence，而不是验收某个业务功能是否已经实现。
 
 当前阶段的验收目标是确认：
@@ -15,7 +17,7 @@
 先查看路线图：
 
 ```bash
-sed -n '1,240p' docs/dev-cadence-roadmap.md
+sed -n '1,240p' docs/archive/dev-cadence-roadmap.md
 ```
 
 验收时重点确认 R1-R7 都是 `done`：

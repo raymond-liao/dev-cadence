@@ -1,14 +1,16 @@
 # Skill 编制前置规格
 
+> 历史归档：本文是 Skill/Plugin 编制前的设计输入，不再作为当前执行计划。当前 Plugin/Skill 模块边界见 [../plugin-skill-modularization.md](../plugin-skill-modularization.md)。
+
 ## 1. 目标
 
 本文定义 `dev-cadence` 的编制前置规格。
 
 目标是在调整包结构之前，先稳定 Skill 或 Plugin 必须实现的契约。本文不是 Skill 本身，而是 Skill 入口、references、templates、adapters 和 repo-local artifact 契约的设计输入。
 
-状态说明：目标架构见 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md)。通用框架规则放在 plugin-owned resources 中；目标仓库只保留薄入口、本地覆盖配置和任务 artifacts。
+状态说明：目标架构草案见 [Dev Cadence 目标形态方案草案](dev-cadence-target-model.md)。通用框架规则放在 plugin-owned resources 中；目标仓库只保留薄入口、本地覆盖配置和任务 artifacts。
 
-当前剩余工作的稳定路线图见 [Dev Cadence 路线图](dev-cadence-roadmap.md)。后续完成状态以路线图为准，本文不追踪逐项执行进度。
+历史阶段完成状态见 [Dev Cadence 路线图](dev-cadence-roadmap.md)。本文不追踪逐项执行进度。
 
 ## 2. 设计假设
 

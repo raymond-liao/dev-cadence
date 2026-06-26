@@ -5,14 +5,14 @@
 本仓库记录一套 AI-native 软件交付框架，并打包 `dev-cadence` Codex Plugin。
 
 - `README.md`：项目入口、安装、验证和文档导航。
-- `docs/`：完整框架方案、支撑性设计说明和稳定验证结论。
+- `docs/`：当前框架方案、Plugin 模块边界、验证/安装说明，以及 `docs/archive/` 下的历史计划和过程记录。
 - `.codex-plugin/plugin.json`：Codex Plugin manifest。
 - `skills/`：发布用入口 Skills。
 - `references/`：发布用框架 references。
 - `templates/`：发布用 task artifacts、Harness evidence 和 prompt templates。
 - `scripts/`：发布用校验、初始化和辅助脚本。
 
-新增框架 reference 时，放在 `references/` 下最相关的现有 reference 附近。稳定设计依据和验证结论放在 `docs/`。`specs/` 和 `research/` 是本地运行或探索过程目录，默认不提交。
+新增框架 reference 时，放在 `references/` 下最相关的现有 reference 附近。当前说明放在 `docs/` 顶层；阶段性计划、验收 runbook、研究记录和过期过程文档放在 `docs/archive/`。`specs/` 和 `research/` 是本地运行或探索过程目录，默认不提交。
 
 ## 构建、测试与开发命令
 

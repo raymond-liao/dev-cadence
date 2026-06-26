@@ -1,5 +1,7 @@
 # Dev Cadence 研究结论
 
+> 历史归档：本文记录早期研究结论，不作为当前使用入口。
+
 本文沉淀早期 `research/` 工作区中仍然有效的稳定结论。原始 research 工作区属于过程材料，不再作为仓库长期结构保留。
 
 ## 核心结论
@@ -57,4 +59,3 @@ Multi-Agent Development Framework
 ## 对当前仓库的影响
 
 `research/` 下的 agents、workspace、wip 和原始报告属于过程材料。稳定结论保留在本文和其他 `docs/` 文档中；后续如果需要新的调研，可以临时创建本地工作区，但不应默认提交到仓库。
-
