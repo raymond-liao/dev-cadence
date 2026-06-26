@@ -53,10 +53,20 @@ node scripts/package-codex-plugin.mjs --clean
 
 ## Documentation
 
+本仓库文档按用途分层，避免把说明文档和运行时规则混成同一个事实源：
+
+- `README.md`：项目入口、安装、使用和维护导航。
+- `docs/`：维护者说明和当前设计解释；`docs/archive/` 只保存历史计划、研究和验收记录。
+- `skills/`、`references/`、`templates/`、`scripts/`：Codex Plugin 发布内容，也是运行时会加载或调用的材料。
+- `specs/`、`research/`：本地运行或探索过程目录，默认不提交。
+
 | 文档 | 作用 |
 |---|---|
-| [docs/framework.md](docs/framework.md) | 完整框架方案 |
-| [docs/plugin-skill-modularization.md](docs/plugin-skill-modularization.md) | Plugin、Skill、reference、template 和 adapter 的模块化边界 |
+| [docs/framework.md](docs/framework.md) | 框架概念、职责分层和长期演进方向 |
+| [docs/architecture.md](docs/architecture.md) | 角色、分层、Harness、Context 和工具边界 |
+| [docs/workflows.md](docs/workflows.md) | Workflow、任务分级、loop、Quality Gate 和 Human Gate |
+| [docs/artifacts.md](docs/artifacts.md) | `specs/`、task artifacts、Harness evidence 和事实源规则 |
+| [docs/plugin-skill-modularization.md](docs/plugin-skill-modularization.md) | 当前 Plugin、Skill、reference、template 和 adapter 的模块化边界 |
 | [docs/validation.md](docs/validation.md) | 当前验证、安装、更新和卸载命令 |
 | [references/skill-layout.md](references/skill-layout.md) | 发布包布局和版本规则 |
 | [docs/archive/](docs/archive/) | 已完成阶段的计划、验收和验证记录 |

@@ -9,6 +9,8 @@
 
 当前验证、安装和卸载命令见 [Dev Cadence 当前验证](validation.md)。历史计划和完成状态见 [docs/archive/](archive/)。
 
+本文是当前 Codex Plugin 模块边界的维护者权威。`docs/framework.md` 只保留框架概念和长期演进解释；运行时可加载或调用的稳定材料以 `skills/`、`references/`、`templates/` 和 `scripts/` 为准。
+
 ## 核心决策
 
 ```text
@@ -94,8 +96,10 @@ references/
   quality-gates.md
   human-gates.md
   agent-blueprints.md
+  repository-rule-sync.md
   adapters.md
   skill-layout.md
+  spec-templates.md
 
 templates/
   spec/
@@ -124,9 +128,16 @@ templates/
     code-reviewer.md
 
 scripts/
+  package-codex-plugin.mjs
   check-skill-package.mjs
   check-discipline-routes.mjs
   check-spec-artifacts.mjs
+  check-gates.mjs
+  check-before-commit.mjs
+  init-task-artifacts.mjs
+  run-delivery-dry-run.mjs
+  summarize-acceptance.mjs
+  sync-repo-contract.mjs
   visual-companion/
     start-server.sh
     stop-server.sh
@@ -137,7 +148,7 @@ scripts/
 
 这些文件在相关入口 Skill 需要时加载。它们不应复制到目标仓库，也不应被理解为 Dev Cadence Core 只能在 Codex 中运行。
 
-`delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。任务 artifact 模板放在 `templates/spec/`，Harness evidence 模板放在 `templates/runs/`，Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或调度具体 run 时使用。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs` 和 `scripts/check-spec-artifacts.mjs` 提供 `dev-cadence` source self-check，校验语言边界、入口 metadata、脚本语法、discipline route、artifact template、prompt template、bundled resource 和 task artifact 是否一致。
+`delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。`spec-templates.md` 说明 task artifact 与 Harness evidence 模板结构；实际模板放在 `templates/spec/` 和 `templates/runs/`。Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或调度具体 run 时使用。`repository-rule-sync.md` 说明 thin repo-local contract 的初始化、检查、同步和修复规则。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs`、`scripts/check-gates.mjs` 和 `scripts/check-before-commit.mjs` 提供 `dev-cadence` source self-check，校验语言边界、入口 metadata、脚本语法、discipline route、artifact template、prompt template、gate state、bundled resource 和 task artifact 是否一致。
 
 `visual-companion.md` 和 `scripts/visual-companion/` 提供可选浏览器视觉对齐能力，用于 mockup、diagram 和视觉方案对比。它帮助 Human 和 AI 对齐难以纯文字表达的需求，但不能成为 G1 的硬条件。缺少 Node、浏览器或可访问 URL 时，流程必须降级为 text-only clarification。
 
@@ -288,9 +299,3 @@ Adapter 不能覆盖：
 ## 实施计划
 
 本文件中的早期实施计划已完成并归档。当前验证入口见 [Dev Cadence 当前验证](validation.md)，历史路线图和目标草案见 [docs/archive/](archive/)。
-## 待决问题
-
-- Adapter 选择只放在 `.dev-cadence.yaml`，还是允许用户按任务选择？
-- Plugin-owned rules 是否需要支持在仓库中显式 pin 版本？
-- Harness evidence 有多少可以由脚本自动生成，有多少需要 agent 写入？
-- 外部 adapter 应只用简单 ID 命名，还是建立结构化 adapter registry？
