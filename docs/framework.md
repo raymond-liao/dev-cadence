@@ -163,7 +163,7 @@ scripts/
 - `templates/`：task artifact、Harness evidence 和 Worker prompt 模板。
 - `scripts/`：package、检查、artifact 初始化、repo contract 同步和 optional visual companion 工具。
 
-完整模块边界见 [Plugin Skill 模块化](plugin-skill-modularization.md)，安装和验证命令见 [Dev Cadence 当前验证](validation.md)。
+完整模块边界见 [Plugin Skill 模块化](plugin-skill-modularization.md)，安装命令见 [Dev Cadence 安装](installation.md)，验证命令见 [Dev Cadence 当前验证](validation.md)。
 
 ## 演进方向
 
@@ -188,7 +188,8 @@ Codex Plugin publishing target
 | [workflows.md](workflows.md) | Workflow、任务分级、loop、Quality Gate 和 Human Gate |
 | [artifacts.md](artifacts.md) | `specs/`、task artifacts、Harness evidence 和事实源规则 |
 | [plugin-skill-modularization.md](plugin-skill-modularization.md) | 当前 Codex Plugin 模块边界 |
-| [validation.md](validation.md) | 当前验证、安装、更新和卸载命令 |
+| [installation.md](installation.md) | 当前安装、更新和卸载命令 |
+| [validation.md](validation.md) | 当前验证、发布包生成和 smoke test 命令 |
 | [archive/](archive/) | 历史计划、验收和研究记录 |
 | [../references/skill-layout.md](../references/skill-layout.md) | 发布包布局和版本规则 |
 | [../references/workflows.md](../references/workflows.md) | Workflow 运行规则 |

@@ -1,6 +1,6 @@
 # Dev Cadence 路线图
 
-> 历史归档：本文记录已经完成的阶段性路线图，不再作为当前执行计划。当前验证、安装和卸载命令见 [../validation.md](../validation.md)。
+> 历史归档：本文记录已经完成的阶段性路线图，不再作为当前执行计划。当前安装和卸载命令见 [../installation.md](../installation.md)，当前验证命令见 [../validation.md](../validation.md)。
 
 ## 目的
 

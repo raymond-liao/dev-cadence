@@ -12,6 +12,15 @@
 
 安装后新开 Codex thread。不要把源码仓库根目录直接作为插件安装源；本地发布包位于 `dist/codex/`。
 
+如果业务仓库已经内置 Dev Cadence repo marketplace，则在业务仓库根目录安装该仓库提供的插件：
+
+```bash
+codex plugin marketplace add .
+codex plugin add dev-cadence@<marketplace-name>
+```
+
+例如业务仓库 `.agents/plugins/marketplace.json` 的 `name` 是 `dev-cadence-health` 时，第二条命令使用 `dev-cadence@dev-cadence-health`。Codex 会把插件安装到当前用户的 Codex cache，业务仓库只作为 marketplace source。
+
 ## Use It
 
 进入业务仓库并启动 Codex：
@@ -49,7 +58,7 @@ bash tests/run-all.sh
 node scripts/package-codex-plugin.mjs --clean
 ```
 
-更多验证、安装和卸载命令见 [docs/validation.md](docs/validation.md)。
+更多安装、更新和卸载命令见 [docs/installation.md](docs/installation.md)；验证和打包检查见 [docs/validation.md](docs/validation.md)。
 
 ## Documentation
 
@@ -67,6 +76,7 @@ node scripts/package-codex-plugin.mjs --clean
 | [docs/workflows.md](docs/workflows.md) | Workflow、任务分级、loop、Quality Gate 和 Human Gate |
 | [docs/artifacts.md](docs/artifacts.md) | `specs/`、task artifacts、Harness evidence 和事实源规则 |
 | [docs/plugin-skill-modularization.md](docs/plugin-skill-modularization.md) | 当前 Plugin、Skill、reference、template 和 adapter 的模块化边界 |
-| [docs/validation.md](docs/validation.md) | 当前验证、安装、更新和卸载命令 |
+| [docs/installation.md](docs/installation.md) | 当前安装、更新和卸载命令 |
+| [docs/validation.md](docs/validation.md) | 当前验证、发布包生成和 smoke test 命令 |
 | [references/skill-layout.md](references/skill-layout.md) | 发布包布局和版本规则 |
 | [docs/archive/](docs/archive/) | 已完成阶段的计划、验收和验证记录 |

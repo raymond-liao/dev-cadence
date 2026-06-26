@@ -1,6 +1,6 @@
 # Dev Cadence 验收指南
 
-> 历史归档：本文是 R1-R7 阶段的人工验收 runbook，不是当前安装、使用或维护入口。当前验证命令见 [../validation.md](../validation.md)。
+> 历史归档：本文是 R1-R7 阶段的人工验收 runbook，不是当前安装、使用或维护入口。当前安装命令见 [../installation.md](../installation.md)，当前验证命令见 [../validation.md](../validation.md)。
 
 本文用于验收当前阶段的 Dev Cadence，而不是验收某个业务功能是否已经实现。
 

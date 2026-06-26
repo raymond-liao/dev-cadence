@@ -4,7 +4,8 @@
 
 当前入口：
 
-- 当前验证和本机安装/卸载命令见 [../validation.md](../validation.md)。
+- 当前安装和本机卸载命令见 [../installation.md](../installation.md)。
+- 当前验证命令见 [../validation.md](../validation.md)。
 - 完整框架方案见 [../framework.md](../framework.md)。
 - 当前 Plugin/Skill 模块边界见 [../plugin-skill-modularization.md](../plugin-skill-modularization.md)。
 

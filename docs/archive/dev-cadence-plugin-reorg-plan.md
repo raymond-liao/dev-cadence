@@ -1,6 +1,6 @@
 # `dev-cadence` Codex 发布结构重组计划
 
-> 历史归档：本文记录 root-level Plugin 迁移过程，不再作为当前执行计划。当前验证、安装和卸载命令见 [../validation.md](../validation.md)。
+> 历史归档：本文记录 root-level Plugin 迁移过程，不再作为当前执行计划。当前安装和卸载命令见 [../installation.md](../installation.md)，当前验证命令见 [../validation.md](../validation.md)。
 
 **目标**：将当前 `dev-cadence` 从“单个 Skill 外壳”调整为 root-level Codex Plugin 源码组织方式，并同步优化用户仓库契约。
 

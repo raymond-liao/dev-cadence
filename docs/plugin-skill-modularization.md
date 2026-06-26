@@ -7,7 +7,7 @@
 
 目标是让 Dev Cadence Core 保持平台无关，同时让 `dev-cadence` 当前 Codex Plugin 发布形态更容易演进、与其他 Codex Skill 组合使用，并避免在每个目标仓库里生成大段重复规则。
 
-当前验证、安装和卸载命令见 [Dev Cadence 当前验证](validation.md)。历史计划和完成状态见 [docs/archive/](archive/)。
+当前安装和卸载命令见 [Dev Cadence 安装](installation.md)，验证命令见 [Dev Cadence 当前验证](validation.md)。历史计划和完成状态见 [docs/archive/](archive/)。
 
 本文是当前 Codex Plugin 模块边界的维护者权威。`docs/framework.md` 只保留框架概念和长期演进解释；运行时可加载或调用的稳定材料以 `skills/`、`references/`、`templates/` 和 `scripts/` 为准。
 
@@ -151,6 +151,8 @@ scripts/
 `delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。`spec-templates.md` 说明 task artifact 与 Harness evidence 模板结构；实际模板放在 `templates/spec/` 和 `templates/runs/`。Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或调度具体 run 时使用。`repository-rule-sync.md` 说明 thin repo-local contract 的初始化、检查、同步和修复规则。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs`、`scripts/check-gates.mjs` 和 `scripts/check-before-commit.mjs` 提供 `dev-cadence` source self-check，校验语言边界、入口 metadata、脚本语法、discipline route、artifact template、prompt template、gate state、bundled resource 和 task artifact 是否一致。
 
 `visual-companion.md` 和 `scripts/visual-companion/` 提供可选浏览器视觉对齐能力，用于 mockup、diagram 和视觉方案对比。它帮助 Human 和 AI 对齐难以纯文字表达的需求，但不能成为 G1 的硬条件。缺少 Node、浏览器或可访问 URL 时，流程必须降级为 text-only clarification。
+
+业务仓库可以选择提交 repo-scoped marketplace 和 plugin payload，用于让团队成员从该业务仓库根目录执行 `codex plugin marketplace add .` 和 `codex plugin add dev-cadence@<marketplace-name>` 安装同一份插件。这是分发方式，不是 `cadence-sync` 默认写入的 thin repo-local contract；此时 `source.path` 必须从业务仓库根目录解析到实际 plugin payload，例如 `./.agents/plugins/dev-cadence`。
 
 ## 薄仓库契约
 
@@ -298,4 +300,4 @@ Adapter 不能覆盖：
 
 ## 实施计划
 
-本文件中的早期实施计划已完成并归档。当前验证入口见 [Dev Cadence 当前验证](validation.md)，历史路线图和目标草案见 [docs/archive/](archive/)。
+本文件中的早期实施计划已完成并归档。当前安装入口见 [Dev Cadence 安装](installation.md)，验证入口见 [Dev Cadence 当前验证](validation.md)，历史路线图和目标草案见 [docs/archive/](archive/)。

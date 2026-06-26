@@ -153,8 +153,8 @@ templates/prompts/
 ```bash
 bash tests/run-all.sh
 node scripts/check-spec-artifacts.mjs templates
-node scripts/check-gates.mjs specs/{task_id}
+node scripts/check-gates.mjs --task-id {task_id}
 node scripts/check-before-commit.mjs --task-id {task_id}
 ```
 
-完整命令说明见 [Dev Cadence 当前验证](validation.md)。文档类变更仍需人工检查 Markdown 渲染、链接、路径和术语一致性。
+完整验证命令说明见 [Dev Cadence 当前验证](validation.md)。文档类变更仍需人工检查 Markdown 渲染、链接、路径和术语一致性。
