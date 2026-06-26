@@ -659,6 +659,14 @@ function checkCliHelp() {
         'does not accept work',
       ],
     },
+    {
+      script: 'scripts/generate-spec-report.mjs',
+      requiredText: [
+        'Usage: generate-spec-report.mjs [options]',
+        'static Dev Cadence specs HTML report',
+        'Markdown and YAML task',
+      ],
+    },
   ];
 
   for (const command of commands) {

@@ -50,6 +50,7 @@ specs/{task_id}/
   runs/
     {run_id}/
       run-context.md
+      pre-implementation-status.md
       execution-report.md
       tool-log.md
       test-log.md
@@ -90,13 +91,40 @@ Run evidence 包括：
 | Evidence | 作用 |
 |---|---|
 | `run-context.md` | 本次执行的 role、输入 artifact、允许路径、工具、预算和约束 |
+| `pre-implementation-status.md` | S1/S2 实现或修复前的 worktree 基线、授权范围和 gate 状态 |
 | `execution-report.md` | 执行摘要、状态、变更文件、跳过检查、风险和交接说明 |
 | `tool-log.md` | 工具调用、命令和关键日志索引 |
 | `test-log.md` | 测试/验证命令、环境、输出摘要和结果 |
 | `diff-summary.md` | 文件变更、行为变化、风险区域和回滚提示 |
 | `permission-decisions.md` | 高风险操作的审批请求、决策人、时间和理由 |
 
-`execution-report.md` 的摘要不能替代 `tool-log.md`、`test-log.md`、`diff-summary.md` 或 `permission-decisions.md`。缺少必要 evidence 时，Quality Gate 应保持 blocked，除非具名 Human 明确接受剩余风险。
+`execution-report.md` 的摘要不能替代 `pre-implementation-status.md`、`tool-log.md`、`test-log.md`、`diff-summary.md` 或 `permission-decisions.md`。S1/S2 的实现或修复工作必须在修改产品文件、测试、构建脚本、部署配置或应用配置之前记录 `pre-implementation-status.md`。缺少必要 evidence 时，Quality Gate 应保持 blocked，除非具名 Human 明确接受剩余风险。
+
+## Specs HTML Report
+
+可以从现有 `specs/` artifact 生成一个静态 HTML 浏览视图：
+
+```bash
+node scripts/generate-spec-report.mjs --specs-dir specs
+```
+
+默认生成文件：
+
+```text
+specs/
+  index.html
+  .dev-cadence-report/
+    style.css
+  {task_id}/
+    index.html
+    runs/
+      {run_id}/
+        index.html
+```
+
+`specs/index.html` 使用类似 JaCoCo 的紧凑 summary 表格，包含 `Element`、`Status`、`Gates`、`Issues`、`Runs` 和 `Updated` 列；有 gate failure、非 G6 待验收 warning、blocked 或 unknown 的任务整行用红色背景提示。纯 `pending acceptance` 只显示黄色状态 badge，不作为红色问题行。`specs/{task_id}/index.html` 显示单个任务的 Gate Summary、artifact 链接、run 链接和 open issue 明细；`runs/{run_id}/index.html` 显示 Harness evidence 详情。每个 Markdown artifact 还会生成对应 `.html` 详情页，顶部保留 JaCoCo 风格面包屑，并提供 `Raw Markdown` 链接回原始文件。
+
+HTML report 是派生浏览视图，不是事实源。Gate、review、acceptance 和提交前检查仍以 Markdown/YAML artifact 为准；生成报告不能替代 `check-gates.mjs`、`check-before-commit.mjs` 或具名 Human acceptance。
 
 ## Artifact Language
 
@@ -155,6 +183,7 @@ bash tests/run-all.sh
 node scripts/check-spec-artifacts.mjs templates
 node scripts/check-gates.mjs --task-id {task_id}
 node scripts/check-before-commit.mjs --task-id {task_id}
+node scripts/generate-spec-report.mjs --specs-dir specs
 ```
 
 完整验证命令说明见 [Dev Cadence 当前验证](validation.md)。文档类变更仍需人工检查 Markdown 渲染、链接、路径和术语一致性。

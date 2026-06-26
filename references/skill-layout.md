@@ -108,6 +108,7 @@ dev-cadence/
     check-skill-package.mjs
     check-discipline-routes.mjs
     check-spec-artifacts.mjs
+    generate-spec-report.mjs
     visual-companion/
       start-server.sh
       stop-server.sh
@@ -303,7 +304,7 @@ dev_cadence:
 - use parallel Worker runs only for independent domains;
 - use Dev Cadence source validation when changing this plugin's own skills and references.
 
-`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, `scripts/check-spec-artifacts.mjs`, `scripts/check-gates.mjs`, and `scripts/check-before-commit.mjs`. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
+`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, `scripts/check-spec-artifacts.mjs`, `scripts/check-gates.mjs`, and `scripts/check-before-commit.mjs`. `scripts/generate-spec-report.mjs` generates a co-located static HTML browsing view under `specs/`; the Markdown/YAML artifacts remain authoritative. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
 
 External adapters are optional replacement points for Worker execution techniques. Dev Cadence still controls Supervisor routing, Harness evidence, Quality Gate, Human Gate, scope reconciliation, and final acceptance.
 

@@ -26,8 +26,16 @@ Executable artifact and gate checks:
 - `scripts/check-spec-artifacts.mjs specs`
 - `scripts/check-gates.mjs --task-id <task_id>`
 - `scripts/check-before-commit.mjs --task-id <task_id>`
+- `scripts/generate-spec-report.mjs --specs-dir specs`
 
 Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reproducible and path-based.
+
+`scripts/generate-spec-report.mjs` writes a static derived browsing view to
+`specs/index.html`, `specs/.dev-cadence-report/style.css`,
+`specs/{task_id}/index.html`, and
+`specs/{task_id}/runs/{run_id}/index.html`. The report is for summary and
+drill-down navigation only. Markdown/YAML artifacts remain the source of truth
+for gates, review, and Human acceptance.
 
 Before writing artifact prose, resolve `artifact_language` from an uncommented supported `dev_cadence.artifact_language` value in root `.dev-cadence.yaml`, then default to `en`. Supported values are `en` and `zh`.
 

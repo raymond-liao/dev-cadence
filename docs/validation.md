@@ -8,7 +8,15 @@
 bash tests/run-all.sh
 ```
 
-该命令覆盖 plugin manifest、发布包边界、官方 plugin 规则、thin repo contract、delivery dry run、gate enforcement、Skill package、discipline routes、artifact templates 和 diff whitespace。
+该命令覆盖 plugin manifest、发布包边界、官方 plugin 规则、thin repo contract、delivery dry run、gate enforcement、specs HTML report、Skill package、discipline routes、artifact templates 和 diff whitespace。
+
+## 生成 Specs HTML Report
+
+```bash
+node scripts/generate-spec-report.mjs --specs-dir specs
+```
+
+该命令从现有 `specs/{task_id}/` Markdown/YAML artifact 生成静态浏览视图：`specs/index.html`、`specs/.dev-cadence-report/style.css`、`specs/{task_id}/index.html`、`specs/{task_id}/*.html`、`specs/{task_id}/runs/{run_id}/index.html` 和 `specs/{task_id}/runs/{run_id}/*.html`。报告用于快速浏览 JaCoCo 风格任务 summary、Gate Summary、problem row、run evidence、artifact HTML 详情和 raw artifact 链接；事实源仍是 Markdown/YAML artifact。
 
 ## 生成发布包
 
