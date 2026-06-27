@@ -27,8 +27,3 @@ Harness。
 ## 如何阅读
 
 用它核对 execution report 中的 claims 是否有对应命令或工具证据。
-
-## 模板来源
-
-- [templates/runs/tool-log.md](../../templates/runs/tool-log.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

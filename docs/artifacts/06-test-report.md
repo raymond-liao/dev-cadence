@@ -39,8 +39,3 @@ Tester 或 Developer via Harness，取决于 workflow 和 task weight。
 ## 如何阅读
 
 阅读它可以判断实现是否有可信验证证据，以及还剩哪些缺口。
-
-## 模板来源
-
-- [templates/spec/06-test-report.md](../../templates/spec/06-test-report.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

@@ -1,8 +1,8 @@
 # Dev Cadence Worker Agents
 
-本文说明 Dev Cadence 中的 Worker Agent Roles。Worker Agents 交付具体研发产物，但不能控制 workflow state、批准 gate、替代 Harness 采集证据，或宣布最终完成。
+Worker Agents 负责交付具体研发产物，例如 requirements、design、tasks、implementation notes、test report、review report 或 research report。它们不能控制 workflow state、批准 gate、替代 Harness 采集证据，或宣布最终完成。
 
-上层角色边界见 [docs/roles/](../)。整体架构分层和 Context/Tooling 边界见 [docs/architecture.md](../../architecture.md)。
+上层角色边界由 [Human、Supervisor 和 Harness](../) 定义；整体架构分层和 Context/Tooling 边界见 [Dev Cadence 架构](../../architecture.md)。
 
 ## Agent 目录
 
@@ -17,4 +17,6 @@
 
 ## 通用边界
 
-Worker Agents 可以产出 requirements、design、tasks、implementation notes、test report、review report 或 research report。它们不能替代 Human 做风险接受，不能替代 Supervisor 决定下一步状态，也不能替代 Harness 处理执行约束和运行证据。
+Worker Agents 的输出是后续流程的输入，不自动等于 gate approval 或 Human acceptance。需求和计划落在 [task artifacts](../../artifacts/)；实现、测试、diff 和权限证据落在 [runs](../../runs/)；被采纳的研究结论必须进入 [design](../../artifacts/02-design.md) 或 ADR 后，才算正式设计决策。
+
+如果 Worker 发现范围、架构、权限、测试信心或剩余风险已经超出当前授权，应把问题写入对应 artifact 或 run evidence，由 [Supervisor](../02-supervisor.md) 决定下一步是否进入 [Gate](../../gates/) 或 Human decision。

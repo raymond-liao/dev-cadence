@@ -4,6 +4,8 @@
 
 `code-review` 用于审查已有 diff、branch、pull request 或 patch。
 
+完整运行时规则见 [workflows.md](../../references/workflows.md)。Review 纪律见 [review-discipline.md](../../references/review-discipline.md)，G5 细则见 [G5 Review](../gates/g5-review.md)。
+
 ## 标准路径
 
 ```text
@@ -35,8 +37,3 @@ intake -> classify -> review -> acceptance
 ## Human 介入点
 
 接受剩余风险、决定是否修复 findings、以及最终验收都需要 Human decision。除非用户明确要求修复 findings，否则 review workflow 不应改代码。
-
-## 参考
-
-- 运行时规则：[references/workflows.md](../../references/workflows.md)
-- Review discipline：[review-discipline.md](../../references/review-discipline.md)

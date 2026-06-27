@@ -2,14 +2,14 @@
 
 ## 目标
 
-本文记录 `dev-cadence` 当前 Codex Plugin 的模块边界，以及它和目标仓库薄契约的关系。
-> 状态提示：旧的四入口 Skill 方案和目标模型草案已归档到 [docs/archive/](archive/)。当前发布结构是 `using-dev-cadence` + `cadence-*` 工作纪律 Skills，旧的 `init/deliver/maintain/authoring` 不再作为主要 Skill 边界。
+维护 `dev-cadence` Codex Plugin 时，这页说明当前模块边界，以及它和目标仓库薄契约的关系。
+> 状态提示：旧的四入口 Skill 方案和目标模型草案已归档到 [archive/](archive/)。当前发布结构是 `using-dev-cadence` + `cadence-*` 工作纪律 Skills，旧的 `init/deliver/maintain/authoring` 不再作为主要 Skill 边界。
 
 目标是让 Dev Cadence Core 保持平台无关，同时让 `dev-cadence` 当前 Codex Plugin 发布形态更容易演进、与其他 Codex Skill 组合使用，并避免在每个目标仓库里生成大段重复规则。
 
-当前安装和卸载命令见 [Dev Cadence 安装](installation.md)，验证命令见 [Dev Cadence 当前验证](validation.md)。历史计划和完成状态见 [docs/archive/](archive/)。
+当前安装和卸载命令见 [Dev Cadence 安装](installation.md)，验证命令见 [Dev Cadence 当前验证](validation.md)。历史计划和完成状态见 [archive/](archive/)。
 
-本文是当前 Codex Plugin 模块边界的维护者权威。`docs/overview.md` 只保留框架概念、文档入口和长期演进解释；运行时可加载或调用的稳定材料以 `skills/`、`references/`、`templates/` 和 `scripts/` 为准。
+当前 Codex Plugin 的模块边界以本页为维护者权威。[overview.md](overview.md) 只保留框架概念、文档地图和长期演进解释；运行时可加载或调用的稳定材料以 `skills/`、`references/`、`templates/` 和 `scripts/` 为准。
 
 ## 核心决策
 
@@ -48,7 +48,7 @@ Adapter 边界跟随可替换执行纪律。
 
 ## 推荐 Skill 集合
 
-本文早期推荐过按 `init/deliver/maintain/authoring` 拆分入口 Skill。该方案已被当前 `using-dev-cadence` + `cadence-*` 发布结构取代，历史草案见 [docs/archive/dev-cadence-target-model.md](archive/dev-cadence-target-model.md)。
+早期曾推荐按 `init/deliver/maintain/authoring` 拆分入口 Skill。该方案已被当前 `using-dev-cadence` + `cadence-*` 发布结构取代，历史草案见 [dev-cadence-target-model.md](archive/dev-cadence-target-model.md)。
 
 当前推荐模型是：
 
@@ -70,86 +70,24 @@ cadence-sync
 
 Codex Plugin 应持有 Dev Cadence Core 在 Codex 中运行所需的可复用流程材料：
 
-```text
-references/
-  principles.md
-  supervisor-state-machine.md
-  task-classes.md
-  workflows.md
-  delivery-disciplines.md
-  intent-and-design-discipline.md
-  visual-companion.md
-  planning-discipline.md
-  implementation-discipline.md
-  testing-anti-patterns.md
-  execution-orchestration.md
-  debugging-discipline.md
-  root-cause-tracing.md
-  condition-based-waiting.md
-  defense-in-depth.md
-  review-discipline.md
-  verification-discipline.md
-  authoring-discipline.md
-  skill-pressure-testing.md
-  context-pack.md
-  harness.md
-  quality-gates.md
-  human-gates.md
-  agent-blueprints.md
-  repository-rule-sync.md
-  adapters.md
-  skill-layout.md
-  spec-templates.md
-
-templates/
-  spec/
-    00-brief.md
-    01-requirements.md
-    02-design.md
-    03-tasks.md
-    04-test-plan.md
-    05-implementation.md
-    06-test-report.md
-    07-review-report.md
-    08-acceptance.md
-  runs/
-    run-context.md
-    execution-report.md
-    tool-log.md
-    test-log.md
-    diff-summary.md
-    permission-decisions.md
-  prompts/
-    spec-document-reviewer.md
-    plan-document-reviewer.md
-    implementer.md
-    spec-compliance-reviewer.md
-    code-quality-reviewer.md
-    code-reviewer.md
-
-scripts/
-  package-codex-plugin.mjs
-  check-skill-package.mjs
-  check-discipline-routes.mjs
-  check-spec-artifacts.mjs
-  check-gates.mjs
-  check-before-commit.mjs
-  generate-spec-report.mjs
-  init-task-artifacts.mjs
-  run-delivery-dry-run.mjs
-  summarize-acceptance.mjs
-  sync-repo-contract.mjs
-  visual-companion/
-    start-server.sh
-    stop-server.sh
-    server.cjs
-    helper.js
-    frame-template.html
-```
+| 目录 | 职责 | 维护入口 |
+|---|---|---|
+| `skills/` | Codex Skill 入口和工作纪律触发面 | `skills/*/SKILL.md` |
+| `references/` | workflow、gate、Harness、agent、adapter 和 discipline 的运行时规则 | [references/skill-layout.md](../references/skill-layout.md) |
+| `templates/spec/` | task artifact 模板 | [references/spec-templates.md](../references/spec-templates.md) |
+| `templates/runs/` | Harness evidence 模板 | [references/spec-templates.md](../references/spec-templates.md) |
+| `templates/prompts/` | Worker、reviewer 和文档审查 prompt 模板 | [references/agent-blueprints.md](../references/agent-blueprints.md) |
+| `scripts/` | 打包、检查、artifact 初始化、报告生成、repo contract 同步和 optional visual companion | [validation.md](validation.md) |
 
 这些文件在相关入口 Skill 需要时加载。它们不应复制到目标仓库，也不应被理解为 Dev Cadence Core 只能在 Codex 中运行。
 
-`delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。`spec-templates.md` 说明 task artifact 与 Harness evidence 模板结构；实际模板放在 `templates/spec/` 和 `templates/runs/`。Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或调度具体 run 时使用。`repository-rule-sync.md` 说明 thin repo-local contract 的初始化、检查、同步和修复规则。`scripts/artifact-language.mjs` 提供共享 artifact language 解析，生成脚本必须用它读取 `.dev-cadence.yaml`，包括 task artifact 正文和 HTML report UI。`scripts/check-skill-package.mjs`、`scripts/check-discipline-routes.mjs`、`scripts/check-spec-artifacts.mjs`、`scripts/check-gates.mjs` 和 `scripts/check-before-commit.mjs` 提供 `dev-cadence` source self-check，校验语言边界、入口 metadata、脚本语法、discipline route、artifact template、prompt template、gate state、bundled resource 和 task artifact 是否一致。`scripts/generate-spec-report.mjs` 从现有 task artifact 生成 co-located 静态 HTML 浏览视图，但不改变 Markdown/YAML 事实源。
+`delivery-disciplines.md` 是默认交付纪律的路由入口。它不承载所有细节，而是按状态加载细分 reference，例如意图澄清、planning、TDD、debugging、review、verification 和 Dev Cadence authoring。
+
+`spec-templates.md` 说明 task artifact 与 Harness evidence 模板结构；实际模板放在 `templates/spec/` 和 `templates/runs/`。Worker 和 reviewer 的可复用提示词放在 `templates/prompts/`，由 Harness 在创建 artifact、记录 evidence 或调度具体 run 时使用。
+
+`repository-rule-sync.md` 说明 thin repo-local contract 的初始化、检查、同步和修复规则。`scripts/` 按职责提供 artifact language 解析、source self-check、gate 检查、提交前检查、artifact 初始化、dry run、HTML report、acceptance summary 和 optional visual companion。具体命令入口见 [validation.md](validation.md)；具体脚本清单以 `scripts/` 目录和 package boundary 测试为准。
+
+`scripts/generate-spec-report.mjs` 从现有 task artifact 生成 co-located 静态 HTML 浏览视图，但不改变 Markdown/YAML 事实源。
 
 `visual-companion.md` 和 `scripts/visual-companion/` 提供可选浏览器视觉对齐能力，用于 mockup、diagram 和视觉方案对比。它帮助 Human 和 AI 对齐难以纯文字表达的需求，但不能成为 G1 的硬条件。缺少 Node、浏览器或可访问 URL 时，流程必须降级为 text-only clarification。
 
@@ -298,7 +236,3 @@ Adapter 不能覆盖：
 - permission gates for high-risk actions；
 - required Harness evidence；
 - scope reconciliation before review and acceptance。
-
-## 实施计划
-
-本文件中的早期实施计划已完成并归档。当前安装入口见 [Dev Cadence 安装](installation.md)，验证入口见 [Dev Cadence 当前验证](validation.md)，历史路线图和目标草案见 [docs/archive/](archive/)。

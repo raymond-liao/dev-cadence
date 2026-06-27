@@ -1,8 +1,8 @@
 # Dev Cadence 门禁
 
-本文说明 Dev Cadence 的 Quality Gates 和 Human Gates。运行时规则见 [../../references/quality-gates.md](../../references/quality-gates.md) 和 [../../references/human-gates.md](../../references/human-gates.md)。
-
 Gate 的作用是决定工作是否可以进入下一阶段。缺失证据是一种 workflow state，不是 approval。
+
+Workflow 路径见 [workflows](../workflows/)。Gate 判断会读取 [task artifacts](../artifacts/) 和 [run evidence](../runs/)；运行时 Quality Gate 规则见 [quality-gates.md](../../references/quality-gates.md)，Human Gate 规则见 [human-gates.md](../../references/human-gates.md)。
 
 ## Gate 目录
 
@@ -43,3 +43,5 @@ scripts/check-gates.mjs --task-id <task_id>
 ```
 
 该脚本只读；它报告 gate 状态，但不替代 Reviewer 或 Human acceptance。
+
+提交前检查和报告生成命令见 [../validation.md](../validation.md)。

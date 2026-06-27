@@ -37,8 +37,3 @@ Supervisor 记录或协调这个 artifact。
 ## 如何阅读
 
 阅读它可以理解任务要达成什么，以及 Supervisor 为什么选择某个 workflow。
-
-## 模板来源
-
-- [templates/spec/00-brief.md](../../templates/spec/00-brief.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

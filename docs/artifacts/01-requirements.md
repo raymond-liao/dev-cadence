@@ -35,8 +35,3 @@ Planner，在 Supervisor 控制下完成。
 ## 如何阅读
 
 实现前先看这个文件，确认什么在范围内、什么明确不做，以及是否还有阻塞问题。
-
-## 模板来源
-
-- [templates/spec/01-requirements.md](../../templates/spec/01-requirements.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

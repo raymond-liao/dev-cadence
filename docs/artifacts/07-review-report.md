@@ -40,8 +40,3 @@ Reviewer。
 ## 如何阅读
 
 Findings 应放在最前面。阅读它可以知道变更已批准、需要修复，还是处于 blocked。
-
-## 模板来源
-
-- [templates/spec/07-review-report.md](../../templates/spec/07-review-report.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

@@ -18,7 +18,7 @@ G4 确保 changed behavior 在 review approval 或 acceptance 前有完整、可
 
 ## 通过条件
 
-每个 affected component 和 changed platform 都有对应 verification，且 verification status 是 `verified`；或者具名 Human Gate 接受 incomplete verification。
+每个 affected component 和 changed platform 都有对应 verification，[06-test-report.md](../artifacts/06-test-report.md) 中的 verification status 是 `verified`；或者具名 Human Gate 接受 incomplete verification。通常由 [Tester](../roles/agents/04-tester.md) 负责准备验证结论。
 
 ## Verification Status 取值
 
@@ -44,8 +44,3 @@ blocked_by_environment
 ## 人工 Override
 
 具名 Human 可以接受 incomplete verification，但必须记录 residual risk、证据缺口、follow-up，以及适用时的 revisit condition。
-
-## 相关产物
-
-- [06-test-report.md](../artifacts/06-test-report.md)
-- [Tester](../roles/agents/04-tester.md)

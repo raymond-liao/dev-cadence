@@ -1,8 +1,8 @@
 # Dev Cadence 角色
 
-本文说明 Dev Cadence 中的角色边界。运行时角色契约见 [../../references/agent-blueprints.md](../../references/agent-blueprints.md)、[../../references/harness.md](../../references/harness.md) 和 [../../references/supervisor-state-machine.md](../../references/supervisor-state-machine.md)。
+Dev Cadence 把“谁决定风险”“谁控制流程”“谁执行并记录证据”“谁交付具体产物”分开，避免一个 Agent 同时做决策、执行和验收。
 
-本目录是角色目录。整体架构分层和 Context/Tooling 边界见 [../architecture.md](../architecture.md)。
+整体角色边界见 [architecture.md](../architecture.md#角色边界)。Supervisor 状态机见 [supervisor-state-machine.md](../../references/supervisor-state-machine.md)，Harness 运行边界见 [harness.md](../../references/harness.md)，Worker Agent 契约见 [agent-blueprints.md](../../references/agent-blueprints.md)。
 
 ## 角色目录
 
@@ -13,15 +13,8 @@
 | [Harness](03-harness.md) | 执行约束、权限、日志和证据采集 |
 | [Worker Agents](agents/) | Planner、Architect、Developer、Tester、Reviewer、Researcher |
 
-## 角色类型
+## 通用边界
 
-| 类型 | 角色 | 核心边界 |
-|---|---|---|
-| Human Decision Roles | Human | 接受目标、风险、权限、合并、发布和最终责任 |
-| Control Role | Supervisor / Orchestrator | 决定下一步状态，不直接写代码 |
-| Runtime Boundary | Harness | 执行约束和证据采集，不做语义批准 |
-| Worker Agent Roles | [Planner / Architect / Developer / Tester / Reviewer / Researcher](agents/) | 交付具体研发产物，不能自行宣布最终完成 |
+Human 决定是否接受风险；Supervisor 决定下一步状态；Harness 负责安全执行和证据采集；Worker Agents 交付具体研发产物。
 
-## 通用规则
-
-Supervisor、Harness、Developer、Tester、Reviewer 或未指定 agent 不能被记录为 final Human accepter。最终验收必须命名 Human。
+Supervisor、Harness、Developer、Tester、Reviewer 或未指定 agent 不能被记录为 final Human accepter。最终验收必须命名 Human，相关 gate 见 [../gates/g6-human-acceptance.md](../gates/g6-human-acceptance.md)。

@@ -30,8 +30,3 @@ Harness 汇总 Worker output 和执行结果。
 ## 如何阅读
 
 先看 summary 和 status，再跟随链接或路径检查实际证据文件。
-
-## 模板来源
-
-- [templates/runs/execution-report.md](../../templates/runs/execution-report.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

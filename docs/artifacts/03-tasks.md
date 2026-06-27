@@ -38,8 +38,3 @@ Planner。
 ## 如何阅读
 
 把它当作 implementation contract：哪些文件被授权修改、哪些工作被禁止、必须产出哪些证据。
-
-## 模板来源
-
-- [templates/spec/03-tasks.md](../../templates/spec/03-tasks.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

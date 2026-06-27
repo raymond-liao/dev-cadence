@@ -33,9 +33,3 @@ Planner 将 brief 转换为清晰需求、验收标准和可执行任务。
 ## 升级条件
 
 当 scope、acceptance、constraints 或 business rules 的歧义足以影响正确性时，Planner 升级处理。
-
-## 相关产物
-
-- [00-brief.md](../../artifacts/00-brief.md)
-- [01-requirements.md](../../artifacts/01-requirements.md)
-- [03-tasks.md](../../artifacts/03-tasks.md)

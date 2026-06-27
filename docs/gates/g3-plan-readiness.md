@@ -17,7 +17,7 @@ G3 确保任务在修改产品文件前已经可执行且范围受控。
 
 ## 通过条件
 
-tasks 包含 inputs、outputs、target files、acceptance mapping、verification plan、forbidden actions 和 task-class escalation rules。
+[03-tasks.md](../artifacts/03-tasks.md) 包含 inputs、outputs、target files、acceptance mapping、verification plan、forbidden actions 和 task-class escalation rules。通常由 [Planner](../roles/agents/01-planner.md) 负责准备可执行计划。
 
 ## 常见阻塞
 
@@ -30,8 +30,3 @@ tasks 包含 inputs、outputs、target files、acceptance mapping、verification
 ## 人工 Override
 
 具名 Human 可以接受 narrowed 证据或 scope changes，但通常仍应更新 requirements、design、tasks 和 verification plan；如果不更新，必须显式记录 accepted gap。
-
-## 相关产物
-
-- [03-tasks.md](../artifacts/03-tasks.md)
-- [Planner](../roles/agents/01-planner.md)

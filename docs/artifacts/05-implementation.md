@@ -37,8 +37,3 @@ Developer。
 ## 如何阅读
 
 阅读它可以理解实际变更是什么，以及变更是否保持在已授权计划内。
-
-## 模板来源
-
-- [templates/spec/05-implementation.md](../../templates/spec/05-implementation.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

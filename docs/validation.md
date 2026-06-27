@@ -1,6 +1,6 @@
 # Dev Cadence 当前验证
 
-本文记录当前仓库维护者常用的验证、发布包生成和 smoke test 命令。它不是业务功能验收指南，也不替代具体任务的 Human acceptance。安装、更新和卸载命令见 [Dev Cadence 安装](installation.md)。
+这些命令用于当前仓库维护者做回归检查、发布包生成和 smoke test。它们不是业务功能验收指南，也不替代具体任务的 Human acceptance；安装、更新和卸载命令见 [Dev Cadence 安装](installation.md)。
 
 ## 回归检查
 

@@ -1,6 +1,6 @@
 # Dev Cadence 安装
 
-本文记录 `dev-cadence` Codex Plugin 的安装、更新和卸载方式。验证、打包检查和 smoke test 见 [Dev Cadence 当前验证](validation.md)。
+在本机或业务仓库安装 `dev-cadence` Codex Plugin 时，使用这里的命令。安装后的验证、打包检查和 smoke test 见 [Dev Cadence 当前验证](validation.md)。
 
 ## 本机安装或更新
 

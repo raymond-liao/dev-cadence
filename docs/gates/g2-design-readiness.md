@@ -16,7 +16,7 @@ G2 确保高风险或架构敏感工作在 implementation 前已有 accepted des
 
 ## 通过条件
 
-高风险或架构敏感任务已有 design 或 ADR approval，并且 implementation constraints 清楚。
+高风险或架构敏感任务已有 [02-design.md](../artifacts/02-design.md) 或 ADR approval，并且 implementation constraints 清楚。通常由 [Architect](../roles/agents/02-architect.md) 负责准备设计证据。
 
 ## 常见阻塞
 
@@ -28,8 +28,3 @@ G2 确保高风险或架构敏感工作在 implementation 前已有 accepted des
 ## 人工 Override
 
 具名 Human 可以批准 architecture 或 risk direction，但 accepted risk 和 follow-up 必须记录。Approval 不能抹掉缺失的 design 证据。
-
-## 相关产物
-
-- [02-design.md](../artifacts/02-design.md)
-- [Architect](../roles/agents/02-architect.md)

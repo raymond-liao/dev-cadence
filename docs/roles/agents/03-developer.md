@@ -25,7 +25,7 @@ Developer 实现限定范围内的变更，并产出实现证据。
 - Code diff。
 - [05-implementation.md](../../artifacts/05-implementation.md)。
 - Red/Green/Refactor 证据或被接受的 substitute feedback。
-- Harness execution report 和 diff summary。
+- [Harness execution report 和 diff summary](../../runs/)。
 
 ## 禁止事项
 
@@ -38,9 +38,3 @@ Developer 实现限定范围内的变更，并产出实现证据。
 ## 升级条件
 
 当 permissions、secrets、destructive actions、architecture changes、acceptance changes 或 testability gaps 实质影响信心时，Developer 升级处理。
-
-## 相关产物
-
-- [03-tasks.md](../../artifacts/03-tasks.md)
-- [05-implementation.md](../../artifacts/05-implementation.md)
-- [Runs](../../runs/)

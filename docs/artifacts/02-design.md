@@ -35,8 +35,3 @@ Architect 或 Planner，取决于任务风险和仓库实践。
 ## 如何阅读
 
 阅读它可以理解为什么选择当前技术方案，以及 implementation 必须保持哪些架构约束。
-
-## 模板来源
-
-- [templates/spec/02-design.md](../../templates/spec/02-design.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

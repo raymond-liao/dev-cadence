@@ -71,12 +71,12 @@ node scripts/package-codex-plugin.mjs --clean
 
 | 文档 | 作用 |
 |---|---|
-| [docs/overview.md](docs/overview.md) | 框架概念、文档入口和长期演进方向 |
+| [docs/overview.md](docs/overview.md) | 框架概念、当前文档地图和长期演进方向 |
 | [docs/architecture.md](docs/architecture.md) | 角色、分层、Harness、Context 和工具边界 |
-| [docs/workflows/](docs/workflows/) | Workflow catalog、任务分级、loop、Quality Gate 和 Human Gate |
+| [docs/workflows/](docs/workflows/) | Workflow catalog、路由原则和每类任务路径 |
 | [docs/roles/](docs/roles/) | Human、Supervisor、Harness 和 Worker Agent 角色边界 |
-| [docs/artifacts/](docs/artifacts/) | `specs/`、task artifacts、Harness 运行证据和事实源规则 |
-| [docs/runs/](docs/runs/) | Harness 运行证据、命令、diff、测试和权限决策说明 |
+| [docs/artifacts/](docs/artifacts/) | `specs/{task_id}/` task artifacts 和模板入口 |
+| [docs/runs/](docs/runs/) | `runs/{run_id}/` Harness 运行证据说明 |
 | [docs/gates/](docs/gates/) | G1-G6 Quality Gates 和 Human Gate 说明 |
 | [docs/plugin-skill-modularization.md](docs/plugin-skill-modularization.md) | 当前 Plugin、Skill、reference、template 和 adapter 的模块化边界 |
 | [docs/installation.md](docs/installation.md) | 当前安装、更新和卸载命令 |

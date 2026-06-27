@@ -31,8 +31,3 @@ Harness 记录请求和决策。决策 owner 必须是具名 Human，不能是 S
 ## 如何阅读
 
 确认每个高风险动作都有明确 decision owner、decision、conditions 和 follow-up。
-
-## 模板来源
-
-- [templates/runs/permission-decisions.md](../../templates/runs/permission-decisions.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

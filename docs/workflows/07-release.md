@@ -4,6 +4,8 @@
 
 `release` 用于记录发布决策、gate、证据要求或交接需要。
 
+完整运行时规则见 [workflows.md](../../references/workflows.md)。发布批准属于 [Human Gate](../gates/) 边界，最终接受记录由 [G6 Human Acceptance](../gates/g6-human-acceptance.md) 控制。
+
 ## 当前范围
 
 `release` 是当前 Skill 版本中的 placeholder workflow。Dev Cadence 可以记录 release readiness 和 required decisions，但不会自动执行发布；除非后续 Skill 版本加入明确的平台或 CI 集成规则。
@@ -30,8 +32,3 @@ release decision 属于 Human Gate 边界。Agent 可以准备证据和建议，
 ## Human 介入点
 
 merge、release、production changes，以及接受 skipped checks 或 residual risk，都需要 Human approval。
-
-## 参考
-
-- 运行时规则：[references/workflows.md](../../references/workflows.md)
-- Human Gates：[../gates/README.md](../gates/README.md)

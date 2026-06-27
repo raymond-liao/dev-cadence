@@ -24,6 +24,7 @@ Researcher 为未知技术方向收集和比较基于证据的选项。
 - Options comparison。
 - Recommendation。
 - Open questions。
+- 如果方案已被采纳，research report 链接 [02-design.md](../../artifacts/02-design.md) 或 ADR 中的正式决策。
 
 ## 禁止事项
 
@@ -34,8 +35,4 @@ Researcher 为未知技术方向收集和比较基于证据的选项。
 ## 升级条件
 
 当 sources 冲突、证据较弱，或 decision 依赖 business priority / risk tolerance 时，Researcher 升级处理。
-
-## 相关产物
-
-- Research report 或 options comparison。
-- 当 decision 升级为 design 时，关联 [02-design.md](../../artifacts/02-design.md) 或 ADR。
+Researcher 的输出是决策输入，不是最终设计决策。如果某个方案被采纳，应在 research report 中链接正式决策来源。

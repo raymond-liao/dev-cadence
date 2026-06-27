@@ -37,8 +37,3 @@ Harness，由 Supervisor 提供必要上下文。
 ## 如何阅读
 
 先看 `agent_role`、`allowed_paths`、`denied_paths` 和 `required_evidence`，确认本次执行是否有清楚边界。
-
-## 模板来源
-
-- [templates/runs/run-context.md](../../templates/runs/run-context.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

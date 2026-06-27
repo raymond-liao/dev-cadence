@@ -35,8 +35,3 @@ Planner 或 Tester。
 ## 如何阅读
 
 阅读它可以知道 review 或 acceptance 前应该完成哪些验证。
-
-## 模板来源
-
-- [templates/spec/04-test-plan.md](../../templates/spec/04-test-plan.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

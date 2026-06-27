@@ -18,7 +18,7 @@ review 之后，Human acceptance 之前。
 
 ## 通过条件
 
-G4 已通过或由 Human Gate override，scope reconciliation 完成，且 Reviewer decision 是 `approved` 或 `approved_with_minor_notes`。
+G4 已通过或由 Human Gate override，scope reconciliation 完成，且 [07-review-report.md](../artifacts/07-review-report.md) 中的 Reviewer decision 是 `approved` 或 `approved_with_minor_notes`。通常由 [Reviewer](../roles/agents/05-reviewer.md) 负责准备 review 结论。
 
 ## 常见阻塞
 
@@ -31,8 +31,3 @@ G4 已通过或由 Human Gate override，scope reconciliation 完成，且 Revie
 ## 人工 Override
 
 具名 Human 只有在 decision 和 follow-up 被记录时，才能接受 major findings 的 residual risk。Critical 或 major findings 通常需要 fix 和 re-review 后才能进入 acceptance。
-
-## 相关产物
-
-- [07-review-report.md](../artifacts/07-review-report.md)
-- [Reviewer](../roles/agents/05-reviewer.md)

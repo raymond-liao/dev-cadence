@@ -23,6 +23,7 @@ Tester 独立于实现者设计和执行 verification。
 
 - [04-test-plan.md](../../artifacts/04-test-plan.md)。
 - [06-test-report.md](../../artifacts/06-test-report.md)。
+- 执行命令或测试时写 [test-log.md](../../runs/05-test-log.md)。
 - verification 失败时的 structured defect list。
 
 ## 禁止事项
@@ -34,9 +35,3 @@ Tester 独立于实现者设计和执行 verification。
 ## 升级条件
 
 当 environment 阻塞验证、证据不完整或 acceptance 无法验证时，Tester 升级处理。
-
-## 相关产物
-
-- [04-test-plan.md](../../artifacts/04-test-plan.md)
-- [06-test-report.md](../../artifacts/06-test-report.md)
-- [test-log.md](../../runs/05-test-log.md)

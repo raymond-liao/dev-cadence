@@ -2,7 +2,7 @@
 
 Dev Cadence 是一套面向 coding agents 的 AI-native 软件交付协作框架。它把需求澄清、计划、实现、验证、Review 和人工验收组织成可审查、可交接的交付节奏。
 
-本文是 Dev Cadence 的说明入口。框架说明应与运行时规则保持一致；可执行规则和模板由 `skills/`、`references/`、`templates/` 和 `scripts/` 承载。
+这页先给出核心模型和阅读路径。可执行规则和模板由 `skills/`、`references/`、`templates/` 和 `scripts/` 承载，框架说明应与这些运行时材料保持一致。
 
 ## 核心模型
 
@@ -33,7 +33,7 @@ Multi-Agent Development Framework
 | [runs/](runs/) | `runs/{run_id}/` 下每个 Harness 运行证据是什么、怎么看 |
 | [gates/](gates/) | G1-G6 gate 控制什么风险、什么时候允许继续 |
 | [architecture.md](architecture.md) | 为什么要分 Supervisor、Harness、Worker、Context 和 Tooling 边界 |
-| [plugin-skill-modularization.md](plugin-skill-modularization.md) | 当前 Codex Plugin 的模块边界和发布资源 |
+| [plugin-skill-modularization.md](plugin-skill-modularization.md) | 当前 Codex Plugin 的模块边界、薄仓库契约和发布资源 |
 | [installation.md](installation.md) | 本机安装、更新和卸载命令 |
 | [validation.md](validation.md) | 当前回归检查、打包和 smoke test 命令 |
 
@@ -49,12 +49,15 @@ templates/
 scripts/
 ```
 
-发布内容分工：
+发布内容分工和 adapter 边界见 [plugin-skill-modularization.md](plugin-skill-modularization.md)。实际打包边界由 `.codex-plugin/plugin.json`、`scripts/package-codex-plugin.mjs` 和相关测试校验。
 
-- `skills/`：Codex Skill 入口和工作纪律入口。
-- `references/`：运行时规则、gate、workflow、Harness、adapter 和 discipline。
-- `templates/`：task artifact、Harness 运行证据和 Worker prompt 模板。
-- `scripts/`：package、检查、artifact 初始化、repo contract 同步和 optional visual companion 工具。
+## 维护边界
+
+`docs/` 用来解释当前框架和维护方式，不作为运行时加载源。维护 workflow、task class、gate、artifact、run evidence 或 role contract 时，先更新对应的 `references/`、`templates/` 或 `scripts/`，再同步这里的说明。
+
+常见对应关系是：[workflows/](workflows/) 解释 [workflows.md](../references/workflows.md) 和 [task-classes.md](../references/task-classes.md)，[gates/](gates/) 解释 [quality-gates.md](../references/quality-gates.md) 和 [human-gates.md](../references/human-gates.md)，[artifacts/](artifacts/) 与 [runs/](runs/) 解释 [spec-templates.md](../references/spec-templates.md)、[templates/spec/](../templates/spec/) 和 [templates/runs/](../templates/runs/)，[roles/](roles/) 解释 [agent-blueprints.md](../references/agent-blueprints.md)。
+
+`docs/archive/` 只保存历史计划、研究和验收记录。归档内容可以解释背景，但不作为当前使用入口或当前执行规则。
 
 ## 演进方向
 

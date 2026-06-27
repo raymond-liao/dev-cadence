@@ -20,12 +20,11 @@ Harness 是 Supervisor 和具体执行器之间的执行边界。它把一次 Ag
 
 ## 输出
 
-- [run-context.md](../runs/01-run-context.md)
-- [execution-report.md](../runs/03-execution-report.md)
-- [tool-log.md](../runs/04-tool-log.md)
-- 执行测试或命令时写 [test-log.md](../runs/05-test-log.md)
-- 文件变更时写 [diff-summary.md](../runs/06-diff-summary.md)
-- [permission-decisions.md](../runs/07-permission-decisions.md)
+- 支撑 task artifact 判断的 [run evidence](../runs/)。
+- [run-context.md](../runs/01-run-context.md)、[execution-report.md](../runs/03-execution-report.md) 和 [tool-log.md](../runs/04-tool-log.md)。
+- 执行测试或命令时写 [test-log.md](../runs/05-test-log.md)。
+- 文件变更时写 [diff-summary.md](../runs/06-diff-summary.md)。
+- 发生权限审批时写 [permission-decisions.md](../runs/07-permission-decisions.md)。
 
 ## 禁止事项
 
@@ -38,10 +37,3 @@ Harness 是 Supervisor 和具体执行器之间的执行边界。它把一次 Ag
 ## 升级条件
 
 当权限、工具、环境或 policy 阻止安全执行时，Harness 记录 blocked 或 incomplete evidence 状态。
-
-## 相关产物
-
-- [05-implementation.md](../artifacts/05-implementation.md)
-- [06-test-report.md](../artifacts/06-test-report.md)
-- [07-review-report.md](../artifacts/07-review-report.md)
-- [Runs](../runs/)

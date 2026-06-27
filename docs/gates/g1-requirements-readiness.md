@@ -30,8 +30,3 @@ scope、non-goals、constraints、acceptance criteria 和 verification approach 
 ## 人工 Override
 
 具名 Human 可以选择或延后某个 interpretation。该 decision 必须记录到 [01-requirements.md](../artifacts/01-requirements.md)；repository 证据本身不能让 G1 通过。
-
-## 相关产物
-
-- [01-requirements.md](../artifacts/01-requirements.md)
-- [Human](../roles/01-human.md)

@@ -30,8 +30,3 @@ Harness 或 Developer via Harness。
 ## 如何阅读
 
 将 changed files 与 [03-tasks.md](../artifacts/03-tasks.md)、[05-implementation.md](../artifacts/05-implementation.md) 和实际 worktree status 对比，确认是否超出计划范围。
-
-## 模板来源
-
-- [templates/runs/diff-summary.md](../../templates/runs/diff-summary.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

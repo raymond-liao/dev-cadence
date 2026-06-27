@@ -31,9 +31,4 @@ G6 确保具名 Human 接受最终输出和剩余风险。
 
 ## 人工 Override
 
-G6 本身就是最终 Human decision。它不能被 agent claim、review approval、passing tests 或 commit request 替代。
-
-## 相关产物
-
-- [08-acceptance.md](../artifacts/08-acceptance.md)
-- [Human](../roles/01-human.md)
+G6 本身就是最终 [Human](../roles/01-human.md) decision。它必须记录在 [08-acceptance.md](../artifacts/08-acceptance.md)，不能被 agent claim、review approval、passing tests 或 commit request 替代。

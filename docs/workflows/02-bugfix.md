@@ -4,6 +4,8 @@
 
 `bugfix` 用于修正错误行为。
 
+完整运行时规则见 [workflows.md](../../references/workflows.md)。根因追踪和复现纪律见 [root-cause-tracing.md](../../references/root-cause-tracing.md)。
+
 ## 标准路径
 
 ```text
@@ -43,8 +45,3 @@ intake -> classify -> requirements -> planning -> implementation -> test -> revi
 ## Human 介入点
 
 expected behavior 不清楚、无法复现但需要接受风险、或最终验收时，需要 Human decision。
-
-## 参考
-
-- 运行时规则：[references/workflows.md](../../references/workflows.md)
-- Debugging discipline：[root-cause-tracing.md](../../references/root-cause-tracing.md)

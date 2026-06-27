@@ -4,6 +4,8 @@
 
 `refactor` 用于意图保持行为不变的结构调整。
 
+完整运行时规则见 [workflows.md](../../references/workflows.md)；风险增强规则见 [task-classes.md](../../references/task-classes.md)。
+
 ## 标准路径
 
 ```text
@@ -46,8 +48,3 @@ intake -> classify -> requirements -> design? -> planning -> implementation -> t
 ## Human 介入点
 
 范围扩大、行为变化、验证不完整或最终验收时，需要 Human decision。
-
-## 参考
-
-- 运行时规则：[references/workflows.md](../../references/workflows.md)
-- 任务分级：[task-classes.md](../../references/task-classes.md)

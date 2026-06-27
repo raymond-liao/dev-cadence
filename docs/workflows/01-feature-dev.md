@@ -4,6 +4,8 @@
 
 `feature-dev` 用于新增用户可见行为或系统行为。
 
+完整运行时规则见 [workflows.md](../../references/workflows.md)；风险增强规则见 [task-classes.md](../../references/task-classes.md)。
+
 ## 标准路径
 
 ```text
@@ -46,8 +48,3 @@ intake -> classify -> requirements -> design? -> planning -> implementation -> t
 ## Human 介入点
 
 需求确认、高风险设计或权限边界、不完整验证 override，以及最终验收都需要 Human decision。
-
-## 参考
-
-- 运行时规则：[references/workflows.md](../../references/workflows.md)
-- 任务分级：[task-classes.md](../../references/task-classes.md)

@@ -29,8 +29,3 @@ S1/S2 implementation 或 fix run 缺少这个文件，或它被标记为 `post_h
 ## 如何阅读
 
 确认 `implementation_authorized: true` 且 `post_hoc_backfill: false`，再检查 authorized files 是否覆盖实际修改范围。
-
-## 模板来源
-
-- [templates/runs/pre-implementation-status.md](../../templates/runs/pre-implementation-status.md)
-- [references/spec-templates.md](../../references/spec-templates.md)

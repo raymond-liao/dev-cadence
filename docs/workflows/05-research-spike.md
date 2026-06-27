@@ -4,6 +4,8 @@
 
 `research-spike` 用于可行性确认、技术比较、设计方案研究或基于证据的建议。
 
+完整运行时规则见 [workflows.md](../../references/workflows.md)。执行角色见 [Researcher](../roles/agents/06-researcher.md)。
+
 ## 标准路径
 
 ```text
@@ -33,8 +35,3 @@ research spike 不自动要求完整 implementation gate chain，但仍必须记
 ## Human 介入点
 
 当建议依赖业务优先级、风险承受度、成本、排期或长期技术方向时，需要 Human review。
-
-## 参考
-
-- 运行时规则：[references/workflows.md](../../references/workflows.md)
-- Researcher 角色：[../roles/agents/06-researcher.md](../roles/agents/06-researcher.md)

@@ -39,8 +39,3 @@ Human decision 由 Supervisor 记录。decision owner 必须是具名 Human。
 ## 如何阅读
 
 阅读它可以确认任务是否真的被接受。commit request 或 agent completion claim 不能替代这个 artifact。
-
-## 模板来源
-
-- [templates/spec/08-acceptance.md](../../templates/spec/08-acceptance.md)
-- [references/spec-templates.md](../../references/spec-templates.md)
