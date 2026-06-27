@@ -97,6 +97,7 @@ assert_exists "scripts/package-codex-plugin.mjs"
 assert_exists "scripts/run-delivery-dry-run.mjs"
 assert_exists "scripts/check-gates.mjs"
 assert_exists "scripts/check-before-commit.mjs"
+assert_exists "scripts/artifact-language.mjs"
 assert_exists "scripts/generate-spec-report.mjs"
 assert_exists "scripts/visual-companion/server.cjs"
 

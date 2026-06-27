@@ -31,6 +31,12 @@ commit for a dirty worktree, run `scripts/check-before-commit.mjs --task-id
 <task_id>`. If G6 final Human acceptance is pending, block the commit and ask
 the Human to accept the result and residual risk before committing.
 
+When G6 is pending, the user-facing handoff must state what is being accepted.
+Run `scripts/summarize-acceptance.mjs --task-id <task_id>` or provide the same
+fields directly: goal, changed scope, verification status, skipped checks,
+review decision, blockers, residual risk, evidence available, and the fields to
+record in `08-acceptance.md`. Do not merely say "G6 is pending".
+
 Update `specs/{task_id}/06-test-report.md` and acceptance summary artifacts when persistent artifacts are being used.
 
 Do not treat `partially_verified`, `not_verified`, or `blocked_by_environment` as complete unless a named Human accepts the gap.

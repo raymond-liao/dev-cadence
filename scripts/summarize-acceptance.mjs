@@ -180,6 +180,44 @@ function asList(value) {
   return [value];
 }
 
+function hasNamedHuman(value) {
+  if (Array.isArray(value)) return value.some((item) => hasNamedHuman(item));
+  if (value === null || value === undefined) return false;
+  if (typeof value === 'boolean') return false;
+  const text = String(value).trim().toLowerCase();
+  return ![
+    '',
+    'false',
+    'true',
+    'yes',
+    'no',
+    'none',
+    'null',
+    'n/a',
+    'na',
+    'tbd',
+    'todo',
+    'pending',
+    'unknown',
+    'supervisor',
+    'harness',
+    'developer',
+    'tester',
+    'reviewer',
+    'agent',
+    'worker',
+    'codex',
+    'assistant',
+    'ai',
+  ].includes(text);
+}
+
+function displayHuman(value) {
+  if (!hasNamedHuman(value)) return null;
+  if (Array.isArray(value)) return value.find((item) => hasNamedHuman(item));
+  return value;
+}
+
 function scopeReconciliationStatus(value) {
   if (!value) return null;
   if (typeof value === 'string') return value;
@@ -204,7 +242,8 @@ function summarize(options) {
   const reviewReport = artifacts['07-review-report.md'].data;
   const acceptance = artifacts['08-acceptance.md'].data;
 
-  const needsHumanAcceptance = !acceptance.accepted_by_human || acceptance.status === 'blocked_pending_named_human';
+  const acceptedByHuman = displayHuman(acceptance.accepted_by_human);
+  const needsHumanAcceptance = !acceptedByHuman || acceptance.status === 'blocked_pending_named_human';
   const residualRisk = [
     ...asList(testReport.residual_risk),
     ...asList(reviewReport.residual_risk),
@@ -229,7 +268,7 @@ function summarize(options) {
     verification_status: testReport.verification_status || null,
     review_decision: reviewReport.decision || null,
     acceptance_status: acceptance.status || null,
-    accepted_by_human: acceptance.accepted_by_human || null,
+    accepted_by_human: acceptedByHuman,
     changed_files: asList(implementation.changed_files),
     created_artifact_files: asList(implementation.created_artifact_files),
     skipped_checks: asList(testReport.skipped_checks),

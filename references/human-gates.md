@@ -67,6 +67,12 @@ Do not treat a request to commit code as final Human acceptance. A commit can
 be requested while G6 is still pending, but the agent must say that final Human
 acceptance is pending unless `08-acceptance.md` records the named Human
 accepter and accepted residual risk.
+When G6 is pending, the agent must also summarize the decision being requested:
+goal, accepted scope or changed files, verification status, skipped checks,
+review decision, blockers, residual risk, evidence reviewed or available, and
+the exact `08-acceptance.md` fields that still need a Human decision. The agent
+may use `scripts/summarize-acceptance.mjs --task-id <task_id>` to produce this
+summary.
 
 Do not treat an agent assumption as a Human decision. If a missing answer affects product behavior or acceptance, record `info_required` and wait.
 Do not treat source-code inspection as a substitute for Human clarification when user intent is unclear.

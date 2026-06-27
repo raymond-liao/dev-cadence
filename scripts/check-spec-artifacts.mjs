@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { findNearestConfig, parseArtifactLanguage } from './artifact-language.mjs';
 
 function printHelp() {
   console.log(`Usage: check-spec-artifacts.mjs [specs-dir]
@@ -150,57 +151,6 @@ function parseTopLevelYaml(block) {
   }
 
   return result;
-}
-
-function findNearestConfig(startPath) {
-  let current = fs.existsSync(startPath) && fs.statSync(startPath).isDirectory()
-    ? startPath
-    : path.dirname(startPath);
-
-  while (true) {
-    const candidate = path.join(current, '.dev-cadence.yaml');
-    if (fs.existsSync(candidate)) {
-      return candidate;
-    }
-    const parent = path.dirname(current);
-    if (parent === current) {
-      return null;
-    }
-    current = parent;
-  }
-}
-
-function parseArtifactLanguage(configPath) {
-  if (!configPath) return 'en';
-  const text = fs.readFileSync(configPath, 'utf8');
-  const lines = text.split(/\r?\n/);
-  let inDevCadence = false;
-  let devCadenceIndent = -1;
-
-  for (const line of lines) {
-    if (!line.trim() || line.trim().startsWith('#')) continue;
-    const indent = line.match(/^\s*/)[0].length;
-    const keyMatch = line.match(/^(\s*)dev_cadence:\s*(?:#.*)?$/);
-    if (keyMatch) {
-      inDevCadence = true;
-      devCadenceIndent = indent;
-      continue;
-    }
-
-    if (inDevCadence && indent <= devCadenceIndent) {
-      inDevCadence = false;
-      devCadenceIndent = -1;
-    }
-
-    if (inDevCadence) {
-      const languageMatch = line.match(/^\s*artifact_language:\s*([A-Za-z_-]+)\s*(?:#.*)?$/);
-      if (languageMatch) {
-        return ['en', 'zh'].includes(languageMatch[1]) ? languageMatch[1] : 'en';
-      }
-    }
-  }
-
-  return 'en';
 }
 
 function shouldCheckArtifactLanguage(configPath, targetDir) {

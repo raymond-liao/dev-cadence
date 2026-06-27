@@ -122,7 +122,7 @@ specs/
         index.html
 ```
 
-`specs/index.html` 使用类似 JaCoCo 的紧凑 summary 表格，包含 `Element`、`Status`、`Gates`、`Issues`、`Runs` 和 `Updated` 列；有 gate failure、非 G6 待验收 warning、blocked 或 unknown 的任务整行用红色背景提示。纯 `pending acceptance` 只显示黄色状态 badge，不作为红色问题行。`specs/{task_id}/index.html` 显示单个任务的 Gate Summary、artifact 链接、run 链接和 open issue 明细；`runs/{run_id}/index.html` 显示 Harness evidence 详情。每个 Markdown artifact 还会生成对应 `.html` 详情页，顶部保留 JaCoCo 风格面包屑，并提供 `Raw Markdown` 链接回原始文件。
+`specs/index.html` 使用类似 JaCoCo 的紧凑 summary 表格，包含任务、状态、门禁、问题、运行和更新时间列；有 gate failure、非 G6 待验收 warning、blocked 或 unknown 的任务整行用红色背景提示。纯 `pending acceptance` 只显示黄色状态 badge，不作为红色问题行。`specs/{task_id}/index.html` 显示单个任务的门禁汇总、artifact 链接、run 链接和 open issue 明细；`runs/{run_id}/index.html` 显示 Harness evidence 详情。每个 Markdown artifact 还会生成对应 `.html` 详情页，顶部保留 JaCoCo 风格面包屑，并提供原始 Markdown 链接回原始文件。
 
 HTML report 是派生浏览视图，不是事实源。Gate、review、acceptance 和提交前检查仍以 Markdown/YAML artifact 为准；生成报告不能替代 `check-gates.mjs`、`check-before-commit.mjs` 或具名 Human acceptance。
 
@@ -139,7 +139,11 @@ dev_cadence:
   review_profile: normal
 ```
 
-`artifact_language` 支持 `en` 和 `zh`。它只控制 spec、测试报告、review 报告等任务产物中的自然语言正文；文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 保持英文。
+`artifact_language` 支持 `en` 和 `zh`。它控制 spec、测试报告、review 报告等任务产物中的自然语言正文，也控制派生 HTML report 的 UI 文案；文件名、YAML 字段、状态枚举、workflow ID、gate ID 和原始 Markdown source view 保持英文或原样。
+
+生成任务 artifact 或派生 report 的脚本必须读取 `.dev-cadence.yaml` 中的 `artifact_language`，不能只依赖 Agent 记忆或提交前 warning。`check-spec-artifacts.mjs --warnings-as-errors` 是防线，不是主要生成策略。
+
+当 G6 尚未验收时，会话和 `check-before-commit.mjs` 输出必须说明用户要审批什么：目标、变更范围、验证状态、跳过的检查、review 结论、blocker、剩余风险、可查看证据，以及需要写入 `08-acceptance.md` 的字段。
 
 ## 模板来源
 

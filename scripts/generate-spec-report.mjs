@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { resolveArtifactLanguage } from './artifact-language.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const CHECK_GATES_SCRIPT = path.join(SCRIPT_DIR, 'check-gates.mjs');
@@ -32,6 +33,162 @@ const RUN_FILES = {
 };
 
 const GATE_IDS = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6'];
+
+const UI_TEXT = {
+  en: {
+    languageTag: 'en',
+    reportTitle: 'Dev Cadence Specs Report',
+    specsReport: 'Specs Report',
+    taskSummary: 'Task Summary',
+    generated: 'Generated',
+    element: 'Element',
+    status: 'Status',
+    gates: 'Gates',
+    gate: 'Gate',
+    issues: 'Issues',
+    issue: 'Issue',
+    runs: 'Runs',
+    run: 'Run',
+    updated: 'Updated',
+    taskDetail: 'Task Detail',
+    gateSummary: 'Gate Summary',
+    sourceFiles: 'Source Files',
+    openIssues: 'Open Issues',
+    evidence: 'Evidence',
+    role: 'Role',
+    state: 'State',
+    verification: 'Verification',
+    artifactDetail: 'Artifact Detail',
+    runArtifactDetail: 'Run Artifact Detail',
+    rawMarkdown: 'Raw Markdown',
+    runDetail: 'Run Detail',
+    permissionEntries: 'Permission Entries',
+    runEvidence: 'Run Evidence',
+    commandsAndTests: 'Commands and Tests',
+    commands: 'Commands',
+    tests: 'Tests',
+    filesChanged: 'Files Changed',
+    baseline: 'Baseline',
+    authorized: 'Authorized',
+    postHocBackfill: 'Post-hoc Backfill',
+    residualRisk: 'Residual Risk',
+    permissions: 'Permissions',
+    none: 'none',
+    missing: 'missing',
+    notApplicable: 'n/a',
+    unknown: 'unknown',
+    noTaskArtifacts: 'No task artifacts found.',
+    noRunEvidence: 'No run evidence directories found.',
+    noOpenGateIssues: 'No open gate issues.',
+    unknownIssue: 'unknown issue',
+    knownMessages: {},
+    sourceNotice: 'Generated view only. Markdown and YAML artifacts remain the source of truth for gates, review, and Human acceptance.',
+    harnessEvidenceFor: (taskId) => `Harness evidence for ${taskId}.`,
+    issueCount: (count) => `${count} issue${count === 1 ? '' : 's'}`,
+    runCount: (count) => `${count} run${count === 1 ? '' : 's'}`,
+    gateClearCount: (clearCount, total) => `${clearCount}/${total} clear`,
+    specTitles: {
+      brief: 'Brief',
+      requirements: 'Requirements',
+      design: 'Design',
+      tasks: 'Tasks',
+      testPlan: 'Test Plan',
+      implementation: 'Implementation',
+      testReport: 'Test Report',
+      reviewReport: 'Review Report',
+      acceptance: 'Acceptance',
+    },
+    runTitles: {
+      context: 'Run Context',
+      baseline: 'Pre-Implementation Status',
+      execution: 'Execution Report',
+      toolLog: 'Tool Log',
+      testLog: 'Test Log',
+      diffSummary: 'Diff Summary',
+      permissions: 'Permission Decisions',
+    },
+  },
+  zh: {
+    languageTag: 'zh-CN',
+    reportTitle: 'Dev Cadence Specs \u62a5\u544a',
+    specsReport: 'Specs \u62a5\u544a',
+    taskSummary: '\u4efb\u52a1\u6c47\u603b',
+    generated: '\u751f\u6210\u65f6\u95f4',
+    element: '\u5143\u7d20',
+    status: '\u72b6\u6001',
+    gates: '\u95e8\u7981',
+    gate: '\u95e8\u7981',
+    issues: '\u95ee\u9898',
+    issue: '\u95ee\u9898',
+    runs: '\u8fd0\u884c',
+    run: '\u8fd0\u884c',
+    updated: '\u66f4\u65b0\u65f6\u95f4',
+    taskDetail: '\u4efb\u52a1\u8be6\u60c5',
+    gateSummary: '\u95e8\u7981\u6c47\u603b',
+    sourceFiles: '\u6e90\u6587\u4ef6',
+    openIssues: '\u672a\u89e3\u51b3\u95ee\u9898',
+    evidence: '\u8bc1\u636e',
+    role: '\u89d2\u8272',
+    state: '\u72b6\u6001',
+    verification: '\u9a8c\u8bc1',
+    artifactDetail: '\u4ea7\u7269\u8be6\u60c5',
+    runArtifactDetail: '\u8fd0\u884c\u4ea7\u7269\u8be6\u60c5',
+    rawMarkdown: '\u539f\u59cb Markdown',
+    runDetail: '\u8fd0\u884c\u8be6\u60c5',
+    permissionEntries: '\u6743\u9650\u8bb0\u5f55',
+    runEvidence: '\u8fd0\u884c\u8bc1\u636e',
+    commandsAndTests: '\u547d\u4ee4\u548c\u6d4b\u8bd5',
+    commands: '\u547d\u4ee4',
+    tests: '\u6d4b\u8bd5',
+    filesChanged: '\u53d8\u66f4\u6587\u4ef6',
+    baseline: '\u57fa\u7ebf',
+    authorized: '\u5df2\u6388\u6743',
+    postHocBackfill: '\u4e8b\u540e\u8865\u5f55',
+    residualRisk: '\u5269\u4f59\u98ce\u9669',
+    permissions: '\u6743\u9650',
+    none: '\u65e0',
+    missing: '\u7f3a\u5931',
+    notApplicable: '\u4e0d\u9002\u7528',
+    unknown: '\u672a\u77e5',
+    noTaskArtifacts: '\u6ca1\u6709\u4efb\u52a1 artifact\u3002',
+    noRunEvidence: '\u6ca1\u6709\u8fd0\u884c\u8bc1\u636e\u76ee\u5f55\u3002',
+    noOpenGateIssues: '\u6ca1\u6709\u672a\u89e3\u51b3\u7684\u95e8\u7981\u95ee\u9898\u3002',
+    unknownIssue: '\u672a\u77e5\u95ee\u9898',
+    knownMessages: {
+      'not required for task class': '\u8be5\u4efb\u52a1\u7c7b\u522b\u4e0d\u8981\u6c42',
+      'Final Human acceptance is pending; continuing only because --allow-pending-acceptance was supplied': '\u6700\u7ec8 Human acceptance \u5f85\u5b8c\u6210\uff1b\u5f53\u524d\u4ec5\u56e0\u4e3a\u4f7f\u7528 --allow-pending-acceptance \u800c\u7ee7\u7eed\u751f\u6210\u62a5\u544a',
+    },
+    sourceNotice: '\u4ec5\u751f\u6210\u6d4f\u89c8\u89c6\u56fe\u3002Markdown \u548c YAML artifacts \u4ecd\u662f\u95e8\u7981\u3001\u8bc4\u5ba1\u548c Human acceptance \u7684\u4e8b\u5b9e\u6e90\u3002',
+    harnessEvidenceFor: (taskId) => `${taskId} \u7684 Harness \u8bc1\u636e\u3002`,
+    issueCount: (count) => `${count} \u4e2a\u95ee\u9898`,
+    runCount: (count) => `${count} \u6b21\u8fd0\u884c`,
+    gateClearCount: (clearCount, total) => `${clearCount}/${total} \u901a\u8fc7`,
+    specTitles: {
+      brief: '\u6458\u8981',
+      requirements: '\u9700\u6c42',
+      design: '\u8bbe\u8ba1',
+      tasks: '\u4efb\u52a1',
+      testPlan: '\u6d4b\u8bd5\u8ba1\u5212',
+      implementation: '\u5b9e\u73b0',
+      testReport: '\u6d4b\u8bd5\u62a5\u544a',
+      reviewReport: '\u8bc4\u5ba1\u62a5\u544a',
+      acceptance: '\u9a8c\u6536',
+    },
+    runTitles: {
+      context: '\u8fd0\u884c\u4e0a\u4e0b\u6587',
+      baseline: '\u5b9e\u73b0\u524d\u72b6\u6001',
+      execution: '\u6267\u884c\u62a5\u544a',
+      toolLog: '\u5de5\u5177\u65e5\u5fd7',
+      testLog: '\u6d4b\u8bd5\u65e5\u5fd7',
+      diffSummary: '\u5dee\u5f02\u6458\u8981',
+      permissions: '\u6743\u9650\u51b3\u7b56',
+    },
+  },
+};
+
+function labelsFor(language) {
+  return UI_TEXT[language] || UI_TEXT.en;
+}
 
 function printHelp() {
   console.log(`Usage: generate-spec-report.mjs [options]
@@ -443,8 +600,8 @@ function inlineList(items, emptyText = 'none') {
   return values.map((item) => `<code>${escapeHtml(item)}</code>`).join(' ');
 }
 
-function formatDate(mtimeMs) {
-  if (!mtimeMs) return 'unknown';
+function formatDate(mtimeMs, labels = UI_TEXT.en) {
+  if (!mtimeMs) return labels.unknown;
   const date = new Date(mtimeMs);
   const pad = (value) => String(value).padStart(2, '0');
   const offsetMinutes = -date.getTimezoneOffset();
@@ -458,9 +615,9 @@ function htmlFileName(fileName) {
   return `${fileName.replace(/\.md$/i, '')}.html`;
 }
 
-function page(title, stylesheetHref, body) {
+function page(title, stylesheetHref, body, labels = UI_TEXT.en) {
   return `<!doctype html>
-<html lang="en">
+<html lang="${escapeHtml(labels.languageTag)}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -474,9 +631,9 @@ ${body}
 `;
 }
 
-function sourceNotice() {
+function sourceNotice(labels) {
   return `<aside class="notice">
-  Generated view only. Markdown and YAML artifacts remain the source of truth for gates, review, and Human acceptance.
+  ${escapeHtml(labels.sourceNotice)}
 </aside>`;
 }
 
@@ -503,69 +660,82 @@ function taskNeedsAttention(task) {
     || gateStatuses.some((status) => ['failed', 'blocked', 'unknown'].includes(status));
 }
 
-function gateSummary(task) {
+function gateSummary(task, labels = UI_TEXT.en) {
   const clearCount = GATE_IDS.filter((gateId) => {
     const status = String(task.gates[gateId]?.status || 'unknown').toLowerCase();
     return ['passed', 'skipped'].includes(status);
   }).length;
-  return `${clearCount}/${GATE_IDS.length} clear`;
+  return labels.gateClearCount(clearCount, GATE_IDS.length);
 }
 
-function renderIndex(specsDir, tasks) {
+function specTitle(labels, key, config) {
+  return labels.specTitles[key] || config.title;
+}
+
+function runTitle(labels, key, config) {
+  return labels.runTitles[key] || config.title;
+}
+
+function displayMessage(message, labels) {
+  const text = String(message ?? '');
+  return labels.knownMessages[text] || text;
+}
+
+function renderIndex(specsDir, tasks, labels) {
   const rows = tasks.map((task) => {
     const taskHref = href(path.join(task.dir_name, 'index.html'));
     const issueCount = taskIssueCount(task);
     const rowClass = taskNeedsAttention(task) ? ' class="problem-row"' : '';
     const issueCell = issueCount > 0
-      ? `<a href="${taskHref}#issues" class="count-link el_issue">${issueCount} issue${issueCount === 1 ? '' : 's'}</a>`
-      : '<span class="muted">none</span>';
+      ? `<a href="${taskHref}#issues" class="count-link el_issue">${escapeHtml(labels.issueCount(issueCount))}</a>`
+      : `<span class="muted">${escapeHtml(labels.none)}</span>`;
     const runCell = task.runs.length > 0
-      ? `<a href="${taskHref}#runs" class="count-link el_run">${task.runs.length} run${task.runs.length === 1 ? '' : 's'}</a>`
-      : '<span class="muted">none</span>';
+      ? `<a href="${taskHref}#runs" class="count-link el_run">${escapeHtml(labels.runCount(task.runs.length))}</a>`
+      : `<span class="muted">${escapeHtml(labels.none)}</span>`;
     return `<tr${rowClass}>
     <td><a href="${taskHref}" class="el_task"><strong>${escapeHtml(task.task_id)}</strong></a></td>
     <td>${badge(task.status, statusLabel(task.status))}</td>
-    <td><a href="${taskHref}" class="count-link">${escapeHtml(gateSummary(task))}</a></td>
+    <td><a href="${taskHref}" class="count-link">${escapeHtml(gateSummary(task, labels))}</a></td>
     <td>${issueCell}</td>
     <td>${runCell}</td>
-    <td>${formatDate(task.last_updated)}</td>
+    <td>${formatDate(task.last_updated, labels)}</td>
   </tr>`;
   }).join('');
 
   const content = `<main class="page-shell">
   <header class="page-header">
     <p class="eyebrow">Dev Cadence</p>
-    <h1>Dev Cadence Specs Report</h1>
+    <h1>${escapeHtml(labels.reportTitle)}</h1>
   </header>
   <section class="panel">
     <div class="section-heading">
-      <h2>Task Summary</h2>
-      <span class="muted">Generated ${escapeHtml(formatDate(Date.now()))}</span>
+      <h2>${escapeHtml(labels.taskSummary)}</h2>
+      <span class="muted">${escapeHtml(labels.generated)} ${escapeHtml(formatDate(Date.now(), labels))}</span>
     </div>
     <div class="table-wrap">
       <table class="coverage">
         <thead>
           <tr>
-            <th>Element</th>
-            <th>Status</th>
-            <th>Gates</th>
-            <th>Issues</th>
-            <th>Runs</th>
-            <th>Updated</th>
+            <th>${escapeHtml(labels.element)}</th>
+            <th>${escapeHtml(labels.status)}</th>
+            <th>${escapeHtml(labels.gates)}</th>
+            <th>${escapeHtml(labels.issues)}</th>
+            <th>${escapeHtml(labels.runs)}</th>
+            <th>${escapeHtml(labels.updated)}</th>
           </tr>
         </thead>
         <tbody>
-          ${rows || '<tr><td colspan="6" class="empty">No task artifacts found.</td></tr>'}
+          ${rows || `<tr><td colspan="6" class="empty">${escapeHtml(labels.noTaskArtifacts)}</td></tr>`}
         </tbody>
       </table>
     </div>
   </section>
 </main>`;
 
-  return page('Dev Cadence Specs Report', href(path.join(REPORT_DIR, STYLE_FILE)), content);
+  return page(labels.reportTitle, href(path.join(REPORT_DIR, STYLE_FILE)), content, labels);
 }
 
-function artifactRows(task, fromDir) {
+function artifactRows(task, fromDir, labels) {
   return Object.entries(SPEC_FILES).map(([key, config]) => {
     const artifact = task.artifacts[key];
     const link = artifact.exists
@@ -573,13 +743,13 @@ function artifactRows(task, fromDir) {
       : `<span class="muted">${escapeHtml(config.fileName)}</span>`;
     return `<tr>
       <td>${link}</td>
-      <td>${config.gate ? escapeHtml(config.gate) : '<span class="muted">n/a</span>'}</td>
-      <td>${artifact.exists ? formatDate(artifact.mtimeMs) : '<span class="muted">missing</span>'}</td>
+      <td>${config.gate ? escapeHtml(config.gate) : `<span class="muted">${escapeHtml(labels.notApplicable)}</span>`}</td>
+      <td>${artifact.exists ? formatDate(artifact.mtimeMs, labels) : `<span class="muted">${escapeHtml(labels.missing)}</span>`}</td>
     </tr>`;
   }).join('');
 }
 
-function gateRows(task, fromDir, specsDir) {
+function gateRows(task, fromDir, specsDir, labels) {
   return GATE_IDS.map((gateId) => {
     const gate = task.gates[gateId] || { status: 'unknown', evidence: [] };
     const issues = [
@@ -588,8 +758,8 @@ function gateRows(task, fromDir, specsDir) {
     ];
     const blocking = issues.filter((issue) => !isPendingAcceptanceWarning(issue));
     const evidence = asList(gate.evidence)
-      .map((item) => evidenceLink(item, fromDir, specsDir))
-      .join('') || '<span class="muted">none</span>';
+      .map((item) => evidenceLink(item, fromDir, specsDir, labels))
+      .join('') || `<span class="muted">${escapeHtml(labels.none)}</span>`;
     const status = String(gate.status || 'unknown').toLowerCase();
     const rowClass = blocking.length > 0 || ['failed', 'blocked', 'unknown'].includes(status)
       ? ' class="problem-row"'
@@ -598,12 +768,12 @@ function gateRows(task, fromDir, specsDir) {
       <td><strong>${gateId}</strong></td>
       <td>${badge(gate.status)}</td>
       <td>${evidence}</td>
-      <td>${issues.length ? listHtml(issues.map((issue) => issue.message)) : '<span class="muted">none</span>'}</td>
+      <td>${issues.length ? listHtml(issues.map((issue) => displayMessage(issue.message, labels)), labels.none) : `<span class="muted">${escapeHtml(labels.none)}</span>`}</td>
     </tr>`;
   }).join('');
 }
 
-function evidenceLink(item, fromDir, specsDir) {
+function evidenceLink(item, fromDir, specsDir, labels = UI_TEXT.en) {
   const text = String(item);
   const candidate = path.join(specsDir, text);
   if (fs.existsSync(candidate)) {
@@ -612,125 +782,125 @@ function evidenceLink(item, fromDir, specsDir) {
       : candidate;
     return `<a class="source-link" href="${href(path.relative(fromDir, target))}">${escapeHtml(text)}</a>`;
   }
-  return `<span class="source-link muted">${escapeHtml(text)}</span>`;
+  return `<span class="source-link muted">${escapeHtml(displayMessage(text, labels))}</span>`;
 }
 
-function runRows(task) {
+function runRows(task, labels) {
   if (task.runs.length === 0) {
-    return '<tr><td colspan="5" class="empty">No run evidence directories found.</td></tr>';
+    return `<tr><td colspan="5" class="empty">${escapeHtml(labels.noRunEvidence)}</td></tr>`;
   }
   return task.runs.map((run) => `<tr>
     <td><a href="${href(path.join('runs', run.dir_name, 'index.html'))}" class="el_run"><strong>${escapeHtml(run.run_id)}</strong></a></td>
     <td>${escapeHtml(run.agent_role)}</td>
     <td>${escapeHtml(run.state)}</td>
     <td>${escapeHtml(run.verification_status)}</td>
-    <td>${formatDate(run.last_updated)}</td>
+    <td>${formatDate(run.last_updated, labels)}</td>
   </tr>`).join('');
 }
 
-function issueRows(task, fromDir, specsDir) {
+function issueRows(task, fromDir, specsDir, labels) {
   const issues = blockingIssues(task);
   if (issues.length === 0) {
-    return '<tr><td colspan="3" class="empty">No open gate issues.</td></tr>';
+    return `<tr><td colspan="3" class="empty">${escapeHtml(labels.noOpenGateIssues)}</td></tr>`;
   }
 
   return issues.map((issue) => {
     const evidence = asList(issue.evidence)
-      .map((item) => evidenceLink(item, fromDir, specsDir))
-      .join('') || '<span class="muted">none</span>';
+      .map((item) => evidenceLink(item, fromDir, specsDir, labels))
+      .join('') || `<span class="muted">${escapeHtml(labels.none)}</span>`;
     return `<tr class="problem-row">
       <td><span class="el_issue">${escapeHtml(issue.gate_id || 'report')}</span></td>
-      <td>${escapeHtml(issue.message || 'unknown issue')}</td>
+      <td>${escapeHtml(displayMessage(issue.message || labels.unknownIssue, labels))}</td>
       <td>${evidence}</td>
     </tr>`;
   }).join('');
 }
 
-function renderTaskArtifact(task, config, artifact) {
+function renderTaskArtifact(task, key, config, artifact, labels) {
   const content = `<main class="page-shell">
-  <div class="breadcrumb" id="breadcrumb"><a href="../index.html" class="el_report">Specs Report</a> &gt; <a href="index.html" class="el_task">${escapeHtml(task.task_id)}</a> &gt; <span class="el_artifact">${escapeHtml(config.fileName)}</span></div>
+  <div class="breadcrumb" id="breadcrumb"><a href="../index.html" class="el_report">${escapeHtml(labels.specsReport)}</a> &gt; <a href="index.html" class="el_task">${escapeHtml(task.task_id)}</a> &gt; <span class="el_artifact">${escapeHtml(config.fileName)}</span></div>
   <header class="page-header">
-    <p class="eyebrow">Artifact Detail</p>
-    <h1>${escapeHtml(config.title)}</h1>
-    <div class="status-line"><a href="${href(config.fileName)}" class="el_artifact">Raw Markdown</a><span class="muted">Updated ${formatDate(artifact.mtimeMs)}</span></div>
+    <p class="eyebrow">${escapeHtml(labels.artifactDetail)}</p>
+    <h1>${escapeHtml(specTitle(labels, key, config))}</h1>
+    <div class="status-line"><a href="${href(config.fileName)}" class="el_artifact">${escapeHtml(labels.rawMarkdown)}</a><span class="muted">${escapeHtml(labels.updated)} ${formatDate(artifact.mtimeMs, labels)}</span></div>
   </header>
   <section class="panel">
     <pre class="source-view"><code>${escapeHtml(artifact.text)}</code></pre>
   </section>
 </main>`;
 
-  return page(`${task.task_id} / ${config.fileName} - Dev Cadence Specs Report`, href(path.join('..', REPORT_DIR, STYLE_FILE)), content);
+  return page(`${task.task_id} / ${config.fileName} - ${labels.reportTitle}`, href(path.join('..', REPORT_DIR, STYLE_FILE)), content, labels);
 }
 
-function renderTask(specsDir, task) {
+function renderTask(specsDir, task, labels) {
   const fromDir = task.dir_path;
 
   const content = `<main class="page-shell">
-  <div class="breadcrumb" id="breadcrumb"><a href="../index.html" class="el_report">Specs Report</a> &gt; <span class="el_task">${escapeHtml(task.task_id)}</span></div>
+  <div class="breadcrumb" id="breadcrumb"><a href="../index.html" class="el_report">${escapeHtml(labels.specsReport)}</a> &gt; <span class="el_task">${escapeHtml(task.task_id)}</span></div>
   <header class="page-header">
-    <p class="eyebrow">Task Detail</p>
+    <p class="eyebrow">${escapeHtml(labels.taskDetail)}</p>
     <h1>${escapeHtml(task.task_id)}</h1>
     <p class="lede">${escapeHtml(task.goal)}</p>
-    <div class="status-line">${badge(task.status, statusLabel(task.status))}<span class="muted">Updated ${formatDate(task.last_updated)}</span></div>
+    <div class="status-line">${badge(task.status, statusLabel(task.status))}<span class="muted">${escapeHtml(labels.updated)} ${formatDate(task.last_updated, labels)}</span></div>
   </header>
   <section class="panel">
-    <div class="section-heading"><h2>Gate Summary</h2><span class="muted">${escapeHtml(gateSummary(task))}</span></div>
+    <div class="section-heading"><h2>${escapeHtml(labels.gateSummary)}</h2><span class="muted">${escapeHtml(gateSummary(task, labels))}</span></div>
     <div class="table-wrap">
       <table class="coverage">
-        <thead><tr><th>Gate</th><th>Status</th><th>Evidence</th><th>Issues</th></tr></thead>
-        <tbody>${gateRows(task, fromDir, specsDir)}</tbody>
+        <thead><tr><th>${escapeHtml(labels.gate)}</th><th>${escapeHtml(labels.status)}</th><th>${escapeHtml(labels.evidence)}</th><th>${escapeHtml(labels.issues)}</th></tr></thead>
+        <tbody>${gateRows(task, fromDir, specsDir, labels)}</tbody>
       </table>
     </div>
   </section>
   <section class="panel" id="artifacts">
-    <div class="section-heading"><h2>Source Files</h2></div>
+    <div class="section-heading"><h2>${escapeHtml(labels.sourceFiles)}</h2></div>
     <div class="table-wrap">
       <table class="coverage">
-        <thead><tr><th>Element</th><th>Gate</th><th>Updated</th></tr></thead>
-        <tbody>${artifactRows(task, fromDir)}</tbody>
+        <thead><tr><th>${escapeHtml(labels.element)}</th><th>${escapeHtml(labels.gate)}</th><th>${escapeHtml(labels.updated)}</th></tr></thead>
+        <tbody>${artifactRows(task, fromDir, labels)}</tbody>
       </table>
     </div>
   </section>
   <section class="panel" id="runs">
-    <div class="section-heading"><h2>Runs</h2><span class="muted">${task.runs.length} run(s)</span></div>
+    <div class="section-heading"><h2>${escapeHtml(labels.runs)}</h2><span class="muted">${escapeHtml(labels.runCount(task.runs.length))}</span></div>
     <div class="table-wrap">
       <table class="coverage">
-        <thead><tr><th>Run</th><th>Role</th><th>State</th><th>Verification</th><th>Updated</th></tr></thead>
-        <tbody>${runRows(task)}</tbody>
+        <thead><tr><th>${escapeHtml(labels.run)}</th><th>${escapeHtml(labels.role)}</th><th>${escapeHtml(labels.state)}</th><th>${escapeHtml(labels.verification)}</th><th>${escapeHtml(labels.updated)}</th></tr></thead>
+        <tbody>${runRows(task, labels)}</tbody>
       </table>
     </div>
   </section>
   <section class="panel" id="issues">
-    <div class="section-heading"><h2>Open Issues</h2><span class="muted">${taskIssueCount(task)} issue(s)</span></div>
+    <div class="section-heading"><h2>${escapeHtml(labels.openIssues)}</h2><span class="muted">${escapeHtml(labels.issueCount(taskIssueCount(task)))}</span></div>
     <div class="table-wrap">
       <table class="coverage">
-        <thead><tr><th>Gate</th><th>Issue</th><th>Evidence</th></tr></thead>
-        <tbody>${issueRows(task, fromDir, specsDir)}</tbody>
+        <thead><tr><th>${escapeHtml(labels.gate)}</th><th>${escapeHtml(labels.issue)}</th><th>${escapeHtml(labels.evidence)}</th></tr></thead>
+        <tbody>${issueRows(task, fromDir, specsDir, labels)}</tbody>
       </table>
     </div>
   </section>
 </main>`;
 
-  return page(`${task.task_id} - Dev Cadence Specs Report`, href(path.join('..', REPORT_DIR, STYLE_FILE)), content);
+  return page(`${task.task_id} - ${labels.reportTitle}`, href(path.join('..', REPORT_DIR, STYLE_FILE)), content, labels);
 }
 
-function renderRunArtifact(task, run, config, artifact) {
+function renderRunArtifact(task, run, key, config, artifact, labels) {
   const content = `<main class="page-shell">
-  <div class="breadcrumb" id="breadcrumb"><a href="../../../index.html" class="el_report">Specs Report</a> &gt; <a href="../../index.html" class="el_task">${escapeHtml(task.task_id)}</a> &gt; <a href="index.html" class="el_run">${escapeHtml(run.run_id)}</a> &gt; <span class="el_artifact">${escapeHtml(config.fileName)}</span></div>
+  <div class="breadcrumb" id="breadcrumb"><a href="../../../index.html" class="el_report">${escapeHtml(labels.specsReport)}</a> &gt; <a href="../../index.html" class="el_task">${escapeHtml(task.task_id)}</a> &gt; <a href="index.html" class="el_run">${escapeHtml(run.run_id)}</a> &gt; <span class="el_artifact">${escapeHtml(config.fileName)}</span></div>
   <header class="page-header">
-    <p class="eyebrow">Run Artifact Detail</p>
-    <h1>${escapeHtml(config.title)}</h1>
-    <div class="status-line"><a href="${href(config.fileName)}" class="el_artifact">Raw Markdown</a><span class="muted">Updated ${formatDate(artifact.mtimeMs)}</span></div>
+    <p class="eyebrow">${escapeHtml(labels.runArtifactDetail)}</p>
+    <h1>${escapeHtml(runTitle(labels, key, config))}</h1>
+    <div class="status-line"><a href="${href(config.fileName)}" class="el_artifact">${escapeHtml(labels.rawMarkdown)}</a><span class="muted">${escapeHtml(labels.updated)} ${formatDate(artifact.mtimeMs, labels)}</span></div>
   </header>
   <section class="panel">
     <pre class="source-view"><code>${escapeHtml(artifact.text)}</code></pre>
   </section>
 </main>`;
 
-  return page(`${run.run_id} / ${config.fileName} - Dev Cadence Specs Report`, href(path.join('..', '..', '..', REPORT_DIR, STYLE_FILE)), content);
+  return page(`${run.run_id} / ${config.fileName} - ${labels.reportTitle}`, href(path.join('..', '..', '..', REPORT_DIR, STYLE_FILE)), content, labels);
 }
 
-function runArtifactRows(run, fromDir) {
+function runArtifactRows(run, fromDir, labels) {
   return Object.entries(RUN_FILES).map(([key, config]) => {
     const artifact = run.artifacts[key];
     const link = artifact.exists
@@ -738,12 +908,12 @@ function runArtifactRows(run, fromDir) {
       : `<span class="muted">${escapeHtml(config.fileName)}</span>`;
     return `<tr>
       <td>${link}</td>
-      <td>${artifact.exists ? formatDate(artifact.mtimeMs) : '<span class="muted">missing</span>'}</td>
+      <td>${artifact.exists ? formatDate(artifact.mtimeMs, labels) : `<span class="muted">${escapeHtml(labels.missing)}</span>`}</td>
     </tr>`;
   }).join('');
 }
 
-function renderRun(run, task) {
+function renderRun(run, task, labels) {
   const fromDir = run.dir_path;
   const execution = run.artifacts.execution.data;
   const baseline = run.artifacts.baseline.data;
@@ -754,64 +924,64 @@ function renderRun(run, task) {
   ];
 
   const content = `<main class="page-shell">
-  <div class="breadcrumb" id="breadcrumb"><a href="../../../index.html" class="el_report">Specs Report</a> &gt; <a href="../../index.html" class="el_task">${escapeHtml(task.task_id)}</a> &gt; <span class="el_run">${escapeHtml(run.run_id)}</span></div>
+  <div class="breadcrumb" id="breadcrumb"><a href="../../../index.html" class="el_report">${escapeHtml(labels.specsReport)}</a> &gt; <a href="../../index.html" class="el_task">${escapeHtml(task.task_id)}</a> &gt; <span class="el_run">${escapeHtml(run.run_id)}</span></div>
   <header class="page-header">
-    <p class="eyebrow">Run Detail</p>
+    <p class="eyebrow">${escapeHtml(labels.runDetail)}</p>
     <h1>${escapeHtml(run.run_id)}</h1>
-    <p class="lede">Harness evidence for ${escapeHtml(task.task_id)}.</p>
-    <div class="status-line">${badge(run.verification_status)}<span class="muted">Updated ${formatDate(run.last_updated)}</span></div>
+    <p class="lede">${escapeHtml(labels.harnessEvidenceFor(task.task_id))}</p>
+    <div class="status-line">${badge(run.verification_status)}<span class="muted">${escapeHtml(labels.updated)} ${formatDate(run.last_updated, labels)}</span></div>
   </header>
-  ${sourceNotice()}
+  ${sourceNotice(labels)}
   <section class="summary-grid" aria-label="Run summary">
-    <div class="metric"><span class="metric-value text">${escapeHtml(run.agent_role)}</span><span class="metric-label">Role</span></div>
-    <div class="metric"><span class="metric-value text">${escapeHtml(run.state)}</span><span class="metric-label">State</span></div>
-    <div class="metric"><span class="metric-value text">${escapeHtml(run.verification_status)}</span><span class="metric-label">Verification</span></div>
-    <div class="metric"><span class="metric-value text">${permissions.length}</span><span class="metric-label">Permission Entries</span></div>
+    <div class="metric"><span class="metric-value text">${escapeHtml(run.agent_role)}</span><span class="metric-label">${escapeHtml(labels.role)}</span></div>
+    <div class="metric"><span class="metric-value text">${escapeHtml(run.state)}</span><span class="metric-label">${escapeHtml(labels.state)}</span></div>
+    <div class="metric"><span class="metric-value text">${escapeHtml(run.verification_status)}</span><span class="metric-label">${escapeHtml(labels.verification)}</span></div>
+    <div class="metric"><span class="metric-value text">${permissions.length}</span><span class="metric-label">${escapeHtml(labels.permissionEntries)}</span></div>
   </section>
   <section class="panel" id="run-evidence">
-    <div class="section-heading"><h2>Run Evidence</h2></div>
+    <div class="section-heading"><h2>${escapeHtml(labels.runEvidence)}</h2></div>
     <div class="table-wrap">
       <table class="coverage">
-        <thead><tr><th>Element</th><th>Updated</th></tr></thead>
-        <tbody>${runArtifactRows(run, fromDir)}</tbody>
+        <thead><tr><th>${escapeHtml(labels.element)}</th><th>${escapeHtml(labels.updated)}</th></tr></thead>
+        <tbody>${runArtifactRows(run, fromDir, labels)}</tbody>
       </table>
     </div>
   </section>
   <section class="two-column" id="commands">
     <div class="panel">
-      <h2>Commands and Tests</h2>
-      <h3>Commands</h3>
-      ${listHtml(run.commands_run)}
-      <h3>Tests</h3>
-      ${listHtml(run.tests_run)}
+      <h2>${escapeHtml(labels.commandsAndTests)}</h2>
+      <h3>${escapeHtml(labels.commands)}</h3>
+      ${listHtml(run.commands_run, labels.none)}
+      <h3>${escapeHtml(labels.tests)}</h3>
+      ${listHtml(run.tests_run, labels.none)}
     </div>
     <div class="panel">
-      <h2>Files Changed</h2>
-      ${listHtml(run.files_changed)}
+      <h2>${escapeHtml(labels.filesChanged)}</h2>
+      ${listHtml(run.files_changed, labels.none)}
     </div>
   </section>
   <section class="two-column">
     <div class="panel">
-      <h2>Baseline</h2>
+      <h2>${escapeHtml(labels.baseline)}</h2>
       <dl class="kv">
-        <dt>Authorized</dt><dd>${escapeHtml(firstNonEmpty(baseline.implementation_authorized, 'unknown'))}</dd>
-        <dt>Post-hoc Backfill</dt><dd>${escapeHtml(firstNonEmpty(baseline.post_hoc_backfill, 'unknown'))}</dd>
-        <dt>G1</dt><dd>${escapeHtml(firstNonEmpty(baseline.g1_status, 'unknown'))}</dd>
-        <dt>G3</dt><dd>${escapeHtml(firstNonEmpty(baseline.g3_status, 'unknown'))}</dd>
+        <dt>${escapeHtml(labels.authorized)}</dt><dd>${escapeHtml(firstNonEmpty(baseline.implementation_authorized, labels.unknown))}</dd>
+        <dt>${escapeHtml(labels.postHocBackfill)}</dt><dd>${escapeHtml(firstNonEmpty(baseline.post_hoc_backfill, labels.unknown))}</dd>
+        <dt>G1</dt><dd>${escapeHtml(firstNonEmpty(baseline.g1_status, labels.unknown))}</dd>
+        <dt>G3</dt><dd>${escapeHtml(firstNonEmpty(baseline.g3_status, labels.unknown))}</dd>
       </dl>
     </div>
     <div class="panel">
-      <h2>Residual Risk</h2>
-      ${listHtml(run.residual_risk)}
+      <h2>${escapeHtml(labels.residualRisk)}</h2>
+      ${listHtml(run.residual_risk, labels.none)}
     </div>
   </section>
   <section class="panel">
-    <h2>Permissions</h2>
-    ${permissions.length ? inlineList(permissions) : '<span class="muted">none</span>'}
+    <h2>${escapeHtml(labels.permissions)}</h2>
+    ${permissions.length ? inlineList(permissions, labels.none) : `<span class="muted">${escapeHtml(labels.none)}</span>`}
   </section>
 </main>`;
 
-  return page(`${run.run_id} - Dev Cadence Specs Report`, href(path.join('..', '..', '..', REPORT_DIR, STYLE_FILE)), content);
+  return page(`${run.run_id} - ${labels.reportTitle}`, href(path.join('..', '..', '..', REPORT_DIR, STYLE_FILE)), content, labels);
 }
 
 function stylesheet() {
@@ -1213,6 +1383,8 @@ function main() {
     throw new Error(`Specs directory does not exist: ${options.specsDir}`);
   }
 
+  const { language } = resolveArtifactLanguage(options.specsDir);
+  const labels = labelsFor(language);
   const generated = [];
   const tasks = taskDirs(options.specsDir)
     .map((taskDir) => buildTask(options.specsDir, taskDir))
@@ -1224,29 +1396,29 @@ function main() {
     });
 
   writeFile(path.join(options.specsDir, REPORT_DIR, STYLE_FILE), stylesheet(), options.specsDir, generated);
-  writeFile(path.join(options.specsDir, 'index.html'), renderIndex(options.specsDir, tasks), options.specsDir, generated);
+  writeFile(path.join(options.specsDir, 'index.html'), renderIndex(options.specsDir, tasks, labels), options.specsDir, generated);
 
   for (const task of tasks) {
-    writeFile(path.join(task.dir_path, 'index.html'), renderTask(options.specsDir, task), options.specsDir, generated);
+    writeFile(path.join(task.dir_path, 'index.html'), renderTask(options.specsDir, task, labels), options.specsDir, generated);
     for (const [key, config] of Object.entries(SPEC_FILES)) {
       const artifact = task.artifacts[key];
       if (artifact.exists) {
         writeFile(
           path.join(task.dir_path, htmlFileName(config.fileName)),
-          renderTaskArtifact(task, config, artifact),
+          renderTaskArtifact(task, key, config, artifact, labels),
           options.specsDir,
           generated,
         );
       }
     }
     for (const run of task.runs) {
-      writeFile(path.join(run.dir_path, 'index.html'), renderRun(run, task), options.specsDir, generated);
+      writeFile(path.join(run.dir_path, 'index.html'), renderRun(run, task, labels), options.specsDir, generated);
       for (const [key, config] of Object.entries(RUN_FILES)) {
         const artifact = run.artifacts[key];
         if (artifact.exists) {
           writeFile(
             path.join(run.dir_path, htmlFileName(config.fileName)),
-            renderRunArtifact(task, run, config, artifact),
+            renderRunArtifact(task, run, key, config, artifact, labels),
             options.specsDir,
             generated,
           );

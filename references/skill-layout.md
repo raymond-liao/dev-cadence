@@ -207,9 +207,11 @@ Supported `artifact_language` values are `en` and `zh`. `en` is the framework de
 #   review_profile: normal
 ```
 
-When `.dev-cadence.yaml` contains an uncommented supported `dev_cadence.artifact_language`, it overrides the plugin default. Add `.dev-cadence.yaml` to `.gitignore` during initialization or maintenance so user-local preferences are not committed by default.
+When `.dev-cadence.yaml` contains an uncommented supported `dev_cadence.artifact_language`, it overrides the plugin default. Runtime scripts that generate task artifact prose or report UI must resolve this value through the shared artifact language helper. Add `.dev-cadence.yaml` to `.gitignore` during initialization or maintenance so user-local preferences are not committed by default.
 
-If persistent visual companion sessions are used, add `.dev-cadence/visual-companion/` to `.gitignore`. The visual companion remains optional and must not be required for G1.
+If persistent visual companion sessions are used, add the local companion
+session directory to `.gitignore`. The visual companion remains optional and
+must not be required for G1.
 
 Task artifacts and Harness evidence are written under `specs/{task_id}/`:
 

@@ -390,6 +390,19 @@ grep -Fq "FAIL G6: Gate G6 must have status: passed" "${OUTPUT_DIR}/failure.out"
   cat "${OUTPUT_DIR}/failure.out" >&2
   exit 1
 }
+grep -Fq "Acceptance Summary: gate-fixture" "${OUTPUT_DIR}/failure.out"
+grep -Fq "Goal: Fix fixture behavior." "${OUTPUT_DIR}/failure.out"
+grep -Fq "Verification: verified" "${OUTPUT_DIR}/failure.out"
+grep -Fq "Review decision: approved" "${OUTPUT_DIR}/failure.out"
+grep -Fq "Residual Risk" "${OUTPUT_DIR}/failure.out"
+grep -Fq "A named Human acceptance is still required" "${OUTPUT_DIR}/failure.out"
+grep -Fq "accepted_by_human" "${OUTPUT_DIR}/failure.out"
+grep -Fq "08-acceptance.md" "${OUTPUT_DIR}/failure.out"
+if grep -Fq "Acceptance is already recorded for" "${OUTPUT_DIR}/failure.out"; then
+  echo "pending acceptance summary must not report acceptance as recorded" >&2
+  cat "${OUTPUT_DIR}/failure.out" >&2
+  exit 1
+fi
 
 cat > "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.md" <<'EOF'
 # Acceptance

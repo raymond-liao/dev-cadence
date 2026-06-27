@@ -18,6 +18,7 @@ tmp/
 
 # Dev Cadence local visual companion sessions
 .dev-cadence/visual-companion/
+.superpowers/
 
 # Local Dev Cadence work artifacts and research workspaces
 /specs/

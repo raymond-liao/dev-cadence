@@ -5,7 +5,10 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPO_DIR="$(mktemp -d /private/tmp/dev-cadence-report.XXXXXX)"
 TASK_ID="acceptance-login"
 PENDING_TASK_ID="pending-acceptance"
+ZH_TASK_ID="zh-report"
+ZH_PENDING_TASK_ID="zh-pending-acceptance"
 REPORT_JSON="${REPO_DIR}/report.json"
+ZH_REPORT_JSON="${REPO_DIR}/zh-report.json"
 trap 'rm -rf "${REPO_DIR}"' EXIT
 
 node "${ROOT_DIR}/scripts/sync-repo-contract.mjs" init --repo-dir "${REPO_DIR}" --json > /dev/null
@@ -184,6 +187,85 @@ grep -q "Specs Report</a> &gt; <a href=\"../../index.html\" class=\"el_task\">${
 grep -q "Raw Markdown" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.html"
 
 grep -q "unknown" "${REPO_DIR}/specs/incomplete/index.html"
+
+ZH_REPORT_REPO="${REPO_DIR}/zh-repo"
+mkdir -p "${ZH_REPORT_REPO}"
+node "${ROOT_DIR}/scripts/sync-repo-contract.mjs" init --repo-dir "${ZH_REPORT_REPO}" --json > /dev/null
+cat > "${ZH_REPORT_REPO}/.dev-cadence.yaml" <<'EOF'
+dev_cadence:
+  artifact_language: zh
+EOF
+
+node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
+  --repo-dir "${ZH_REPORT_REPO}" \
+  --plugin-dir "${ROOT_DIR}" \
+  --task-id "${ZH_TASK_ID}" \
+  --goal "验证中文报告 UI" \
+  --requested-by "Raymond" \
+  --accepted-by "Raymond" \
+  --json > /dev/null
+
+cp -R "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}" "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}"
+find "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}" -type f -name '*.md' -exec \
+  perl -0pi -e "s/${ZH_TASK_ID}/${ZH_PENDING_TASK_ID}/g; s/验证中文报告 UI/验证中文待验收报告 UI/g" {} +
+cat > "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}/08-acceptance.md" <<'EOF'
+# Acceptance
+
+```yaml
+status:
+accepted_by_human:
+accepted_at:
+accepted_scope:
+evidence_reviewed:
+human_gate_decisions:
+residual_risk_accepted:
+merge_or_release_decision:
+follow_up:
+```
+
+## Gate G6
+
+```yaml
+gate_id: G6
+status:
+required_inputs:
+evidence:
+human_accepter:
+decision:
+residual_risk:
+escalation:
+```
+EOF
+
+node "${ROOT_DIR}/scripts/generate-spec-report.mjs" \
+  --specs-dir "${ZH_REPORT_REPO}/specs" \
+  --json > "${ZH_REPORT_JSON}"
+
+grep -q "任务汇总" "${ZH_REPORT_REPO}/specs/index.html"
+grep -q ">问题<" "${ZH_REPORT_REPO}/specs/index.html"
+grep -q ">运行<" "${ZH_REPORT_REPO}/specs/index.html"
+grep -q "门禁汇总" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"
+grep -q "未解决问题" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"
+grep -q "源文件" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"
+grep -q "原始 Markdown" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/08-acceptance.html"
+grep -q "该任务类别不要求" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"
+grep -q "最终 Human acceptance 待完成" "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}/index.html"
+if grep -q ">Issues<" "${ZH_REPORT_REPO}/specs/index.html"; then
+  echo "zh report index must not render the Issues table header in English" >&2
+  exit 1
+fi
+if grep -q "Open Issues" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"; then
+  echo "zh report task page must not render the Open Issues heading in English" >&2
+  exit 1
+fi
+if grep -q "not required for task class" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"; then
+  echo "zh report task page must not render known gate evidence in English" >&2
+  exit 1
+fi
+if grep -q "Final Human acceptance is pending" "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}/index.html"; then
+  echo "zh report pending acceptance warning must not render in English" >&2
+  exit 1
+fi
 
 node --input-type=module - "${REPORT_JSON}" "${REPO_DIR}/specs" "${PENDING_TASK_ID}" <<'NODE'
 import fs from 'node:fs';

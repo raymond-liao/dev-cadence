@@ -269,6 +269,16 @@ function runChecker(scriptPath, args, cwd) {
   return run(process.execPath, [scriptPath, ...args], cwd);
 }
 
+function runAcceptanceSummary(options) {
+  const scriptPath = path.join(options.pluginDir, 'scripts', 'summarize-acceptance.mjs');
+  if (!fs.existsSync(scriptPath) || !options.taskId) return null;
+  return runChecker(
+    scriptPath,
+    ['--task-id', options.taskId, '--specs-dir', options.specsDir],
+    options.repoDir,
+  );
+}
+
 function check(options) {
   const dirty = gitStatus(options.repoDir);
   const report = {
@@ -331,6 +341,10 @@ function check(options) {
     }
     if (gateCheck.status !== 0) {
       report.failures.push('Quality Gate or Human Gate validation failed. Commit is blocked until G6 final Human acceptance is recorded.');
+      const acceptanceSummary = runAcceptanceSummary(options);
+      if (acceptanceSummary && acceptanceSummary.stdout) {
+        report.acceptance_summary = acceptanceSummary.stdout;
+      }
     }
     if (report.uncovered_paths.length > 0) {
       report.failures.push('Dirty paths are not covered by selected task artifacts.');
@@ -366,6 +380,10 @@ function printText(report) {
   }
   for (const failure of report.failures || []) {
     console.error(`FAIL ${failure}`);
+  }
+  if (report.acceptance_summary) {
+    console.error('\nHuman acceptance summary:');
+    console.error(report.acceptance_summary);
   }
 }
 

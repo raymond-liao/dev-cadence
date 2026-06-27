@@ -37,9 +37,14 @@ Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reprodu
 drill-down navigation only. Markdown/YAML artifacts remain the source of truth
 for gates, review, and Human acceptance.
 
-Before writing artifact prose, resolve `artifact_language` from an uncommented supported `dev_cadence.artifact_language` value in root `.dev-cadence.yaml`, then default to `en`. Supported values are `en` and `zh`.
+Before writing artifact prose or generated report UI, resolve `artifact_language` from an uncommented supported `dev_cadence.artifact_language` value in root `.dev-cadence.yaml`, then default to `en`. Supported values are `en` and `zh`.
 
-`artifact_language` controls human-readable Markdown prose, notes, acceptance criteria text, reports, and explanations. Keep template filenames, headings, YAML keys, schema fields, status values, workflow IDs, gate IDs, and command/code identifiers in English.
+`artifact_language` controls human-readable Markdown prose, notes, acceptance criteria text, reports, explanations, and generated HTML report UI labels. Keep template filenames, headings, YAML keys, schema fields, status values, workflow IDs, gate IDs, command/code identifiers, and raw Markdown source views in English or source form.
+
+Runtime scripts must use the shared artifact language resolver rather than
+duplicating `.dev-cadence.yaml` parsing. When a script generates human-readable
+task artifact prose or report UI, it must honor `artifact_language`; validators
+remain a backstop, not the first point where localization drift is discovered.
 
 ## Contents
 
@@ -96,7 +101,9 @@ structural artifact check.
 task. `scripts/check-before-commit.mjs` validates artifact structure, gate
 state, artifact language warnings as failures for the selected task, and dirty
 worktree path coverage before a Git commit. It requires G6 final Human
-acceptance to pass; pending acceptance blocks commit readiness.
+acceptance to pass; pending acceptance blocks commit readiness. When gate
+validation fails because G6 is pending, the commit-readiness output must include
+a Human-facing acceptance summary, not only the gate failure.
 
 ## `00-brief.md`
 

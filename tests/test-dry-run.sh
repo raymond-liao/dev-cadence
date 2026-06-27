@@ -6,6 +6,7 @@ REPO_DIR="$(mktemp -d /private/tmp/dev-cadence-delivery.XXXXXX)"
 DRY_RUN_JSON="${REPO_DIR}/dry-run.json"
 SUMMARY_FILE="${REPO_DIR}/summary.txt"
 ZH_REPO_DIR="${REPO_DIR}/zh-warning-fixture"
+ZH_DRY_RUN_REPO="${REPO_DIR}/zh-dry-run"
 TASK_ID="acceptance-login"
 trap 'rm -rf "${REPO_DIR}"' EXIT
 
@@ -45,6 +46,25 @@ if ! node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${ZH_REPO_DIR}/specs" 
   exit 1
 fi
 grep -q "English-looking prose in zh artifact_language" "${ZH_REPO_DIR}/check.err"
+
+mkdir -p "${ZH_DRY_RUN_REPO}"
+node "${ROOT_DIR}/scripts/sync-repo-contract.mjs" init --repo-dir "${ZH_DRY_RUN_REPO}" --json > /dev/null
+cat > "${ZH_DRY_RUN_REPO}/.dev-cadence.yaml" <<'EOF'
+dev_cadence:
+  artifact_language: zh
+EOF
+node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
+  --repo-dir "${ZH_DRY_RUN_REPO}" \
+  --plugin-dir "${ROOT_DIR}" \
+  --task-id "zh-login" \
+  --goal "实现登录功能" \
+  --requested-by "Raymond" \
+  --accepted-by "Raymond" \
+  --json > "${ZH_DRY_RUN_REPO}/dry-run.json"
+grep -q "本 artifact 集用于验证 Dev Cadence 交付路由和证据生成" "${ZH_DRY_RUN_REPO}/specs/zh-login/00-brief.md"
+grep -q "生成自 CLI 输入和仓库本地 Dev Cadence 薄契约" "${ZH_DRY_RUN_REPO}/specs/zh-login/01-requirements.md"
+grep -q "产品行为未由 dry run 验证" "${ZH_DRY_RUN_REPO}/specs/zh-login/08-acceptance.md"
+node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${ZH_DRY_RUN_REPO}/specs" --warnings-as-errors
 
 node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
   --specs-dir "${REPO_DIR}/specs" \
