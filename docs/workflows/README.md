@@ -1,6 +1,20 @@
 # Dev Cadence 工作流
 
-本文说明 Dev Cadence 的 workflow、任务分级、loop、Quality Gate 和 Human Gate。运行时细则见 `references/` 中的 workflow、gate 和 discipline references。
+本文说明 Dev Cadence 的 workflow、任务分级、loop、Quality Gate 和 Human Gate。运行时细则见 [../../references/workflows.md](../../references/workflows.md)、[../../references/task-classes.md](../../references/task-classes.md)、[../../references/quality-gates.md](../../references/quality-gates.md) 和 [../../references/human-gates.md](../../references/human-gates.md)。
+
+本目录是 workflow 目录。每个 workflow 的单页说明回答“什么时候用、标准路径是什么、涉及哪些角色和产物”。
+
+## Workflow 目录
+
+| Workflow | 说明 |
+|---|---|
+| [`feature-dev`](01-feature-dev.md) | 新功能或行为变更 |
+| [`bugfix`](02-bugfix.md) | 已知缺陷修复 |
+| [`code-review`](03-code-review.md) | 审查已有 diff、PR 或提交 |
+| [`refactor`](04-refactor.md) | 行为不变的结构调整 |
+| [`research-spike`](05-research-spike.md) | 技术选型、未知风险探索、方案比较 |
+| [`incident-fix`](06-incident-fix.md) | 紧急生产修复或高压故障恢复 |
+| [`release`](07-release.md) | 发布、打包、上线或发布前检查 |
 
 ## 标准工作流
 
@@ -24,22 +38,22 @@ Supervisor 根据当前状态决定下一步，Harness 负责执行每个 Agent 
 
 | State | Owner | Output | Gate | Next |
 |---|---|---|---|---|
-| `intake` | Supervisor | `00-brief.md` | 目标、约束、任务类型已记录 | `classify` |
+| `intake` | Supervisor | [00-brief.md](../artifacts/00-brief.md) | 目标、约束、任务类型已记录 | `classify` |
 | `classify` | Supervisor | task class / workflow type | 已判定任务强度 | `requirements` 或 lightweight path |
-| `requirements` | Planner | `01-requirements.md` | 范围和验收标准清楚 | `design` 或 `planning` |
-| `design` | Architect / Planner | `02-design.md` / ADR | 高风险任务完成设计确认 | `planning` |
-| `planning` | Planner | `03-tasks.md`、`04-test-plan.md` | 任务可执行，验证方式明确 | `implementation` |
-| `implementation` | Developer via Harness | code diff、`05-implementation.md`、run evidence | 有 diff、说明和初步验证证据 | `verification` |
-| `verification` | Tester / Developer via Harness | `06-test-report.md` | 测试或验证证据完整 | `review` 或 `fix` |
-| `review` | Reviewer via Harness | `07-review-report.md` | 无 blocker / major，或进入修复 | `acceptance` 或 `fix` |
-| `fix` | Developer via Harness | patch + run evidence | 修复针对明确 issue，未扩大范围 | `verification` |
-| `acceptance` | Human + Supervisor | `08-acceptance.md` | 人确认风险并批准结束 | `done` |
+| `requirements` | Planner | [01-requirements.md](../artifacts/01-requirements.md) | 范围和验收标准清楚 | `design` 或 `planning` |
+| `design` | Architect / Planner | [02-design.md](../artifacts/02-design.md) / ADR | 高风险任务完成设计确认 | `planning` |
+| `planning` | Planner | [03-tasks.md](../artifacts/03-tasks.md)、[04-test-plan.md](../artifacts/04-test-plan.md) | 任务可执行，验证方式明确 | `implementation` |
+| `implementation` | Developer via Harness | code diff、[05-implementation.md](../artifacts/05-implementation.md)、[运行证据](../runs/) | 有 diff、说明和初步验证证据 | `verification` |
+| `verification` | Tester / Developer via Harness | [06-test-report.md](../artifacts/06-test-report.md) | 测试或验证证据完整 | `review` 或 `fix` |
+| `review` | Reviewer via Harness | [07-review-report.md](../artifacts/07-review-report.md) | 无 blocker / major，或进入修复 | `acceptance` 或 `fix` |
+| `fix` | Developer via Harness | patch + [运行证据](../runs/) | 修复针对明确 issue，未扩大范围 | `verification` |
+| `acceptance` | Human + Supervisor | [08-acceptance.md](../artifacts/08-acceptance.md) | 人确认风险并批准结束 | `done` |
 | `blocked` | Supervisor + Human | escalation decision | 人决定继续、降级、拆分或终止 | selected state |
 
 关键规则：
 
 - 每个 Agent 执行状态都必须经过 Harness。
-- 每个 Harness run 都必须生成 required evidence。
+- 每个 Harness run 都必须生成必需证据。
 - Supervisor 只能根据产物和 gate 决定下一步，不能代替 Agent 产出内容。
 - Human Gate 的决定必须写入 requirements、ADR 或 acceptance。
 - `fix` 状态最多循环 3 次，超限进入 `blocked`。
@@ -52,13 +66,13 @@ Supervisor 根据当前状态决定下一步，Harness 负责执行每个 Agent 
 
 | Workflow | 适用场景 |
 |---|---|
-| `feature-dev` | 新功能或行为变更 |
-| `bugfix` | 已知缺陷修复 |
-| `refactor` | 行为不变的结构调整 |
-| `code-review` | 审查已有 diff、PR 或提交 |
-| `research-spike` | 技术选型、未知风险探索、方案比较 |
-| `incident-fix` | 紧急生产修复或高压故障恢复 |
-| `release` | 发布、打包、上线或发布前检查 |
+| [`feature-dev`](01-feature-dev.md) | 新功能或行为变更 |
+| [`bugfix`](02-bugfix.md) | 已知缺陷修复 |
+| [`code-review`](03-code-review.md) | 审查已有 diff、PR 或提交 |
+| [`refactor`](04-refactor.md) | 行为不变的结构调整 |
+| [`research-spike`](05-research-spike.md) | 技术选型、未知风险探索、方案比较 |
+| [`incident-fix`](06-incident-fix.md) | 紧急生产修复或高压故障恢复 |
+| [`release`](07-release.md) | 发布、打包、上线或发布前检查 |
 
 如果用户明确说“只做 review”“先调研”“按 incident 处理”，该表达应作为 `workflow_hint` 记录，但最终仍由 Supervisor 校准风险和 gate。
 
@@ -68,7 +82,7 @@ Supervisor 根据当前状态决定下一步，Harness 负责执行每个 Agent 
 
 | Class | 适用场景 | 必需产物 | Human Gate |
 |---|---|---|---|
-| `S0 trivial` | 文案、注释、低风险配置、可快速回滚的小修 | brief、implementation、test evidence 或 not verified reason、acceptance | final acceptance |
+| `S0 trivial` | 文案、注释、低风险配置、可快速回滚的小修 | brief、implementation、测试证据或 not verified reason、acceptance | final acceptance |
 | `S1 normal` | 普通 feature、bugfix、code-review、局部重构 | requirements、tasks、implementation、test_report、review_report、acceptance | requirement acceptance、final acceptance |
 | `S2 high-risk` | 架构、安全、权限、CI、数据迁移、跨模块变更 | requirements、design/ADR、tasks、implementation、test_report、review_report、acceptance | 实现前 approval、permission approval、final acceptance |
 | `research-spike` | 技术选型、未知风险探索、方案比较 | research report、options comparison、recommendation、open questions | decision review |

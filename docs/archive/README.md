@@ -6,7 +6,7 @@
 
 - 当前安装和本机卸载命令见 [../installation.md](../installation.md)。
 - 当前验证命令见 [../validation.md](../validation.md)。
-- 完整框架方案见 [../framework.md](../framework.md)。
+- 当前框架入口见 [../overview.md](../overview.md)。
 - 当前 Plugin/Skill 模块边界见 [../plugin-skill-modularization.md](../plugin-skill-modularization.md)。
 
 归档文件：

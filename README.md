@@ -42,7 +42,7 @@ codex
 修复支付回调重复处理的问题
 ```
 
-Dev Cadence 会在业务仓库里使用 `specs/{task_id}/` 记录过程 artifact、Harness evidence、验证和人工验收。完整机制见 [docs/framework.md](docs/framework.md)。
+Dev Cadence 会在业务仓库里使用 `specs/{task_id}/` 记录过程 artifact、Harness 运行证据、验证和人工验收。完整机制见 [docs/overview.md](docs/overview.md)。
 
 ## Local Development
 
@@ -62,19 +62,22 @@ node scripts/package-codex-plugin.mjs --clean
 
 ## Documentation
 
-本仓库文档按用途分层，避免把说明文档和运行时规则混成同一个事实源：
+本仓库文档按用途分层；`docs/` 说明框架和使用方式，发布内容承载可执行规则和模板：
 
 - `README.md`：项目入口、安装、使用和维护导航。
-- `docs/`：维护者说明和当前设计解释；`docs/archive/` 只保存历史计划、研究和验收记录。
+- `docs/`：使用者和维护者说明，以及当前设计解释；`docs/archive/` 只保存历史计划、研究和验收记录。
 - `skills/`、`references/`、`templates/`、`scripts/`：Codex Plugin 发布内容，也是运行时会加载或调用的材料。
 - `specs/`、`research/`：本地运行或探索过程目录，默认不提交。
 
 | 文档 | 作用 |
 |---|---|
-| [docs/framework.md](docs/framework.md) | 框架概念、职责分层和长期演进方向 |
+| [docs/overview.md](docs/overview.md) | 框架概念、文档入口和长期演进方向 |
 | [docs/architecture.md](docs/architecture.md) | 角色、分层、Harness、Context 和工具边界 |
-| [docs/workflows.md](docs/workflows.md) | Workflow、任务分级、loop、Quality Gate 和 Human Gate |
-| [docs/artifacts.md](docs/artifacts.md) | `specs/`、task artifacts、Harness evidence 和事实源规则 |
+| [docs/workflows/](docs/workflows/) | Workflow catalog、任务分级、loop、Quality Gate 和 Human Gate |
+| [docs/roles/](docs/roles/) | Human、Supervisor、Harness 和 Worker Agent 角色边界 |
+| [docs/artifacts/](docs/artifacts/) | `specs/`、task artifacts、Harness 运行证据和事实源规则 |
+| [docs/runs/](docs/runs/) | Harness 运行证据、命令、diff、测试和权限决策说明 |
+| [docs/gates/](docs/gates/) | G1-G6 Quality Gates 和 Human Gate 说明 |
 | [docs/plugin-skill-modularization.md](docs/plugin-skill-modularization.md) | 当前 Plugin、Skill、reference、template 和 adapter 的模块化边界 |
 | [docs/installation.md](docs/installation.md) | 当前安装、更新和卸载命令 |
 | [docs/validation.md](docs/validation.md) | 当前验证、发布包生成和 smoke test 命令 |

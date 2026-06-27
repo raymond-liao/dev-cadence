@@ -1,6 +1,6 @@
 # Dev Cadence 目标形态方案草案
 
-> 历史归档：本文是目标形态设计草案。当前稳定入口见 [../framework.md](../framework.md)、[../plugin-skill-modularization.md](../plugin-skill-modularization.md)、[../installation.md](../installation.md) 和 [../validation.md](../validation.md)。
+> 历史归档：本文是目标形态设计草案。当前稳定入口见 [../overview.md](../overview.md)、[../plugin-skill-modularization.md](../plugin-skill-modularization.md)、[../installation.md](../installation.md) 和 [../validation.md](../validation.md)。
 
 ## 目的
 

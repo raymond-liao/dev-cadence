@@ -9,7 +9,7 @@
 
 当前安装和卸载命令见 [Dev Cadence 安装](installation.md)，验证命令见 [Dev Cadence 当前验证](validation.md)。历史计划和完成状态见 [docs/archive/](archive/)。
 
-本文是当前 Codex Plugin 模块边界的维护者权威。`docs/framework.md` 只保留框架概念和长期演进解释；运行时可加载或调用的稳定材料以 `skills/`、`references/`、`templates/` 和 `scripts/` 为准。
+本文是当前 Codex Plugin 模块边界的维护者权威。`docs/overview.md` 只保留框架概念、文档入口和长期演进解释；运行时可加载或调用的稳定材料以 `skills/`、`references/`、`templates/` 和 `scripts/` 为准。
 
 ## 核心决策
 
