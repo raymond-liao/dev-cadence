@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 function printHelp() {
   console.log(`Usage: check-before-commit.mjs [options]
@@ -14,7 +15,8 @@ Options:
   --repo-dir <dir>     Target Git repository. Defaults to current working directory.
   --plugin-dir <dir>   dev-cadence plugin/source directory. Defaults to the
                        parent directory of this script.
-  --specs-dir <dir>    Specs directory. Defaults to <repo-dir>/specs.
+  --specs-dir <dir>    Specs records directory. Defaults to <repo-dir>/specs/records,
+                       or legacy <repo-dir>/specs when it already contains task dirs.
   --json               Print machine-readable JSON.
   -h, --help           Show this help text.
 
@@ -61,7 +63,9 @@ function parseArgs(argv) {
 
   options.repoDir = path.resolve(options.repoDir);
   options.pluginDir = path.resolve(options.pluginDir);
-  options.specsDir = path.resolve(options.specsDir || path.join(options.repoDir, 'specs'));
+  options.specsDir = options.specsDir
+    ? normalizeSpecsDir(options.specsDir)
+    : resolveDefaultSpecsDir(options.repoDir);
   if (options.taskId !== null) {
     validateId('task-id', options.taskId);
   }
@@ -202,7 +206,7 @@ function walkFiles(dir) {
   return result;
 }
 
-function coverageEntries(taskDir, specsDir) {
+function coverageEntries(taskDir, specsDir, repoDir) {
   const entries = new Set();
   const specFiles = [
     '03-tasks.md',
@@ -218,7 +222,7 @@ function coverageEntries(taskDir, specsDir) {
     addCoverageFromYaml(entries, readArtifactYaml(filePath));
   }
 
-  const taskArtifactRoot = path.relative(path.dirname(specsDir), taskDir).replaceAll(path.sep, '/');
+  const taskArtifactRoot = path.relative(repoDir, taskDir).replaceAll(path.sep, '/');
   entries.add(taskArtifactRoot);
   entries.add(`${taskArtifactRoot}/**`);
   return [...entries].filter(Boolean);
@@ -323,7 +327,7 @@ function check(options) {
   );
   report.checks.push(gateCheck);
 
-  const covered = coverageEntries(taskDir, options.specsDir);
+  const covered = coverageEntries(taskDir, options.specsDir, options.repoDir);
   report.coverage_entries = covered;
   report.uncovered_paths = dirty
     .map((item) => item.path)

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 const REQUIRED_FILES = [
   '00-brief.md',
@@ -19,7 +20,8 @@ Required:
   --task-id <id>       Task directory name under the specs directory.
 
 Options:
-  --specs-dir <dir>    Specs directory. Defaults to specs.
+  --specs-dir <dir>    Specs records directory. Defaults to specs/records,
+                       or legacy specs when it already contains task dirs.
   --json               Print machine-readable JSON.
   -h, --help           Show this help text.
 
@@ -33,7 +35,7 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 
 function parseArgs(argv) {
   const options = {
-    specsDir: path.resolve('specs'),
+    specsDir: resolveDefaultSpecsDir(),
     taskId: null,
     json: false,
   };
@@ -44,7 +46,7 @@ function parseArgs(argv) {
       options.taskId = readValue(argv, index, arg);
       index += 1;
     } else if (arg === '--specs-dir') {
-      options.specsDir = path.resolve(readValue(argv, index, arg));
+      options.specsDir = normalizeSpecsDir(readValue(argv, index, arg));
       index += 1;
     } else if (arg === '--json') {
       options.json = true;

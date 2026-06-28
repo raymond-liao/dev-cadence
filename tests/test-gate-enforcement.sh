@@ -5,6 +5,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPO_DIR="$(mktemp -d /private/tmp/dev-cadence-gates.XXXXXX)"
 OUTPUT_DIR="$(mktemp -d /private/tmp/dev-cadence-gates-output.XXXXXX)"
 LANG_REPO="$(mktemp -d /private/tmp/dev-cadence-gates-language.XXXXXX)"
+SPECS_DIR="${REPO_DIR}/specs/records"
+LANG_SPECS_DIR="${LANG_REPO}/specs/records"
 TASK_ID="gate-fixture"
 RUN_ID="gate-fixture-run-1"
 trap 'rm -rf "${REPO_DIR}" "${OUTPUT_DIR}" "${LANG_REPO}"' EXIT
@@ -26,7 +28,7 @@ assert_command_fails_with() {
   }
 }
 
-mkdir -p "${REPO_DIR}/src" "${REPO_DIR}/specs/${TASK_ID}/runs/${RUN_ID}"
+mkdir -p "${REPO_DIR}/src" "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}"
 git -C "${REPO_DIR}" init -q
 cat > "${REPO_DIR}/src/app.txt" <<'EOF'
 before
@@ -34,7 +36,7 @@ EOF
 git -C "${REPO_DIR}" add src/app.txt
 git -C "${REPO_DIR}" commit -q -m "test: seed fixture"
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/00-brief.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/00-brief.md" <<'EOF'
 # Brief
 
 ```yaml
@@ -45,7 +47,7 @@ goal: Fix fixture behavior.
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/01-requirements.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/01-requirements.md" <<'EOF'
 # Requirements
 
 ```yaml
@@ -76,7 +78,7 @@ decision: passed
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/03-tasks.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/03-tasks.md" <<'EOF'
 # Tasks
 
 ```yaml
@@ -98,7 +100,7 @@ decision: passed
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/05-implementation.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/05-implementation.md" <<'EOF'
 # Implementation
 
 ```yaml
@@ -114,7 +116,7 @@ scope_reconciliation: passed
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/06-test-report.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/06-test-report.md" <<'EOF'
 # Test Report
 
 ```yaml
@@ -135,7 +137,7 @@ human_override: null
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/07-review-report.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/07-review-report.md" <<'EOF'
 # Review Report
 
 ```yaml
@@ -157,7 +159,7 @@ g4_status: blocked
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/08-acceptance.md" <<'EOF'
 # Acceptance
 
 ```yaml
@@ -178,7 +180,7 @@ decision: blocked_pending_named_human
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/runs/${RUN_ID}/run-context.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}/run-context.md" <<'EOF'
 # Run Context
 
 ```yaml
@@ -187,7 +189,7 @@ task_id: gate-fixture
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/runs/${RUN_ID}/pre-implementation-status.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}/pre-implementation-status.md" <<'EOF'
 # Pre-Implementation Status
 
 ```yaml
@@ -200,7 +202,7 @@ authorized_target_files:
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/runs/${RUN_ID}/execution-report.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}/execution-report.md" <<'EOF'
 # Execution Report
 
 ```yaml
@@ -215,7 +217,7 @@ verification_status: verified
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/runs/${RUN_ID}/tool-log.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}/tool-log.md" <<'EOF'
 # Tool Log
 
 ```yaml
@@ -224,7 +226,7 @@ commands_or_tools: []
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/runs/${RUN_ID}/permission-decisions.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}/permission-decisions.md" <<'EOF'
 # Permission Decisions
 
 ```yaml
@@ -234,7 +236,7 @@ decisions: []
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/runs/${RUN_ID}/diff-summary.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}/diff-summary.md" <<'EOF'
 # Diff Summary
 
 ```yaml
@@ -251,10 +253,10 @@ EOF
 assert_command_fails_with \
   "Gate G4 must have status: passed" \
   node "${ROOT_DIR}/scripts/check-gates.mjs" \
-    --specs-dir "${REPO_DIR}/specs" \
+    --specs-dir "${SPECS_DIR}" \
     --task-id "${TASK_ID}"
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/01-requirements.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/01-requirements.md" <<'EOF'
 # Requirements
 
 ```yaml
@@ -288,11 +290,11 @@ EOF
 assert_command_fails_with \
   "Requirements Readiness Check must name accepted_by_human" \
   node "${ROOT_DIR}/scripts/check-gates.mjs" \
-    --specs-dir "${REPO_DIR}/specs" \
+    --specs-dir "${SPECS_DIR}" \
     --task-id "${TASK_ID}" \
     --allow-pending-acceptance
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/01-requirements.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/01-requirements.md" <<'EOF'
 # Requirements
 
 ```yaml
@@ -331,7 +333,7 @@ assert_command_fails_with \
     --repo-dir "${REPO_DIR}" \
     --plugin-dir "${ROOT_DIR}"
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/06-test-report.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/06-test-report.md" <<'EOF'
 # Test Report
 
 ```yaml
@@ -352,7 +354,7 @@ human_override: null
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/07-review-report.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/07-review-report.md" <<'EOF'
 # Review Report
 
 ```yaml
@@ -374,7 +376,7 @@ g4_status: passed
 EOF
 
 node "${ROOT_DIR}/scripts/check-gates.mjs" \
-  --specs-dir "${REPO_DIR}/specs" \
+  --specs-dir "${SPECS_DIR}" \
   --task-id "${TASK_ID}" \
   --allow-pending-acceptance > "${OUTPUT_DIR}/pending.out"
 grep -Fq "Gate status: pending_acceptance" "${OUTPUT_DIR}/pending.out"
@@ -404,7 +406,7 @@ if grep -Fq "Acceptance is already recorded for" "${OUTPUT_DIR}/failure.out"; th
   exit 1
 fi
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/08-acceptance.md" <<'EOF'
 # Acceptance
 
 ```yaml
@@ -413,7 +415,7 @@ accepted_by_human: true
 accepted_scope:
   - fixture behavior
 evidence_reviewed:
-  - specs/gate-fixture
+  - specs/records/gate-fixture
 residual_risk_accepted: []
 ```
 
@@ -430,10 +432,10 @@ EOF
 assert_command_fails_with \
   "Acceptance must name accepted_by_human or Gate G6 human_accepter" \
   node "${ROOT_DIR}/scripts/check-gates.mjs" \
-    --specs-dir "${REPO_DIR}/specs" \
+    --specs-dir "${SPECS_DIR}" \
     --task-id "${TASK_ID}"
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/08-acceptance.md" <<'EOF'
 # Acceptance
 
 ```yaml
@@ -454,7 +456,7 @@ decision: blocked_pending_named_human
 ```
 EOF
 
-mkdir -p "${LANG_REPO}/specs/${TASK_ID}/runs/${RUN_ID}"
+mkdir -p "${LANG_SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}"
 git -C "${LANG_REPO}" init -q
 mkdir -p "${LANG_REPO}/src"
 cat > "${LANG_REPO}/.dev-cadence.yaml" <<'EOF'
@@ -466,8 +468,8 @@ before
 EOF
 git -C "${LANG_REPO}" add .dev-cadence.yaml src/app.txt
 git -C "${LANG_REPO}" commit -q -m "test: seed language fixture"
-cp -R "${REPO_DIR}/specs/${TASK_ID}/." "${LANG_REPO}/specs/${TASK_ID}/"
-cat > "${LANG_REPO}/specs/${TASK_ID}/00-brief.md" <<'EOF'
+cp -R "${SPECS_DIR}/${TASK_ID}/." "${LANG_SPECS_DIR}/${TASK_ID}/"
+cat > "${LANG_SPECS_DIR}/${TASK_ID}/00-brief.md" <<'EOF'
 # Brief
 
 This English prose should fail commit readiness when artifact_language is zh.
@@ -496,7 +498,7 @@ assert_command_fails_with \
     --task-id "${TASK_ID}"
 rm -f "${REPO_DIR}/src/extra.txt"
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/05-implementation.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/05-implementation.md" <<'EOF'
 # Implementation
 
 ```yaml
@@ -517,7 +519,7 @@ printf 'scratch\n' > "${REPO_DIR}/src/extra.txt"
 assert_command_fails_with \
   "Implementation artifact has unplanned_changed_files" \
   node "${ROOT_DIR}/scripts/check-gates.mjs" \
-    --specs-dir "${REPO_DIR}/specs" \
+    --specs-dir "${SPECS_DIR}" \
     --task-id "${TASK_ID}" \
     --allow-pending-acceptance
 
@@ -529,7 +531,7 @@ assert_command_fails_with \
     --task-id "${TASK_ID}"
 rm -f "${REPO_DIR}/src/extra.txt"
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/05-implementation.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/05-implementation.md" <<'EOF'
 # Implementation
 
 ```yaml
@@ -545,7 +547,7 @@ scope_reconciliation: passed
 ```
 EOF
 
-cat > "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.md" <<'EOF'
+cat > "${SPECS_DIR}/${TASK_ID}/08-acceptance.md" <<'EOF'
 # Acceptance
 
 ```yaml
@@ -554,7 +556,7 @@ accepted_by_human: Raymond
 accepted_scope:
   - fixture behavior
 evidence_reviewed:
-  - specs/gate-fixture
+  - specs/records/gate-fixture
 residual_risk_accepted: []
 ```
 
@@ -569,7 +571,7 @@ decision: accepted
 EOF
 
 node "${ROOT_DIR}/scripts/check-gates.mjs" \
-  --specs-dir "${REPO_DIR}/specs" \
+  --specs-dir "${SPECS_DIR}" \
   --task-id "${TASK_ID}" > "${OUTPUT_DIR}/accepted.out"
 grep -Fq "Gate status: passed" "${OUTPUT_DIR}/accepted.out"
 

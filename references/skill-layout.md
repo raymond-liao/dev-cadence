@@ -201,7 +201,8 @@ Supported `artifact_language` values are `en` and `zh`. `en` is the framework de
 # - zh: Chinese, Simplified Chinese by default
 # dev_cadence:
 #   artifact_language: en
-#   specs_dir: specs
+#   specs_dir: specs/records
+#   report_dir: specs/report
 #   implementation_discipline: default
 #   verification_discipline: default
 #   review_profile: normal
@@ -213,30 +214,33 @@ If persistent visual companion sessions are used, add the local companion
 session directory to `.gitignore`. The visual companion remains optional and
 must not be required for G1.
 
-Task artifacts and Harness evidence are written under `specs/{task_id}/`:
+Task artifacts and Harness evidence are written under `specs/records/{task_id}/`:
 
 ```text
 specs/
-  {task_id}/
-    00-brief.md
-    01-requirements.md
-    02-design.md
-    03-tasks.md
-    04-test-plan.md
-    05-implementation.md
-    06-test-report.md
-    07-review-report.md
-    08-acceptance.md
-    decisions/
-      ADR-001.md
-    runs/
-      {run_id}/
-        run-context.md
-        execution-report.md
-        tool-log.md
-        test-log.md
-        diff-summary.md
-        permission-decisions.md
+  records/
+    {task_id}/
+      00-brief.md
+      01-requirements.md
+      02-design.md
+      03-tasks.md
+      04-test-plan.md
+      05-implementation.md
+      06-test-report.md
+      07-review-report.md
+      08-acceptance.md
+      decisions/
+        ADR-001.md
+      runs/
+        {run_id}/
+          run-context.md
+          execution-report.md
+          tool-log.md
+          test-log.md
+          diff-summary.md
+          permission-decisions.md
+  report/
+    # generated HTML, safe to delete and regenerate
 ```
 
 Artifact language applies to Markdown prose, notes, acceptance criteria text, reports, and human-readable explanations. Keep filenames, paths, YAML keys, schema fields, status values, workflow IDs, gate IDs, and command/code identifiers in English for interoperability.
@@ -245,9 +249,9 @@ Artifact language applies to Markdown prose, notes, acceptance criteria text, re
 
 - Create or update root `AGENTS.md` so normal software delivery requests route to Dev Cadence.
 - Create `.dev-cadence.yaml` with commented user preference fields unless it already exists.
-- Create `specs/.gitkeep` when needed to represent an empty specs directory.
+- Create `specs/records/.gitkeep` when needed to represent an empty specs records directory.
 - Create or update `.gitignore` to include `.dev-cadence.yaml`, preserving existing ignore rules.
-- During initialization, synchronization, repair, or diagnosis, write only root `AGENTS.md`, root `.gitignore` entry for `.dev-cadence.yaml`, root `.dev-cadence.yaml`, and `specs/.gitkeep` by default.
+- During initialization, synchronization, repair, or diagnosis, write only root `AGENTS.md`, root `.gitignore` entry for `.dev-cadence.yaml`, root `.dev-cadence.yaml`, and `specs/records/.gitkeep` by default.
 - Do not modify product source, tests, migrations, build scripts, deployment files, or application configuration during framework initialization unless the user explicitly requests delivery work in the same turn.
 - Do not create task-specific specs during framework initialization unless the user explicitly requests a concrete delivery task in the same turn.
 - Do not infer a hidden product task from repository contents when the user asks only to prepare, initialize, apply, install, update, sync, repair, inspect, or diagnose the framework.
@@ -265,7 +269,7 @@ For software delivery tasks in this repository, use `dev-cadence`.
 
 This applies to feature development, bugfixes, refactoring, code review, research spikes, incident fixes, and any request that changes or evaluates repository behavior.
 
-Read root `.dev-cadence.yaml` when present for local overrides. Write task artifacts and Harness evidence under `specs/{task_id}/`.
+Read root `.dev-cadence.yaml` when present for local overrides. Write task artifacts and Harness evidence under `specs/records/{task_id}/`. Generated HTML reports live under `specs/report/`.
 
 The user does not need to invoke a Skill name or choose a workflow. Dev Cadence infers `workflow_hint`, routes `selected_workflow`, records `selection_reason`, and follows its plugin-owned policies, templates, and gates.
 
@@ -278,7 +282,7 @@ Resolve runtime rules in this order:
 
 1. Current user request and explicit repository instructions.
 2. Repo-local `AGENTS.md` and `.dev-cadence.yaml`.
-3. Current task artifacts under `specs/{task_id}/`.
+3. Current task artifacts under `specs/records/{task_id}/`.
 4. `dev-cadence` references, templates, built-in delivery disciplines, and adapters.
 5. Configured adapters when selected.
 
@@ -306,7 +310,7 @@ dev_cadence:
 - use parallel Worker runs only for independent domains;
 - use Dev Cadence source validation when changing this plugin's own skills and references.
 
-`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, `scripts/check-spec-artifacts.mjs`, `scripts/check-gates.mjs`, and `scripts/check-before-commit.mjs`. `scripts/generate-spec-report.mjs` generates a co-located static HTML browsing view under `specs/`; the Markdown/YAML artifacts remain authoritative. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
+`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, `scripts/check-spec-artifacts.mjs`, `scripts/check-gates.mjs`, and `scripts/check-before-commit.mjs`. `scripts/generate-spec-report.mjs` generates a static HTML browsing view under `specs/report/` from Markdown/YAML artifacts under `specs/records/`; the Markdown/YAML artifacts remain authoritative. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
 
 External adapters are optional replacement points for Worker execution techniques. Dev Cadence still controls Supervisor routing, Harness evidence, Quality Gate, Human Gate, scope reconciliation, and final acceptance.
 
@@ -319,9 +323,9 @@ Maintenance may update:
 - root `AGENTS.md` AI delivery entrypoint section;
 - root `.gitignore` entry for `.dev-cadence.yaml`;
 - root `.dev-cadence.yaml`;
-- `specs/.gitkeep`.
+- `specs/records/.gitkeep`.
 
-Maintenance must not touch product code or task-specific `specs/{task_id}/` artifacts unless the same user turn explicitly requests delivery work.
+Maintenance must not touch product code or task-specific `specs/records/{task_id}/` artifacts unless the same user turn explicitly requests delivery work.
 
 ## Hard Rules
 

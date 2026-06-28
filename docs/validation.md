@@ -13,10 +13,10 @@ bash tests/run-all.sh
 ## 生成 Specs HTML Report
 
 ```bash
-node scripts/generate-spec-report.mjs --specs-dir specs
+node scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report
 ```
 
-该命令从现有 `specs/{task_id}/` Markdown/YAML artifact 生成静态浏览视图：`specs/index.html`、`specs/.dev-cadence-report/style.css`、`specs/{task_id}/index.html`、`specs/{task_id}/*.html`、`specs/{task_id}/runs/{run_id}/index.html` 和 `specs/{task_id}/runs/{run_id}/*.html`。报告用于快速浏览 JaCoCo 风格任务 summary、Gate Summary、problem row、run evidence、artifact HTML 详情和 raw artifact 链接；事实源仍是 Markdown/YAML artifact。
+该命令从现有 `specs/records/{task_id}/` Markdown/YAML artifact 生成静态浏览视图：`specs/report/index.html`、`specs/report/assets/style.css`、`specs/report/{task_id}/index.html`、`specs/report/{task_id}/*.html`、`specs/report/{task_id}/runs/{run_id}/index.html` 和 `specs/report/{task_id}/runs/{run_id}/*.html`。报告用于快速浏览 JaCoCo 风格任务 summary、Gate Summary、problem row、run evidence、artifact HTML 详情和 raw artifact 链接；事实源仍是 `specs/records/` 下的 Markdown/YAML artifact。
 
 ## 生成发布包
 

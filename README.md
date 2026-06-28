@@ -42,7 +42,7 @@ codex
 修复支付回调重复处理的问题
 ```
 
-Dev Cadence 会在业务仓库里使用 `specs/{task_id}/` 记录过程 artifact、Harness 运行证据、验证和人工验收。完整机制见 [docs/overview.md](docs/overview.md)。
+Dev Cadence 会在业务仓库里使用 `specs/records/{task_id}/` 记录过程 artifact、Harness 运行证据、验证和人工验收；生成的 HTML 浏览报告放在 `specs/report/`。完整机制见 [docs/overview.md](docs/overview.md)。
 
 ## Local Development
 
@@ -75,7 +75,7 @@ node scripts/package-codex-plugin.mjs --clean
 | [docs/architecture.md](docs/architecture.md) | 角色、分层、Harness、Context 和工具边界 |
 | [docs/workflows/](docs/workflows/) | Workflow catalog、路由原则和每类任务路径 |
 | [docs/roles/](docs/roles/) | Human、Supervisor、Harness 和 Worker Agent 角色边界 |
-| [docs/artifacts/](docs/artifacts/) | `specs/{task_id}/` task artifacts 和模板入口 |
+| [docs/artifacts/](docs/artifacts/) | `specs/records/{task_id}/` task artifacts 和模板入口 |
 | [docs/runs/](docs/runs/) | `runs/{run_id}/` Harness 运行证据说明 |
 | [docs/gates/](docs/gates/) | G1-G6 Quality Gates 和 Human Gate 说明 |
 | [docs/plugin-skill-modularization.md](docs/plugin-skill-modularization.md) | 当前 Plugin、Skill、reference、template 和 adapter 的模块化边界 |

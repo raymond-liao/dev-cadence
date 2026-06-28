@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 const SPEC_TEMPLATES = [
   '00-brief.md',
@@ -34,7 +35,8 @@ Required:
 
 Options:
   --run-id <id>        Also initialize Harness evidence under runs/<run-id>.
-  --specs-dir <dir>    Specs output directory. Defaults to specs.
+  --specs-dir <dir>    Specs records output directory. Defaults to specs/records,
+                       or legacy specs when it already contains task dirs.
   --plugin-dir <dir>   dev-cadence source directory. Defaults to the
                        parent directory of this script.
   --skill-dir <dir>    Deprecated alias for --plugin-dir.
@@ -46,7 +48,7 @@ Options:
 Examples:
   init-task-artifacts.mjs --task-id 20260622-login
   init-task-artifacts.mjs --task-id 20260622-login --run-id 20260622-1030-developer-1
-  init-task-artifacts.mjs --task-id 20260622-login --specs-dir specs --dry-run`);
+  init-task-artifacts.mjs --task-id 20260622-login --specs-dir specs/records --dry-run`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -57,7 +59,7 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 function parseArgs(argv) {
   const options = {
     pluginDir: path.resolve(path.join(import.meta.dirname, '..')),
-    specsDir: path.resolve('specs'),
+    specsDir: resolveDefaultSpecsDir(),
     taskId: null,
     runId: null,
     overwrite: false,
@@ -74,7 +76,7 @@ function parseArgs(argv) {
       options.runId = readValue(argv, index, arg);
       index += 1;
     } else if (arg === '--specs-dir') {
-      options.specsDir = path.resolve(readValue(argv, index, arg));
+      options.specsDir = normalizeSpecsDir(readValue(argv, index, arg));
       index += 1;
     } else if (arg === '--plugin-dir') {
       options.pluginDir = path.resolve(readValue(argv, index, arg));

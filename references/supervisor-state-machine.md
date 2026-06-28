@@ -25,7 +25,7 @@ Use explicit state, not conversational judgment. Any skipped state must record i
 - Produce required Harness evidence for every run: `run-context.md`, `execution-report.md`, `tool-log.md`, `permission-decisions.md`, plus `diff-summary.md` when files change and `test-log.md` when commands or tests run.
 - For `S1` and `S2` implementation or fix runs, produce `pre-implementation-status.md` before the first product source, test, migration, build, deployment, or application configuration edit.
 - After implementation and before test, reconcile actual changed files, untracked files, created artifact files, deleted files, new components, and new platforms against `02-design.md`, `03-tasks.md`, and `05-implementation.md`.
-- Do not rely only on tracked diffs for scope reconciliation. New `specs/{task_id}/` artifacts, generated files, and new source files can be untracked until staged, but still must be classified as planned, unplanned, or evidence-only files.
+- Do not rely only on tracked diffs for scope reconciliation. New `specs/records/{task_id}/` artifacts, generated files, and new source files can be untracked until staged, but still must be classified as planned, unplanned, or evidence-only files.
 - If actual diff exceeds planned scope, pause before review and update requirements, design, tasks, and test plan, or record a named Human decision accepting the narrowed evidence.
 - Test evidence must cover every changed component or explicitly record skipped checks, residual risk, and whether Human acceptance is allowed.
 - Reviewer must check scope reconciliation and verification coverage before approving.
@@ -101,10 +101,10 @@ Before any product file write, verify:
 - any same-turn scope change or user correction has been captured as a Human decision.
 - any required clarification names a Human decision owner, not repository evidence, code inspection, Supervisor, Harness, or a Worker Agent.
 
-If any item is missing, only read-only analysis and updates to `specs/{task_id}/` or requirement documents are allowed.
+If any item is missing, only read-only analysis and updates to `specs/records/{task_id}/` or requirement documents are allowed.
 
 For `S1` and `S2`, also verify that
-`specs/{task_id}/runs/{run_id}/pre-implementation-status.md` exists before the
+`specs/records/{task_id}/runs/{run_id}/pre-implementation-status.md` exists before the
 first product edit and records:
 
 - current tracked and untracked worktree status;

@@ -24,12 +24,12 @@ Allowed writes during rule maintenance:
 - root `AGENTS.md` AI delivery entrypoint section;
 - root `.gitignore` entry for `.dev-cadence.yaml`;
 - root `.dev-cadence.yaml`;
-- `specs/.gitkeep` only when needed to represent an empty specs directory.
+- `specs/records/.gitkeep` only when needed to represent an empty specs records directory.
 
 Forbidden writes unless the same user turn explicitly asks for delivery work:
 
 - product source, tests, migrations, build scripts, deployment files, runtime configuration, or dependency manifests;
-- task-specific `specs/{task_id}/` artifacts;
+- task-specific `specs/records/{task_id}/` artifacts;
 - commits, pushes, releases, database operations, or production actions.
 
 ## Sync Record

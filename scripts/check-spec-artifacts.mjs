@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { findNearestConfig, parseArtifactLanguage } from './artifact-language.mjs';
+import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 function printHelp() {
   console.log(`Usage: check-spec-artifacts.mjs [specs-dir]
@@ -9,8 +10,9 @@ function printHelp() {
 Validates Dev Cadence task artifacts for basic YAML-like consistency.
 
 Arguments:
-  specs-dir  Specs directory to check. Defaults to specs in the current working
-             directory.
+  specs-dir  Specs records directory to check. Defaults to specs/records in the
+             current working directory, or legacy specs when it already contains
+             task dirs.
 
 Options:
   --warnings-as-errors
@@ -35,7 +37,7 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 
 function parseArgs(argv) {
   const options = {
-    specsDir: 'specs',
+    specsDir: resolveDefaultSpecsDir(),
     warningsAsErrors: false,
   };
 
@@ -49,7 +51,7 @@ function parseArgs(argv) {
     }
   }
 
-  options.specsDir = path.resolve(options.specsDir);
+  options.specsDir = normalizeSpecsDir(options.specsDir);
   return options;
 }
 
@@ -78,6 +80,7 @@ function walk(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
+    if (entry.isDirectory() && entry.name === 'report') continue;
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       files.push(...walk(fullPath));
@@ -267,6 +270,11 @@ function checkDuplicateKeys(filePath, block, blockIndex) {
 }
 
 function taskDirectories(rootDir) {
+  const recordsDir = path.join(rootDir, 'records');
+  if (fs.existsSync(recordsDir) && fs.statSync(recordsDir).isDirectory()) {
+    return taskDirectories(recordsDir);
+  }
+
   const directories = [];
   if (fs.existsSync(path.join(rootDir, '00-brief.md'))) {
     directories.push(rootDir);

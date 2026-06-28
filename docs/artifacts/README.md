@@ -1,6 +1,6 @@
 # Dev Cadence 产物
 
-`specs/{task_id}/` 是一个任务的持久交接包：需求、设计、计划、实现说明、验证、Review 和最终验收都放在这里。后续 Agent、Reviewer 和 Human 应优先读这些文件，而不是依赖聊天记录。
+`specs/records/{task_id}/` 是一个任务的持久交接包：需求、设计、计划、实现说明、验证、Review 和最终验收都放在这里。后续 Agent、Reviewer 和 Human 应优先读这些文件，而不是依赖聊天记录。
 
 如果要看某次执行的命令、测试、diff 或权限证据，进入 [runs](../runs/)；如果要看 G1-G6 如何使用这些产物，进入 [gates](../gates/)。
 
@@ -41,7 +41,7 @@ Artifact 的作用：
 默认任务目录：
 
 ```text
-specs/{task_id}/
+specs/records/{task_id}/
   00-brief.md
   01-requirements.md
   02-design.md
@@ -70,13 +70,13 @@ Run evidence 的逐项说明见 [../runs/](../runs/)；G1-G6 的检查含义见 
 
 ## 任务报告
 
-可以从现有 `specs/` artifact 生成静态 HTML 浏览视图：
+可以从现有 `specs/records/` artifact 生成静态 HTML 浏览视图：
 
 ```bash
-node scripts/generate-spec-report.mjs --specs-dir specs
+node scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report
 ```
 
-HTML report 用于浏览 task summary、gate summary、artifact 链接、run evidence 和 Markdown 详情页。它是派生视图，不是事实源；Gate、review、acceptance 和提交前检查仍以 Markdown/YAML artifact 为准。
+HTML report 输出到 `specs/report/`，用于浏览 task summary、gate summary、artifact 链接、run evidence 和 Markdown 详情页。它是派生视图，不是事实源；Gate、review、acceptance 和提交前检查仍以 `specs/records/` 下的 Markdown/YAML artifact 为准。
 
 报告命令和输出文件说明见 [Dev Cadence 当前验证](../validation.md#生成-specs-html-report)。目标仓库的薄契约只需要保存 `specs/` 和本地配置，初始化与同步规则由 [Plugin Skill 模块化](../plugin-skill-modularization.md#薄仓库契约) 和 [repository-rule-sync.md](../../references/repository-rule-sync.md) 说明。
 

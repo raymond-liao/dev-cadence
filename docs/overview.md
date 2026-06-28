@@ -29,7 +29,7 @@ Multi-Agent Development Framework
 |---|---|
 | [workflows/](workflows/) | Dev Cadence 支持哪些工作流，每类任务怎么走 |
 | [roles/](roles/) | Human、Supervisor、Harness 和 Worker Agents 各自负责什么 |
-| [artifacts/](artifacts/) | `specs/{task_id}/` 下每个产物是什么、怎么看 |
+| [artifacts/](artifacts/) | `specs/records/{task_id}/` 下每个产物是什么、怎么看 |
 | [runs/](runs/) | `runs/{run_id}/` 下每个 Harness 运行证据是什么、怎么看 |
 | [gates/](gates/) | G1-G6 gate 控制什么风险、什么时候允许继续 |
 | [architecture.md](architecture.md) | 为什么要分 Supervisor、Harness、Worker、Context 和 Tooling 边界 |

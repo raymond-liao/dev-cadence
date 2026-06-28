@@ -87,7 +87,7 @@ Codex Plugin 应持有 Dev Cadence Core 在 Codex 中运行所需的可复用流
 
 `repository-rule-sync.md` 说明 thin repo-local contract 的初始化、检查、同步和修复规则。`scripts/` 按职责提供 artifact language 解析、source self-check、gate 检查、提交前检查、artifact 初始化、dry run、HTML report、acceptance summary 和 optional visual companion。具体命令入口见 [validation.md](validation.md)；具体脚本清单以 `scripts/` 目录和 package boundary 测试为准。
 
-`scripts/generate-spec-report.mjs` 从现有 task artifact 生成 co-located 静态 HTML 浏览视图，但不改变 Markdown/YAML 事实源。
+`scripts/generate-spec-report.mjs` 从 `specs/records/` 下的 task artifact 生成 `specs/report/` 静态 HTML 浏览视图，但不改变 Markdown/YAML 事实源。
 
 `visual-companion.md` 和 `scripts/visual-companion/` 提供可选浏览器视觉对齐能力，用于 mockup、diagram 和视觉方案对比。它帮助 Human 和 AI 对齐难以纯文字表达的需求，但不能成为 G1 的硬条件。缺少 Node、浏览器或可访问 URL 时，流程必须降级为 text-only clarification。
 
@@ -103,7 +103,10 @@ AGENTS.md
 .dev-cadence.yaml
 
 specs/
-  .gitkeep
+  records/
+    .gitkeep
+  report/
+    # generated HTML, safe to delete and regenerate
 ```
 
 `AGENTS.md` 应把 Codex 中的交付工作路由到 `dev-cadence` Codex Plugin。它不应包含完整框架。
@@ -113,7 +116,8 @@ specs/
 ```yaml
 dev_cadence:
   artifact_language: en
-  specs_dir: specs
+  specs_dir: specs/records
+  report_dir: specs/report
   implementation_discipline: default
   verification_discipline: default
   review_profile: normal
@@ -121,7 +125,7 @@ dev_cadence:
 
 `.dev-cadence/visual-companion/` 只用于持久化 visual companion session，应加入 `.gitignore`，不作为框架 runtime authority。
 
-`specs/{task_id}/` 仍然是任务产物、证据和验收记录的持久来源。
+`specs/records/{task_id}/` 仍然是任务产物、证据和验收记录的持久来源；`specs/report/` 只是可重新生成的浏览视图。
 
 ## 运行时权威
 
@@ -129,7 +133,7 @@ dev_cadence:
 
 1. 当前用户请求和显式仓库指令。
 2. 仓库本地 `AGENTS.md` 和 `.dev-cadence.yaml`。
-3. `specs/{task_id}/` 下的任务产物。
+3. `specs/records/{task_id}/` 下的任务产物。
 4. `dev-cadence` 的 references、templates、内置交付纪律和 adapters。
 5. 被显式配置的外部 adapter。
 

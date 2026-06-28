@@ -1,6 +1,6 @@
 # Spec Templates
 
-Use these templates for task artifacts under `specs/{task_id}/`. Copy only the artifacts required by the task class, workflow, or maintenance mode.
+Use these templates for task artifacts under `specs/records/{task_id}/`. Copy only the artifacts required by the task class, workflow, or maintenance mode.
 
 The reusable template files live under:
 
@@ -23,17 +23,17 @@ The reusable template files live under:
 
 Executable artifact and gate checks:
 
-- `scripts/check-spec-artifacts.mjs specs`
+- `scripts/check-spec-artifacts.mjs specs/records`
 - `scripts/check-gates.mjs --task-id <task_id>`
 - `scripts/check-before-commit.mjs --task-id <task_id>`
-- `scripts/generate-spec-report.mjs --specs-dir specs`
+- `scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report`
 
 Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reproducible and path-based.
 
 `scripts/generate-spec-report.mjs` writes a static derived browsing view to
-`specs/index.html`, `specs/.dev-cadence-report/style.css`,
-`specs/{task_id}/index.html`, and
-`specs/{task_id}/runs/{run_id}/index.html`. The report is for summary and
+`specs/report/index.html`, `specs/report/assets/style.css`,
+`specs/report/{task_id}/index.html`, and
+`specs/report/{task_id}/runs/{run_id}/index.html`. The report is for summary and
 drill-down navigation only. Markdown/YAML artifacts remain the source of truth
 for gates, review, and Human acceptance.
 
@@ -77,7 +77,8 @@ remain a backstop, not the first point where localization drift is discovered.
 # - zh: Chinese, Simplified Chinese by default
 # dev_cadence:
 #   artifact_language: en
-#   specs_dir: specs
+#   specs_dir: specs/records
+#   report_dir: specs/report
 #   implementation_discipline: default
 #   verification_discipline: default
 #   review_profile: normal

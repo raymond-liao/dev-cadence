@@ -23,7 +23,7 @@ node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
 
 node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${REPO_DIR}/specs"
 node "${ROOT_DIR}/scripts/check-gates.mjs" \
-  --specs-dir "${REPO_DIR}/specs" \
+  --specs-dir "${REPO_DIR}/specs/records" \
   --task-id "${TASK_ID}"
 
 mkdir -p "${ZH_REPO_DIR}/specs/sample"
@@ -61,19 +61,19 @@ node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
   --requested-by "Raymond" \
   --accepted-by "Raymond" \
   --json > "${ZH_DRY_RUN_REPO}/dry-run.json"
-grep -q "本 artifact 集用于验证 Dev Cadence 交付路由和证据生成" "${ZH_DRY_RUN_REPO}/specs/zh-login/00-brief.md"
-grep -q "生成自 CLI 输入和仓库本地 Dev Cadence 薄契约" "${ZH_DRY_RUN_REPO}/specs/zh-login/01-requirements.md"
-grep -q "产品行为未由 dry run 验证" "${ZH_DRY_RUN_REPO}/specs/zh-login/08-acceptance.md"
-node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${ZH_DRY_RUN_REPO}/specs" --warnings-as-errors
+grep -q "本 artifact 集用于验证 Dev Cadence 交付路由和证据生成" "${ZH_DRY_RUN_REPO}/specs/records/zh-login/00-brief.md"
+grep -q "生成自 CLI 输入和仓库本地 Dev Cadence 薄契约" "${ZH_DRY_RUN_REPO}/specs/records/zh-login/01-requirements.md"
+grep -q "产品行为未由 dry run 验证" "${ZH_DRY_RUN_REPO}/specs/records/zh-login/08-acceptance.md"
+node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${ZH_DRY_RUN_REPO}/specs/records" --warnings-as-errors
 
 node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
-  --specs-dir "${REPO_DIR}/specs" \
+  --specs-dir "${REPO_DIR}/specs/records" \
   --task-id "${TASK_ID}" > "${SUMMARY_FILE}"
 
-test -f "${REPO_DIR}/specs/${TASK_ID}/00-brief.md"
-test -f "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.md"
-test -d "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1"
-test -f "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/pre-implementation-status.md"
+test -f "${REPO_DIR}/specs/records/${TASK_ID}/00-brief.md"
+test -f "${REPO_DIR}/specs/records/${TASK_ID}/08-acceptance.md"
+test -d "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1"
+test -f "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/pre-implementation-status.md"
 test ! -e "${REPO_DIR}/.ai"
 grep -q "Accepted by: Raymond" "${SUMMARY_FILE}"
 grep -q "Acceptance: accepted_for_dry_run_scope" "${SUMMARY_FILE}"

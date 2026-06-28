@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { RECORDS_DIR, SPECS_ROOT_DIR } from './specs-paths.mjs';
 
 const START_MARKER = '<!-- dev-cadence:start -->';
 const END_MARKER = '<!-- dev-cadence:end -->';
@@ -12,7 +13,7 @@ For software delivery tasks in this repository, use \`dev-cadence\`.
 
 This applies to feature development, bugfixes, refactoring, code review, research spikes, incident fixes, and any request that changes or evaluates repository behavior.
 
-Read root \`.dev-cadence.yaml\` when present for local overrides. Write task artifacts and Harness evidence under \`specs/{task_id}/\`.
+Read root \`.dev-cadence.yaml\` when present for local overrides. Write task artifacts and Harness evidence under \`specs/records/{task_id}/\`. Generated HTML reports live under \`specs/report/\`.
 
 The user does not need to invoke a Skill name or choose a workflow. Dev Cadence infers \`workflow_hint\`, routes \`selected_workflow\`, records \`selection_reason\`, and follows its plugin-owned policies, templates, and gates.
 
@@ -27,7 +28,8 @@ const LOCAL_YAML = `# Local Dev Cadence preferences.
 # - zh: Chinese, Simplified Chinese by default
 # dev_cadence:
 #   artifact_language: en
-#   specs_dir: specs
+#   specs_dir: specs/records
+#   report_dir: specs/report
 #   implementation_discipline: default
 #   verification_discipline: default
 #   review_profile: normal
@@ -52,7 +54,7 @@ Options:
   -h, --help         Show this help text.
 
 Writes are limited to root AGENTS.md, root .gitignore, root .dev-cadence.yaml,
-and specs/.gitkeep.`);
+and specs/records/.gitkeep.`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -298,7 +300,8 @@ function verify(options, report) {
   const agents = readIfExists(path.join(options.repoDir, 'AGENTS.md')) || '';
   const gitignore = readIfExists(path.join(options.repoDir, '.gitignore')) || '';
   const localExists = fs.existsSync(path.join(options.repoDir, '.dev-cadence.yaml'));
-  const specsExists = fs.existsSync(path.join(options.repoDir, 'specs'));
+  const specsExists = fs.existsSync(path.join(options.repoDir, SPECS_ROOT_DIR));
+  const recordsExists = fs.existsSync(path.join(options.repoDir, SPECS_ROOT_DIR, RECORDS_DIR));
 
   report.verification.push({
     check: 'AGENTS.md routes normal delivery to Dev Cadence',
@@ -309,8 +312,8 @@ function verify(options, report) {
     status: localExists && gitignore.split(/\r?\n/).some((line) => line.trim() === '.dev-cadence.yaml') ? 'pass' : 'missing',
   });
   report.verification.push({
-    check: 'specs/ exists',
-    status: specsExists ? 'pass' : 'missing',
+    check: 'specs/records exists',
+    status: specsExists && recordsExists ? 'pass' : 'missing',
   });
   report.verification.push({
     check: 'no product files were in allowed write set',
@@ -342,7 +345,12 @@ function reconcile(options) {
 
   reconcileGitignore(options, report);
   reconcileLocal(options, report);
-  reconcileGitkeep(options, report, path.join(options.repoDir, 'specs'), path.join(options.repoDir, 'specs', '.gitkeep'));
+  reconcileGitkeep(
+    options,
+    report,
+    path.join(options.repoDir, SPECS_ROOT_DIR, RECORDS_DIR),
+    path.join(options.repoDir, SPECS_ROOT_DIR, RECORDS_DIR, '.gitkeep'),
+  );
   inspectLegacyAi(options, report);
   verify(options, report);
 

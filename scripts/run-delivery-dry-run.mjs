@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { resolveArtifactLanguage } from './artifact-language.mjs';
+import { defaultRecordsDir } from './specs-paths.mjs';
 
 let outputArtifactLanguage = 'en';
 
@@ -12,7 +13,7 @@ function printHelp() {
 Creates a minimal Dev Cadence delivery dry run in an initialized repository.
 
 Required:
-  --task-id <id>          Task directory name under specs.
+  --task-id <id>          Task directory name under specs/records.
   --goal <text>           Requested task goal.
 
 Options:
@@ -326,7 +327,7 @@ const ZH_REPLACEMENTS = [
   ['Task artifacts populated.', 'Task artifacts \u5df2\u586b\u5145。'],
   ['Harness run evidence populated.', 'Harness run evidence \u5df2\u586b\u5145。'],
   ['No product tool execution.', '\u6ca1\u6709\u4ea7\u54c1\u5de5\u5177\u6267\u884c。'],
-  ['check-spec-artifacts.mjs specs', 'check-spec-artifacts.mjs specs'],
+  ['check-spec-artifacts.mjs specs/records', 'check-spec-artifacts.mjs specs/records'],
   ['pending_external_command_capture', 'pending_external_command_capture'],
   ['Product test suite skipped by dry-run scope.', 'dry-run scope \u8df3\u8fc7\u4ea7\u54c1\u6d4b\u8bd5\u5957\u4ef6。'],
   ['Generated delivery dry-run artifacts.', '\u751f\u6210\u4ea4\u4ed8 dry-run artifacts。'],
@@ -346,6 +347,7 @@ function localizeDryRunText(text, artifactLanguage) {
 }
 
 function initArtifacts(options) {
+  const recordsDir = defaultRecordsDir(options.repoDir);
   const script = path.join(options.pluginDir, 'scripts', 'init-task-artifacts.mjs');
   const result = spawnSync(process.execPath, [
     script,
@@ -354,7 +356,7 @@ function initArtifacts(options) {
     '--run-id',
     options.runId,
     '--specs-dir',
-    path.join(options.repoDir, 'specs'),
+    recordsDir,
     '--skill-dir',
     options.pluginDir,
     '--json',
@@ -368,7 +370,9 @@ function initArtifacts(options) {
 }
 
 function writeArtifacts(options, workflow, selectionReason, taskClass, artifactReport) {
-  const taskDir = path.join(options.repoDir, 'specs', options.taskId);
+  const recordsDir = defaultRecordsDir(options.repoDir);
+  const recordsLabel = 'specs/records';
+  const taskDir = path.join(recordsDir, options.taskId);
   const runDir = path.join(taskDir, 'runs', options.runId);
   const artifactFiles = [
     '00-brief.md',
@@ -390,8 +394,8 @@ function writeArtifacts(options, workflow, selectionReason, taskClass, artifactR
     'diff-summary.md',
     'permission-decisions.md',
   ];
-  const artifactPaths = artifactFiles.map((file) => `specs/${options.taskId}/${file}`);
-  const runPaths = runFiles.map((file) => `specs/${options.taskId}/runs/${options.runId}/${file}`);
+  const artifactPaths = artifactFiles.map((file) => `${recordsLabel}/${options.taskId}/${file}`);
+  const runPaths = runFiles.map((file) => `${recordsLabel}/${options.taskId}/runs/${options.runId}/${file}`);
   const acceptanceBlocked = !options.acceptedBy;
   const timestamp = now();
 
@@ -482,7 +486,7 @@ status: passed
 required_inputs:
   - 01-requirements.md
 evidence:
-  - specs/${options.taskId}/01-requirements.md
+  - specs/records/${options.taskId}/01-requirements.md
 pass_condition: dry_run_requirements_ready
 fail_condition: dry_run_scope_unknown
 decision: passed
@@ -546,7 +550,7 @@ status: passed
 required_inputs:
   - 03-tasks.md
 evidence:
-  - specs/${options.taskId}/03-tasks.md
+  - specs/records/${options.taskId}/03-tasks.md
 pass_condition: dry_run_tasks_are_executable
 fail_condition: dry_run_tasks_missing_scope_or_verification
 decision: passed
@@ -561,8 +565,8 @@ G3 passed for dry-run execution because tasks, artifacts, forbidden actions, and
     status: 'complete_for_dry_run',
     scope: ['Generated artifacts and run evidence'],
     test_strategy: ['Validate YAML-like artifact blocks with check-spec-artifacts.mjs'],
-    test_commands: [`node ${path.relative(options.repoDir, path.join(options.pluginDir, 'scripts', 'check-spec-artifacts.mjs'))} specs`],
-    test_data: [`specs/${options.taskId}`],
+    test_commands: [`node ${path.relative(options.repoDir, path.join(options.pluginDir, 'scripts', 'check-spec-artifacts.mjs'))} specs/records`],
+    test_data: [`specs/records/${options.taskId}`],
     environment: ['local fixture repository'],
     coverage_targets: ['Task artifact schema', 'Harness evidence schema'],
     changed_component_coverage: ['No product components changed'],
@@ -626,7 +630,7 @@ required_inputs:
   - 04-test-plan.md
   - 06-test-report.md
 evidence:
-  - specs/${options.taskId}
+  - specs/records/${options.taskId}
 verification_status: partially_verified
 component_coverage_complete: false
 human_override: ${yamlValue(options.acceptedBy)}
@@ -662,7 +666,7 @@ required_inputs:
   - 06-test-report.md
   - 07-review-report.md
 evidence:
-  - specs/${options.taskId}
+  - specs/records/${options.taskId}
 g4_status: ${options.acceptedBy ? 'human_override_for_dry_run' : 'blocked_pending_human_acceptance'}
 scope_reconciliation_status: passed_no_product_changes
 verification_coverage_status: product_behavior_not_applicable_to_dry_run
@@ -690,7 +694,7 @@ status: ${acceptanceBlocked ? 'blocked' : 'passed'}
 required_inputs:
   - 08-acceptance.md
 evidence:
-  - specs/${options.taskId}
+  - specs/records/${options.taskId}
 human_accepter: ${yamlValue(options.acceptedBy)}
 decision: ${acceptanceBlocked ? 'blocked_pending_named_human' : 'accepted_for_dry_run_scope'}
 residual_risk:
@@ -703,10 +707,10 @@ escalation: ${acceptanceBlocked ? 'named Human acceptance required' : 'none'}
     task_id: options.taskId,
     agent_role: 'Supervisor',
     blueprint_path: 'references/supervisor-state-machine.md',
-    context_pack_path: `specs/${options.taskId}/00-brief.md`,
+    context_pack_path: `specs/records/${options.taskId}/00-brief.md`,
     workspace_path: rel(options.repoDir, options.repoDir),
-    allowed_read_paths: ['AGENTS.md', '.dev-cadence.yaml', 'specs/**'],
-    allowed_write_paths: [`specs/${options.taskId}/**`],
+    allowed_read_paths: ['AGENTS.md', '.dev-cadence.yaml', 'specs/records/**'],
+    allowed_write_paths: [`specs/records/${options.taskId}/**`],
     denied_paths: ['product source files'],
     allowed_tools: ['node', 'filesystem writes under specs'],
     denied_tools: ['network', 'production actions', 'database writes'],
@@ -717,7 +721,7 @@ escalation: ${acceptanceBlocked ? 'named Human acceptance required' : 'none'}
     timeout: 'not enforced',
     max_iterations: 1,
     required_evidence: runPaths,
-    pre_implementation_status_path: `specs/${options.taskId}/runs/${options.runId}/pre-implementation-status.md`,
+    pre_implementation_status_path: `specs/records/${options.taskId}/runs/${options.runId}/pre-implementation-status.md`,
     expected_artifacts: artifactPaths,
     log_paths: runPaths,
   }));
@@ -763,7 +767,7 @@ escalation: ${acceptanceBlocked ? 'named Human acceptance required' : 'none'}
     unplanned_changed_files: [],
     deleted_files: [],
     added_components: [],
-    pre_implementation_status_path: `specs/${options.taskId}/runs/${options.runId}/pre-implementation-status.md`,
+    pre_implementation_status_path: `specs/records/${options.taskId}/runs/${options.runId}/pre-implementation-status.md`,
     implementation_authorized: false,
     post_hoc_backfill: false,
     scope_reconciliation_status: 'passed_no_product_changes',
@@ -789,7 +793,7 @@ escalation: ${acceptanceBlocked ? 'named Human acceptance required' : 'none'}
 
   writeText(path.join(runDir, 'test-log.md'), block('Test Log', {
     run_id: options.runId,
-    commands: ['check-spec-artifacts.mjs specs'],
+    commands: ['check-spec-artifacts.mjs specs/records'],
     environment: ['local fixture repository'],
     results: ['pending_external_command_capture'],
     failures: [],

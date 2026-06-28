@@ -4,10 +4,11 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { resolveArtifactLanguage } from './artifact-language.mjs';
+import { defaultReportDirForSpecsDir, normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const CHECK_GATES_SCRIPT = path.join(SCRIPT_DIR, 'check-gates.mjs');
-const REPORT_DIR = '.dev-cadence-report';
+const ASSETS_DIR = 'assets';
 const STYLE_FILE = 'style.css';
 
 const SPEC_FILES = {
@@ -196,7 +197,10 @@ function printHelp() {
 Generates a static Dev Cadence specs HTML report from existing task artifacts.
 
 Options:
-  --specs-dir <dir>    Specs directory. Defaults to specs.
+  --specs-dir <dir>    Raw specs records directory. Defaults to specs/records,
+                       or legacy specs when it already contains task dirs.
+  --report-dir <dir>   Generated HTML report directory. Defaults to specs/report
+                       when --specs-dir is specs/records.
   --json               Print machine-readable JSON report.
   -h, --help           Show this help text.
 
@@ -210,21 +214,32 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 }
 
 function parseArgs(argv) {
+  const explicitSpecsDir = argv.includes('--specs-dir');
   const options = {
-    specsDir: path.resolve('specs'),
+    specsDir: resolveDefaultSpecsDir(),
+    reportDir: null,
     json: false,
   };
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '--specs-dir') {
-      options.specsDir = path.resolve(readValue(argv, index, arg));
+      options.specsDir = normalizeSpecsDir(readValue(argv, index, arg));
+      index += 1;
+    } else if (arg === '--report-dir') {
+      options.reportDir = path.resolve(readValue(argv, index, arg));
       index += 1;
     } else if (arg === '--json') {
       options.json = true;
     } else {
       throw new Error(`Unknown option: ${arg}`);
     }
+  }
+
+  if (!options.reportDir) {
+    options.reportDir = explicitSpecsDir
+      ? defaultReportDirForSpecsDir(options.specsDir)
+      : path.resolve('specs', 'report');
   }
 
   return options;
@@ -363,7 +378,7 @@ function taskDirs(specsDir) {
   if (!fs.existsSync(specsDir)) return [];
   return fs.readdirSync(specsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
-    .filter((entry) => entry.name !== REPORT_DIR)
+    .filter((entry) => entry.name !== 'report')
     .map((entry) => path.join(specsDir, entry.name))
     .filter((dirPath) => fs.existsSync(path.join(dirPath, SPEC_FILES.brief.fileName)))
     .sort();
@@ -681,9 +696,26 @@ function displayMessage(message, labels) {
   return labels.knownMessages[text] || text;
 }
 
-function renderIndex(specsDir, tasks, labels) {
+function reportPath(reportDir, relativePath) {
+  return path.join(reportDir, relativePath);
+}
+
+function reportRelativePath(relativePath) {
+  if (!relativePath || relativePath === '.') return 'index.html';
+  return path.join(relativePath, 'index.html');
+}
+
+function artifactReportRelativePath(relativePath, fileName) {
+  return path.join(relativePath, htmlFileName(fileName));
+}
+
+function sourceHref(fromReportDir, artifact) {
+  return href(path.relative(fromReportDir, artifact.path));
+}
+
+function renderIndex(reportDir, tasks, labels) {
   const rows = tasks.map((task) => {
-    const taskHref = href(path.join(task.dir_name, 'index.html'));
+    const taskHref = href(reportRelativePath(task.relative_path));
     const issueCount = taskIssueCount(task);
     const rowClass = taskNeedsAttention(task) ? ' class="problem-row"' : '';
     const issueCell = issueCount > 0
@@ -732,14 +764,14 @@ function renderIndex(specsDir, tasks, labels) {
   </section>
 </main>`;
 
-  return page(labels.reportTitle, href(path.join(REPORT_DIR, STYLE_FILE)), content, labels);
+  return page(labels.reportTitle, href(path.join(ASSETS_DIR, STYLE_FILE)), content, labels);
 }
 
-function artifactRows(task, fromDir, labels) {
+function artifactRows(task, fromReportDir, reportDir, labels) {
   return Object.entries(SPEC_FILES).map(([key, config]) => {
     const artifact = task.artifacts[key];
     const link = artifact.exists
-      ? `<a href="${href(htmlFileName(config.fileName))}" class="el_artifact">${escapeHtml(config.fileName)}</a>`
+      ? `<a href="${href(path.relative(fromReportDir, reportPath(reportDir, artifactReportRelativePath(task.relative_path, config.fileName))))}" class="el_artifact">${escapeHtml(config.fileName)}</a>`
       : `<span class="muted">${escapeHtml(config.fileName)}</span>`;
     return `<tr>
       <td>${link}</td>
@@ -749,7 +781,7 @@ function artifactRows(task, fromDir, labels) {
   }).join('');
 }
 
-function gateRows(task, fromDir, specsDir, labels) {
+function gateRows(task, fromReportDir, specsDir, reportDir, labels) {
   return GATE_IDS.map((gateId) => {
     const gate = task.gates[gateId] || { status: 'unknown', evidence: [] };
     const issues = [
@@ -758,7 +790,7 @@ function gateRows(task, fromDir, specsDir, labels) {
     ];
     const blocking = issues.filter((issue) => !isPendingAcceptanceWarning(issue));
     const evidence = asList(gate.evidence)
-      .map((item) => evidenceLink(item, fromDir, specsDir, labels))
+      .map((item) => evidenceLink(item, fromReportDir, specsDir, reportDir, labels))
       .join('') || `<span class="muted">${escapeHtml(labels.none)}</span>`;
     const status = String(gate.status || 'unknown').toLowerCase();
     const rowClass = blocking.length > 0 || ['failed', 'blocked', 'unknown'].includes(status)
@@ -773,24 +805,46 @@ function gateRows(task, fromDir, specsDir, labels) {
   }).join('');
 }
 
-function evidenceLink(item, fromDir, specsDir, labels = UI_TEXT.en) {
+function evidenceLink(item, fromReportDir, specsDir, reportDir, labels = UI_TEXT.en) {
   const text = String(item);
-  const candidate = path.join(specsDir, text);
+  const candidate = resolveEvidencePath(text, specsDir);
   if (fs.existsSync(candidate)) {
     const target = text.endsWith('.md')
-      ? path.join(path.dirname(candidate), htmlFileName(path.basename(candidate)))
+      ? reportPath(reportDir, artifactReportRelativePath(toPosix(rel(specsDir, path.dirname(candidate))), path.basename(candidate)))
       : candidate;
-    return `<a class="source-link" href="${href(path.relative(fromDir, target))}">${escapeHtml(text)}</a>`;
+    return `<a class="source-link" href="${href(path.relative(fromReportDir, target))}">${escapeHtml(text)}</a>`;
   }
   return `<span class="source-link muted">${escapeHtml(displayMessage(text, labels))}</span>`;
 }
 
-function runRows(task, labels) {
+function resolveEvidencePath(item, specsDir) {
+  const candidates = [
+    path.join(specsDir, item),
+  ];
+  const normalized = item.split('/').join(path.sep);
+  const recordsMarker = `${path.sep}specs${path.sep}records${path.sep}`;
+  const specsMarker = `${path.sep}specs${path.sep}`;
+  if (path.isAbsolute(normalized)) {
+    candidates.push(normalized);
+  } else {
+    const specsRecordsIndex = `${path.sep}${normalized}`.indexOf(recordsMarker);
+    if (specsRecordsIndex !== -1) {
+      candidates.push(path.join(specsDir, `${path.sep}${normalized}`.slice(specsRecordsIndex + recordsMarker.length)));
+    }
+    const specsIndex = `${path.sep}${normalized}`.indexOf(specsMarker);
+    if (specsIndex !== -1) {
+      candidates.push(path.join(specsDir, `${path.sep}${normalized}`.slice(specsIndex + specsMarker.length)));
+    }
+  }
+  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
+}
+
+function runRows(task, fromReportDir, reportDir, labels) {
   if (task.runs.length === 0) {
     return `<tr><td colspan="5" class="empty">${escapeHtml(labels.noRunEvidence)}</td></tr>`;
   }
   return task.runs.map((run) => `<tr>
-    <td><a href="${href(path.join('runs', run.dir_name, 'index.html'))}" class="el_run"><strong>${escapeHtml(run.run_id)}</strong></a></td>
+    <td><a href="${href(path.relative(fromReportDir, reportPath(reportDir, reportRelativePath(run.relative_path))))}" class="el_run"><strong>${escapeHtml(run.run_id)}</strong></a></td>
     <td>${escapeHtml(run.agent_role)}</td>
     <td>${escapeHtml(run.state)}</td>
     <td>${escapeHtml(run.verification_status)}</td>
@@ -798,7 +852,7 @@ function runRows(task, labels) {
   </tr>`).join('');
 }
 
-function issueRows(task, fromDir, specsDir, labels) {
+function issueRows(task, fromReportDir, specsDir, reportDir, labels) {
   const issues = blockingIssues(task);
   if (issues.length === 0) {
     return `<tr><td colspan="3" class="empty">${escapeHtml(labels.noOpenGateIssues)}</td></tr>`;
@@ -806,7 +860,7 @@ function issueRows(task, fromDir, specsDir, labels) {
 
   return issues.map((issue) => {
     const evidence = asList(issue.evidence)
-      .map((item) => evidenceLink(item, fromDir, specsDir, labels))
+      .map((item) => evidenceLink(item, fromReportDir, specsDir, reportDir, labels))
       .join('') || `<span class="muted">${escapeHtml(labels.none)}</span>`;
     return `<tr class="problem-row">
       <td><span class="el_issue">${escapeHtml(issue.gate_id || 'report')}</span></td>
@@ -816,24 +870,25 @@ function issueRows(task, fromDir, specsDir, labels) {
   }).join('');
 }
 
-function renderTaskArtifact(task, key, config, artifact, labels) {
+function renderTaskArtifact(reportDir, task, key, config, artifact, labels) {
+  const fromReportDir = reportPath(reportDir, task.relative_path);
   const content = `<main class="page-shell">
   <div class="breadcrumb" id="breadcrumb"><a href="../index.html" class="el_report">${escapeHtml(labels.specsReport)}</a> &gt; <a href="index.html" class="el_task">${escapeHtml(task.task_id)}</a> &gt; <span class="el_artifact">${escapeHtml(config.fileName)}</span></div>
   <header class="page-header">
     <p class="eyebrow">${escapeHtml(labels.artifactDetail)}</p>
     <h1>${escapeHtml(specTitle(labels, key, config))}</h1>
-    <div class="status-line"><a href="${href(config.fileName)}" class="el_artifact">${escapeHtml(labels.rawMarkdown)}</a><span class="muted">${escapeHtml(labels.updated)} ${formatDate(artifact.mtimeMs, labels)}</span></div>
+    <div class="status-line"><a href="${sourceHref(fromReportDir, artifact)}" class="el_artifact">${escapeHtml(labels.rawMarkdown)}</a><span class="muted">${escapeHtml(labels.updated)} ${formatDate(artifact.mtimeMs, labels)}</span></div>
   </header>
   <section class="panel">
     <pre class="source-view"><code>${escapeHtml(artifact.text)}</code></pre>
   </section>
 </main>`;
 
-  return page(`${task.task_id} / ${config.fileName} - ${labels.reportTitle}`, href(path.join('..', REPORT_DIR, STYLE_FILE)), content, labels);
+  return page(`${task.task_id} / ${config.fileName} - ${labels.reportTitle}`, href(path.relative(fromReportDir, path.join(reportDir, ASSETS_DIR, STYLE_FILE))), content, labels);
 }
 
-function renderTask(specsDir, task, labels) {
-  const fromDir = task.dir_path;
+function renderTask(specsDir, reportDir, task, labels) {
+  const fromReportDir = reportPath(reportDir, task.relative_path);
 
   const content = `<main class="page-shell">
   <div class="breadcrumb" id="breadcrumb"><a href="../index.html" class="el_report">${escapeHtml(labels.specsReport)}</a> &gt; <span class="el_task">${escapeHtml(task.task_id)}</span></div>
@@ -848,7 +903,7 @@ function renderTask(specsDir, task, labels) {
     <div class="table-wrap">
       <table class="coverage">
         <thead><tr><th>${escapeHtml(labels.gate)}</th><th>${escapeHtml(labels.status)}</th><th>${escapeHtml(labels.evidence)}</th><th>${escapeHtml(labels.issues)}</th></tr></thead>
-        <tbody>${gateRows(task, fromDir, specsDir, labels)}</tbody>
+        <tbody>${gateRows(task, fromReportDir, specsDir, reportDir, labels)}</tbody>
       </table>
     </div>
   </section>
@@ -857,7 +912,7 @@ function renderTask(specsDir, task, labels) {
     <div class="table-wrap">
       <table class="coverage">
         <thead><tr><th>${escapeHtml(labels.element)}</th><th>${escapeHtml(labels.gate)}</th><th>${escapeHtml(labels.updated)}</th></tr></thead>
-        <tbody>${artifactRows(task, fromDir, labels)}</tbody>
+        <tbody>${artifactRows(task, fromReportDir, reportDir, labels)}</tbody>
       </table>
     </div>
   </section>
@@ -866,7 +921,7 @@ function renderTask(specsDir, task, labels) {
     <div class="table-wrap">
       <table class="coverage">
         <thead><tr><th>${escapeHtml(labels.run)}</th><th>${escapeHtml(labels.role)}</th><th>${escapeHtml(labels.state)}</th><th>${escapeHtml(labels.verification)}</th><th>${escapeHtml(labels.updated)}</th></tr></thead>
-        <tbody>${runRows(task, labels)}</tbody>
+        <tbody>${runRows(task, fromReportDir, reportDir, labels)}</tbody>
       </table>
     </div>
   </section>
@@ -875,36 +930,37 @@ function renderTask(specsDir, task, labels) {
     <div class="table-wrap">
       <table class="coverage">
         <thead><tr><th>${escapeHtml(labels.gate)}</th><th>${escapeHtml(labels.issue)}</th><th>${escapeHtml(labels.evidence)}</th></tr></thead>
-        <tbody>${issueRows(task, fromDir, specsDir, labels)}</tbody>
+        <tbody>${issueRows(task, fromReportDir, specsDir, reportDir, labels)}</tbody>
       </table>
     </div>
   </section>
 </main>`;
 
-  return page(`${task.task_id} - ${labels.reportTitle}`, href(path.join('..', REPORT_DIR, STYLE_FILE)), content, labels);
+  return page(`${task.task_id} - ${labels.reportTitle}`, href(path.relative(fromReportDir, path.join(reportDir, ASSETS_DIR, STYLE_FILE))), content, labels);
 }
 
-function renderRunArtifact(task, run, key, config, artifact, labels) {
+function renderRunArtifact(reportDir, task, run, key, config, artifact, labels) {
+  const fromReportDir = reportPath(reportDir, run.relative_path);
   const content = `<main class="page-shell">
   <div class="breadcrumb" id="breadcrumb"><a href="../../../index.html" class="el_report">${escapeHtml(labels.specsReport)}</a> &gt; <a href="../../index.html" class="el_task">${escapeHtml(task.task_id)}</a> &gt; <a href="index.html" class="el_run">${escapeHtml(run.run_id)}</a> &gt; <span class="el_artifact">${escapeHtml(config.fileName)}</span></div>
   <header class="page-header">
     <p class="eyebrow">${escapeHtml(labels.runArtifactDetail)}</p>
     <h1>${escapeHtml(runTitle(labels, key, config))}</h1>
-    <div class="status-line"><a href="${href(config.fileName)}" class="el_artifact">${escapeHtml(labels.rawMarkdown)}</a><span class="muted">${escapeHtml(labels.updated)} ${formatDate(artifact.mtimeMs, labels)}</span></div>
+    <div class="status-line"><a href="${sourceHref(fromReportDir, artifact)}" class="el_artifact">${escapeHtml(labels.rawMarkdown)}</a><span class="muted">${escapeHtml(labels.updated)} ${formatDate(artifact.mtimeMs, labels)}</span></div>
   </header>
   <section class="panel">
     <pre class="source-view"><code>${escapeHtml(artifact.text)}</code></pre>
   </section>
 </main>`;
 
-  return page(`${run.run_id} / ${config.fileName} - ${labels.reportTitle}`, href(path.join('..', '..', '..', REPORT_DIR, STYLE_FILE)), content, labels);
+  return page(`${run.run_id} / ${config.fileName} - ${labels.reportTitle}`, href(path.relative(fromReportDir, path.join(reportDir, ASSETS_DIR, STYLE_FILE))), content, labels);
 }
 
-function runArtifactRows(run, fromDir, labels) {
+function runArtifactRows(run, fromReportDir, reportDir, labels) {
   return Object.entries(RUN_FILES).map(([key, config]) => {
     const artifact = run.artifacts[key];
     const link = artifact.exists
-      ? `<a href="${href(htmlFileName(config.fileName))}" class="el_artifact">${escapeHtml(config.fileName)}</a>`
+      ? `<a href="${href(path.relative(fromReportDir, reportPath(reportDir, artifactReportRelativePath(run.relative_path, config.fileName))))}" class="el_artifact">${escapeHtml(config.fileName)}</a>`
       : `<span class="muted">${escapeHtml(config.fileName)}</span>`;
     return `<tr>
       <td>${link}</td>
@@ -913,8 +969,8 @@ function runArtifactRows(run, fromDir, labels) {
   }).join('');
 }
 
-function renderRun(run, task, labels) {
-  const fromDir = run.dir_path;
+function renderRun(reportDir, run, task, labels) {
+  const fromReportDir = reportPath(reportDir, run.relative_path);
   const execution = run.artifacts.execution.data;
   const baseline = run.artifacts.baseline.data;
   const permissions = [
@@ -943,7 +999,7 @@ function renderRun(run, task, labels) {
     <div class="table-wrap">
       <table class="coverage">
         <thead><tr><th>${escapeHtml(labels.element)}</th><th>${escapeHtml(labels.updated)}</th></tr></thead>
-        <tbody>${runArtifactRows(run, fromDir, labels)}</tbody>
+        <tbody>${runArtifactRows(run, fromReportDir, reportDir, labels)}</tbody>
       </table>
     </div>
   </section>
@@ -981,7 +1037,7 @@ function renderRun(run, task, labels) {
   </section>
 </main>`;
 
-  return page(`${run.run_id} - ${labels.reportTitle}`, href(path.join('..', '..', '..', REPORT_DIR, STYLE_FILE)), content, labels);
+  return page(`${run.run_id} - ${labels.reportTitle}`, href(path.relative(fromReportDir, path.join(reportDir, ASSETS_DIR, STYLE_FILE))), content, labels);
 }
 
 function stylesheet() {
@@ -1371,10 +1427,10 @@ function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function writeFile(filePath, content, specsDir, generated) {
+function writeFile(filePath, content, reportDir, generated) {
   ensureDir(path.dirname(filePath));
   fs.writeFileSync(filePath, content);
-  generated.push(toPosix(rel(specsDir, filePath)));
+  generated.push(toPosix(rel(reportDir, filePath)));
 }
 
 function main() {
@@ -1395,31 +1451,41 @@ function main() {
       return right.last_updated - left.last_updated;
     });
 
-  writeFile(path.join(options.specsDir, REPORT_DIR, STYLE_FILE), stylesheet(), options.specsDir, generated);
-  writeFile(path.join(options.specsDir, 'index.html'), renderIndex(options.specsDir, tasks, labels), options.specsDir, generated);
+  writeFile(path.join(options.reportDir, ASSETS_DIR, STYLE_FILE), stylesheet(), options.reportDir, generated);
+  writeFile(path.join(options.reportDir, 'index.html'), renderIndex(options.reportDir, tasks, labels), options.reportDir, generated);
 
   for (const task of tasks) {
-    writeFile(path.join(task.dir_path, 'index.html'), renderTask(options.specsDir, task, labels), options.specsDir, generated);
+    writeFile(
+      reportPath(options.reportDir, reportRelativePath(task.relative_path)),
+      renderTask(options.specsDir, options.reportDir, task, labels),
+      options.reportDir,
+      generated,
+    );
     for (const [key, config] of Object.entries(SPEC_FILES)) {
       const artifact = task.artifacts[key];
       if (artifact.exists) {
         writeFile(
-          path.join(task.dir_path, htmlFileName(config.fileName)),
-          renderTaskArtifact(task, key, config, artifact, labels),
-          options.specsDir,
+          reportPath(options.reportDir, artifactReportRelativePath(task.relative_path, config.fileName)),
+          renderTaskArtifact(options.reportDir, task, key, config, artifact, labels),
+          options.reportDir,
           generated,
         );
       }
     }
     for (const run of task.runs) {
-      writeFile(path.join(run.dir_path, 'index.html'), renderRun(run, task, labels), options.specsDir, generated);
+      writeFile(
+        reportPath(options.reportDir, reportRelativePath(run.relative_path)),
+        renderRun(options.reportDir, run, task, labels),
+        options.reportDir,
+        generated,
+      );
       for (const [key, config] of Object.entries(RUN_FILES)) {
         const artifact = run.artifacts[key];
         if (artifact.exists) {
           writeFile(
-            path.join(run.dir_path, htmlFileName(config.fileName)),
-            renderRunArtifact(task, run, key, config, artifact, labels),
-            options.specsDir,
+            reportPath(options.reportDir, artifactReportRelativePath(run.relative_path, config.fileName)),
+            renderRunArtifact(options.reportDir, task, run, key, config, artifact, labels),
+            options.reportDir,
             generated,
           );
         }
@@ -1429,6 +1495,7 @@ function main() {
 
   const report = {
     specs_dir: options.specsDir,
+    report_dir: options.reportDir,
     generated_at: new Date().toISOString(),
     generated_files: generated.sort(),
     tasks: tasks.map((task) => ({
@@ -1458,7 +1525,7 @@ function main() {
   if (options.json) {
     console.log(JSON.stringify(report, null, 2));
   } else {
-    console.log(`Specs report: ${path.join(options.specsDir, 'index.html')}`);
+    console.log(`Specs report: ${path.join(options.reportDir, 'index.html')}`);
     console.log(`Tasks: ${tasks.length}`);
     console.log(`Generated files: ${generated.length}`);
   }

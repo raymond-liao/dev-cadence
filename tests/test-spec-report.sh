@@ -9,6 +9,8 @@ ZH_TASK_ID="zh-report"
 ZH_PENDING_TASK_ID="zh-pending-acceptance"
 REPORT_JSON="${REPO_DIR}/report.json"
 ZH_REPORT_JSON="${REPO_DIR}/zh-report.json"
+SPECS_DIR="${REPO_DIR}/specs/records"
+HTML_REPORT_DIR="${REPO_DIR}/specs/report"
 trap 'rm -rf "${REPO_DIR}"' EXIT
 
 node "${ROOT_DIR}/scripts/sync-repo-contract.mjs" init --repo-dir "${REPO_DIR}" --json > /dev/null
@@ -22,10 +24,10 @@ node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
   --accepted-by "Raymond" \
   --json > /dev/null
 
-cp -R "${REPO_DIR}/specs/${TASK_ID}" "${REPO_DIR}/specs/${PENDING_TASK_ID}"
-find "${REPO_DIR}/specs/${PENDING_TASK_ID}" -type f -name '*.md' -exec \
+cp -R "${SPECS_DIR}/${TASK_ID}" "${SPECS_DIR}/${PENDING_TASK_ID}"
+find "${SPECS_DIR}/${PENDING_TASK_ID}" -type f -name '*.md' -exec \
   perl -0pi -e "s/${TASK_ID}/${PENDING_TASK_ID}/g; s/Develop a login feature/Await human acceptance/g" {} +
-cat > "${REPO_DIR}/specs/${PENDING_TASK_ID}/08-acceptance.md" <<'EOF'
+cat > "${SPECS_DIR}/${PENDING_TASK_ID}/08-acceptance.md" <<'EOF'
 # Acceptance
 
 ```yaml
@@ -54,8 +56,8 @@ escalation:
 ```
 EOF
 
-mkdir -p "${REPO_DIR}/specs/incomplete"
-cat > "${REPO_DIR}/specs/incomplete/00-brief.md" <<'EOF'
+mkdir -p "${SPECS_DIR}/incomplete"
+cat > "${SPECS_DIR}/incomplete/00-brief.md" <<'EOF'
 # Brief
 
 ```yaml
@@ -67,128 +69,134 @@ task_class: S1
 EOF
 
 node "${ROOT_DIR}/scripts/generate-spec-report.mjs" \
-  --specs-dir "${REPO_DIR}/specs" \
+  --specs-dir "${SPECS_DIR}" \
+  --report-dir "${HTML_REPORT_DIR}" \
   --json > "${REPORT_JSON}"
 
-test -f "${REPO_DIR}/specs/index.html"
-test -f "${REPO_DIR}/specs/.dev-cadence-report/style.css"
-test -f "${REPO_DIR}/specs/${TASK_ID}/index.html"
-test -f "${REPO_DIR}/specs/${PENDING_TASK_ID}/index.html"
-test -f "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.html"
-test -f "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
-test -f "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.html"
-test -f "${REPO_DIR}/specs/incomplete/index.html"
+test -f "${HTML_REPORT_DIR}/index.html"
+test -f "${HTML_REPORT_DIR}/assets/style.css"
+test -f "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+test -f "${HTML_REPORT_DIR}/${PENDING_TASK_ID}/index.html"
+test -f "${HTML_REPORT_DIR}/${TASK_ID}/08-acceptance.html"
+test -f "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
+test -f "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.html"
+test -f "${HTML_REPORT_DIR}/incomplete/index.html"
+test ! -f "${SPECS_DIR}/index.html"
+test ! -f "${SPECS_DIR}/${TASK_ID}/08-acceptance.html"
 
-grep -q "Dev Cadence Specs Report" "${REPO_DIR}/specs/index.html"
-grep -q "${TASK_ID}" "${REPO_DIR}/specs/index.html"
-grep -q "${PENDING_TASK_ID}" "${REPO_DIR}/specs/index.html"
-grep -q "pending acceptance" "${REPO_DIR}/specs/index.html"
-if grep -q "Summary of task artifacts" "${REPO_DIR}/specs/index.html"; then
+grep -q "Dev Cadence Specs Report" "${HTML_REPORT_DIR}/index.html"
+grep -q "${TASK_ID}" "${HTML_REPORT_DIR}/index.html"
+grep -q "${PENDING_TASK_ID}" "${HTML_REPORT_DIR}/index.html"
+grep -q "pending acceptance" "${HTML_REPORT_DIR}/index.html"
+if grep -q "Summary of task artifacts" "${HTML_REPORT_DIR}/index.html"; then
   echo "index should not include a prose description under the title" >&2
   exit 1
 fi
-if grep -q "UTC" "${REPO_DIR}/specs/index.html"; then
+if grep -q "UTC" "${HTML_REPORT_DIR}/index.html"; then
   echo "dates should render in the local system timezone, not UTC" >&2
   exit 1
 fi
-if grep -Eq "Generated [0-9]{4}-[0-9]{2}-[0-9]{2}T.*Z" "${REPO_DIR}/specs/index.html"; then
+if grep -Eq "Generated [0-9]{4}-[0-9]{2}-[0-9]{2}T.*Z" "${HTML_REPORT_DIR}/index.html"; then
   echo "generated timestamp should render in the local system timezone, not ISO UTC" >&2
   exit 1
 fi
-if grep -q "Develop a login feature" "${REPO_DIR}/specs/index.html"; then
+if grep -q "Develop a login feature" "${HTML_REPORT_DIR}/index.html"; then
   echo "index Element column should only show the task link, not the task goal" >&2
   exit 1
 fi
-if grep -q "Needs Attention" "${REPO_DIR}/specs/index.html"; then
+if grep -q "Needs Attention" "${HTML_REPORT_DIR}/index.html"; then
   echo "index should be a compact table, not a dashboard" >&2
   exit 1
 fi
-if grep -q "Generated view only" "${REPO_DIR}/specs/index.html"; then
+if grep -q "Generated view only" "${HTML_REPORT_DIR}/index.html"; then
   echo "index should not include explanatory notice blocks" >&2
   exit 1
 fi
-grep -q "class=\"coverage\"" "${REPO_DIR}/specs/index.html"
-grep -q ">Element<" "${REPO_DIR}/specs/index.html"
-grep -q "class=\"el_task\"" "${REPO_DIR}/specs/index.html"
-grep -q "href=\"${TASK_ID}/index.html\" class=\"el_task\"" "${REPO_DIR}/specs/index.html"
-grep -q ">Gates<" "${REPO_DIR}/specs/index.html"
-grep -q ">Issues<" "${REPO_DIR}/specs/index.html"
-grep -q ">Runs<" "${REPO_DIR}/specs/index.html"
-grep -q ">Updated<" "${REPO_DIR}/specs/index.html"
-grep -q "href=\"incomplete/index.html#issues\"" "${REPO_DIR}/specs/index.html"
-grep -q "href=\"${TASK_ID}/index.html#runs\"" "${REPO_DIR}/specs/index.html"
-grep -q "class=\"problem-row\"" "${REPO_DIR}/specs/index.html"
-grep -q "tr.problem-row" "${REPO_DIR}/specs/.dev-cadence-report/style.css"
-grep -q "#ffe1de" "${REPO_DIR}/specs/.dev-cadence-report/style.css"
-grep -q "data:image/svg+xml" "${REPO_DIR}/specs/.dev-cadence-report/style.css"
-grep -q "text-decoration: underline" "${REPO_DIR}/specs/.dev-cadence-report/style.css"
-grep -q "font-size: 1.45rem" "${REPO_DIR}/specs/.dev-cadence-report/style.css"
-if grep -q "font-size: clamp" "${REPO_DIR}/specs/.dev-cadence-report/style.css"; then
+grep -q "class=\"coverage\"" "${HTML_REPORT_DIR}/index.html"
+grep -q ">Element<" "${HTML_REPORT_DIR}/index.html"
+grep -q "class=\"el_task\"" "${HTML_REPORT_DIR}/index.html"
+grep -q "href=\"${TASK_ID}/index.html\" class=\"el_task\"" "${HTML_REPORT_DIR}/index.html"
+grep -q ">Gates<" "${HTML_REPORT_DIR}/index.html"
+grep -q ">Issues<" "${HTML_REPORT_DIR}/index.html"
+grep -q ">Runs<" "${HTML_REPORT_DIR}/index.html"
+grep -q ">Updated<" "${HTML_REPORT_DIR}/index.html"
+grep -q "href=\"incomplete/index.html#issues\"" "${HTML_REPORT_DIR}/index.html"
+grep -q "href=\"${TASK_ID}/index.html#runs\"" "${HTML_REPORT_DIR}/index.html"
+grep -q "class=\"problem-row\"" "${HTML_REPORT_DIR}/index.html"
+grep -q "tr.problem-row" "${HTML_REPORT_DIR}/assets/style.css"
+grep -q "#ffe1de" "${HTML_REPORT_DIR}/assets/style.css"
+grep -q "data:image/svg+xml" "${HTML_REPORT_DIR}/assets/style.css"
+grep -q "text-decoration: underline" "${HTML_REPORT_DIR}/assets/style.css"
+grep -q "font-size: 1.45rem" "${HTML_REPORT_DIR}/assets/style.css"
+if grep -q "font-size: clamp" "${HTML_REPORT_DIR}/assets/style.css"; then
   echo "report h1 should use compact report sizing, not hero sizing" >&2
   exit 1
 fi
-if grep -q "background-image: linear-gradient" "${REPO_DIR}/specs/.dev-cadence-report/style.css"; then
+if grep -q "background-image: linear-gradient" "${HTML_REPORT_DIR}/assets/style.css"; then
   echo "object markers should use icons, not color blocks" >&2
   exit 1
 fi
-if grep -q ">Artifacts<" "${REPO_DIR}/specs/index.html"; then
+if grep -q ">Artifacts<" "${HTML_REPORT_DIR}/index.html"; then
   echo "index should keep artifact links on task pages, not as a top-level column" >&2
   exit 1
 fi
-if grep -q "cell-link" "${REPO_DIR}/specs/index.html"; then
+if grep -q "cell-link" "${HTML_REPORT_DIR}/index.html"; then
   echo "summary metrics must not be hidden drill-down links" >&2
   exit 1
 fi
 
-grep -q "Gate Summary" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "id=\"gate-G1\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "class=\"breadcrumb\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "id=\"breadcrumb\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "Specs Report</a> &gt; <span class=\"el_task\">${TASK_ID}</span>" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-if grep -q "class=\"info\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"; then
+grep -q "Gate Summary" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "id=\"gate-G1\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "class=\"breadcrumb\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "id=\"breadcrumb\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "Specs Report</a> &gt; <span class=\"el_task\">${TASK_ID}</span>" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+if grep -q "class=\"info\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"; then
   echo "task breadcrumb should not show unexplained right-side shortcut icons" >&2
   exit 1
 fi
-grep -q "class=\"coverage\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "id=\"artifacts\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "id=\"runs\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "id=\"issues\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "class=\"el_artifact\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "class=\"el_run\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "Source Files" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "href=\"01-requirements.html\"" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-if grep -q "summary-grid" "${REPO_DIR}/specs/${TASK_ID}/index.html"; then
+grep -q "class=\"coverage\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "id=\"artifacts\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "id=\"runs\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "id=\"issues\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "class=\"el_artifact\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "class=\"el_run\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "Source Files" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "href=\"01-requirements.html\"" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+if grep -q "summary-grid" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"; then
   echo "task page should use compact report tables, not dashboard cards" >&2
   exit 1
 fi
-grep -q "G1" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "G6" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "passed" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "href=\"01-requirements.html\">${TASK_ID}/01-requirements.md</a>" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "href=\"08-acceptance.html\" class=\"el_artifact\">08-acceptance.md</a>" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "08-acceptance.md" "${REPO_DIR}/specs/${TASK_ID}/index.html"
-grep -q "${TASK_ID}-dry-run-1" "${REPO_DIR}/specs/${TASK_ID}/index.html"
+grep -q "G1" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "G6" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "passed" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "href=\"01-requirements.html\">${TASK_ID}/01-requirements.md</a>" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "href=\"08-acceptance.html\" class=\"el_artifact\">08-acceptance.md</a>" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "08-acceptance.md" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+grep -q "${TASK_ID}-dry-run-1" "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
 
-grep -q "Specs Report</a> &gt; <a href=\"index.html\" class=\"el_task\">${TASK_ID}</a> &gt; <span class=\"el_artifact\">08-acceptance.md</span>" "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.html"
-grep -q "Raw Markdown" "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.html"
-grep -q "href=\"08-acceptance.md\"" "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.html"
-grep -q "class=\"source-view\"" "${REPO_DIR}/specs/${TASK_ID}/08-acceptance.html"
+grep -q "Specs Report</a> &gt; <a href=\"index.html\" class=\"el_task\">${TASK_ID}</a> &gt; <span class=\"el_artifact\">08-acceptance.md</span>" "${HTML_REPORT_DIR}/${TASK_ID}/08-acceptance.html"
+grep -q "Raw Markdown" "${HTML_REPORT_DIR}/${TASK_ID}/08-acceptance.html"
+grep -q "href=\"../../records/${TASK_ID}/08-acceptance.md\"" "${HTML_REPORT_DIR}/${TASK_ID}/08-acceptance.html"
+grep -q "class=\"source-view\"" "${HTML_REPORT_DIR}/${TASK_ID}/08-acceptance.html"
 
-grep -q "Run Evidence" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
-grep -q "Specs Report</a> &gt; <a href=\"../../index.html\" class=\"el_task\">${TASK_ID}</a> &gt; <span class=\"el_run\">${TASK_ID}-dry-run-1</span>" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
-grep -q "pre-implementation-status.md" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
-grep -q "href=\"test-log.html\" class=\"el_artifact\">test-log.md</a>" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
-grep -q "test-log.md" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
-if grep -q "class=\"info\"" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"; then
+grep -q "Run Evidence" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
+grep -q "Specs Report</a> &gt; <a href=\"../../index.html\" class=\"el_task\">${TASK_ID}</a> &gt; <span class=\"el_run\">${TASK_ID}-dry-run-1</span>" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
+grep -q "pre-implementation-status.md" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
+grep -q "href=\"test-log.html\" class=\"el_artifact\">test-log.md</a>" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
+grep -q "test-log.md" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
+if grep -q "class=\"info\"" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"; then
   echo "run breadcrumb should not show unexplained right-side shortcut icons" >&2
   exit 1
 fi
-grep -q "Specs Report</a> &gt; <a href=\"../../index.html\" class=\"el_task\">${TASK_ID}</a> &gt; <a href=\"index.html\" class=\"el_run\">${TASK_ID}-dry-run-1</a> &gt; <span class=\"el_artifact\">test-log.md</span>" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.html"
-grep -q "Raw Markdown" "${REPO_DIR}/specs/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.html"
+grep -q "Specs Report</a> &gt; <a href=\"../../index.html\" class=\"el_task\">${TASK_ID}</a> &gt; <a href=\"index.html\" class=\"el_run\">${TASK_ID}-dry-run-1</a> &gt; <span class=\"el_artifact\">test-log.md</span>" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.html"
+grep -q "Raw Markdown" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.html"
+grep -q "href=\"../../../../records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.md\"" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/test-log.html"
 
-grep -q "unknown" "${REPO_DIR}/specs/incomplete/index.html"
+grep -q "unknown" "${HTML_REPORT_DIR}/incomplete/index.html"
 
 ZH_REPORT_REPO="${REPO_DIR}/zh-repo"
+ZH_SPECS_DIR="${ZH_REPORT_REPO}/specs/records"
+ZH_HTML_REPORT_DIR="${ZH_REPORT_REPO}/specs/report"
 mkdir -p "${ZH_REPORT_REPO}"
 node "${ROOT_DIR}/scripts/sync-repo-contract.mjs" init --repo-dir "${ZH_REPORT_REPO}" --json > /dev/null
 cat > "${ZH_REPORT_REPO}/.dev-cadence.yaml" <<'EOF'
@@ -205,10 +213,10 @@ node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
   --accepted-by "Raymond" \
   --json > /dev/null
 
-cp -R "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}" "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}"
-find "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}" -type f -name '*.md' -exec \
+cp -R "${ZH_SPECS_DIR}/${ZH_TASK_ID}" "${ZH_SPECS_DIR}/${ZH_PENDING_TASK_ID}"
+find "${ZH_SPECS_DIR}/${ZH_PENDING_TASK_ID}" -type f -name '*.md' -exec \
   perl -0pi -e "s/${ZH_TASK_ID}/${ZH_PENDING_TASK_ID}/g; s/验证中文报告 UI/验证中文待验收报告 UI/g" {} +
-cat > "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}/08-acceptance.md" <<'EOF'
+cat > "${ZH_SPECS_DIR}/${ZH_PENDING_TASK_ID}/08-acceptance.md" <<'EOF'
 # Acceptance
 
 ```yaml
@@ -238,42 +246,44 @@ escalation:
 EOF
 
 node "${ROOT_DIR}/scripts/generate-spec-report.mjs" \
-  --specs-dir "${ZH_REPORT_REPO}/specs" \
+  --specs-dir "${ZH_SPECS_DIR}" \
+  --report-dir "${ZH_HTML_REPORT_DIR}" \
   --json > "${ZH_REPORT_JSON}"
 
-grep -q "任务汇总" "${ZH_REPORT_REPO}/specs/index.html"
-grep -q ">问题<" "${ZH_REPORT_REPO}/specs/index.html"
-grep -q ">运行<" "${ZH_REPORT_REPO}/specs/index.html"
-grep -q "门禁汇总" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"
-grep -q "未解决问题" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"
-grep -q "源文件" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"
-grep -q "原始 Markdown" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/08-acceptance.html"
-grep -q "该任务类别不要求" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"
-grep -q "最终 Human acceptance 待完成" "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}/index.html"
-if grep -q ">Issues<" "${ZH_REPORT_REPO}/specs/index.html"; then
+grep -q "任务汇总" "${ZH_HTML_REPORT_DIR}/index.html"
+grep -q ">问题<" "${ZH_HTML_REPORT_DIR}/index.html"
+grep -q ">运行<" "${ZH_HTML_REPORT_DIR}/index.html"
+grep -q "门禁汇总" "${ZH_HTML_REPORT_DIR}/${ZH_TASK_ID}/index.html"
+grep -q "未解决问题" "${ZH_HTML_REPORT_DIR}/${ZH_TASK_ID}/index.html"
+grep -q "源文件" "${ZH_HTML_REPORT_DIR}/${ZH_TASK_ID}/index.html"
+grep -q "原始 Markdown" "${ZH_HTML_REPORT_DIR}/${ZH_TASK_ID}/08-acceptance.html"
+grep -q "该任务类别不要求" "${ZH_HTML_REPORT_DIR}/${ZH_TASK_ID}/index.html"
+grep -q "最终 Human acceptance 待完成" "${ZH_HTML_REPORT_DIR}/${ZH_PENDING_TASK_ID}/index.html"
+if grep -q ">Issues<" "${ZH_HTML_REPORT_DIR}/index.html"; then
   echo "zh report index must not render the Issues table header in English" >&2
   exit 1
 fi
-if grep -q "Open Issues" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"; then
+if grep -q "Open Issues" "${ZH_HTML_REPORT_DIR}/${ZH_TASK_ID}/index.html"; then
   echo "zh report task page must not render the Open Issues heading in English" >&2
   exit 1
 fi
-if grep -q "not required for task class" "${ZH_REPORT_REPO}/specs/${ZH_TASK_ID}/index.html"; then
+if grep -q "not required for task class" "${ZH_HTML_REPORT_DIR}/${ZH_TASK_ID}/index.html"; then
   echo "zh report task page must not render known gate evidence in English" >&2
   exit 1
 fi
-if grep -q "Final Human acceptance is pending" "${ZH_REPORT_REPO}/specs/${ZH_PENDING_TASK_ID}/index.html"; then
+if grep -q "Final Human acceptance is pending" "${ZH_HTML_REPORT_DIR}/${ZH_PENDING_TASK_ID}/index.html"; then
   echo "zh report pending acceptance warning must not render in English" >&2
   exit 1
 fi
 
-node --input-type=module - "${REPORT_JSON}" "${REPO_DIR}/specs" "${PENDING_TASK_ID}" <<'NODE'
+node --input-type=module - "${REPORT_JSON}" "${SPECS_DIR}" "${HTML_REPORT_DIR}" "${PENDING_TASK_ID}" <<'NODE'
 import fs from 'node:fs';
 import path from 'node:path';
 
 const report = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 const specsDir = process.argv[3];
-const pendingTaskId = process.argv[4];
+const reportDir = process.argv[4];
+const pendingTaskId = process.argv[5];
 
 function assert(condition, message) {
   if (!condition) {
@@ -282,6 +292,7 @@ function assert(condition, message) {
 }
 
 assert(report.specs_dir === specsDir, 'report JSON must use requested specs dir');
+assert(report.report_dir === reportDir, 'report JSON must use requested report dir');
 assert(report.generated_files.includes('index.html'), 'report JSON must list root index');
 assert(report.generated_files.includes('acceptance-login/index.html'), 'report JSON must list task page');
 assert(report.generated_files.includes('acceptance-login/08-acceptance.html'), 'report JSON must list task artifact page');
@@ -301,7 +312,7 @@ const pending = report.tasks.find((task) => task.task_id === pendingTaskId);
 assert(pending, 'report JSON must include pending acceptance task');
 assert(pending.status === 'pending_acceptance', 'pending acceptance task must preserve pending status');
 
-const indexHtml = fs.readFileSync(path.join(specsDir, 'index.html'), 'utf8');
+const indexHtml = fs.readFileSync(path.join(reportDir, 'index.html'), 'utf8');
 const pendingRow = indexHtml.match(new RegExp(`<tr([^>]*)>\\s*<td><a href="${pendingTaskId}/index.html"`));
 assert(pendingRow, 'index must include pending acceptance row');
 assert(!pendingRow[1].includes('problem-row'), 'pending acceptance alone must not render as a red problem row');
@@ -310,7 +321,7 @@ assert(incompleteRow && incompleteRow[1].includes('problem-row'), 'unknown incom
 
 const generatedHtml = [];
 for (const relative of report.generated_files) {
-  if (relative.endsWith('.html')) generatedHtml.push(path.join(specsDir, relative));
+  if (relative.endsWith('.html')) generatedHtml.push(path.join(reportDir, relative));
 }
 
 for (const filePath of generatedHtml) {
@@ -324,7 +335,7 @@ for (const filePath of generatedHtml) {
     const withoutHash = href.split('#')[0];
     if (!withoutHash) continue;
     const targetPath = path.resolve(path.dirname(filePath), withoutHash);
-    assert(fs.existsSync(targetPath), `${path.relative(specsDir, filePath)} links to missing ${href}`);
+    assert(fs.existsSync(targetPath), `${path.relative(reportDir, filePath)} links to missing ${href}`);
   }
 }
 

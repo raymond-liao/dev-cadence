@@ -14,7 +14,8 @@ test -f "${REPO_DIR}/AGENTS.md"
 test -f "${REPO_DIR}/.gitignore"
 test -f "${REPO_DIR}/.dev-cadence.yaml"
 test -d "${REPO_DIR}/specs"
-test -f "${REPO_DIR}/specs/.gitkeep"
+test -d "${REPO_DIR}/specs/records"
+test -f "${REPO_DIR}/specs/records/.gitkeep"
 test ! -e "${REPO_DIR}/.ai"
 grep -q "dev-cadence" "${REPO_DIR}/AGENTS.md"
 grep -qx ".dev-cadence.yaml" "${REPO_DIR}/.gitignore"
@@ -44,7 +45,7 @@ assert(init.initialized === true, 'init report must be initialized');
 assert(init.files_added.includes('AGENTS.md'), 'init must add AGENTS.md');
 assert(init.files_added.includes('.gitignore'), 'init must add .gitignore');
 assert(init.files_added.includes('.dev-cadence.yaml'), 'init must add .dev-cadence.yaml');
-assert(init.files_added.includes('specs/.gitkeep'), 'init must add specs/.gitkeep');
+assert(init.files_added.includes('specs/records/.gitkeep'), 'init must add specs/records/.gitkeep');
 assert(!init.files_added.some((file) => file.startsWith('.ai/')), 'init must not add .ai files');
 
 assert(inspect.initialized === true, 'inspect report must see initialized repo');
