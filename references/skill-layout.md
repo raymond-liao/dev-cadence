@@ -180,7 +180,8 @@ AGENTS.md
 .dev-cadence.yaml
 
 specs/
-  .gitkeep
+  records/
+    .gitkeep
 ```
 
 `AGENTS.md` routes normal delivery work to `dev-cadence`.

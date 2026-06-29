@@ -103,7 +103,7 @@
 完成定义：
 
 - 每个入口 Skill 有独立 `SKILL.md` 和 `agents/openai.yaml`。
-- 触发边界符合 `docs/plugin-skill-modularization.md` 和 `docs/archive/skill-authoring-prespec.md`。
+- 触发边界符合 `docs/codex-plugin-boundaries.md` 和 `docs/archive/skill-authoring-prespec.md`。
 - 初始化、交付、维护、框架编制的入口语义不互相污染。
 - Package self-check 能识别多入口结构，或有明确过渡检查。
 
@@ -122,7 +122,7 @@
 范围：
 
 - 生成或更新 root `AGENTS.md` 的 Dev Cadence 入口段落。
-- 生成或维护 `specs/.gitkeep`。
+- 生成或维护 `specs/records/.gitkeep`。
 - 可选生成 `.dev-cadence.yaml` 作为本地覆盖配置。
 - 更新 `.gitignore`，确保 `.dev-cadence.yaml` 被忽略。
 - 实现 inspect/sync/repair/diagnose 的最小行为。

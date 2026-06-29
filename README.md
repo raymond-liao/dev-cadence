@@ -124,7 +124,7 @@ node scripts/package-codex-plugin.mjs --clean
 | [docs/artifacts/](docs/artifacts/) | `specs/records/{task_id}/` task artifacts 和模板入口 |
 | [docs/runs/](docs/runs/) | `runs/{run_id}/` Harness 运行证据说明 |
 | [docs/gates/](docs/gates/) | G1-G6 Quality Gates 和 Human Gate 说明 |
-| [docs/plugin-skill-modularization.md](docs/plugin-skill-modularization.md) | 当前 Plugin、Skill、reference、template 和 adapter 的模块化边界 |
+| [docs/codex-plugin-boundaries.md](docs/codex-plugin-boundaries.md) | 当前 Codex Plugin、Skill、reference、template 和 adapter 的模块边界 |
 | [docs/installation.md](docs/installation.md) | 当前安装、更新和卸载命令 |
 | [docs/validation.md](docs/validation.md) | 当前验证、发布包生成和 smoke test 命令 |
 | [references/skill-layout.md](references/skill-layout.md) | 发布包布局和版本规则 |

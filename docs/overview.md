@@ -33,7 +33,7 @@ Multi-Agent Development Framework
 | [runs/](runs/) | `runs/{run_id}/` 下每个 Harness 运行证据是什么、怎么看 |
 | [gates/](gates/) | G1-G6 gate 控制什么风险、什么时候允许继续 |
 | [architecture.md](architecture.md) | 为什么要分 Supervisor、Harness、Worker、Context 和 Tooling 边界 |
-| [plugin-skill-modularization.md](plugin-skill-modularization.md) | 当前 Codex Plugin 的模块边界、薄仓库契约和发布资源 |
+| [codex-plugin-boundaries.md](codex-plugin-boundaries.md) | 当前 Codex Plugin 的模块边界、薄仓库契约和发布资源 |
 | [installation.md](installation.md) | 业务仓库内置 marketplace 分发、本机开发安装和卸载命令 |
 | [validation.md](validation.md) | 当前回归检查、打包和 smoke test 命令 |
 
@@ -49,7 +49,7 @@ templates/
 scripts/
 ```
 
-发布内容分工和 adapter 边界见 [plugin-skill-modularization.md](plugin-skill-modularization.md)。实际打包边界由 `.codex-plugin/plugin.json`、`scripts/package-codex-plugin.mjs` 和相关测试校验。
+发布内容分工和 adapter 边界见 [codex-plugin-boundaries.md](codex-plugin-boundaries.md)。实际打包边界由 `.codex-plugin/plugin.json`、`scripts/package-codex-plugin.mjs` 和相关测试校验。
 
 ## 维护边界
 

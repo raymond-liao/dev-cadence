@@ -1,6 +1,6 @@
 # Dev Cadence 架构
 
-Dev Cadence 的架构关注角色、分层、上下文和执行边界：Human 决定风险，Supervisor 控制流程，Harness 约束执行，Worker Agents 交付具体研发产物。当前 Codex Plugin 的发布资源边界见 [Plugin Skill 模块化](plugin-skill-modularization.md)。
+Dev Cadence 的架构关注角色、分层、上下文和执行边界：Human 决定风险，Supervisor 控制流程，Harness 约束执行，Worker Agents 交付具体研发产物。当前 Codex Plugin 的发布资源边界见 [Codex Plugin 模块边界](codex-plugin-boundaries.md)。
 
 ## 核心模型
 

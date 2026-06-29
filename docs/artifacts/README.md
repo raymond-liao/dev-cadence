@@ -78,7 +78,7 @@ node scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir spe
 
 HTML report 输出到 `specs/report/`，用于浏览 task summary、gate summary、artifact 链接、run evidence 和 Markdown 详情页。它是派生视图，不是事实源；Gate、review、acceptance 和提交前检查仍以 `specs/records/` 下的 Markdown/YAML artifact 为准。
 
-报告命令和输出文件说明见 [Dev Cadence 当前验证](../validation.md#生成-specs-html-report)。目标仓库的薄契约只需要保存 `specs/` 和本地配置，初始化与同步规则由 [Plugin Skill 模块化](../plugin-skill-modularization.md#薄仓库契约) 和 [repository-rule-sync.md](../../references/repository-rule-sync.md) 说明。
+报告命令和输出文件说明见 [Dev Cadence 当前验证](../validation.md#生成-specs-html-report)。目标仓库的薄契约只需要保存 `specs/` 和本地配置，初始化与同步规则由 [Codex Plugin 模块边界](../codex-plugin-boundaries.md#thin-repo-local-contract) 和 [repository-rule-sync.md](../../references/repository-rule-sync.md) 说明。
 
 ## 模板与语言
 

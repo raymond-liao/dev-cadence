@@ -1,6 +1,6 @@
 # Dev Cadence 目标形态方案草案
 
-> 历史归档：本文是目标形态设计草案。当前稳定入口见 [../overview.md](../overview.md)、[../plugin-skill-modularization.md](../plugin-skill-modularization.md)、[../installation.md](../installation.md) 和 [../validation.md](../validation.md)。
+> 历史归档：本文是目标形态设计草案。当前稳定入口见 [../overview.md](../overview.md)、[../codex-plugin-boundaries.md](../codex-plugin-boundaries.md)、[../installation.md](../installation.md) 和 [../validation.md](../validation.md)。
 
 ## 目的
 
@@ -439,7 +439,7 @@ syncing-repo-contract
 ## 建议下一步
 
 1. 先评审本文，确认目标形态。
-2. 更新 `docs/plugin-skill-modularization.md`，废弃“按用户意图菜单拆四个 Skill”的旧结论。
+2. 更新 `docs/codex-plugin-boundaries.md`，废弃“按用户意图菜单拆四个 Skill”的旧结论。
 3. 在 `docs/dev-cadence-roadmap.md` 追加 R8：Skill 目标模型重构。
 4. 实现 `using-dev-cadence` 入口 Skill。
 5. 将当前 `init/maintain` 能力迁移到 `syncing-repo-contract`。

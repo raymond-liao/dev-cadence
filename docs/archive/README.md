@@ -7,7 +7,7 @@
 - 当前安装和本机卸载命令见 [../installation.md](../installation.md)。
 - 当前验证命令见 [../validation.md](../validation.md)。
 - 当前框架入口见 [../overview.md](../overview.md)。
-- 当前 Plugin/Skill 模块边界见 [../plugin-skill-modularization.md](../plugin-skill-modularization.md)。
+- 当前 Codex Plugin 模块边界见 [../codex-plugin-boundaries.md](../codex-plugin-boundaries.md)。
 
 归档文件：
 

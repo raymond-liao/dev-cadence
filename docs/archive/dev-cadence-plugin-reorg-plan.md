@@ -38,7 +38,7 @@ dev-cadence/
 ## 执行计划
 
 - [x] **任务 1：更新框架定位文档**
-  - 修改 `README.md`、`docs/plugin-skill-modularization.md`、`docs/skill-authoring-prespec.md`。
+  - 修改 `README.md`、`docs/codex-plugin-boundaries.md`、`docs/skill-authoring-prespec.md`。
   - 明确 Dev Cadence 近期交付形态是 Codex Plugin。
   - 明确 Core 是长期抽象，不在本轮实现多平台 adapter。
   - 明确目录结构采用 root-level publishing layout。
@@ -58,7 +58,7 @@ dev-cadence/
 - [x] **任务 4：改造用户仓库契约**
   - 修改 `scripts/sync-repo-contract.mjs`。
   - 停止创建 `.ai/config.yaml`、`.ai/local.yaml`、`.ai/overrides/.gitkeep`。
-  - 初始化或修复时只处理 `AGENTS.md`、`.gitignore`、`specs/.gitkeep` 和可选 `.dev-cadence.yaml`。
+  - 初始化或修复时只处理 `AGENTS.md`、`.gitignore`、`specs/records/.gitkeep` 和可选 `.dev-cadence.yaml`。
   - `.gitignore` 只添加 `.dev-cadence.yaml`。
   - `AGENTS.md` 只负责把普通交付工作路由到 `dev-cadence`。
 

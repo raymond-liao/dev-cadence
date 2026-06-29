@@ -100,7 +100,7 @@ Initialized: yes
 AGENTS.md
 .gitignore
 .dev-cadence.yaml
-specs/.gitkeep
+specs/records/.gitkeep
 ```
 
 然后运行一次 delivery dry run：

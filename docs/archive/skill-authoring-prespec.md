@@ -1,6 +1,6 @@
 # Skill 编制前置规格
 
-> 历史归档：本文是 Skill/Plugin 编制前的设计输入，不再作为当前执行计划。当前 Plugin/Skill 模块边界见 [../plugin-skill-modularization.md](../plugin-skill-modularization.md)。
+> 历史归档：本文是 Skill/Plugin 编制前的设计输入，不再作为当前执行计划。当前 Codex Plugin 模块边界见 [../codex-plugin-boundaries.md](../codex-plugin-boundaries.md)。
 
 ## 1. 目标
 
@@ -28,7 +28,7 @@
 - 普通 feature、bugfix、review、refactor、research 和 incident 工作由 `using-dev-cadence` 路由到 `cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review` 和 `cadence-verify`。
 - `implementation_discipline: default` 和 `verification_discipline: default` 表示 Dev Cadence 内置交付纪律，不依赖外部 Skill。
 - 未初始化仓库中的产品实现请求不应因为缺少 thin repo-local contract 而被阻塞；需要持久 artifact 时再创建 `specs/` 或调用 `cadence-sync`。
-- Repo contract 边界：setup、sync、repair、diagnosis 默认只能写 root `AGENTS.md`、root `.gitignore` 中的 `.dev-cadence.yaml` 忽略项、root `.dev-cadence.yaml` 和 `specs/.gitkeep`；除非用户同一轮明确要求交付工作，否则不得修改产品代码或 task-specific specs。
+- Repo contract 边界：setup、sync、repair、diagnosis 默认只能写 root `AGENTS.md`、root `.gitignore` 中的 `.dev-cadence.yaml` 忽略项、root `.dev-cadence.yaml` 和 `specs/records/.gitkeep`；除非用户同一轮明确要求交付工作，否则不得修改产品代码或 task-specific specs。
 
 ## 3. 不可协商原则
 
@@ -114,7 +114,8 @@ AGENTS.md
 .dev-cadence.yaml
 
 specs/
-  .gitkeep
+  records/
+    .gitkeep
 ```
 
 `AGENTS.md` 将 Codex 中的普通交付工作路由到 `dev-cadence`。`.dev-cadence.yaml` 保存被忽略的用户本地覆盖配置。默认配置由 `dev-cadence` 持有，不在目标仓库生成 `.ai/` 目录。`specs/` 保存任务 artifacts 和 Harness evidence。`.dev-cadence/visual-companion/` 只保存可选 visual companion session，应由 `.gitignore` 忽略。
