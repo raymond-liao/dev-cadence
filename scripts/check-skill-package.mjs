@@ -7,6 +7,7 @@ const EXPECTED_SKILLS = [
   'using-dev-cadence',
   'cadence-clarify',
   'cadence-plan',
+  'cadence-research',
   'cadence-executing-plans',
   'cadence-subagent-development',
   'cadence-dispatch-parallel',

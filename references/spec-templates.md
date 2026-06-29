@@ -7,6 +7,7 @@ The reusable template files live under:
 - `templates/spec/00-brief.md`
 - `templates/spec/01-requirements.md`
 - `templates/spec/02-design.md`
+- `templates/spec/research-report.md`
 - `templates/spec/03-tasks.md`
 - `templates/spec/04-test-plan.md`
 - `templates/spec/05-implementation.md`
@@ -52,6 +53,7 @@ remain a backstop, not the first point where localization drift is discovered.
 - [`00-brief.md`](#00-briefmd)
 - [`01-requirements.md`](#01-requirementsmd)
 - [`02-design.md`](#02-designmd)
+- [`research-report.md`](#research-reportmd)
 - [`03-tasks.md`](#03-tasksmd)
 - [`04-test-plan.md`](#04-test-planmd)
 - [`05-implementation.md`](#05-implementationmd)
@@ -207,6 +209,36 @@ human_decisions:
 ## Rationale
 
 ## Gate G2
+````
+
+## `research-report.md`
+
+````markdown
+# Research Report
+
+```yaml
+status:
+research_question:
+constraints:
+non_goals:
+decision_boundary:
+sources_reviewed:
+comparison_criteria:
+options:
+recommendation:
+confidence:
+evidence_gaps:
+risks:
+open_questions:
+human_decisions:
+follow_up_delivery_needed:
+```
+
+## Evidence
+
+## Options Comparison
+
+## Recommendation
 ````
 
 ## `03-tasks.md`
@@ -378,6 +410,10 @@ residual_risk:
 escalation:
 ```
 ````
+
+`research-spike` does not require `07-review-report.md` unless the Human asks
+for a separate review of the research output. Its decision evidence lives in
+`research-report.md` and `08-acceptance.md`.
 
 ## `08-acceptance.md`
 

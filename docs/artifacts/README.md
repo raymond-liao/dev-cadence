@@ -13,6 +13,7 @@
 | [`00-brief.md`](00-brief.md) | 用户请求、目标、背景、初始分类和非目标 |
 | [`01-requirements.md`](01-requirements.md) | 范围、验收标准、约束、歧义和 G1 状态 |
 | [`02-design.md`](02-design.md) | 方案、架构约束、风险、替代方案和 G2 状态 |
+| [`research-report.md`](research-report.md) | research spike 的证据、方案比较、建议和 open questions |
 | [`03-tasks.md`](03-tasks.md) | 可执行任务、目标文件、顺序、forbidden actions 和 G3 状态 |
 | [`04-test-plan.md`](04-test-plan.md) | 验证策略、命令、覆盖范围和预期证据 |
 | [`05-implementation.md`](05-implementation.md) | diff 摘要、实现说明、运行证据和已知限制 |
@@ -45,6 +46,7 @@ specs/records/{task_id}/
   00-brief.md
   01-requirements.md
   02-design.md
+  research-report.md
   03-tasks.md
   04-test-plan.md
   05-implementation.md

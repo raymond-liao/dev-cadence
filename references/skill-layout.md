@@ -34,6 +34,9 @@ dev-cadence/
     cadence-plan/
       SKILL.md
       agents/openai.yaml
+    cadence-research/
+      SKILL.md
+      agents/openai.yaml
     cadence-executing-plans/
       SKILL.md
       agents/openai.yaml
@@ -93,6 +96,7 @@ dev-cadence/
       00-brief.md
       01-requirements.md
       02-design.md
+      research-report.md
       03-tasks.md
       04-test-plan.md
       05-implementation.md
@@ -154,6 +158,7 @@ Published Skills:
 - `using-dev-cadence`: Dev Cadence Supervisor entrypoint. It selects workflow state, task class, evidence requirements, gates, and the ordered set of applicable cadence discipline Skills.
 - `cadence-clarify`: clarify goal, scope, expected behavior, non-goals, design, acceptance, and verification before implementation.
 - `cadence-plan`: turn clarified design into executable tasks and verification steps.
+- `cadence-research`: run research spikes with evidence-backed options, recommendation, and open questions without implementing product changes.
 - `cadence-executing-plans`: execute an approved plan through Harness evidence.
 - `cadence-subagent-development`: execute approved bounded tasks with fresh Worker contexts and per-task review checkpoints.
 - `cadence-dispatch-parallel`: dispatch parallel Workers for independent problem domains and integrate results.
@@ -315,6 +320,7 @@ dev_cadence:
 `default` means Dev Cadence's own rules:
 
 - clarify intent before implementation;
+- keep research spikes separate from product implementation until follow-up delivery is explicitly approved;
 - create executable plans with concrete files, behavior, and verification;
 - use strict Red-Green-Refactor for testable behavior changes;
 - reproduce or characterize bugs before fixing;

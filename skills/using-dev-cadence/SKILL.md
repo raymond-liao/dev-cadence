@@ -55,6 +55,7 @@ Before acting on software delivery work, identify the current workflow state, ta
 - repository contract setup, inspection, sync, repair, or diagnosis -> `cadence-sync`;
 - unclear goal, scope, expected behavior, non-goals, design, or acceptance -> `cadence-clarify`;
 - approved design that needs executable tasks -> `cadence-plan`;
+- feasibility check, technical comparison, design research, option analysis, or recommendation without approved implementation -> `cadence-research`;
 - approved plan ready for implementation -> `cadence-executing-plans`;
 - approved plan with bounded tasks and isolated Worker execution -> `cadence-subagent-development`;
 - independent domains that can run concurrently -> `cadence-dispatch-parallel`;
@@ -68,6 +69,7 @@ If multiple Skills apply, use them in workflow order. These Skills are cumulativ
 
 Common sequences:
 
+- research spike: `cadence-clarify` when the research question or decision boundary is unclear -> `cadence-research` -> Human decision or `cadence-clarify`/`cadence-plan` for approved delivery follow-up;
 - feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance;
 - bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance;
 - review request: `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance when the user asks to accept or finish;
@@ -120,6 +122,8 @@ edits started, mark `post_hoc_backfill: true`; do not treat it as normal
 pre-work evidence without a named Human Gate override.
 
 Do not collapse the workflow to a single Skill when later Skills are required. A bugfix can require debug, TDD or execution, review, verify, and acceptance in the same delivery.
+
+Do not turn research into implementation. A research spike can inspect evidence and recommend a path, but product edits require explicit follow-up delivery approval and the normal clarify, plan, execute, review, and verify sequence.
 
 Do not self-accept final results. Final acceptance must name a Human accepter.
 

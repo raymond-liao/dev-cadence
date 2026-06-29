@@ -7,6 +7,7 @@ const SPEC_FILES = {
   brief: '00-brief.md',
   requirements: '01-requirements.md',
   design: '02-design.md',
+  researchReport: 'research-report.md',
   tasks: '03-tasks.md',
   implementation: '05-implementation.md',
   testReport: '06-test-report.md',
@@ -264,7 +265,7 @@ function requiredFilesFor(taskClass) {
     return ['brief', 'implementation', 'testReport', 'reviewReport', 'acceptance'];
   }
   if (taskClass === 'research-spike') {
-    return ['brief', 'requirements', 'reviewReport', 'acceptance'];
+    return ['brief', 'requirements', 'researchReport', 'acceptance'];
   }
   return ['brief', 'implementation', 'testReport', 'acceptance'];
 }
@@ -423,7 +424,12 @@ function checkG3(result, artifacts, taskClass) {
   }
 }
 
-function checkG4(result, artifacts) {
+function checkG4(result, artifacts, taskClass) {
+  if (taskClass === 'research-spike') {
+    recordGate(result, 'G4', 'skipped', ['not required for research-spike']);
+    return;
+  }
+
   const gate = readGate(artifacts.testReport, 'G4');
   const evidence = [artifacts.testReport.relativePath];
   if (!artifacts.testReport.exists) {
@@ -444,7 +450,12 @@ function checkG4(result, artifacts) {
   }
 }
 
-function checkG5(result, artifacts) {
+function checkG5(result, artifacts, taskClass) {
+  if (taskClass === 'research-spike') {
+    recordGate(result, 'G5', 'skipped', ['not required for research-spike']);
+    return;
+  }
+
   const gate = readGate(artifacts.reviewReport, 'G5');
   const evidence = [artifacts.reviewReport.relativePath];
   if (!artifacts.reviewReport.exists) {
@@ -522,8 +533,8 @@ function summarize(options) {
   checkG2(result, artifacts, taskClass);
   checkG3(result, artifacts, taskClass);
   checkHarnessEvidence(result, taskDir, taskClass, artifacts.implementation.data, options.specsDir);
-  checkG4(result, artifacts);
-  checkG5(result, artifacts);
+  checkG4(result, artifacts, taskClass);
+  checkG5(result, artifacts, taskClass);
   checkG6(result, artifacts, options.allowPendingAcceptance);
 
   if (result.failures.length > 0) {

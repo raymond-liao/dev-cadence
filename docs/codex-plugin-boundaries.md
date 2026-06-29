@@ -57,6 +57,7 @@ Adapter boundaries follow replaceable execution techniques.
 | `using-dev-cadence` | Dev Cadence 入口，负责 Supervisor 路由、workflow state、task class、gate 和 discipline sequencing |
 | `cadence-clarify` | 澄清目标、范围、非目标、验收和验证 |
 | `cadence-plan` | 把已澄清需求转成可执行计划和验证步骤 |
+| `cadence-research` | 执行 research spike，产出证据、方案比较、建议和 open questions，不实现产品代码 |
 | `cadence-executing-plans` | 在 Harness evidence 约束下执行已批准计划 |
 | `cadence-subagent-development` | 用隔离 Worker 顺序执行已批准任务，并逐任务通过 spec compliance 与 code quality review |
 | `cadence-dispatch-parallel` | 对独立问题域并行派发 Worker，并整合冲突检查和总体验证 |

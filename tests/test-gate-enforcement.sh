@@ -7,7 +7,9 @@ OUTPUT_DIR="$(mktemp -d /private/tmp/dev-cadence-gates-output.XXXXXX)"
 LANG_REPO="$(mktemp -d /private/tmp/dev-cadence-gates-language.XXXXXX)"
 SPECS_DIR="${REPO_DIR}/specs/records"
 LANG_SPECS_DIR="${LANG_REPO}/specs/records"
+RESEARCH_SPECS_DIR="${OUTPUT_DIR}/research-specs"
 TASK_ID="gate-fixture"
+RESEARCH_TASK_ID="research-fixture"
 RUN_ID="gate-fixture-run-1"
 trap 'rm -rf "${REPO_DIR}" "${OUTPUT_DIR}" "${LANG_REPO}"' EXIT
 
@@ -255,6 +257,105 @@ assert_command_fails_with \
   node "${ROOT_DIR}/scripts/check-gates.mjs" \
     --specs-dir "${SPECS_DIR}" \
     --task-id "${TASK_ID}"
+
+mkdir -p "${RESEARCH_SPECS_DIR}/${RESEARCH_TASK_ID}"
+cat > "${RESEARCH_SPECS_DIR}/${RESEARCH_TASK_ID}/00-brief.md" <<'EOF'
+# Brief
+
+```yaml
+task_id: research-fixture
+selected_workflow: research-spike
+task_class: research-spike
+goal: Compare storage options.
+```
+EOF
+
+cat > "${RESEARCH_SPECS_DIR}/${RESEARCH_TASK_ID}/01-requirements.md" <<'EOF'
+# Requirements
+
+```yaml
+status: ready_for_research
+goal: Compare storage options.
+scope:
+  - storage options
+non_goals:
+  - implementation
+acceptance_criteria:
+  - recommendation is evidence-backed
+open_questions: []
+```
+EOF
+
+cat > "${RESEARCH_SPECS_DIR}/${RESEARCH_TASK_ID}/08-acceptance.md" <<'EOF'
+# Acceptance
+
+```yaml
+status: accepted
+accepted_by_human: Raymond
+accepted_scope:
+  - research recommendation
+evidence_reviewed:
+  - specs/records/research-fixture/research-report.md
+residual_risk_accepted: []
+```
+
+## Gate G6
+
+```yaml
+gate_id: G6
+status: passed
+human_accepter: Raymond
+decision: accepted
+```
+EOF
+
+assert_command_fails_with \
+  "Missing required artifact research-report.md" \
+  node "${ROOT_DIR}/scripts/check-gates.mjs" \
+    --specs-dir "${RESEARCH_SPECS_DIR}" \
+    --task-id "${RESEARCH_TASK_ID}"
+
+cat > "${RESEARCH_SPECS_DIR}/${RESEARCH_TASK_ID}/research-report.md" <<'EOF'
+# Research Report
+
+```yaml
+status: complete
+research_question: Compare storage options.
+constraints:
+  - no implementation
+non_goals:
+  - product code changes
+decision_boundary: recommendation only
+sources_reviewed:
+  - README.md
+comparison_criteria:
+  - operational fit
+options:
+  - SQLite
+  - Postgres
+recommendation: Postgres for multi-user workloads.
+confidence: medium
+evidence_gaps: []
+risks: []
+open_questions: []
+human_decisions:
+  - Raymond accepted the research recommendation.
+follow_up_delivery_needed: true
+```
+
+## Evidence
+
+## Options Comparison
+
+## Recommendation
+EOF
+
+node "${ROOT_DIR}/scripts/check-gates.mjs" \
+  --specs-dir "${RESEARCH_SPECS_DIR}" \
+  --task-id "${RESEARCH_TASK_ID}" > "${OUTPUT_DIR}/research.out"
+grep -Fq "Gate status: passed" "${OUTPUT_DIR}/research.out"
+grep -Fq "G4: skipped" "${OUTPUT_DIR}/research.out"
+grep -Fq "G5: skipped" "${OUTPUT_DIR}/research.out"
 
 cat > "${SPECS_DIR}/${TASK_ID}/01-requirements.md" <<'EOF'
 # Requirements

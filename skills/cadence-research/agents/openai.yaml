@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cadence Research"
+  short_description: "Run research spikes"
+  default_prompt: "Use $cadence-research to compare options and produce an evidence-backed recommendation without implementing code."
+policy:
+  allow_implicit_invocation: false

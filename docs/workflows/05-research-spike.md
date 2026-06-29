@@ -4,7 +4,7 @@
 
 `research-spike` 用于可行性确认、技术比较、设计方案研究或基于证据的建议。
 
-完整运行时规则见 [workflows.md](../../references/workflows.md)。执行角色见 [Researcher](../roles/agents/06-researcher.md)。
+完整运行时规则见 [workflows.md](../../references/workflows.md)。执行入口是 `cadence-research`，执行角色见 [Researcher](../roles/agents/06-researcher.md)。
 
 ## 标准路径
 
@@ -24,7 +24,7 @@ intake -> classify -> research -> design? -> acceptance
 ## 主要产物
 
 - [00-brief.md](../artifacts/00-brief.md)
-- research report 或 options comparison
+- `research-report.md`
 - 当研究升级为设计方向时写 [02-design.md](../artifacts/02-design.md) 或 ADR
 - [08-acceptance.md](../artifacts/08-acceptance.md) 或 decision record
 
