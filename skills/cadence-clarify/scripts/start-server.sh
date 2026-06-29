@@ -76,6 +76,7 @@ fi
 
 # Generate unique session directory
 SESSION_ID="$$-$(date +%s)"
+SERVER_INSTANCE_ID="dcv-${SESSION_ID}-${RANDOM}${RANDOM}"
 
 if [[ -n "$PROJECT_DIR" ]]; then
   SESSION_DIR="${PROJECT_DIR}/.dev-cadence/visual-companion/${SESSION_ID}"
@@ -89,6 +90,7 @@ LOG_FILE="${STATE_DIR}/server.log"
 
 # Create fresh session directory with content and state peers
 mkdir -p "${SESSION_DIR}/content" "$STATE_DIR"
+echo "$SERVER_INSTANCE_ID" > "${STATE_DIR}/server-instance-id"
 
 # Kill any existing server
 if [[ -f "$PID_FILE" ]]; then
@@ -110,13 +112,12 @@ fi
 # Foreground mode for environments that reap detached/background processes.
 if [[ "$FOREGROUND" == "true" ]]; then
   echo "$$" > "$PID_FILE"
-  env DEV_CADENCE_VISUAL_DIR="$SESSION_DIR" DEV_CADENCE_VISUAL_HOST="$BIND_HOST" DEV_CADENCE_VISUAL_URL_HOST="$URL_HOST" DEV_CADENCE_VISUAL_OWNER_PID="$OWNER_PID" node server.cjs
-  exit $?
+  exec env DEV_CADENCE_VISUAL_DIR="$SESSION_DIR" DEV_CADENCE_VISUAL_HOST="$BIND_HOST" DEV_CADENCE_VISUAL_URL_HOST="$URL_HOST" DEV_CADENCE_VISUAL_OWNER_PID="$OWNER_PID" node server.cjs "--dev-cadence-visual-server-id=$SERVER_INSTANCE_ID"
 fi
 
 # Start server, capturing output to log file
 # Use nohup to survive shell exit; disown to remove from job table
-nohup env DEV_CADENCE_VISUAL_DIR="$SESSION_DIR" DEV_CADENCE_VISUAL_HOST="$BIND_HOST" DEV_CADENCE_VISUAL_URL_HOST="$URL_HOST" DEV_CADENCE_VISUAL_OWNER_PID="$OWNER_PID" node server.cjs > "$LOG_FILE" 2>&1 &
+nohup env DEV_CADENCE_VISUAL_DIR="$SESSION_DIR" DEV_CADENCE_VISUAL_HOST="$BIND_HOST" DEV_CADENCE_VISUAL_URL_HOST="$URL_HOST" DEV_CADENCE_VISUAL_OWNER_PID="$OWNER_PID" node server.cjs "--dev-cadence-visual-server-id=$SERVER_INSTANCE_ID" > "$LOG_FILE" 2>&1 &
 SERVER_PID=$!
 disown "$SERVER_PID" 2>/dev/null
 echo "$SERVER_PID" > "$PID_FILE"

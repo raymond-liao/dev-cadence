@@ -24,6 +24,7 @@ run_test "tests/test-dry-run.sh"
 run_test "tests/test-gate-enforcement.sh"
 run_test "tests/test-spec-report.sh"
 run_test "tests/test-codex-install-smoke.sh"
+run_test "tests/cadence-clarify-visual/run-all.sh"
 run_command node scripts/check-skill-package.mjs .
 run_command node scripts/check-discipline-routes.mjs .
 run_command node scripts/check-spec-artifacts.mjs templates
