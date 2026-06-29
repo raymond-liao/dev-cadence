@@ -104,7 +104,7 @@ assert_exists "scripts/check-gates.mjs"
 assert_exists "scripts/check-before-commit.mjs"
 assert_exists "scripts/artifact-language.mjs"
 assert_exists "scripts/generate-spec-report.mjs"
-assert_exists "scripts/visual-companion/server.cjs"
+assert_exists "skills/cadence-clarify/scripts/server.cjs"
 
 test ! -e "${PLUGIN_DIR}/assets" || {
   echo "unexpected optional assets directory in package fixture" >&2

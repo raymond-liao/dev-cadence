@@ -48,7 +48,7 @@ Load these references by state or condition:
 | State or condition | Required references |
 |---|---|
 | `intake`, `requirements`, design-sensitive clarification | `intent-and-design-discipline.md` |
-| visual clarification would materially improve alignment | `visual-companion.md` |
+| visual clarification would materially improve alignment | `skills/cadence-clarify/visual-companion.md` |
 | `planning` | `planning-discipline.md` |
 | `implementation` for testable behavior | `implementation-discipline.md`; load `testing-anti-patterns.md` when writing tests or mocks |
 | Worker dispatch, inline execution, subagent execution, parallel candidates | `execution-orchestration.md`; load `adapters.md` when an external adapter is configured or requested |
@@ -68,7 +68,7 @@ Visual companion tooling is optional. It may help when visual inspection or visu
 
 Do not make visual companion usage a G1 requirement. Requirements pass based on clarified intent and named Human decisions, not on whether a browser session was opened.
 
-Use `visual-companion.md` for server lifecycle, port and host handling, session directory cleanup, event capture, `.gitignore` impact, fallback behavior, and Harness evidence mapping.
+Use `skills/cadence-clarify/visual-companion.md` for server lifecycle, port and host handling, session directory cleanup, event capture, `.gitignore` impact, fallback behavior, and Harness evidence mapping.
 
 ## Adapter Boundary
 

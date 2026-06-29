@@ -3,6 +3,8 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+// ========== WebSocket Protocol (RFC 6455) ==========
+
 const OPCODES = { TEXT: 0x01, CLOSE: 0x08, PING: 0x09, PONG: 0x0A };
 const WS_MAGIC = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
 
@@ -69,6 +71,8 @@ function decodeFrame(buffer) {
   return { opcode, payload: data, bytesConsumed: totalLen };
 }
 
+// ========== Configuration ==========
+
 const PORT = process.env.DEV_CADENCE_VISUAL_PORT || (49152 + Math.floor(Math.random() * 16383));
 const HOST = process.env.DEV_CADENCE_VISUAL_HOST || '127.0.0.1';
 const URL_HOST = process.env.DEV_CADENCE_VISUAL_URL_HOST || (HOST === '127.0.0.1' ? 'localhost' : HOST);
@@ -83,6 +87,8 @@ const MIME_TYPES = {
   '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.svg': 'image/svg+xml'
 };
 
+// ========== Templates and Constants ==========
+
 const WAITING_PAGE = `<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><title>Dev Cadence Visual Companion</title>
@@ -95,6 +101,8 @@ h1 { color: #333; } p { color: #666; }</style>
 const frameTemplate = fs.readFileSync(path.join(__dirname, 'frame-template.html'), 'utf-8');
 const helperScript = fs.readFileSync(path.join(__dirname, 'helper.js'), 'utf-8');
 const helperInjection = '<script>\n' + helperScript + '\n</script>';
+
+// ========== Helper Functions ==========
 
 function isFullDocument(html) {
   const trimmed = html.trimStart().toLowerCase();
@@ -115,6 +123,8 @@ function getNewestScreen() {
     .sort((a, b) => b.mtime - a.mtime);
   return files.length > 0 ? files[0].path : null;
 }
+
+// ========== HTTP Request Handler ==========
 
 function handleRequest(req, res) {
   touchActivity();
@@ -149,6 +159,8 @@ function handleRequest(req, res) {
     res.end('Not found');
   }
 }
+
+// ========== WebSocket Connection Handling ==========
 
 const clients = new Set();
 
@@ -232,19 +244,28 @@ function broadcast(msg) {
   }
 }
 
-const IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+// ========== Activity Tracking ==========
+
+const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 let lastActivity = Date.now();
 
 function touchActivity() {
   lastActivity = Date.now();
 }
 
+// ========== File Watching ==========
+
 const debounceTimers = new Map();
+
+// ========== Server Startup ==========
 
 function startServer() {
   if (!fs.existsSync(CONTENT_DIR)) fs.mkdirSync(CONTENT_DIR, { recursive: true });
   if (!fs.existsSync(STATE_DIR)) fs.mkdirSync(STATE_DIR, { recursive: true });
 
+  // Track known files to distinguish new screens from updates.
+  // macOS fs.watch reports 'rename' for both new files and overwrites,
+  // so we can't rely on eventType alone.
   const knownFiles = new Set(
     fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.html'))
   );
@@ -260,7 +281,7 @@ function startServer() {
       debounceTimers.delete(filename);
       const filePath = path.join(CONTENT_DIR, filename);
 
-      if (!fs.existsSync(filePath)) return;
+      if (!fs.existsSync(filePath)) return; // file was deleted
       touchActivity();
 
       if (!knownFiles.has(filename)) {
@@ -295,12 +316,16 @@ function startServer() {
     try { process.kill(ownerPid, 0); return true; } catch (e) { return e.code === 'EPERM'; }
   }
 
+  // Check every 60s: exit if owner process died or idle for 30 minutes
   const lifecycleCheck = setInterval(() => {
     if (!ownerAlive()) shutdown('owner process exited');
     else if (Date.now() - lastActivity > IDLE_TIMEOUT_MS) shutdown('idle timeout');
   }, 60 * 1000);
   lifecycleCheck.unref();
 
+  // Validate owner PID at startup. If it's already dead, the PID resolution
+  // was wrong (common on WSL, Tailscale SSH, and cross-user scenarios).
+  // Disable monitoring and rely on the idle timeout instead.
   if (ownerPid) {
     try { process.kill(ownerPid, 0); }
     catch (e) {

@@ -31,6 +31,14 @@ dev-cadence/
     cadence-clarify/
       SKILL.md
       agents/openai.yaml
+      visual-companion.md
+      spec-document-reviewer-prompt.md
+      scripts/
+        start-server.sh
+        stop-server.sh
+        server.cjs
+        helper.js
+        frame-template.html
     cadence-plan/
       SKILL.md
       agents/openai.yaml
@@ -72,7 +80,6 @@ dev-cadence/
     workflows.md
     delivery-disciplines.md
     intent-and-design-discipline.md
-    visual-companion.md
     planning-discipline.md
     implementation-discipline.md
     testing-anti-patterns.md
@@ -111,7 +118,6 @@ dev-cadence/
       diff-summary.md
       permission-decisions.md
     prompts/
-      spec-document-reviewer.md
       plan-document-reviewer.md
       implementer.md
       spec-compliance-reviewer.md
@@ -122,16 +128,12 @@ dev-cadence/
     check-discipline-routes.mjs
     check-spec-artifacts.mjs
     generate-spec-report.mjs
-    visual-companion/
-      start-server.sh
-      stop-server.sh
-      server.cjs
-      helper.js
-      frame-template.html
   assets/        # Optional: icons, logos, screenshots
   .mcp.json      # Optional: bundled MCP server configuration
   .app.json      # Optional: app or connector mappings
 ```
+
+Each `skills/*/agents/openai.yaml` file is author-maintained Codex/OpenAI UI metadata for the shipped plugin: display name, short description, and default prompt. Keep these files in source so the package shape is deterministic. Do not treat them as local cache files unless the publishing model is intentionally changed.
 
 The current published package does not include lifecycle hooks. Do not add
 `hooks/` or a manifest `hooks` entry unless a future approved design explicitly
@@ -330,7 +332,7 @@ dev_cadence:
 - use parallel Worker runs only for independent domains;
 - use Dev Cadence source validation when changing this plugin's own skills and references.
 
-`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and Worker and reviewer prompt templates live under `templates/prompts/`. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, `scripts/check-spec-artifacts.mjs`, `scripts/check-gates.mjs`, and `scripts/check-before-commit.mjs`. `scripts/generate-spec-report.mjs` generates a static HTML browsing view under `specs/report/` from Markdown/YAML artifacts under `specs/records/`; the Markdown/YAML artifacts remain authoritative. Optional visual alignment uses `visual-companion.md` and `scripts/visual-companion/`; unavailability falls back to text-only clarification and does not block G1.
+`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and shared Worker and reviewer prompt templates live under `templates/prompts/`. Skill-specific resources, such as `skills/cadence-clarify/visual-companion.md`, `skills/cadence-clarify/spec-document-reviewer-prompt.md`, and `skills/cadence-clarify/scripts/`, live with the owning Skill. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, `scripts/check-spec-artifacts.mjs`, `scripts/check-gates.mjs`, and `scripts/check-before-commit.mjs`. `scripts/generate-spec-report.mjs` generates a static HTML browsing view under `specs/report/` from Markdown/YAML artifacts under `specs/records/`; the Markdown/YAML artifacts remain authoritative. Optional visual alignment uses `skills/cadence-clarify/visual-companion.md` and `skills/cadence-clarify/scripts/`; unavailability falls back to text-only clarification and does not block G1.
 
 External adapters are optional replacement points for Worker execution techniques. Dev Cadence still controls Supervisor routing, Harness evidence, Quality Gate, Human Gate, scope reconciliation, and final acceptance.
 

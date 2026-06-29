@@ -82,7 +82,6 @@ function checkDeliveryStateTable() {
   const text = readText(sourceFile);
   const required = [
     'intent-and-design-discipline.md',
-    'visual-companion.md',
     'planning-discipline.md',
     'implementation-discipline.md',
     'testing-anti-patterns.md',
@@ -106,11 +105,23 @@ function checkDeliveryStateTable() {
       fail(`${sourceFile}: route target missing: references/${fileName}`);
     }
   }
+
+  const skillLocalRoutes = [
+    'skills/cadence-clarify/visual-companion.md',
+  ];
+  for (const relativePath of skillLocalRoutes) {
+    if (!text.includes(relativePath)) {
+      fail(`${sourceFile}: missing required route to ${relativePath}`);
+    }
+    if (!exists(relativePath)) {
+      fail(`${sourceFile}: route target missing: ${relativePath}`);
+    }
+  }
 }
 
 function checkPromptTemplates() {
   const required = [
-    'templates/prompts/spec-document-reviewer.md',
+    'skills/cadence-clarify/spec-document-reviewer-prompt.md',
     'templates/prompts/plan-document-reviewer.md',
     'templates/prompts/implementer.md',
     'templates/prompts/spec-compliance-reviewer.md',
@@ -132,10 +143,15 @@ function checkPromptTemplates() {
     'references/agent-blueprints.md',
   ];
   const combined = refs.map(readText).join('\n');
-  for (const relativePath of required) {
+  const referencedRequired = required.filter((relativePath) => !relativePath.startsWith('skills/cadence-clarify/'));
+  for (const relativePath of referencedRequired) {
     if (!combined.includes(relativePath)) {
       fail(`prompt template is not referenced by discipline or blueprint: ${relativePath}`);
     }
+  }
+  const clarifySkill = readText('skills/cadence-clarify/SKILL.md');
+  if (!combined.includes('skills/cadence-clarify/spec-document-reviewer-prompt.md') && !clarifySkill.includes('spec-document-reviewer-prompt.md')) {
+    fail('skills/cadence-clarify/spec-document-reviewer-prompt.md: missing reference from clarify discipline or skill');
   }
 }
 
@@ -176,12 +192,12 @@ function checkArtifactTemplates() {
 
 function checkVisualCompanionScripts() {
   const required = [
-    'references/visual-companion.md',
-    'scripts/visual-companion/start-server.sh',
-    'scripts/visual-companion/stop-server.sh',
-    'scripts/visual-companion/server.cjs',
-    'scripts/visual-companion/helper.js',
-    'scripts/visual-companion/frame-template.html',
+    'skills/cadence-clarify/visual-companion.md',
+    'skills/cadence-clarify/scripts/start-server.sh',
+    'skills/cadence-clarify/scripts/stop-server.sh',
+    'skills/cadence-clarify/scripts/server.cjs',
+    'skills/cadence-clarify/scripts/helper.js',
+    'skills/cadence-clarify/scripts/frame-template.html',
   ];
 
   for (const relativePath of required) {
@@ -190,10 +206,26 @@ function checkVisualCompanionScripts() {
     }
   }
 
-  const visualRef = readText('references/visual-companion.md');
+  const visualRef = readText('skills/cadence-clarify/visual-companion.md');
   for (const relativePath of required.slice(1)) {
-    if (!visualRef.includes(relativePath)) {
-      fail(`references/visual-companion.md: missing script reference ${relativePath}`);
+    const skillLocalPath = relativePath.replace('skills/cadence-clarify/', '');
+    if (!visualRef.includes(relativePath) && !visualRef.includes(skillLocalPath)) {
+      fail(`skills/cadence-clarify/visual-companion.md: missing script reference ${relativePath}`);
+    }
+  }
+
+  const requiredText = [
+    '--foreground',
+    'do not use --background for user URLs',
+    "curl --noproxy '*' -sS -D - <url>",
+    '.dev-cadence/visual-companion/',
+    'devCadenceVisual',
+    '$STATE_DIR/server-info',
+    '$STATE_DIR/events',
+  ];
+  for (const text of requiredText) {
+    if (!visualRef.includes(text)) {
+      fail(`skills/cadence-clarify/visual-companion.md: missing visual companion guidance '${text}'`);
     }
   }
 }
@@ -273,6 +305,33 @@ function checkUsingDevCadenceContract() {
   }
 }
 
+function checkCadenceClarifyContract() {
+  const sourceFile = 'skills/cadence-clarify/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    '## Checklist',
+    'Explore project context with limited read-only analysis',
+    'Assess scope size. If the request spans independent subsystems or is too large for one delivery task, propose decomposition',
+    'Ask focused clarification questions one at a time.',
+    'Present 2-3 viable interpretations or approaches with tradeoffs and a recommendation',
+    'Present requirements or design in sections scaled to complexity',
+    'Ask the Human to review the written artifacts when persistent artifacts are used.',
+    '## Process Flow',
+    'The terminal state is a handoff to `using-dev-cadence` recommending `cadence-plan`',
+    'Do not invoke `cadence-plan`, `cadence-executing-plans`, `cadence-tdd`, or implementation actions directly from this Skill.',
+    '## Human Review Gate',
+    'Only hand off as ready for planning when the Human approves the clarified requirements and required design',
+    '## Visual Companion',
+    'Visual companion is optional and just-in-time.',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing clarify process phrase: ${phrase}`);
+    }
+  }
+}
+
 function checkConcreteSkillSupervisorBoundary() {
   const concreteSkills = EXPECTED_SKILLS.filter((name) => name !== 'using-dev-cadence');
   const required = [
@@ -312,7 +371,7 @@ if (!fs.existsSync(pluginDir)) {
 
 checkPluginSurface();
 checkPathReferences('references/delivery-disciplines.md');
-checkPathReferences('references/visual-companion.md');
+checkPathReferences('skills/cadence-clarify/visual-companion.md');
 checkPathReferences('references/skill-layout.md');
 checkDeliveryStateTable();
 checkPromptTemplates();
@@ -321,6 +380,7 @@ checkVisualCompanionScripts();
 checkEntrypointReferenceMap();
 checkEntrypointSkills();
 checkUsingDevCadenceContract();
+checkCadenceClarifyContract();
 checkConcreteSkillSupervisorBoundary();
 
 if (errors.length > 0) {

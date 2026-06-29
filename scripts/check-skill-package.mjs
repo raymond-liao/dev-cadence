@@ -526,12 +526,15 @@ function checkLanguageBoundary(files) {
 
 function checkForbiddenLegacyNames(files) {
   const wordPattern = (parts) => new RegExp(`\\b${parts.join('')}\\b`, 'i');
+  const prefixPattern = (parts) => new RegExp(`\\b${parts.join('')}`, 'i');
   const dottedPattern = (parts) => new RegExp(`\\.${parts.join('')}\\b`, 'i');
   const forbidden = [
     { pattern: wordPattern(['super', 'powers']), label: 'external workflow package name' },
     { pattern: dottedPattern(['super', 'powers']), label: 'external workflow state directory' },
     { pattern: wordPattern(['clau', 'de']), label: 'external assistant name' },
     { pattern: wordPattern(['brain', 'storming']), label: 'external workflow skill name' },
+    { pattern: wordPattern(['prime', 'radiant']), label: 'external brand name' },
+    { pattern: prefixPattern(['brain', 'storm_']), label: 'external visual companion environment prefix' },
   ];
 
   for (const filePath of files) {

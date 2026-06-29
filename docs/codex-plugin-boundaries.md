@@ -81,11 +81,13 @@ Adapter boundaries follow replaceable execution techniques.
 | `templates/prompts/` | Worker、reviewer 和文档审查 prompt 模板 | [references/agent-blueprints.md](../references/agent-blueprints.md) |
 | `scripts/` | 打包、检查、artifact 初始化、报告生成、repo contract 同步和 optional visual companion | [validation.md](validation.md) |
 
+每个入口 Skill 下的 `agents/openai.yaml` 是本仓库主动维护的 Codex/OpenAI UI metadata，包括展示名称、简短说明和默认提示。它不是本地安装 cache，也不是 thin repo-local contract。某些上游参考仓库的源码目录可能不包含 `agents/`，但安装后的 plugin cache 会包含；Dev Cadence 选择在源码层维护它，让发布包形态、触发文案和测试结果保持确定。
+
 `delivery-disciplines.md` 是默认交付纪律的路由入口；细节按状态拆到 clarify、planning、TDD、debugging、review、verification 和 authoring discipline references。
 
 `repository-rule-sync.md` 定义 thin repo-local contract 的初始化、检查、同步和修复规则。`scripts/` 提供对应检查和生成命令；具体脚本清单以 `scripts/` 目录和 package boundary 测试为准。
 
-`visual-companion.md` 和 `scripts/visual-companion/` 提供可选浏览器视觉对齐能力。它可以帮助 Human 和 AI 对齐 mockup、diagram 和视觉方案，但不能成为 G1 的硬条件。
+`skills/cadence-clarify/visual-companion.md` 和 `skills/cadence-clarify/scripts/` 提供 `cadence-clarify` 的可选浏览器视觉对齐能力。它可以帮助 Human 和 AI 对齐 mockup、diagram 和视觉方案，但不能成为 G1 的硬条件。
 
 ## Thin Repo-Local Contract
 

@@ -69,7 +69,7 @@ After writing `01-requirements.md` or `02-design.md`, review it before moving on
 - assumptions recorded as requirements without Human decision;
 - acceptance criteria that cannot be verified.
 
-For a reusable reviewer prompt, use `templates/prompts/spec-document-reviewer.md`.
+For a reusable reviewer prompt, use `skills/cadence-clarify/spec-document-reviewer-prompt.md`.
 
 ## Visual Companion Boundary
 
@@ -84,4 +84,4 @@ Do not use a visual companion for text-only requirements, ordinary backend work,
 
 Visual companion tooling is an optional capability, not a G1 requirement. G1 passes on clarified requirements and named Human decisions, not on whether a browser session was opened.
 
-Load `visual-companion.md` before offering or using the browser-based companion. If the environment cannot run it, record the fallback when a task is active and continue text-only.
+When running `cadence-clarify`, load `skills/cadence-clarify/visual-companion.md` before offering or using the browser-based companion. If the environment cannot run it, record the fallback when a task is active and continue text-only.
