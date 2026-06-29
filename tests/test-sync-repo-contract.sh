@@ -18,6 +18,8 @@ test -d "${REPO_DIR}/specs/records"
 test -f "${REPO_DIR}/specs/records/.gitkeep"
 test ! -e "${REPO_DIR}/.ai"
 grep -q "dev-cadence" "${REPO_DIR}/AGENTS.md"
+grep -q ".dev-cadence/skills/using-dev-cadence/SKILL.md" "${REPO_DIR}/AGENTS.md"
+grep -q "Do not rely on global plugin or Skill auto-discovery" "${REPO_DIR}/AGENTS.md"
 grep -qx ".dev-cadence.yaml" "${REPO_DIR}/.gitignore"
 
 node "${ROOT_DIR}/scripts/sync-repo-contract.mjs" inspect --repo-dir "${REPO_DIR}" --json > "${INSPECT_JSON}"

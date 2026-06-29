@@ -4,60 +4,35 @@
 
 ## Quickstart
 
-推荐把 Dev Cadence 作为业务仓库内置的 repo-scoped marketplace 分发，这样团队成员从同一个业务仓库安装同一份插件。先在本仓库生成 plugin payload：
+推荐把 Dev Cadence 作为业务仓库内置的 repo-embedded runtime 分发，这样流程入口由业务仓库 `AGENTS.md` 强制触发，不依赖全局 Plugin 或 Skill 自动发现。先在本仓库生成 target-repo bundle：
 
 ```bash
-node scripts/package-codex-plugin.mjs --clean
+node scripts/package-target-repo-bundle.mjs --clean
 ```
 
-把 `dist/codex/plugins/dev-cadence/` 放到业务仓库，例如：
+同步到业务仓库：
+
+```bash
+node scripts/sync-target-repo-bundle.mjs --target /path/to/your/product-repo
+```
+
+同步后的业务仓库形态：
 
 ```text
 your-product-repo/
-  .agents/
-    plugins/
-      marketplace.json
-      dev-cadence/
-        .codex-plugin/
-        skills/
-        references/
-        templates/
-        scripts/
+  AGENTS.md
+  .gitignore
+  .dev-cadence.yaml
+  .dev-cadence/
+    VERSION
+    manifest.json
+    skills/
+    references/
+    templates/
+    scripts/
 ```
 
-业务仓库的 `.agents/plugins/marketplace.json` 使用团队自己的 marketplace name，并让 `source.path` 指向提交进去的 plugin payload：
-
-```json
-{
-  "name": "dev-cadence-your-product",
-  "interface": {
-    "displayName": "Dev Cadence Your Product"
-  },
-  "plugins": [
-    {
-      "name": "dev-cadence",
-      "source": {
-        "source": "local",
-        "path": "./.agents/plugins/dev-cadence"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
-    }
-  ]
-}
-```
-
-团队成员在业务仓库根目录安装：
-
-```bash
-codex plugin marketplace add .
-codex plugin add dev-cadence@dev-cadence-your-product
-```
-
-安装后新开 Codex thread。不要把本仓库源码根目录直接作为插件安装源；团队分发应使用业务仓库提交的 `.agents/plugins/marketplace.json` 和 plugin payload。
+提交业务仓库中的 `AGENTS.md`、`.dev-cadence/`、`.gitignore` 和 `specs/records/.gitkeep`。`.dev-cadence.yaml` 继续作为本地偏好文件，默认加入 `.gitignore`；默认 artifact language 是 `en`，用户可以在本地取消注释改为 `zh`。
 
 ## Use It
 
@@ -80,7 +55,7 @@ codex
 修复支付回调重复处理的问题
 ```
 
-Dev Cadence 会在业务仓库里使用 `specs/records/{task_id}/` 记录过程 artifact、Harness 运行证据、验证和人工验收；生成的 HTML 浏览报告放在 `specs/report/`。完整机制见 [docs/overview.md](docs/overview.md)。
+业务仓库 `AGENTS.md` 会要求普通交付任务先读取 `.dev-cadence/skills/using-dev-cadence/SKILL.md`。Dev Cadence 会在业务仓库里使用 `specs/records/{task_id}/` 记录过程 artifact、Harness 运行证据、验证和人工验收；生成的 HTML 浏览报告放在 `specs/report/`。完整机制见 [docs/overview.md](docs/overview.md)。
 
 ## Local Development
 
@@ -98,10 +73,10 @@ Dev Cadence 会在业务仓库里使用 `specs/records/{task_id}/` 记录过程 
 bash tests/run-all.sh
 ```
 
-重新生成本地 Codex 发布包：
+重新生成目标仓库内置 bundle：
 
 ```bash
-node scripts/package-codex-plugin.mjs --clean
+node scripts/package-target-repo-bundle.mjs --clean
 ```
 
 更多安装、更新和卸载命令见 [docs/installation.md](docs/installation.md)；验证和打包检查见 [docs/validation.md](docs/validation.md)。
@@ -112,7 +87,7 @@ node scripts/package-codex-plugin.mjs --clean
 
 - `README.md`：项目入口、安装、使用和维护导航。
 - `docs/`：使用者和维护者说明，以及当前设计解释；`docs/archive/` 只保存历史计划、研究和验收记录。
-- `skills/`、`references/`、`templates/`、`scripts/`：Codex Plugin 发布内容，也是运行时会加载或调用的材料。
+- `skills/`、`references/`、`templates/`、`scripts/`：Dev Cadence 运行时内容，会被打包到业务仓库 `.dev-cadence/`。
 - `specs/`、`research/`：本地运行或探索过程目录，默认不提交。
 
 | 文档 | 作用 |

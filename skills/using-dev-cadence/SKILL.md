@@ -31,6 +31,8 @@ If user or repository instructions conflict with Dev Cadence discipline, follow 
 
 Use Codex native skill activation. Do not read `SKILL.md` files with ordinary file tools as a substitute for activating an applicable Skill.
 
+When Dev Cadence is embedded in a target repository under `.dev-cadence/`, repository instructions may require reading `.dev-cadence/skills/using-dev-cadence/SKILL.md` as the activation path. In that mode, treat the repo-embedded file as the active Dev Cadence runtime, resolve `skills/...`, `references/...`, `templates/...`, and `scripts/...` paths relative to `.dev-cadence/`, and continue through the same Supervisor routing rules.
+
 If a concrete cadence Skill was activated first, immediately return to this Supervisor entrypoint before doing that Skill's work.
 
 ## Required References

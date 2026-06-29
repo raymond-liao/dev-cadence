@@ -1,67 +1,54 @@
 # Dev Cadence 安装
 
-推荐把 `dev-cadence` Codex Plugin 提交到业务仓库的 repo-scoped marketplace，让团队成员从业务仓库根目录安装同一份插件。本机安装只用于维护者开发、调试和 smoke test。安装后的验证、打包检查和 smoke test 见 [Dev Cadence 当前验证](validation.md)。
+推荐把 Dev Cadence 提交到业务仓库的 repo-embedded runtime，让团队成员从同一份业务仓库 `AGENTS.md` 进入流程。全局 Plugin 或业务仓库 marketplace 可以以后再作为辅助分发方式；当前主路径不依赖 Skill 自动发现。安装后的验证、打包检查和 smoke test 见 [Dev Cadence 当前验证](validation.md)。
 
-## 业务仓库内置 Marketplace 安装
+## 业务仓库内置 Runtime
 
-先在 Dev Cadence 源码仓库生成发布包：
+先在 Dev Cadence 源码仓库生成 target-repo bundle：
 
 ```bash
 cd /path/to/dev-cadence
-node scripts/package-codex-plugin.mjs --clean
+node scripts/package-target-repo-bundle.mjs --clean
 ```
 
-把 `dist/codex/plugins/dev-cadence/` 复制或同步到业务仓库的 plugin payload 目录。典型形态：
+同步到业务仓库：
+
+```bash
+node scripts/sync-target-repo-bundle.mjs --target /path/to/your/product-repo
+```
+
+同步后的业务仓库形态：
 
 ```text
 your-product-repo/
-  .agents/
-    plugins/
-      marketplace.json
-      dev-cadence/
-        .codex-plugin/
-          plugin.json
-        skills/
-        references/
-        templates/
-        scripts/
+  AGENTS.md
+  .gitignore
+  .dev-cadence.yaml
+  .dev-cadence/
+    VERSION
+    manifest.json
+    skills/
+    references/
+    templates/
+    scripts/
+  specs/
+    records/
+      .gitkeep
 ```
 
-业务仓库的 `.agents/plugins/marketplace.json` 需要使用该仓库自己的 marketplace name；`source.path` 必须从业务仓库根目录解析到实际 plugin payload。例如 plugin payload 放在 `.agents/plugins/dev-cadence/` 时：
+提交业务仓库中的 `AGENTS.md`、`.gitignore`、`.dev-cadence/` 和 `specs/records/.gitkeep`。`.dev-cadence.yaml` 继续作为用户本地偏好文件，默认加入 `.gitignore`。默认 artifact language 是 `en`；用户可以在本地取消注释改成 `zh`。
 
-```json
-{
-  "name": "dev-cadence-your-product",
-  "interface": {
-    "displayName": "Dev Cadence Your Product"
-  },
-  "plugins": [
-    {
-      "name": "dev-cadence",
-      "source": {
-        "source": "local",
-        "path": "./.agents/plugins/dev-cadence"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
-    }
-  ]
-}
-```
+业务仓库 `AGENTS.md` 的 Dev Cadence 段落会要求普通交付任务先读取 `.dev-cadence/skills/using-dev-cadence/SKILL.md`，并把 `skills/...`、`references/...`、`templates/...` 和 `scripts/...` 解析到 `.dev-cadence/` 下。
 
-团队成员在业务仓库根目录执行：
+## 可选 Codex Plugin 安装
+
+维护者仍可生成 Codex Plugin marketplace package：
 
 ```bash
-codex plugin marketplace add .
-codex plugin add dev-cadence@dev-cadence-your-product
+node scripts/package-codex-plugin.mjs --clean
 ```
 
-`codex plugin marketplace add .` 使用当前业务仓库作为 marketplace source。`codex plugin add` 会把插件安装到当前用户的 Codex cache，例如 `~/.codex/plugins/cache/...`；这属于正常用户本机状态，不表示插件被安装回业务仓库。安装后新开 Codex thread。
-
-如果业务仓库用 `.gitignore` 忽略 `.agents/`，必须显式放行 `.agents/plugins/marketplace.json` 和 plugin payload，否则其他用户 clone 后无法安装。
+生成的本地 marketplace root 位于 `dist/codex/`。这条路径保留给全局 Plugin 或 marketplace 方案，不作为当前流程稳定启动的前提。
 
 ## 维护者本机安装
 
@@ -71,7 +58,7 @@ codex plugin add dev-cadence@dev-cadence-your-product
 ./deploy-local.sh
 ```
 
-该脚本会生成 `dist/codex/` 本地 marketplace package，注册 marketplace，并安装 `dev-cadence@dev-cadence-local`。这条路径只用于本机开发、调试和 smoke test；团队使用应优先通过业务仓库内置 marketplace 分发。
+该脚本会生成 `dist/codex/` 本地 marketplace package，注册 marketplace，并安装 `dev-cadence@dev-cadence-local`。这条路径只用于本机开发、调试和 smoke test；团队使用应优先通过业务仓库内置 runtime 分发。
 
 不要把源码仓库根目录直接作为插件安装源；打包产物位于 `dist/codex/`。
 

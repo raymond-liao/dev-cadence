@@ -134,7 +134,7 @@ function assertInitialized(repoDir) {
 
   const missing = required.filter((item) => !fs.existsSync(path.join(repoDir, item)));
   if (missing.length > 0) {
-    throw new Error(`Repository is not initialized with Dev Cadence thin contract: missing ${missing.join(', ')}`);
+    throw new Error(`Repository is not initialized with Dev Cadence repository contract: missing ${missing.join(', ')}`);
   }
 
   const agents = readText(path.join(repoDir, 'AGENTS.md'));
@@ -218,7 +218,7 @@ const ZH_REPLACEMENTS = [
   ['Final acceptance blocks without a named Human accepter.', '\u6ca1\u6709\u5177\u540d Human accepter \u65f6\u6700\u7ec8\u9a8c\u6536\u4fdd\u6301\u963b\u585e。'],
   ['Dry run only.', '\u4ec5 dry run。'],
   ['Who is the named Human accepter?', '\u5177\u540d Human accepter \u662f\u8c01？'],
-  ['Generated from CLI inputs and repo-local Dev Cadence thin contract.', '\u751f\u6210\u81ea CLI \u8f93\u5165\u548c\u4ed3\u5e93\u672c\u5730 Dev Cadence \u8584\u5951\u7ea6。'],
+  ['Generated from CLI inputs and Dev Cadence repository contract.', '\u751f\u6210\u81ea CLI \u8f93\u5165\u548c Dev Cadence \u4ed3\u5e93\u5951\u7ea6。'],
   ['Checked initialized repo contract.', '\u5df2\u68c0\u67e5\u521d\u59cb\u5316\u540e\u7684\u4ed3\u5e93\u5951\u7ea6。'],
   ['Inferred workflow and task class from goal text.', '\u5df2\u6839\u636e\u76ee\u6807\u6587\u672c\u63a8\u65ad workflow \u548c task class。'],
   ['dry_run_scope', 'dry_run_scope'],
@@ -246,7 +246,7 @@ const ZH_REPLACEMENTS = [
   ['Record dry-run implementation evidence.', '\u8bb0\u5f55 dry-run implementation evidence。'],
   ['Record verification and review evidence.', '\u8bb0\u5f55 verification \u548c review evidence。'],
   ['Block final acceptance when no named Human accepter is provided.', '\u672a\u63d0\u4f9b\u5177\u540d Human accepter \u65f6\u963b\u585e\u6700\u7ec8\u9a8c\u6536。'],
-  ['Initialized Dev Cadence thin repo-local contract', '\u5df2\u521d\u59cb\u5316 Dev Cadence \u4ed3\u5e93\u672c\u5730\u8584\u5951\u7ea6'],
+  ['Initialized Dev Cadence repository contract', '\u5df2\u521d\u59cb\u5316 Dev Cadence \u4ed3\u5e93\u5951\u7ea6'],
   ['specs artifact tree', 'specs artifact tree'],
   ['Modify product files', '\u4fee\u6539\u4ea7\u54c1\u6587\u4ef6'],
   ['Claim product verification', '\u58f0\u79f0\u4ea7\u54c1\u5df2\u9a8c\u8bc1'],
@@ -317,7 +317,7 @@ const ZH_REPLACEMENTS = [
   ['No product implementation is authorized or performed by dry run.', 'dry run \u672a\u6388\u6743\u4e5f\u672a\u6267\u884c\u4ea7\u54c1\u5b9e\u73b0。'],
   ['delivery_dry_run', 'delivery_dry_run'],
   ['CLI goal', 'CLI goal'],
-  ['repo-local Dev Cadence thin contract', 'repo-local Dev Cadence thin contract'],
+  ['Dev Cadence repository contract', 'Dev Cadence repository contract'],
   ['init-task-artifacts.mjs', 'init-task-artifacts.mjs'],
   ['check-spec-artifacts.mjs should be run after generation', '\u751f\u6210\u540e\u5e94\u8fd0\u884c check-spec-artifacts.mjs'],
   ['Product tests skipped; dry run has no product implementation.', '\u8df3\u8fc7\u4ea7\u54c1\u6d4b\u8bd5，\u56e0\u4e3a dry run \u6ca1\u6709\u4ea7\u54c1\u5b9e\u73b0。'],
@@ -440,7 +440,7 @@ This artifact set validates Dev Cadence delivery routing and evidence generation
     human_decisions: options.acceptedBy ? [`accepted_by_human: ${options.acceptedBy}`] : [],
   }, `## Source Notes
 
-Generated from CLI inputs and repo-local Dev Cadence thin contract.
+Generated from CLI inputs and Dev Cadence repository contract.
 
 ## Ambiguity Check
 
@@ -530,7 +530,7 @@ G2 is not required for this dry-run task unless real high-risk product work is a
       'Record verification and review evidence.',
       'Block final acceptance when no named Human accepter is provided.',
     ],
-    dependencies: ['Initialized Dev Cadence thin repo-local contract'],
+    dependencies: ['Initialized Dev Cadence repository contract'],
     planned_components: ['specs artifact tree'],
     target_files: [],
     planned_artifact_files: artifactPaths,
@@ -757,7 +757,7 @@ escalation: ${acceptanceBlocked ? 'named Human acceptance required' : 'none'}
     state: 'delivery_dry_run',
     started_at: timestamp,
     ended_at: timestamp,
-    inputs: ['CLI goal', 'repo-local Dev Cadence thin contract'],
+    inputs: ['CLI goal', 'Dev Cadence repository contract'],
     outputs: [...artifactPaths, ...runPaths],
     planned_files: [],
     planned_artifact_files: artifactPaths,

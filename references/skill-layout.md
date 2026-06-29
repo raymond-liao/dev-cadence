@@ -1,13 +1,13 @@
 # Skill Layout
 
-This file defines the current Codex Plugin publishing shape for `dev-cadence` and the thin repo-local output shape created when applying Dev Cadence to a target repository.
+This file defines the current Codex Plugin publishing shape for `dev-cadence` and the repo-embedded output shape created when applying Dev Cadence to a target repository.
 
 ## Contents
 
 - [Target Plugin Package](#target-plugin-package)
 - [Skill Boundaries](#skill-boundaries)
 - [Invocation Boundary](#invocation-boundary)
-- [Thin Target Repository Layout](#thin-target-repository-layout)
+- [Target Repository Layout](#target-repository-layout)
 - [Initialization Rules](#initialization-rules)
 - [Automatic Entrypoint](#automatic-entrypoint)
 - [Runtime Authority](#runtime-authority)
@@ -169,13 +169,13 @@ Published Skills:
 - `cadence-request-review`: review implementation for spec compliance and code quality.
 - `cadence-review`: verify and address existing review feedback, then request re-review.
 - `cadence-verify`: verify evidence, scope, skipped checks, residual risk, and Human acceptance before completion.
-- `cadence-sync`: initialize, inspect, sync, repair, or diagnose the thin repo-local contract.
+- `cadence-sync`: initialize, inspect, sync, repair, or diagnose the repo-embedded repository contract.
 
 Dev Cadence authoring is not published as a normal user Skill. Authoring discipline remains available as shared source-maintenance guidance for this repository.
 
 ## Invocation Boundary
 
-`using-dev-cadence` is the only Skill that represents Dev Cadence as a whole. It is selected through Codex native skill triggering or an explicit user request to use Dev Cadence, and it must route ordinary delivery work to the applicable cadence discipline Skills before action.
+`using-dev-cadence` is the only Skill that represents Dev Cadence as a whole. It is selected through Codex native skill triggering, an explicit user request to use Dev Cadence, or a target repository `AGENTS.md` rule that requires reading `.dev-cadence/skills/using-dev-cadence/SKILL.md`. It must route ordinary delivery work to the applicable cadence discipline Skills before action.
 
 The bootstrap entrypoint is not a soft introduction. It owns the Supervisor obligation to check applicable Skills before any delivery response or action, preserve workflow order, and keep later gates reachable. Concrete discipline Skills remain independently triggerable, but they are not independent workflows.
 
@@ -189,23 +189,31 @@ Ordinary delivery work does not require prior repository initialization. If pers
 
 Do not use `cadence-sync` as an implicit trigger for product implementation work. Do not infer a hidden product task from repository contents when the user asks only to prepare, initialize, apply, install, update, sync, repair, inspect, or diagnose the framework.
 
-## Thin Target Repository Layout
+## Target Repository Layout
 
-For new repositories, create or update only the thin repo-local contract:
+For target repositories, embed the runtime bundle and keep user-local preferences at the root:
 
 ```text
 AGENTS.md
 .gitignore
 .dev-cadence.yaml
 
+.dev-cadence/
+  VERSION
+  manifest.json
+  skills/
+  references/
+  templates/
+  scripts/
+
 specs/
   records/
     .gitkeep
 ```
 
-`AGENTS.md` routes normal delivery work to `dev-cadence`.
+`AGENTS.md` routes normal delivery work to the repo-embedded Dev Cadence entrypoint: `.dev-cadence/skills/using-dev-cadence/SKILL.md`.
 
-Default Dev Cadence behavior is plugin-owned. Target repositories do not need a generated default config file.
+Default Dev Cadence behavior is runtime-owned under `.dev-cadence/`. Target repositories do not need a generated default config file.
 
 `default` means the built-in Dev Cadence delivery discipline in `delivery-disciplines.md`.
 
@@ -267,11 +275,12 @@ Artifact language applies to Markdown prose, notes, acceptance criteria text, re
 
 ## Initialization Rules
 
-- Create or update root `AGENTS.md` so normal software delivery requests route to Dev Cadence.
+- Copy or update `.dev-cadence/` from the current target-repo bundle.
+- Create or update root `AGENTS.md` so normal software delivery requests route to `.dev-cadence/skills/using-dev-cadence/SKILL.md`.
 - Create `.dev-cadence.yaml` with commented user preference fields unless it already exists.
 - Create `specs/records/.gitkeep` when needed to represent an empty specs records directory.
 - Create or update `.gitignore` to include `.dev-cadence.yaml`, preserving existing ignore rules.
-- During initialization, synchronization, repair, or diagnosis, write only root `AGENTS.md`, root `.gitignore` entry for `.dev-cadence.yaml`, root `.dev-cadence.yaml`, and `specs/records/.gitkeep` by default.
+- During initialization, synchronization, repair, or diagnosis, write only `.dev-cadence/`, root `AGENTS.md`, root `.gitignore` entry for `.dev-cadence.yaml`, root `.dev-cadence.yaml`, and `specs/records/.gitkeep` by default.
 - Do not modify product source, tests, migrations, build scripts, deployment files, or application configuration during framework initialization unless the user explicitly requests delivery work in the same turn.
 - Do not create task-specific specs during framework initialization unless the user explicitly requests a concrete delivery task in the same turn.
 - Do not infer a hidden product task from repository contents when the user asks only to prepare, initialize, apply, install, update, sync, repair, inspect, or diagnose the framework.
@@ -285,13 +294,15 @@ Add this section to root `AGENTS.md`, adapting wording only when the repository 
 ```markdown
 ## AI Delivery Workflow
 
-For software delivery tasks in this repository, use `dev-cadence`.
+For implementation, debugging, planning, research, review, verification, acceptance, or commit-related delivery work in this repository, use the repo-embedded Dev Cadence runtime.
 
-This applies to feature development, bugfixes, refactoring, code review, research spikes, incident fixes, and any request that changes or evaluates repository behavior.
+Before answering, asking clarification questions, reading files, running commands, editing code, reviewing, verifying, or committing for delivery work, read and apply:
 
-Read root `.dev-cadence.yaml` when present for local overrides. Write task artifacts and Harness evidence under `specs/records/{task_id}/`. Generated HTML reports live under `specs/report/`.
+`.dev-cadence/skills/using-dev-cadence/SKILL.md`
 
-The user does not need to invoke a Skill name or choose a workflow. Dev Cadence infers `workflow_hint`, routes `selected_workflow`, records `selection_reason`, and follows its plugin-owned policies, templates, and gates.
+Follow the matching workflow Skill under `.dev-cadence/skills/`. Resolve Dev Cadence paths such as `skills/...`, `references/...`, `templates/...`, and `scripts/...` relative to `.dev-cadence/`. Do not rely on global plugin or Skill auto-discovery for Dev Cadence activation in this repository.
+
+Read root `.dev-cadence.yaml` when present for local overrides. It is user-local and ignored by Git by default. Write task artifacts and Harness evidence under `specs/records/{task_id}/`. Generated HTML reports live under `specs/report/`.
 
 Use direct execution without task specs only for explicitly trivial questions or non-delivery requests.
 ```
@@ -303,14 +314,14 @@ Resolve runtime rules in this order:
 1. Current user request and explicit repository instructions.
 2. Repo-local `AGENTS.md` and `.dev-cadence.yaml`.
 3. Current task artifacts under `specs/records/{task_id}/`.
-4. `dev-cadence` references, templates, built-in delivery disciplines, and adapters.
+4. Repo-embedded `.dev-cadence/` references, templates, built-in delivery disciplines, and adapters.
 5. Configured adapters when selected.
 
 Repo-local overlays may add stricter or project-specific constraints. They must not weaken hard safety rules such as named Human acceptance, evidence requirements, permission gates, Requirements Readiness Check, or required Harness evidence.
 
 ## Delivery Discipline and Adapters
 
-The thin config starts with Dev Cadence defaults:
+The local config starts with Dev Cadence defaults:
 
 ```yaml
 dev_cadence:

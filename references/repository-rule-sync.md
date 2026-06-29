@@ -4,15 +4,15 @@ Use this reference only when the user explicitly invokes `$dev-cadence` or names
 
 ## Core Model
 
-After initialization, normal delivery work is routed by the target repository's root `AGENTS.md` to `dev-cadence`. Runtime authority is layered across repo-local entrypoint, optional local override file, task artifacts, `dev-cadence` references/templates/built-in delivery disciplines/adapters, and configured adapters.
+After initialization, normal delivery work is routed by the target repository's root `AGENTS.md` to the repo-embedded Dev Cadence entrypoint at `.dev-cadence/skills/using-dev-cadence/SKILL.md`. Runtime authority is layered across repo-local entrypoint, optional local override file, task artifacts, `.dev-cadence/` references/templates/built-in delivery disciplines/adapters, and configured adapters.
 
-The maintenance Skill becomes active again only for repository-rule maintenance. In that mode, update the thin repo-local contract so future ordinary work uses the intended runtime path.
+The maintenance Skill becomes active again only for repository-rule maintenance. In that mode, update the repo-embedded contract so future ordinary work uses the intended runtime path.
 
 ## Allowed Modes
 
 - `inspect`: read repo-local `AGENTS.md`, `.gitignore`, `.dev-cadence.yaml`, legacy `.ai/` when present, and `specs/` shape; report whether the repository appears initialized and where drift exists. Do not write.
-- `sync` or `update`: reconcile the thin repo-local contract with current Dev Cadence references while preserving local overlays. Write only framework entrypoint and local override files.
-- `repair`: restore missing or malformed thin-contract files. Preserve local repository instructions and report any uncertain merge.
+- `sync` or `update`: reconcile the repo-embedded contract with the current Dev Cadence target-repo bundle while preserving local overlays. Write only framework runtime, entrypoint, local override, and artifact-space files.
+- `repair`: restore missing or malformed repo-embedded contract files. Preserve local repository instructions and report any uncertain merge.
 - `diagnose`: explain initialization or rule-routing problems and recommend exact fixes. Write only if the user explicitly asked to repair or update.
 
 Maintenance modes are forbidden unless the user explicitly invokes `$dev-cadence` or names `dev-cadence`.
@@ -24,6 +24,7 @@ Allowed writes during rule maintenance:
 - root `AGENTS.md` AI delivery entrypoint section;
 - root `.gitignore` entry for `.dev-cadence.yaml`;
 - root `.dev-cadence.yaml`;
+- `.dev-cadence/` runtime bundle;
 - `specs/records/.gitkeep` only when needed to represent an empty specs records directory.
 
 Forbidden writes unless the same user turn explicitly asks for delivery work:
@@ -34,13 +35,13 @@ Forbidden writes unless the same user turn explicitly asks for delivery work:
 
 ## Sync Record
 
-Thin-contract repositories do not need a generated sync record by default. Runtime authority is the layered model described in `skill-layout.md`.
+Repo-embedded repositories do not need a generated sync record by default. Runtime authority is the layered model described in `skill-layout.md`.
 
 If a future implementation adds a sync record, it must be audit metadata only and must not become runtime configuration.
 
 ## Drift Detection
 
-Compare repo-local files against the current thin contract in `skill-layout.md`.
+Compare repo-local files against the current repo-embedded contract in `skill-layout.md`.
 
 Classify each target as:
 
@@ -87,7 +88,8 @@ next_steps:
 
 Verification should include at least:
 
-- root `AGENTS.md` routes normal delivery to Dev Cadence;
+- root `AGENTS.md` routes normal delivery to `.dev-cadence/skills/using-dev-cadence/SKILL.md`;
+- `.dev-cadence/` runtime bundle exists and contains `manifest.json`, `VERSION`, `skills/`, `references/`, `templates/`, and `scripts/`;
 - `.dev-cadence.yaml` exists and `.gitignore` ignores it;
 - legacy `.ai/` content is preserved and reported when present;
 - hard rules are available through plugin-owned references;
@@ -95,4 +97,4 @@ Verification should include at least:
 
 ## Runtime Reminder
 
-After sync/update completes, future normal work should use the target repository's updated `AGENTS.md` route plus `.dev-cadence.yaml` when present, `specs/**`, and `dev-cadence` references/templates/built-in delivery disciplines/adapters. Do not continue into product delivery unless the user asks for a concrete delivery task in the same turn.
+After sync/update completes, future normal work should use the target repository's updated `AGENTS.md` route plus `.dev-cadence/`, `.dev-cadence.yaml` when present, and `specs/**`. Do not continue into product delivery unless the user asks for a concrete delivery task in the same turn.

@@ -47,6 +47,9 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 }
 
 const pluginDir = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
+const embeddedRuntime = fs.existsSync(path.join(pluginDir, 'manifest.json')) &&
+  fs.existsSync(path.join(pluginDir, 'VERSION')) &&
+  !fs.existsSync(path.join(pluginDir, '.codex-plugin'));
 const errors = [];
 const warnings = [];
 
@@ -237,6 +240,14 @@ function checkFrontmatter() {
 function checkPluginManifest() {
   const manifestPath = path.join(pluginDir, '.codex-plugin', 'plugin.json');
   if (!fs.existsSync(manifestPath)) {
+    if (embeddedRuntime) {
+      checkEmbeddedManifest();
+      return {
+        name: 'dev-cadence',
+        version: readText(path.join(pluginDir, 'VERSION')).trim(),
+        skills: './skills/',
+      };
+    }
     fail('.codex-plugin/plugin.json: missing required Codex plugin manifest');
     return null;
   }
@@ -289,6 +300,35 @@ function checkPluginManifest() {
   checkPluginRootShape();
 
   return manifest;
+}
+
+function checkEmbeddedManifest() {
+  const manifestPath = path.join(pluginDir, 'manifest.json');
+  let manifest;
+  try {
+    manifest = JSON.parse(readText(manifestPath));
+  } catch (error) {
+    fail(`manifest.json: invalid JSON: ${error.message}`);
+    return;
+  }
+
+  if (manifest.name !== 'dev-cadence') {
+    fail(`manifest.json: expected name 'dev-cadence', got '${manifest.name || ''}'`);
+  }
+  if (!isNonEmptyString(manifest.version)) {
+    fail('manifest.json: version must be a non-empty string');
+  }
+  if (manifest.entrypoint !== 'skills/using-dev-cadence/SKILL.md') {
+    fail(`manifest.json: expected entrypoint skills/using-dev-cadence/SKILL.md, got '${manifest.entrypoint || ''}'`);
+  }
+  if (!Array.isArray(manifest.runtime_paths)) {
+    fail('manifest.json: runtime_paths must be an array');
+  }
+
+  const versionText = readText(path.join(pluginDir, 'VERSION')).trim();
+  if (manifest.version !== versionText) {
+    fail('VERSION must match manifest.json version');
+  }
 }
 
 function validateOptionalManifestPaths(manifest) {
@@ -379,6 +419,8 @@ function validateManifestInterface(manifest) {
 }
 
 function checkPluginRootShape() {
+  if (embeddedRuntime) return;
+
   const codexPluginDir = path.join(pluginDir, '.codex-plugin');
   if (fs.existsSync(codexPluginDir)) {
     for (const entry of fs.readdirSync(codexPluginDir, { withFileTypes: true })) {
@@ -495,6 +537,8 @@ function marketplaceEntrySourcePath(source, label) {
 function shippedFiles() {
   const roots = [
     '.codex-plugin',
+    'manifest.json',
+    'VERSION',
     'skills',
     'references',
     'templates',
@@ -585,14 +629,6 @@ function checkScripts() {
 function checkCliHelp() {
   const commands = [
     {
-      script: 'scripts/package-codex-plugin.mjs',
-      requiredText: [
-        'Usage: package-codex-plugin.mjs [options]',
-        'Builds the Codex Plugin publishing package',
-        '--output-dir <dir>',
-      ],
-    },
-    {
       script: 'scripts/check-skill-package.mjs',
       requiredText: [
         'Usage: check-skill-package.mjs [plugin-dir]',
@@ -651,6 +687,22 @@ function checkCliHelp() {
       ],
     },
     {
+      script: 'scripts/package-target-repo-bundle.mjs',
+      requiredText: [
+        'Usage: package-target-repo-bundle.mjs [options]',
+        'repo-embedded Dev Cadence bundle',
+        '--output-dir <dir>',
+      ],
+    },
+    {
+      script: 'scripts/sync-target-repo-bundle.mjs',
+      requiredText: [
+        'Usage: sync-target-repo-bundle.mjs --target <repo-dir> [options]',
+        'Syncs a repo-embedded Dev Cadence bundle',
+        '--bundle-dir <dir>',
+      ],
+    },
+    {
       script: 'scripts/run-delivery-dry-run.mjs',
       requiredText: [
         'Usage: run-delivery-dry-run.mjs --task-id <task-id> --goal <goal> [options]',
@@ -675,6 +727,17 @@ function checkCliHelp() {
       ],
     },
   ];
+
+  if (!embeddedRuntime) {
+    commands.unshift({
+      script: 'scripts/package-codex-plugin.mjs',
+      requiredText: [
+        'Usage: package-codex-plugin.mjs [options]',
+        'Builds the Codex Plugin publishing package',
+        '--output-dir <dir>',
+      ],
+    });
+  }
 
   for (const command of commands) {
     const scriptPath = path.join(pluginDir, command.script);

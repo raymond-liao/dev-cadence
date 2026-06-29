@@ -8,7 +8,7 @@
 bash tests/run-all.sh
 ```
 
-该命令覆盖 plugin manifest、发布包边界、官方 plugin 规则、thin repo contract、delivery dry run、gate enforcement、specs HTML report、Skill package、discipline routes、artifact templates 和 diff whitespace。
+该命令覆盖 plugin manifest、发布包边界、官方 plugin 规则、target-repo bundle、repo-embedded contract、delivery dry run、gate enforcement、specs HTML report、Skill package、discipline routes、artifact templates 和 diff whitespace。
 
 ## 生成 Specs HTML Report
 
@@ -18,7 +18,15 @@ node scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir spe
 
 该命令从现有 `specs/records/{task_id}/` Markdown/YAML artifact 生成静态浏览视图：`specs/report/index.html`、`specs/report/assets/style.css`、`specs/report/{task_id}/index.html`、`specs/report/{task_id}/*.html`、`specs/report/{task_id}/runs/{run_id}/index.html` 和 `specs/report/{task_id}/runs/{run_id}/*.html`。报告用于快速浏览 JaCoCo 风格任务 summary、Gate Summary、problem row、run evidence、artifact HTML 详情和 raw artifact 链接；事实源仍是 `specs/records/` 下的 Markdown/YAML artifact。
 
-## 生成发布包
+## 生成目标仓库 Bundle
+
+```bash
+node scripts/package-target-repo-bundle.mjs --clean
+```
+
+生成的业务仓库内置 bundle 位于 `dist/target-repo/`，包含 `.dev-cadence/` runtime、`AGENTS.dev-cadence-section.md` 和示例 `.dev-cadence.yaml`。使用 `scripts/sync-target-repo-bundle.mjs --target <repo>` 同步到目标仓库。
+
+## 生成 Codex Plugin 发布包
 
 ```bash
 node scripts/package-codex-plugin.mjs --clean

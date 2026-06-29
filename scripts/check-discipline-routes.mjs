@@ -43,6 +43,9 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 }
 
 const pluginDir = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
+const embeddedRuntime = fs.existsSync(path.join(pluginDir, 'manifest.json')) &&
+  fs.existsSync(path.join(pluginDir, 'VERSION')) &&
+  !fs.existsSync(path.join(pluginDir, '.codex-plugin'));
 const errors = [];
 
 function fail(message) {
@@ -282,6 +285,7 @@ function checkUsingDevCadenceContract() {
     'Dev Cadence Supervisor, Harness, Quality Gate, Human Gate, and cadence Skill rules',
     '## Skill Activation',
     'Use Codex native skill activation.',
+    'When Dev Cadence is embedded in a target repository under `.dev-cadence/`, repository instructions may require reading `.dev-cadence/skills/using-dev-cadence/SKILL.md` as the activation path.',
     'Do not read `SKILL.md` files with ordinary file tools as a substitute for activating an applicable Skill.',
     '## Supervisor Routing',
     'If multiple Skills apply, use them in workflow order.',
@@ -354,6 +358,19 @@ function checkConcreteSkillSupervisorBoundary() {
 }
 
 function checkPluginSurface() {
+  if (embeddedRuntime) {
+    const required = [
+      'manifest.json',
+      'VERSION',
+    ];
+    for (const relativePath of required) {
+      if (!exists(relativePath)) {
+        fail(`missing embedded runtime resource: ${relativePath}`);
+      }
+    }
+    return;
+  }
+
   const required = [
     '.codex-plugin/plugin.json',
   ];

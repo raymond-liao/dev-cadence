@@ -62,7 +62,7 @@ node "${ROOT_DIR}/scripts/run-delivery-dry-run.mjs" \
   --accepted-by "Raymond" \
   --json > "${ZH_DRY_RUN_REPO}/dry-run.json"
 grep -q "本 artifact 集用于验证 Dev Cadence 交付路由和证据生成" "${ZH_DRY_RUN_REPO}/specs/records/zh-login/00-brief.md"
-grep -q "生成自 CLI 输入和仓库本地 Dev Cadence 薄契约" "${ZH_DRY_RUN_REPO}/specs/records/zh-login/01-requirements.md"
+grep -q "生成自 CLI 输入和 Dev Cadence 仓库契约" "${ZH_DRY_RUN_REPO}/specs/records/zh-login/01-requirements.md"
 grep -q "产品行为未由 dry run 验证" "${ZH_DRY_RUN_REPO}/specs/records/zh-login/08-acceptance.md"
 node "${ROOT_DIR}/scripts/check-spec-artifacts.mjs" "${ZH_DRY_RUN_REPO}/specs/records" --warnings-as-errors
 

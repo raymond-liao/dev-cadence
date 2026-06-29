@@ -2,49 +2,18 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { RECORDS_DIR, SPECS_ROOT_DIR } from './specs-paths.mjs';
-
-const START_MARKER = '<!-- dev-cadence:start -->';
-const END_MARKER = '<!-- dev-cadence:end -->';
-
-const AGENTS_SECTION = `${START_MARKER}
-## AI Delivery Workflow
-
-For software delivery tasks in this repository, use \`dev-cadence\`.
-
-This applies to feature development, bugfixes, refactoring, code review, research spikes, incident fixes, and any request that changes or evaluates repository behavior.
-
-Read root \`.dev-cadence.yaml\` when present for local overrides. Write task artifacts and Harness evidence under \`specs/records/{task_id}/\`. Generated HTML reports live under \`specs/report/\`.
-
-The user does not need to invoke a Skill name or choose a workflow. Dev Cadence infers \`workflow_hint\`, routes \`selected_workflow\`, records \`selection_reason\`, and follows its plugin-owned policies, templates, and gates.
-
-Use direct execution without task specs only for explicitly trivial questions or non-delivery requests.
-${END_MARKER}
-`;
-
-const LOCAL_YAML = `# Local Dev Cadence preferences.
-# Uncomment and change this value to override generated artifact prose language for your local work.
-# Supported values:
-# - en: English
-# - zh: Chinese, Simplified Chinese by default
-# dev_cadence:
-#   artifact_language: en
-#   specs_dir: specs/records
-#   report_dir: specs/report
-#   implementation_discipline: default
-#   verification_discipline: default
-#   review_profile: normal
-`;
+import { LOCAL_YAML, START_MARKER, END_MARKER, updateAgentsContent } from './target-repo-contract.mjs';
 
 function printHelp() {
   console.log(`Usage: sync-repo-contract.mjs <mode> [options]
 
-Initializes, inspects, or repairs the Dev Cadence thin repo-local contract.
+Initializes, inspects, or repairs the Dev Cadence repository contract.
 
 Modes:
   inspect       Read repo-local contract status without writing.
-  init          Create missing thin-contract files.
-  sync          Reconcile generated thin-contract entrypoints.
-  repair        Restore missing thin-contract files.
+  init          Create missing repository contract files.
+  sync          Reconcile generated repository contract entrypoints.
+  repair        Restore missing repository contract files.
   diagnose      Report routing and contract issues without writing.
 
 Options:
@@ -179,25 +148,6 @@ function writeFileIfNeeded(options, report, filePath, content) {
 
 function shouldWrite(mode) {
   return mode === 'init' || mode === 'sync' || mode === 'repair';
-}
-
-function updateAgentsContent(existing) {
-  const normalized = existing || '';
-  const start = normalized.indexOf(START_MARKER);
-  const end = normalized.indexOf(END_MARKER);
-
-  if (start !== -1 && end !== -1 && end > start) {
-    const before = normalized.slice(0, start).trimEnd();
-    const after = normalized.slice(end + END_MARKER.length).trimStart();
-    return [before, AGENTS_SECTION.trimEnd(), after].filter(Boolean).join('\n\n') + '\n';
-  }
-
-  if (start !== -1 || end !== -1) {
-    return null;
-  }
-
-  const prefix = normalized.trimEnd();
-  return [prefix, AGENTS_SECTION.trimEnd()].filter(Boolean).join('\n\n') + '\n';
 }
 
 function reconcileAgents(options, report) {
@@ -357,7 +307,7 @@ function reconcile(options) {
   if (report.initialized) {
     report.next_steps.push('Use Dev Cadence delivery routing for ordinary repository work');
   } else if (options.mode === 'inspect' || options.mode === 'diagnose') {
-    report.next_steps.push('Run init, sync, or repair mode to create missing thin-contract files');
+    report.next_steps.push('Run init, sync, or repair mode to create missing repository contract files');
   }
 
   return report;

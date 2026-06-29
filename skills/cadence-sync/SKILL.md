@@ -1,6 +1,6 @@
 ---
 name: cadence-sync
-description: Initialize, inspect, sync, repair, or diagnose the Dev Cadence thin repository contract. Use when the user asks to set up Dev Cadence, initialize repository rules, inspect configuration, repair drift, sync contract files, diagnose setup, or prepare artifact space.
+description: Initialize, inspect, sync, repair, or diagnose the Dev Cadence repo-embedded repository contract. Use when the user asks to set up Dev Cadence, initialize repository rules, inspect configuration, repair drift, sync contract files, diagnose setup, or prepare artifact space.
 ---
 
 # Cadence Sync
@@ -17,8 +17,9 @@ Read these shared plugin resources before reporting or changing files:
 
 ## Scope
 
-Only create, inspect, synchronize, repair, or diagnose the thin repo-local contract:
+Only create, inspect, synchronize, repair, or diagnose the repo-embedded Dev Cadence contract:
 
+- `.dev-cadence/` runtime bundle;
 - root `AGENTS.md`;
 - root `.gitignore` entry for `.dev-cadence.yaml`;
 - root `.dev-cadence.yaml`;
@@ -28,7 +29,7 @@ Do not touch product source, tests, migrations, runtime configuration, dependenc
 
 ## Behavior
 
-Use `../../scripts/sync-repo-contract.mjs` when deterministic contract inspection or writes are needed.
+Use `../../scripts/sync-target-repo-bundle.mjs` when deterministic target repository synchronization is needed. Use `../../scripts/package-target-repo-bundle.mjs` first when a fresh bundle must be generated from source.
 
 Create low-risk directories or contract files directly when permissions allow and no conflicting user content exists. Stop for a Human decision when a write would overwrite project knowledge, weaken safety rules, or cross the contract boundary.
 
