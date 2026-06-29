@@ -4,22 +4,60 @@
 
 ## Quickstart
 
-本仓库是插件源码和本地发布包生成仓库。安装或更新本机插件：
+推荐把 Dev Cadence 作为业务仓库内置的 repo-scoped marketplace 分发，这样团队成员从同一个业务仓库安装同一份插件。先在本仓库生成 plugin payload：
 
 ```bash
-./deploy-local.sh
+node scripts/package-codex-plugin.mjs --clean
 ```
 
-安装后新开 Codex thread。不要把源码仓库根目录直接作为插件安装源；本地发布包位于 `dist/codex/`。
+把 `dist/codex/plugins/dev-cadence/` 放到业务仓库，例如：
 
-如果业务仓库已经内置 Dev Cadence repo marketplace，则在业务仓库根目录安装该仓库提供的插件：
+```text
+your-product-repo/
+  .agents/
+    plugins/
+      marketplace.json
+      dev-cadence/
+        .codex-plugin/
+        skills/
+        references/
+        templates/
+        scripts/
+```
+
+业务仓库的 `.agents/plugins/marketplace.json` 使用团队自己的 marketplace name，并让 `source.path` 指向提交进去的 plugin payload：
+
+```json
+{
+  "name": "dev-cadence-your-product",
+  "interface": {
+    "displayName": "Dev Cadence Your Product"
+  },
+  "plugins": [
+    {
+      "name": "dev-cadence",
+      "source": {
+        "source": "local",
+        "path": "./.agents/plugins/dev-cadence"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    }
+  ]
+}
+```
+
+团队成员在业务仓库根目录安装：
 
 ```bash
 codex plugin marketplace add .
-codex plugin add dev-cadence@<marketplace-name>
+codex plugin add dev-cadence@dev-cadence-your-product
 ```
 
-例如业务仓库 `.agents/plugins/marketplace.json` 的 `name` 是 `dev-cadence-health` 时，第二条命令使用 `dev-cadence@dev-cadence-health`。Codex 会把插件安装到当前用户的 Codex cache，业务仓库只作为 marketplace source。
+安装后新开 Codex thread。不要把本仓库源码根目录直接作为插件安装源；团队分发应使用业务仓库提交的 `.agents/plugins/marketplace.json` 和 plugin payload。
 
 ## Use It
 
@@ -45,6 +83,14 @@ codex
 Dev Cadence 会在业务仓库里使用 `specs/records/{task_id}/` 记录过程 artifact、Harness 运行证据、验证和人工验收；生成的 HTML 浏览报告放在 `specs/report/`。完整机制见 [docs/overview.md](docs/overview.md)。
 
 ## Local Development
+
+维护者需要在本机验证当前源码包时，可以使用：
+
+```bash
+./deploy-local.sh
+```
+
+这会生成 `dist/codex/` 并安装 `dev-cadence@dev-cadence-local`，只用于本机开发和 smoke test。
 
 完整回归：
 

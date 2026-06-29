@@ -22,7 +22,7 @@ Only create, inspect, synchronize, repair, or diagnose the thin repo-local contr
 - root `AGENTS.md`;
 - root `.gitignore` entry for `.dev-cadence.yaml`;
 - root `.dev-cadence.yaml`;
-- `specs/.gitkeep`.
+- `specs/records/.gitkeep`.
 
 Do not touch product source, tests, migrations, runtime configuration, dependency manifests, task-specific specs, commits, pushes, releases, databases, or production systems.
 

@@ -91,7 +91,7 @@ Codex Plugin 应持有 Dev Cadence Core 在 Codex 中运行所需的可复用流
 
 `visual-companion.md` 和 `scripts/visual-companion/` 提供可选浏览器视觉对齐能力，用于 mockup、diagram 和视觉方案对比。它帮助 Human 和 AI 对齐难以纯文字表达的需求，但不能成为 G1 的硬条件。缺少 Node、浏览器或可访问 URL 时，流程必须降级为 text-only clarification。
 
-业务仓库可以选择提交 repo-scoped marketplace 和 plugin payload，用于让团队成员从该业务仓库根目录执行 `codex plugin marketplace add .` 和 `codex plugin add dev-cadence@<marketplace-name>` 安装同一份插件。这是分发方式，不是 `cadence-sync` 默认写入的 thin repo-local contract；此时 `source.path` 必须从业务仓库根目录解析到实际 plugin payload，例如 `./.agents/plugins/dev-cadence`。
+推荐通过业务仓库提交 repo-scoped marketplace 和 plugin payload 来做团队分发，让团队成员从该业务仓库根目录执行 `codex plugin marketplace add .` 和 `codex plugin add dev-cadence@<marketplace-name>` 安装同一份插件。这是分发方式，不是 `cadence-sync` 默认写入的 thin repo-local contract；此时 `source.path` 必须从业务仓库根目录解析到实际 plugin payload，例如 `./.agents/plugins/dev-cadence`。
 
 ## 薄仓库契约
 

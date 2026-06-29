@@ -34,7 +34,7 @@ Multi-Agent Development Framework
 | [gates/](gates/) | G1-G6 gate 控制什么风险、什么时候允许继续 |
 | [architecture.md](architecture.md) | 为什么要分 Supervisor、Harness、Worker、Context 和 Tooling 边界 |
 | [plugin-skill-modularization.md](plugin-skill-modularization.md) | 当前 Codex Plugin 的模块边界、薄仓库契约和发布资源 |
-| [installation.md](installation.md) | 本机安装、更新和卸载命令 |
+| [installation.md](installation.md) | 业务仓库内置 marketplace 分发、本机开发安装和卸载命令 |
 | [validation.md](validation.md) | 当前回归检查、打包和 smoke test 命令 |
 
 ## 当前发布形态
