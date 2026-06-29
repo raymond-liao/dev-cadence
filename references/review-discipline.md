@@ -56,6 +56,8 @@ Critical or major findings require fix and re-review before acceptance.
 
 ## Receiving Review Feedback
 
+Receiving review feedback is a separate action from producing review findings. Use `cadence-review` when Codex is asked to handle existing findings, requested changes, PR comments, or reviewer feedback. Use `cadence-request-review` to produce findings and review decisions.
+
 Do not blindly apply feedback.
 
 For each finding:

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cadence Subagent Development"
+  short_description: "Run isolated Workers"
+  default_prompt: "Use $cadence-subagent-development to execute approved tasks with fresh Worker contexts and review checkpoints."
+policy:
+  allow_implicit_invocation: false

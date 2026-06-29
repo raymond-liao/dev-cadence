@@ -1,11 +1,17 @@
 ---
 name: cadence-clarify
-description: Clarify delivery intent before implementation. Use for feature requests, ambiguous fixes, design-sensitive changes, unclear expected behavior, missing acceptance criteria, UI or visual alignment needs, or any task that needs requirements readiness.
+description: Clarify delivery intent, requirements, and design before planning or implementation. Use for feature requests, behavior changes, ambiguous fixes, design-sensitive work, UI or visual alignment, unclear expected behavior, missing acceptance criteria, or any task that needs requirements readiness.
 ---
 
 # Cadence Clarify
 
-Use this Skill before planning or implementation when intent is unclear or unconfirmed.
+Use this Skill before planning or implementation for feature work, behavior changes, ambiguous fixes, or any task whose requirements, design, non-goals, acceptance, or verification are not already approved.
+
+## Hard Gate
+
+Do not plan implementation, edit product code, scaffold work, or invoke execution Skills until requirements readiness is satisfied and the named Human has approved the clarified intent. For design-sensitive work, do not proceed until the design or accepted option is approved.
+
+Small tasks can have short clarification, but they still need explicit enough scope, non-goals, acceptance criteria, and verification to prevent invented requirements.
 
 ## Required References
 
@@ -31,15 +37,37 @@ Clarify and record:
 - acceptance criteria;
 - verification approach.
 
-For standard or high-risk tasks, create or update task artifacts under `specs/{task_id}/`, especially `00-brief.md`, `01-requirements.md`, and `02-design.md`.
+For standard or high-risk tasks, create or update task artifacts under `specs/records/{task_id}/`, especially `00-brief.md`, `01-requirements.md`, and `02-design.md`.
 
 ## Required Behavior
 
-Do limited read-only analysis before asking questions. Present candidate interpretations with evidence and tradeoffs when possible.
+Follow this order:
+
+1. Explore current project context with limited read-only analysis before asking detailed questions.
+2. If visual alignment would materially help, offer the visual companion before asking visual design questions. Keep it optional.
+3. Ask focused clarification questions one at a time. Prefer concrete options when possible.
+4. When the request has multiple viable interpretations or approaches, present 2-3 options with tradeoffs and a recommendation.
+5. Present the clarified requirements or design in sections scaled to the task complexity.
+6. Get named Human approval for the clarified intent, requirements, and any required design before handing off to planning or execution.
+7. Write or update required artifacts when persistent evidence is being used.
+8. Self-review the artifacts before handoff.
 
 Do not convert assumptions into requirements. If unresolved ambiguity could materially change implementation or acceptance, enter Human Gate `info_required` and block implementation.
 
 Visual companion is optional. If unavailable, continue with text-only clarification and record the fallback when evidence is being written.
+
+## Artifact Self-Review
+
+After writing `00-brief.md`, `01-requirements.md`, or `02-design.md`, check for:
+
+- placeholders, TODOs, or unfilled sections;
+- contradictions between goal, scope, non-goals, acceptance, and design;
+- requirements that can be interpreted in materially different ways;
+- unapproved assumptions recorded as requirements;
+- acceptance criteria without a verification approach;
+- design-sensitive changes missing alternatives, tradeoffs, or Human approval.
+
+Fix issues before handoff. If they cannot be fixed without a Human decision, keep G1 or G2 blocked and ask for that decision.
 
 ## Supervisor Boundary
 

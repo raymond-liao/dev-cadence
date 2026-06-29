@@ -34,13 +34,22 @@ dev-cadence/
     cadence-plan/
       SKILL.md
       agents/openai.yaml
-    cadence-execute/
+    cadence-executing-plans/
+      SKILL.md
+      agents/openai.yaml
+    cadence-subagent-development/
+      SKILL.md
+      agents/openai.yaml
+    cadence-dispatch-parallel/
       SKILL.md
       agents/openai.yaml
     cadence-tdd/
       SKILL.md
       agents/openai.yaml
     cadence-debug/
+      SKILL.md
+      agents/openai.yaml
+    cadence-request-review/
       SKILL.md
       agents/openai.yaml
     cadence-review/
@@ -145,10 +154,13 @@ Published Skills:
 - `using-dev-cadence`: Dev Cadence Supervisor entrypoint. It selects workflow state, task class, evidence requirements, gates, and the ordered set of applicable cadence discipline Skills.
 - `cadence-clarify`: clarify goal, scope, expected behavior, non-goals, design, acceptance, and verification before implementation.
 - `cadence-plan`: turn clarified design into executable tasks and verification steps.
-- `cadence-execute`: execute an approved plan through Harness evidence.
+- `cadence-executing-plans`: execute an approved plan through Harness evidence.
+- `cadence-subagent-development`: execute approved bounded tasks with fresh Worker contexts and per-task review checkpoints.
+- `cadence-dispatch-parallel`: dispatch parallel Workers for independent problem domains and integrate results.
 - `cadence-tdd`: apply Red-Green-Refactor for testable behavior changes.
 - `cadence-debug`: diagnose bugs, incidents, failing tests, regressions, and unclear root cause.
-- `cadence-review`: review implementation for spec compliance and code quality.
+- `cadence-request-review`: review implementation for spec compliance and code quality.
+- `cadence-review`: verify and address existing review feedback, then request re-review.
 - `cadence-verify`: verify evidence, scope, skipped checks, residual risk, and Human acceptance before completion.
 - `cadence-sync`: initialize, inspect, sync, repair, or diagnose the thin repo-local contract.
 
@@ -307,6 +319,7 @@ dev_cadence:
 - use strict Red-Green-Refactor for testable behavior changes;
 - reproduce or characterize bugs before fixing;
 - review spec compliance before code quality;
+- address review findings separately from producing review findings;
 - verify before any completion claim;
 - use parallel Worker runs only for independent domains;
 - use Dev Cadence source validation when changing this plugin's own skills and references.

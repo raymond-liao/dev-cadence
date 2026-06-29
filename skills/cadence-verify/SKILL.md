@@ -37,7 +37,7 @@ fields directly: goal, changed scope, verification status, skipped checks,
 review decision, blockers, residual risk, evidence available, and the fields to
 record in `08-acceptance.md`. Do not merely say "G6 is pending".
 
-Update `specs/{task_id}/06-test-report.md` and acceptance summary artifacts when persistent artifacts are being used.
+Update `specs/records/{task_id}/06-test-report.md` and acceptance summary artifacts when persistent artifacts are being used.
 
 Do not treat `partially_verified`, `not_verified`, or `blocked_by_environment` as complete unless a named Human accepts the gap.
 

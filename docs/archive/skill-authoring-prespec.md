@@ -25,7 +25,7 @@
 - 非 Agent 角色：`Human`、`Supervisor`、`Harness`、`Quality Gate`、`Human Gate`。
 - 触发边界：`using-dev-cadence` 是唯一代表 Dev Cadence 整体的入口 Skill/router，通过 Codex 原生 Skill 触发或用户显式要求使用 Dev Cadence 进入流程。
 - `cadence-sync` 只处理 initialize、inspect、sync、repair、diagnose 和 thin repo-local contract 写入。
-- 普通 feature、bugfix、review、refactor、research 和 incident 工作由 `using-dev-cadence` 路由到 `cadence-clarify`、`cadence-plan`、`cadence-execute`、`cadence-tdd`、`cadence-debug`、`cadence-review` 和 `cadence-verify`。
+- 普通 feature、bugfix、review、refactor、research 和 incident 工作由 `using-dev-cadence` 路由到 `cadence-clarify`、`cadence-plan`、`cadence-executing-plans`、`cadence-subagent-development`、`cadence-dispatch-parallel`、`cadence-tdd`、`cadence-debug`、`cadence-request-review`、`cadence-review` 和 `cadence-verify`。
 - `implementation_discipline: default` 和 `verification_discipline: default` 表示 Dev Cadence 内置交付纪律，不依赖外部 Skill。
 - 未初始化仓库中的产品实现请求不应因为缺少 thin repo-local contract 而被阻塞；需要持久 artifact 时再创建 `specs/` 或调用 `cadence-sync`。
 - Repo contract 边界：setup、sync、repair、diagnosis 默认只能写 root `AGENTS.md`、root `.gitignore` 中的 `.dev-cadence.yaml` 忽略项、root `.dev-cadence.yaml` 和 `specs/records/.gitkeep`；除非用户同一轮明确要求交付工作，否则不得修改产品代码或 task-specific specs。
@@ -74,13 +74,22 @@ dev-cadence/
     cadence-plan/
       SKILL.md
       agents/openai.yaml
-    cadence-execute/
+    cadence-executing-plans/
+      SKILL.md
+      agents/openai.yaml
+    cadence-subagent-development/
+      SKILL.md
+      agents/openai.yaml
+    cadence-dispatch-parallel/
       SKILL.md
       agents/openai.yaml
     cadence-tdd/
       SKILL.md
       agents/openai.yaml
     cadence-debug/
+      SKILL.md
+      agents/openai.yaml
+    cadence-request-review/
       SKILL.md
       agents/openai.yaml
     cadence-review/

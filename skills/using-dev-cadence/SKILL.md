@@ -55,25 +55,28 @@ Before acting on software delivery work, identify the current workflow state, ta
 - repository contract setup, inspection, sync, repair, or diagnosis -> `cadence-sync`;
 - unclear goal, scope, expected behavior, non-goals, design, or acceptance -> `cadence-clarify`;
 - approved design that needs executable tasks -> `cadence-plan`;
-- approved plan ready for implementation -> `cadence-execute`;
+- approved plan ready for implementation -> `cadence-executing-plans`;
+- approved plan with bounded tasks and isolated Worker execution -> `cadence-subagent-development`;
+- independent domains that can run concurrently -> `cadence-dispatch-parallel`;
 - testable behavior change during implementation -> `cadence-tdd`;
 - bug, incident, failing test, or unknown cause -> `cadence-debug`;
-- implementation checkpoint or final review -> `cadence-review`;
+- implementation checkpoint, final review, or code review request -> `cadence-request-review`;
+- review feedback, requested changes, or reviewer findings to fix -> `cadence-review`;
 - before claiming fixed, done, passing, approved, or complete -> `cadence-verify`.
 
 If multiple Skills apply, use them in workflow order. These Skills are cumulative, not alternatives.
 
 Common sequences:
 
-- feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-execute` -> `cadence-review` -> `cadence-verify` -> Human acceptance;
-- bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-execute` -> `cadence-review` -> `cadence-verify` -> Human acceptance;
-- review request: `cadence-review` -> `cadence-verify` -> Human acceptance when the user asks to accept or finish;
+- feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance;
+- bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance;
+- review request: `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance when the user asks to accept or finish;
 - verification or completion claim: `cadence-verify` -> Human acceptance when final completion is requested;
 - repository setup or drift repair: `cadence-sync`, then return to the delivery sequence only if the same user turn requests product work.
 
 ## Repo Contract
 
-A target repository does not need to be initialized before Dev Cadence can help. Create or use `specs/{task_id}/` when persistent artifacts are needed. Use `cadence-sync` only when the user requests repository setup or when low-risk contract files must be created for durable artifacts.
+A target repository does not need to be initialized before Dev Cadence can help. Create or use `specs/records/{task_id}/` when persistent artifacts are needed. Use `cadence-sync` only when the user requests repository setup or when low-risk contract files must be created for durable artifacts.
 
 ## Task Weight
 

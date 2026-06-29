@@ -19,8 +19,8 @@ Use this Skill only after requirements readiness is satisfied or the remaining g
 
 Create or update:
 
-- `specs/{task_id}/03-tasks.md`;
-- `specs/{task_id}/04-test-plan.md`.
+- `specs/records/{task_id}/03-tasks.md`;
+- `specs/records/{task_id}/04-test-plan.md`.
 
 Each task must include concrete files or modules, intended behavior, verification command or method, dependencies, risk, and expected evidence.
 
