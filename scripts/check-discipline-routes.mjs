@@ -90,7 +90,6 @@ function checkDeliveryStateTable() {
     'intent-and-design-discipline.md',
     'planning-discipline.md',
     'implementation-discipline.md',
-    'testing-anti-patterns.md',
     'execution-orchestration.md',
     'debugging-discipline.md',
     'review-discipline.md',
@@ -109,6 +108,8 @@ function checkDeliveryStateTable() {
 
   const skillLocalRoutes = [
     'skills/cadence-clarify/visual-companion.md',
+    'skills/cadence-tdd/SKILL.md',
+    'skills/cadence-tdd/testing-anti-patterns.md',
     'skills/cadence-debug/SKILL.md',
     'skills/cadence-debug/root-cause-tracing.md',
     'skills/cadence-debug/condition-based-waiting.md',
@@ -151,11 +152,11 @@ function checkDeliveryStateTable() {
 function checkPromptTemplates() {
   const required = [
     'skills/cadence-clarify/spec-document-reviewer-prompt.md',
+    'skills/cadence-request-review/spec-compliance-reviewer.md',
+    'skills/cadence-request-review/code-quality-reviewer.md',
+    'skills/cadence-request-review/code-reviewer.md',
     'templates/prompts/plan-document-reviewer.md',
     'templates/prompts/implementer.md',
-    'templates/prompts/spec-compliance-reviewer.md',
-    'templates/prompts/code-quality-reviewer.md',
-    'templates/prompts/code-reviewer.md',
   ];
 
   for (const relativePath of required) {
@@ -431,6 +432,162 @@ function checkCadenceDebugContract() {
   }
 }
 
+function checkCadenceTddContract() {
+  const sourceFile = 'skills/cadence-tdd/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST',
+    'Writing production code before the failing test invalidates normal TDD evidence.',
+    '## Pre-Implementation Baseline',
+    '### RED: Write a Failing Test',
+    '### GREEN: Minimal Code',
+    '### REFACTOR: Clean Up While Green',
+    'If the test passes immediately, it is not Red evidence.',
+    'Do not add behavior during refactor.',
+    '## Why Order Matters',
+    '## Common Rationalizations',
+    '## Red Flags',
+    '## When Stuck',
+    '## Debugging Integration',
+    'Never fix a testable bug without a failing test or named Human exception.',
+    '## Testing Anti-Patterns',
+    'testing-anti-patterns.md',
+    '## Evidence',
+    'Production code -> test exists and failed first.',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing TDD process phrase: ${phrase}`);
+    }
+  }
+}
+
+function checkImplementationDisciplineBoundary() {
+  const sourceFile = 'references/implementation-discipline.md';
+  const text = readText(sourceFile);
+  const required = [
+    'shared implementation evidence and exception contract',
+    'skills/cadence-tdd/SKILL.md',
+    '## Shared Evidence Contract',
+    '## Exception Contract',
+    '## Test Quality Boundary',
+    'When a change is testable, enter `cadence-tdd` and follow its full Red-Green-Refactor workflow before changing production code.',
+    'skills/cadence-tdd/testing-anti-patterns.md',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing implementation boundary phrase: ${phrase}`);
+    }
+  }
+}
+
+function checkCadenceReviewBoundary() {
+  const sourceFile = 'skills/cadence-review/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'review feedback is input to evaluate, not an order to obey.',
+    'Verify before implementing. Ask before assuming.',
+    'First read all feedback before making changes.',
+    'Understand the requested change in your own words, or ask for clarification.',
+    'Evaluate whether it is technically correct for this repository',
+    'Do not blindly apply external reviewer suggestions.',
+    'When a finding is wrong, push back with code, test, spec, or artifact evidence.',
+    'Avoid performative',
+    'Do not load or apply',
+    '`cadence-tdd` test-writing resources from this Skill.',
+    'If a valid finding requires production behavior changes, test changes, mocks, or',
+    'return a handoff to `using-dev-cadence` so the Supervisor can',
+    'route the work to `cadence-tdd` or `cadence-executing-plans`.',
+    'own the test-writing discipline.',
+  ];
+  const forbidden = [
+    '../../references/testing-anti-patterns.md',
+    'skills/cadence-tdd/testing-anti-patterns.md',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing review boundary phrase: ${phrase}`);
+    }
+  }
+  for (const phrase of forbidden) {
+    if (text.includes(phrase)) {
+      fail(`${sourceFile}: must not directly load TDD test-writing resource: ${phrase}`);
+    }
+  }
+}
+
+function checkCadenceRequestReviewContract() {
+  const sourceFile = 'skills/cadence-request-review/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'review the work product, not the implementer',
+    'Provide precise context and keep reviewer execution read-only.',
+    '## Reviewer Context',
+    'Do not pass the current chat history as reviewer context.',
+    'Reviewer Workers are read-only:',
+    'do not mutate the working tree, index, branch state, specs, or run evidence;',
+    '## Review Output',
+    'findings grouped by `blocker`, `major`, `minor`, and `note`',
+    'explicit verdict: `approved`, `approved_with_minor_notes`,',
+    '`changes_requested`, or `blocked`',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing request-review contract phrase: ${phrase}`);
+    }
+  }
+}
+
+function checkReviewDisciplineContract() {
+  const sourceFile = 'references/review-discipline.md';
+  const text = readText(sourceFile);
+  const required = [
+    'Reviewer Workers are read-only.',
+    'Do not pass the current chat history as reviewer context.',
+    'Reviewers must not mutate the working tree, index, branch state, specs, or run',
+    '`approved`, `approved_with_minor_notes`, `changes_requested`, or `blocked`',
+    'Do not blindly apply feedback.',
+    'Read all feedback first, clarify unclear items',
+    'If a valid finding requires production behavior changes, test changes, mocks, or',
+    'return to the Supervisor so the work can enter `cadence-tdd` or',
+    'Review handling does',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing review discipline phrase: ${phrase}`);
+    }
+  }
+}
+
+function checkCodeReviewerPromptContract() {
+  const sourceFile = 'skills/cadence-request-review/code-reviewer.md';
+  const text = readText(sourceFile);
+  const required = [
+    '## Read-Only Review',
+    'Do not mutate the working tree, the',
+    'index, HEAD, branch state, specs, or run evidence.',
+    'Review the supplied work product and artifacts.',
+    'Do not rely on chat history',
+    '## Calibration',
+    'Categorize issues by actual severity.',
+    'Do not give feedback on code, tests, artifacts, or requirements you did not',
+    'Give a clear verdict',
+    'decision: approved | approved_with_minor_notes | changes_requested | blocked',
+    '## Critical Rules',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing reviewer prompt phrase: ${phrase}`);
+    }
+  }
+}
+
 function checkConcreteSkillSupervisorBoundary() {
   const concreteSkills = EXPECTED_SKILLS.filter((name) => name !== 'using-dev-cadence');
   const required = [
@@ -494,6 +651,12 @@ checkEntrypointSkills();
 checkUsingDevCadenceContract();
 checkCadenceClarifyContract();
 checkCadenceDebugContract();
+checkCadenceTddContract();
+checkImplementationDisciplineBoundary();
+checkCadenceRequestReviewContract();
+checkCadenceReviewBoundary();
+checkReviewDisciplineContract();
+checkCodeReviewerPromptContract();
 checkConcreteSkillSupervisorBoundary();
 
 if (errors.length > 0) {

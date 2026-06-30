@@ -7,6 +7,9 @@ description: Request or perform Dev Cadence review of completed implementation w
 
 Use this Skill to request or perform review of implementation work. It produces findings and a review decision. It does not implement fixes for review feedback.
 
+Core principle: review the work product, not the implementer's conversation
+history. Provide precise context and keep reviewer execution read-only.
+
 ## Required References
 
 - `../../references/review-discipline.md`
@@ -24,6 +27,39 @@ Review in two stages:
 Do not run code quality review before spec compliance passes or unresolved spec gaps are recorded.
 
 Findings lead. Blocker or major issues block progress unless a named Human Gate accepts the residual risk.
+
+## Reviewer Context
+
+When dispatching reviewer Workers, provide only the context needed to review the
+work:
+
+- task description and task class;
+- requirements, plan, acceptance criteria, and design decisions;
+- changed file list and relevant diff or git range;
+- implementation notes and verification evidence;
+- known skipped checks, residual risks, and Human decisions.
+
+Do not pass the current chat history as reviewer context. Do not ask the reviewer
+to infer the intended behavior from implementer commentary.
+
+Reviewer Workers are read-only:
+
+- inspect code, specs, diffs, logs, and tests;
+- do not mutate the working tree, index, branch state, specs, or run evidence;
+- use a separate temporary checkout if another revision must be inspected.
+
+## Review Output
+
+Every review must provide:
+
+- strengths or correct decisions worth preserving;
+- findings grouped by `blocker`, `major`, `minor`, and `note`;
+- file and line references for each concrete issue when available;
+- why each issue matters;
+- suggested fix when the fix is clear;
+- explicit verdict: `approved`, `approved_with_minor_notes`,
+  `changes_requested`, or `blocked`;
+- reasoning for the verdict.
 
 Write or update `specs/records/{task_id}/07-review-report.md` when persistent artifacts are being used.
 

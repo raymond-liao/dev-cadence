@@ -19,7 +19,9 @@ For each Worker run, provide:
 - required evidence;
 - handoff target.
 
-Use prompt templates under `templates/prompts/` when dispatching Workers.
+Use shared prompt templates under `templates/prompts/` when dispatching generic
+Workers. Use Skill-local prompts when the owning Skill provides them, such as
+`skills/cadence-request-review/code-reviewer.md` for reviewer Workers.
 
 ## Subagent-Style Execution
 

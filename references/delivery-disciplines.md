@@ -60,7 +60,7 @@ Load these references by state or condition:
 | `intake`, `requirements`, design-sensitive clarification | `intent-and-design-discipline.md` |
 | visual clarification would materially improve alignment | `skills/cadence-clarify/visual-companion.md` |
 | `planning` | `planning-discipline.md` |
-| `implementation` for testable behavior | `implementation-discipline.md`; load `testing-anti-patterns.md` when writing tests or mocks |
+| `implementation` for testable behavior | `implementation-discipline.md`; use `skills/cadence-tdd/SKILL.md` for full Red-Green-Refactor workflow; load `skills/cadence-tdd/testing-anti-patterns.md` when writing tests or mocks |
 | Worker dispatch, inline execution, subagent execution, parallel candidates | `execution-orchestration.md`; load `adapters.md` when an external adapter is configured or requested |
 | `bugfix`, `incident-fix`, unexpected behavior, failing tests | `debugging-discipline.md`; use `skills/cadence-debug/SKILL.md` for full debugging workflow |
 | Deep symptom, unclear origin, bad value propagation | `skills/cadence-debug/root-cause-tracing.md` |
@@ -70,7 +70,7 @@ Load these references by state or condition:
 | before claiming fixed, done, passing, approved, or complete | `verification-discipline.md` |
 | Dev Cadence source maintenance in this repository | source-only `references/source-maintenance/authoring-discipline.md`; load `references/source-maintenance/skill-pressure-testing.md` for validation |
 
-Prompt templates live under `templates/prompts/` and should be used when dispatching Worker or reviewer runs through Harness.
+Shared prompt templates live under `templates/prompts/`. Skill-specific prompts live with the owning Skill, such as `skills/cadence-request-review/code-reviewer.md` for reviewer runs.
 
 ## Optional Capabilities
 

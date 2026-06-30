@@ -83,7 +83,7 @@ Adapter boundaries follow replaceable execution techniques.
 | `references/` | workflow、gate、Harness、agent、adapter 和 discipline 的运行时规则；`source-maintenance/` 只用于本仓库维护 | [references/skill-layout.md](../references/skill-layout.md) |
 | `templates/spec/` | task artifact 模板 | [references/spec-templates.md](../references/spec-templates.md) |
 | `templates/runs/` | Harness evidence 模板 | [references/spec-templates.md](../references/spec-templates.md) |
-| `templates/prompts/` | Worker、reviewer 和文档审查 prompt 模板 | [references/agent-blueprints.md](../references/agent-blueprints.md) |
+| `templates/prompts/` | 共享 Worker 和文档审查 prompt 模板；reviewer 专属 prompt 放在 owning Skill 下 | [references/agent-blueprints.md](../references/agent-blueprints.md) |
 | `scripts/` | 打包、检查、artifact 初始化、报告生成、repo contract 同步和 optional visual companion | [validation.md](validation.md) |
 
 Skill 的发布元信息由 `SKILL.md` frontmatter 和 `.codex-plugin/plugin.json` 维护。`skills/*/agents/` 不是 Dev Cadence 的源码或 runtime 契约，不应进入发布包或目标仓库 `.dev-cadence/`。

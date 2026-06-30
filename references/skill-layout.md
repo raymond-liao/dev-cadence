@@ -107,7 +107,6 @@ Runtime references are shared workflow rules used by target repositories:
 - `intent-and-design-discipline.md`
 - `planning-discipline.md`
 - `implementation-discipline.md`
-- `testing-anti-patterns.md`
 - `execution-orchestration.md`
 - `debugging-discipline.md`
 - `review-discipline.md`
@@ -125,6 +124,12 @@ Runtime references are shared workflow rules used by target repositories:
 Source-maintenance references under `references/source-maintenance/` are for
 changing Dev Cadence itself. They are part of the source plugin package but are
 excluded from the repo-embedded target runtime.
+
+The full test-first implementation workflow lives in
+`skills/cadence-tdd/SKILL.md`. `implementation-discipline.md` remains the shared
+implementation evidence and exception contract used by runtime workflow states.
+Test anti-pattern guidance lives beside that Skill in
+`skills/cadence-tdd/testing-anti-patterns.md`.
 
 ## Runtime Authority
 
@@ -145,10 +150,11 @@ Harness evidence.
 ## Resource Boundaries
 
 Task artifact templates live under `templates/spec/`. Harness evidence
-templates live under `templates/runs/`. Shared Worker and reviewer prompt
-templates live under `templates/prompts/`. Skill-specific resources, such as
+templates live under `templates/runs/`. Shared Worker prompt templates live
+under `templates/prompts/`. Skill-specific resources, such as
 `skills/cadence-clarify/visual-companion.md`,
-`skills/cadence-clarify/spec-document-reviewer-prompt.md`, and
+`skills/cadence-clarify/spec-document-reviewer-prompt.md`,
+`skills/cadence-request-review/code-reviewer.md`, and
 `skills/cadence-clarify/scripts/`, live with the owning Skill. Debugging
 techniques such as `skills/cadence-debug/root-cause-tracing.md`,
 `skills/cadence-debug/condition-based-waiting.md`, and

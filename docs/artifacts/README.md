@@ -86,12 +86,13 @@ HTML report 输出到 `specs/report/`，用于浏览 task summary、gate summary
 
 `.dev-cadence.yaml` 可通过 `dev_cadence.artifact_language` 覆盖任务 artifact 的自然语言正文，支持 `en` 和 `zh`。文件名、YAML 字段、状态枚举、workflow ID 和 gate ID 保持英文。
 
-Task artifact、run evidence 和 prompt 模板由 plugin 持有：
+Task artifact、run evidence 和共享 prompt 模板由 plugin 持有；Skill 专属 prompt 放在 owning Skill 下，例如 `skills/cadence-request-review/`：
 
 ```text
 templates/spec/
 templates/runs/
 templates/prompts/
+skills/*/
 ```
 
 生成任务 artifact 或派生 report 的脚本必须读取 `.dev-cadence.yaml`，不能只依赖 Agent 记忆；完整验证命令见 [Dev Cadence 当前验证](../validation.md)。
