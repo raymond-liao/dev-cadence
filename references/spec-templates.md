@@ -26,7 +26,7 @@ Executable artifact and gate checks:
 
 - `scripts/check-spec-artifacts.mjs specs/records`
 - `scripts/check-gates.mjs --task-id <task_id>`
-- `scripts/check-before-commit.mjs --task-id <task_id>`
+- `scripts/check-before-commit.mjs`
 - `scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report`
 
 Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence reproducible and path-based.
@@ -105,14 +105,21 @@ For discipline fields, `default` means Dev Cadence's built-in delivery disciplin
 English-only. These warnings highlight localization drift; they do not fail the
 structural artifact check.
 
+Use `scripts/check-before-commit.mjs --task-id <task_id>` only when committing
+product paths that intentionally belong to an existing Dev Cadence workflow but
+the workflow specs are not in the same commit candidate.
+
 `scripts/check-gates.mjs` validates G1-G6 and Human acceptance state for one
-task. `scripts/check-before-commit.mjs` validates artifact structure, gate
-state, artifact language warnings as failures for the selected task, and dirty
-worktree path coverage before a Git commit. It requires G6 final Human
-acceptance to pass; pending acceptance blocks commit readiness. When gate
-validation fails because G6 is pending, the commit-readiness output must include
-a Human-facing acceptance summary and the browsable report entry, not only the
-gate failure.
+task. `scripts/check-before-commit.mjs` validates the Git commit candidate
+without creating specs. The candidate is the full dirty worktree, regardless of
+staging state. Candidates outside Dev Cadence workflow scope skip G1-G6 and
+Human Gate checks. Dev Cadence contract/runtime-only candidates validate the
+embedded runtime. Workflow candidates validate artifact structure, artifact
+language warnings as failures, G1-G6/Human acceptance, and candidate path
+coverage for the corresponding task artifacts. Pending G6 blocks workflow
+commit readiness. When gate validation fails because G6 is pending, the
+commit-readiness output must include a Human-facing acceptance summary and the
+browsable report entry, not only the gate failure.
 
 ## `00-brief.md`
 

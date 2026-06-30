@@ -27,9 +27,12 @@ Verify:
 
 When persistent artifacts exist, run `scripts/check-gates.mjs --task-id
 <task_id>` and include the Gate Summary in the handoff. Before creating a Git
-commit for a dirty worktree, run `scripts/check-before-commit.mjs --task-id
-<task_id>`. If G6 final Human acceptance is pending, block the commit and ask
-the Human to accept the result and residual risk before committing.
+commit, run `scripts/check-before-commit.mjs` against the commit candidate. Add
+`--task-id <task_id>` when committing product paths that intentionally belong to
+an existing Dev Cadence workflow but the workflow specs are not in the same
+candidate. If G6 final Human acceptance is pending for a workflow candidate,
+block the commit and ask the Human to accept the result and residual risk
+before committing.
 
 When G6 is pending, the user-facing handoff must state what is being accepted.
 Refresh the browsable report with

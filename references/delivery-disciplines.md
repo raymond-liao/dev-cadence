@@ -29,11 +29,21 @@ Worker Agents must not treat shortcuts as equivalent evidence. Missing evidence 
 
 Workspace, branch, worktree, merge, and PR lifecycle management are outside the
 default discipline for now. Git commit readiness is inside the evidence
-discipline: before creating a commit for a dirty worktree, run
-`scripts/check-before-commit.mjs --task-id <task_id>` and report any blocked
-Quality Gate, pending Human Gate, artifact language violation, or uncovered
-changed path. This check does not bypass pending G6; commit is blocked until
-final Human acceptance is recorded in `08-acceptance.md`.
+discipline: before creating a commit, run `scripts/check-before-commit.mjs`
+against the commit candidate. The checker is read-only and must not create
+specs. The commit candidate is the full dirty worktree, regardless of staging
+state.
+
+Dev Cadence gate checks apply only to candidates that contain Dev Cadence
+workflow content, or when the user intentionally supplies `--task-id <task_id>`
+for product paths that belong to an existing workflow. Candidates outside Dev
+Cadence workflow scope skip G1-G6 and Human Gate checks. Dev Cadence
+contract/runtime-only candidates validate the embedded runtime and must not be
+blocked by unrelated product task Human Gates. Workflow candidates validate the
+corresponding `specs/records/{task_id}/` artifacts, G1-G6/Human acceptance, and
+coverage for product paths included in the candidate. This check does not
+bypass pending G6 for workflow changes; commit is blocked until final Human
+acceptance is recorded in `08-acceptance.md`.
 
 Preserve existing repository policy and user instructions. Continue to record
 Harness evidence and scope reconciliation even when no Git checkpoint is

@@ -107,7 +107,7 @@ Stop and route through the applicable cadence Skill when any of these are true:
 - fixing a bug before root cause or reproducible behavior is recorded;
 - implementing testable behavior before deciding whether `cadence-tdd` applies;
 - claiming fixed, done, passing, ready, approved, or complete before `cadence-verify`;
-- creating a Git commit for a dirty worktree before `scripts/check-before-commit.mjs --task-id <task_id>` passes;
+- creating a Git commit before `scripts/check-before-commit.mjs` has evaluated the commit candidate;
 - treating missing verification, missing Harness evidence, or skipped checks as acceptable without a named Human Gate;
 - recording Supervisor, Harness, Developer, Tester, Reviewer, or an unspecified agent as the final accepter.
 
@@ -129,16 +129,27 @@ Do not turn research into implementation. A research spike can inspect evidence 
 
 Do not self-accept final results. Final acceptance must name a Human accepter.
 
-Do not treat a request to commit code as final acceptance. Before committing a
-dirty worktree, run `scripts/check-before-commit.mjs --task-id <task_id>`.
-This check must fail on selected-task artifact language warnings as well as
-blocked gates or uncovered dirty paths.
-If G6 is pending, block the commit and ask the Human to accept the result and
-residual risk before committing. The blocking message must explain what the
-Human is being asked to accept: task goal, changed scope, verification status,
-skipped checks, review decision, blockers, residual risk, evidence available,
-and the `08-acceptance.md` fields that must be recorded. Use
-`scripts/summarize-acceptance.mjs --task-id <task_id> --require-report` or
+Do not treat a request to commit code as final acceptance. Before committing,
+run `scripts/check-before-commit.mjs` against the commit candidate. The checker
+is read-only and must not create specs. It evaluates the full dirty worktree,
+regardless of staging state.
+
+If the candidate is outside Dev Cadence workflow scope, Dev Cadence G1-G6 and
+Human Gate checks are skipped. If the candidate is Dev Cadence
+contract/runtime-only, run the checker without borrowing an unrelated product
+task id; it validates the embedded runtime. If the candidate includes
+`specs/records/{task_id}/` workflow specs, or product paths intentionally belong
+to an existing Dev Cadence workflow but the specs are not in the same candidate,
+ensure the workflow is checked with `--task-id <task_id>` when needed. Workflow
+checks must fail on selected-task artifact language warnings, blocked gates,
+pending Human acceptance, or uncovered candidate paths.
+
+If G6 is pending for a workflow candidate, block the commit and ask the Human to
+accept the result and residual risk before committing. The blocking message
+must explain what the Human is being asked to accept: task goal, changed scope,
+verification status, skipped checks, review decision, blockers, residual risk,
+evidence available, and the `08-acceptance.md` fields that must be recorded.
+Use `scripts/summarize-acceptance.mjs --task-id <task_id> --require-report` or
 equivalent content. Before requesting final Human acceptance, refresh the
 browsable report with
 `scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report`

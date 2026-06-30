@@ -29,7 +29,7 @@ The user does not need to choose a workflow. Supervisor infers `selected_workflo
 - Use Harness for Worker Agent states.
 - Capture `pre-implementation-status.md` before S1/S2 product edits.
 - Run `scripts/check-gates.mjs --task-id <task_id>` before claiming completion, approval, acceptance, or readiness.
-- Run `scripts/check-before-commit.mjs --task-id <task_id>` before creating a Git commit for a dirty worktree.
+- Run `scripts/check-before-commit.mjs` before creating a Git commit. Add `--task-id <task_id>` when committing product paths that intentionally belong to an existing Dev Cadence workflow but the workflow specs are not in the same candidate.
 - Enforce hard stops from `SKILL.md` before implementation, review, and acceptance.
 - Record skipped states and residual risk.
 - End with acceptance or blocked escalation.

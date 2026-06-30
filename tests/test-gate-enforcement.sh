@@ -5,13 +5,17 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REPO_DIR="$(mktemp -d /private/tmp/dev-cadence-gates.XXXXXX)"
 OUTPUT_DIR="$(mktemp -d /private/tmp/dev-cadence-gates-output.XXXXXX)"
 LANG_REPO="$(mktemp -d /private/tmp/dev-cadence-gates-language.XXXXXX)"
+OUTSIDE_REPO="$(mktemp -d /private/tmp/dev-cadence-gates-outside.XXXXXX)"
+CONTRACT_REPO="$(mktemp -d /private/tmp/dev-cadence-gates-contract.XXXXXX)"
+CONTRACT_BUNDLE="$(mktemp -d /private/tmp/dev-cadence-gates-bundle.XXXXXX)"
 SPECS_DIR="${REPO_DIR}/specs/records"
 LANG_SPECS_DIR="${LANG_REPO}/specs/records"
+CONTRACT_SPECS_DIR="${CONTRACT_REPO}/specs/records"
 RESEARCH_SPECS_DIR="${OUTPUT_DIR}/research-specs"
 TASK_ID="gate-fixture"
 RESEARCH_TASK_ID="research-fixture"
 RUN_ID="gate-fixture-run-1"
-trap 'rm -rf "${REPO_DIR}" "${OUTPUT_DIR}" "${LANG_REPO}"' EXIT
+trap 'rm -rf "${REPO_DIR}" "${OUTPUT_DIR}" "${LANG_REPO}" "${OUTSIDE_REPO}" "${CONTRACT_REPO}" "${CONTRACT_BUNDLE}"' EXIT
 
 assert_command_fails_with() {
   local expected_text="$1"
@@ -29,6 +33,22 @@ assert_command_fails_with() {
     exit 1
   }
 }
+
+mkdir -p "${OUTSIDE_REPO}/src"
+git -C "${OUTSIDE_REPO}" init -q
+cat > "${OUTSIDE_REPO}/src/app.txt" <<'EOF'
+before
+EOF
+git -C "${OUTSIDE_REPO}" add src/app.txt
+git -C "${OUTSIDE_REPO}" commit -q -m "test: seed outside fixture"
+printf 'after\n' > "${OUTSIDE_REPO}/src/app.txt"
+
+node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
+  --repo-dir "${OUTSIDE_REPO}" \
+  --plugin-dir "${ROOT_DIR}" > "${OUTPUT_DIR}/outside-ready.out"
+grep -Fq "Scope: outside-dev-cadence" "${OUTPUT_DIR}/outside-ready.out"
+grep -Fq "Commit readiness: passed" "${OUTPUT_DIR}/outside-ready.out"
+grep -Fq "SKIP Commit candidate is outside Dev Cadence workflow; G1-G6 and Human Gate checks skipped." "${OUTPUT_DIR}/outside-ready.out"
 
 mkdir -p "${REPO_DIR}/src" "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}"
 git -C "${REPO_DIR}" init -q
@@ -428,11 +448,40 @@ EOF
 
 printf 'after\n' > "${REPO_DIR}/src/app.txt"
 
-assert_command_fails_with \
-  "requires --task-id" \
-  node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
-    --repo-dir "${REPO_DIR}" \
-    --plugin-dir "${ROOT_DIR}"
+mkdir -p "${CONTRACT_REPO}/.dev-cadence" "${CONTRACT_SPECS_DIR}"
+node "${ROOT_DIR}/scripts/package-target-repo-bundle.mjs" \
+  --output-dir "${CONTRACT_BUNDLE}" \
+  --clean \
+  --json > "${OUTPUT_DIR}/contract-bundle.json"
+git -C "${CONTRACT_REPO}" init -q
+cp -R "${CONTRACT_BUNDLE}/.dev-cadence/." "${CONTRACT_REPO}/.dev-cadence/"
+cat > "${CONTRACT_REPO}/AGENTS.md" <<'EOF'
+# Test Agent Rules
+EOF
+cat > "${CONTRACT_REPO}/.gitignore" <<'EOF'
+.dev-cadence.yaml
+EOF
+touch "${CONTRACT_SPECS_DIR}/.gitkeep"
+git -C "${CONTRACT_REPO}" add .dev-cadence AGENTS.md .gitignore specs/records/.gitkeep
+git -C "${CONTRACT_REPO}" commit -q -m "test: seed contract fixture"
+
+printf '\n# local contract update\n' >> "${CONTRACT_REPO}/AGENTS.md"
+printf '\n# runtime update\n' >> "${CONTRACT_REPO}/.dev-cadence/references/human-gates.md"
+
+node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
+  --repo-dir "${CONTRACT_REPO}" \
+  --plugin-dir "${ROOT_DIR}" > "${OUTPUT_DIR}/contract-ready.out"
+grep -Fq "Scope: dev-cadence-contract" "${OUTPUT_DIR}/contract-ready.out"
+grep -Fq "Commit readiness: passed" "${OUTPUT_DIR}/contract-ready.out"
+
+mkdir -p "${CONTRACT_REPO}/src"
+printf 'product\n' > "${CONTRACT_REPO}/src/app.txt"
+node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
+  --repo-dir "${CONTRACT_REPO}" \
+  --plugin-dir "${ROOT_DIR}" > "${OUTPUT_DIR}/mixed-ready.out"
+grep -Fq "Scope: mixed" "${OUTPUT_DIR}/mixed-ready.out"
+grep -Fq "Commit readiness: passed" "${OUTPUT_DIR}/mixed-ready.out"
+grep -Fq "SKIP Outside Dev Cadence workflow paths are not checked by Dev Cadence gates." "${OUTPUT_DIR}/mixed-ready.out"
 
 cat > "${SPECS_DIR}/${TASK_ID}/06-test-report.md" <<'EOF'
 # Test Report
@@ -481,6 +530,9 @@ node "${ROOT_DIR}/scripts/check-gates.mjs" \
   --task-id "${TASK_ID}" \
   --allow-pending-acceptance > "${OUTPUT_DIR}/pending.out"
 grep -Fq "Gate status: pending_acceptance" "${OUTPUT_DIR}/pending.out"
+node "${ROOT_DIR}/scripts/generate-spec-report.mjs" \
+  --specs-dir "${SPECS_DIR}" \
+  --report-dir "${REPO_DIR}/specs/report" > "${OUTPUT_DIR}/pending-report.out"
 
 assert_command_fails_with \
   "Commit is blocked until G6 final Human acceptance is recorded" \
@@ -501,6 +553,7 @@ grep -Fq "Residual Risk" "${OUTPUT_DIR}/failure.out"
 grep -Fq "A named Human acceptance is still required" "${OUTPUT_DIR}/failure.out"
 grep -Fq "accepted_by_human" "${OUTPUT_DIR}/failure.out"
 grep -Fq "08-acceptance.md" "${OUTPUT_DIR}/failure.out"
+grep -Fq "specs/report/gate-fixture/index.html" "${OUTPUT_DIR}/failure.out"
 if grep -Fq "Acceptance is already recorded for" "${OUTPUT_DIR}/failure.out"; then
   echo "pending acceptance summary must not report acceptance as recorded" >&2
   cat "${OUTPUT_DIR}/failure.out" >&2
@@ -681,5 +734,20 @@ node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
   --plugin-dir "${ROOT_DIR}" \
   --task-id "${TASK_ID}" > "${OUTPUT_DIR}/ready.out"
 grep -Fq "Commit readiness: passed" "${OUTPUT_DIR}/ready.out"
+
+node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
+  --repo-dir "${REPO_DIR}" \
+  --plugin-dir "${ROOT_DIR}" > "${OUTPUT_DIR}/workflow-ready.out"
+grep -Fq "Workflow tasks: ${TASK_ID}" "${OUTPUT_DIR}/workflow-ready.out"
+grep -Fq "Scope: mixed" "${OUTPUT_DIR}/workflow-ready.out"
+grep -Fq "Commit readiness: passed" "${OUTPUT_DIR}/workflow-ready.out"
+
+printf 'scratch\n' > "${REPO_DIR}/src/extra.txt"
+assert_command_fails_with \
+  "Commit candidate paths are not covered by workflow task artifacts" \
+  node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
+    --repo-dir "${REPO_DIR}" \
+    --plugin-dir "${ROOT_DIR}"
+rm -f "${REPO_DIR}/src/extra.txt"
 
 echo "gate enforcement ok"

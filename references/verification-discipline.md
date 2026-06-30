@@ -24,11 +24,19 @@ Skipping a step means the workflow is not verified.
 
 When task artifacts exist, run
 `scripts/check-gates.mjs --task-id <task_id>` before claiming fixed, complete,
-approved, accepted, or ready. Before creating a Git commit for a dirty
-worktree, run `scripts/check-before-commit.mjs --task-id <task_id>`; this also
-treats selected-task artifact language warnings as failures. If G6 final Human
-acceptance is pending, do not commit; report the required Human acceptance
-fields instead.
+approved, accepted, or ready. Before creating a Git commit, run
+`scripts/check-before-commit.mjs` against the full dirty worktree, regardless
+of staging state. The checker is read-only and must not create specs.
+
+If the candidate is outside Dev Cadence workflow scope, G1-G6 and Human Gate
+checks are skipped. If the candidate is Dev Cadence contract/runtime-only, the
+checker validates the embedded runtime instead of borrowing an unrelated
+product task id. If the candidate includes Dev Cadence workflow specs, or the
+user supplies `--task-id <task_id>` for product paths that belong to an existing
+workflow, the checker validates artifact structure, artifact language warnings,
+G1-G6/Human acceptance, and candidate path coverage. If G6 final Human
+acceptance is pending for that workflow, do not commit; report the required
+Human acceptance fields instead.
 
 ## Claim Matrix
 

@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
+import { defaultReportDirForSpecsDir, normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 function printHelp() {
   console.log(`Usage: check-before-commit.mjs [options]
@@ -10,8 +10,8 @@ function printHelp() {
 Checks Dev Cadence readiness before creating a Git commit.
 
 Options:
-  --task-id <id>       Task directory name under the specs directory. Required
-                       when the Git worktree has changes.
+  --task-id <id>       Task directory name under the specs directory. Use when
+                       the commit candidate is part of a Dev Cadence workflow.
   --repo-dir <dir>     Target Git repository. Defaults to current working directory.
   --plugin-dir <dir>   dev-cadence plugin/source directory. Defaults to the
                        parent directory of this script.
@@ -20,9 +20,14 @@ Options:
   --json               Print machine-readable JSON.
   -h, --help           Show this help text.
 
-This command does not create commits. It validates artifacts, gates, Human
-acceptance state, and whether dirty worktree paths are covered by the selected
-task artifacts.`);
+This command does not create commits and never creates specs. It treats the
+dirty worktree as the commit candidate, regardless of staging state. It first
+decides whether the candidate belongs to Dev Cadence workflow content. Outside
+workflow candidates skip Dev Cadence gate checks. Dev Cadence contract/runtime
+candidates validate the embedded runtime. Workflow candidates validate touched
+spec artifacts, gates, Human acceptance, and any covered product paths. Use
+--task-id when the candidate has product paths that are intentionally part of a
+Dev Cadence task but the specs are not present in the dirty worktree.`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -225,6 +230,14 @@ function coverageEntries(taskDir, specsDir, repoDir) {
   const taskArtifactRoot = path.relative(repoDir, taskDir).replaceAll(path.sep, '/');
   entries.add(taskArtifactRoot);
   entries.add(`${taskArtifactRoot}/**`);
+  const reportDir = defaultReportDirForSpecsDir(specsDir);
+  const taskReportRoot = path.relative(repoDir, path.join(reportDir, path.basename(taskDir))).replaceAll(path.sep, '/');
+  const reportIndex = path.relative(repoDir, path.join(reportDir, 'index.html')).replaceAll(path.sep, '/');
+  const reportAssets = path.relative(repoDir, path.join(reportDir, 'assets')).replaceAll(path.sep, '/');
+  entries.add(taskReportRoot);
+  entries.add(`${taskReportRoot}/**`);
+  entries.add(reportIndex);
+  entries.add(`${reportAssets}/**`);
   return [...entries].filter(Boolean);
 }
 
@@ -266,6 +279,91 @@ function isCovered(filePath, entries) {
   });
 }
 
+function isContractPath(filePath, options) {
+  const normalized = normalizePath(filePath);
+  const specsGitkeep = `${specsRel(options)}/.gitkeep`;
+  const hasEmbeddedRuntime = fs.existsSync(path.join(options.repoDir, '.dev-cadence'));
+  return (
+    normalized === specsGitkeep
+    || normalized.startsWith('.dev-cadence/')
+    || (hasEmbeddedRuntime && (
+      normalized === 'AGENTS.md'
+      || normalized === '.gitignore'
+      || normalized === '.dev-cadence.yaml'
+    ))
+  );
+}
+
+function specsRel(options) {
+  return normalizePath(path.relative(options.repoDir, options.specsDir));
+}
+
+function isWorkflowSpecPath(filePath, options) {
+  const normalized = normalizePath(filePath);
+  const base = specsRel(options);
+  if (normalized === `${base}/.gitkeep`) return false;
+  return normalized.startsWith(`${base}/`);
+}
+
+function workflowSpecTaskIds(candidatePaths, options) {
+  const base = specsRel(options);
+  const result = new Set();
+  for (const filePath of candidatePaths) {
+    const normalized = normalizePath(filePath);
+    if (!normalized.startsWith(`${base}/`)) continue;
+    const rest = normalized.slice(base.length + 1);
+    if (!rest || rest === '.gitkeep') continue;
+    const taskId = rest.split('/')[0];
+    if (taskId) {
+      result.add(taskId);
+    }
+  }
+  return [...result].sort();
+}
+
+function contractOnlyCheck(options) {
+  const checks = [];
+  checks.push(runChecker(
+    path.join(options.pluginDir, 'scripts', 'check-skill-package.mjs'),
+    [path.join(options.repoDir, '.dev-cadence')],
+    options.repoDir,
+  ));
+  checks.push(runChecker(
+    path.join(options.pluginDir, 'scripts', 'check-discipline-routes.mjs'),
+    [path.join(options.repoDir, '.dev-cadence')],
+    options.repoDir,
+  ));
+  checks.push(runChecker(
+    path.join(options.pluginDir, 'scripts', 'check-spec-artifacts.mjs'),
+    [path.join(options.repoDir, '.dev-cadence', 'templates')],
+    options.repoDir,
+  ));
+  return checks;
+}
+
+function taskArtifactCheck(options, taskId) {
+  return runChecker(
+    path.join(options.pluginDir, 'scripts', 'check-spec-artifacts.mjs'),
+    [path.join(options.specsDir, taskId), '--warnings-as-errors'],
+    options.repoDir,
+  );
+}
+
+function taskGateCheck(options, taskId) {
+  return runChecker(
+    path.join(options.pluginDir, 'scripts', 'check-gates.mjs'),
+    ['--task-id', taskId, '--specs-dir', options.specsDir],
+    options.repoDir,
+  );
+}
+
+function taskChecks(options, taskId) {
+  return [
+    taskArtifactCheck(options, taskId),
+    taskGateCheck(options, taskId),
+  ];
+}
+
 function runChecker(scriptPath, args, cwd) {
   if (!fs.existsSync(scriptPath)) {
     throw new Error(`Required checker not found: ${scriptPath}`);
@@ -273,22 +371,25 @@ function runChecker(scriptPath, args, cwd) {
   return run(process.execPath, [scriptPath, ...args], cwd);
 }
 
-function runAcceptanceSummary(options) {
+function runAcceptanceSummary(options, taskId = options.taskId) {
   const scriptPath = path.join(options.pluginDir, 'scripts', 'summarize-acceptance.mjs');
-  if (!fs.existsSync(scriptPath) || !options.taskId) return null;
+  if (!fs.existsSync(scriptPath) || !taskId) return null;
   return runChecker(
     scriptPath,
-    ['--task-id', options.taskId, '--specs-dir', options.specsDir, '--require-report'],
+    ['--task-id', taskId, '--specs-dir', options.specsDir, '--require-report'],
     options.repoDir,
   );
 }
 
 function check(options) {
   const dirty = gitStatus(options.repoDir);
+  const candidatePaths = dirty.map((item) => item.path);
   const report = {
     repository: options.repoDir,
     task_id: options.taskId,
     specs_dir: options.specsDir,
+    scope: 'product',
+    candidate_paths: candidatePaths,
     status: 'passed',
     dirty_paths: dirty.map((item) => item.path),
     checks: [],
@@ -299,12 +400,76 @@ function check(options) {
     return report;
   }
 
-  if (!options.taskId) {
-    report.status = 'failed';
-    report.failures = ['Dirty worktree requires --task-id so Dev Cadence gates and scope coverage can be checked.'];
+  const contractPaths = candidatePaths.filter((filePath) => isContractPath(filePath, options));
+  const workflowSpecPaths = candidatePaths.filter((filePath) => isWorkflowSpecPath(filePath, options));
+  const outsidePaths = candidatePaths
+    .filter((filePath) => !isContractPath(filePath, options) && !isWorkflowSpecPath(filePath, options));
+
+  if (!options.taskId && candidatePaths.length > 0 && workflowSpecPaths.length === 0) {
+    if (contractPaths.length > 0) {
+      report.scope = outsidePaths.length > 0 ? 'mixed' : 'dev-cadence-contract';
+      report.checks = contractOnlyCheck(options);
+      report.skipped_gate_checks = outsidePaths.length > 0
+        ? ['Outside Dev Cadence workflow paths are not checked by Dev Cadence gates.']
+        : [];
+    } else {
+      report.scope = 'outside-dev-cadence';
+      report.skipped_gate_checks = ['Commit candidate is outside Dev Cadence workflow; G1-G6 and Human Gate checks skipped.'];
+    }
+    const failed = report.checks.filter((checkResult) => checkResult.status !== 0);
+    if (failed.length > 0) {
+      report.status = 'failed';
+      report.failures = ['Dev Cadence contract/runtime validation failed.'];
+    }
     return report;
   }
 
+  if (!options.taskId) {
+    const taskIds = workflowSpecTaskIds(candidatePaths, options);
+    report.workflow_task_ids = taskIds;
+    report.scope = outsidePaths.length > 0 || contractPaths.length > 0 ? 'mixed' : 'dev-cadence-workflow';
+    report.checks = [
+      ...taskIds.flatMap((taskId) => taskChecks(options, taskId)),
+      ...(contractPaths.length > 0 ? contractOnlyCheck(options) : []),
+    ];
+    const coverage = new Set();
+    for (const taskId of taskIds) {
+      for (const entry of coverageEntries(path.join(options.specsDir, taskId), options.specsDir, options.repoDir)) {
+        coverage.add(entry);
+      }
+    }
+    report.coverage_entries = [...coverage].filter(Boolean);
+    report.uncovered_paths = outsidePaths.filter((filePath) => !isCovered(filePath, report.coverage_entries));
+    if (taskIds.length === 0) {
+      report.failures = ['Commit candidate contains Dev Cadence workflow paths, but no task directories were found.'];
+    }
+    const failed = report.checks.filter((checkResult) => checkResult.status !== 0);
+    if (failed.length > 0 || report.uncovered_paths.length > 0 || (report.failures || []).length > 0) {
+      report.status = 'failed';
+      report.failures = report.failures || [];
+      if (failed.some((checkResult) => checkResult.command.includes('check-spec-artifacts.mjs'))) {
+        report.failures.push('Spec artifact validation failed.');
+      }
+      if (failed.some((checkResult) => checkResult.command.includes('check-gates.mjs'))) {
+        report.failures.push('Quality Gate or Human Gate validation failed. Commit is blocked until G6 final Human acceptance is recorded.');
+        report.acceptance_summaries = taskIds
+          .map((taskId) => {
+            const summary = runAcceptanceSummary(options, taskId);
+            return summary && summary.stdout ? { task_id: taskId, summary: summary.stdout } : null;
+          })
+          .filter(Boolean);
+      }
+      if (failed.some((checkResult) => !checkResult.command.includes('check-spec-artifacts.mjs') && !checkResult.command.includes('check-gates.mjs'))) {
+        report.failures.push('Dev Cadence contract/runtime validation failed.');
+      }
+      if (report.uncovered_paths.length > 0) {
+        report.failures.push('Commit candidate paths are not covered by workflow task artifacts.');
+      }
+    }
+    return report;
+  }
+
+  report.scope = 'dev-cadence-workflow';
   const taskDir = path.join(options.specsDir, options.taskId);
   if (!fs.existsSync(taskDir)) {
     report.status = 'failed';
@@ -329,9 +494,7 @@ function check(options) {
 
   const covered = coverageEntries(taskDir, options.specsDir, options.repoDir);
   report.coverage_entries = covered;
-  report.uncovered_paths = dirty
-    .map((item) => item.path)
-    .filter((filePath) => !isCovered(filePath, covered));
+  report.uncovered_paths = candidatePaths.filter((filePath) => !isCovered(filePath, covered));
 
   if (
     artifactCheck.status !== 0
@@ -361,12 +524,22 @@ function check(options) {
 function printText(report) {
   console.log(`Repository: ${report.repository}`);
   console.log(`Task: ${report.task_id || 'not supplied'}`);
+  if (report.workflow_task_ids && report.workflow_task_ids.length > 0) {
+    console.log(`Workflow tasks: ${report.workflow_task_ids.join(', ')}`);
+  }
+  console.log(`Scope: ${report.scope || 'product'}`);
   console.log(`Commit readiness: ${report.status}`);
   if (report.dirty_paths.length === 0) {
     console.log('Dirty paths: none');
   } else {
     console.log('Dirty paths:');
     for (const filePath of report.dirty_paths) {
+      console.log(`- ${filePath}`);
+    }
+  }
+  if (report.candidate_paths && report.candidate_paths.length > 0) {
+    console.log('Commit candidate paths:');
+    for (const filePath of report.candidate_paths) {
       console.log(`- ${filePath}`);
     }
   }
@@ -382,12 +555,19 @@ function printText(report) {
       console.error(`- ${filePath}`);
     }
   }
+  for (const skipped of report.skipped_gate_checks || []) {
+    console.log(`SKIP ${skipped}`);
+  }
   for (const failure of report.failures || []) {
     console.error(`FAIL ${failure}`);
   }
   if (report.acceptance_summary) {
     console.error('\nHuman acceptance summary:');
     console.error(report.acceptance_summary);
+  }
+  for (const acceptanceSummary of report.acceptance_summaries || []) {
+    console.error(`\nHuman acceptance summary (${acceptanceSummary.task_id}):`);
+    console.error(acceptanceSummary.summary);
   }
 }
 
