@@ -7,8 +7,7 @@ description: Request or perform Dev Cadence review of completed implementation w
 
 Use this Skill to request or perform review of implementation work. It produces findings and a review decision. It does not implement fixes for review feedback.
 
-Core principle: review the work product, not the implementer's conversation
-history. Provide precise context and keep reviewer execution read-only.
+Core principle: review early and review often. Always review the work product, not the implementer's conversation history. Provide precise context and keep reviewer execution read-only.
 
 ## Required References
 
@@ -18,6 +17,20 @@ history. Provide precise context and keep reviewer execution read-only.
 - `../../references/spec-templates.md`
 
 ## Required Behavior
+
+Request review at these points:
+
+- after each task completed by `cadence-subagent-development`;
+- at natural checkpoints while executing an approved plan;
+- after a major feature, bug fix, or risky refactor is implemented;
+- before verification or completion claims for implementation work;
+- before merging, releasing, or handing off work as ready.
+
+Request review when stuck or before a risky refactor when a fresh read-only
+perspective would reduce uncertainty.
+
+Do not skip review because the change looks simple. Do not proceed past valid
+blocker or major findings unless a named Human Gate accepts the residual risk.
 
 Review in two stages:
 

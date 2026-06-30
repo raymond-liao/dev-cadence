@@ -46,6 +46,19 @@ In tests, use output visible in the test runner. Remove temporary diagnostics
 after confirming the root cause unless they are useful production
 observability.
 
+## Finding Test Pollution
+
+If a file, directory, environment state, or cache appears during a test run and
+you do not know which test created it, use `find-polluter.sh`:
+
+```bash
+skills/cadence-debug/find-polluter.sh '.git' 'src/**/*.test.ts' npm test --
+```
+
+The script runs matching tests one at a time, stops at the first test that
+creates the unwanted path, and prints the focused command to reproduce it. Pass
+the test command after the pattern; when omitted, it defaults to `npm test --`.
+
 ## Questions
 
 - Where did this value come from?

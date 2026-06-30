@@ -54,6 +54,11 @@ Before shipping a Dev Cadence behavior change:
 - triggering context is clear;
 - loading contract is explicit;
 - rule is concise but hard to rationalize away;
+- parity or reference-derived content preserves file-level structure and
+  behavioral force, not just topic coverage;
+- anti-patterns, gate functions, examples, red flags, quick references,
+  stop conditions, and visual markers such as `✅ GOOD` / `❌ BAD` are retained
+  when they are part of how the source rule prevents agent failure;
 - examples are reusable, not narrative-only;
 - required evidence is named;
 - exceptions require named Human decision when appropriate;

@@ -20,7 +20,16 @@ NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
 If you did not watch the test fail for the expected reason, you do not know
 whether it tests the right behavior.
 
-Writing production code before the failing test invalidates normal TDD evidence. Delete or disregard that code and restart from the test unless a named Human explicitly accepts the gap and substitute feedback.
+Writing production code before the failing test invalidates normal TDD evidence.
+Remove or disregard that code and restart from the test unless a named Human
+explicitly accepts the gap and substitute feedback.
+
+If implementation code came first:
+
+- do not keep it as "reference";
+- do not adapt it while writing tests;
+- do not use it to bias the expected behavior;
+- restart from a failing test, or record a named Human exception and residual risk.
 
 ## Required References
 
@@ -119,6 +128,44 @@ stayed green.
 
 Repeat the cycle for each next behavior.
 
+## Example: Bug Fix
+
+Bug: empty email is accepted.
+
+RED:
+
+```typescript
+test('rejects empty email', async () => {
+  const result = await submitForm({ email: '' });
+  expect(result.error).toBe('Email required');
+});
+```
+
+Verify RED:
+
+```text
+FAIL expected "Email required", got undefined
+```
+
+GREEN:
+
+```typescript
+function submitForm(data: FormData) {
+  if (!data.email?.trim()) {
+    return { error: 'Email required' };
+  }
+  return submitValidForm(data);
+}
+```
+
+Verify GREEN:
+
+```text
+PASS
+```
+
+Refactor only after the focused test and relevant neighboring tests stay green.
+
 ## Good Tests
 
 Good tests:
@@ -200,6 +247,22 @@ When adding mocks or test utilities, load
 - mocking without understanding side effects;
 - using incomplete mock data that production code would not receive;
 - replacing useful integration coverage with brittle mocks.
+
+## Completion Checklist
+
+Before marking TDD implementation ready:
+
+- [ ] each accepted behavior has Red evidence or a named Human exception;
+- [ ] each Red test was observed failing for the expected reason;
+- [ ] production code was written after Red evidence;
+- [ ] Green verification passed for focused tests;
+- [ ] relevant neighboring or regression tests passed;
+- [ ] refactor, if any, happened only while tests stayed green;
+- [ ] tests use real behavior and mocks are justified;
+- [ ] skipped checks and residual risk are recorded.
+
+If these boxes cannot be checked, do not claim normal TDD. Return to Red or
+record the named Human exception.
 
 ## Evidence
 

@@ -150,6 +150,25 @@ function checkDeliveryStateTable() {
   }
 }
 
+function checkSourceMaintenanceContract() {
+  if (embeddedRuntime) return;
+
+  const sourceFile = 'references/source-maintenance/authoring-discipline.md';
+  const text = readText(sourceFile);
+  const required = [
+    'parity or reference-derived content preserves file-level structure and',
+    'behavioral force, not just topic coverage',
+    'anti-patterns, gate functions, examples, red flags, quick references',
+    'visual markers such as `✅ GOOD` / `❌ BAD` are retained',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing source maintenance contract phrase: ${phrase}`);
+    }
+  }
+}
+
 function checkPromptTemplates() {
   const required = [
     'skills/cadence-clarify/spec-document-reviewer-prompt.md',
@@ -439,12 +458,17 @@ function checkCadenceTddContract() {
   const required = [
     'NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST',
     'Writing production code before the failing test invalidates normal TDD evidence.',
+    'do not keep it as "reference"',
+    'do not adapt it while writing tests',
     '## Pre-Implementation Baseline',
     '### RED: Write a Failing Test',
     '### GREEN: Minimal Code',
     '### REFACTOR: Clean Up While Green',
     'If the test passes immediately, it is not Red evidence.',
     'Do not add behavior during refactor.',
+    '## Example: Bug Fix',
+    "test('rejects empty email'",
+    'FAIL expected "Email required", got undefined',
     '## Why Order Matters',
     '## Common Rationalizations',
     '## Red Flags',
@@ -453,6 +477,8 @@ function checkCadenceTddContract() {
     'Never fix a testable bug without a failing test or named Human exception.',
     '## Testing Anti-Patterns',
     'testing-anti-patterns.md',
+    '## Completion Checklist',
+    'each accepted behavior has Red evidence or a named Human exception',
     '## Evidence',
     'Production code -> test exists and failed first.',
   ];
@@ -460,6 +486,41 @@ function checkCadenceTddContract() {
   for (const phrase of required) {
     if (!text.includes(phrase)) {
       fail(`${sourceFile}: missing TDD process phrase: ${phrase}`);
+    }
+  }
+
+  const antiPatternsFile = 'skills/cadence-tdd/testing-anti-patterns.md';
+  if (!exists(antiPatternsFile)) {
+    fail(`${antiPatternsFile}: missing TDD anti-patterns reference`);
+    return;
+  }
+
+  const antiPatternsText = readText(antiPatternsFile);
+  const antiPatternRequired = [
+    '## Anti-Pattern 1: Testing Mock Behavior',
+    '## Anti-Pattern 2: Test-Only Methods in Production',
+    '## Anti-Pattern 3: Mocking Without Understanding',
+    '## Anti-Pattern 4: Incomplete Mocks',
+    '## Anti-Pattern 5: Integration Tests as Afterthought',
+    '### Gate Function',
+    'BEFORE asserting on any mock element:',
+    'BEFORE adding any method to production class:',
+    'BEFORE mocking any method:',
+    'BEFORE creating mock responses:',
+    '❌ BAD: Testing that the mock exists',
+    '✅ GOOD: Test the real component',
+    '✅ Implementation complete',
+    '❌ No tests written',
+    '## TDD Prevents These Anti-Patterns',
+    '## Quick Reference',
+    '## Red Flags',
+    '## Bottom Line',
+    'Mocks are tools to isolate, not things to test.',
+  ];
+
+  for (const phrase of antiPatternRequired) {
+    if (!antiPatternsText.includes(phrase)) {
+      fail(`${antiPatternsFile}: missing TDD anti-pattern phrase: ${phrase}`);
     }
   }
 }
@@ -734,6 +795,7 @@ checkPathReferences('references/delivery-disciplines.md');
 checkPathReferences('skills/cadence-clarify/visual-companion.md');
 checkPathReferences('references/skill-layout.md');
 checkDeliveryStateTable();
+checkSourceMaintenanceContract();
 checkPromptTemplates();
 checkArtifactTemplates();
 checkVisualCompanionScripts();

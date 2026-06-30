@@ -41,6 +41,10 @@ For each finding:
 8. Rerun targeted verification for each fix, then broader verification when integration risk exists.
 9. Update `specs/records/{task_id}/07-review-report.md`, `05-implementation.md`, and run evidence when persistent artifacts are being used.
 
+For multi-item feedback, clarify all unclear items first, then handle valid
+items in this order: blockers or security/correctness breaks, simple mechanical
+fixes, then complex logic or refactor findings. Test each fix individually.
+
 Do not blindly apply external reviewer suggestions. Check whether the suggestion:
 
 - breaks existing behavior;
@@ -52,6 +56,9 @@ Do not blindly apply external reviewer suggestions. Check whether the suggestion
 When a finding is wrong, push back with code, test, spec, or artifact evidence.
 When a finding is right, state the fix and evidence. Avoid performative
 agreement; the useful output is the correction and verification.
+
+When replying to GitHub inline review comments, reply in the original review
+thread rather than posting a disconnected top-level PR comment.
 
 If a finding reveals unclear requirements, changed scope, or design risk, return to `cadence-clarify` or `cadence-plan` through the Supervisor before implementing more changes.
 

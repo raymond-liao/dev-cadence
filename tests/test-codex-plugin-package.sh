@@ -88,6 +88,11 @@ assert_exists "skills/cadence-debug/SKILL.md"
 assert_exists "skills/cadence-debug/root-cause-tracing.md"
 assert_exists "skills/cadence-debug/condition-based-waiting.md"
 assert_exists "skills/cadence-debug/defense-in-depth.md"
+assert_exists "skills/cadence-debug/find-polluter.sh"
+test -x "${PLUGIN_DIR}/skills/cadence-debug/find-polluter.sh" || {
+  echo "expected packaged skills/cadence-debug/find-polluter.sh to be executable" >&2
+  exit 1
+}
 assert_exists "skills/cadence-request-review/SKILL.md"
 assert_exists "skills/cadence-review/SKILL.md"
 assert_exists "skills/cadence-verify/SKILL.md"
