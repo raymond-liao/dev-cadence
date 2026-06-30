@@ -1,6 +1,8 @@
 # Verification Discipline
 
-Use this reference before any completion, fixed, passing, approval, or acceptance claim.
+Use this shared reference before any completion, fixed, passing, approval, or
+acceptance claim. This reference defines shared verification gate semantics. For
+the executable verification workflow, use `skills/cadence-verify/SKILL.md`.
 
 ## Core Rule
 
@@ -9,18 +11,23 @@ No completion claims without fresh verification evidence.
 ```
 
 Evidence comes before claims. Confidence is not evidence.
+Unverified completion claims are process failures, not efficiency.
 
 ## Gate Function
 
 Before claiming any work state:
 
 1. Identify which command, check, or artifact proves the claim.
-2. Run the full relevant command or perform the documented check.
+2. Run the full relevant command or perform the documented check against the
+   current candidate.
 3. Read the full output and exit code.
 4. Compare the result to the claim.
 5. State the claim only with evidence, or state the actual incomplete status.
 
 Skipping a step means the workflow is not verified.
+
+Fresh evidence means evidence produced after the final relevant change. After a
+file change, old output is stale for affected claims.
 
 When task artifacts exist, run
 `scripts/check-gates.mjs --task-id <task_id>` before claiming fixed, complete,
@@ -43,10 +50,13 @@ Human acceptance fields instead.
 | Claim | Requires | Not sufficient |
 |---|---|---|
 | Tests pass | fresh test output with zero relevant failures | prior run, expectation |
+| Linter clean | linter output with zero relevant errors | formatter only, partial check |
 | Build succeeds | build command exit 0 | linter only |
 | Bug fixed | original symptom or regression check passes | code changed |
+| Regression test works | Red-Green verification or equivalent failing-before-fix evidence | test passes once |
 | Requirement met | acceptance mapping checked | tests unrelated to requirement |
 | Review approved | reviewer decision and evidence | implementer self-report |
+| Worker or delegated task completed | Worker report plus independent diff/artifact verification | Worker says "done" |
 | Task complete | required artifacts and gates complete | "looks done" |
 
 ## Red Flags
@@ -58,9 +68,23 @@ Stop before saying success words when you notice:
 - "seems";
 - "looks good";
 - "done" before verification;
+- expressing satisfaction before verification;
+- about to commit, open a PR, merge, or ask for acceptance without verification;
 - trusting Worker success reports;
 - relying on partial verification;
+- thinking "just this once";
 - wanting to finish because tired or rushed.
+- any wording that implies success without current evidence.
+
+## Rationalization Prevention
+
+| Rationalization | Reality |
+|---|---|
+| "It should pass now." | Run the verification. |
+| "I am confident." | Confidence is not evidence. |
+| "The linter passed." | Lint does not prove tests or build pass. |
+| "The Worker said it is done." | Verify the diff and artifacts independently. |
+| "Partial check is enough." | Partial check supports only a partial claim. |
 
 ## Incomplete Verification
 
@@ -76,3 +100,8 @@ human_gate_required:
 ```
 
 Do not pass G4 or G6 until a named Human accepts the gap.
+
+## Bottom Line
+
+No shortcuts for verification. Run the command or documented check, read the
+output, compare it to the claim, then state the result.

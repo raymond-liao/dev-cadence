@@ -130,6 +130,9 @@ The full test-first implementation workflow lives in
 implementation evidence and exception contract used by runtime workflow states.
 Test anti-pattern guidance lives beside that Skill in
 `skills/cadence-tdd/testing-anti-patterns.md`.
+The full completion verification workflow lives in
+`skills/cadence-verify/SKILL.md`. `verification-discipline.md` remains the
+shared claim and gate contract used by runtime workflow states.
 
 ## Runtime Authority
 

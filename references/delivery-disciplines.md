@@ -67,7 +67,7 @@ Load these references by state or condition:
 | Flaky async tests or arbitrary sleeps | `skills/cadence-debug/condition-based-waiting.md` |
 | Invalid data, unsafe state, boundary failures | `skills/cadence-debug/defense-in-depth.md` |
 | `review`, checkpoint review, final implementation review | `review-discipline.md` |
-| before claiming fixed, done, passing, approved, or complete | `verification-discipline.md` |
+| before claiming fixed, done, passing, approved, or complete | `verification-discipline.md`; use `skills/cadence-verify/SKILL.md` for the full verification workflow |
 | Dev Cadence source maintenance in this repository | source-only `references/source-maintenance/authoring-discipline.md`; load `references/source-maintenance/skill-pressure-testing.md` for validation |
 
 Shared prompt templates live under `templates/prompts/`. Skill-specific prompts live with the owning Skill, such as `skills/cadence-request-review/code-reviewer.md` for reviewer runs.

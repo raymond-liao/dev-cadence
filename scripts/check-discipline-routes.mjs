@@ -110,6 +110,7 @@ function checkDeliveryStateTable() {
     'skills/cadence-clarify/visual-companion.md',
     'skills/cadence-tdd/SKILL.md',
     'skills/cadence-tdd/testing-anti-patterns.md',
+    'skills/cadence-verify/SKILL.md',
     'skills/cadence-debug/SKILL.md',
     'skills/cadence-debug/root-cause-tracing.md',
     'skills/cadence-debug/condition-based-waiting.md',
@@ -483,6 +484,96 @@ function checkImplementationDisciplineBoundary() {
   }
 }
 
+function checkCadenceVerifyContract() {
+  const sourceFile = 'skills/cadence-verify/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE',
+    'Core principle: evidence before claims, always.',
+    'Unverified completion claims are a process failure, not efficiency.',
+    'If the claim depends on a command, and that command has not run',
+    '## Core Rule',
+    '### Gate Function',
+    '1. IDENTIFY: what command, artifact, or documented check proves the claim.',
+    '2. RUN: execute the full relevant command',
+    '3. READ: inspect the full output, exit code, failure count, skipped checks, and',
+    '4. COMPARE: decide whether the evidence actually proves the claim.',
+    '5. STATE: report the verified result with evidence',
+    'If any step is missing, do not make the claim.',
+    '### Claim Matrix',
+    'linter clean',
+    'regression test works',
+    'Worker or delegated task completed',
+    '### Fresh Evidence Rules',
+    'After any file change, old verification output is stale for affected claims.',
+    'Do not trust Worker, reviewer, or tool summaries without checking',
+    '### Commit and Gate Verification',
+    '`scripts/check-before-commit.mjs` is read-only and must not create specs.',
+    '### Human Acceptance Summary',
+    'Do not merely say "G6 is pending".',
+    '### Incomplete Verification',
+    '## Red Flags',
+    'expressing satisfaction before verification',
+    'about to commit, open a PR, merge, or ask for acceptance without verification',
+    'any wording that implies success without current evidence',
+    '## Rationalization Prevention',
+    'Just this once.',
+    'Different wording avoids the rule.',
+    '## Key Patterns',
+    '**Tests:**',
+    '✅ [Run test command] [See: 34/34 pass] "All tests pass"',
+    '**Regression tests (TDD Red-Green):**',
+    'Run (MUST FAIL)',
+    '**Build:**',
+    '"Linter passed" when build or compile did not run',
+    '**Requirements:**',
+    'Re-read plan -> Create checklist -> Verify each -> Report gaps or completion',
+    '**Delegated Work:**',
+    'Worker reports success -> Check diff -> Verify artifacts -> Report actual state',
+    '**Bug Fix:**',
+    '## When to Apply',
+    'any expression of satisfaction about work state',
+    'The rule applies to exact words, synonyms, paraphrases, and implications',
+    '## Why This Matters',
+    'False completion claims cause:',
+    '## Bottom Line',
+    'No shortcuts for verification.',
+    '## Handoff Evidence',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing verification process phrase: ${phrase}`);
+    }
+  }
+}
+
+function checkVerificationDisciplineBoundary() {
+  const sourceFile = 'references/verification-discipline.md';
+  const text = readText(sourceFile);
+  const required = [
+    'shared verification gate semantics',
+    'skills/cadence-verify/SKILL.md',
+    'No completion claims without fresh verification evidence.',
+    'Unverified completion claims are process failures, not efficiency.',
+    'Fresh evidence means evidence produced after the final relevant change.',
+    'Linter clean',
+    'Regression test works',
+    'Worker or delegated task completed',
+    'Worker report plus independent diff/artifact verification',
+    '## Rationalization Prevention',
+    'Confidence is not evidence.',
+    'Partial check supports only a partial claim.',
+    '## Bottom Line',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing verification boundary phrase: ${phrase}`);
+    }
+  }
+}
+
 function checkCadenceReviewBoundary() {
   const sourceFile = 'skills/cadence-review/SKILL.md';
   const text = readText(sourceFile);
@@ -653,6 +744,8 @@ checkCadenceClarifyContract();
 checkCadenceDebugContract();
 checkCadenceTddContract();
 checkImplementationDisciplineBoundary();
+checkCadenceVerifyContract();
+checkVerificationDisciplineBoundary();
 checkCadenceRequestReviewContract();
 checkCadenceReviewBoundary();
 checkReviewDisciplineContract();
