@@ -29,4 +29,12 @@ if rg -n 'cadence-execute([^a-z-]|$)' references skills templates scripts .codex
   exit 1
 fi
 
+if rg -n 'superpowers|Superpowers|SUPERPOWERS|super powers|Super Powers|using-superpowers|brainstorming|writing-plans|test-driven-development|systematic-debugging' \
+  skills references templates scripts .codex-plugin README.md docs \
+  --glob '!docs/archive/**' \
+  --glob '!docs/skill-parity-improvement-plan.md'; then
+  echo "ERROR external product or source-project references found in current Dev Cadence content" >&2
+  exit 1
+fi
+
 echo "current contract terms ok"
