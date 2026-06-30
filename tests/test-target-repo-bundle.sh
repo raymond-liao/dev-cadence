@@ -18,12 +18,18 @@ test -d "${BUNDLE_DIR}/.dev-cadence"
 test -f "${BUNDLE_DIR}/.dev-cadence/VERSION"
 test -f "${BUNDLE_DIR}/.dev-cadence/manifest.json"
 test -f "${BUNDLE_DIR}/.dev-cadence/skills/using-dev-cadence/SKILL.md"
+test -f "${BUNDLE_DIR}/.dev-cadence/skills/cadence-debug/root-cause-tracing.md"
+test -f "${BUNDLE_DIR}/.dev-cadence/skills/cadence-debug/condition-based-waiting.md"
+test -f "${BUNDLE_DIR}/.dev-cadence/skills/cadence-debug/defense-in-depth.md"
 runtime_agents_dir="$(find "${BUNDLE_DIR}/.dev-cadence/skills" -path '*/agents' -type d -print -quit)"
 test -z "${runtime_agents_dir}" || {
   echo "unexpected skill-local agents directory in target runtime: ${runtime_agents_dir#${BUNDLE_DIR}/}" >&2
   exit 1
 }
 test -f "${BUNDLE_DIR}/.dev-cadence/references/skill-layout.md"
+test ! -e "${BUNDLE_DIR}/.dev-cadence/references/root-cause-tracing.md"
+test ! -e "${BUNDLE_DIR}/.dev-cadence/references/condition-based-waiting.md"
+test ! -e "${BUNDLE_DIR}/.dev-cadence/references/defense-in-depth.md"
 test ! -e "${BUNDLE_DIR}/.dev-cadence/references/source-maintenance"
 test -f "${BUNDLE_DIR}/.dev-cadence/templates/spec/00-brief.md"
 test -f "${BUNDLE_DIR}/.dev-cadence/scripts/check-gates.mjs"

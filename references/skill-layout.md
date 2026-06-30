@@ -110,9 +110,6 @@ Runtime references are shared workflow rules used by target repositories:
 - `testing-anti-patterns.md`
 - `execution-orchestration.md`
 - `debugging-discipline.md`
-- `root-cause-tracing.md`
-- `condition-based-waiting.md`
-- `defense-in-depth.md`
 - `review-discipline.md`
 - `verification-discipline.md`
 - `context-pack.md`
@@ -152,7 +149,11 @@ templates live under `templates/runs/`. Shared Worker and reviewer prompt
 templates live under `templates/prompts/`. Skill-specific resources, such as
 `skills/cadence-clarify/visual-companion.md`,
 `skills/cadence-clarify/spec-document-reviewer-prompt.md`, and
-`skills/cadence-clarify/scripts/`, live with the owning Skill.
+`skills/cadence-clarify/scripts/`, live with the owning Skill. Debugging
+techniques such as `skills/cadence-debug/root-cause-tracing.md`,
+`skills/cadence-debug/condition-based-waiting.md`, and
+`skills/cadence-debug/defense-in-depth.md` are Skill-local resources, not
+global runtime references.
 
 `delivery-disciplines.md` is the routing entrypoint for detailed discipline
 references. `scripts/check-skill-package.mjs`,

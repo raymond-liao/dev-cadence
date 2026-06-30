@@ -4,7 +4,7 @@
 
 `bugfix` 用于修正错误行为。
 
-完整运行时规则见 [workflows.md](../../references/workflows.md)。根因追踪和复现纪律见 [root-cause-tracing.md](../../references/root-cause-tracing.md)。
+完整运行时规则见 [workflows.md](../../references/workflows.md)。调试纪律见 [cadence-debug](../../skills/cadence-debug/SKILL.md)，根因追踪见 [root-cause-tracing.md](../../skills/cadence-debug/root-cause-tracing.md)。
 
 ## 标准路径
 

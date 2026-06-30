@@ -62,10 +62,10 @@ Load these references by state or condition:
 | `planning` | `planning-discipline.md` |
 | `implementation` for testable behavior | `implementation-discipline.md`; load `testing-anti-patterns.md` when writing tests or mocks |
 | Worker dispatch, inline execution, subagent execution, parallel candidates | `execution-orchestration.md`; load `adapters.md` when an external adapter is configured or requested |
-| `bugfix`, `incident-fix`, unexpected behavior, failing tests | `debugging-discipline.md` |
-| Deep symptom, unclear origin, bad value propagation | `root-cause-tracing.md` |
-| Flaky async tests or arbitrary sleeps | `condition-based-waiting.md` |
-| Invalid data, unsafe state, boundary failures | `defense-in-depth.md` |
+| `bugfix`, `incident-fix`, unexpected behavior, failing tests | `debugging-discipline.md`; use `skills/cadence-debug/SKILL.md` for full debugging workflow |
+| Deep symptom, unclear origin, bad value propagation | `skills/cadence-debug/root-cause-tracing.md` |
+| Flaky async tests or arbitrary sleeps | `skills/cadence-debug/condition-based-waiting.md` |
+| Invalid data, unsafe state, boundary failures | `skills/cadence-debug/defense-in-depth.md` |
 | `review`, checkpoint review, final implementation review | `review-discipline.md` |
 | before claiming fixed, done, passing, approved, or complete | `verification-discipline.md` |
 | Dev Cadence source maintenance in this repository | source-only `references/source-maintenance/authoring-discipline.md`; load `references/source-maintenance/skill-pressure-testing.md` for validation |

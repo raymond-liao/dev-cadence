@@ -93,9 +93,6 @@ function checkDeliveryStateTable() {
     'testing-anti-patterns.md',
     'execution-orchestration.md',
     'debugging-discipline.md',
-    'root-cause-tracing.md',
-    'condition-based-waiting.md',
-    'defense-in-depth.md',
     'review-discipline.md',
     'verification-discipline.md',
     'adapters.md',
@@ -112,6 +109,10 @@ function checkDeliveryStateTable() {
 
   const skillLocalRoutes = [
     'skills/cadence-clarify/visual-companion.md',
+    'skills/cadence-debug/SKILL.md',
+    'skills/cadence-debug/root-cause-tracing.md',
+    'skills/cadence-debug/condition-based-waiting.md',
+    'skills/cadence-debug/defense-in-depth.md',
   ];
   for (const relativePath of skillLocalRoutes) {
     if (!text.includes(relativePath)) {
@@ -358,6 +359,78 @@ function checkCadenceClarifyContract() {
   }
 }
 
+function checkCadenceDebugContract() {
+  const sourceFile = 'skills/cadence-debug/SKILL.md';
+  const text = readText(sourceFile);
+  const requiredFiles = [
+    'skills/cadence-debug/root-cause-tracing.md',
+    'skills/cadence-debug/condition-based-waiting.md',
+    'skills/cadence-debug/defense-in-depth.md',
+  ];
+
+  for (const relativePath of requiredFiles) {
+    if (!exists(relativePath)) {
+      fail(`missing cadence-debug resource: ${relativePath}`);
+    }
+  }
+
+  const required = [
+    'NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST',
+    'If you have not completed Phase 1, you cannot propose fixes.',
+    'You MUST complete each phase before proceeding to the next.',
+    '### Phase 1: Root Cause Investigation',
+    '### Phase 2: Pattern Analysis',
+    '### Phase 3: Hypothesis and Testing',
+    '### Phase 4: Implementation',
+    'Use `cadence-tdd` for testable code changes.',
+    'If three fix attempts fail',
+    '## Red Flags',
+    '## Human Correction Signals',
+    '## Common Rationalizations',
+    '## Evidence',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing debug process phrase: ${phrase}`);
+    }
+  }
+
+  const techniqueExpectations = [
+    {
+      file: 'skills/cadence-debug/root-cause-tracing.md',
+      phrases: [
+        'Trace backward through the call chain',
+        'NEVER fix just where the error appears',
+      ],
+    },
+    {
+      file: 'skills/cadence-debug/condition-based-waiting.md',
+      phrases: [
+        'Wait for the actual condition you care about',
+        'do not increase arbitrary delays as a flaky-test fix',
+      ],
+    },
+    {
+      file: 'skills/cadence-debug/defense-in-depth.md',
+      phrases: [
+        'Validate at every layer',
+        'Do not stop at one validation point',
+      ],
+    },
+  ];
+
+  for (const item of techniqueExpectations) {
+    if (!exists(item.file)) continue;
+    const resourceText = readText(item.file);
+    for (const phrase of item.phrases) {
+      if (!resourceText.includes(phrase)) {
+        fail(`${item.file}: missing debug technique phrase: ${phrase}`);
+      }
+    }
+  }
+}
+
 function checkConcreteSkillSupervisorBoundary() {
   const concreteSkills = EXPECTED_SKILLS.filter((name) => name !== 'using-dev-cadence');
   const required = [
@@ -420,6 +493,7 @@ checkEntrypointReferenceMap();
 checkEntrypointSkills();
 checkUsingDevCadenceContract();
 checkCadenceClarifyContract();
+checkCadenceDebugContract();
 checkConcreteSkillSupervisorBoundary();
 
 if (errors.length > 0) {
