@@ -38,6 +38,16 @@ await waitFor(() => getResult() !== undefined, "result to exist");
 expect(getResult()).toBeDefined();
 ```
 
+## Quick Patterns
+
+| Scenario | Pattern |
+|---|---|
+| Wait for event | `waitFor(() => events.find((event) => event.type === "DONE"), "DONE event")` |
+| Wait for state | `waitFor(() => machine.state === "ready", "machine ready")` |
+| Wait for count | `waitFor(() => items.length >= 5, "at least 5 items")` |
+| Wait for file | `waitFor(() => fs.existsSync(path), "file to exist")` |
+| Wait for matching data | `waitFor(() => records.find((record) => record.id === expectedId), "expected record")` |
+
 ## Generic Helper
 
 ```typescript
@@ -68,6 +78,30 @@ async function waitFor<T>(
 - call the getter inside the loop so data is fresh;
 - wait for a triggering condition before waiting for documented timing behavior;
 - do not increase arbitrary delays as a flaky-test fix.
+
+## When a Fixed Delay Is Correct
+
+Fixed delays are allowed only when the behavior under test is time itself,
+such as debounce, throttle, retry interval, scheduled tick, or partial output
+after a documented interval.
+
+Even then:
+
+1. First wait for the triggering condition.
+2. Base the delay on a known interval, not a guess.
+3. Explain why the delay is part of the requirement.
+
+```typescript
+await waitFor(() => events.find((event) => event.type === "TOOL_STARTED"), "tool start");
+
+// The tool emits progress every 100ms. Two ticks prove partial output behavior.
+await new Promise((resolve) => setTimeout(resolve, 200));
+
+expect(progressEvents.length).toBeGreaterThanOrEqual(2);
+```
+
+If you cannot name the triggering condition and documented interval, the delay
+is a guess. Replace it with condition-based waiting.
 
 ## Common Mistakes
 

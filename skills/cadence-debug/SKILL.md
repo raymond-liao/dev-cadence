@@ -38,6 +38,13 @@ Load these when the condition applies:
   to move forward.
 - `../../references/spec-templates.md` when updating task artifacts.
 
+## Example Code Boundary
+
+Examples are illustrative only. Always adapt diagnostics, tests, and fixes to
+the target repository's existing language, framework, tooling, and conventions.
+Do not introduce a language, framework, toolchain, or dependency only because
+an example uses it.
+
 ## When to Use
 
 Use this for:
