@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Start the Dev Cadence visual companion server and output connection info
-# Usage: start-server.sh [--project-dir <path>] [--host <bind-host>] [--url-host <display-host>] [--foreground] [--background]
+# Usage: start-server.sh [--project-dir <path>] [--host <bind-host>] [--url-host <display-host>] [--open] [--foreground] [--background]
 #
 # Starts server on a random high port, outputs JSON with URL.
 # Each session gets its own directory to avoid conflicts.
@@ -11,6 +11,8 @@
 #   --host <bind-host>    Host/interface to bind (default: 127.0.0.1).
 #                         Use 0.0.0.0 in remote/containerized environments.
 #   --url-host <host>     Hostname shown in returned URL JSON.
+#   --open                Auto-open the browser on the first screen (use only
+#                         after the user approves the visual companion).
 #   --foreground          Run server in the current terminal (no backgrounding).
 #   --background          Force background mode (overrides Codex auto-foreground).
 
@@ -35,6 +37,10 @@ while [[ $# -gt 0 ]]; do
     --url-host)
       URL_HOST="$2"
       shift 2
+      ;;
+    --open)
+      export DEV_CADENCE_VISUAL_OPEN=1
+      shift
       ;;
     --foreground|--no-daemon)
       FOREGROUND="true"

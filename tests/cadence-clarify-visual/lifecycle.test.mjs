@@ -119,6 +119,7 @@ await test('starts in background, returns session metadata, and stop preserves p
     '--project-dir', projectDir,
     '--host', '127.0.0.1',
     '--url-host', 'localhost',
+    '--open',
     '--background'
   ], {
     env: {

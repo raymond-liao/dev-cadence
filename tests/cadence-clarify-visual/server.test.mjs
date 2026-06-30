@@ -12,6 +12,7 @@ const SERVER_PATH = path.join(ROOT_DIR, 'skills/cadence-clarify/scripts/server.c
 const TEST_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'dev-cadence-visual-test-'));
 const CONTENT_DIR = path.join(TEST_DIR, 'content');
 const STATE_DIR = path.join(TEST_DIR, 'state');
+const OPEN_LOG = path.join(TEST_DIR, 'open.log');
 
 let server = null;
 let stdout = '';
@@ -60,7 +61,9 @@ function startServer() {
       DEV_CADENCE_VISUAL_HOST: '127.0.0.1',
       DEV_CADENCE_VISUAL_URL_HOST: 'localhost',
       DEV_CADENCE_VISUAL_DIR: TEST_DIR,
-      DEV_CADENCE_VISUAL_OWNER_PID: String(process.pid)
+      DEV_CADENCE_VISUAL_OWNER_PID: String(process.pid),
+      DEV_CADENCE_VISUAL_OPEN: '1',
+      DEV_CADENCE_VISUAL_OPEN_CMD: `node -e "require('fs').appendFileSync(process.argv[1], process.argv[2] + '\\n')" ${JSON.stringify(OPEN_LOG)}`
     },
     stdio: ['ignore', 'pipe', 'pipe']
   });
@@ -263,6 +266,21 @@ async function main() {
     assert(response.body.includes('window.devCadenceVisual'));
   });
 
+  await test('auto-opens the browser URL only when the first screen is added', async () => {
+    const screenPath = path.join(CONTENT_DIR, 'auto-open.html');
+    fs.rmSync(OPEN_LOG, { force: true });
+
+    fs.writeFileSync(screenPath, '<h2>Auto Open</h2>');
+    await sleep(300);
+
+    assert.deepStrictEqual(fs.readFileSync(OPEN_LOG, 'utf8').trim().split('\n'), [`http://localhost:${port}`]);
+
+    fs.writeFileSync(path.join(CONTENT_DIR, 'auto-open-2.html'), '<h2>Second Screen</h2>');
+    await sleep(300);
+
+    assert.deepStrictEqual(fs.readFileSync(OPEN_LOG, 'utf8').trim().split('\n'), [`http://localhost:${port}`]);
+  });
+
   await test('wraps content fragments in the Dev Cadence frame', async () => {
     fs.writeFileSync(path.join(CONTENT_DIR, 'fragment.html'), '<h2>Choose direction</h2><div class="options"><div class="option" data-choice="a">A</div></div>');
     await sleep(300);
@@ -391,6 +409,69 @@ async function main() {
     fs.writeFileSync(path.join(CONTENT_DIR, '._ignore.html'), 'resource fork');
     await wait;
     ws.close();
+  });
+
+  await test('does not auto-open when a browser client is already connected', async () => {
+    const existingClientDir = fs.mkdtempSync(path.join(os.tmpdir(), 'dev-cadence-visual-existing-client-'));
+    const existingContentDir = path.join(existingClientDir, 'content');
+    const existingStateDir = path.join(existingClientDir, 'state');
+    const existingOpenLog = path.join(existingClientDir, 'open.log');
+    const existingPort = await getFreePort();
+    const existingServer = spawn('node', [SERVER_PATH], {
+      env: {
+        ...process.env,
+        DEV_CADENCE_VISUAL_PORT: String(existingPort),
+        DEV_CADENCE_VISUAL_HOST: '127.0.0.1',
+        DEV_CADENCE_VISUAL_URL_HOST: 'localhost',
+        DEV_CADENCE_VISUAL_DIR: existingClientDir,
+        DEV_CADENCE_VISUAL_OWNER_PID: String(process.pid),
+        DEV_CADENCE_VISUAL_OPEN: '1',
+        DEV_CADENCE_VISUAL_OPEN_CMD: `node -e "require('fs').appendFileSync(process.argv[1], process.argv[2] + '\\n')" ${JSON.stringify(existingOpenLog)}`
+      },
+      stdio: ['ignore', 'pipe', 'pipe']
+    });
+    let existingStdout = '';
+    let existingStderr = '';
+    existingServer.stdout.on('data', (data) => { existingStdout += data.toString(); });
+    existingServer.stderr.on('data', (data) => { existingStderr += data.toString(); });
+    try {
+      const deadline = Date.now() + 5000;
+      while (!existingStdout.includes('server-started') && Date.now() < deadline) {
+        await sleep(50);
+      }
+      assert(existingStdout.includes('server-started'), `server did not start. stdout=${existingStdout} stderr=${existingStderr}`);
+
+      await new Promise((resolve, reject) => {
+        const socket = net.createConnection({ host: '127.0.0.1', port: existingPort });
+        socket.once('connect', () => {
+          const key = crypto.randomBytes(16).toString('base64');
+          socket.write(
+            'GET / HTTP/1.1\r\n' +
+            'Host: 127.0.0.1\r\n' +
+            'Upgrade: websocket\r\n' +
+            'Connection: Upgrade\r\n' +
+            `Sec-WebSocket-Key: ${key}\r\n` +
+            'Sec-WebSocket-Version: 13\r\n\r\n'
+          );
+        });
+        socket.once('data', () => {
+          fs.writeFileSync(path.join(existingContentDir, 'has-client.html'), '<h2>Has Client</h2>');
+          setTimeout(() => {
+            socket.end();
+            resolve();
+          }, 300);
+        });
+        socket.on('error', reject);
+      });
+
+      assert(!fs.existsSync(existingOpenLog), 'auto-open should be skipped when a client is already connected');
+      assert(fs.existsSync(existingStateDir));
+    } finally {
+      if (existingServer.exitCode === null && existingServer.signalCode === null) {
+        existingServer.kill();
+      }
+      fs.rmSync(existingClientDir, { recursive: true, force: true });
+    }
   });
 
   await test('clears prior events when a new screen is added', async () => {

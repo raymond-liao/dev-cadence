@@ -33,8 +33,9 @@ The server watches a directory for HTML files and serves the newest one to the b
 ## Starting a Session
 
 ```bash
-# Start AFTER the user approves the companion. --project-dir persists mockups.
-scripts/start-server.sh --project-dir /path/to/project
+# Start AFTER the user approves the companion. --open auto-opens their browser on
+# the first screen when local browser launching is available; --project-dir persists mockups.
+scripts/start-server.sh --project-dir /path/to/project --open
 
 # Returns: {"type":"server-started","port":52341,
 #           "url":"http://localhost:52341",
@@ -42,7 +43,7 @@ scripts/start-server.sh --project-dir /path/to/project
 #           "state_dir":"/path/to/project/.dev-cadence/visual-companion/12345-1706000000/state"}
 ```
 
-Save `screen_dir` and `state_dir` from the response. Tell the user to open the returned URL.
+Save `screen_dir` and `state_dir` from the response. With `--open`, the browser opens itself when you push the first screen if local browser launching is available. Still share the URL as a fallback for headless, remote, or restricted setups.
 
 Always give the user the complete URL from the `url` field. When binding to a non-loopback host, treat the URL as local session access and avoid sharing it beyond the current collaboration.
 
@@ -55,7 +56,7 @@ Always give the user the complete URL from the `url` field. When binding to a no
 **Background-friendly shell:**
 ```bash
 # Default mode works — the script backgrounds the server itself.
-scripts/start-server.sh --project-dir /path/to/project
+scripts/start-server.sh --project-dir /path/to/project --open
 ```
 
 On Windows, the script auto-detects and switches to foreground mode (which blocks the tool call). Use `run_in_background: true` on the Bash tool call so the server survives across conversation turns, then read `$STATE_DIR/server-info` on the next turn to get the URL and port.
@@ -64,16 +65,16 @@ On Windows, the script auto-detects and switches to foreground mode (which block
 ```bash
 # Codex must keep the tool call alive. Start a foreground server in a
 # persistent/interactive exec session; do not use --background for user URLs.
-scripts/start-server.sh --project-dir /path/to/project --foreground
+scripts/start-server.sh --project-dir /path/to/project --open --foreground
 ```
 
-In Codex, keep the foreground tool session running while the user uses the browser. After the script prints `server-started`, write the first screen, then verify the returned URL with `curl --noproxy '*' -sS -D - <url>` before giving it to the user. If a background launch produced a URL that `curl` cannot reach, stop that stale session and restart with `--foreground`.
+In Codex, keep the foreground tool session running while the user uses the browser. After the script prints `server-started`, write the first screen, then verify the returned URL with `curl --noproxy '*' -sS -D - <url>` before giving it to the user. The browser auto-open is best effort; always provide the verified URL as a fallback. If a background launch produced a URL that `curl` cannot reach, stop that stale session and restart with `--foreground`.
 
 **Gemini CLI:**
 ```bash
 # Use --foreground and set is_background: true on your shell tool call
 # so the process survives across turns
-scripts/start-server.sh --project-dir /path/to/project --foreground
+scripts/start-server.sh --project-dir /path/to/project --open --foreground
 ```
 
 **Copilot CLI:**
@@ -81,7 +82,7 @@ scripts/start-server.sh --project-dir /path/to/project --foreground
 # Use --foreground and start the server via the bash tool with mode: "async"
 # so the process survives across turns. Capture the returned shellId for
 # read_bash / stop_bash if you need to interact with it later.
-scripts/start-server.sh --project-dir /path/to/project --foreground
+scripts/start-server.sh --project-dir /path/to/project --open --foreground
 ```
 
 **Other environments:** The server must keep running in the background across conversation turns. If your environment reaps detached processes, use `--foreground` and launch the command with your platform's background execution mechanism.

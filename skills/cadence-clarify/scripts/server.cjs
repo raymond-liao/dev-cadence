@@ -148,6 +148,24 @@ function getNewestScreen() {
   return files.length > 0 ? files[0].path : null;
 }
 
+function visualCompanionUrl() {
+  return 'http://' + URL_HOST + ':' + PORT;
+}
+
+function browserLauncherForPlatform(url, {
+  platform = process.platform,
+  osRelease = require('os').release(),
+  env = process.env
+} = {}) {
+  const isWSL = platform === 'linux' && /microsoft/i.test(osRelease);
+  if (platform === 'darwin') return { bin: 'open', args: [url] };
+  if (platform === 'win32' || isWSL) {
+    return { bin: 'rundll32.exe', args: ['url.dll,FileProtocolHandler', url] };
+  }
+  if (env.DISPLAY || env.WAYLAND_DISPLAY) return { bin: 'xdg-open', args: [url] };
+  return null;
+}
+
 // ========== HTTP Request Handler ==========
 
 function handleRequest(req, res) {
@@ -270,6 +288,26 @@ function broadcast(msg) {
   }
 }
 
+let browserOpened = false;
+function maybeOpenBrowser() {
+  if (browserOpened) return;
+  browserOpened = true;
+  if (!process.env.DEV_CADENCE_VISUAL_OPEN) return;
+  if (HOST !== '127.0.0.1' && HOST !== 'localhost') return;
+  if (clients.size > 0) return;
+
+  const url = visualCompanionUrl();
+  const cp = require('child_process');
+  if (process.env.DEV_CADENCE_VISUAL_OPEN_CMD) {
+    try { cp.exec(process.env.DEV_CADENCE_VISUAL_OPEN_CMD + ' ' + JSON.stringify(url), () => {}); } catch (e) { /* best effort */ }
+    return;
+  }
+
+  const launcher = browserLauncherForPlatform(url);
+  if (!launcher) return;
+  try { cp.execFile(launcher.bin, launcher.args, () => {}); } catch (e) { /* best effort */ }
+}
+
 // ========== Activity Tracking ==========
 
 const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
@@ -316,6 +354,7 @@ function startServer() {
         const eventsFile = path.join(STATE_DIR, 'events');
         if (fs.existsSync(eventsFile)) fs.unlinkSync(eventsFile);
         console.log(JSON.stringify({ type: 'screen-added', file: filePath }));
+        maybeOpenBrowser();
       } else {
         console.log(JSON.stringify({ type: 'screen-updated', file: filePath }));
       }
@@ -366,7 +405,7 @@ function startServer() {
   server.listen(PORT, HOST, () => {
     const info = JSON.stringify({
       type: 'server-started', port: Number(PORT), host: HOST,
-      url_host: URL_HOST, url: 'http://' + URL_HOST + ':' + PORT,
+      url_host: URL_HOST, url: visualCompanionUrl(),
       screen_dir: CONTENT_DIR, state_dir: STATE_DIR
     });
     console.log(info);
@@ -378,4 +417,4 @@ if (require.main === module) {
   startServer();
 }
 
-module.exports = { computeAcceptKey, encodeFrame, decodeFrame, OPCODES };
+module.exports = { computeAcceptKey, encodeFrame, decodeFrame, browserLauncherForPlatform, OPCODES };

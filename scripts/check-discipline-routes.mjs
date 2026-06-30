@@ -265,6 +265,7 @@ function checkVisualCompanionScripts() {
   }
 
   const requiredText = [
+    '--open',
     '--foreground',
     'do not use --background for user URLs',
     "curl --noproxy '*' -sS -D - <url>",
@@ -277,6 +278,14 @@ function checkVisualCompanionScripts() {
     if (!visualRef.includes(text)) {
       fail(`skills/cadence-clarify/visual-companion.md: missing visual companion guidance '${text}'`);
     }
+  }
+
+  const clarifySkill = readText('skills/cadence-clarify/SKILL.md');
+  if (!clarifySkill.includes("I'll open it for you")) {
+    fail('skills/cadence-clarify/SKILL.md: visual companion offer must preserve auto-open behavior');
+  }
+  if (!clarifySkill.includes('start the server with `--open`; still give them the returned URL as a fallback')) {
+    fail('skills/cadence-clarify/SKILL.md: visual companion offer must require URL fallback');
   }
 }
 
