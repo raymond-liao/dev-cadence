@@ -278,7 +278,7 @@ function runAcceptanceSummary(options) {
   if (!fs.existsSync(scriptPath) || !options.taskId) return null;
   return runChecker(
     scriptPath,
-    ['--task-id', options.taskId, '--specs-dir', options.specsDir],
+    ['--task-id', options.taskId, '--specs-dir', options.specsDir, '--require-report'],
     options.repoDir,
   );
 }

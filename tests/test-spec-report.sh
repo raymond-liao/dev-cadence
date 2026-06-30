@@ -8,6 +8,8 @@ PENDING_TASK_ID="pending-acceptance"
 ZH_TASK_ID="zh-report"
 ZH_PENDING_TASK_ID="zh-pending-acceptance"
 REPORT_JSON="${REPO_DIR}/report.json"
+SUMMARY_MD="${REPO_DIR}/acceptance-summary.md"
+MISSING_SUMMARY_MD="${REPO_DIR}/missing-acceptance-summary.md"
 ZH_REPORT_JSON="${REPO_DIR}/zh-report.json"
 SPECS_DIR="${REPO_DIR}/specs/records"
 HTML_REPORT_DIR="${REPO_DIR}/specs/report"
@@ -178,6 +180,32 @@ grep -q "Specs Report</a> &gt; <a href=\"index.html\" class=\"el_task\">${TASK_I
 grep -q "Raw Markdown" "${HTML_REPORT_DIR}/${TASK_ID}/08-acceptance.html"
 grep -q "href=\"../../records/${TASK_ID}/08-acceptance.md\"" "${HTML_REPORT_DIR}/${TASK_ID}/08-acceptance.html"
 grep -q "class=\"source-view\"" "${HTML_REPORT_DIR}/${TASK_ID}/08-acceptance.html"
+
+node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
+  --task-id "${TASK_ID}" \
+  --specs-dir "${SPECS_DIR}" \
+  --report-dir "${HTML_REPORT_DIR}" \
+  --require-report > "${SUMMARY_MD}"
+
+grep -q "## Browsable Report" "${SUMMARY_MD}"
+grep -q "specs/report/${TASK_ID}/index.html" "${SUMMARY_MD}"
+
+rm "${HTML_REPORT_DIR}/${TASK_ID}/index.html"
+if node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
+  --task-id "${TASK_ID}" \
+  --specs-dir "${SPECS_DIR}" \
+  --report-dir "${HTML_REPORT_DIR}" \
+  --require-report > "${MISSING_SUMMARY_MD}"; then
+  echo "acceptance summary should fail when required report entry is missing" >&2
+  exit 1
+fi
+grep -q "## Missing Report" "${MISSING_SUMMARY_MD}"
+grep -q "generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report" "${MISSING_SUMMARY_MD}"
+
+node "${ROOT_DIR}/scripts/generate-spec-report.mjs" \
+  --specs-dir "${SPECS_DIR}" \
+  --report-dir "${HTML_REPORT_DIR}" \
+  --json > "${REPORT_JSON}"
 
 grep -q "Run Evidence" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"
 grep -q "Specs Report</a> &gt; <a href=\"../../index.html\" class=\"el_task\">${TASK_ID}</a> &gt; <span class=\"el_run\">${TASK_ID}-dry-run-1</span>" "${HTML_REPORT_DIR}/${TASK_ID}/runs/${TASK_ID}-dry-run-1/index.html"

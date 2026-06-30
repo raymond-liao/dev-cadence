@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
-import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
+import { defaultReportDirForSpecsDir, normalizeSpecsDir, RECORDS_DIR, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 const REQUIRED_FILES = [
   '00-brief.md',
@@ -22,6 +22,9 @@ Required:
 Options:
   --specs-dir <dir>    Specs records directory. Defaults to specs/records,
                        or legacy specs when it already contains task dirs.
+  --report-dir <dir>   Generated specs report directory. Defaults to specs/report
+                       when --specs-dir is specs/records.
+  --require-report     Fail when specs/report/{task-id}/index.html is missing.
   --json               Print machine-readable JSON.
   -h, --help           Show this help text.
 
@@ -36,7 +39,9 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 function parseArgs(argv) {
   const options = {
     specsDir: resolveDefaultSpecsDir(),
+    reportDir: null,
     taskId: null,
+    requireReport: false,
     json: false,
   };
 
@@ -48,6 +53,11 @@ function parseArgs(argv) {
     } else if (arg === '--specs-dir') {
       options.specsDir = normalizeSpecsDir(readValue(argv, index, arg));
       index += 1;
+    } else if (arg === '--report-dir') {
+      options.reportDir = path.resolve(readValue(argv, index, arg));
+      index += 1;
+    } else if (arg === '--require-report') {
+      options.requireReport = true;
     } else if (arg === '--json') {
       options.json = true;
     } else {
@@ -56,6 +66,9 @@ function parseArgs(argv) {
   }
 
   validateId('task-id', options.taskId);
+  if (!options.reportDir) {
+    options.reportDir = defaultReportDirForSpecsDir(options.specsDir);
+  }
   return options;
 }
 
@@ -78,6 +91,13 @@ function validateId(label, value) {
 
 function rel(baseDir, filePath) {
   return path.relative(baseDir, filePath) || '.';
+}
+
+function reportDisplayBase(specsDir) {
+  if (path.basename(specsDir) === RECORDS_DIR) {
+    return path.dirname(path.dirname(specsDir));
+  }
+  return path.dirname(specsDir);
 }
 
 function firstYamlBlock(text) {
@@ -233,6 +253,9 @@ function summarize(options) {
   if (!fs.existsSync(taskDir)) {
     throw new Error(`Task artifacts not found: ${taskDir}`);
   }
+  const reportEntryPath = path.join(options.reportDir, options.taskId, 'index.html');
+  const reportEntryExists = fs.existsSync(reportEntryPath);
+  const reportEntry = rel(reportDisplayBase(options.specsDir), reportEntryPath);
 
   const artifacts = Object.fromEntries(REQUIRED_FILES.map((file) => [file, readArtifact(taskDir, file)]));
   const missing = Object.values(artifacts).filter((artifact) => !artifact.exists).map((artifact) => artifact.fileName);
@@ -278,7 +301,12 @@ function summarize(options) {
     residual_risk: uniqueNormalized(displayResidualRisk),
     evidence_reviewed: asList(acceptance.evidence_reviewed),
     evidence_available: evidence,
+    report_entry: reportEntry,
+    report_entry_exists: reportEntryExists,
     missing_artifacts: missing,
+    missing_report: options.requireReport && !reportEntryExists
+      ? [reportEntry]
+      : [],
     needs_human_acceptance: needsHumanAcceptance,
     confirmation_to_record: needsHumanAcceptance
       ? {
@@ -358,9 +386,18 @@ function printMarkdown(summary) {
   console.log('\n## Evidence Available');
   printList(summary.evidence_available);
 
+  console.log('\n## Browsable Report');
+  console.log(`- ${summary.report_entry}${summary.report_entry_exists ? '' : ' (missing)'}`);
+
   if (summary.missing_artifacts.length > 0) {
     console.log('\n## Missing Artifacts');
     printList(summary.missing_artifacts);
+  }
+
+  if (summary.missing_report.length > 0) {
+    console.log('\n## Missing Report');
+    printList(summary.missing_report);
+    console.log('Run `scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report` before requesting Human acceptance.');
   }
 
   console.log('\n## Human Confirmation');
@@ -381,7 +418,7 @@ try {
   } else {
     printMarkdown(summary);
   }
-  if (summary.missing_artifacts.length > 0) {
+  if (summary.missing_artifacts.length > 0 || summary.missing_report.length > 0) {
     process.exit(1);
   }
 } catch (error) {

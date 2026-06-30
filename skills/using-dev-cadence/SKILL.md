@@ -138,6 +138,10 @@ residual risk before committing. The blocking message must explain what the
 Human is being asked to accept: task goal, changed scope, verification status,
 skipped checks, review decision, blockers, residual risk, evidence available,
 and the `08-acceptance.md` fields that must be recorded. Use
-`scripts/summarize-acceptance.mjs --task-id <task_id>` or equivalent content.
+`scripts/summarize-acceptance.mjs --task-id <task_id> --require-report` or
+equivalent content. Before requesting final Human acceptance, refresh the
+browsable report with
+`scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report`
+and include `specs/report/{task_id}/index.html` in the approval request.
 
 Do not make visual companion usage a gate. It is an optional clarification capability for UI, diagram, mockup, or visual comparison tasks and must fall back to text-only clarification when unavailable.
