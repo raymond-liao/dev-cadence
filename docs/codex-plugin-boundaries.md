@@ -86,7 +86,7 @@ Adapter boundaries follow replaceable execution techniques.
 | `templates/prompts/` | Worker、reviewer 和文档审查 prompt 模板 | [references/agent-blueprints.md](../references/agent-blueprints.md) |
 | `scripts/` | 打包、检查、artifact 初始化、报告生成、repo contract 同步和 optional visual companion | [validation.md](validation.md) |
 
-每个入口 Skill 下的 `agents/openai.yaml` 是本仓库主动维护的 Codex/OpenAI UI metadata，包括展示名称、简短说明和默认提示。它不是本地安装 cache。某些上游参考仓库的源码目录可能不包含 `agents/`，但安装后的 plugin cache 会包含；Dev Cadence 选择在源码层维护它，让发布包形态、触发文案和测试结果保持确定。
+Skill 的发布元信息由 `SKILL.md` frontmatter 和 `.codex-plugin/plugin.json` 维护。`skills/*/agents/` 不是 Dev Cadence 的源码或 runtime 契约，不应进入发布包或目标仓库 `.dev-cadence/`。
 
 `delivery-disciplines.md` 是默认交付纪律的路由入口；细节按状态拆到 clarify、planning、TDD、debugging、review 和 verification discipline references。Dev Cadence 自身规则维护使用 `references/source-maintenance/`，不作为目标仓库 runtime 规则发布。
 

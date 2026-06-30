@@ -90,6 +90,11 @@ assert_exists "skills/cadence-review/SKILL.md"
 assert_exists "skills/cadence-verify/SKILL.md"
 assert_exists "skills/cadence-sync/SKILL.md"
 assert_absent "skills/dev-cadence-authoring"
+skill_agents_dir="$(find "${PLUGIN_DIR}/skills" -path '*/agents' -type d -print -quit)"
+test -z "${skill_agents_dir}" || {
+  echo "unexpected skill-local agents directory in package: ${skill_agents_dir#${PLUGIN_DIR}/}" >&2
+  exit 1
+}
 assert_exists "references/skill-layout.md"
 assert_exists "references/delivery-disciplines.md"
 assert_exists "references/source-maintenance/authoring-discipline.md"

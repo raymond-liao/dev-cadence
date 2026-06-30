@@ -1,6 +1,0 @@
-interface:
-  display_name: "Cadence Verify"
-  short_description: "Verify before completion"
-  default_prompt: "Use $cadence-verify before claiming a task is fixed, done, passing, approved, or complete."
-policy:
-  allow_implicit_invocation: true

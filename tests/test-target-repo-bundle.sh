@@ -18,6 +18,11 @@ test -d "${BUNDLE_DIR}/.dev-cadence"
 test -f "${BUNDLE_DIR}/.dev-cadence/VERSION"
 test -f "${BUNDLE_DIR}/.dev-cadence/manifest.json"
 test -f "${BUNDLE_DIR}/.dev-cadence/skills/using-dev-cadence/SKILL.md"
+runtime_agents_dir="$(find "${BUNDLE_DIR}/.dev-cadence/skills" -path '*/agents' -type d -print -quit)"
+test -z "${runtime_agents_dir}" || {
+  echo "unexpected skill-local agents directory in target runtime: ${runtime_agents_dir#${BUNDLE_DIR}/}" >&2
+  exit 1
+}
 test -f "${BUNDLE_DIR}/.dev-cadence/references/skill-layout.md"
 test ! -e "${BUNDLE_DIR}/.dev-cadence/references/source-maintenance"
 test -f "${BUNDLE_DIR}/.dev-cadence/templates/spec/00-brief.md"

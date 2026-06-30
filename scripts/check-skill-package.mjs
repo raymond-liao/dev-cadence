@@ -38,7 +38,7 @@ Checks:
   - JavaScript syntax and shell executable bits under scripts/
   - CLI help for package scripts
   - artifact template fenced yaml blocks have no duplicate keys
-  - agents/openai.yaml metadata fields when present`);
+  - absence of skill-local agents metadata directories`);
 }
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -779,20 +779,15 @@ function checkArtifactTemplateBlocks() {
   }
 }
 
-function checkOpenAiYaml() {
-  const expected = EXPECTED_SKILLS.map((name) => `skills/${name}/agents/openai.yaml`);
+function checkNoSkillLocalAgents() {
+  const skillsDir = path.join(pluginDir, 'skills');
+  if (!fs.existsSync(skillsDir)) return;
 
-  for (const relativePath of expected) {
-    const openAiYaml = path.join(pluginDir, relativePath);
-    if (!fs.existsSync(openAiYaml)) {
-      warn(`${relativePath}: missing optional UI metadata`);
-      continue;
-    }
-    const text = readText(openAiYaml);
-    for (const required of ['display_name:', 'short_description:', 'default_prompt:']) {
-      if (!text.includes(required)) {
-        fail(`${relativePath}: missing ${required}`);
-      }
+  for (const entry of fs.readdirSync(skillsDir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const agentsDir = path.join(skillsDir, entry.name, 'agents');
+    if (fs.existsSync(agentsDir)) {
+      fail(`skills/${entry.name}/agents/: skill-local agents metadata is not part of the Dev Cadence package contract`);
     }
   }
 }
@@ -812,7 +807,7 @@ checkNoAuxiliaryDocs(files);
 checkScripts();
 checkCliHelp();
 checkArtifactTemplateBlocks();
-checkOpenAiYaml();
+checkNoSkillLocalAgents();
 
 for (const message of warnings) {
   console.warn(`WARN ${message}`);

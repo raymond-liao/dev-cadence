@@ -277,10 +277,7 @@ function checkEntrypointReferenceMap() {
   }
 }
 function checkEntrypointSkills() {
-  const required = EXPECTED_SKILLS.flatMap((name) => [
-    `skills/${name}/SKILL.md`,
-    `skills/${name}/agents/openai.yaml`,
-  ]);
+  const required = EXPECTED_SKILLS.map((name) => `skills/${name}/SKILL.md`);
 
   for (const relativePath of required) {
     if (!exists(relativePath)) {

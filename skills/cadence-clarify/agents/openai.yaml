@@ -1,6 +1,0 @@
-interface:
-  display_name: "Cadence Clarify"
-  short_description: "Clarify delivery intent"
-  default_prompt: "Use $cadence-clarify to clarify goal, scope, design, non-goals, acceptance, and verification before implementation."
-policy:
-  allow_implicit_invocation: true

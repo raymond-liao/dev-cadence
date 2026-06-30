@@ -1,6 +1,0 @@
-interface:
-  display_name: "Using Dev Cadence"
-  short_description: "Route delivery work through Dev Cadence"
-  default_prompt: "Use $using-dev-cadence to route this delivery task through Supervisor workflow, Harness evidence, gates, discipline Skills, and Human acceptance."
-policy:
-  allow_implicit_invocation: true

@@ -1,6 +1,0 @@
-interface:
-  display_name: "Cadence Review"
-  short_description: "Address review feedback"
-  default_prompt: "Use $cadence-review to verify and address review findings before re-review."
-policy:
-  allow_implicit_invocation: false

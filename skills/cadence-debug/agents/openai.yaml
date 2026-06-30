@@ -1,6 +1,0 @@
-interface:
-  display_name: "Cadence Debug"
-  short_description: "Trace and fix defects"
-  default_prompt: "Use $cadence-debug for bugs, incidents, failing tests, regressions, or unclear root cause."
-policy:
-  allow_implicit_invocation: true

@@ -1,6 +1,0 @@
-interface:
-  display_name: "Cadence Dispatch Parallel"
-  short_description: "Dispatch parallel Workers"
-  default_prompt: "Use $cadence-dispatch-parallel to run independent Worker domains in parallel and integrate the results."
-policy:
-  allow_implicit_invocation: false

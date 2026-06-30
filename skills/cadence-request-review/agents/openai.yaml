@@ -1,6 +1,0 @@
-interface:
-  display_name: "Cadence Request Review"
-  short_description: "Request delivery review"
-  default_prompt: "Use $cadence-request-review to review implementation against plan and code quality before completion."
-policy:
-  allow_implicit_invocation: false
