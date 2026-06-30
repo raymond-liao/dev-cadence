@@ -74,6 +74,9 @@ function extractBacktickPaths(text) {
 function checkPathReferences(sourceFile) {
   const text = readText(sourceFile);
   for (const referencedPath of extractBacktickPaths(text)) {
+    if (embeddedRuntime && referencedPath.startsWith('references/source-maintenance/')) {
+      continue;
+    }
     if (!exists(referencedPath)) {
       fail(`${sourceFile}: referenced path does not exist: ${referencedPath}`);
     }
@@ -95,8 +98,6 @@ function checkDeliveryStateTable() {
     'defense-in-depth.md',
     'review-discipline.md',
     'verification-discipline.md',
-    'authoring-discipline.md',
-    'skill-pressure-testing.md',
     'adapters.md',
   ];
 
@@ -118,6 +119,30 @@ function checkDeliveryStateTable() {
     }
     if (!exists(relativePath)) {
       fail(`${sourceFile}: route target missing: ${relativePath}`);
+    }
+  }
+
+  const sourceOnlyRequired = [
+    'references/source-maintenance/authoring-discipline.md',
+    'references/source-maintenance/skill-pressure-testing.md',
+  ];
+  if (embeddedRuntime) {
+    for (const relativePath of sourceOnlyRequired) {
+      if (exists(relativePath)) {
+        fail(`${sourceFile}: source-maintenance reference must not be bundled in embedded runtime: ${relativePath}`);
+      }
+      if (text.includes(relativePath)) {
+        fail(`${sourceFile}: source-maintenance route must not be bundled in embedded runtime: ${relativePath}`);
+      }
+    }
+  } else {
+    for (const relativePath of sourceOnlyRequired) {
+      if (!text.includes(relativePath)) {
+        fail(`${sourceFile}: missing source-maintenance route to ${relativePath}`);
+      }
+      if (!exists(relativePath)) {
+        fail(`${sourceFile}: source-maintenance route target missing: ${relativePath}`);
+      }
     }
   }
 }
@@ -265,8 +290,8 @@ function checkEntrypointSkills() {
 
   const layoutText = readText('references/skill-layout.md');
   for (const skillName of EXPECTED_SKILLS) {
-    if (!layoutText.includes(`${skillName}/`)) {
-      fail(`references/skill-layout.md: missing target entrypoint ${skillName}/`);
+    if (!layoutText.includes(`${skillName}/`) && !layoutText.includes(`\`${skillName}\``)) {
+      fail(`references/skill-layout.md: missing target entrypoint ${skillName}`);
     }
   }
 }

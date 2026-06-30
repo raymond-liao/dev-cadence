@@ -19,10 +19,12 @@ test -f "${BUNDLE_DIR}/.dev-cadence/VERSION"
 test -f "${BUNDLE_DIR}/.dev-cadence/manifest.json"
 test -f "${BUNDLE_DIR}/.dev-cadence/skills/using-dev-cadence/SKILL.md"
 test -f "${BUNDLE_DIR}/.dev-cadence/references/skill-layout.md"
+test ! -e "${BUNDLE_DIR}/.dev-cadence/references/source-maintenance"
 test -f "${BUNDLE_DIR}/.dev-cadence/templates/spec/00-brief.md"
 test -f "${BUNDLE_DIR}/.dev-cadence/scripts/check-gates.mjs"
 test -f "${BUNDLE_DIR}/AGENTS.dev-cadence-section.md"
 test -f "${BUNDLE_DIR}/.dev-cadence.yaml"
+! grep -q "references/source-maintenance" "${BUNDLE_DIR}/.dev-cadence/references/delivery-disciplines.md"
 test ! -e "${BUNDLE_DIR}/.codex-plugin"
 test ! -e "${BUNDLE_DIR}/docs"
 test ! -e "${BUNDLE_DIR}/tests"
@@ -57,12 +59,18 @@ dev_cadence:
   artifact_language: zh
 EOF
 
+mkdir -p "${TARGET_DIR}/.dev-cadence/references/source-maintenance"
+cat > "${TARGET_DIR}/.dev-cadence/references/source-maintenance/stale.md" <<'EOF'
+stale source-only runtime content
+EOF
+
 node "${ROOT_DIR}/scripts/sync-target-repo-bundle.mjs" \
   --target "${TARGET_DIR}" \
   --bundle-dir "${BUNDLE_DIR}" \
   --json > "${SYNC_AGAIN_JSON}"
 
 grep -q "artifact_language: zh" "${TARGET_DIR}/.dev-cadence.yaml"
+test ! -e "${TARGET_DIR}/.dev-cadence/references/source-maintenance"
 
 node --input-type=module - "${REPORT_JSON}" "${SYNC_JSON}" "${SYNC_AGAIN_JSON}" "${TARGET_DIR}" <<'NODE'
 import fs from 'node:fs';
@@ -91,6 +99,7 @@ assert(sync.files_added.includes('.dev-cadence.yaml'), 'sync must add local yaml
 assert(sync.files_added.includes('specs/records/.gitkeep'), 'sync must add specs records gitkeep');
 assert(sync.verification.every((item) => item.status === 'pass'), 'sync verification must pass');
 assert(syncAgain.files_preserved.includes('.dev-cadence.yaml'), 'second sync must preserve local yaml override');
+assert(syncAgain.files_removed.includes('.dev-cadence/references/source-maintenance'), 'second sync must remove stale source-only runtime references');
 assert(syncAgain.verification.every((item) => item.status === 'pass'), 'second sync verification must pass');
 
 console.log('target repo bundle ok');

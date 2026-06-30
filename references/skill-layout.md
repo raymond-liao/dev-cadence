@@ -1,145 +1,50 @@
 # Skill Layout
 
-This file defines the current Codex Plugin publishing shape for `dev-cadence` and the repo-embedded output shape created when applying Dev Cadence to a target repository.
+This file defines the runtime package boundaries for Dev Cadence. It is an
+index, not the full repository sync contract. Repository initialization and
+repair rules live in `repository-rule-sync.md`; artifact schemas live in
+`spec-templates.md`; workflow behavior lives in the workflow and discipline
+references.
 
-## Contents
+## Package Shape
 
-- [Target Plugin Package](#target-plugin-package)
-- [Skill Boundaries](#skill-boundaries)
-- [Invocation Boundary](#invocation-boundary)
-- [Target Repository Layout](#target-repository-layout)
-- [Initialization Rules](#initialization-rules)
-- [Automatic Entrypoint](#automatic-entrypoint)
-- [Runtime Authority](#runtime-authority)
-- [Delivery Discipline and Adapters](#delivery-discipline-and-adapters)
-- [Repository Rule Maintenance](#repository-rule-maintenance)
-- [Hard Rules](#hard-rules)
-- [Versioning](#versioning)
-
-## Target Plugin Package
-
-The target distributable shape is a plugin with a bootstrap Skill, short discipline Skills, and shared plugin-owned resources:
+The source plugin package contains:
 
 ```text
 dev-cadence/
   .codex-plugin/
-    plugin.json
   skills/
-    using-dev-cadence/
-      SKILL.md
-      agents/openai.yaml
-    cadence-clarify/
-      SKILL.md
-      agents/openai.yaml
-      visual-companion.md
-      spec-document-reviewer-prompt.md
-      scripts/
-        start-server.sh
-        stop-server.sh
-        server.cjs
-        helper.js
-        frame-template.html
-    cadence-plan/
-      SKILL.md
-      agents/openai.yaml
-    cadence-research/
-      SKILL.md
-      agents/openai.yaml
-    cadence-executing-plans/
-      SKILL.md
-      agents/openai.yaml
-    cadence-subagent-development/
-      SKILL.md
-      agents/openai.yaml
-    cadence-dispatch-parallel/
-      SKILL.md
-      agents/openai.yaml
-    cadence-tdd/
-      SKILL.md
-      agents/openai.yaml
-    cadence-debug/
-      SKILL.md
-      agents/openai.yaml
-    cadence-request-review/
-      SKILL.md
-      agents/openai.yaml
-    cadence-review/
-      SKILL.md
-      agents/openai.yaml
-    cadence-verify/
-      SKILL.md
-      agents/openai.yaml
-    cadence-sync/
-      SKILL.md
-      agents/openai.yaml
   references/
-    principles.md
-    supervisor-state-machine.md
-    task-classes.md
-    agent-blueprints.md
-    workflows.md
-    delivery-disciplines.md
-    intent-and-design-discipline.md
-    planning-discipline.md
-    implementation-discipline.md
-    testing-anti-patterns.md
-    execution-orchestration.md
-    debugging-discipline.md
-    root-cause-tracing.md
-    condition-based-waiting.md
-    defense-in-depth.md
-    review-discipline.md
-    verification-discipline.md
-    authoring-discipline.md
-    skill-pressure-testing.md
-    context-pack.md
-    harness.md
-    quality-gates.md
-    human-gates.md
-    adapters.md
-    skill-layout.md
   templates/
-    spec/
-      00-brief.md
-      01-requirements.md
-      02-design.md
-      research-report.md
-      03-tasks.md
-      04-test-plan.md
-      05-implementation.md
-      06-test-report.md
-      07-review-report.md
-      08-acceptance.md
-    runs/
-      run-context.md
-      execution-report.md
-      tool-log.md
-      test-log.md
-      diff-summary.md
-      permission-decisions.md
-    prompts/
-      plan-document-reviewer.md
-      implementer.md
-      spec-compliance-reviewer.md
-      code-quality-reviewer.md
-      code-reviewer.md
   scripts/
-    check-skill-package.mjs
-    check-discipline-routes.mjs
-    check-spec-artifacts.mjs
-    generate-spec-report.mjs
-  assets/        # Optional: icons, logos, screenshots
-  .mcp.json      # Optional: bundled MCP server configuration
-  .app.json      # Optional: app or connector mappings
 ```
 
-Each `skills/*/agents/openai.yaml` file is author-maintained Codex/OpenAI UI metadata for the shipped plugin: display name, short description, and default prompt. Keep these files in source so the package shape is deterministic. Do not treat them as local cache files unless the publishing model is intentionally changed.
+The repo-embedded target runtime contains:
 
-The current published package does not include lifecycle hooks. Do not add
-`hooks/` or a manifest `hooks` entry unless a future approved design explicitly
-reintroduces plugin hooks.
+```text
+.dev-cadence/
+  VERSION
+  manifest.json
+  skills/
+  references/
+  templates/
+  scripts/
+```
 
-Do not add generic `README.md`, installation guide, changelog, or narrative research documents to runtime Skill folders. Keep narrative design documents in the framework repository.
+Target repositories also keep a thin root contract:
+
+```text
+AGENTS.md
+.gitignore
+.dev-cadence.yaml
+specs/records/.gitkeep
+```
+
+`AGENTS.md` routes normal delivery work to
+`.dev-cadence/skills/using-dev-cadence/SKILL.md`. `.dev-cadence.yaml` stores
+user-local overrides and is ignored by Git by default. Task artifacts and
+Harness evidence are written under `specs/records/{task_id}/`; generated HTML
+reports live under `specs/report/`.
 
 ## Skill Boundaries
 
@@ -153,159 +58,76 @@ Template boundaries follow artifact types.
 Adapter boundaries follow replaceable execution techniques.
 ```
 
-Do not create one Skill per internal Supervisor state such as `requirements-gate`, `planning-gate`, `harness-run`, `quality-gate`, or `human-gate`. Supervisor, Harness, Quality Gate, Human Gate, Context Pack, artifact schema, and task class policy are shared references, not user-facing Skills.
+Do not create one Skill per internal Supervisor state such as
+`requirements-gate`, `planning-gate`, `harness-run`, `quality-gate`, or
+`human-gate`. Supervisor, Harness, Quality Gate, Human Gate, Context Pack,
+artifact schema, and task class policy are shared references, not user-facing
+Skills.
 
 Published Skills:
 
-- `using-dev-cadence`: Dev Cadence Supervisor entrypoint. It selects workflow state, task class, evidence requirements, gates, and the ordered set of applicable cadence discipline Skills.
-- `cadence-clarify`: clarify goal, scope, expected behavior, non-goals, design, acceptance, and verification before implementation.
-- `cadence-plan`: turn clarified design into executable tasks and verification steps.
-- `cadence-research`: run research spikes with evidence-backed options, recommendation, and open questions without implementing product changes.
+- `using-dev-cadence`: Supervisor entrypoint and discipline router.
+- `cadence-clarify`: clarify goal, scope, expected behavior, non-goals, design,
+  acceptance, and verification before implementation.
+- `cadence-plan`: turn clarified requirements and design into executable tasks
+  and verification steps.
+- `cadence-research`: run research spikes without implementing product changes.
 - `cadence-executing-plans`: execute an approved plan through Harness evidence.
-- `cadence-subagent-development`: execute approved bounded tasks with fresh Worker contexts and per-task review checkpoints.
-- `cadence-dispatch-parallel`: dispatch parallel Workers for independent problem domains and integrate results.
+- `cadence-subagent-development`: execute approved bounded tasks with fresh
+  Worker contexts and per-task review checkpoints.
+- `cadence-dispatch-parallel`: dispatch parallel Workers for independent
+  problem domains and integrate results.
 - `cadence-tdd`: apply Red-Green-Refactor for testable behavior changes.
-- `cadence-debug`: diagnose bugs, incidents, failing tests, regressions, and unclear root cause.
-- `cadence-request-review`: review implementation for spec compliance and code quality.
-- `cadence-review`: verify and address existing review feedback, then request re-review.
-- `cadence-verify`: verify evidence, scope, skipped checks, residual risk, and Human acceptance before completion.
-- `cadence-sync`: initialize, inspect, sync, repair, or diagnose the repo-embedded repository contract.
+- `cadence-debug`: diagnose bugs, incidents, failing tests, regressions, and
+  unclear root cause.
+- `cadence-request-review`: review implementation for spec compliance and code
+  quality.
+- `cadence-review`: verify and address existing review feedback, then request
+  re-review.
+- `cadence-verify`: verify evidence, scope, skipped checks, residual risk, and
+  Human acceptance before completion.
+- `cadence-sync`: initialize, inspect, sync, repair, or diagnose the
+  repo-embedded repository contract.
 
-Dev Cadence authoring is not published as a normal user Skill. Authoring discipline remains available as shared source-maintenance guidance for this repository.
+Every concrete cadence Skill must run under `using-dev-cadence` Supervisor
+control. If selected directly, it must first enter `using-dev-cadence` so
+workflow state, task class, gates, and evidence requirements are established.
+When a concrete Skill finishes, it returns evidence produced, unresolved
+blockers, gate status, and recommended next state to `using-dev-cadence`.
 
-## Invocation Boundary
+## Runtime References
 
-`using-dev-cadence` is the only Skill that represents Dev Cadence as a whole. It is selected through Codex native skill triggering, an explicit user request to use Dev Cadence, or a target repository `AGENTS.md` rule that requires reading `.dev-cadence/skills/using-dev-cadence/SKILL.md`. It must route ordinary delivery work to the applicable cadence discipline Skills before action.
+Runtime references are shared workflow rules used by target repositories:
 
-The bootstrap entrypoint is not a soft introduction. It owns the Supervisor obligation to check applicable Skills before any delivery response or action, preserve workflow order, and keep later gates reachable. Concrete discipline Skills remain independently triggerable, but they are not independent workflows.
+- `principles.md`
+- `supervisor-state-machine.md`
+- `task-classes.md`
+- `workflows.md`
+- `delivery-disciplines.md`
+- `intent-and-design-discipline.md`
+- `planning-discipline.md`
+- `implementation-discipline.md`
+- `testing-anti-patterns.md`
+- `execution-orchestration.md`
+- `debugging-discipline.md`
+- `root-cause-tracing.md`
+- `condition-based-waiting.md`
+- `defense-in-depth.md`
+- `review-discipline.md`
+- `verification-discipline.md`
+- `context-pack.md`
+- `harness.md`
+- `agent-blueprints.md`
+- `quality-gates.md`
+- `human-gates.md`
+- `repository-rule-sync.md`
+- `spec-templates.md`
+- `adapters.md`
+- `skill-layout.md`
 
-Before answering, asking clarification questions, reading files, running commands, or editing code for delivery work, the agent must check whether Dev Cadence and any concrete cadence Skill apply. User and repository instructions remain higher priority than Dev Cadence discipline; conflicts must be recorded when evidence is being written and affected gates remain blocked unless a named Human accepts the residual risk.
-
-Every concrete cadence Skill must run under `using-dev-cadence` Supervisor control. If selected directly, it must first enter `using-dev-cadence` so workflow state, task class, gates, and evidence requirements are established. When a concrete Skill finishes, it returns evidence produced, unresolved blockers, gate status, and recommended next state to `using-dev-cadence`; it must not choose the next cadence Skill by itself.
-
-`cadence-sync` may be selected implicitly when the user asks to install, initialize, set up, inspect, sync, repair, diagnose, or prepare Dev Cadence repository-level rules, local config, or artifact space.
-
-Ordinary delivery work does not require prior repository initialization. If persistent artifacts are needed and the repo contract is missing, create low-risk artifact space directly when permissions allow, or use `cadence-sync` when contract files must be created or repaired.
-
-Do not use `cadence-sync` as an implicit trigger for product implementation work. Do not infer a hidden product task from repository contents when the user asks only to prepare, initialize, apply, install, update, sync, repair, inspect, or diagnose the framework.
-
-## Target Repository Layout
-
-For target repositories, embed the runtime bundle and keep user-local preferences at the root:
-
-```text
-AGENTS.md
-.gitignore
-.dev-cadence.yaml
-
-.dev-cadence/
-  VERSION
-  manifest.json
-  skills/
-  references/
-  templates/
-  scripts/
-
-specs/
-  records/
-    .gitkeep
-```
-
-`AGENTS.md` routes normal delivery work to the repo-embedded Dev Cadence entrypoint: `.dev-cadence/skills/using-dev-cadence/SKILL.md`.
-
-Default Dev Cadence behavior is runtime-owned under `.dev-cadence/`. Target repositories do not need a generated default config file.
-
-`default` means the built-in Dev Cadence delivery discipline in `delivery-disciplines.md`.
-
-Supported `artifact_language` values are `en` and `zh`. `en` is the framework default. `zh` means Chinese prose and defaults to Simplified Chinese unless repository rules say otherwise.
-
-`.dev-cadence.yaml` stores user-local overrides. Generate it with commented examples only and keep it ignored by Git:
-
-```yaml
-# Local Dev Cadence preferences.
-# Uncomment and change this value to override generated artifact prose language for your local work.
-# Supported values:
-# - en: English
-# - zh: Chinese, Simplified Chinese by default
-# dev_cadence:
-#   artifact_language: en
-#   specs_dir: specs/records
-#   report_dir: specs/report
-#   implementation_discipline: default
-#   verification_discipline: default
-#   review_profile: normal
-```
-
-When `.dev-cadence.yaml` contains an uncommented supported `dev_cadence.artifact_language`, it overrides the plugin default. Runtime scripts that generate task artifact prose or report UI must resolve this value through the shared artifact language helper. Add `.dev-cadence.yaml` to `.gitignore` during initialization or maintenance so user-local preferences are not committed by default.
-
-If persistent visual companion sessions are used, add the local companion
-session directory to `.gitignore`. The visual companion remains optional and
-must not be required for G1.
-
-Task artifacts and Harness evidence are written under `specs/records/{task_id}/`:
-
-```text
-specs/
-  records/
-    {task_id}/
-      00-brief.md
-      01-requirements.md
-      02-design.md
-      03-tasks.md
-      04-test-plan.md
-      05-implementation.md
-      06-test-report.md
-      07-review-report.md
-      08-acceptance.md
-      decisions/
-        ADR-001.md
-      runs/
-        {run_id}/
-          run-context.md
-          execution-report.md
-          tool-log.md
-          test-log.md
-          diff-summary.md
-          permission-decisions.md
-  report/
-    # generated HTML, safe to delete and regenerate
-```
-
-Artifact language applies to Markdown prose, notes, acceptance criteria text, reports, and human-readable explanations. Keep filenames, paths, YAML keys, schema fields, status values, workflow IDs, gate IDs, and command/code identifiers in English for interoperability.
-
-## Initialization Rules
-
-- Copy or update `.dev-cadence/` from the current target-repo bundle.
-- Create or update root `AGENTS.md` so normal software delivery requests route to `.dev-cadence/skills/using-dev-cadence/SKILL.md`.
-- Create `.dev-cadence.yaml` with commented user preference fields unless it already exists.
-- Create `specs/records/.gitkeep` when needed to represent an empty specs records directory.
-- Create or update `.gitignore` to include `.dev-cadence.yaml`, preserving existing ignore rules.
-- During initialization, synchronization, repair, or diagnosis, write only `.dev-cadence/`, root `AGENTS.md`, root `.gitignore` entry for `.dev-cadence.yaml`, root `.dev-cadence.yaml`, and `specs/records/.gitkeep` by default.
-- Do not modify product source, tests, migrations, build scripts, deployment files, or application configuration during framework initialization unless the user explicitly requests delivery work in the same turn.
-- Do not create task-specific specs during framework initialization unless the user explicitly requests a concrete delivery task in the same turn.
-- Do not infer a hidden product task from repository contents when the user asks only to prepare, initialize, apply, install, update, sync, repair, inspect, or diagnose the framework.
-- If `AGENTS.md` already exists, preserve existing repository instructions and add only a scoped AI delivery entrypoint section.
-- Preserve existing legacy `.ai/` conventions if already present, but do not create `.ai/` as the default Dev Cadence contract. Report legacy `.ai/` content as a local overlay for manual review when it appears relevant.
-
-## Automatic Entrypoint
-
-Add this section to root `AGENTS.md`, adapting wording only when the repository already has equivalent instructions:
-
-```markdown
-## AI Delivery Workflow
-
-For implementation, debugging, planning, research, review, verification, acceptance, or commit-related delivery work in this repository, use the repo-embedded Dev Cadence runtime.
-
-Before answering, asking clarification questions, reading files, running commands, editing code, reviewing, verifying, or committing for delivery work, read and apply:
-
-`.dev-cadence/skills/using-dev-cadence/SKILL.md`
-
-Follow the matching workflow Skill under `.dev-cadence/skills/`. Resolve Dev Cadence paths such as `skills/...`, `references/...`, `templates/...`, and `scripts/...` relative to `.dev-cadence/`. Do not rely on global plugin or Skill auto-discovery for Dev Cadence activation in this repository.
-
-Read root `.dev-cadence.yaml` when present for local overrides. It is user-local and ignored by Git by default. Write task artifacts and Harness evidence under `specs/records/{task_id}/`. Generated HTML reports live under `specs/report/`.
-
-Use direct execution without task specs only for explicitly trivial questions or non-delivery requests.
-```
+Source-maintenance references under `references/source-maintenance/` are for
+changing Dev Cadence itself. They are part of the source plugin package but are
+excluded from the repo-embedded target runtime.
 
 ## Runtime Authority
 
@@ -314,77 +136,38 @@ Resolve runtime rules in this order:
 1. Current user request and explicit repository instructions.
 2. Repo-local `AGENTS.md` and `.dev-cadence.yaml`.
 3. Current task artifacts under `specs/records/{task_id}/`.
-4. Repo-embedded `.dev-cadence/` references, templates, built-in delivery disciplines, and adapters.
+4. Repo-embedded `.dev-cadence/` references, templates, built-in delivery
+   disciplines, and adapters.
 5. Configured adapters when selected.
 
-Repo-local overlays may add stricter or project-specific constraints. They must not weaken hard safety rules such as named Human acceptance, evidence requirements, permission gates, Requirements Readiness Check, or required Harness evidence.
+Repo-local overlays may add stricter or project-specific constraints. They must
+not weaken hard safety rules such as named Human acceptance, evidence
+requirements, permission gates, Requirements Readiness Check, or required
+Harness evidence.
 
-## Delivery Discipline and Adapters
+## Resource Boundaries
 
-The local config starts with Dev Cadence defaults:
+Task artifact templates live under `templates/spec/`. Harness evidence
+templates live under `templates/runs/`. Shared Worker and reviewer prompt
+templates live under `templates/prompts/`. Skill-specific resources, such as
+`skills/cadence-clarify/visual-companion.md`,
+`skills/cadence-clarify/spec-document-reviewer-prompt.md`, and
+`skills/cadence-clarify/scripts/`, live with the owning Skill.
 
-```yaml
-dev_cadence:
-  implementation_discipline: default
-  verification_discipline: default
-  review_profile: normal
-```
-
-`default` means Dev Cadence's own rules:
-
-- clarify intent before implementation;
-- keep research spikes separate from product implementation until follow-up delivery is explicitly approved;
-- create executable plans with concrete files, behavior, and verification;
-- use strict Red-Green-Refactor for testable behavior changes;
-- reproduce or characterize bugs before fixing;
-- review spec compliance before code quality;
-- address review findings separately from producing review findings;
-- verify before any completion claim;
-- use parallel Worker runs only for independent domains;
-- use Dev Cadence source validation when changing this plugin's own skills and references.
-
-`delivery-disciplines.md` is the routing entrypoint. It maps each workflow state to the required detailed discipline reference. Task artifact templates live under `templates/spec/`, Harness evidence templates live under `templates/runs/`, and shared Worker and reviewer prompt templates live under `templates/prompts/`. Skill-specific resources, such as `skills/cadence-clarify/visual-companion.md`, `skills/cadence-clarify/spec-document-reviewer-prompt.md`, and `skills/cadence-clarify/scripts/`, live with the owning Skill. Use these templates through the Harness when creating task artifacts or dispatching Worker runs. `dev-cadence` source self-checks live in `scripts/check-skill-package.mjs`, `scripts/check-discipline-routes.mjs`, `scripts/check-spec-artifacts.mjs`, `scripts/check-gates.mjs`, and `scripts/check-before-commit.mjs`. `scripts/generate-spec-report.mjs` generates a static HTML browsing view under `specs/report/` from Markdown/YAML artifacts under `specs/records/`; the Markdown/YAML artifacts remain authoritative. Optional visual alignment uses `skills/cadence-clarify/visual-companion.md` and `skills/cadence-clarify/scripts/`; unavailability falls back to text-only clarification and does not block G1.
-
-External adapters are optional replacement points for Worker execution techniques. Dev Cadence still controls Supervisor routing, Harness evidence, Quality Gate, Human Gate, scope reconciliation, and final acceptance.
-
-When an adapter is selected, the stricter compatible rule wins inside that Worker state. Adapter selection must not weaken named Human acceptance, Requirements Readiness Check, permission gates, required Harness evidence, or scope reconciliation.
-
-## Repository Rule Maintenance
-
-Maintenance may update:
-
-- root `AGENTS.md` AI delivery entrypoint section;
-- root `.gitignore` entry for `.dev-cadence.yaml`;
-- root `.dev-cadence.yaml`;
-- `specs/records/.gitkeep`.
-
-Maintenance must not touch product code or task-specific `specs/records/{task_id}/` artifacts unless the same user turn explicitly requests delivery work.
-
-## Hard Rules
-
-- Keep repository contract synchronization separate from product delivery work unless the same user turn explicitly requests both.
-- Do not infer unclear product intent. If goal, scope, non-goals, reference behavior, or acceptance has multiple reasonable interpretations, enter Human Gate `info_required` before implementation.
-- Do not convert unconfirmed assumptions into scope, non-goals, tasks, or acceptance criteria.
-- Require a Requirements Readiness Check before planning or implementation. It must confirm expected behavior, reference behavior, scope, non-goals, acceptance criteria, and verification approach.
-- Treat broad or comparative wording such as "not as expected", "inconsistent", "same as", "match", "align", "parity", or "fix this issue" as unclear unless the expected behavior and comparison dimension are explicit.
-- Before asking for clarification, perform limited read-only analysis and present candidate interpretations, evidence paths, a recommended option, and tradeoffs.
-- Repository evidence can support candidate interpretations, but it cannot clarify user intent or pass G1.
-- Do not record repository evidence, code inspection, Supervisor, Harness, Developer, Tester, Reviewer, or an unspecified agent as `clarified_by_human`, `accepted_by_human`, or an equivalent G1 decision owner.
-- If the user rejects or corrects a prior result, reopen requirements and block implementation until the correction is clarified.
-- Do not pass G1 while unresolved ambiguity could materially change implementation or acceptance.
-- Do not start `S2` implementation until required Human Gate approvals are recorded.
-- Do not approve review when G4 is not passed or explicitly overridden by a named Human Gate.
-- Do not pass G6 unless final acceptance names a Human accepter.
-- Do not record Supervisor, Harness, Developer, Tester, Reviewer, or an unspecified agent as final accepter.
-- Treat `partially_verified`, `not_verified`, and `blocked_by_environment` as blocked until a named Human accepts the gap.
-- Require `run-context.md`, `execution-report.md`, `tool-log.md`, and `permission-decisions.md` for every Harness run.
-- Require `diff-summary.md` when files change.
-- Require `test-log.md` when commands or tests run.
-- Do not let an `execution-report.md` summary replace missing evidence files.
+`delivery-disciplines.md` is the routing entrypoint for detailed discipline
+references. `scripts/check-skill-package.mjs`,
+`scripts/check-discipline-routes.mjs`, `scripts/check-spec-artifacts.mjs`,
+`scripts/check-gates.mjs`, and `scripts/check-before-commit.mjs` provide source
+and runtime validation. `scripts/generate-spec-report.mjs` generates a static
+HTML browsing view under `specs/report/` from Markdown/YAML artifacts under
+`specs/records/`; Markdown/YAML artifacts remain authoritative.
 
 ## Versioning
 
-Version the Plugin, Skills, references, templates, adapters, and repo-local config like code. Changes to rules, templates, adapters, or gates should be reviewed with the same care as workflow code because they affect delivery behavior.
+Version the Plugin, Skills, references, templates, adapters, and repo-local
+config like code. Changes to rules, templates, adapters, or gates should be
+reviewed with the same care as workflow code because they affect delivery
+behavior.
 
 Use the version in `.codex-plugin/plugin.json` as the Plugin package version.
 Until the maintainer explicitly declares a formal public release, keep the major

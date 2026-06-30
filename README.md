@@ -87,7 +87,7 @@ node scripts/package-target-repo-bundle.mjs --clean
 
 - `README.md`：项目入口、安装、使用和维护导航。
 - `docs/`：使用者和维护者说明，以及当前设计解释；`docs/archive/` 只保存历史计划、研究和验收记录。
-- `skills/`、`references/`、`templates/`、`scripts/`：Dev Cadence 运行时内容，会被打包到业务仓库 `.dev-cadence/`。
+- `skills/`、`references/`、`templates/`、`scripts/`：Dev Cadence 运行时内容，会被打包到业务仓库 `.dev-cadence/`；`references/source-maintenance/` 只用于维护本仓库，不进入业务仓库 runtime。
 - `specs/`、`research/`：本地运行或探索过程目录，默认不提交。
 
 | 文档 | 作用 |
@@ -102,5 +102,5 @@ node scripts/package-target-repo-bundle.mjs --clean
 | [docs/codex-plugin-boundaries.md](docs/codex-plugin-boundaries.md) | 当前 Codex Plugin、Skill、reference、template 和 adapter 的模块边界 |
 | [docs/installation.md](docs/installation.md) | 当前安装、更新和卸载命令 |
 | [docs/validation.md](docs/validation.md) | 当前验证、发布包生成和 smoke test 命令 |
-| [references/skill-layout.md](references/skill-layout.md) | 发布包布局和版本规则 |
+| [references/skill-layout.md](references/skill-layout.md) | runtime 布局、Skill 边界和版本规则 |
 | [docs/archive/](docs/archive/) | 已完成阶段的计划、验收和验证记录 |

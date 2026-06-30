@@ -39,7 +39,7 @@ target repository bundle
 | 本地打包产物 | `dist/codex/plugins/dev-cadence/` | 由 `scripts/package-codex-plugin.mjs` 生成的 plugin payload |
 | 可选业务仓库 marketplace | `.agents/plugins/marketplace.json`、`.agents/plugins/dev-cadence/` | 可选 Codex Plugin 分发，不作为当前稳定启动前提 |
 
-`skills/`、`references/`、`templates/` 和 `scripts/` 会被打包到目标仓库 `.dev-cadence/`。目标仓库 `AGENTS.md` 必须要求读取 `.dev-cadence/skills/using-dev-cadence/SKILL.md`，不要依赖全局 Plugin 或 Skill 自动发现。
+`skills/`、runtime `references/`、`templates/` 和 `scripts/` 会被打包到目标仓库 `.dev-cadence/`。`references/source-maintenance/` 是维护 Dev Cadence 自身规则时使用的 source-only 材料，不进入目标仓库 runtime。目标仓库 `AGENTS.md` 必须要求读取 `.dev-cadence/skills/using-dev-cadence/SKILL.md`，不要依赖全局 Plugin 或 Skill 自动发现。
 
 ## Skill 边界
 
@@ -80,7 +80,7 @@ Adapter boundaries follow replaceable execution techniques.
 | 目录 | 职责 | 维护入口 |
 |---|---|---|
 | `skills/` | Codex Skill 入口和工作纪律触发面 | `skills/*/SKILL.md` |
-| `references/` | workflow、gate、Harness、agent、adapter 和 discipline 的运行时规则 | [references/skill-layout.md](../references/skill-layout.md) |
+| `references/` | workflow、gate、Harness、agent、adapter 和 discipline 的运行时规则；`source-maintenance/` 只用于本仓库维护 | [references/skill-layout.md](../references/skill-layout.md) |
 | `templates/spec/` | task artifact 模板 | [references/spec-templates.md](../references/spec-templates.md) |
 | `templates/runs/` | Harness evidence 模板 | [references/spec-templates.md](../references/spec-templates.md) |
 | `templates/prompts/` | Worker、reviewer 和文档审查 prompt 模板 | [references/agent-blueprints.md](../references/agent-blueprints.md) |
@@ -88,7 +88,7 @@ Adapter boundaries follow replaceable execution techniques.
 
 每个入口 Skill 下的 `agents/openai.yaml` 是本仓库主动维护的 Codex/OpenAI UI metadata，包括展示名称、简短说明和默认提示。它不是本地安装 cache。某些上游参考仓库的源码目录可能不包含 `agents/`，但安装后的 plugin cache 会包含；Dev Cadence 选择在源码层维护它，让发布包形态、触发文案和测试结果保持确定。
 
-`delivery-disciplines.md` 是默认交付纪律的路由入口；细节按状态拆到 clarify、planning、TDD、debugging、review、verification 和 authoring discipline references。
+`delivery-disciplines.md` 是默认交付纪律的路由入口；细节按状态拆到 clarify、planning、TDD、debugging、review 和 verification discipline references。Dev Cadence 自身规则维护使用 `references/source-maintenance/`，不作为目标仓库 runtime 规则发布。
 
 `repository-rule-sync.md` 定义 repo-embedded contract 的初始化、检查、同步和修复规则。`scripts/package-target-repo-bundle.mjs` 生成目标仓库 bundle；`scripts/sync-target-repo-bundle.mjs` 把 bundle 同步到目标仓库。具体脚本清单以 `scripts/` 目录和 package boundary 测试为准。
 

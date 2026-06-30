@@ -5,6 +5,9 @@ import { spawnSync } from 'node:child_process';
 import { AGENTS_SECTION, EMBEDDED_RUNTIME_DIR, LOCAL_YAML, TARGET_BUNDLE_RUNTIME_PATHS } from './target-repo-contract.mjs';
 
 const DEFAULT_OUTPUT = path.join('dist', 'target-repo');
+const TARGET_BUNDLE_EXCLUDED_PATHS = [
+  'references/source-maintenance',
+];
 
 function printHelp() {
   console.log(`Usage: package-target-repo-bundle.mjs [options]
@@ -95,19 +98,40 @@ function ensureInsideOutputBoundary(sourceDir, outputDir) {
   }
 }
 
-function copyRecursive(sourcePath, targetPath, copied, baseDir) {
+function shouldExcludeFromTargetBundle(sourceDir, sourcePath) {
+  const relativePath = rel(sourceDir, sourcePath).replaceAll(path.sep, '/');
+  return TARGET_BUNDLE_EXCLUDED_PATHS.some((excludedPath) => (
+    relativePath === excludedPath || relativePath.startsWith(`${excludedPath}/`)
+  ));
+}
+
+function transformTargetRuntimeFile(sourceDir, sourcePath, content) {
+  const relativePath = rel(sourceDir, sourcePath).replaceAll(path.sep, '/');
+  if (relativePath !== 'references/delivery-disciplines.md') {
+    return content;
+  }
+
+  return content
+    .toString('utf8')
+    .replace(/\n\| Dev Cadence source maintenance in this repository \|[^\n]+\n/, '\n');
+}
+
+function copyRecursive(sourcePath, targetPath, copied, baseDir, sourceDir) {
+  if (shouldExcludeFromTargetBundle(sourceDir, sourcePath)) {
+    return;
+  }
   const stat = fs.statSync(sourcePath);
   if (stat.isDirectory()) {
     fs.mkdirSync(targetPath, { recursive: true });
     for (const entry of fs.readdirSync(sourcePath, { withFileTypes: true })) {
       if (entry.name === '.DS_Store') continue;
-      copyRecursive(path.join(sourcePath, entry.name), path.join(targetPath, entry.name), copied, baseDir);
+      copyRecursive(path.join(sourcePath, entry.name), path.join(targetPath, entry.name), copied, baseDir, sourceDir);
     }
     return;
   }
   if (stat.isFile()) {
     fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-    fs.copyFileSync(sourcePath, targetPath);
+    fs.writeFileSync(targetPath, transformTargetRuntimeFile(sourceDir, sourcePath, fs.readFileSync(sourcePath)));
     fs.chmodSync(targetPath, stat.mode);
     copied.push(rel(baseDir, targetPath));
   }
@@ -149,7 +173,7 @@ function main() {
       missing.push(item);
       continue;
     }
-    copyRecursive(sourcePath, path.join(runtimeDir, item), copied, options.outputDir);
+    copyRecursive(sourcePath, path.join(runtimeDir, item), copied, options.outputDir, options.sourceDir);
   }
 
   fs.writeFileSync(path.join(runtimeDir, 'VERSION'), `${manifest.version}\n`);
@@ -162,6 +186,7 @@ function main() {
       entrypoint: 'skills/using-dev-cadence/SKILL.md',
       runtime_paths: TARGET_BUNDLE_RUNTIME_PATHS,
       local_config: '../.dev-cadence.yaml',
+      source_only_excluded_paths: TARGET_BUNDLE_EXCLUDED_PATHS,
     }, null, 2)}\n`,
   );
   fs.writeFileSync(path.join(options.outputDir, 'AGENTS.dev-cadence-section.md'), AGENTS_SECTION);
@@ -188,6 +213,7 @@ function main() {
     runtime_dir: runtimeDir,
     clean: options.clean,
     runtime_paths: TARGET_BUNDLE_RUNTIME_PATHS,
+    source_only_excluded_paths: TARGET_BUNDLE_EXCLUDED_PATHS,
     files_copied: copied.sort(),
     missing_paths: missing,
     checks,

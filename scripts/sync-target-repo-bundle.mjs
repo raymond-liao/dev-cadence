@@ -77,6 +77,11 @@ function readIfExists(filePath) {
   return fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
 }
 
+function readJsonIfExists(filePath) {
+  const content = readIfExists(filePath);
+  return content === null ? null : JSON.parse(content);
+}
+
 function ensureParent(filePath) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 }
@@ -177,6 +182,32 @@ function removeStaleRuntimeFiles(options, report, bundleRuntimeDir, targetRuntim
   }
 }
 
+function normalizeRuntimeRelativePath(relativePath) {
+  if (typeof relativePath !== 'string' || relativePath.length === 0) return null;
+  if (path.isAbsolute(relativePath)) return null;
+  const normalized = path.posix.normalize(relativePath.replaceAll(path.sep, '/'));
+  if (normalized === '.' || normalized.startsWith('../')) return null;
+  return normalized;
+}
+
+function removeSourceOnlyExcludedPaths(options, report, bundleRuntimeDir, targetRuntimeDir) {
+  const manifest = readJsonIfExists(path.join(bundleRuntimeDir, 'manifest.json')) || {};
+  const excludedPaths = Array.isArray(manifest.source_only_excluded_paths) ? manifest.source_only_excluded_paths : [];
+
+  for (const relativePath of excludedPaths) {
+    const normalized = normalizeRuntimeRelativePath(relativePath);
+    if (!normalized) continue;
+
+    const targetPath = path.join(targetRuntimeDir, normalized);
+    if (!fs.existsSync(targetPath)) continue;
+
+    record(report, 'files_removed', options.targetDir, targetPath);
+    if (!options.dryRun) {
+      fs.rmSync(targetPath, { recursive: true, force: true });
+    }
+  }
+}
+
 function reconcileAgents(options, report) {
   const agentsPath = path.join(options.targetDir, 'AGENTS.md');
   const next = updateAgentsContent(readIfExists(agentsPath));
@@ -267,6 +298,7 @@ function sync(options) {
   }
   copyRecursive(options, report, bundleRuntimeDir, targetRuntimeDir);
   removeStaleRuntimeFiles(options, report, bundleRuntimeDir, targetRuntimeDir);
+  removeSourceOnlyExcludedPaths(options, report, bundleRuntimeDir, targetRuntimeDir);
 
   if (reconcileAgents(options, report)) {
     reconcileGitignore(options, report);
