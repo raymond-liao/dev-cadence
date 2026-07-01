@@ -82,8 +82,8 @@ Published Skills:
   unclear root cause.
 - `cadence-request-code-review`: review implementation for spec compliance and code
   quality.
-- `cadence-review`: verify and address existing review feedback, then request
-  re-review.
+- `cadence-review`: verify and address existing code review feedback, then request
+  code re-review; non-code feedback returns to Supervisor routing.
 - `cadence-verify`: verify evidence, scope, skipped checks, residual risk, and
   Human acceptance before completion.
 - `cadence-sync`: initialize, inspect, sync, repair, or diagnose the

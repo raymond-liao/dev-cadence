@@ -69,7 +69,7 @@ Adapter boundaries follow replaceable execution techniques.
 | `cadence-tdd` | 对 testable behavior changes 执行 Red-Green-Refactor |
 | `cadence-debug` | 诊断 bug、incident、失败测试、回归和未知根因 |
 | `cadence-request-code-review` | 请求或执行 spec compliance 和 code quality review |
-| `cadence-review` | 验证并处理已有 review feedback，然后回到 re-review |
+| `cadence-review` | 验证并处理已有 code review feedback，然后回到 code re-review；非代码反馈回 Supervisor 重新分类 |
 | `cadence-verify` | 完成前核验证据、范围、跳过项、剩余风险和 Human acceptance |
 | `cadence-sync` | 初始化、检查、同步、修复或诊断 repo-embedded repository contract |
 
