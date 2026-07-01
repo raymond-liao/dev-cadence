@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build Codex plugin package
+        run: node scripts/package-codex-plugin.mjs --clean
+
+      - name: Build target repo bundle
+        run: node scripts/package-target-repo-bundle.mjs --clean
+
+      - name: Run test suite
+        run: bash tests/run-all.sh
