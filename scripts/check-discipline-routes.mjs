@@ -438,6 +438,37 @@ function checkCadencePlanContract() {
   }
 }
 
+function checkCadenceExecutingPlansContract() {
+  const sourceFile = 'skills/cadence-executing-plans/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'Read the approved plan, review it critically, execute task steps in order, run specified verification, and stop when blocked.',
+    'Do not route workflow, select other cadence Skills, mark gates complete, write persistent records, accept risk, or claim completion.',
+    '## Step 1: Load and Review Plan',
+    'Read the approved plan and Supervisor-selected execution context:',
+    'Check task order, target files, dependencies, acceptance mapping, verification commands, expected results, and forbidden actions.',
+    'If the plan has critical gaps, unapproved scope, missing target files, unclear instructions, impossible verification, missing approvals, or a required discipline/gate not present in the Supervisor context',
+    'Do not implement or switch Skills directly.',
+    'Create local todos only after review finds no blocker.',
+    '## Step 2: Execute Tasks',
+    'Apply only the implementation discipline selected by `using-dev-cadence` for this run.',
+    'Task status is one of: `implemented`, `verification_failed`, `blocked`, `needs_plan_update`.',
+    'Do not treat local task progress as gate or workflow completion.',
+    '## Stop Conditions',
+    'Ask for clarification or a named Human decision through the Supervisor rather than guessing.',
+    'If the plan changes, return to Step 1 before continuing.',
+    '## Handoff',
+    'recommended next state for Supervisor consideration.',
+    'Do not approve, accept, commit, mark gates complete, or say done/fixed/passing/ready from this Skill.',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing executing-plans process phrase: ${phrase}`);
+    }
+  }
+}
+
 function checkCadenceDebugContract() {
   const sourceFile = 'skills/cadence-debug/SKILL.md';
   const text = readText(sourceFile);
@@ -981,6 +1012,7 @@ checkEntrypointSkills();
 checkUsingDevCadenceContract();
 checkCadenceClarifyContract();
 checkCadencePlanContract();
+checkCadenceExecutingPlansContract();
 checkCadenceDebugContract();
 checkCadenceTddContract();
 checkImplementationDisciplineBoundary();

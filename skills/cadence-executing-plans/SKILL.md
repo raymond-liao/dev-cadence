@@ -1,11 +1,17 @@
 ---
 name: cadence-executing-plans
-description: Execute approved Dev Cadence delivery plans. Use when a plan is ready for implementation, Worker execution, inline execution, or adapter-driven execution with Harness evidence requirements.
+description: Execute approved Dev Cadence delivery plans. Use when the Supervisor has selected inline or adapter-driven implementation execution for an approved plan.
 ---
 
 # Cadence Executing Plans
 
-Use this Skill for implementation execution after clarification and planning gates are satisfied.
+Use this Skill only after `using-dev-cadence` has selected inline or adapter-driven execution for an approved plan.
+
+## Core Rule
+
+Read the approved plan, review it critically, execute task steps in order, run specified verification, and stop when blocked.
+
+Do not route workflow, select other cadence Skills, mark gates complete, write persistent records, accept risk, or claim completion.
 
 ## Required References
 
@@ -18,35 +24,64 @@ Use this Skill for implementation execution after clarification and planning gat
 
 Read `../../references/adapters.md` only when an external adapter is configured or requested.
 
-## Scope
+## Step 1: Load and Review Plan
 
-Execute planned work and return Harness-ready evidence for `specs/records/{task_id}/runs/{run_id}/` when persistent evidence is required.
+Read the approved plan and Supervisor-selected execution context:
 
-Ask the Supervisor/Harness path to use `../../scripts/init-task-artifacts.mjs` when a new task or run artifact set is needed.
+- `03-tasks.md`;
+- `04-test-plan.md`;
+- requirements and design artifacts;
+- task class, allowed files, required evidence, gates, and implementation discipline.
 
-## Required Behavior
+Check task order, target files, dependencies, acceptance mapping, verification commands, expected results, and forbidden actions.
 
-For `S1` and `S2` implementation or fix work, ensure
-`runs/{run_id}/pre-implementation-status.md` exists before the first product
-source, test, migration, build, deployment, or application configuration edit.
+For `S1` and `S2` implementation or fix work, ensure `runs/{run_id}/pre-implementation-status.md` exists before the first product source, test, migration, build, deployment, or application configuration edit.
 
-Do not expand scope silently. Return scope reconciliation when changed files or behavior differ from the plan.
+If the plan has critical gaps, unapproved scope, missing target files, unclear instructions, impossible verification, missing approvals, or a required discipline/gate not present in the Supervisor context, stop and return the mismatch to `using-dev-cadence`. Do not implement or switch Skills directly.
 
-For testable behavior changes, use `cadence-tdd` during implementation. For bugs, incidents, failing tests, or unclear cause, use `cadence-debug` before changing production code.
+Create local todos only after review finds no blocker.
 
-Do not claim completion. Return control to the Supervisor before any review, verification, or completion claim.
+## Step 2: Execute Tasks
 
-## Worker Execution Shapes
+For each task:
 
-Supervisor chooses the execution shape before implementation starts:
+1. Track one task as in progress locally.
+2. Follow approved steps exactly unless unsafe, impossible, or inconsistent with repository reality.
+3. Apply only the implementation discipline selected by `using-dev-cadence` for this run.
+4. Stay within approved files and allowed write paths.
+5. Run the task's focused verification and relevant neighboring checks.
+6. Return task status, changed files, commands, outputs, skipped checks, residual risk, and scope reconciliation for Supervisor/Harness recording.
 
-- inline execution: use when subagents are unavailable or the work is tightly coupled;
-- sequential subagent-style execution: route to `cadence-subagent-development` when an approved plan has bounded tasks that can be executed one at a time with fresh Worker context;
-- parallel Worker dispatch: route to `cadence-dispatch-parallel` only for two or more independent domains that do not share mutable state, files, findings, or sequencing dependencies.
+Task status is one of: `implemented`, `verification_failed`, `blocked`, `needs_plan_update`.
 
-Subagent-style execution means a fresh Worker context per task, followed by spec compliance review and then code quality review before the task is marked complete. Do not move to a dependent task while spec gaps or blocking quality issues remain open.
+Do not treat local task progress as gate or workflow completion.
 
-Parallel Worker dispatch means one Worker per independent problem domain, followed by integration review, conflict checks, and integrated verification. Do not parallelize Workers that edit the same files, depend on each other's findings, or require a whole-system mental model.
+## Stop Conditions
+
+Stop and return to `using-dev-cadence` when:
+
+- a dependency is missing;
+- a plan instruction is unclear;
+- the repository differs from the plan;
+- verification fails unexpectedly or repeatedly;
+- implementation would exceed approved scope or allowed files;
+- permission, architecture, security, migration, CI/CD, release, production, Human Gate, or unselected cadence discipline is required.
+
+Ask for clarification or a named Human decision through the Supervisor rather than guessing. If the plan changes, return to Step 1 before continuing.
+
+## Handoff
+
+Return:
+
+- task statuses;
+- changed files and scope reconciliation;
+- verification commands, exit codes, and relevant output summaries;
+- skipped checks and reasons;
+- implementation discipline evidence or named exceptions from the Supervisor-selected context;
+- blockers, unresolved risks, and required Human decisions;
+- recommended next state for Supervisor consideration.
+
+Do not approve, accept, commit, mark gates complete, or say done/fixed/passing/ready from this Skill.
 
 ## Supervisor Boundary
 
