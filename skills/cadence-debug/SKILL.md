@@ -20,7 +20,7 @@ NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
 ```
 
 If you have not completed Phase 1, you cannot propose fixes. If the Human
-explicitly accepts an emergency shortcut, record the named Human decision,
+explicitly accepts an emergency shortcut, return the named Human decision,
 reason, residual risk, and follow-up evidence gap before proceeding.
 
 ## Required Resources
@@ -33,10 +33,10 @@ Load these when the condition applies:
   or arbitrary sleeps/timeouts appear in test code.
 - `defense-in-depth.md` when the bug involves invalid data, unsafe state, a
   dangerous operation, or missing boundary checks.
-- `../../references/harness.md` when recording persistent run evidence.
+- `../../references/harness.md` when persistent run evidence is required.
 - `../../references/quality-gates.md` when deciding whether evidence is enough
   to move forward.
-- `../../references/spec-templates.md` when updating task artifacts.
+- `../../references/spec-templates.md` when task artifact content is required.
 
 ## Example Code Boundary
 
@@ -73,7 +73,7 @@ root causes.
 ## Four Phases
 
 You MUST complete each phase before proceeding to the next. If a phase is
-blocked, record the blocker and ask for the missing evidence or Human decision
+blocked, state the blocker and ask for the missing evidence or Human decision
 instead of guessing.
 
 ### Phase 1: Root Cause Investigation
@@ -152,11 +152,11 @@ continuing to patch symptoms.
 If investigation indicates the issue is environmental, external, or genuinely
 timing-dependent:
 
-1. Record what was investigated.
-2. Record what evidence ruled out local causes.
+1. Return what was investigated.
+2. Return what evidence ruled out local causes.
 3. Implement handling appropriate to the proven failure mode, such as retry,
    timeout, diagnostics, or clearer error reporting.
-4. Add monitoring or evidence capture for future investigation.
+4. Recommend monitoring or evidence capture for future investigation.
 
 Treat "no root cause" as suspicious until the investigation is documented.
 
@@ -202,7 +202,7 @@ and return to investigation:
 
 ## Evidence
 
-When artifacts are being written, record:
+When artifacts are being written, return:
 
 - exact reproduction or characterization steps;
 - observed behavior and expected behavior;

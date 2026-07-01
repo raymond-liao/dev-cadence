@@ -41,7 +41,7 @@ After Workers return:
 1. Review every summary and changed file list.
 2. Check for overlapping edits, semantic conflicts, and inconsistent assumptions.
 3. Run integrated verification.
-4. Record integration evidence and unresolved risks.
+4. Return integration evidence and unresolved risks for Supervisor/Harness recording.
 5. Continue to review only after conflicts and verification gaps are resolved.
 
 Do not use parallel dispatch when failures are related, when one fix may change another domain, when shared state is involved, or when a single whole-system investigation is required.

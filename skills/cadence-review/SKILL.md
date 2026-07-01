@@ -28,7 +28,7 @@ correctness over social comfort.
 ```text
 WHEN receiving code review feedback:
 
-1. READ: Complete feedback without reacting
+1. READ: First read all code review feedback before making changes.
 2. UNDERSTAND: Restate requirement in your own words, or ask
 3. VERIFY: Check against repository reality
 4. EVALUATE: Technically sound for this codebase and accepted scope?

@@ -17,10 +17,13 @@ Use this Skill only after requirements readiness is satisfied or the remaining g
 
 ## Scope
 
-Create or update:
+Produce artifact-ready planning content for:
 
 - `specs/records/{task_id}/03-tasks.md`;
 - `specs/records/{task_id}/04-test-plan.md`.
+
+Leave concrete artifact writes to the Supervisor/Harness path unless this Skill
+is explicitly being used as the artifact authoring action.
 
 Each task must include concrete files or modules, intended behavior, verification command or method, dependencies, risk, and expected evidence.
 

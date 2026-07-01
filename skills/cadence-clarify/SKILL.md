@@ -28,7 +28,7 @@ You MUST create a task for each of these items and complete them in order:
 5. **Present 2-3 viable interpretations or approaches with tradeoffs and a recommendation** when the request has meaningful alternatives
 6. **Present requirements or design in sections scaled to complexity** and get Human approval after each section when needed
 7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
-8. **Ask the Human to review the written artifacts when persistent artifacts are used.**
+8. **Ask the Human to review clarified requirements/design when persistent artifacts are used.**
 9. **Transition to planning handoff** — return to `using-dev-cadence` with evidence, gate status, unresolved blockers, and a recommendation for `cadence-plan`
 
 ## Process Flow
@@ -41,7 +41,7 @@ digraph cadence-clarify {
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
-    "Write/update artifacts if needed" [shape=box];
+    "Prepare artifact-ready handoff if needed" [shape=box];
     "Spec self-review\n(fix inline)" [shape=box];
     "Human reviews artifacts?" [shape=diamond];
     "Handoff to using-dev-cadence\nrecommend cadence-plan" [shape=doublecircle];
@@ -53,10 +53,10 @@ digraph cadence-clarify {
     "Propose 2-3 approaches" -> "Present design sections";
     "Present design sections" -> "User approves design?";
     "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Write/update artifacts if needed" [label="yes"];
-    "Write/update artifacts if needed" -> "Spec self-review\n(fix inline)";
+    "User approves design?" -> "Prepare artifact-ready handoff if needed" [label="yes"];
+    "Prepare artifact-ready handoff if needed" -> "Spec self-review\n(fix inline)";
     "Spec self-review\n(fix inline)" -> "Human reviews artifacts?";
-    "Human reviews artifacts?" -> "Write/update artifacts if needed" [label="changes requested"];
+    "Human reviews artifacts?" -> "Prepare artifact-ready handoff if needed" [label="changes requested"];
     "Human reviews artifacts?" -> "Handoff to using-dev-cadence\nrecommend cadence-plan" [label="approved"];
 }
 ```
@@ -104,26 +104,26 @@ digraph cadence-clarify {
 
 ## After the Design
 
-**Documentation:**
+**Documentation handoff:**
 
-- For standard or high-risk tasks, write or update task artifacts under `specs/records/{task_id}/`, especially `00-brief.md`, `01-requirements.md`, and `02-design.md`.
+- For standard or high-risk tasks, return artifact-ready content for `00-brief.md`, `01-requirements.md`, and `02-design.md` when persistent artifacts are being used.
   - User or repository preferences for artifact location override this default.
-- Do not commit artifacts unless the Human explicitly asks for a commit.
+- Leave concrete artifact writes to the Supervisor/Harness path unless this Skill is explicitly being used as the artifact authoring action.
 
 **Spec Self-Review:**
-After writing the spec document, look at it with fresh eyes:
+Before handoff, review the clarified spec content with fresh eyes:
 
 1. **Placeholder scan:** Any "TBD", "TODO", incomplete sections, or vague requirements? Fix them.
 2. **Internal consistency:** Do any sections contradict each other? Does the architecture match the feature descriptions?
 3. **Scope check:** Is this focused enough for a single implementation plan, or does it need decomposition?
 4. **Ambiguity check:** Could any requirement be interpreted two different ways? If so, pick one and make it explicit.
 
-Fix any issues inline. No need to re-review — just fix and move on.
+Fix any issues in the handoff content before returning it. No need to re-review — just fix and move on.
 
 **User Review Gate:**
-After the spec review loop passes, ask the Human to review the written artifacts before handoff:
+After the spec review loop passes, ask the Human to review the clarified requirements/design before handoff:
 
-> "Artifacts written to `<path>`. Please review them and let me know if you want changes before I hand this back for planning."
+> "The clarified requirements/design are ready for review. Please let me know if you want changes before I hand this back for planning."
 
 Wait for the Human response. If they request changes, make them and re-run the spec review loop. Only hand off as ready for planning when the Human approves the clarified requirements and required design.
 

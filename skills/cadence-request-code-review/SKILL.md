@@ -37,7 +37,7 @@ Review in two stages:
 1. spec compliance: compare implementation to clarified requirements, plan, and acceptance criteria;
 2. code quality: look for correctness, maintainability, security, reliability, and scope issues.
 
-Do not run code quality review before spec compliance passes or unresolved spec gaps are recorded.
+Do not run code quality review before spec compliance passes or unresolved spec gaps are returned for Supervisor/Harness recording.
 
 Findings lead. Blocker or major issues block progress unless a named Human Gate accepts the residual risk.
 
@@ -87,7 +87,7 @@ Every review must provide:
   `changes_requested`, or `blocked`;
 - reasoning for the verdict.
 
-Write or update `specs/records/{task_id}/07-review-report.md` when persistent artifacts are being used.
+Return review findings, verdict, and evidence for `specs/records/{task_id}/07-review-report.md` when persistent artifacts are being used.
 
 If review finds valid blocking issues, hand off to `cadence-review`. Do not fix findings inside this Skill.
 

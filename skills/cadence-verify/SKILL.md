@@ -107,11 +107,11 @@ skipped checks, review decision, blockers, residual risk, evidence available,
 the `specs/report/{task_id}/index.html` review entry, and the fields to record
 in `08-acceptance.md`. Do not merely say "G6 is pending".
 
-Update `specs/records/{task_id}/06-test-report.md` and acceptance summary artifacts when persistent artifacts are being used.
+Return test-report and acceptance-summary fields for Supervisor/Harness recording when persistent artifacts are being used. Do not directly write or update persistent records from this Skill; missing Tester, Reviewer, Worker, or Human evidence must remain a gap until the responsible path provides it.
 
 ### Incomplete Verification
 
-If verification cannot run, record:
+If verification cannot run, return:
 
 ```yaml
 verification_status: blocked_by_environment

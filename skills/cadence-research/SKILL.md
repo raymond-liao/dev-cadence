@@ -18,19 +18,19 @@ Do not implement product changes from this Skill. Research output is decision in
 - `../../references/human-gates.md`
 - `../../references/spec-templates.md`
 
-Load `../../references/context-pack.md` and `../../references/harness.md` when dispatching a Researcher Worker or recording persistent run evidence.
+Load `../../references/context-pack.md` and `../../references/harness.md` when dispatching a Researcher Worker or persistent run evidence is required.
 
 ## Scope
 
-Create or update `specs/records/{task_id}/research-report.md` when persistent artifacts are being used.
+Produce artifact-ready content for `specs/records/{task_id}/research-report.md` when persistent artifacts are being used.
 
-Research may inspect code, docs, tests, dependency metadata, logs, or approved external sources. Record source dates or version caveats when evidence may become stale.
+Research may inspect code, docs, tests, dependency metadata, logs, or approved external sources. Return source dates or version caveats when evidence may become stale.
 
 ## Required Behavior
 
 1. Confirm the research question, constraints, non-goals, and decision boundary.
 2. If the question is ambiguous, route through `cadence-clarify` before researching.
-3. Gather evidence from approved sources and record source paths, commands, links, versions, or dates.
+3. Gather evidence from approved sources and return source paths, commands, links, versions, or dates.
 4. Compare options using explicit criteria.
 5. State confidence, evidence gaps, risks, and open questions.
 6. Recommend a path, including when no option is ready.
@@ -38,7 +38,7 @@ Research may inspect code, docs, tests, dependency metadata, logs, or approved e
 
 Do not make final architecture, product, release, or business-priority decisions. Open a Human Gate when the recommendation depends on cost, schedule, risk tolerance, long-term technical direction, production behavior, security, privacy, or data handling.
 
-Do not write product source, tests, migrations, build scripts, deployment files, or application configuration from this Skill. If research reveals a needed code change, record it as a recommendation or follow-up task.
+Do not write product source, tests, migrations, build scripts, deployment files, or application configuration from this Skill. If research reveals a needed code change, return it as a recommendation or follow-up task.
 
 ## Supervisor Boundary
 

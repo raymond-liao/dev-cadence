@@ -25,18 +25,18 @@ Before dispatching any Worker:
 1. Read the approved task plan once.
 2. Extract every task with full text, required files, dependencies, verification, and expected evidence.
 3. Build a focused Context Pack and Harness Run Context for the current task.
-4. Record required pre-implementation status for `S1` and `S2` implementation or fix work.
+4. Ensure required pre-implementation status exists for `S1` and `S2` implementation or fix work.
 
 For each task:
 
 1. Dispatch one fresh implementer Worker with only the context needed for that task.
-2. If the Worker asks questions, answer with evidence or update artifacts before implementation continues.
+2. If the Worker asks questions, answer with evidence or return artifact updates before implementation continues.
 3. Require implementation evidence, verification output, changed files, and self-review notes.
 4. Run spec compliance review before code quality review.
 5. Fix spec gaps and re-review until clear.
 6. Run code quality review.
 7. Fix blocking quality issues and re-review until clear or blocked by a named Human Gate.
-8. Mark the task complete only after required evidence is recorded.
+8. Treat the task as complete only after required evidence is available for Supervisor/Harness recording.
 
 Do not dispatch multiple implementation Workers in parallel from this Skill. Use `cadence-dispatch-parallel` only when the domains are independent and the Supervisor selects parallel execution.
 
@@ -47,8 +47,8 @@ Do not let Worker self-review replace independent spec compliance or code qualit
 Treat Worker results as claims that need evidence:
 
 - `DONE`: proceed to spec compliance review.
-- `DONE_WITH_CONCERNS`: inspect concerns before review; update artifacts or escalate if correctness or scope is affected.
-- `NEEDS_CONTEXT`: provide context or update task artifacts before re-dispatch.
+- `DONE_WITH_CONCERNS`: inspect concerns before review; return artifact updates or escalate if correctness or scope is affected.
+- `NEEDS_CONTEXT`: provide context or return task artifact updates before re-dispatch.
 - `BLOCKED`: classify blocker as missing context, task size, model capability, plan flaw, or external dependency before retrying.
 
 Never force the same Worker to retry unchanged after a real blocker.

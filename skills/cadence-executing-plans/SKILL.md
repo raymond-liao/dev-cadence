@@ -1,6 +1,6 @@
 ---
 name: cadence-executing-plans
-description: Execute approved Dev Cadence delivery plans. Use when a plan is ready for implementation, Worker execution, inline execution, or adapter-driven execution through Harness evidence.
+description: Execute approved Dev Cadence delivery plans. Use when a plan is ready for implementation, Worker execution, inline execution, or adapter-driven execution with Harness evidence requirements.
 ---
 
 # Cadence Executing Plans
@@ -20,17 +20,17 @@ Read `../../references/adapters.md` only when an external adapter is configured 
 
 ## Scope
 
-Execute planned work and record Harness evidence under `specs/records/{task_id}/runs/{run_id}/` when persistent evidence is required.
+Execute planned work and return Harness-ready evidence for `specs/records/{task_id}/runs/{run_id}/` when persistent evidence is required.
 
-Use `../../scripts/init-task-artifacts.mjs` when a new task or run artifact set is needed.
+Ask the Supervisor/Harness path to use `../../scripts/init-task-artifacts.mjs` when a new task or run artifact set is needed.
 
 ## Required Behavior
 
-For `S1` and `S2` implementation or fix work, write or update
-`runs/{run_id}/pre-implementation-status.md` before the first product source,
-test, migration, build, deployment, or application configuration edit.
+For `S1` and `S2` implementation or fix work, ensure
+`runs/{run_id}/pre-implementation-status.md` exists before the first product
+source, test, migration, build, deployment, or application configuration edit.
 
-Do not expand scope silently. Record scope reconciliation when changed files or behavior differ from the plan.
+Do not expand scope silently. Return scope reconciliation when changed files or behavior differ from the plan.
 
 For testable behavior changes, use `cadence-tdd` during implementation. For bugs, incidents, failing tests, or unclear cause, use `cadence-debug` before changing production code.
 

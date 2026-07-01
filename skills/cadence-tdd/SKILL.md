@@ -36,10 +36,10 @@ If implementation code came first:
 - `../../references/implementation-discipline.md`
 - `testing-anti-patterns.md` when writing or changing tests, adding mocks, or
   tempted to add production methods only for tests.
-- `../../references/harness.md` when recording persistent run evidence.
+- `../../references/harness.md` when persistent run evidence is required.
 - `../../references/quality-gates.md` when deciding whether evidence is enough
   to continue.
-- `../../references/spec-templates.md` when updating task artifacts.
+- `../../references/spec-templates.md` when task artifact content is required.
 
 ## When to Use
 
@@ -59,16 +59,16 @@ repository rule applies. Common exception candidates:
 - pure configuration change;
 - environment limitation that prevents useful test-first feedback.
 
-Record the exception, substitute feedback, and residual risk in Harness
-evidence and task artifacts. Thinking "skip TDD just this once" is a red flag,
+Return the exception, substitute feedback, and residual risk for
+Supervisor/Harness recording. Thinking "skip TDD just this once" is a red flag,
 not an exception.
 
 ## Pre-Implementation Baseline
 
-For `S1` and `S2` implementation or fix work, capture
-`runs/{run_id}/pre-implementation-status.md` before writing the Red test or any
-product source, migration, build, deployment, or application configuration
-change.
+For `S1` and `S2` implementation or fix work, ensure a
+`runs/{run_id}/pre-implementation-status.md` baseline is available before writing
+the Red test or any product source, migration, build, deployment, or application
+configuration change.
 
 If test or production files were already changed, mark
 `post_hoc_backfill: true` and keep the relevant gates blocked unless a named
@@ -266,7 +266,7 @@ record the named Human exception.
 
 ## Evidence
 
-Record these when artifacts are being written:
+Return these evidence fields when artifacts are being written:
 
 - pre-implementation baseline path and status;
 - Red test path, command, failure output, and expected failure reason;
@@ -274,8 +274,9 @@ Record these when artifacts are being written:
 - Refactor changes and verification that tests stayed green;
 - skipped checks, TDD exception, substitute feedback, and residual risk.
 
-`05-implementation.md` should include Red, Green, and Refactor evidence or a
-named Human-approved exception.
+The implementation handoff should include Red, Green, and Refactor evidence or a
+named Human-approved exception for `05-implementation.md` when persistent
+artifacts are being used.
 
 ## Final Rule
 
@@ -285,7 +286,7 @@ Otherwise -> not TDD.
 ```
 
 No exception is valid unless a named Human accepted it and the substitute
-feedback is recorded.
+feedback is returned for Supervisor/Harness recording.
 
 ## Supervisor Boundary
 

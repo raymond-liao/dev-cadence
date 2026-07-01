@@ -375,7 +375,7 @@ function checkCadenceClarifyContract() {
     'Ask focused clarification questions one at a time.',
     'Present 2-3 viable interpretations or approaches with tradeoffs and a recommendation',
     'Present requirements or design in sections scaled to complexity',
-    'Ask the Human to review the written artifacts when persistent artifacts are used.',
+    'Ask the Human to review clarified requirements/design when persistent artifacts are used.',
     '## Process Flow',
     'The terminal state is a handoff to `using-dev-cadence` recommending `cadence-plan`',
     'Do not invoke `cadence-plan`, `cadence-executing-plans`, `cadence-tdd`, or implementation actions directly from this Skill.',
@@ -669,34 +669,22 @@ function checkCadenceReviewBoundary() {
     'This Skill is not a generic review-feedback bucket.',
     'Non-code feedback returns to',
     '`using-dev-cadence` for routing',
-    '## Response Pattern',
     'WHEN receiving code review feedback:',
-    '1. READ: Complete feedback without reacting',
-    '6. IMPLEMENT: One valid item at a time, test each fix',
+    'First read all code review feedback before making changes.',
     '## Forbidden Responses',
-    '**NEVER:**',
-    '"You\'re absolutely right!"',
-    '"Great point!"',
-    '"Excellent feedback!"',
     '"Let me implement that now" before verification.',
     '"Thanks for catching that" or any gratitude-only response.',
-    '**INSTEAD:**',
     '## Handling Unclear Code Review Feedback',
     'STOP - do not implement anything yet',
     'Partial understanding = wrong implementation.',
-    '## Source-Specific Handling',
-    '### From the Human',
-    '### From External Reviewers or Automated Review',
     'Check: technically correct for this codebase?',
     'If you cannot verify it, say what evidence is missing',
     '## YAGNI Check for Professionalized Suggestions',
     'search the codebase for actual callers or users',
     'Do not add speculative functionality only because a review comment sounds',
-    '## Implementation Order',
     'Clarify anything unclear FIRST',
     'Verify no regressions',
     '## When To Push Back',
-    'How to push back:',
     'use technical reasoning, not defensiveness;',
     '## Acknowledging Correct Feedback',
     'When code review feedback is correct:',
@@ -705,10 +693,6 @@ function checkCadenceReviewBoundary() {
     '❌ Any gratitude-only response.',
     'Actions and evidence are the acknowledgment.',
     'If you push back and later prove yourself wrong, correct course factually:',
-    '## Real Examples',
-    'Performative Agreement (Bad)',
-    'Technical Verification (Good)',
-    'YAGNI (Good)',
     '## GitHub Thread Replies',
     '## Dev Cadence Boundary',
     '## Common Mistakes',
@@ -875,6 +859,39 @@ function checkConcreteSkillSupervisorBoundary() {
   }
 }
 
+function checkConcreteSkillResponsibilityBoundary() {
+  const supervisorHarnessSkills = new Set([
+    'using-dev-cadence',
+    'cadence-verify',
+    'cadence-sync',
+  ]);
+  const concreteBehaviorSkills = EXPECTED_SKILLS.filter((name) => !supervisorHarnessSkills.has(name));
+  const forbiddenPatterns = [
+    /\b(?:write|update|create)\s+or\s+(?:update|create)\s+`?specs\/records/i,
+    /\bwrite\/update\s+artifacts/i,
+    /\bupdate\s+artifacts\b/i,
+    /\bupdate\s+task\s+artifacts\b/i,
+    /\brecord\s+Harness\s+evidence\b/i,
+    /\brecording\s+persistent\s+run\s+evidence\b/i,
+    /\bwhen\s+artifacts\s+are\s+being\s+written,\s+record\b/i,
+    /\brecord\s+required\s+pre-implementation\s+status\b/i,
+    /\brecord\s+integration\s+evidence\b/i,
+  ];
+
+  for (const skillName of concreteBehaviorSkills) {
+    const sourceFile = `skills/${skillName}/SKILL.md`;
+    const text = readText(sourceFile);
+    const lines = text.split('\n');
+    lines.forEach((line, index) => {
+      for (const pattern of forbiddenPatterns) {
+        if (pattern.test(line)) {
+          fail(`${sourceFile}:${index + 1}: concrete Skill must return handoff data, not own Supervisor/Harness artifact work: ${line.trim()}`);
+        }
+      }
+    });
+  }
+}
+
 function checkPluginSurface() {
   if (embeddedRuntime) {
     const required = [
@@ -928,6 +945,7 @@ checkReviewDisciplineContract();
 checkStagedReviewerPromptContract();
 checkCodeReviewerPromptContract();
 checkConcreteSkillSupervisorBoundary();
+checkConcreteSkillResponsibilityBoundary();
 
 if (errors.length > 0) {
   for (const message of errors) {
