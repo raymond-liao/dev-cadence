@@ -691,7 +691,7 @@ function checkCadenceReviewBoundary() {
   }
 }
 
-function checkCadenceRequestReviewContract() {
+function checkCadenceRequestCodeReviewContract() {
   const sourceFile = 'skills/cadence-request-code-review/SKILL.md';
   const text = readText(sourceFile);
   const required = [
@@ -870,7 +870,7 @@ checkCadenceTddContract();
 checkImplementationDisciplineBoundary();
 checkCadenceVerifyContract();
 checkVerificationDisciplineBoundary();
-checkCadenceRequestReviewContract();
+checkCadenceRequestCodeReviewContract();
 checkCadenceReviewBoundary();
 checkReviewDisciplineContract();
 checkStagedReviewerPromptContract();

@@ -104,29 +104,38 @@ function run(command, args, cwd) {
   };
 }
 
-function gitStatus(repoDir) {
-  const result = run('git', ['status', '--porcelain=v1', '--untracked-files=all'], repoDir);
-  if (result.status !== 0) {
-    throw new Error(`git status failed: ${result.stderr || result.stdout}`);
-  }
-  return result.stdout
-    .split('\n')
-    .map((line) => line.trimEnd())
-    .filter(Boolean)
-    .map(parseStatusLine);
+function runBuffer(command, args, cwd) {
+  const result = spawnSync(command, args, { cwd });
+  return {
+    command: [command, ...args].join(' '),
+    status: result.status,
+    stdout: result.stdout,
+    stderr: result.stderr.toString('utf8').trim(),
+  };
 }
 
-function parseStatusLine(line) {
-  const match = line.match(/^(.{1,2})\s+(.+)$/);
-  if (!match) {
-    return { code: '', path: line.trim() };
+function gitStatus(repoDir) {
+  const result = runBuffer('git', ['status', '--porcelain=v1', '-z', '--untracked-files=all'], repoDir);
+  if (result.status !== 0) {
+    throw new Error(`git status failed: ${result.stderr || result.stdout.toString('utf8')}`);
   }
-  const code = match[1].padEnd(2, ' ');
-  let filePath = match[2];
-  if (filePath.includes(' -> ')) {
-    filePath = filePath.split(' -> ').at(-1);
+  return parseStatusEntries(result.stdout);
+}
+
+function parseStatusEntries(output) {
+  const entries = output.toString('utf8').split('\0').filter(Boolean);
+  const result = [];
+  for (let index = 0; index < entries.length; index += 1) {
+    const entry = entries[index];
+    const code = entry.slice(0, 2).padEnd(2, ' ');
+    const filePath = entry.slice(3);
+    if (!filePath) continue;
+    if (code.startsWith('R') || code.startsWith('C')) {
+      index += 1;
+    }
+    result.push({ code, path: filePath });
   }
-  return { code, path: filePath };
+  return result;
 }
 
 function yamlBlocks(text) {

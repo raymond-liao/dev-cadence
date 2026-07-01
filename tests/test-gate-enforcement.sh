@@ -692,14 +692,18 @@ cat > "${SPECS_DIR}/${TASK_ID}/05-implementation.md" <<'EOF'
 status: implemented
 planned_files:
   - src/app.txt
+  - src/file with spaces.txt
 changed_files:
   - src/app.txt
+  - src/file with spaces.txt
 created_artifact_files: []
 unplanned_changed_files: []
 deleted_files: []
 scope_reconciliation: passed
 ```
 EOF
+
+printf 'planned special path\n' > "${REPO_DIR}/src/file with spaces.txt"
 
 cat > "${SPECS_DIR}/${TASK_ID}/08-acceptance.md" <<'EOF'
 # Acceptance
@@ -741,6 +745,7 @@ node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
 grep -Fq "Workflow tasks: ${TASK_ID}" "${OUTPUT_DIR}/workflow-ready.out"
 grep -Fq "Scope: mixed" "${OUTPUT_DIR}/workflow-ready.out"
 grep -Fq "Commit readiness: passed" "${OUTPUT_DIR}/workflow-ready.out"
+grep -Fq "src/file with spaces.txt" "${OUTPUT_DIR}/workflow-ready.out"
 
 printf 'scratch\n' > "${REPO_DIR}/src/extra.txt"
 assert_command_fails_with \

@@ -259,24 +259,33 @@ function verify(options, report) {
   const agents = readIfExists(path.join(options.targetDir, 'AGENTS.md')) || '';
   const gitignore = readIfExists(path.join(options.targetDir, '.gitignore')) || '';
   const runtimeDir = path.join(options.targetDir, EMBEDDED_RUNTIME_DIR);
+  const hasPlannedChange = (relativePath) => (
+    report.files_added.includes(relativePath) || report.files_updated.includes(relativePath)
+  );
+  const hasPlannedRuntimeFile = (relativePath) => hasPlannedChange(`${EMBEDDED_RUNTIME_DIR}/${relativePath}`);
 
   report.verification.push({
     check: 'AGENTS.md requires repo-embedded Dev Cadence entrypoint',
-    status: agents.includes(`${EMBEDDED_RUNTIME_DIR}/skills/using-dev-cadence/SKILL.md`) ? 'pass' : 'missing',
+    status: agents.includes(`${EMBEDDED_RUNTIME_DIR}/skills/using-dev-cadence/SKILL.md`) ||
+      hasPlannedChange('AGENTS.md') ? 'pass' : 'missing',
   });
   report.verification.push({
     check: '.dev-cadence runtime exists',
     status: fs.existsSync(path.join(runtimeDir, 'manifest.json')) &&
-      fs.existsSync(path.join(runtimeDir, 'skills', 'using-dev-cadence', 'SKILL.md')) ? 'pass' : 'missing',
+      fs.existsSync(path.join(runtimeDir, 'skills', 'using-dev-cadence', 'SKILL.md')) ||
+      (hasPlannedRuntimeFile('manifest.json') &&
+        hasPlannedRuntimeFile('skills/using-dev-cadence/SKILL.md')) ? 'pass' : 'missing',
   });
   report.verification.push({
     check: '.dev-cadence.yaml exists and is ignored',
     status: fs.existsSync(path.join(options.targetDir, '.dev-cadence.yaml')) &&
-      gitignore.split(/\r?\n/).some((line) => line.trim() === '.dev-cadence.yaml') ? 'pass' : 'missing',
+      gitignore.split(/\r?\n/).some((line) => line.trim() === '.dev-cadence.yaml') ||
+      (hasPlannedChange('.dev-cadence.yaml') && hasPlannedChange('.gitignore')) ? 'pass' : 'missing',
   });
   report.verification.push({
     check: 'specs/records exists',
-    status: fs.existsSync(path.join(options.targetDir, SPECS_ROOT_DIR, RECORDS_DIR)) ? 'pass' : 'missing',
+    status: fs.existsSync(path.join(options.targetDir, SPECS_ROOT_DIR, RECORDS_DIR)) ||
+      hasPlannedChange(`${SPECS_ROOT_DIR}/${RECORDS_DIR}/.gitkeep`) ? 'pass' : 'missing',
   });
 }
 

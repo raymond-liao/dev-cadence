@@ -24,6 +24,11 @@ if rg -n 'cadence-address-review' references skills templates scripts .codex-plu
   exit 1
 fi
 
+if rg -n 'cadence-request-review' references skills templates scripts .codex-plugin docs README.md; then
+  echo "ERROR old code review request Skill name found; use cadence-request-code-review" >&2
+  exit 1
+fi
+
 if rg -n 'cadence-execute([^a-z-]|$)' references skills templates scripts .codex-plugin docs README.md; then
   echo "ERROR old plan execution Skill name found; use cadence-executing-plans" >&2
   exit 1

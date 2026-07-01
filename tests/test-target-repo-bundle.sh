@@ -7,7 +7,9 @@ TARGET_DIR="$(mktemp -d /private/tmp/dev-cadence-target-repo.XXXXXX)"
 REPORT_JSON="$(mktemp /private/tmp/dev-cadence-target-bundle-report.XXXXXX.json)"
 SYNC_JSON="${TARGET_DIR}/sync-report.json"
 SYNC_AGAIN_JSON="${TARGET_DIR}/sync-again-report.json"
-trap 'rm -rf "${BUNDLE_DIR}" "${TARGET_DIR}" "${REPORT_JSON}"' EXIT
+DRY_RUN_TARGET_DIR="$(mktemp -d /private/tmp/dev-cadence-target-dry-run.XXXXXX)"
+DRY_RUN_JSON="${DRY_RUN_TARGET_DIR}/dry-run-report.json"
+trap 'rm -rf "${BUNDLE_DIR}" "${TARGET_DIR}" "${DRY_RUN_TARGET_DIR}" "${REPORT_JSON}"' EXIT
 
 node "${ROOT_DIR}/scripts/package-target-repo-bundle.mjs" \
   --output-dir "${BUNDLE_DIR}" \
@@ -42,6 +44,20 @@ test ! -e "${BUNDLE_DIR}/tests"
 
 node "${ROOT_DIR}/scripts/check-skill-package.mjs" "${BUNDLE_DIR}/.dev-cadence" > /dev/null
 node "${ROOT_DIR}/scripts/check-discipline-routes.mjs" "${BUNDLE_DIR}/.dev-cadence" > /dev/null
+
+cat > "${DRY_RUN_TARGET_DIR}/AGENTS.md" <<'EOF'
+# Dry Run Product Agent Rules
+EOF
+
+node "${ROOT_DIR}/scripts/sync-target-repo-bundle.mjs" \
+  --target "${DRY_RUN_TARGET_DIR}" \
+  --bundle-dir "${BUNDLE_DIR}" \
+  --dry-run \
+  --json > "${DRY_RUN_JSON}"
+
+test ! -e "${DRY_RUN_TARGET_DIR}/.dev-cadence"
+test ! -e "${DRY_RUN_TARGET_DIR}/.dev-cadence.yaml"
+test ! -e "${DRY_RUN_TARGET_DIR}/specs/records/.gitkeep"
 
 cat > "${TARGET_DIR}/AGENTS.md" <<'EOF'
 # Product Agent Rules
@@ -83,14 +99,15 @@ node "${ROOT_DIR}/scripts/sync-target-repo-bundle.mjs" \
 grep -q "artifact_language: zh" "${TARGET_DIR}/.dev-cadence.yaml"
 test ! -e "${TARGET_DIR}/.dev-cadence/references/source-maintenance"
 
-node --input-type=module - "${REPORT_JSON}" "${SYNC_JSON}" "${SYNC_AGAIN_JSON}" "${TARGET_DIR}" <<'NODE'
+node --input-type=module - "${REPORT_JSON}" "${SYNC_JSON}" "${SYNC_AGAIN_JSON}" "${TARGET_DIR}" "${DRY_RUN_JSON}" <<'NODE'
 import fs from 'node:fs';
 import path from 'node:path';
 
-const [reportPath, syncPath, syncAgainPath, targetDir] = process.argv.slice(2);
+const [reportPath, syncPath, syncAgainPath, targetDir, dryRunPath] = process.argv.slice(2);
 const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
 const sync = JSON.parse(fs.readFileSync(syncPath, 'utf8'));
 const syncAgain = JSON.parse(fs.readFileSync(syncAgainPath, 'utf8'));
+const dryRun = JSON.parse(fs.readFileSync(dryRunPath, 'utf8'));
 const manifest = JSON.parse(fs.readFileSync(path.join(targetDir, '.dev-cadence/manifest.json'), 'utf8'));
 
 function assert(condition, message) {
@@ -102,6 +119,12 @@ function assert(condition, message) {
 assert(report.files_copied.includes('.dev-cadence/manifest.json'), 'bundle report must include runtime manifest');
 assert(report.files_copied.includes('AGENTS.dev-cadence-section.md'), 'bundle report must include AGENTS section');
 assert(report.checks.every((check) => check.status === 0), 'bundle checks must pass');
+assert(dryRun.dry_run === true, 'dry run report must mark dry_run');
+assert(dryRun.files_added.includes('.dev-cadence/skills/using-dev-cadence/SKILL.md'), 'dry run must plan embedded entrypoint');
+assert(dryRun.files_updated.includes('AGENTS.md'), 'dry run must plan AGENTS update');
+assert(dryRun.files_added.includes('.dev-cadence.yaml'), 'dry run must plan local yaml');
+assert(dryRun.files_added.includes('specs/records/.gitkeep'), 'dry run must plan specs records gitkeep');
+assert(dryRun.verification.every((item) => item.status === 'pass'), 'dry run verification must reflect planned state');
 assert(manifest.name === 'dev-cadence', 'embedded manifest name must be dev-cadence');
 assert(manifest.entrypoint === 'skills/using-dev-cadence/SKILL.md', 'embedded manifest entrypoint must be set');
 assert(sync.files_added.includes('.dev-cadence/skills/using-dev-cadence/SKILL.md'), 'sync must add embedded entrypoint');
