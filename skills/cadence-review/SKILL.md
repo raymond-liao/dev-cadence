@@ -5,7 +5,7 @@ description: Address Dev Cadence review feedback. Use after code review, checkpo
 
 # Cadence Review
 
-Use this Skill after review findings exist and the task is to handle those findings. This Skill is separate from `cadence-request-review`: request-review produces findings; this Skill verifies and addresses them.
+Use this Skill after review findings exist and the task is to handle those findings. This Skill is separate from `cadence-request-code-review`: request-code-review produces findings; this Skill verifies and addresses them.
 
 Core principle: review feedback is input to evaluate, not an order to obey.
 Verify before implementing. Ask before assuming.
@@ -68,7 +68,7 @@ route the work to `cadence-tdd` or `cadence-executing-plans`. This Skill may
 record the finding, validity, scope, and recommended next state, but it must not
 own the test-writing discipline.
 
-Do not treat "addressed" as "approved". After fixes, return to `cadence-request-review` for re-review and then `cadence-verify` before any completion claim.
+Do not treat "addressed" as "approved". After fixes, return to `cadence-request-code-review` for re-review and then `cadence-verify` before any completion claim.
 
 ## Supervisor Boundary
 

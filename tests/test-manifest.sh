@@ -35,7 +35,7 @@ const requiredSkills = [
   'cadence-dispatch-parallel',
   'cadence-tdd',
   'cadence-debug',
-  'cadence-request-review',
+  'cadence-request-code-review',
   'cadence-review',
   'cadence-verify',
   'cadence-sync',

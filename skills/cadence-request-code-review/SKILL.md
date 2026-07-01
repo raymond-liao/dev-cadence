@@ -1,9 +1,9 @@
 ---
-name: cadence-request-review
+name: cadence-request-code-review
 description: Request or perform Dev Cadence review of completed implementation work. Use for checkpoint review, final implementation review, code review requests, or when implementation needs spec compliance and code quality assessment before verification or completion.
 ---
 
-# Cadence Request Review
+# Cadence Request Code Review
 
 Use this Skill to request or perform review of implementation work. It produces findings and a review decision. It does not implement fixes for review feedback.
 
@@ -40,6 +40,19 @@ Review in two stages:
 Do not run code quality review before spec compliance passes or unresolved spec gaps are recorded.
 
 Findings lead. Blocker or major issues block progress unless a named Human Gate accepts the residual risk.
+
+## Reviewer Prompt Selection
+
+Use `spec-compliance-reviewer.md` for the first review stage. Use
+`code-quality-reviewer.md` for the second stage after spec compliance passes.
+Use `code-reviewer.md` for full-diff review, major feature review, or final
+implementation review when one reviewer must cover both alignment and code
+quality.
+
+Every reviewer request must include a concrete review target: changed files,
+diff path, staged diff, or base/head revision range. Reviewers must inspect the
+actual work product, artifacts, and evidence; do not ask for judgment from an
+implementer summary alone.
 
 ## Reviewer Context
 

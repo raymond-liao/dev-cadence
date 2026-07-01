@@ -289,7 +289,7 @@ Review code, architecture fit, maintainability, security, and residual risk.
 
 Hand off review decision, findings, residual risk, and required fixes to Supervisor or Developer.
 
-When dispatching reviewer Workers through Harness, use `skills/cadence-request-review/spec-compliance-reviewer.md`, then `skills/cadence-request-review/code-quality-reviewer.md` or `skills/cadence-request-review/code-reviewer.md` after spec compliance passes.
+When dispatching reviewer Workers through Harness, use `skills/cadence-request-code-review/spec-compliance-reviewer.md`, then `skills/cadence-request-code-review/code-quality-reviewer.md` or `skills/cadence-request-code-review/code-reviewer.md` after spec compliance passes.
 
 ### Escalation Conditions
 

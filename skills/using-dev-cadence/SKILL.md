@@ -63,7 +63,7 @@ Before acting on software delivery work, identify the current workflow state, ta
 - independent domains that can run concurrently -> `cadence-dispatch-parallel`;
 - testable behavior change during implementation -> `cadence-tdd`;
 - bug, incident, failing test, or unknown cause -> `cadence-debug`;
-- implementation checkpoint, final review, or code review request -> `cadence-request-review`;
+- implementation checkpoint, final review, or code review request -> `cadence-request-code-review`;
 - review feedback, requested changes, or reviewer findings to fix -> `cadence-review`;
 - before claiming fixed, done, passing, approved, or complete -> `cadence-verify`.
 
@@ -72,9 +72,9 @@ If multiple Skills apply, use them in workflow order. These Skills are cumulativ
 Common sequences:
 
 - research spike: `cadence-clarify` when the research question or decision boundary is unclear -> `cadence-research` -> Human decision or `cadence-clarify`/`cadence-plan` for approved delivery follow-up;
-- feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance;
-- bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance;
-- review request: `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance when the user asks to accept or finish;
+- feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-code-review` -> `cadence-review` when findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance;
+- bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-code-review` -> `cadence-review` when findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance;
+- review request: `cadence-request-code-review` -> `cadence-review` when findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance when the user asks to accept or finish;
 - verification or completion claim: `cadence-verify` -> Human acceptance when final completion is requested;
 - repository setup or drift repair: `cadence-sync`, then return to the delivery sequence only if the same user turn requests product work.
 

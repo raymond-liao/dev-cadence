@@ -93,7 +93,7 @@ test -x "${PLUGIN_DIR}/skills/cadence-debug/find-polluter.sh" || {
   echo "expected packaged skills/cadence-debug/find-polluter.sh to be executable" >&2
   exit 1
 }
-assert_exists "skills/cadence-request-review/SKILL.md"
+assert_exists "skills/cadence-request-code-review/SKILL.md"
 assert_exists "skills/cadence-review/SKILL.md"
 assert_exists "skills/cadence-verify/SKILL.md"
 assert_exists "skills/cadence-sync/SKILL.md"
@@ -115,9 +115,9 @@ assert_exists "templates/runs/run-context.md"
 assert_exists "templates/spec/research-report.md"
 assert_exists "templates/runs/pre-implementation-status.md"
 assert_exists "templates/prompts/implementer.md"
-assert_exists "skills/cadence-request-review/spec-compliance-reviewer.md"
-assert_exists "skills/cadence-request-review/code-quality-reviewer.md"
-assert_exists "skills/cadence-request-review/code-reviewer.md"
+assert_exists "skills/cadence-request-code-review/spec-compliance-reviewer.md"
+assert_exists "skills/cadence-request-code-review/code-quality-reviewer.md"
+assert_exists "skills/cadence-request-code-review/code-reviewer.md"
 assert_absent "templates/prompts/spec-compliance-reviewer.md"
 assert_absent "templates/prompts/code-quality-reviewer.md"
 assert_absent "templates/prompts/code-reviewer.md"

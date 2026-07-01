@@ -80,7 +80,7 @@ Published Skills:
 - `cadence-tdd`: apply Red-Green-Refactor for testable behavior changes.
 - `cadence-debug`: diagnose bugs, incidents, failing tests, regressions, and
   unclear root cause.
-- `cadence-request-review`: review implementation for spec compliance and code
+- `cadence-request-code-review`: review implementation for spec compliance and code
   quality.
 - `cadence-review`: verify and address existing review feedback, then request
   re-review.
@@ -157,7 +157,7 @@ templates live under `templates/runs/`. Shared Worker prompt templates live
 under `templates/prompts/`. Skill-specific resources, such as
 `skills/cadence-clarify/visual-companion.md`,
 `skills/cadence-clarify/spec-document-reviewer-prompt.md`,
-`skills/cadence-request-review/code-reviewer.md`, and
+`skills/cadence-request-code-review/code-reviewer.md`, and
 `skills/cadence-clarify/scripts/`, live with the owning Skill. Debugging
 techniques such as `skills/cadence-debug/root-cause-tracing.md`,
 `skills/cadence-debug/condition-based-waiting.md`, and

@@ -21,7 +21,7 @@ For each Worker run, provide:
 
 Use shared prompt templates under `templates/prompts/` when dispatching generic
 Workers. Use Skill-local prompts when the owning Skill provides them, such as
-`skills/cadence-request-review/code-reviewer.md` for reviewer Workers.
+`skills/cadence-request-code-review/code-reviewer.md` for reviewer Workers.
 
 ## Subagent-Style Execution
 

@@ -17,6 +17,14 @@ TEST_REPORT_PATH: {TEST_REPORT_PATH}
 BASE_REVISION: {BASE_REVISION}
 HEAD_REVISION: {HEAD_REVISION}
 
+## Read-Only Review
+
+Your review is read-only. Do not mutate the working tree, index, HEAD, branch
+state, specs, or run evidence. Inspect the actual diff or revision range, source
+files, tests, and artifacts before making claims. If another revision must be
+inspected, use a separate temporary checkout instead of moving HEAD in this
+checkout.
+
 ## What to Check
 
 Correctness:

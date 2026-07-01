@@ -22,9 +22,24 @@ TASKS_PATH: {TASKS_PATH}
 
 {IMPLEMENTER_REPORT}
 
+## Review Target
+
+CHANGED_FILES: {CHANGED_FILES}
+DIFF_PATH_OR_RANGE: {DIFF_PATH_OR_RANGE}
+TEST_REPORT_PATH: {TEST_REPORT_PATH}
+
+## Read-Only Review
+
+Your review is read-only. Do not mutate the working tree, index, HEAD, branch
+state, specs, or run evidence. Inspect the actual files, diffs, tests, and
+artifacts. If another revision must be inspected, use a separate temporary
+checkout instead of moving HEAD in this checkout.
+
 ## Critical Rule
 
-Do not trust the implementer report by itself. Verify against actual files, diffs, tests, and artifacts.
+Do not trust the implementer report by itself. Verify against actual files,
+diffs, tests, and artifacts. Do not rely on chat history or implementer
+commentary that is not included in the review inputs.
 
 ## What to Check
 
@@ -64,4 +79,7 @@ issues:
 
 scope_reconciliation:
 - planned_vs_actual finding
+
+verdict: compliant | issues_found | blocked
+reasoning:
 ```

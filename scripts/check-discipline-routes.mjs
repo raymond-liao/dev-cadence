@@ -12,7 +12,7 @@ const EXPECTED_SKILLS = [
   'cadence-dispatch-parallel',
   'cadence-tdd',
   'cadence-debug',
-  'cadence-request-review',
+  'cadence-request-code-review',
   'cadence-review',
   'cadence-verify',
   'cadence-sync',
@@ -172,9 +172,9 @@ function checkSourceMaintenanceContract() {
 function checkPromptTemplates() {
   const required = [
     'skills/cadence-clarify/spec-document-reviewer-prompt.md',
-    'skills/cadence-request-review/spec-compliance-reviewer.md',
-    'skills/cadence-request-review/code-quality-reviewer.md',
-    'skills/cadence-request-review/code-reviewer.md',
+    'skills/cadence-request-code-review/spec-compliance-reviewer.md',
+    'skills/cadence-request-code-review/code-quality-reviewer.md',
+    'skills/cadence-request-code-review/code-reviewer.md',
     'templates/prompts/plan-document-reviewer.md',
     'templates/prompts/implementer.md',
   ];
@@ -345,8 +345,8 @@ function checkUsingDevCadenceContract() {
     'These Skills are cumulative, not alternatives.',
     'Common sequences:',
     'research spike: `cadence-clarify` when the research question or decision boundary is unclear -> `cadence-research` -> Human decision or `cadence-clarify`/`cadence-plan` for approved delivery follow-up',
-    'feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance',
-    'bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-review` -> `cadence-review` when findings require fixes -> `cadence-request-review` -> `cadence-verify` -> Human acceptance',
+    'feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-code-review` -> `cadence-review` when findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance',
+    'bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-code-review` -> `cadence-review` when findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance',
     '## Red Flags',
     'reading files, checking git, or exploring the repository before checking the applicable cadence Skill',
     'thinking the request is too small, too obvious, or too urgent for a cadence Skill',
@@ -692,7 +692,7 @@ function checkCadenceReviewBoundary() {
 }
 
 function checkCadenceRequestReviewContract() {
-  const sourceFile = 'skills/cadence-request-review/SKILL.md';
+  const sourceFile = 'skills/cadence-request-code-review/SKILL.md';
   const text = readText(sourceFile);
   const required = [
     'review the work product, not the implementer',
@@ -701,6 +701,12 @@ function checkCadenceRequestReviewContract() {
     'Do not pass the current chat history as reviewer context.',
     'Reviewer Workers are read-only:',
     'do not mutate the working tree, index, branch state, specs, or run evidence;',
+    '## Reviewer Prompt Selection',
+    'Use `spec-compliance-reviewer.md` for the first review stage.',
+    '`code-quality-reviewer.md` for the second stage after spec compliance passes.',
+    'Every reviewer request must include a concrete review target',
+    'Reviewers must inspect the',
+    'actual work product, artifacts, and evidence',
     '## Review Output',
     'findings grouped by `blocker`, `major`, `minor`, and `note`',
     'explicit verdict: `approved`, `approved_with_minor_notes`,',
@@ -709,7 +715,7 @@ function checkCadenceRequestReviewContract() {
 
   for (const phrase of required) {
     if (!text.includes(phrase)) {
-      fail(`${sourceFile}: missing request-review contract phrase: ${phrase}`);
+      fail(`${sourceFile}: missing request-code-review contract phrase: ${phrase}`);
     }
   }
 }
@@ -736,8 +742,44 @@ function checkReviewDisciplineContract() {
   }
 }
 
+function checkStagedReviewerPromptContract() {
+  const expectations = [
+    {
+      file: 'skills/cadence-request-code-review/spec-compliance-reviewer.md',
+      phrases: [
+        '## Review Target',
+        'CHANGED_FILES: {CHANGED_FILES}',
+        'DIFF_PATH_OR_RANGE: {DIFF_PATH_OR_RANGE}',
+        '## Read-Only Review',
+        'Do not mutate the working tree, index, HEAD, branch',
+        'Do not trust the implementer report by itself.',
+        'Do not rely on chat history or implementer',
+        'verdict: compliant | issues_found | blocked',
+      ],
+    },
+    {
+      file: 'skills/cadence-request-code-review/code-quality-reviewer.md',
+      phrases: [
+        '## Read-Only Review',
+        'Do not mutate the working tree, index, HEAD, branch',
+        'Inspect the actual diff or revision range',
+        'decision: approved | approved_with_minor_notes | changes_requested | blocked',
+      ],
+    },
+  ];
+
+  for (const expectation of expectations) {
+    const text = readText(expectation.file);
+    for (const phrase of expectation.phrases) {
+      if (!text.includes(phrase)) {
+        fail(`${expectation.file}: missing staged reviewer prompt phrase: ${phrase}`);
+      }
+    }
+  }
+}
+
 function checkCodeReviewerPromptContract() {
-  const sourceFile = 'skills/cadence-request-review/code-reviewer.md';
+  const sourceFile = 'skills/cadence-request-code-review/code-reviewer.md';
   const text = readText(sourceFile);
   const required = [
     '## Read-Only Review',
@@ -831,6 +873,7 @@ checkVerificationDisciplineBoundary();
 checkCadenceRequestReviewContract();
 checkCadenceReviewBoundary();
 checkReviewDisciplineContract();
+checkStagedReviewerPromptContract();
 checkCodeReviewerPromptContract();
 checkConcreteSkillSupervisorBoundary();
 
