@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REPO_DIR="$(mktemp -d /private/tmp/dev-cadence-repo-contract.XXXXXX)"
+TMP_ROOT="${TMPDIR:-/tmp}"
+REPO_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-repo-contract.XXXXXX")"
 INIT_JSON="${REPO_DIR}/init.json"
 INSPECT_JSON="${REPO_DIR}/inspect.json"
 REPAIR_JSON="${REPO_DIR}/repair.json"

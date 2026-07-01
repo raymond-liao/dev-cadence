@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-FIXTURE_DIR="$(mktemp -d /private/tmp/dev-cadence-plugin-rules.XXXXXX)"
+TMP_ROOT="${TMPDIR:-/tmp}"
+FIXTURE_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-plugin-rules.XXXXXX")"
 trap 'rm -rf "${FIXTURE_DIR}"' EXIT
 
 PLUGIN_DIR="${FIXTURE_DIR}/plugins/dev-cadence"

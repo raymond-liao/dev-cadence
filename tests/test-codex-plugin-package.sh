@@ -2,10 +2,11 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PACKAGE_DIR="$(mktemp -d /private/tmp/dev-cadence-codex-plugin.XXXXXX)"
+TMP_ROOT="${TMPDIR:-/tmp}"
+PACKAGE_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-codex-plugin.XXXXXX")"
 PLUGIN_DIR="${PACKAGE_DIR}/plugins/dev-cadence"
 MARKETPLACE_FILE="${PACKAGE_DIR}/.agents/plugins/marketplace.json"
-SAFETY_ROOT="$(mktemp -d /private/tmp/dev-cadence-package-safety.XXXXXX)"
+SAFETY_ROOT="$(mktemp -d "${TMP_ROOT}/dev-cadence-package-safety.XXXXXX")"
 trap 'rm -rf "${PACKAGE_DIR}" "${SAFETY_ROOT}"' EXIT
 
 assert_exists() {

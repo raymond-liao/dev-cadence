@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REPO_DIR="$(mktemp -d /private/tmp/dev-cadence-report.XXXXXX)"
+TMP_ROOT="${TMPDIR:-/tmp}"
+REPO_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-report.XXXXXX")"
 TASK_ID="acceptance-login"
 PENDING_TASK_ID="pending-acceptance"
 ZH_TASK_ID="zh-report"
@@ -309,8 +310,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const report = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
-const specsDir = process.argv[3];
-const reportDir = process.argv[4];
+const specsDir = fs.realpathSync(process.argv[3]);
+const reportDir = fs.realpathSync(process.argv[4]);
 const pendingTaskId = process.argv[5];
 
 function assert(condition, message) {
@@ -319,8 +320,8 @@ function assert(condition, message) {
   }
 }
 
-assert(report.specs_dir === specsDir, 'report JSON must use requested specs dir');
-assert(report.report_dir === reportDir, 'report JSON must use requested report dir');
+assert(fs.realpathSync(report.specs_dir) === specsDir, 'report JSON must use requested specs dir');
+assert(fs.realpathSync(report.report_dir) === reportDir, 'report JSON must use requested report dir');
 assert(report.generated_files.includes('index.html'), 'report JSON must list root index');
 assert(report.generated_files.includes('acceptance-login/index.html'), 'report JSON must list task page');
 assert(report.generated_files.includes('acceptance-login/08-acceptance.html'), 'report JSON must list task artifact page');

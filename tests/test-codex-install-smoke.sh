@@ -13,10 +13,11 @@ if ! command -v codex > /dev/null 2>&1; then
   exit 1
 fi
 
-PACKAGE_DIR="$(mktemp -d /private/tmp/dev-cadence-codex-marketplace.XXXXXX)"
-CODEX_HOME_DIR="$(mktemp -d /private/tmp/dev-cadence-codex-home.XXXXXX)"
-MARKETPLACE_OUTPUT="$(mktemp /private/tmp/dev-cadence-codex-marketplace-add.XXXXXX.json)"
-PLUGIN_OUTPUT="$(mktemp /private/tmp/dev-cadence-codex-plugin-add.XXXXXX.json)"
+TMP_ROOT="${TMPDIR:-/tmp}"
+PACKAGE_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-codex-marketplace.XXXXXX")"
+CODEX_HOME_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-codex-home.XXXXXX")"
+MARKETPLACE_OUTPUT="$(mktemp "${TMP_ROOT}/dev-cadence-codex-marketplace-add.XXXXXX.json")"
+PLUGIN_OUTPUT="$(mktemp "${TMP_ROOT}/dev-cadence-codex-plugin-add.XXXXXX.json")"
 trap 'rm -rf "${PACKAGE_DIR}" "${CODEX_HOME_DIR}"; rm -f "${MARKETPLACE_OUTPUT}" "${PLUGIN_OUTPUT}"' EXIT
 
 node "${ROOT_DIR}/scripts/package-codex-plugin.mjs" \

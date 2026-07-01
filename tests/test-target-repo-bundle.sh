@@ -2,12 +2,13 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_DIR="$(mktemp -d /private/tmp/dev-cadence-target-bundle.XXXXXX)"
-TARGET_DIR="$(mktemp -d /private/tmp/dev-cadence-target-repo.XXXXXX)"
-REPORT_JSON="$(mktemp /private/tmp/dev-cadence-target-bundle-report.XXXXXX.json)"
+TMP_ROOT="${TMPDIR:-/tmp}"
+BUNDLE_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-target-bundle.XXXXXX")"
+TARGET_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-target-repo.XXXXXX")"
+REPORT_JSON="$(mktemp "${TMP_ROOT}/dev-cadence-target-bundle-report.XXXXXX.json")"
 SYNC_JSON="${TARGET_DIR}/sync-report.json"
 SYNC_AGAIN_JSON="${TARGET_DIR}/sync-again-report.json"
-DRY_RUN_TARGET_DIR="$(mktemp -d /private/tmp/dev-cadence-target-dry-run.XXXXXX)"
+DRY_RUN_TARGET_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-target-dry-run.XXXXXX")"
 DRY_RUN_JSON="${DRY_RUN_TARGET_DIR}/dry-run-report.json"
 trap 'rm -rf "${BUNDLE_DIR}" "${TARGET_DIR}" "${DRY_RUN_TARGET_DIR}" "${REPORT_JSON}"' EXIT
 

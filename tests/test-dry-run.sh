@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REPO_DIR="$(mktemp -d /private/tmp/dev-cadence-delivery.XXXXXX)"
+TMP_ROOT="${TMPDIR:-/tmp}"
+REPO_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-delivery.XXXXXX")"
 DRY_RUN_JSON="${REPO_DIR}/dry-run.json"
 SUMMARY_FILE="${REPO_DIR}/summary.txt"
 ZH_REPO_DIR="${REPO_DIR}/zh-warning-fixture"
