@@ -66,9 +66,9 @@ Critical or major findings require fix and re-review before acceptance.
 
 ## Receiving Review Feedback
 
-Receiving code review feedback is a separate action from producing review findings. Use `cadence-review` when Codex is asked to handle existing code review findings, PR comments, or code reviewer feedback. Use `cadence-request-code-review` to produce findings and review decisions.
+Receiving code review feedback is a separate action from producing review findings. Use `cadence-code-review` when Codex is asked to handle existing code review findings, PR comments, or code reviewer feedback. Use `cadence-request-code-review` to produce findings and review decisions.
 
-Do not use `cadence-review` as a generic feedback handler. Route non-code feedback by the object being changed: intent or acceptance feedback to `cadence-clarify`, design or plan feedback to `cadence-plan`, requested behavior changes to the normal implementation route, and evidence or completion feedback to `cadence-verify`.
+Do not use `cadence-code-review` as a generic feedback handler. Route non-code feedback by the object being changed: intent or acceptance feedback to `cadence-clarify`, design or plan feedback to `cadence-plan`, requested behavior changes to the normal implementation route, and evidence or completion feedback to `cadence-verify`.
 
 Do not blindly apply feedback. Read all feedback first, clarify unclear items
 before implementing, and verify each finding against code, tests, specs, and

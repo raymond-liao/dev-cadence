@@ -20,7 +20,7 @@ if rg -n 'specs/\{task_id\}' README.md AGENTS.md docs references skills template
 fi
 
 if rg -n 'cadence-address-review' references skills templates scripts .codex-plugin docs README.md; then
-  echo "ERROR old review feedback Skill name found; use cadence-review" >&2
+  echo "ERROR old review feedback Skill name found; use cadence-code-review" >&2
   exit 1
 fi
 

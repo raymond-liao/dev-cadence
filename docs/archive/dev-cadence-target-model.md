@@ -55,7 +55,7 @@ Codex Plugin
   scripts/
 ```
 
-实际发布时，Skill 名称应避免过长。概念上按工作动作命名；实现上使用短前缀避免和其他插件的同名 Skills 冲突，例如 `cadence-clarify`、`cadence-plan`、`cadence-tdd`、`cadence-review`、`cadence-verify` 和 `cadence-sync`。`using-dev-cadence` 可保留完整名称，因为它是 bootstrap 和治理入口。
+实际发布时，Skill 名称应避免过长。概念上按工作动作命名；实现上使用短前缀避免和其他插件的同名 Skills 冲突，例如 `cadence-clarify`、`cadence-plan`、`cadence-tdd`、`cadence-code-review`、`cadence-verify` 和 `cadence-sync`。`using-dev-cadence` 可保留完整名称，因为它是 bootstrap 和治理入口。
 
 ## 与 Superpowers 的关系
 
@@ -219,7 +219,7 @@ Harness evidence 的价值是可追踪，不是文件越多越好。
 决策：
 
 1. 概念文档中按动作命名，例如 `clarifying-intent`、`writing-delivery-plans`。
-2. Codex 发布时使用短前缀，例如 `cadence-clarify`、`cadence-plan`、`cadence-tdd`、`cadence-review`、`cadence-verify` 和 `cadence-sync`。
+2. Codex 发布时使用短前缀，例如 `cadence-clarify`、`cadence-plan`、`cadence-tdd`、`cadence-code-review`、`cadence-verify` 和 `cadence-sync`。
 3. `using-dev-cadence` 保持完整名称，因为它是 bootstrap 和治理入口。
 4. `syncing-repo-contract` 的发布名可缩短为 `cadence-sync`，不再使用 `init` 或 `maintain`。
 

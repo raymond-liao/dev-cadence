@@ -14,7 +14,7 @@ const EXPECTED_SKILLS = [
   'cadence-tdd',
   'cadence-debug',
   'cadence-request-code-review',
-  'cadence-review',
+  'cadence-code-review',
   'cadence-verify',
   'cadence-sync',
 ];

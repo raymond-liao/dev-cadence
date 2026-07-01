@@ -13,7 +13,7 @@ const EXPECTED_SKILLS = [
   'cadence-tdd',
   'cadence-debug',
   'cadence-request-code-review',
-  'cadence-review',
+  'cadence-code-review',
   'cadence-verify',
   'cadence-sync',
 ];
@@ -345,9 +345,9 @@ function checkUsingDevCadenceContract() {
     'These Skills are cumulative, not alternatives.',
     'Common sequences:',
     'research spike: `cadence-clarify` when the research question or decision boundary is unclear -> `cadence-research` -> Human decision or `cadence-clarify`/`cadence-plan` for approved delivery follow-up',
-    'feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-code-review` -> `cadence-review` when code findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance',
-    'bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-code-review` -> `cadence-review` when code findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance',
-    'code review feedback, PR comments, or code reviewer findings to fix -> `cadence-review`;',
+    'feature or behavior change: `cadence-clarify` -> `cadence-plan` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-code-review` -> `cadence-code-review` when code findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance',
+    'bug, incident, failing test, or regression: `cadence-debug` -> `cadence-tdd` or `cadence-executing-plans` -> `cadence-request-code-review` -> `cadence-code-review` when code findings require fixes -> `cadence-request-code-review` -> `cadence-verify` -> Human acceptance',
+    'code review feedback, PR comments, or code reviewer findings to fix -> `cadence-code-review`;',
     'non-code review feedback or requested changes -> classify by what changed:',
     'intent/acceptance -> `cadence-clarify`, design/plan -> `cadence-plan`, implementation behavior -> `cadence-tdd` or `cadence-executing-plans`, evidence/completion -> `cadence-verify`;',
     '## Red Flags',
@@ -658,8 +658,8 @@ function checkVerificationDisciplineBoundary() {
   }
 }
 
-function checkCadenceReviewBoundary() {
-  const sourceFile = 'skills/cadence-review/SKILL.md';
+function checkCadenceCodeReviewBoundary() {
+  const sourceFile = 'skills/cadence-code-review/SKILL.md';
   const text = readText(sourceFile);
   const required = [
     'Code review feedback requires technical evaluation, not emotional performance.',
@@ -762,7 +762,7 @@ function checkReviewDisciplineContract() {
     'Reviewers must not mutate the working tree, index, branch state, specs, or run',
     '`approved`, `approved_with_minor_notes`, `changes_requested`, or `blocked`',
     'Receiving code review feedback is a separate action from producing review findings.',
-    'Do not use `cadence-review` as a generic feedback handler.',
+    'Do not use `cadence-code-review` as a generic feedback handler.',
     'Route non-code feedback by the object being changed',
     'Do not blindly apply feedback.',
     'Read all feedback first, clarify unclear items',
@@ -940,7 +940,7 @@ checkImplementationDisciplineBoundary();
 checkCadenceVerifyContract();
 checkVerificationDisciplineBoundary();
 checkCadenceRequestCodeReviewContract();
-checkCadenceReviewBoundary();
+checkCadenceCodeReviewBoundary();
 checkReviewDisciplineContract();
 checkStagedReviewerPromptContract();
 checkCodeReviewerPromptContract();

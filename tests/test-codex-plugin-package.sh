@@ -95,7 +95,7 @@ test -x "${PLUGIN_DIR}/skills/cadence-debug/find-polluter.sh" || {
   exit 1
 }
 assert_exists "skills/cadence-request-code-review/SKILL.md"
-assert_exists "skills/cadence-review/SKILL.md"
+assert_exists "skills/cadence-code-review/SKILL.md"
 assert_exists "skills/cadence-verify/SKILL.md"
 assert_exists "skills/cadence-sync/SKILL.md"
 assert_absent "skills/dev-cadence-authoring"

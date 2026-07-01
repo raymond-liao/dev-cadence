@@ -1,9 +1,9 @@
 ---
-name: cadence-review
+name: cadence-code-review
 description: Address Dev Cadence code review feedback. Use after code review, PR review, or code reviewer findings when Codex must verify findings, fix valid issues, push back on invalid issues with evidence, rerun verification, and request re-review.
 ---
 
-# Cadence Review
+# Cadence Code Review
 
 ## Overview
 

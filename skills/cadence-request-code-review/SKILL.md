@@ -89,7 +89,7 @@ Every review must provide:
 
 Return review findings, verdict, and evidence for `specs/records/{task_id}/07-review-report.md` when persistent artifacts are being used.
 
-If review finds valid blocking issues, hand off to `cadence-review`. Do not fix findings inside this Skill.
+If review finds valid blocking issues, hand off to `cadence-code-review`. Do not fix findings inside this Skill.
 
 ## Supervisor Boundary
 
