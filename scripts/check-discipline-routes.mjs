@@ -397,9 +397,9 @@ function checkCadencePlanContract() {
   const sourceFile = 'skills/cadence-plan/SKILL.md';
   const text = readText(sourceFile);
   const required = [
-    'Create executable plans.',
+    'Create executable implementation plans.',
     'A Worker with no chat history and limited context must be able to complete one task',
-    'Vague plans are blocked at G3.',
+    'Vague plans fail planning review.',
     '## Scope Check',
     'multiple independent subsystems',
     'return a decomposition recommendation to `using-dev-cadence`',
@@ -410,25 +410,37 @@ function checkCadencePlanContract() {
     'smallest unit that carries its own test cycle and is worth an independent review gate',
     '## Plan Document Shape',
     '## Global Constraints',
-    'Do not leave bracketed placeholders in the final handoff content.',
+    'Replace bracketed placeholders with actual accepted values in the final handoff content.',
     '## Task Structure',
     '**Interfaces:**',
     '**Acceptance Mapping:**',
+    '**Test-First Plan:**',
+    'Red behavior or characterization:',
+    'Expected Red result:',
+    'Expected Green result:',
+    '**Test-First Exception:**',
+    '**Implementation Detail:**',
+    'Test detail: [test name, fixture/data shape, assertion, and expected failure]',
+    'Code detail: [function/type/API signatures, data fields, config keys, or pseudocode required]',
+    'New/changed surface: [exports, commands, user-visible behavior, or integration contract]',
     'Use checkbox (`- [ ]`) steps so execution can track progress.',
     'Do not include commit steps unless the Human explicitly asked this workflow to plan commits.',
     '## No Placeholders',
     'These are plan failures:',
     '"handle edge cases" without listing the edge cases',
+    'code-changing steps that lack enough test/code detail to prevent a Worker from inventing signatures, fields, or behavior',
     'references to functions, types, files, commands, APIs, or dependencies',
     '## Test Plan Requirements',
     'Do not let "tests pass" stand in for acceptance mapping.',
     '## Self-Review',
     'Requirement coverage',
     'File/interface consistency',
+    'Implementation specificity',
     'A fresh Worker can execute one task without chat history or guessing.',
     '## Execution Handoff',
-    'recommended execution path: `cadence-subagent-development`',
-    'Do not invoke execution Skills from here. Do not implement the plan from this Skill.',
+    'implementation plan content;',
+    'serial or parallel execution candidates with dependency notes;',
+    'End with the plan handoff.',
   ];
 
   for (const phrase of required) {
@@ -916,7 +928,7 @@ function checkCodeReviewerPromptContract() {
 }
 
 function checkConcreteSkillSupervisorBoundary() {
-  const concreteSkills = EXPECTED_SKILLS.filter((name) => name !== 'using-dev-cadence');
+  const concreteSkills = EXPECTED_SKILLS.filter((name) => name !== 'using-dev-cadence' && name !== 'cadence-plan');
   const required = [
     '## Supervisor Boundary',
     'This Skill must run under `using-dev-cadence` Supervisor control.',
