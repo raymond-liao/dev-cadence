@@ -2,9 +2,9 @@
 # Stop the Dev Cadence visual companion server and clean up
 # Usage: stop-server.sh <session_dir>
 #
-# Kills the server process. Only deletes session directory if it's
-# under /tmp (ephemeral). Persistent project directories are
-# kept so mockups can be reviewed later.
+# Kills the server process. Only deletes ephemeral sessions created
+# without --project-dir. Persistent project directories are kept so
+# mockups can be reviewed later.
 
 SESSION_DIR="$1"
 
@@ -74,11 +74,10 @@ if [[ -f "$PID_FILE" ]]; then
 
   rm -f "$PID_FILE" "${STATE_DIR}/server.log"
 
-  # Only delete ephemeral /tmp directories
-  if [[ "$SESSION_DIR" == /tmp/* ]]; then
+  # Only delete ephemeral sessions created by start-server.sh without --project-dir.
+  if [[ "$SESSION_DIR" == /tmp/dev-cadence-visual-companion-* ]]; then
     rm -rf "$SESSION_DIR"
   fi
-
   echo '{"status": "stopped"}'
 else
   echo '{"status": "not_running"}'
