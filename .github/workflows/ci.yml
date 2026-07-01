@@ -45,5 +45,13 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install test dependencies
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+
+      - name: Configure Git test identity
+        run: |
+          git config --global user.name "Dev Cadence CI"
+          git config --global user.email "dev-cadence-ci@example.invalid"
+
       - name: Run test suite
         run: bash tests/run-all.sh
