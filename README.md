@@ -83,7 +83,7 @@ node scripts/package-target-repo-bundle.mjs --clean
 
 ## Documentation
 
-本仓库文档按用途分层；`docs/` 说明框架和使用方式，发布内容承载可执行规则和模板：
+本仓库文档按用途分层：
 
 - `README.md`：项目入口、安装、使用和维护导航。
 - `docs/`：使用者和维护者说明，以及当前设计解释；`docs/archive/` 只保存历史计划、研究和验收记录。
@@ -92,15 +92,15 @@ node scripts/package-target-repo-bundle.mjs --clean
 
 | 文档 | 作用 |
 |---|---|
-| [docs/overview.md](docs/overview.md) | 框架概念、当前文档地图和长期演进方向 |
-| [docs/architecture.md](docs/architecture.md) | 角色、分层、Harness、Context 和工具边界 |
-| [docs/workflows/](docs/workflows/) | Workflow catalog、路由原则和每类任务路径 |
-| [docs/roles/](docs/roles/) | Human、Supervisor、Harness 和 Worker Agent 角色边界 |
-| [docs/artifacts/](docs/artifacts/) | `specs/records/{task_id}/` task artifacts 和模板入口 |
-| [docs/runs/](docs/runs/) | `runs/{run_id}/` Harness 运行证据说明 |
-| [docs/gates/](docs/gates/) | G1-G6 Quality Gates 和 Human Gate 说明 |
-| [docs/codex-plugin-boundaries.md](docs/codex-plugin-boundaries.md) | 当前 Codex Plugin、Skill、reference、template 和 adapter 的模块边界 |
-| [docs/installation.md](docs/installation.md) | 当前安装、更新和卸载命令 |
-| [docs/validation.md](docs/validation.md) | 当前验证、发布包生成和 smoke test 命令 |
-| [references/skill-layout.md](references/skill-layout.md) | runtime 布局、Skill 边界和版本规则 |
-| [docs/archive/](docs/archive/) | 已完成阶段的计划、验收和验证记录 |
+| [Dev Cadence 概览](docs/overview.md) | 文档入口和阅读顺序 |
+| [Dev Cadence 架构](docs/architecture.md) | Human、Supervisor、Harness 和 Worker Agents 的核心关系 |
+| [Dev Cadence 角色](docs/roles/) | Human、Supervisor、Harness 和 Worker Agents 各自负责什么 |
+| [Dev Cadence 工作流](docs/workflows/) | Dev Cadence 支持哪些工作流，每类任务怎么走 |
+| [Dev Cadence 产物](docs/artifacts/) | `specs/records/{task_id}/` 下每个产物是什么、怎么看 |
+| [Dev Cadence Runs](docs/runs/) | `runs/{run_id}/` 下每个 Harness 运行证据是什么、怎么看 |
+| [Dev Cadence 门禁](docs/gates/) | G1-G6 gate 控制什么风险、什么时候允许继续 |
+| [Dev Cadence 安装](docs/installation.md) | 业务仓库内置 runtime、本机开发安装和卸载命令 |
+| [Dev Cadence 当前验证](docs/validation.md) | 当前回归检查、打包和 smoke test 命令 |
+| [Codex Plugin 模块边界](docs/codex-plugin-boundaries.md) | 当前 Codex Plugin、Skill、reference、template 和 adapter 的模块边界 |
+| [Skill Layout](references/skill-layout.md) | runtime 布局、Skill 边界和版本规则 |
+| [Archive](docs/archive/) | 已完成阶段的计划、验收和验证记录 |

@@ -2,7 +2,7 @@
 
 Worker Agents 负责交付具体研发产物，例如 requirements、design、tasks、implementation notes、test report、review report 或 research report。它们不能控制 workflow state、批准 gate、替代 Harness 采集证据，或宣布最终完成。
 
-上层角色边界由 [Human、Supervisor 和 Harness](../) 定义；整体架构分层和 Context/Tooling 边界见 [Dev Cadence 架构](../../architecture.md)。
+上层角色边界由 [Human、Supervisor 和 Harness](../) 定义；核心架构关系见 [Dev Cadence 架构](../../architecture.md)。
 
 ## Agent 目录
 
