@@ -74,4 +74,4 @@ Check:
 - Worker handoff context is sufficient;
 - parallel candidates are independent.
 
-For a reusable reviewer prompt, use `templates/prompts/plan-document-reviewer.md`.
+For independent review, use the `cadence-plan` reviewer prompt through the Supervisor handoff.

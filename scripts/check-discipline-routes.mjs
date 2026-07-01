@@ -175,7 +175,7 @@ function checkPromptTemplates() {
     'skills/cadence-request-code-review/spec-compliance-reviewer.md',
     'skills/cadence-request-code-review/code-quality-reviewer.md',
     'skills/cadence-request-code-review/code-reviewer.md',
-    'templates/prompts/plan-document-reviewer.md',
+    'skills/cadence-plan/plan-document-reviewer.md',
     'templates/prompts/implementer.md',
   ];
 
@@ -191,6 +191,7 @@ function checkPromptTemplates() {
     'references/execution-orchestration.md',
     'references/review-discipline.md',
     'references/agent-blueprints.md',
+    'skills/cadence-plan/SKILL.md',
   ];
   const combined = refs.map(readText).join('\n');
   const referencedRequired = required.filter((relativePath) => !relativePath.startsWith('skills/cadence-clarify/'));
@@ -388,6 +389,51 @@ function checkCadenceClarifyContract() {
   for (const phrase of required) {
     if (!text.includes(phrase)) {
       fail(`${sourceFile}: missing clarify process phrase: ${phrase}`);
+    }
+  }
+}
+
+function checkCadencePlanContract() {
+  const sourceFile = 'skills/cadence-plan/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'Create executable plans.',
+    'A Worker with no chat history and limited context must be able to complete one task',
+    'Vague plans are blocked at G3.',
+    '## Scope Check',
+    'multiple independent subsystems',
+    'return a decomposition recommendation to `using-dev-cadence`',
+    '## File Structure Planning',
+    'map created and modified files',
+    'Each task should produce a self-contained change',
+    '## Task Right-Sizing',
+    'smallest unit that carries its own test cycle and is worth an independent review gate',
+    '## Plan Document Shape',
+    '## Global Constraints',
+    'Do not leave bracketed placeholders in the final handoff content.',
+    '## Task Structure',
+    '**Interfaces:**',
+    '**Acceptance Mapping:**',
+    'Use checkbox (`- [ ]`) steps so execution can track progress.',
+    'Do not include commit steps unless the Human explicitly asked this workflow to plan commits.',
+    '## No Placeholders',
+    'These are plan failures:',
+    '"handle edge cases" without listing the edge cases',
+    'references to functions, types, files, commands, APIs, or dependencies',
+    '## Test Plan Requirements',
+    'Do not let "tests pass" stand in for acceptance mapping.',
+    '## Self-Review',
+    'Requirement coverage',
+    'File/interface consistency',
+    'A fresh Worker can execute one task without chat history or guessing.',
+    '## Execution Handoff',
+    'recommended execution path: `cadence-subagent-development`',
+    'Do not invoke execution Skills from here. Do not implement the plan from this Skill.',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing planning process phrase: ${phrase}`);
     }
   }
 }
@@ -934,6 +980,7 @@ checkEntrypointReferenceMap();
 checkEntrypointSkills();
 checkUsingDevCadenceContract();
 checkCadenceClarifyContract();
+checkCadencePlanContract();
 checkCadenceDebugContract();
 checkCadenceTddContract();
 checkImplementationDisciplineBoundary();

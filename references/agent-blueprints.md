@@ -74,7 +74,7 @@ Clarify goal, scope, constraints, acceptance criteria, and executable task break
 
 Hand off requirements, task list, acceptance criteria, risks, and unresolved questions to Architect or Developer.
 
-When dispatching a plan document review through Harness, use `templates/prompts/plan-document-reviewer.md`.
+When dispatching a plan document review through Harness, use the `cadence-plan` reviewer prompt through the Supervisor handoff.
 
 ### Escalation Conditions
 
