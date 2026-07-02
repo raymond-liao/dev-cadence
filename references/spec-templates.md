@@ -30,8 +30,10 @@ Harness run templates:
 - `templates/runs/permission-decisions.md`
 
 Copy only the artifacts required by the task class, workflow, or maintenance
-mode. Prefer YAML-like field blocks plus concise Markdown notes. Keep evidence
-reproducible and path-based.
+mode. Prefer Markdown-first artifacts with stable labels, tables, checklists,
+and headings that Human reviewers can read directly. Use fenced YAML only for
+legacy compatibility blocks, local config examples, or small machine-oriented
+schemas. Keep evidence reproducible and path-based.
 
 ## Checks
 
@@ -69,9 +71,9 @@ not only the gate failure.
 - `specs/report/{task_id}/index.html`
 - `specs/report/{task_id}/runs/{run_id}/index.html`
 
-The report is for summary and drill-down navigation only. Markdown/YAML
-artifacts under `specs/records/` remain the source of truth for gates, review,
-and Human acceptance.
+The report is for summary and drill-down navigation only. Markdown artifacts
+under `specs/records/` remain the source of truth for gates, review, and Human
+acceptance; parsers support legacy fenced YAML fields as compatibility input.
 
 Before asking a Human to approve final acceptance, regenerate this report and
 provide `specs/report/{task_id}/index.html` as the review entry. The Human may

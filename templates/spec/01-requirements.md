@@ -1,50 +1,86 @@
 # Requirements
 
-```yaml
-status:
-goal:
-scope:
-non_goals:
-users_or_stakeholders:
-acceptance_criteria:
-constraints:
-assumptions:
-open_questions:
-human_decisions:
-```
+Status:
+Goal:
 
-## Source Notes
+## User-facing outcome
 
-## Ambiguity Check
+Describe the behavior, decision, or documentation result the Human expects to see. Avoid implementation detail here unless it is part of acceptance.
 
-```yaml
-unresolved_ambiguity:
-material_to_implementation:
-clarification_required:
-analysis_performed:
-evidence_paths:
-candidate_interpretations:
-recommended_option:
-clarified_by_human:
-clarified_at:
-decision:
-```
+## Scope
 
-## Requirements Readiness Check
+### In scope
 
-```yaml
-expected_behavior_explicit:
-expected_behavior_source:
-reference_behavior_explicit:
-reference_behavior_source:
-scope_confirmed:
-non_goals_confirmed:
-acceptance_criteria_confirmed:
-verification_approach_confirmed:
-accepted_by_human:
-human_decision_reference:
-ready_for_implementation:
-blocking_questions:
-```
+-
+
+### Non-goals
+
+-
+
+### Users / stakeholders
+
+-
+
+## Acceptance criteria
+
+- [ ]
+
+## Constraints
+
+- Technical constraints:
+- Process constraints:
+- Repository or policy constraints:
+
+## Ambiguity check
+
+Unresolved ambiguity:
+Material to implementation:
+Clarification required:
+
+### Interpretations considered
+
+-
+
+### Evidence used
+
+Evidence paths:
+-
+
+Analysis performed:
+-
+
+Recommended option:
+Clarified by human:
+Clarified at:
+Decision:
+
+## Requirements readiness check
+
+Expected behavior explicit:
+Expected behavior source:
+Reference behavior explicit:
+Reference behavior source:
+Scope confirmed:
+Non goals confirmed:
+Acceptance criteria confirmed:
+Verification approach confirmed:
+Accepted by human:
+Human decision reference:
+Ready for implementation:
+Blocking questions:
+
+## Human decisions
+
+-
 
 ## Gate G1
+
+Status:
+Decision:
+Required inputs:
+Evidence:
+Pass condition:
+Fail condition:
+Human override:
+Residual risk:
+Escalation:

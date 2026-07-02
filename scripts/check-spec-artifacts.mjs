@@ -11,7 +11,7 @@ import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 function printHelp() {
   console.log(`Usage: check-spec-artifacts.mjs [specs-dir]
 
-Validates Dev Cadence task artifacts for basic YAML-like consistency.
+Validates Dev Cadence task artifacts for basic Markdown/YAML consistency.
 
 Arguments:
   specs-dir  Specs records directory to check. Defaults to specs/records in the
@@ -130,11 +130,24 @@ function markdownProseLines(text) {
     if (trimmed.startsWith('|')) continue;
     if (/^[-*_]{3,}$/.test(trimmed)) continue;
     if (/^<!--.*-->$/.test(trimmed)) continue;
+    if (isMachineLabelLine(trimmed)) continue;
 
     lines.push({ number: index + 1, text: trimmed });
   }
 
   return lines;
+}
+
+function isMachineLabelLine(line) {
+  const match = line.match(/^(?:[-*]\s+)?(?:\*\*)?[A-Za-z][A-Za-z0-9 /_-]*(?:\*\*)?:\s*(.*)$/);
+  if (!match) return false;
+  const value = match[1].trim();
+  if (value === '') return true;
+  if (/^(?:true|false|null|\[\]|none|n\/a|na|tbd|todo|pending|unknown)$/i.test(value)) return true;
+  if (/^[a-z0-9][a-z0-9._/-]*$/i.test(value)) return true;
+  if (/(?:^|\s)(?:[a-z][a-z0-9._-]*|[A-Z][A-Z0-9._-]*)(?:$|\s)/.test(value)) return true;
+  if (/^`[^`]+`$/.test(value)) return true;
+  return false;
 }
 
 function proseSignal(line) {

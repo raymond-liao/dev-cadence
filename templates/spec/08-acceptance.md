@@ -1,26 +1,40 @@
 # Acceptance
 
-```yaml
-status:
-accepted_by_human:
-accepted_at:
-accepted_scope:
-evidence_reviewed:
-human_gate_decisions:
-residual_risk_accepted:
-merge_or_release_decision:
-follow_up:
-```
+Status:
+Accepted by human:
+Accepted at:
+Merge or release decision:
+
+## Acceptance decision
+
+State whether the named Human accepted the delivered scope, deferred acceptance, or rejected it. Do not record agent self-acceptance.
+
+## Accepted scope
+
+-
+
+## Evidence reviewed
+
+-
+
+## Human gate decisions
+
+-
+
+## Residual risk accepted
+
+-
+
+## Follow-up
+
+-
 
 ## Gate G6
 
-```yaml
-gate_id: G6
-status:
-required_inputs:
-evidence:
-human_accepter:
-decision:
-residual_risk:
-escalation:
-```
+Status:
+Required inputs:
+Evidence:
+Human accepter:
+Decision:
+Residual risk:
+Escalation:

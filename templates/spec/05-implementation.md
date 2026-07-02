@@ -1,29 +1,73 @@
 # Implementation
 
-```yaml
-status:
-planned_files:
-planned_artifact_files:
-changed_files:
-created_artifact_files:
-unplanned_changed_files:
-deleted_files:
-added_components:
-scope_reconciliation:
-rationale:
-implementation_notes:
-tdd_or_feedback_evidence:
-red_evidence:
-green_evidence:
-refactor_evidence:
-tdd_exception:
-substitute_feedback:
-test_commands:
-test_results:
-known_limitations:
-follow_up_needed:
-```
+Status:
+Scope reconciliation:
+Rationale:
 
-## Diff Summary
+## What changed
 
-## Harness Runs
+Summarize the actual implementation in Human-readable terms. Include behavior changes first, then structural or artifact changes.
+
+## Planned files
+
+-
+
+## Changed files
+
+| File | Planned? | Change summary |
+|---|---|---|
+
+## Created artifact files
+
+-
+
+## Scope reconciliation
+
+Explain whether the actual change stayed inside the approved task scope.
+
+Unplanned changed files:
+-
+
+Deleted files:
+-
+
+Added components:
+-
+
+## Implementation notes
+
+-
+
+## Discipline evidence
+
+### TDD or feedback evidence
+
+Red evidence:
+Green evidence:
+Refactor evidence:
+TDD exception:
+Substitute feedback:
+
+## Verification performed during implementation
+
+Test commands:
+-
+
+Test results:
+-
+
+## Known limitations
+
+-
+
+## Follow-up needed
+
+-
+
+## Diff summary
+
+Point to run-level diff summaries when persistent run evidence is used.
+
+## Harness runs
+
+-

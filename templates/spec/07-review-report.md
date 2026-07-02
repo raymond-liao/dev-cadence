@@ -1,48 +1,57 @@
 # Review Report
 
-```yaml
-status:
-review_scope:
-evidence_reviewed:
-scope_reconciliation_reviewed:
-verification_coverage_reviewed:
-findings:
-blockers:
-major_issues:
-minor_notes:
-security_notes:
-architecture_notes:
-decision:
-residual_risk:
-```
+Status:
+Decision:
+Scope reconciliation reviewed:
+Verification coverage reviewed:
+
+## Review scope
+
+Describe what was reviewed: diff range, artifacts, implementation notes, test evidence, and any excluded areas.
+
+## Evidence reviewed
+
+-
 
 ## Findings
 
-Use severity values:
+| Severity | Finding | Evidence | Required action |
+|---|---|---|---|
 
-- `blocker`
-- `major`
-- `minor`
-- `note`
+Use severity values: `blocker`, `major`, `minor`, `note`.
+Allowed decisions: `approved`, `approved_with_minor_notes`, `changes_requested`, `blocked`.
 
-Allowed decisions:
+## Blockers
 
-- `approved`
-- `approved_with_minor_notes`
-- `changes_requested`
-- `blocked`
+Blockers:
+-
+
+Major issues:
+-
+
+## Notes
+
+Minor notes:
+-
+
+Security notes:
+-
+
+Architecture notes:
+-
+
+## Residual risk
+
+-
 
 ## Gate G5
 
-```yaml
-gate_id: G5
-status:
-required_inputs:
-evidence:
-g4_status:
-scope_reconciliation_status:
-verification_coverage_status:
-decision:
-residual_risk:
-escalation:
-```
+Status:
+Required inputs:
+Evidence:
+G4 status:
+Scope reconciliation status:
+Verification coverage status:
+Decision:
+Residual risk:
+Escalation:

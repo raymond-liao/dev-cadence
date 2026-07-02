@@ -1,32 +1,61 @@
 # Test Report
 
-```yaml
-status:
-verification_status:
-commands_run:
-environment:
-results:
-coverage_scope:
-changed_component_coverage:
-skipped_component_checks:
-defects:
-skipped_checks:
-residual_risk:
-recommendation:
-```
+Status:
+Verification status:
+Recommendation:
+
+## Verification summary
+
+State what is verified, what is only partially verified, and what remains unverified.
+
+## Commands run
+
+| Command | Result | Evidence |
+|---|---|---|
+
+## Environment
+
+-
+
+## Results
+
+-
+
+## Coverage
+
+Coverage scope:
+Changed component coverage:
+
+Explain which acceptance criteria, files, or components were covered.
+
+## Skipped checks
+
+Skipped component checks:
+-
+
+Skipped checks:
+-
+
+## Failures / blockers
+
+Defects:
+-
+
+## Residual risk
+
+-
 
 ## Evidence
 
+List evidence paths or run artifacts supporting this report.
+
 ## Gate G4
 
-```yaml
-gate_id: G4
-status:
-required_inputs:
-evidence:
-verification_status:
-component_coverage_complete:
-human_override:
-residual_risk:
-escalation:
-```
+Status:
+Required inputs:
+Evidence:
+Verification status:
+Component coverage complete:
+Human override:
+Residual risk:
+Escalation:

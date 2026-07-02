@@ -71,8 +71,35 @@ node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
   --specs-dir "${REPO_DIR}/specs/records" \
   --task-id "${TASK_ID}" > "${SUMMARY_FILE}"
 
+node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
+  --specs-dir "${ZH_DRY_RUN_REPO}/specs/records" \
+  --task-id "zh-login" > "${ZH_DRY_RUN_REPO}/summary.txt"
+grep -q "验收摘要: zh-login" "${ZH_DRY_RUN_REPO}/summary.txt"
+grep -q "目标: 实现登录功能" "${ZH_DRY_RUN_REPO}/summary.txt"
+grep -q "## 可审核证据" "${ZH_DRY_RUN_REPO}/summary.txt"
+grep -q "已记录 Raymond 的验收" "${ZH_DRY_RUN_REPO}/summary.txt"
+if grep -q "Acceptance Summary" "${ZH_DRY_RUN_REPO}/summary.txt"; then
+  echo "zh acceptance summary should not render Human-facing headings in English" >&2
+  exit 1
+fi
+
 test -f "${REPO_DIR}/specs/records/${TASK_ID}/00-brief.md"
 grep -q "### Task 1:" "${REPO_DIR}/specs/records/${TASK_ID}/03-tasks.md"
+for artifact in \
+  00-brief.md \
+  01-requirements.md \
+  02-design.md \
+  03-tasks.md \
+  04-test-plan.md \
+  05-implementation.md \
+  06-test-report.md \
+  07-review-report.md \
+  08-acceptance.md; do
+  if grep -q '```yaml' "${REPO_DIR}/specs/records/${TASK_ID}/${artifact}"; then
+    echo "generated spec artifact should be Markdown-first without fenced YAML: ${artifact}" >&2
+    exit 1
+  fi
+done
 "${ROOT_DIR}/skills/cadence-subagent-development/scripts/task-brief" \
   "${REPO_DIR}/specs/records/${TASK_ID}/03-tasks.md" \
   1 \

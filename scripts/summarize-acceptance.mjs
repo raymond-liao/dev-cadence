@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveArtifactLanguage } from './artifact-language.mjs';
 import { readArtifactData } from './markdown-artifacts.mjs';
 import { defaultReportDirForSpecsDir, normalizeSpecsDir, RECORDS_DIR, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
@@ -223,6 +224,8 @@ function summarize(options) {
   return {
     task_id: options.taskId,
     task_dir: rel(options.specsDir, taskDir),
+    task_dir_path: taskDir,
+    artifact_language: resolveArtifactLanguage(taskDir).language,
     goal: brief.goal || null,
     selected_workflow: brief.selected_workflow || null,
     task_class: brief.task_class || null,
@@ -293,58 +296,131 @@ function printList(items, fallback = 'None') {
   }
 }
 
+const SUMMARY_TEXT = {
+  en: {
+    title: 'Acceptance Summary',
+    goal: 'Goal',
+    workflow: 'Workflow',
+    taskClass: 'Task class',
+    implementation: 'Implementation',
+    scopeReconciliation: 'Scope reconciliation',
+    verification: 'Verification',
+    reviewDecision: 'Review decision',
+    acceptance: 'Acceptance',
+    acceptedBy: 'Accepted by',
+    unknown: 'Unknown',
+    notRecorded: 'Not recorded',
+    none: 'None',
+    changedFiles: 'Changed Files',
+    createdArtifactFiles: 'Created Artifact Files',
+    skippedChecks: 'Skipped Checks',
+    blockers: 'Blockers',
+    residualRisk: 'Residual Risk',
+    evidenceAvailable: 'Evidence Available',
+    browsableReport: 'Browsable Report',
+    missingArtifacts: 'Missing Artifacts',
+    missingReport: 'Missing Report',
+    missing: 'missing',
+    humanConfirmation: 'Human Confirmation',
+    requiredFields: 'Required fields:',
+    reportInstruction: 'Run `scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report` before requesting Human acceptance.',
+    acceptanceRequired: (targetFile) => `A named Human acceptance is still required. Record confirmation in ${targetFile}.`,
+    acceptanceRecorded: (acceptedBy) => `Acceptance is already recorded for ${acceptedBy}.`,
+  },
+  zh: {
+    title: '\u9a8c\u6536\u6458\u8981',
+    goal: '\u76ee\u6807',
+    workflow: '\u5de5\u4f5c\u6d41',
+    taskClass: '\u4efb\u52a1\u7c7b\u522b',
+    implementation: '\u5b9e\u73b0\u72b6\u6001',
+    scopeReconciliation: '\u8303\u56f4\u5bf9\u9f50',
+    verification: '\u9a8c\u8bc1\u72b6\u6001',
+    reviewDecision: '\u8bc4\u5ba1\u7ed3\u8bba',
+    acceptance: '\u9a8c\u6536\u72b6\u6001',
+    acceptedBy: '\u9a8c\u6536\u4eba',
+    unknown: '\u672a\u77e5',
+    notRecorded: '\u672a\u8bb0\u5f55',
+    none: '\u65e0',
+    changedFiles: '\u53d8\u66f4\u6587\u4ef6',
+    createdArtifactFiles: '\u521b\u5efa\u7684 Artifact \u6587\u4ef6',
+    skippedChecks: '\u8df3\u8fc7\u7684\u68c0\u67e5',
+    blockers: '\u963b\u585e\u9879',
+    residualRisk: '\u5269\u4f59\u98ce\u9669',
+    evidenceAvailable: '\u53ef\u5ba1\u6838\u8bc1\u636e',
+    browsableReport: '\u53ef\u6d4f\u89c8\u62a5\u544a',
+    missingArtifacts: '\u7f3a\u5931 Artifact',
+    missingReport: '\u7f3a\u5931\u62a5\u544a',
+    missing: '\u7f3a\u5931',
+    humanConfirmation: 'Human \u786e\u8ba4',
+    requiredFields: '\u5fc5\u586b\u5b57\u6bb5\uff1a',
+    reportInstruction: '\u8bf7\u6c42 Human \u9a8c\u6536\u524d\uff0c\u8bf7\u5148\u8fd0\u884c `scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report`\u3002',
+    acceptanceRequired: (targetFile) => `\u4ecd\u9700\u8981\u5177\u540d Human \u9a8c\u6536\u3002\u8bf7\u5728 ${targetFile} \u4e2d\u8bb0\u5f55\u786e\u8ba4\u3002`,
+    acceptanceRecorded: (acceptedBy) => `\u5df2\u8bb0\u5f55 ${acceptedBy} \u7684\u9a8c\u6536\u3002`,
+  },
+};
+
+function summaryText(language) {
+  return SUMMARY_TEXT[language] || SUMMARY_TEXT.en;
+}
+
+function summaryLanguage(summary) {
+  return summary.artifact_language || resolveArtifactLanguage(summary.task_dir_path).language;
+}
+
 function printMarkdown(summary) {
-  console.log(`# Acceptance Summary: ${summary.task_id}`);
+  const text = summaryText(summaryLanguage(summary));
+
+  console.log(`# ${text.title}: ${summary.task_id}`);
   console.log('');
-  console.log(`Goal: ${summary.goal || 'Unknown'}`);
-  console.log(`Workflow: ${summary.selected_workflow || 'Unknown'}`);
-  console.log(`Task class: ${summary.task_class || 'Unknown'}`);
-  console.log(`Implementation: ${summary.implementation_status || 'Unknown'}`);
-  console.log(`Scope reconciliation: ${summary.scope_reconciliation || 'Unknown'}`);
-  console.log(`Verification: ${summary.verification_status || 'Unknown'}`);
-  console.log(`Review decision: ${summary.review_decision || 'Unknown'}`);
-  console.log(`Acceptance: ${summary.acceptance_status || 'Unknown'}`);
-  console.log(`Accepted by: ${summary.accepted_by_human || 'Not recorded'}`);
+  console.log(`${text.goal}: ${summary.goal || text.unknown}`);
+  console.log(`${text.workflow}: ${summary.selected_workflow || text.unknown}`);
+  console.log(`${text.taskClass}: ${summary.task_class || text.unknown}`);
+  console.log(`${text.implementation}: ${summary.implementation_status || text.unknown}`);
+  console.log(`${text.scopeReconciliation}: ${summary.scope_reconciliation || text.unknown}`);
+  console.log(`${text.verification}: ${summary.verification_status || text.unknown}`);
+  console.log(`${text.reviewDecision}: ${summary.review_decision || text.unknown}`);
+  console.log(`${text.acceptance}: ${summary.acceptance_status || text.unknown}`);
+  console.log(`${text.acceptedBy}: ${summary.accepted_by_human || text.notRecorded}`);
 
-  console.log('\n## Changed Files');
-  printList(summary.changed_files);
+  console.log(`\n## ${text.changedFiles}`);
+  printList(summary.changed_files, text.none);
 
-  console.log('\n## Created Artifact Files');
-  printList(summary.created_artifact_files);
+  console.log(`\n## ${text.createdArtifactFiles}`);
+  printList(summary.created_artifact_files, text.none);
 
-  console.log('\n## Skipped Checks');
-  printList(summary.skipped_checks);
+  console.log(`\n## ${text.skippedChecks}`);
+  printList(summary.skipped_checks, text.none);
 
-  console.log('\n## Blockers');
-  printList(summary.blockers);
+  console.log(`\n## ${text.blockers}`);
+  printList(summary.blockers, text.none);
 
-  console.log('\n## Residual Risk');
-  printList(summary.residual_risk);
+  console.log(`\n## ${text.residualRisk}`);
+  printList(summary.residual_risk, text.none);
 
-  console.log('\n## Evidence Available');
-  printList(summary.evidence_available);
+  console.log(`\n## ${text.evidenceAvailable}`);
+  printList(summary.evidence_available, text.none);
 
-  console.log('\n## Browsable Report');
-  console.log(`- ${summary.report_entry}${summary.report_entry_exists ? '' : ' (missing)'}`);
+  console.log(`\n## ${text.browsableReport}`);
+  console.log(`- ${summary.report_entry}${summary.report_entry_exists ? '' : ` (${text.missing})`}`);
 
   if (summary.missing_artifacts.length > 0) {
-    console.log('\n## Missing Artifacts');
-    printList(summary.missing_artifacts);
+    console.log(`\n## ${text.missingArtifacts}`);
+    printList(summary.missing_artifacts, text.none);
   }
 
   if (summary.missing_report.length > 0) {
-    console.log('\n## Missing Report');
-    printList(summary.missing_report);
-    console.log('Run `scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report` before requesting Human acceptance.');
+    console.log(`\n## ${text.missingReport}`);
+    printList(summary.missing_report, text.none);
+    console.log(text.reportInstruction);
   }
 
-  console.log('\n## Human Confirmation');
+  console.log(`\n## ${text.humanConfirmation}`);
   if (summary.needs_human_acceptance) {
-    console.log(`A named Human acceptance is still required. Record confirmation in ${summary.confirmation_to_record.target_file}.`);
-    console.log('Required fields:');
-    printList(summary.confirmation_to_record.required_fields);
+    console.log(text.acceptanceRequired(summary.confirmation_to_record.target_file));
+    console.log(text.requiredFields);
+    printList(summary.confirmation_to_record.required_fields, text.none);
   } else {
-    console.log(`Acceptance is already recorded for ${summary.accepted_by_human}.`);
+    console.log(text.acceptanceRecorded(summary.accepted_by_human));
   }
 }
 
