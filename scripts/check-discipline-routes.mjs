@@ -491,6 +491,56 @@ function checkCadencePlanContract() {
   }
 }
 
+function checkCadenceResearchContract() {
+  const sourceFile = 'skills/cadence-research/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'Research output is decision input, not delivery approval. Do not implement product changes from this Skill.',
+    '## When to Use',
+    'research, evaluation, comparison, feasibility, or recommendation without approved implementation',
+    'Do not use this Skill for:',
+    'If the request mixes research with implementation, split the workflow',
+    '## Research Boundary',
+    'implementation_not_authorized: true',
+    'If the question, allowed sources, comparison criteria, or decision boundary is ambiguous enough to affect the recommendation, route through `cadence-clarify` before researching.',
+    '## Evidence Rules',
+    'Every material recommendation must trace to source evidence.',
+    'When sources conflict and the conflict affects scope, architecture, security, permissions, cost, schedule, production behavior, privacy, data handling, or acceptance, do not choose silently; surface the conflict as a Human decision.',
+    'For date-sensitive external facts, include the access date or version caveat.',
+    '## Option Analysis',
+    'Include a `do nothing`, defer, or no-ready-option path when it is plausible.',
+    'what evidence would invalidate the option.',
+    '## Recommendation Gate',
+    'confidence: high | medium | low',
+    'Open a Human Gate when the recommendation depends on cost, schedule, risk tolerance, long-term technical direction, production behavior, security, privacy, data handling, or unresolved source conflicts.',
+    'Do not make final architecture, product, release, or business-priority decisions.',
+    '## Artifact Handoff',
+    'produce artifact-ready content for `specs/records/{task_id}/research-report.md`',
+    'Return artifact-ready content to the Supervisor/Harness path.',
+    'Do not directly write or update persistent artifacts, Harness evidence, gate status, or acceptance records from this Skill unless the Supervisor explicitly selected this run as the artifact authoring action.',
+    '## Stop Conditions',
+    'Do not use research momentum as permission to edit product source, tests, migrations, build scripts, deployment files, or application configuration.',
+    'gate-relevant observations',
+    'required Human decisions',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing research process phrase: ${phrase}`);
+    }
+  }
+
+  const forbidden = [
+    'with evidence produced, unresolved blockers, gate status, and recommended next state',
+    'Hand off to Human decision, `cadence-clarify`, or `cadence-plan` only if follow-up delivery is explicitly approved.',
+  ];
+  for (const phrase of forbidden) {
+    if (text.includes(phrase)) {
+      fail(`${sourceFile}: research Skill must preserve Supervisor routing and gate-status boundary: ${phrase}`);
+    }
+  }
+}
+
 function checkCadenceExecutingPlansContract() {
   const sourceFile = 'skills/cadence-executing-plans/SKILL.md';
   const text = readText(sourceFile);
@@ -1301,6 +1351,7 @@ checkEntrypointSkills();
 checkUsingDevCadenceContract();
 checkCadenceClarifyContract();
 checkCadencePlanContract();
+checkCadenceResearchContract();
 checkCadenceExecutingPlansContract();
 checkCadenceSubagentDevelopmentContract();
 checkCadenceDispatchParallelContract();
