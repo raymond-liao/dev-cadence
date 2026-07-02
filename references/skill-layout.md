@@ -153,8 +153,7 @@ Harness evidence.
 ## Resource Boundaries
 
 Task artifact templates live under `templates/spec/`. Harness evidence
-templates live under `templates/runs/`. Shared Worker prompt templates live
-under `templates/prompts/`. Skill-specific resources, such as
+templates live under `templates/runs/`. Skill-specific resources, such as
 `skills/cadence-clarify/visual-companion.md`,
 `skills/cadence-clarify/spec-document-reviewer-prompt.md`,
 `skills/cadence-request-code-review/code-reviewer.md`, and

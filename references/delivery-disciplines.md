@@ -70,7 +70,7 @@ Load these references by state or condition:
 | before claiming fixed, done, passing, approved, or complete | `verification-discipline.md`; use `skills/cadence-verify/SKILL.md` for the full verification workflow |
 | Dev Cadence source maintenance in this repository | source-only `references/source-maintenance/authoring-discipline.md`; load `references/source-maintenance/skill-pressure-testing.md` for validation |
 
-Shared prompt templates live under `templates/prompts/`. Skill-specific prompts live with the owning Skill, such as `skills/cadence-request-code-review/code-reviewer.md` for reviewer runs.
+Skill-specific prompts live with the owning Skill, such as `skills/cadence-subagent-development/implementer-prompt.md` for implementer runs and `skills/cadence-request-code-review/code-reviewer.md` for reviewer runs.
 
 ## Optional Capabilities
 

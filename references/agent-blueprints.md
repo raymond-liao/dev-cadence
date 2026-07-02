@@ -185,8 +185,6 @@ Implement scoped changes and produce implementation evidence.
 
 Hand off diff summary, implementation notes, Red-Green-Refactor or substitute-feedback evidence, verification evidence, skipped checks, and risks to Tester.
 
-When dispatching an implementer Worker through Harness, use `templates/prompts/implementer.md`.
-
 ### Escalation Conditions
 
 Escalate when required permissions, secrets, destructive actions, architecture changes, acceptance changes, or testability gaps materially affect confidence.

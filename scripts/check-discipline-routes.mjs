@@ -176,7 +176,7 @@ function checkPromptTemplates() {
     'skills/cadence-request-code-review/code-quality-reviewer.md',
     'skills/cadence-request-code-review/code-reviewer.md',
     'skills/cadence-plan/plan-document-reviewer.md',
-    'templates/prompts/implementer.md',
+    'skills/cadence-subagent-development/implementer-prompt.md',
   ];
 
   for (const relativePath of required) {
