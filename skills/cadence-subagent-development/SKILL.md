@@ -26,7 +26,7 @@ Use Skill-local resources only for Worker dispatch:
 
 - `skills/cadence-subagent-development/implementer-prompt.md` for implementer Workers.
 - `skills/cadence-subagent-development/task-reviewer-prompt.md` for task reviewer Workers.
-- `skills/cadence-subagent-development/scripts/sdd-workspace` for local coordination scratch under `<repo-root>/.dev-cadence/sdd/`.
+- `skills/cadence-subagent-development/scripts/handoff-workspace` for local handoff scratch under `<repo-root>/build/dev-cadence/subagent-development/`.
 - `skills/cadence-subagent-development/scripts/task-brief` for extracting one Markdown `Task N` section into a Worker-readable file.
 - `skills/cadence-subagent-development/scripts/review-package` for creating reviewer-readable diff packages from either a commit range or `--worktree BASE`.
 
@@ -99,9 +99,9 @@ Prefer paths to large artifacts over copied content. Never pass secrets.
 When possible, use file handoffs to keep controller context small:
 
 - task brief: use `scripts/task-brief PLAN_FILE TASK_NUMBER [OUTFILE]` to extract one Markdown `Task N` section containing the task text, acceptance mapping, constraints, allowed paths, verification commands, and required evidence;
-- implementer report: one file under `.dev-cadence/sdd/` containing implementation summary, changed files, verification output, discipline evidence, skipped checks, and concerns;
+- implementer report: one file under `build/dev-cadence/subagent-development/` containing implementation summary, changed files, verification output, discipline evidence, skipped checks, and concerns;
 - review package: use `scripts/review-package BASE HEAD [OUTFILE]` for committed ranges or `scripts/review-package --worktree BASE [OUTFILE]` for no-commit working tree review; the package contains changed files, diff, untracked text files when applicable, implementer report path, and evidence paths for the reviewer;
-- local progress ledger: `.dev-cadence/sdd/progress.md` is a resume map for local statuses such as `in_progress`, `needs_context`, `blocked`, `local_review_clear`, and `handoff_returned`.
+- local progress ledger: `build/dev-cadence/subagent-development/progress.md` is a resume map for local statuses such as `in_progress`, `needs_context`, `blocked`, `local_review_clear`, and `handoff_returned`.
 
 These files are local coordination inputs. They are not gate completion, Human acceptance, or persistent Harness records unless the Supervisor/Harness separately records them. Never use the local progress ledger to claim done, accepted, ready, or gate-passed.
 
@@ -109,16 +109,16 @@ These files are local coordination inputs. They are not gate completion, Human a
 
 For each task:
 
-1. Ensure the local workspace exists with `skills/cadence-subagent-development/scripts/sdd-workspace`.
+1. Ensure the local handoff workspace exists with `skills/cadence-subagent-development/scripts/handoff-workspace`.
 2. Generate the task brief from the approved Markdown plan with `skills/cadence-subagent-development/scripts/task-brief`.
-3. Record local task progress as `in_progress` in `.dev-cadence/sdd/progress.md` for resume support only.
+3. Record local task progress as `in_progress` in `build/dev-cadence/subagent-development/progress.md` for resume support only.
 4. Dispatch one fresh implementer Worker using `skills/cadence-subagent-development/implementer-prompt.md`, passing the task brief path and an expected implementer report path.
 5. Handle Worker status before review.
 6. Inspect the Worker report, changed files, and verification evidence as claims, not proof.
 7. Build a focused review package with `skills/cadence-subagent-development/scripts/review-package`; use `--worktree BASE` when the task did not create commits.
 8. Dispatch one read-only task reviewer Worker using `skills/cadence-subagent-development/task-reviewer-prompt.md`, passing the task brief path, implementer report path, and review package path.
 9. Fix spec gaps, evidence gaps, and blocking or major quality findings inside the approved task scope, then re-review until the task reviewer reports compliant/approved, a named Human accepts residual risk, or the task is blocked.
-10. Update `.dev-cadence/sdd/progress.md` only with local coordination status such as `local_review_clear`, `blocked`, `needs_context`, or `handoff_returned`.
+10. Update `build/dev-cadence/subagent-development/progress.md` only with local coordination status such as `local_review_clear`, `blocked`, `needs_context`, or `handoff_returned`.
 11. Return task execution status, changed files, review verdicts, verification evidence, skipped checks, residual risk, and blockers to `using-dev-cadence`/Supervisor-Harness as handoff data.
 12. Move to the next task only after required implementation evidence and the task review are clear for this task.
 

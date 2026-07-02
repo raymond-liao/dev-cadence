@@ -3,7 +3,7 @@
 # into a file a fresh implementer Worker can read without chat history.
 #
 # Usage: task-brief PLAN_FILE TASK_NUMBER [OUTFILE]
-# Default OUTFILE: <repo-root>/.dev-cadence/sdd/task-<N>-brief.md
+# Default OUTFILE: <repo-root>/build/dev-cadence/subagent-development/task-<N>-brief.md
 set -euo pipefail
 
 if [ $# -lt 2 ] || [ $# -gt 3 ]; then
@@ -22,7 +22,7 @@ if [ $# -eq 3 ]; then
   out=$3
   mkdir -p "$(dirname "$out")"
 else
-  dir=$("$(cd "$(dirname "$0")" && pwd)/sdd-workspace")
+  dir=$("$(cd "$(dirname "$0")" && pwd)/handoff-workspace")
   out="$dir/task-${n}-brief.md"
 fi
 

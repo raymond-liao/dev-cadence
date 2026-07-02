@@ -661,7 +661,7 @@ function checkCadenceSubagentDevelopmentContract() {
   const requiredFiles = [
     'skills/cadence-subagent-development/implementer-prompt.md',
     'skills/cadence-subagent-development/task-reviewer-prompt.md',
-    'skills/cadence-subagent-development/scripts/sdd-workspace',
+    'skills/cadence-subagent-development/scripts/handoff-workspace',
     'skills/cadence-subagent-development/scripts/task-brief',
     'skills/cadence-subagent-development/scripts/review-package',
   ];
@@ -692,18 +692,18 @@ function checkCadenceSubagentDevelopmentContract() {
     'A fresh Worker must not need chat history.',
     'Do not paste accumulated prior-task summaries into later dispatches',
     'task brief: use `scripts/task-brief PLAN_FILE TASK_NUMBER [OUTFILE]`',
-    'implementer report: one file under `.dev-cadence/sdd/` containing implementation summary, changed files, verification output, discipline evidence, skipped checks, and concerns;',
+    'implementer report: one file under `build/dev-cadence/subagent-development/` containing implementation summary, changed files, verification output, discipline evidence, skipped checks, and concerns;',
     'review package: use `scripts/review-package BASE HEAD [OUTFILE]` for committed ranges or `scripts/review-package --worktree BASE [OUTFILE]` for no-commit working tree review;',
-    'skills/cadence-subagent-development/scripts/sdd-workspace',
+    'skills/cadence-subagent-development/scripts/handoff-workspace',
     'skills/cadence-subagent-development/scripts/task-brief',
     'skills/cadence-subagent-development/scripts/review-package',
-    '<repo-root>/.dev-cadence/sdd/',
+    '<repo-root>/build/dev-cadence/subagent-development/',
     'scripts/task-brief PLAN_FILE TASK_NUMBER [OUTFILE]',
     'scripts/review-package --worktree BASE [OUTFILE]',
-    'local progress ledger: `.dev-cadence/sdd/progress.md` is a resume map',
+    'local progress ledger: `build/dev-cadence/subagent-development/progress.md` is a resume map',
     'Never use the local progress ledger to claim done, accepted, ready, or gate-passed.',
     '## Per-Task Loop',
-    'Ensure the local workspace exists with `skills/cadence-subagent-development/scripts/sdd-workspace`.',
+    'Ensure the local handoff workspace exists with `skills/cadence-subagent-development/scripts/handoff-workspace`.',
     'Generate the task brief from the approved Markdown plan with `skills/cadence-subagent-development/scripts/task-brief`.',
     'Dispatch one fresh implementer Worker using `skills/cadence-subagent-development/implementer-prompt.md`, passing the task brief path and an expected implementer report path.',
     'Dispatch one read-only task reviewer Worker using `skills/cadence-subagent-development/task-reviewer-prompt.md`, passing the task brief path, implementer report path, and review package path.',
@@ -792,9 +792,9 @@ function checkCadenceSubagentDevelopmentContract() {
 
   const scriptExpectations = [
     {
-      file: 'skills/cadence-subagent-development/scripts/sdd-workspace',
+      file: 'skills/cadence-subagent-development/scripts/handoff-workspace',
       phrases: [
-        '.dev-cadence/sdd',
+        'build/dev-cadence/subagent-development',
         'progress.md',
         'not Harness evidence, gate status, Human acceptance, or a persistent source of truth',
       ],

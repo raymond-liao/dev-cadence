@@ -13,7 +13,7 @@ usage() {
 }
 
 workspace_dir() {
-  "$(cd "$(dirname "$0")" && pwd)/sdd-workspace"
+  "$(cd "$(dirname "$0")" && pwd)/handoff-workspace"
 }
 
 short_rev() {

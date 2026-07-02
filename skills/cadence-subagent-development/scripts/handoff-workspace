@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
-# Resolve and ensure the working-tree directory used by cadence-subagent-development
-# for short-lived local coordination files: task briefs, implementer reports,
-# review packages, and the local progress ledger.
+# Resolve and ensure the build directory used by cadence-subagent-development
+# for short-lived local handoff files: task briefs, implementer reports, review
+# packages, and the local progress ledger.
 #
-# Usage: sdd-workspace
+# Usage: handoff-workspace
 set -euo pipefail
 
 root=$(git rev-parse --show-toplevel)
-dir="$root/.dev-cadence/sdd"
+dir="$root/build/dev-cadence/subagent-development"
 mkdir -p "$dir"
 printf '*\n' > "$dir/.gitignore"
 
 ledger="$dir/progress.md"
 if [ ! -e "$ledger" ]; then
   cat > "$ledger" <<'LEDGER'
-# Dev Cadence SDD Local Progress
+# Dev Cadence Subagent Development Local Progress
 
-This is local coordination scratch for cadence-subagent-development resume support.
+This is local handoff scratch for cadence-subagent-development resume support.
 It is not Harness evidence, gate status, Human acceptance, or a persistent source of truth.
 Use local statuses such as `in_progress`, `needs_context`, `blocked`, `local_review_clear`, and `handoff_returned`.
 Do not use this ledger to claim done, accepted, ready, or gate-passed.
