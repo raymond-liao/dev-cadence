@@ -29,7 +29,7 @@ You MUST create a task for each of these items and complete them in order:
 6. **Present requirements or design in sections scaled to complexity** and get Human approval after each section when needed
 7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
 8. **Ask the Human to review clarified requirements/design when persistent artifacts are used.**
-9. **Transition to planning handoff** — return to `using-dev-cadence` with evidence, gate status, unresolved blockers, and a recommendation for `cadence-plan`
+9. **Transition to planning handoff** — return to `using-dev-cadence` with evidence fields, gate-relevant observations, unresolved blockers, and a recommendation for `cadence-plan`
 
 ## Process Flow
 
@@ -108,7 +108,8 @@ digraph cadence-clarify {
 
 - For standard or high-risk tasks, return artifact-ready content for `00-brief.md`, `01-requirements.md`, and `02-design.md` when persistent artifacts are being used.
   - User or repository preferences for artifact location override this default.
-- Leave concrete artifact writes to the Supervisor/Harness path unless this Skill is explicitly being used as the artifact authoring action.
+- Write or update clarified artifacts only when Supervisor/Harness context provides the target paths and authorizes this Skill to update them; otherwise return complete artifact-ready content.
+- Do not choose artifact paths, create workflow records, mark gates complete, or treat artifact writes as Human approval from this Skill.
 
 **Spec Self-Review:**
 Before handoff, review the clarified spec content with fresh eyes:
@@ -129,7 +130,7 @@ Wait for the Human response. If they request changes, make them and re-run the s
 
 **Implementation:**
 
-- Return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate status, and recommended next state.
+- Return a concise handoff to `using-dev-cadence` with evidence fields produced, unresolved blockers, gate-relevant observations, and recommended next state.
 - Do not select the next cadence Skill from here.
 
 ## Key Principles
@@ -168,4 +169,4 @@ Only hand off as ready for planning when the Human approves the clarified requir
 
 This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
 
-When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate status, and recommended next state. Do not select the next cadence Skill from here.
+When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence fields produced, unresolved blockers, gate-relevant observations, and recommended next state. Do not select the next cadence Skill from here.
