@@ -155,6 +155,15 @@ Harness evidence under `specs/records/{task_id}/runs/{run_id}/`:
 | `diff-summary.md` | planned vs actual files, untracked files, behavior changes, risk notes |
 | `permission-decisions.md` | permission requests, decisions, denials, residual risk |
 
+Run artifacts are execution provenance, not the default Human-facing task
+summary. They still must be readable audit notes: open one file and it should
+answer a concrete question such as “what was this run allowed to do?”, “what
+happened?”, “which commands verified it?”, or “which permission decision allowed
+the risky action?”. Use Markdown/schema-lite with stable labels, tables,
+checklists, and command/log blocks as the primary shape. Preserve fenced YAML
+only as legacy compatibility input; do not author new run templates as fenced
+YAML schema stubs.
+
 ## Required Fields
 
 Templates may evolve, but these fields are core runtime contract fields:

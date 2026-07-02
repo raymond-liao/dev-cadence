@@ -14,14 +14,13 @@ Harness 汇总 Worker output 和执行结果。
 
 ## 记录内容
 
-- run status
-- summary
-- changed files
-- skipped checks
-- known limitations
-- risks
-- handoff notes
-- verification status when applicable
+- stable labels: `Run ID`、`Task ID`、`Agent role`、`Status`、start/end time
+- `What happened`: inputs and outputs
+- `Files changed`: planned/actual/unplanned/deleted files and scope reconciliation status
+- authorization baseline: pre-implementation status path, implementation authorization, post-hoc flag
+- verification run: commands/tests and verification status
+- permission activity, skipped checks, errors/blockers, residual risk
+- handoff target
 
 ## Gate 影响
 
@@ -29,4 +28,4 @@ Harness 汇总 Worker output 和执行结果。
 
 ## 如何阅读
 
-先看 summary 和 status，再跟随链接或路径检查实际证据文件。
+先看 `What happened`、`Files changed` 和 `Verification run`，确认本次实际做了什么、有没有越界、验证是否足够；再跟随证据路径检查 tool/test/diff/permission 记录。

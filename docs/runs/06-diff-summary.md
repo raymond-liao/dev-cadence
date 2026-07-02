@@ -14,14 +14,13 @@ Harness 或 Developer via Harness。
 
 ## 记录内容
 
-- planned files
-- changed files
-- untracked task files
-- deleted files
-- behavior changes
+- `Scope reconciliation status`
+- planned files and planned artifact files
+- actual changed files, untracked files, created artifact files, added components
+- unplanned changed files and deleted files
+- behavior and non-behavior changes
 - risk areas
 - rollback notes
-- scope reconciliation notes
 
 ## Gate 影响
 
@@ -29,4 +28,4 @@ Harness 或 Developer via Harness。
 
 ## 如何阅读
 
-将 changed files 与 [03-tasks.md](../artifacts/03-tasks.md)、[05-implementation.md](../artifacts/05-implementation.md) 和实际 worktree status 对比，确认是否超出计划范围。
+将 `Actual changes` 与 [03-tasks.md](../artifacts/03-tasks.md)、[05-implementation.md](../artifacts/05-implementation.md) 和实际 worktree status 对比，确认是否超出计划范围。`Files changed` 和 `Untracked files` 即使为空也要明确记录，避免漏掉未跟踪任务文件。

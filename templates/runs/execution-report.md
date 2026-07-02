@@ -1,34 +1,93 @@
 # Execution Report
 
-```yaml
-run_id:
-task_id:
-agent_role:
-state:
-started_at:
-ended_at:
-inputs:
-outputs:
-planned_files:
-planned_artifact_files:
-files_changed:
-untracked_files:
-created_artifact_files:
-unplanned_changed_files:
-deleted_files:
-added_components:
-pre_implementation_status_path:
-implementation_authorized:
-post_hoc_backfill:
-scope_reconciliation_status:
-commands_run:
-tests_run:
-verification_status:
-permissions_requested:
-permissions_granted:
-permissions_denied:
-skipped_checks:
-errors:
-residual_risk:
-handoff_target:
-```
+Run ID:
+Task ID:
+Agent role:
+Status:
+Started at:
+Ended at:
+
+## What happened
+
+Summarize what the Worker or adapter actually did, including inputs consumed and outputs produced.
+
+Inputs:
+-
+
+Outputs:
+-
+
+## Files changed
+
+| File | Planned? | Change summary |
+|---|---|---|
+
+Planned files:
+-
+
+Planned artifact files:
+-
+
+Untracked files:
+-
+
+Created artifact files:
+-
+
+Unplanned changed files:
+-
+
+Deleted files:
+-
+
+Added components:
+-
+
+Scope reconciliation status:
+
+## Authorization baseline
+
+Pre-implementation status path:
+Implementation authorized: false
+Post hoc backfill: false
+
+## Artifacts created or updated
+
+-
+
+## Verification run
+
+Commands run:
+-
+
+Tests run:
+-
+
+Verification status:
+
+## Permission activity
+
+Permissions requested:
+-
+
+Permissions granted:
+-
+
+Permissions denied:
+-
+
+## Skipped checks
+
+-
+
+## Errors and blockers
+
+-
+
+## Residual risk
+
+-
+
+## Handoff
+
+Handoff target:

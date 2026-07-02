@@ -21,6 +21,8 @@ Harness 或 Developer via Harness。
 - blocking questions 状态
 - `implementation_authorized`
 - `post_hoc_backfill`
+- post-hoc Human override owner/reason when applicable
+- residual risk
 
 ## Gate 影响
 
@@ -28,4 +30,4 @@ S1/S2 implementation 或 fix run 缺少这个文件，或它被标记为 `post_h
 
 ## 如何阅读
 
-确认 `implementation_authorized: true` 且 `post_hoc_backfill: false`，再检查 authorized files 是否覆盖实际修改范围。
+确认 `Implementation authorized: true` 且 `Post hoc backfill: false`，再检查 `Authorized target files` 是否覆盖实际修改范围。若 `Post hoc backfill: true`，必须有具名 Human override 和 residual risk 说明。

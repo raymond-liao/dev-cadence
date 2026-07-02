@@ -6,69 +6,41 @@ Harness is not an Agent and must not make semantic approval decisions.
 
 ## Contents
 
-- [Run Context Schema](#run-context-schema)
-- [Pre-Implementation Status Schema](#pre-implementation-status-schema)
+- [Run Context Evidence](#run-context-evidence)
+- [Pre-Implementation Status Evidence](#pre-implementation-status-evidence)
 - [Required Evidence](#required-evidence)
-- [Execution Report Schema](#execution-report-schema)
+- [Execution Report Evidence](#execution-report-evidence)
 - [Permission Policy](#permission-policy)
 - [Single-Executor Use](#single-executor-use)
 - [Missing Evidence](#missing-evidence)
 
-## Run Context Schema
+## Run Context Evidence
 
-```yaml
-run_id:
-task_id:
-agent_role:
-blueprint_path:
-context_pack_path:
-workspace_path:
-allowed_read_paths:
-allowed_write_paths:
-denied_paths:
-allowed_tools:
-denied_tools:
-network_policy:
-secret_policy:
-permission_policy:
-budget:
-timeout:
-max_iterations:
-required_evidence:
-pre_implementation_status_path:
-expected_artifacts:
-log_paths:
-```
+`run-context.md` records the execution boundary for one Harness run as readable
+Markdown/schema-lite. It must answer what this run was allowed to do before a
+Reviewer or Verifier trusts later claims.
 
-## Pre-Implementation Status Schema
+Required stable labels and sections:
+
+- `Run ID`, `Task ID`, `Agent role`, `Status`;
+- `What this run is allowed to do`: blueprint path, context pack path,
+  workspace path, allowed read paths, allowed write paths, forbidden paths;
+- `Tools and environment`: allowed tools, denied tools, network policy, secret
+  policy, permission policy;
+- `Required evidence`: evidence files expected from this run;
+- `Limits`: budget, timeout, max iterations.
+
+## Pre-Implementation Status Evidence
 
 For `S1` and `S2` implementation or fix runs, capture
 `pre-implementation-status.md` before the first product source, test, migration,
 build, deployment, or application configuration edit.
 
-```yaml
-run_id:
-task_id:
-captured_at:
-task_class:
-selected_workflow:
-implementation_state:
-git_status_before:
-untracked_files_before:
-authorized_target_files:
-authorized_artifact_files:
-g1_status:
-g2_status:
-g3_status:
-requirements_ready:
-blocking_questions:
-implementation_authorized:
-authorization_source:
-post_hoc_backfill:
-post_hoc_human_override_by:
-post_hoc_human_override_reason:
-residual_risk:
-```
+Use stable Markdown labels for `Run ID`, `Task ID`, `Captured at`, `Task class`,
+`Selected workflow`, `Implementation state`, `Implementation authorized`,
+`Authorization source`, and `Post hoc backfill`. Include sections for worktree
+baseline, authorized scope, gate-relevant baseline, post-hoc Human override, and
+residual risk.
 
 `implementation_authorized` may be `true` only when the latest request is
 reconciled, Requirements Readiness Check is complete, required gates are passed
@@ -92,29 +64,15 @@ Capture or reference:
 
 Missing required files block Quality Gates. A summary inside `execution-report.md` does not replace the required evidence files.
 
-## Execution Report Schema
+## Execution Report Evidence
 
-```yaml
-run_id:
-task_id:
-agent_role:
-state:
-started_at:
-ended_at:
-inputs:
-outputs:
-files_changed:
-commands_run:
-tests_run:
-verification_status:
-permissions_requested:
-permissions_granted:
-permissions_denied:
-skipped_checks:
-errors:
-residual_risk:
-handoff_target:
-```
+`execution-report.md` summarizes one run without replacing the required evidence
+files. It must use readable sections for `What happened`, `Files changed`,
+authorization baseline, artifacts created or updated, verification run,
+permission activity, skipped checks, errors/blockers, residual risk, and handoff.
+Keep stable labels such as `Run ID`, `Task ID`, `Agent role`, `Status`,
+`Scope reconciliation status`, `Commands run`, `Tests run`, and
+`Verification status` so checkers can parse the evidence.
 
 ## Permission Policy
 

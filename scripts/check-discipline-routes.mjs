@@ -258,6 +258,68 @@ function checkArtifactTemplates() {
       fail(`templates/spec/03-tasks.md: missing Markdown task template phrase: ${phrase}`);
     }
   }
+
+  const runTemplateRequirements = {
+    'templates/runs/run-context.md': [
+      '## What this run is allowed to do',
+      'Allowed write paths:',
+      '## Tools and environment',
+      '## Required evidence',
+      '## Limits',
+    ],
+    'templates/runs/pre-implementation-status.md': [
+      'Implementation authorized:',
+      'Post hoc backfill:',
+      '## Worktree before implementation',
+      '## Authorized scope',
+      '## Gate-relevant baseline',
+      '## Human override, if post-hoc',
+    ],
+    'templates/runs/execution-report.md': [
+      '## What happened',
+      '## Files changed',
+      'Scope reconciliation status:',
+      '## Verification run',
+      '## Handoff',
+    ],
+    'templates/runs/tool-log.md': [
+      '## Commands and tools used',
+      '| Time | Tool/command | Purpose | Result | Evidence path |',
+      '## Notable output',
+    ],
+    'templates/runs/test-log.md': [
+      'Verification status:',
+      '## Commands run',
+      '| Command | Result | Evidence | Covers |',
+      '## Skipped checks',
+      '## Residual risk',
+    ],
+    'templates/runs/diff-summary.md': [
+      'Scope reconciliation status:',
+      '## Planned changes',
+      '## Actual changes',
+      'Files changed:',
+      'Untracked files:',
+      '## Rollback notes',
+    ],
+    'templates/runs/permission-decisions.md': [
+      '## Decisions',
+      '| Request | Risk | Decision | Decider | Time | Reason |',
+      '## Deferred or denied requests',
+      '## Residual risk',
+    ],
+  };
+  for (const [relativePath, phrases] of Object.entries(runTemplateRequirements)) {
+    const text = readText(relativePath);
+    if (/```ya?ml\b/i.test(text)) {
+      fail(`${relativePath}: run template must be readable Markdown/schema-lite, not a fenced YAML schema stub`);
+    }
+    for (const phrase of phrases) {
+      if (!text.includes(phrase)) {
+        fail(`${relativePath}: missing readable run evidence phrase: ${phrase}`);
+      }
+    }
+  }
 }
 
 function checkVisualCompanionScripts() {

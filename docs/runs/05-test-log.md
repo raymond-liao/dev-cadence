@@ -14,12 +14,13 @@ Harness，包含 Tester 或 Developer via Harness 的验证输出。
 
 ## 记录内容
 
-- commands
+- `Verification status`
+- `Commands run` table: command、result、evidence、covers
 - environment
-- output summary
-- result
-- failures
+- results
 - skipped checks
+- failures
+- residual risk
 
 ## Gate 影响
 
@@ -27,4 +28,4 @@ Harness，包含 Tester 或 Developer via Harness 的验证输出。
 
 ## 如何阅读
 
-确认命令、环境和结果是否足以支持 [06-test-report.md](../artifacts/06-test-report.md) 中的 verification status。
+确认 `Commands run` table、环境和结果是否足以支持 [06-test-report.md](../artifacts/06-test-report.md) 中的 verification status；若有 skipped checks，检查 residual risk 是否被带到 test report / acceptance summary。

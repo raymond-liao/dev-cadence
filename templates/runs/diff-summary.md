@@ -1,17 +1,53 @@
 # Diff Summary
 
-```yaml
-run_id:
-planned_files:
-planned_artifact_files:
-files_changed:
-untracked_files:
-created_artifact_files:
-unplanned_changed_files:
-deleted_files:
-added_components:
-scope_reconciliation_status:
-behavior_changes:
-non_behavior_changes:
-risk_notes:
-```
+Run ID:
+Task ID:
+Scope reconciliation status:
+
+## Planned changes
+
+Planned files:
+-
+
+Planned artifact files:
+-
+
+## Actual changes
+
+Files changed:
+-
+
+Untracked files:
+-
+
+Created artifact files:
+-
+
+Added components:
+-
+
+## Unplanned changes
+
+Unplanned changed files:
+-
+
+## Deleted files
+
+-
+
+## Behavior changes
+
+-
+
+## Non-behavior changes
+
+-
+
+## Risk areas
+
+Risk notes:
+-
+
+## Rollback notes
+
+-

@@ -100,6 +100,25 @@ for artifact in \
     exit 1
   fi
 done
+for artifact in \
+  run-context.md \
+  pre-implementation-status.md \
+  execution-report.md \
+  tool-log.md \
+  test-log.md \
+  diff-summary.md \
+  permission-decisions.md; do
+  if grep -q '```yaml' "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/${artifact}"; then
+    echo "generated run artifact should be readable Markdown/schema-lite without fenced YAML: ${artifact}" >&2
+    exit 1
+  fi
+done
+grep -q "## What this run is allowed to do" "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/run-context.md"
+grep -q "Allowed write paths:" "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/run-context.md"
+grep -q "## Worktree before implementation" "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/pre-implementation-status.md"
+grep -q "Implementation Authorized: false" "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/pre-implementation-status.md"
+grep -q "## What happened" "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/execution-report.md"
+grep -q "Scope Reconciliation Status: passed_no_product_changes" "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/diff-summary.md"
 "${ROOT_DIR}/skills/cadence-subagent-development/scripts/task-brief" \
   "${REPO_DIR}/specs/records/${TASK_ID}/03-tasks.md" \
   1 \

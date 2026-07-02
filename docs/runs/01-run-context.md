@@ -14,21 +14,11 @@ Harness，由 Supervisor 提供必要上下文。
 
 ## 记录内容
 
-- `run_id`
-- `agent_role`
-- `blueprint_path`
-- `context_pack_path`
-- `workspace_path`
-- `allowed_tools`
-- `denied_tools`
-- `allowed_paths`
-- `denied_paths`
-- `network_policy`
-- `secret_policy`
-- `budget`
-- `timeout`
-- `max_iterations`
-- `required_evidence`
+- stable labels: `Run ID`、`Task ID`、`Agent role`、`Status`
+- `What this run is allowed to do`: blueprint/context/workspace、allowed read/write paths、forbidden paths
+- `Tools and environment`: allowed/denied tools、network/secret/permission policy
+- `Required evidence`: 本次 run 必须生成或引用的 evidence 文件
+- `Limits`: budget、timeout、max iterations
 
 ## Gate 影响
 
@@ -36,4 +26,4 @@ Harness，由 Supervisor 提供必要上下文。
 
 ## 如何阅读
 
-先看 `agent_role`、`allowed_paths`、`denied_paths` 和 `required_evidence`，确认本次执行是否有清楚边界。
+先看 `What this run is allowed to do`，确认 allowed write paths 和 forbidden paths 是否清楚；再看 `Required evidence` 和 `Limits`，判断后续 claims 是否有足够证据支撑。

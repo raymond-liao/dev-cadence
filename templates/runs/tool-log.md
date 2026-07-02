@@ -1,9 +1,23 @@
 # Tool Log
 
-```yaml
-run_id:
-commands_or_tools:
-outputs:
-errors:
-omissions:
-```
+Run ID:
+Task ID:
+
+## Commands and tools used
+
+| Time | Tool/command | Purpose | Result | Evidence path |
+|---|---|---|---|---|
+
+Commands or tools:
+-
+
+## Notable output
+
+Outputs:
+-
+
+Errors:
+-
+
+Omissions:
+-

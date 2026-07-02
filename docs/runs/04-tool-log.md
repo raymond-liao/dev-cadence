@@ -14,11 +14,11 @@ Harness。
 
 ## 记录内容
 
-- tool calls
-- shell commands
-- key output references
-- errors or notable logs
-- timestamps when available
+- `Commands and tools used` table: time、tool/command、purpose、result、evidence path
+- command/tool list for parser-friendly summaries
+- notable outputs
+- errors
+- omissions
 
 ## Gate 影响
 
@@ -26,4 +26,4 @@ Harness。
 
 ## 如何阅读
 
-用它核对 execution report 中的 claims 是否有对应命令或工具证据。
+用它核对 execution report 中的 claims 是否有对应命令或工具证据；重点看 table 中的 purpose、result 和 evidence path 是否能支撑结论。

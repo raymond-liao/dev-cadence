@@ -992,129 +992,305 @@ Decision: ${acceptanceBlocked ? 'blocked_pending_named_human' : 'accepted_for_dr
 Residual risk:
 - Product behavior is not verified.
 Escalation: ${acceptanceBlocked ? 'named Human acceptance required' : 'none'}`));
-
-  writeText(path.join(runDir, 'run-context.md'), block('Run Context', {
+  writeText(path.join(runDir, 'run-context.md'), markdownBlock('Run Context', {
     run_id: options.runId,
     task_id: options.taskId,
     agent_role: 'Supervisor',
-    blueprint_path: 'references/supervisor-state-machine.md',
-    context_pack_path: `specs/records/${options.taskId}/00-brief.md`,
-    workspace_path: rel(options.repoDir, options.repoDir),
-    allowed_read_paths: ['AGENTS.md', '.dev-cadence.yaml', 'specs/records/**'],
-    allowed_write_paths: [`specs/records/${options.taskId}/**`],
-    denied_paths: ['product source files'],
-    allowed_tools: ['node', 'filesystem writes under specs'],
-    denied_tools: ['network', 'production actions', 'database writes'],
-    network_policy: 'disabled',
-    secret_policy: 'do_not_request_or_record_secrets',
-    permission_policy: 'no elevated permissions required',
-    budget: 'local dry run',
-    timeout: 'not enforced',
-    max_iterations: 1,
-    required_evidence: runPaths,
-    pre_implementation_status_path: `specs/records/${options.taskId}/runs/${options.runId}/pre-implementation-status.md`,
-    expected_artifacts: artifactPaths,
-    log_paths: runPaths,
-  }));
+    status: 'dry_run_scope',
+  }, `## What this run is allowed to do
 
-  writeText(path.join(runDir, 'pre-implementation-status.md'), block('Pre-Implementation Status', {
+Blueprint path: references/supervisor-state-machine.md
+Context pack path: specs/records/${options.taskId}/00-brief.md
+Workspace path: ${rel(options.repoDir, options.repoDir)}
+
+Allowed read paths:
+- AGENTS.md
+- .dev-cadence.yaml
+- specs/records/**
+
+Allowed write paths:
+- specs/records/${options.taskId}/**
+
+Forbidden paths:
+- product_source_files
+
+## Tools and environment
+
+Allowed tools:
+- node
+- filesystem_writes_under_specs
+
+Denied tools:
+- network
+- production_actions
+- database_writes
+
+Network policy: disabled
+Secret policy: do_not_request_or_record_secrets
+Permission policy: no_elevated_permissions_required
+
+## Required evidence
+
+${runPaths.map((item) => `- ${item}`).join('\n')}
+
+Pre-implementation status path: specs/records/${options.taskId}/runs/${options.runId}/pre-implementation-status.md
+Expected artifacts:
+${artifactPaths.map((item) => `- ${item}`).join('\n')}
+
+Log paths:
+${runPaths.map((item) => `- ${item}`).join('\n')}
+
+## Limits
+
+Budget: local_dry_run
+Timeout: not_enforced
+Max iterations: 1`));
+
+  writeText(path.join(runDir, 'pre-implementation-status.md'), markdownBlock('Pre-Implementation Status', {
     run_id: options.runId,
     task_id: options.taskId,
     captured_at: timestamp,
     task_class: taskClass,
     selected_workflow: workflow,
     implementation_state: 'not_started_for_product_files',
-    git_status_before: [],
-    untracked_files_before: [],
-    authorized_target_files: [],
-    authorized_artifact_files: artifactPaths,
-    g1_status: 'passed_for_dry_run_scope',
-    g2_status: taskClass === 'S2' ? 'not_applicable_no_product_implementation' : 'not_required',
-    g3_status: 'passed_for_dry_run_scope',
-    requirements_ready: true,
-    blocking_questions: [],
     implementation_authorized: false,
     authorization_source: 'dry_run_no_product_edits',
     post_hoc_backfill: false,
-    post_hoc_human_override_by: null,
-    post_hoc_human_override_reason: null,
-    residual_risk: ['No product implementation is authorized or performed by dry run.'],
-  }));
+  }, `## Worktree before implementation
 
-  writeText(path.join(runDir, 'execution-report.md'), block('Execution Report', {
+Git status before: []
+Untracked files before: []
+
+## Authorized scope
+
+Authorized target files: []
+Authorized artifact files:
+${artifactPaths.map((item) => `- ${item}`).join('\n')}
+
+## Gate-relevant baseline
+
+G1 status: passed_for_dry_run_scope
+G2 status: ${taskClass === 'S2' ? 'not_applicable_no_product_implementation' : 'not_required'}
+G3 status: passed_for_dry_run_scope
+Requirements ready: true
+Blocking questions: []
+
+## Human override, if post-hoc
+
+Override by: null
+Override reason: null
+Post hoc human override by: null
+Post hoc human override reason: null
+
+## Residual risk
+
+Residual risk:
+- dry_run_no_product_implementation_authorized`));
+
+  writeText(path.join(runDir, 'execution-report.md'), markdownBlock('Execution Report', {
     run_id: options.runId,
     task_id: options.taskId,
     agent_role: 'Supervisor',
+    status: 'delivery_dry_run',
     state: 'delivery_dry_run',
     started_at: timestamp,
     ended_at: timestamp,
-    inputs: ['CLI goal', 'Dev Cadence repository contract'],
-    outputs: [...artifactPaths, ...runPaths],
-    planned_files: [],
-    planned_artifact_files: artifactPaths,
-    files_changed: [],
-    untracked_files: [],
-    created_artifact_files: [...artifactPaths, ...runPaths],
-    unplanned_changed_files: [],
-    deleted_files: [],
-    added_components: [],
-    pre_implementation_status_path: `specs/records/${options.taskId}/runs/${options.runId}/pre-implementation-status.md`,
-    implementation_authorized: false,
-    post_hoc_backfill: false,
-    scope_reconciliation_status: 'passed_no_product_changes',
-    commands_run: ['init-task-artifacts.mjs'],
-    tests_run: ['check-spec-artifacts.mjs should be run after generation'],
+  }, `## What happened
+
+Inputs:
+- cli_goal
+- dev_cadence_repository_contract
+
+Outputs:
+${[...artifactPaths, ...runPaths].map((item) => `- ${item}`).join('\n')}
+
+## Files changed
+
+| File | Planned? | Change summary |
+|---|---|---|
+
+Planned files: []
+Planned artifact files:
+${artifactPaths.map((item) => `- ${item}`).join('\n')}
+
+Files changed: []
+Untracked files: []
+Created artifact files:
+${[...artifactPaths, ...runPaths].map((item) => `- ${item}`).join('\n')}
+
+Unplanned changed files: []
+Deleted files: []
+Added components: []
+Scope reconciliation status: passed_no_product_changes
+
+## Authorization baseline
+
+Pre-implementation status path: specs/records/${options.taskId}/runs/${options.runId}/pre-implementation-status.md
+Implementation authorized: false
+Post hoc backfill: false
+
+## Artifacts created or updated
+
+${[...artifactPaths, ...runPaths].map((item) => `- ${item}`).join('\n')}
+
+## Verification run
+
+Commands run:
+- init-task-artifacts.mjs
+
+Tests run:
+- check_spec_artifacts_pending_after_generation
+
+Verification status: partially_verified
+
+## Permission activity
+
+Permissions requested: []
+Permissions granted: []
+Permissions denied: []
+
+## Skipped checks
+
+Skipped checks:
+- product_tests_skipped_no_product_implementation
+
+## Errors and blockers
+
+Errors: []
+
+## Residual risk
+
+Residual risk:
+- product_behavior_unverified
+
+## Handoff
+
+Handoff target: ${acceptanceBlocked ? 'Human Gate G6' : 'Done for dry-run scope'}`));
+
+  writeText(path.join(runDir, 'tool-log.md'), markdownBlock('Tool Log', {
+    run_id: options.runId,
+    task_id: options.taskId,
+  }, `## Commands and tools used
+
+| Time | Tool/command | Purpose | Result | Evidence path |
+|---|---|---|---|---|
+| ${timestamp} | init-task-artifacts.mjs | initialize_artifacts | created_or_skipped | specs/records/${options.taskId} |
+| ${timestamp} | run-delivery-dry-run.mjs | populate_dry_run_evidence | completed | specs/records/${options.taskId}/runs/${options.runId} |
+
+Commands or tools:
+- init-task-artifacts.mjs
+- run-delivery-dry-run.mjs
+
+## Notable output
+
+Outputs:
+- task_artifacts_populated
+- harness_run_evidence_populated
+
+Errors: []
+Omissions:
+- no_product_tool_execution`));
+
+  writeText(path.join(runDir, 'test-log.md'), markdownBlock('Test Log', {
+    run_id: options.runId,
+    task_id: options.taskId,
     verification_status: 'partially_verified',
-    permissions_requested: [],
-    permissions_granted: [],
-    permissions_denied: [],
-    skipped_checks: ['Product tests skipped; dry run has no product implementation.'],
-    errors: [],
-    residual_risk: ['Product behavior is unverified.'],
-    handoff_target: acceptanceBlocked ? 'Human Gate G6' : 'Done for dry-run scope',
-  }));
+  }, `## Commands run
 
-  writeText(path.join(runDir, 'tool-log.md'), block('Tool Log', {
-    run_id: options.runId,
-    commands_or_tools: ['init-task-artifacts.mjs', 'run-delivery-dry-run.mjs'],
-    outputs: ['Task artifacts populated.', 'Harness run evidence populated.'],
-    errors: [],
-    omissions: ['No product tool execution.'],
-  }));
+| Command | Result | Evidence | Covers |
+|---|---|---|---|
+| check-spec-artifacts.mjs specs/records | pending_external_command_capture | specs/records/${options.taskId} | artifact_schema |
 
-  writeText(path.join(runDir, 'test-log.md'), block('Test Log', {
-    run_id: options.runId,
-    commands: ['check-spec-artifacts.mjs specs/records'],
-    environment: ['local fixture repository'],
-    results: ['pending_external_command_capture'],
-    failures: [],
-    skipped: ['Product test suite skipped by dry-run scope.'],
-  }));
+Commands:
+- check-spec-artifacts.mjs specs/records
 
-  writeText(path.join(runDir, 'diff-summary.md'), block('Diff Summary', {
+## Environment
+
+- local_fixture_repository
+
+## Results
+
+- pending_external_command_capture
+
+## Skipped checks
+
+Skipped:
+- product_test_suite_skipped_by_dry_run_scope
+
+## Failures
+
+Failures: []
+
+## Residual risk
+
+Residual risk:
+- product_behavior_unverified`));
+
+  writeText(path.join(runDir, 'diff-summary.md'), markdownBlock('Diff Summary', {
     run_id: options.runId,
-    planned_files: [],
-    planned_artifact_files: artifactPaths,
-    files_changed: [],
-    untracked_files: [],
-    created_artifact_files: [...artifactPaths, ...runPaths],
-    unplanned_changed_files: [],
-    deleted_files: [],
-    added_components: [],
+    task_id: options.taskId,
     scope_reconciliation_status: 'passed_no_product_changes',
-    behavior_changes: [],
-    non_behavior_changes: ['Generated delivery dry-run artifacts.'],
-    risk_notes: ['No product behavior verified.'],
-  }));
+  }, `## Planned changes
 
-  writeText(path.join(runDir, 'permission-decisions.md'), block('Permission Decisions', {
+Planned files: []
+Planned artifact files:
+${artifactPaths.map((item) => `- ${item}`).join('\n')}
+
+## Actual changes
+
+Files changed: []
+Untracked files: []
+Created artifact files:
+${[...artifactPaths, ...runPaths].map((item) => `- ${item}`).join('\n')}
+
+Added components: []
+
+## Unplanned changes
+
+Unplanned changed files: []
+
+## Deleted files
+
+Deleted files: []
+
+## Behavior changes
+
+Behavior changes: []
+
+## Non-behavior changes
+
+Non behavior changes:
+- generated_delivery_dry_run_artifacts
+
+## Risk areas
+
+Risk notes:
+- no_product_behavior_verified
+
+## Rollback notes
+
+- delete_generated_dry_run_artifacts_if_unneeded`));
+
+  writeText(path.join(runDir, 'permission-decisions.md'), markdownBlock('Permission Decisions', {
     run_id: options.runId,
-    requests: [],
-    decisions: [],
-    denials: [],
-    conditions: ['No elevated permissions requested.'],
-    residual_risk: [],
-  }));
+    task_id: options.taskId,
+  }, `## Decisions
+
+| Request | Risk | Decision | Decider | Time | Reason |
+|---|---|---|---|---|---|
+
+Requests: []
+Decisions: []
+Conditions:
+- no_elevated_permissions_requested
+
+## Deferred or denied requests
+
+Denials: []
+
+## Residual risk
+
+Residual risk: []`));
 
   return { artifact_paths: artifactPaths, run_paths: runPaths, acceptance_blocked: acceptanceBlocked };
 }

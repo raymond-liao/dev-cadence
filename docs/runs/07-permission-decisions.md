@@ -14,15 +14,11 @@ Harness 记录请求和决策。决策 owner 必须是具名 Human，不能是 S
 
 ## 记录内容
 
-- requested action
-- reason
-- risk if skipped
-- requested by
-- decision
-- decided by
-- decided at
+- `Decisions` table: request、risk、decision、decider、time、reason
+- requests and decisions summary
 - conditions
-- follow-up
+- deferred or denied requests
+- residual risk
 
 ## Gate 影响
 
@@ -30,4 +26,4 @@ Harness 记录请求和决策。决策 owner 必须是具名 Human，不能是 S
 
 ## 如何阅读
 
-确认每个高风险动作都有明确 decision owner、decision、conditions 和 follow-up。
+确认每个高风险动作都有明确 request、risk、decision、具名 Human decider、time、reason 和 conditions。若请求被 deferred 或 denied，检查 residual risk 是否传递到后续 gate/acceptance 判断。
