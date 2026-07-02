@@ -6,3 +6,4 @@
 - [ ] [cadence-request-code-review](../skills/cadence-request-code-review) 与期望严重不符
 - [ ] [cadence-subagent-development](../skills/cadence-subagent-development) 能力缺失
 - [ ] [cadence-debug](../skills/cadence-debug) 能力缺失
+- [ ] [cadence-clarify](../skills/cadence-clarify) 可能需要进一步增强，以保证 AI 与用户的理解一致，保证后续产出正确

@@ -7,13 +7,21 @@ description: Use when starting or continuing software delivery work, including f
 
 Use this Skill as the Dev Cadence Supervisor entrypoint. It is the only Skill that represents Dev Cadence as a whole.
 
+## Worker Dispatch Boundary
+
+If you were dispatched by a Dev Cadence Supervisor or Harness as a Worker for a specific implementation, review, test, research, or verification task, do not start a new Supervisor workflow unless the Worker prompt explicitly asks you to. Follow the supplied run context, selected discipline, allowed files, forbidden actions, and output contract, then return the requested handoff.
+
+This boundary prevents nested Supervisors from overriding the controller that dispatched the Worker.
+
 ## Control Rule
 
 Before any response or action for software delivery work, classify the request, check all applicable cadence Skills, and enter the smallest workflow that preserves evidence, gates, and Human acceptance.
 
 User instructions define what to do. Dev Cadence defines how delivery work is controlled, evidenced, reviewed, verified, and accepted.
 
-If there is any reasonable chance a cadence Skill applies, use this Supervisor entrypoint before answering, asking clarification questions, reading files, running commands, or editing code.
+If there is even a small chance a cadence Skill applies, you must use this Supervisor entrypoint before answering, asking clarification questions, reading files, running commands, or editing code.
+
+If a cadence Skill applies to the task, using it is mandatory. This is not optional, not a preference, and not something to rationalize away because the task looks small or urgent.
 
 If a concrete cadence Skill applies, use it through this Supervisor entrypoint. Do not treat this bootstrap Skill as a replacement for the concrete discipline Skill.
 
@@ -29,11 +37,25 @@ If user or repository instructions conflict with Dev Cadence discipline, follow 
 
 ## Skill Activation
 
-Use Codex native skill activation. Do not read `SKILL.md` files with ordinary file tools as a substitute for activating an applicable Skill.
+Use the host platform's Skill activation mechanism when available. Do not treat manually reading a `SKILL.md` file as equivalent to activating an applicable Skill.
+
+On platforms where reading `SKILL.md` is the documented activation mechanism, use the platform's required activation signal or repository-defined embedded activation path, then apply the same Supervisor routing rules.
 
 When Dev Cadence is embedded in a target repository under `.dev-cadence/`, repository instructions may require reading `.dev-cadence/skills/using-dev-cadence/SKILL.md` as the activation path. In that mode, treat the repo-embedded file as the active Dev Cadence runtime, resolve `skills/...`, `references/...`, `templates/...`, and `scripts/...` paths relative to `.dev-cadence/`, and continue through the same Supervisor routing rules.
 
 If a concrete cadence Skill was activated first, immediately return to this Supervisor entrypoint before doing that Skill's work.
+
+Activation sequence:
+
+1. Receive the user request or continuation signal.
+2. Check whether any cadence Skill may apply before any other response or action.
+3. Activate this Supervisor entrypoint when software delivery work is involved.
+4. Classify workflow state, task class, evidence needs, gates, and applicable concrete Skills.
+5. Activate the selected concrete Skill through this Supervisor entrypoint.
+6. If the concrete Skill has a checklist, track each required item as explicit work.
+7. Follow the concrete Skill and return to this Supervisor entrypoint for routing, gate, and handoff decisions.
+
+If the selected Skill turns out not to fit after activation, return to Supervisor routing with the reason and choose the next applicable state. Do not silently proceed under default agent behavior.
 
 ## Required References
 
@@ -70,6 +92,15 @@ Before acting on software delivery work, identify the current workflow state, ta
 
 If multiple Skills apply, use them in workflow order. These Skills are cumulative, not alternatives.
 
+Process Skills come first because they define how to approach the work:
+
+- unclear intent, design, or acceptance -> clarify before planning or implementation;
+- unknown cause, bug, incident, failing test, or regression -> debug before fixing;
+- executable plan needed -> plan before execution;
+- completion or success claim -> verify before reporting.
+
+Implementation, review, research, and verification Skills then run inside the selected workflow state. Do not skip a process Skill because you already see a plausible implementation path.
+
 Common sequences:
 
 - research spike: `cadence-clarify` when the research question or decision boundary is unclear -> `cadence-research` -> Human decision or `cadence-clarify`/`cadence-plan` for approved delivery follow-up;
@@ -100,6 +131,11 @@ Stop and route through the applicable cadence Skill when any of these are true:
 - responding to a feature, bugfix, refactor, review, research, incident, verification, acceptance, or repo contract request before checking Dev Cadence routing;
 - asking clarification questions before checking whether `cadence-clarify` applies;
 - reading files, checking git, or exploring the repository before checking the applicable cadence Skill;
+- thinking "this is just a simple question" even though it affects delivery work;
+- thinking "I need more context first" before checking which Skill controls context gathering;
+- thinking "I remember this Skill" instead of activating the current version;
+- thinking "the Skill is overkill" or "just this once";
+- thinking "I know what the user means" when scope, acceptance, or expected behavior has multiple reasonable interpretations;
 - starting with file edits, shell commands, or implementation before classifying workflow state and task class;
 - starting S1/S2 product edits before `runs/{run_id}/pre-implementation-status.md` captures the worktree baseline and authorization state;
 - thinking the request is too small, too obvious, or too urgent for a cadence Skill;
@@ -111,6 +147,8 @@ Stop and route through the applicable cadence Skill when any of these are true:
 - creating a Git commit before `scripts/check-before-commit.mjs` has evaluated the commit candidate;
 - treating missing verification, missing Harness evidence, or skipped checks as acceptable without a named Human Gate;
 - recording Supervisor, Harness, Developer, Tester, Reviewer, or an unspecified agent as the final accepter.
+
+Questions are tasks when answering them changes delivery direction, design, implementation, review, verification, acceptance, or repository contract state. Check routing before answering them.
 
 ## Hard Rules
 
