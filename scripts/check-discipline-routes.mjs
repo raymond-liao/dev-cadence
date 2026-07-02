@@ -654,6 +654,69 @@ function checkCadenceSubagentDevelopmentContract() {
   }
 }
 
+function checkCadenceDispatchParallelContract() {
+  const sourceFile = 'skills/cadence-dispatch-parallel/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'Dispatch parallel Dev Cadence Workers only for independent problem domains.',
+    'Core principle: one Worker per independent problem domain, running concurrently, followed by controller-side integration verification.',
+    '## Parallel Dispatch Gate',
+    'Are there two or more domains?',
+    'Can each domain be understood without findings from another domain?',
+    'Can the controller integrate and verify all results after they return?',
+    'recommend inline or sequential execution instead.',
+    '## When to Use',
+    'multiple independent failing test files, subsystems, investigation tracks, research options, or review slices exist;',
+    'Workers can receive self-contained prompts without needing inherited chat history;',
+    'no Worker needs another Worker\'s result before starting.',
+    '## When Not to Use',
+    'failures may share one root cause or one fix may change another domain;',
+    'Workers would edit the same files, schemas, migrations, fixtures, generated artifacts, or shared test infrastructure;',
+    'Related failures must be investigated together first. Parallelism is not a substitute for root-cause analysis.',
+    'Confirm each Worker has a self-contained context package and does not need current-chat history.',
+    'Parallel dispatch means issuing all Worker requests in the same controller step or tool batch so they run concurrently.',
+    '## Worker Prompt Structure',
+    '**Specific scope:**',
+    '**Self-contained context:**',
+    '**Allowed and forbidden actions:**',
+    '**Output contract:**',
+    'Prompt anti-patterns:',
+    '❌ "Fix all failures." Too broad; the Worker loses domain focus.',
+    '✅ "Return root cause, changed files, verification command output, skipped checks, and residual risk."',
+    '## Dispatch Pattern',
+    'Issue all independent Worker dispatches in the same controller step or tool batch.',
+    'Do not paste the full current conversation into each Worker.',
+    '## Integration',
+    'Inspect the actual diff or artifacts for each domain; do not trust summaries alone.',
+    'Spot-check for systematic Worker errors such as all Workers using the same invalid assumption.',
+    'If conflicts or verification gaps exist, stop and return the gap to `using-dev-cadence` instead of claiming success.',
+    '## Common Mistakes',
+    'Running only per-domain tests and skipping integrated verification.',
+    '## Verification Requirements',
+    'Parallel work is not complete until the controller verifies the integrated result.',
+    'overlap/conflict check was performed;',
+    'integrated command or review proved the combined result, or the residual risk was returned to the Supervisor/Harness.',
+    'gate-relevant observations',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing dispatch-parallel process phrase: ${phrase}`);
+    }
+  }
+
+  const forbidden = [
+    'gate status',
+    'write persistent records',
+    'mark gates complete',
+  ];
+  for (const phrase of forbidden) {
+    if (text.includes(phrase)) {
+      fail(`${sourceFile}: dispatch Skill must return handoff fields, not own gate or persistent record state: ${phrase}`);
+    }
+  }
+}
+
 function checkCadenceDebugContract() {
   const sourceFile = 'skills/cadence-debug/SKILL.md';
   const text = readText(sourceFile);
@@ -1199,6 +1262,7 @@ checkCadenceClarifyContract();
 checkCadencePlanContract();
 checkCadenceExecutingPlansContract();
 checkCadenceSubagentDevelopmentContract();
+checkCadenceDispatchParallelContract();
 checkCadenceDebugContract();
 checkCadenceTddContract();
 checkImplementationDisciplineBoundary();
