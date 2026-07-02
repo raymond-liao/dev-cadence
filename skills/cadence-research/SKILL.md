@@ -104,7 +104,7 @@ When persistent artifacts are being used, produce artifact-ready content for `sp
 - `evidence_gaps`, `risks`, `open_questions`, and `human_decisions`;
 - `follow_up_delivery_needed`.
 
-Return artifact-ready content to the Supervisor/Harness path. Do not directly write or update persistent artifacts, Harness evidence, gate status, or acceptance records from this Skill unless the Supervisor explicitly selected this run as the artifact authoring action.
+Write or update specified artifact targets only when Supervisor/Harness context provides the paths and authorizes this Skill as the artifact-writing action; otherwise return complete artifact-ready content to the Supervisor/Harness path. Do not choose artifact paths, create workflow records, own Harness-evidence recording, own gate status, or write acceptance records from this Skill.
 
 ## Stop Conditions
 
@@ -122,4 +122,4 @@ Do not use research momentum as permission to edit product source, tests, migrat
 
 This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
 
-When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate-relevant observations, required Human decisions, and recommended next state. Do not select the next cadence Skill from here.
+When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence fields produced, unresolved blockers, gate-relevant observations, required Human decisions, and recommended next state. Do not select the next cadence Skill from here.

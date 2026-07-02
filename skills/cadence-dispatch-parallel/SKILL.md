@@ -121,7 +121,7 @@ After Workers return:
 4. Run domain-specific verification when needed, then run integrated verification that proves the combined result.
 5. Spot-check for systematic Worker errors such as all Workers using the same invalid assumption.
 6. If conflicts or verification gaps exist, stop and return the gap to `using-dev-cadence` instead of claiming success.
-7. Return integration evidence and unresolved risks for Supervisor/Harness recording.
+7. Return integration-evidence fields and unresolved risks as fields for Supervisor/Harness recording when persistent artifacts are being used.
 
 Do not continue to review, verify completion, or ask for Human acceptance until conflicts and verification gaps are resolved or explicitly handed off as residual risk.
 

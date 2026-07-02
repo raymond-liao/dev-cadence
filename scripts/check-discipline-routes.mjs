@@ -516,8 +516,9 @@ function checkCadenceResearchContract() {
     'Do not make final architecture, product, release, or business-priority decisions.',
     '## Artifact Handoff',
     'produce artifact-ready content for `specs/records/{task_id}/research-report.md`',
-    'Return artifact-ready content to the Supervisor/Harness path.',
-    'Do not directly write or update persistent artifacts, Harness evidence, gate status, or acceptance records from this Skill unless the Supervisor explicitly selected this run as the artifact authoring action.',
+    'Write or update specified artifact targets only when Supervisor/Harness context provides the paths and authorizes this Skill as the artifact-writing action',
+    'otherwise return complete artifact-ready content to the Supervisor/Harness path.',
+    'Do not choose artifact paths, create workflow records, own Harness-evidence recording, own gate status, or write acceptance records from this Skill.',
     '## Stop Conditions',
     'Do not use research momentum as permission to edit product source, tests, migrations, build scripts, deployment files, or application configuration.',
     'gate-relevant observations',
@@ -533,6 +534,7 @@ function checkCadenceResearchContract() {
   const forbidden = [
     'with evidence produced, unresolved blockers, gate status, and recommended next state',
     'Hand off to Human decision, `cadence-clarify`, or `cadence-plan` only if follow-up delivery is explicitly approved.',
+    'Do not directly write or update persistent artifacts, Harness evidence, gate status, or acceptance records from this Skill unless the Supervisor explicitly selected this run as the artifact authoring action.',
   ];
   for (const phrase of forbidden) {
     if (text.includes(phrase)) {
@@ -1373,6 +1375,8 @@ function checkConcreteSkillResponsibilityBoundary() {
     /\bwhen\s+artifacts\s+are\s+being\s+written,\s+record\b/i,
     /\brecord\s+required\s+pre-implementation\s+status\b/i,
     /\brecord\s+integration\s+evidence\b/i,
+    /\bwith\s+evidence\s+produced,\s+unresolved\s+blockers,\s+gate\s+status,\s+and\s+recommended\s+next\s+state\b/i,
+    /\bgate\s+status,\s+and\s+recommended\s+next\s+state\b/i,
   ];
 
   for (const skillName of concreteBehaviorSkills) {

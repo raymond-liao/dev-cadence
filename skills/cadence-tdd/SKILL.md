@@ -29,7 +29,7 @@ If implementation code came first:
 - do not keep it as "reference";
 - do not adapt it while writing tests;
 - do not use it to bias the expected behavior;
-- restart from a failing test, or record a named Human exception and residual risk.
+- restart from a failing test, or return a named Human exception and residual risk.
 
 ## Required References
 
@@ -59,9 +59,9 @@ repository rule applies. Common exception candidates:
 - pure configuration change;
 - environment limitation that prevents useful test-first feedback.
 
-Return the exception, substitute feedback, and residual risk for
-Supervisor/Harness recording. Thinking "skip TDD just this once" is a red flag,
-not an exception.
+Return the exception, substitute feedback, and residual risk as fields for
+Supervisor/Harness recording when persistent artifacts are being used. Thinking
+"skip TDD just this once" is a red flag, not an exception.
 
 ## Pre-Implementation Baseline
 
@@ -123,8 +123,8 @@ Refactor only after Green:
 - extract helpers;
 - clarify structure.
 
-Do not add behavior during refactor. Re-run verification and record that tests
-stayed green.
+Do not add behavior during refactor. Re-run verification and return evidence
+that tests stayed green.
 
 Repeat the cycle for each next behavior.
 
@@ -259,10 +259,10 @@ Before marking TDD implementation ready:
 - [ ] relevant neighboring or regression tests passed;
 - [ ] refactor, if any, happened only while tests stayed green;
 - [ ] tests use real behavior and mocks are justified;
-- [ ] skipped checks and residual risk are recorded.
+- [ ] skipped checks and residual risk are captured in the handoff.
 
 If these boxes cannot be checked, do not claim normal TDD. Return to Red or
-record the named Human exception.
+return the named Human exception.
 
 ## Evidence
 
@@ -286,12 +286,13 @@ Otherwise -> not TDD.
 ```
 
 No exception is valid unless a named Human accepted it and the substitute
-feedback is returned for Supervisor/Harness recording.
+feedback is returned as fields for Supervisor/Harness recording when persistent
+artifacts are being used.
 
 ## Supervisor Boundary
 
 This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
 
 When this Skill finishes, return a concise handoff to `using-dev-cadence` with
-evidence produced, unresolved blockers, gate status, and recommended next
-state. Do not select the next cadence Skill from here.
+evidence fields produced, unresolved blockers, gate-relevant observations, and
+recommended next state. Do not select the next cadence Skill from here.

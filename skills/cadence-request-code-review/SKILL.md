@@ -37,7 +37,7 @@ Review in two stages:
 1. spec compliance: compare implementation to clarified requirements, plan, and acceptance criteria;
 2. code quality: look for correctness, maintainability, security, reliability, and scope issues.
 
-Do not run code quality review before spec compliance passes or unresolved spec gaps are returned for Supervisor/Harness recording.
+Do not run code quality review before spec compliance passes or unresolved spec gaps are returned as fields for Supervisor/Harness recording when persistent artifacts are being used.
 
 Findings lead. Blocker or major issues block progress unless a named Human Gate accepts the residual risk.
 
@@ -87,7 +87,7 @@ Every review must provide:
   `changes_requested`, or `blocked`;
 - reasoning for the verdict.
 
-Return review findings, verdict, and evidence for `specs/records/{task_id}/07-review-report.md` when persistent artifacts are being used.
+Return review-report fields with findings, verdict, and evidence for `specs/records/{task_id}/07-review-report.md` when persistent artifacts are being used.
 
 If review finds valid blocking issues, hand off to `cadence-code-review`. Do not fix findings inside this Skill.
 
@@ -95,4 +95,4 @@ If review finds valid blocking issues, hand off to `cadence-code-review`. Do not
 
 This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
 
-When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate status, and recommended next state. Do not select the next cadence Skill from here.
+When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence fields produced, unresolved blockers, gate-relevant observations, and recommended next state. Do not select the next cadence Skill from here.

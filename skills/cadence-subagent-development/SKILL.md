@@ -221,4 +221,4 @@ Do not approve, accept, commit, mark gates complete, write persistent records, o
 
 This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
 
-When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate-relevant observations, and recommended next state. Do not select the next cadence Skill from here.
+When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence fields produced, unresolved blockers, gate-relevant observations, and recommended next state. Do not select the next cadence Skill from here.

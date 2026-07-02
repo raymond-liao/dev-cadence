@@ -50,7 +50,7 @@ For each task:
 3. Apply only the implementation discipline selected by `using-dev-cadence` for this run.
 4. Stay within approved files and allowed write paths.
 5. Run the task's focused verification and relevant neighboring checks.
-6. Return task status, changed files, commands, outputs, skipped checks, residual risk, and scope reconciliation for Supervisor/Harness recording.
+6. Return task-status fields, changed files, commands, outputs, skipped checks, residual risk, and scope reconciliation as fields for Supervisor/Harness recording when persistent artifacts are being used.
 
 Task status is one of: `implemented`, `verification_failed`, `blocked`, `needs_plan_update`.
 
@@ -87,4 +87,4 @@ Do not approve, accept, commit, mark gates complete, or say done/fixed/passing/r
 
 This Skill must run under `using-dev-cadence` Supervisor control. If it was selected directly, first enter `using-dev-cadence` to classify workflow state, task class, gates, and evidence requirements.
 
-When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence produced, unresolved blockers, gate status, and recommended next state. Do not select the next cadence Skill from here.
+When this Skill finishes, return a concise handoff to `using-dev-cadence` with evidence fields produced, unresolved blockers, gate-relevant observations, and recommended next state. Do not select the next cadence Skill from here.
