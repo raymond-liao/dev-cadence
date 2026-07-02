@@ -240,6 +240,20 @@ function checkArtifactTemplates() {
     }
   }
 
+  const specsRefRequired = [
+    'Prefer Markdown-first artifacts with stable labels, tables, checklists',
+    'Artifact templates define the evidence shape; they do not decide workflow state',
+    'Concrete Skills should return artifact-ready handoff data',
+    '`03-tasks.md` is the source for executable Markdown `Task N` sections',
+    'Do not author new task plans as a YAML-only `tasks:` schema',
+    'do not author new run templates as fenced\nYAML schema stubs',
+  ];
+  for (const phrase of specsRefRequired) {
+    if (!specsRef.includes(phrase)) {
+      fail(`references/spec-templates.md: missing Markdown-first artifact contract phrase: ${phrase}`);
+    }
+  }
+
   const tasksTemplate = readText('templates/spec/03-tasks.md');
   const taskTemplateRequired = [
     'For Dev Cadence Workers:',
@@ -256,6 +270,23 @@ function checkArtifactTemplates() {
   for (const phrase of taskTemplateRequired) {
     if (!tasksTemplate.includes(phrase)) {
       fail(`templates/spec/03-tasks.md: missing Markdown task template phrase: ${phrase}`);
+    }
+  }
+  if (/```ya?ml\b/i.test(tasksTemplate) || /^tasks:\s*$/m.test(tasksTemplate)) {
+    fail('templates/spec/03-tasks.md: must be Markdown-first, not a YAML-only task schema');
+  }
+
+  if (exists('docs/artifacts/03-tasks.md')) {
+    const tasksDoc = readText('docs/artifacts/03-tasks.md');
+    for (const phrase of [
+      'Markdown-first artifact',
+      '### Task 1:',
+      '`task-brief`',
+      'YAML `tasks:`',
+    ]) {
+      if (!tasksDoc.includes(phrase)) {
+        fail(`docs/artifacts/03-tasks.md: missing Task N source documentation phrase: ${phrase}`);
+      }
     }
   }
 

@@ -35,6 +35,13 @@ and headings that Human reviewers can read directly. Use fenced YAML only for
 legacy compatibility blocks, local config examples, or small machine-oriented
 schemas. Keep evidence reproducible and path-based.
 
+Artifact templates define the evidence shape; they do not decide workflow state
+or gate outcomes. Supervisor/Harness/checkers evaluate gate state from the
+available evidence. Concrete Skills should return artifact-ready handoff data,
+or write only Supervisor/Harness-specified artifact targets when explicitly
+authorized; they must not choose persistent record paths, own Harness evidence
+capture, or mark gates complete.
+
 ## Checks
 
 Executable artifact and gate checks:
@@ -142,6 +149,12 @@ Task artifacts under `specs/records/{task_id}/`:
 | `06-test-report.md` | verification status, commands, coverage, skipped checks, residual risk | G4 |
 | `07-review-report.md` | findings, severity, review decision, residual risk | G5 |
 | `08-acceptance.md` | named Human acceptance, accepted scope, residual risk accepted | G6 |
+
+`03-tasks.md` is the source for executable Markdown `Task N` sections. It must
+include a stable `### Task N: ...` heading shape, task-level `**Files:**` and
+`**Interfaces:**` anchors, and checkbox execution steps so
+`cadence-subagent-development` can extract a single Worker brief without parsing
+YAML task lists. Do not author new task plans as a YAML-only `tasks:` schema.
 
 Harness evidence under `specs/records/{task_id}/runs/{run_id}/`:
 

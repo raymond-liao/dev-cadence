@@ -22,7 +22,7 @@
 | [`08-acceptance.md`](08-acceptance.md) | 具名 Human acceptance、剩余风险和 G6 状态 |
 | [Runs](../runs/) | `runs/{run_id}/` 下的 Harness 执行证据 |
 
-生成这些 task artifact 时，使用 [templates/spec/](../../templates/spec/) 下的同名模板；模板契约见 [spec-templates.md](../../references/spec-templates.md)。
+生成这些 task artifact 时，使用 [templates/spec/](../../templates/spec/) 下的同名模板；模板契约见 [spec-templates.md](../../references/spec-templates.md)。Spec artifacts 使用 Markdown-first 形态：稳定 headings、labels、tables 和 checklists 服务 Human review 与 checker 解析；fenced YAML 只保留给兼容旧记录或局部机器字段，不作为新 artifact 的主体。
 
 ## Artifact-First 原则
 
@@ -78,7 +78,7 @@ Run evidence 的逐项说明见 [../runs/](../runs/)；G1-G6 的检查含义见 
 node scripts/generate-spec-report.mjs --specs-dir specs/records --report-dir specs/report
 ```
 
-HTML report 输出到 `specs/report/`，用于浏览 task summary、gate summary、artifact 链接、run evidence 和 Markdown 详情页。它是派生视图，不是事实源；Gate、review、acceptance 和提交前检查仍以 `specs/records/` 下的 Markdown/YAML artifact 为准。
+HTML report 输出到 `specs/report/`，用于浏览 task summary、gate summary、artifact 链接、run evidence 和 Markdown 详情页。它是派生视图，不是事实源；Gate、review、acceptance 和提交前检查仍以 `specs/records/` 下的 Markdown artifact 为准，旧 YAML-style 记录只作为兼容输入处理。
 
 报告命令和输出文件说明见 [Dev Cadence 当前验证](../validation.md#生成-specs-html-report)。目标仓库契约包含 `.dev-cadence/` runtime、`AGENTS.md`、本地 `.dev-cadence.yaml` 偏好和 `specs/` artifact space；初始化与同步规则由 [Codex Plugin 模块边界](../codex-plugin-boundaries.md#target-repository-contract) 和 [repository-rule-sync.md](../../references/repository-rule-sync.md) 说明。
 

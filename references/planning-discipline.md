@@ -63,7 +63,7 @@ Before writing implementation tasks, map created and modified files:
 
 ## Plan Review
 
-After writing `03-tasks.md`, review it against `01-requirements.md` and `02-design.md` when present.
+After writing `03-tasks.md`, review it against `01-requirements.md` and `02-design.md` when present. `03-tasks.md` is the executable Markdown plan source: use `### Task N: ...` sections with stable task anchors, not a YAML-only `tasks:` list.
 
 Check:
 
