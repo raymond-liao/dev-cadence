@@ -126,6 +126,47 @@ function cleanValue(value) {
   return trimmed;
 }
 
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function markdownSection(text, headingPattern) {
+  const pattern = new RegExp(`^#{1,6}\\s+${headingPattern}[^\\n]*\\n([\\s\\S]*?)(?=^#{1,6}\\s+|(?![\\s\\S]))`, 'im');
+  const match = text.match(pattern);
+  return match ? match[1] : '';
+}
+
+function markdownLabel(text, label) {
+  const escaped = escapeRegExp(label);
+  const pattern = new RegExp(`^\\s*(?:\\*\\*)?${escaped}(?:\\*\\*)?:\\s*(.*)$`, 'im');
+  const match = text.match(pattern);
+  return match ? cleanValue(match[1]) : '';
+}
+
+function markdownListAfterLabel(text, label) {
+  const escaped = escapeRegExp(label);
+  const pattern = new RegExp(`^\\s*(?:[-*]\\s+)?(?:\\*\\*)?${escaped}(?:\\*\\*)?:\\s*(.*)$`, 'i');
+  const lines = text.split('\n');
+  const startIndex = lines.findIndex((line) => pattern.test(line));
+  if (startIndex === -1) return [];
+
+  const values = [];
+  const firstValue = lines[startIndex].match(pattern)?.[1]?.trim();
+  if (firstValue) values.push(cleanValue(firstValue));
+
+  for (let index = startIndex + 1; index < lines.length; index += 1) {
+    const trimmed = lines[index].trim();
+    if (!trimmed) continue;
+    if (trimmed.startsWith('#')) break;
+    if (/^(?:[-*]\s+)?(?:\*\*)?[A-Za-z][A-Za-z0-9 /_-]*(?:\*\*)?:/.test(trimmed)) break;
+    const listItem = trimmed.match(/^[-*]\s+(.*)$/);
+    if (!listItem) break;
+    values.push(cleanValue(listItem[1]));
+  }
+
+  return values;
+}
+
 function parseTopLevelYaml(block) {
   const data = {};
   const lines = block.split('\n');
@@ -172,7 +213,19 @@ function readArtifact(taskDir, fileName, specsDir) {
 
 function readGate(artifact, gateId) {
   if (!artifact.exists) return {};
-  return parseTopLevelYaml(gateYamlBlock(artifact.text, gateId));
+  const yaml = parseTopLevelYaml(gateYamlBlock(artifact.text, gateId));
+  if (Object.keys(yaml).length > 0) return yaml;
+
+  const section = markdownSection(artifact.text, `Gate\\s+${gateId}\\b`);
+  if (!section) return {};
+  return {
+    gate_id: gateId,
+    status: markdownLabel(section, 'Status'),
+    decision: markdownLabel(section, 'Decision'),
+    human_override: markdownLabel(section, 'Human override'),
+    human_accepter: markdownLabel(section, 'Human accepter'),
+    residual_risk: markdownListAfterLabel(section, 'Residual risk'),
+  };
 }
 
 function asList(value) {
@@ -407,10 +460,13 @@ function checkG3(result, artifacts, taskClass) {
     fail(result, 'G3', 'Missing tasks artifact', evidence);
     return;
   }
-  if (!nonEmpty(artifacts.tasks.data.status)) {
+  const taskStatus = artifacts.tasks.data.status || markdownLabel(artifacts.tasks.text, 'Status');
+  const verificationPlan = asList(artifacts.tasks.data.verification_plan);
+  const markdownVerificationPlan = markdownListAfterLabel(artifacts.tasks.text, 'Verification plan');
+  if (!nonEmpty(taskStatus)) {
     fail(result, 'G3', 'Tasks artifact must record status', evidence);
   }
-  if (asList(artifacts.tasks.data.verification_plan).length === 0) {
+  if (verificationPlan.length === 0 && markdownVerificationPlan.length === 0) {
     fail(result, 'G3', 'Tasks artifact must include verification_plan', evidence);
   }
   if (asList(artifacts.implementation.data.unplanned_changed_files).length > 0) {

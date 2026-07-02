@@ -240,6 +240,22 @@ const ZH_REPLACEMENTS = [
   ['Dry run cannot verify product behavior.', 'dry run \u4e0d\u80fd\u9a8c\u8bc1\u4ea7\u54c1\u884c\u4e3a。'],
   ['The dry run validates orchestration surfaces before real Worker execution.', 'dry run \u5728\u771f\u5b9e Worker \u6267\u884c\u524d\u9a8c\u8bc1\u7f16\u6392\u63a5\u53e3。'],
   ['G2 is not required for this dry-run task unless real high-risk product work is added.', '\u9664\u975e\u52a0\u5165\u771f\u5b9e\u9ad8\u98ce\u9669\u4ea7\u54c1\u5de5\u4f5c，\u5426\u5219\u6b64 dry-run task \u4e0d\u9700\u8981 G2。'],
+  ['> **For Dev Cadence Workers:** Use `cadence-subagent-development` or `cadence-executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.', '> **For Dev Cadence Workers:** \u4f7f\u7528 `cadence-subagent-development` \u6216 `cadence-executing-plans` \u6309 task \u6267\u884c\u6b64 plan。Steps \u4f7f\u7528 checkbox (`- [ ]`) \u8bed\u6cd5\u8ddf\u8e2a。'],
+  ['Generate task artifacts and Harness run evidence without product edits.', '\u5728\u4e0d\u4fee\u6539\u4ea7\u54c1\u6587\u4ef6\u7684\u524d\u63d0\u4e0b\u751f\u6210 task artifacts \u548c Harness run evidence。'],
+  ['Dev Cadence runtime scripts and Markdown artifacts.', 'Dev Cadence runtime scripts \u548c Markdown artifacts。'],
+  ['Do not modify product files.', '\u4e0d\u8981\u4fee\u6539\u4ea7\u54c1\u6587\u4ef6。'],
+  ['Do not claim product verification.', '\u4e0d\u8981\u58f0\u79f0\u4ea7\u54c1\u5df2\u9a8c\u8bc1。'],
+  ['Consumes: CLI goal, requested_by, accepted_by, Dev Cadence repository contract.', 'Consumes: CLI goal、requested_by、accepted_by \u548c Dev Cadence \u4ed3\u5e93\u5951\u7ea6。'],
+  ['Produces: task artifacts and Harness run evidence.', 'Produces: task artifacts \u548c Harness run evidence。'],
+  ['Step 1: Run characterization before artifact fill', 'Step 1: \u5728 artifact \u586b\u5145\u524d\u8fd0\u884c characterization'],
+  ['Expected: generated dry-run evidence is not yet populated.', 'Expected: \u751f\u6210\u7684 dry-run evidence \u5c1a\u672a\u586b\u5145。'],
+  ['Step 2: Populate dry-run artifacts', 'Step 2: \u586b\u5145 dry-run artifacts'],
+  ['Create task artifacts and run evidence under', '\u5728'],
+  ['without product edits.', '\u4e0b\u521b\u5efa task artifacts \u548c run evidence，\u4e14\u4e0d\u4fee\u6539\u4ea7\u54c1\u6587\u4ef6。'],
+  ['Step 3: Run artifact verification', 'Step 3: \u8fd0\u884c artifact verification'],
+  ['Expected: generated dry-run artifact structure is checkable.', 'Expected: \u751f\u6210\u7684 dry-run artifact \u7ed3\u6784\u53ef\u68c0\u67e5。'],
+  ['Step 4: Run gate verification', 'Step 4: \u8fd0\u884c gate verification'],
+  ['Expected: G3 passes for dry-run task execution.', 'Expected: G3 \u9488\u5bf9 dry-run task execution \u901a\u8fc7。'],
   ['complete_for_dry_run', 'complete_for_dry_run'],
   ['Initialize task and run artifacts.', '\u521d\u59cb\u5316 task \u548c run artifact。'],
   ['Record workflow and task class inference.', '\u8bb0\u5f55 workflow \u548c task class \u63a8\u65ad。'],
@@ -516,50 +532,80 @@ The dry run validates orchestration surfaces before real Worker execution.
 
 G2 is not required for this dry-run task unless real high-risk product work is added.`));
 
-  writeText(path.join(taskDir, '03-tasks.md'), block('Tasks', {
-    status: 'complete_for_dry_run',
-    task_class: taskClass,
-    selected_workflow: workflow,
-    previous_task_class: null,
-    task_class_change_reason: null,
-    required_extra_gates: taskClass === 'S2' ? ['Human risk approval before real implementation'] : [],
-    tasks: [
-      'Initialize task and run artifacts.',
-      'Record workflow and task class inference.',
-      'Record dry-run implementation evidence.',
-      'Record verification and review evidence.',
-      'Block final acceptance when no named Human accepter is provided.',
-    ],
-    dependencies: ['Initialized Dev Cadence repository contract'],
-    planned_components: ['specs artifact tree'],
-    target_files: [],
-    planned_artifact_files: artifactPaths,
-    forbidden_actions: ['Modify product files', 'Claim product verification'],
-    acceptance_mapping: ['All generated artifacts are listed in implementation and diff summary.'],
-    verification_plan: ['Run check-spec-artifacts on the generated specs directory.'],
-    verification_coverage_matrix: ['artifact_schema: covered', 'product_behavior: not_applicable'],
-  }, `## Execution Notes
+  writeText(path.join(taskDir, '03-tasks.md'), `# Delivery Dry Run Implementation Plan
+
+> **For Dev Cadence Workers:** Use \`cadence-subagent-development\` or \`cadence-executing-plans\` to implement this plan task-by-task. Steps use checkbox (\`- [ ]\`) syntax for tracking.
+
+**Goal:** Validate delivery runtime artifact generation.
+
+**Architecture:** Generate task artifacts and Harness run evidence without product edits.
+
+**Tech Stack:** Dev Cadence runtime scripts and Markdown artifacts.
+
+## Global Constraints
+
+- Do not modify product files.
+- Do not claim product verification.
+- Task class: ${taskClass}
+- Selected workflow: ${workflow}
+
+---
+
+### Task 1: Initialize delivery runtime artifacts
+
+**Files:**
+- Create: \`specs/records/${options.taskId}/**\`
+- Modify: not_applicable: no product files.
+- Test: \`specs/records/${options.taskId}/runs/${options.runId}/test-log.md\`
+
+**Interfaces:**
+- Consumes: CLI goal, requested_by, accepted_by, Dev Cadence repository contract.
+- Produces: task artifacts and Harness run evidence.
+
+- [ ] **Step 1: Run characterization before artifact fill**
+
+Run: \`node scripts/check-spec-artifacts.mjs specs/records\`
+Expected: generated dry-run evidence is not yet populated.
+
+- [ ] **Step 2: Populate dry-run artifacts**
+
+Create task artifacts and run evidence under \`specs/records/${options.taskId}/\` without product edits.
+
+- [ ] **Step 3: Run artifact verification**
+
+Run: \`node scripts/check-spec-artifacts.mjs specs/records\`
+Expected: generated dry-run artifact structure is checkable.
+
+- [ ] **Step 4: Run gate verification**
+
+Run: \`node scripts/check-gates.mjs --task-id ${options.taskId}\`
+Expected: G3 passes for dry-run task execution.
+
+## Execution Notes
+
+Status: complete_for_dry_run
+
+Verification plan:
+- Run check-spec-artifacts on the generated specs directory.
 
 Executed as delivery runtime dry run.
 
 ## Gate G3
 
-\`\`\`yaml
-gate_id: G3
-status: passed
-required_inputs:
-  - 03-tasks.md
-evidence:
-  - specs/records/${options.taskId}/03-tasks.md
-pass_condition: dry_run_tasks_are_executable
-fail_condition: dry_run_tasks_missing_scope_or_verification
-decision: passed
-human_override: null
-residual_risk: []
-escalation: none
-\`\`\`
+Status: passed
+Required inputs:
+- 03-tasks.md
+Evidence:
+- specs/records/${options.taskId}/03-tasks.md
+Pass condition: dry_run_tasks_are_executable
+Fail condition: dry_run_tasks_missing_scope_or_verification
+Decision: passed
+Human override: none
+Residual risk:
+- none
+Escalation: none
 
-G3 passed for dry-run execution because tasks, artifacts, forbidden actions, and verification plan are explicit.`));
+G3 passed for dry-run execution because tasks, artifacts, forbidden actions, and verification plan are explicit.`);
 
   writeText(path.join(taskDir, '04-test-plan.md'), block('Test Plan', {
     status: 'complete_for_dry_run',

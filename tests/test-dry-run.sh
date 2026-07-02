@@ -72,6 +72,12 @@ node "${ROOT_DIR}/scripts/summarize-acceptance.mjs" \
   --task-id "${TASK_ID}" > "${SUMMARY_FILE}"
 
 test -f "${REPO_DIR}/specs/records/${TASK_ID}/00-brief.md"
+grep -q "### Task 1:" "${REPO_DIR}/specs/records/${TASK_ID}/03-tasks.md"
+"${ROOT_DIR}/skills/cadence-subagent-development/scripts/task-brief" \
+  "${REPO_DIR}/specs/records/${TASK_ID}/03-tasks.md" \
+  1 \
+  "${REPO_DIR}/task-1-brief.md" > /dev/null
+grep -q "### Task 1:" "${REPO_DIR}/task-1-brief.md"
 test -f "${REPO_DIR}/specs/records/${TASK_ID}/08-acceptance.md"
 test -d "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1"
 test -f "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/pre-implementation-status.md"

@@ -239,6 +239,25 @@ function checkArtifactTemplates() {
       fail(`artifact template is not referenced by spec-templates.md: ${relativePath}`);
     }
   }
+
+  const tasksTemplate = readText('templates/spec/03-tasks.md');
+  const taskTemplateRequired = [
+    'For Dev Cadence Workers:',
+    '### Task N:',
+    '**Files:**',
+    '**Interfaces:**',
+    '- [ ] **Step 1: Write the failing test or characterization**',
+    'Example only — replace with this repository\'s language and test framework:',
+    '- [ ] **Step 2: Run test to verify it fails**',
+    '- [ ] **Step 3: Write minimal implementation**',
+    'Example only — replace with this repository\'s language and implementation style:',
+    '- [ ] **Step 4: Run test to verify it passes**',
+  ];
+  for (const phrase of taskTemplateRequired) {
+    if (!tasksTemplate.includes(phrase)) {
+      fail(`templates/spec/03-tasks.md: missing Markdown task template phrase: ${phrase}`);
+    }
+  }
 }
 
 function checkVisualCompanionScripts() {
