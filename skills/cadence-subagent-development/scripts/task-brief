@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# Extract one task's full Markdown section from an approved implementation plan
+# into a file a fresh implementer Worker can read without chat history.
+#
+# Usage: task-brief PLAN_FILE TASK_NUMBER [OUTFILE]
+# Default OUTFILE: <repo-root>/.dev-cadence/sdd/task-<N>-brief.md
+set -euo pipefail
+
+if [ $# -lt 2 ] || [ $# -gt 3 ]; then
+  echo "usage: task-brief PLAN_FILE TASK_NUMBER [OUTFILE]" >&2
+  exit 2
+fi
+
+plan=$1
+n=$2
+[ -f "$plan" ] || { echo "no such plan file: $plan" >&2; exit 2; }
+case "$n" in
+  ''|*[!0-9]*) echo "TASK_NUMBER must be a positive integer: $n" >&2; exit 2 ;;
+esac
+
+if [ $# -eq 3 ]; then
+  out=$3
+  mkdir -p "$(dirname "$out")"
+else
+  dir=$("$(cd "$(dirname "$0")" && pwd)/sdd-workspace")
+  out="$dir/task-${n}-brief.md"
+fi
+
+tmp=$(mktemp "${TMPDIR:-/tmp}/dev-cadence-task-brief.XXXXXX")
+awk -v n="$n" '
+  function heading_level(line) {
+    if (line ~ /^######[[:space:]]+/) return 6;
+    if (line ~ /^#####[[:space:]]+/) return 5;
+    if (line ~ /^####[[:space:]]+/) return 4;
+    if (line ~ /^###[[:space:]]+/) return 3;
+    if (line ~ /^##[[:space:]]+/) return 2;
+    if (line ~ /^#[[:space:]]+/) return 1;
+    return 0;
+  }
+  function is_task_heading(line, n) {
+    return line ~ ("^#{1,6}[[:space:]]+Task[[:space:]]+" n "([^0-9]|$)");
+  }
+  /^```/ { infence = !infence }
+  !infence {
+    lvl = heading_level($0);
+    if (!found && is_task_heading($0, n)) {
+      found = 1;
+      start_level = lvl;
+    } else if (found && lvl > 0 && lvl <= start_level) {
+      exit;
+    }
+  }
+  found { print }
+' "$plan" > "$tmp"
+
+if [ ! -s "$tmp" ]; then
+  rm -f "$tmp"
+  echo "task ${n} not found in ${plan} (expected Markdown heading like '## Task ${n}')" >&2
+  exit 3
+fi
+
+mv "$tmp" "$out"
+echo "wrote ${out}: $(wc -l < "$out" | tr -d ' ') lines"

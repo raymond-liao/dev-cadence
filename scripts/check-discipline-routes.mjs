@@ -481,6 +481,179 @@ function checkCadenceExecutingPlansContract() {
   }
 }
 
+function checkCadenceSubagentDevelopmentContract() {
+  const sourceFile = 'skills/cadence-subagent-development/SKILL.md';
+  const text = readText(sourceFile);
+  const requiredFiles = [
+    'skills/cadence-subagent-development/implementer-prompt.md',
+    'skills/cadence-subagent-development/task-reviewer-prompt.md',
+    'skills/cadence-subagent-development/scripts/sdd-workspace',
+    'skills/cadence-subagent-development/scripts/task-brief',
+    'skills/cadence-subagent-development/scripts/review-package',
+  ];
+
+  for (const relativePath of requiredFiles) {
+    if (!exists(relativePath)) {
+      fail(`missing cadence-subagent-development resource: ${relativePath}`);
+      continue;
+    }
+    if (relativePath.includes('/scripts/')) {
+      const mode = fs.statSync(path.join(pluginDir, relativePath)).mode;
+      if ((mode & 0o111) === 0) {
+        fail(`${relativePath}: script must be executable`);
+      }
+    }
+  }
+
+  const required = [
+    'Fresh Worker per task + file-based task brief and report + task-scoped review after each task.',
+    'does not route workflow, select another cadence Skill, write persistent records, mark gates complete, accept risk, commit by default, or claim final completion.',
+    '## When to Use',
+    'each task has enough files, interfaces, acceptance mapping, test/code detail, dependencies, and verification commands for a fresh Worker',
+    '## Continuous Execution Boundary',
+    'continue through the selected task list without asking “should I continue?” between tasks.',
+    '## Pre-Flight Plan Review',
+    'Check that each task is small enough for one fresh Worker and has sufficient context to avoid invention.',
+    '## Context Construction',
+    'A fresh Worker must not need chat history.',
+    'Do not paste accumulated prior-task summaries into later dispatches',
+    'task brief: use `scripts/task-brief PLAN_FILE TASK_NUMBER [OUTFILE]`',
+    'implementer report: one file under `.dev-cadence/sdd/` containing implementation summary, changed files, verification output, discipline evidence, skipped checks, and concerns;',
+    'review package: use `scripts/review-package BASE HEAD [OUTFILE]` for committed ranges or `scripts/review-package --worktree BASE [OUTFILE]` for no-commit working tree review;',
+    'skills/cadence-subagent-development/scripts/sdd-workspace',
+    'skills/cadence-subagent-development/scripts/task-brief',
+    'skills/cadence-subagent-development/scripts/review-package',
+    '<repo-root>/.dev-cadence/sdd/',
+    'scripts/task-brief PLAN_FILE TASK_NUMBER [OUTFILE]',
+    'scripts/review-package --worktree BASE [OUTFILE]',
+    'local progress ledger: `.dev-cadence/sdd/progress.md` is a resume map',
+    'Never use the local progress ledger to claim done, accepted, ready, or gate-passed.',
+    '## Per-Task Loop',
+    'Ensure the local workspace exists with `skills/cadence-subagent-development/scripts/sdd-workspace`.',
+    'Generate the task brief from the approved Markdown plan with `skills/cadence-subagent-development/scripts/task-brief`.',
+    'Dispatch one fresh implementer Worker using `skills/cadence-subagent-development/implementer-prompt.md`, passing the task brief path and an expected implementer report path.',
+    'Dispatch one read-only task reviewer Worker using `skills/cadence-subagent-development/task-reviewer-prompt.md`, passing the task brief path, implementer report path, and review package path.',
+    'Build a focused review package with `skills/cadence-subagent-development/scripts/review-package`; use `--worktree BASE` when the task did not create commits.',
+    'Do not dispatch multiple implementer Workers in parallel from this Skill.',
+    '## Worker Status Handling',
+    'Never force the same Worker to retry unchanged after a real blocker.',
+    '## Review Rules',
+    'Task review is mandatory after each implementer Worker and before the next task.',
+    'spec compliance: whether the actual change matches the accepted task, constraints, and acceptance mapping;',
+    'task quality: whether the task is well built, maintainable, verified, and safe enough to proceed.',
+    'Reviewer Workers are read-only.',
+    'Do not let implementer self-review replace independent review.',
+    '## Prompt Construction Rules',
+    'exact test/code detail needed to avoid invention',
+    'Supervisor-selected implementation discipline and evidence expectations;',
+    'Do not pre-judge findings for the reviewer.',
+    '## Red Flags',
+    'local progress is treated as gate completion, final acceptance, or persistent evidence.',
+    '## Handoff',
+    'Do not approve, accept, commit, mark gates complete, write persistent records, or say done/fixed/passing/ready from this Skill.',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing subagent-development process phrase: ${phrase}`);
+    }
+  }
+
+  const implementerPrompt = readText('skills/cadence-subagent-development/implementer-prompt.md');
+  const promptRequired = [
+    'You are the implementer Worker for one Dev Cadence task.',
+    'Do not use prior chat history as requirements.',
+    'stop with `NEEDS_CONTEXT`',
+    'Do not guess and do not invent scope.',
+    'Follow the Supervisor-selected implementation discipline for this task.',
+    'Return the evidence required by that discipline. Do not infer, weaken, rename, or replace the discipline requirements.',
+    'IMPLEMENTER_REPORT_PATH: {IMPLEMENTER_REPORT_PATH}',
+    'Write the full implementation report to `IMPLEMENTER_REPORT_PATH` when a path is provided',
+    'Do not commit unless the Human or approved plan explicitly authorized commits.',
+    'Full report path:',
+    'Status: DONE | DONE_WITH_CONCERNS | NEEDS_CONTEXT | BLOCKED',
+    'Recommended controller action:',
+  ];
+
+  for (const phrase of promptRequired) {
+    if (!implementerPrompt.includes(phrase)) {
+      fail(`skills/cadence-subagent-development/implementer-prompt.md: missing implementer prompt phrase: ${phrase}`);
+    }
+  }
+
+  const taskReviewerPrompt = readText('skills/cadence-subagent-development/task-reviewer-prompt.md');
+  const reviewerRequired = [
+    'You are the task reviewer Worker for one Dev Cadence task.',
+    'Your review is read-only.',
+    'Do not use prior chat history as review input.',
+    'REVIEW_PACKAGE_PATH: {REVIEW_PACKAGE_PATH}',
+    'When `REVIEW_PACKAGE_PATH` is supplied, inspect it before opening additional files.',
+    '## Part 1: Spec Compliance',
+    '## Part 2: Code Quality',
+    'spec_compliance: compliant | issues_found | cannot_verify | blocked',
+    'quality_decision: approved | approved_with_minor_notes | changes_requested | blocked',
+    'recommended_controller_action:',
+  ];
+
+  for (const phrase of reviewerRequired) {
+    if (!taskReviewerPrompt.includes(phrase)) {
+      fail(`skills/cadence-subagent-development/task-reviewer-prompt.md: missing task reviewer prompt phrase: ${phrase}`);
+    }
+  }
+
+  const forbidden = [
+    'skills/cadence-request-code-review/spec-compliance-reviewer.md',
+    'skills/cadence-request-code-review/code-quality-reviewer.md',
+    'TDD evidence',
+    'RED:',
+    'GREEN:',
+    'required Red/Green',
+  ];
+
+  for (const phrase of forbidden) {
+    if (text.includes(phrase) || implementerPrompt.includes(phrase)) {
+      fail(`cadence-subagent-development must stay Skill-local and not hard-code TDD evidence vocabulary: ${phrase}`);
+    }
+  }
+
+  const scriptExpectations = [
+    {
+      file: 'skills/cadence-subagent-development/scripts/sdd-workspace',
+      phrases: [
+        '.dev-cadence/sdd',
+        'progress.md',
+        'not Harness evidence, gate status, Human acceptance, or a persistent source of truth',
+      ],
+    },
+    {
+      file: 'skills/cadence-subagent-development/scripts/task-brief',
+      phrases: [
+        'usage: task-brief PLAN_FILE TASK_NUMBER [OUTFILE]',
+        'Task[[:space:]]+',
+        'expected Markdown heading like',
+      ],
+    },
+    {
+      file: 'skills/cadence-subagent-development/scripts/review-package',
+      phrases: [
+        'review-package --worktree BASE [OUTFILE]',
+        'git diff -U10 "$base" --',
+        'git ls-files --others --exclude-standard',
+        '## Untracked file contents',
+      ],
+    },
+  ];
+
+  for (const expectation of scriptExpectations) {
+    const scriptText = readText(expectation.file);
+    for (const phrase of expectation.phrases) {
+      if (!scriptText.includes(phrase)) {
+        fail(`${expectation.file}: missing script contract phrase: ${phrase}`);
+      }
+    }
+  }
+}
+
 function checkCadenceDebugContract() {
   const sourceFile = 'skills/cadence-debug/SKILL.md';
   const text = readText(sourceFile);
@@ -1025,6 +1198,7 @@ checkUsingDevCadenceContract();
 checkCadenceClarifyContract();
 checkCadencePlanContract();
 checkCadenceExecutingPlansContract();
+checkCadenceSubagentDevelopmentContract();
 checkCadenceDebugContract();
 checkCadenceTddContract();
 checkImplementationDisciplineBoundary();

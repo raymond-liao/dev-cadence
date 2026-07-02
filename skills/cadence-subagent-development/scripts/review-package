@@ -1,0 +1,145 @@
+#!/usr/bin/env bash
+# Generate a file-based review package for one task. Supports committed ranges
+# and Dev Cadence's default no-commit working tree mode.
+#
+# Usage:
+#   review-package BASE HEAD [OUTFILE]
+#   review-package --worktree BASE [OUTFILE]
+set -euo pipefail
+
+usage() {
+  echo "usage: review-package BASE HEAD [OUTFILE]" >&2
+  echo "   or: review-package --worktree BASE [OUTFILE]" >&2
+}
+
+workspace_dir() {
+  "$(cd "$(dirname "$0")" && pwd)/sdd-workspace"
+}
+
+short_rev() {
+  git rev-parse --short "$1"
+}
+
+is_text_file() {
+  local file=$1
+  local mime
+  [ -f "$file" ] || return 1
+  [ ! -s "$file" ] && return 0
+  mime=$(file -b --mime-type "$file" 2>/dev/null || true)
+  case "$mime" in
+    text/*|application/json|application/xml|application/javascript|application/x-javascript|application/x-sh|application/yaml|application/x-yaml)
+      return 0
+      ;;
+  esac
+  return 1
+}
+
+write_untracked_contents() {
+  local max_bytes=100000
+  local had_any=0
+  while IFS= read -r -d '' file; do
+    had_any=1
+    echo
+    echo "### ${file}"
+    if [ ! -f "$file" ]; then
+      echo "skipped: not a regular file"
+      continue
+    fi
+    local bytes
+    bytes=$(wc -c < "$file" | tr -d ' ')
+    if [ "$bytes" -gt "$max_bytes" ]; then
+      echo "skipped: file too large (${bytes} bytes > ${max_bytes})"
+      continue
+    fi
+    if ! is_text_file "$file"; then
+      echo "skipped: binary or non-text file (${bytes} bytes)"
+      continue
+    fi
+    if [ "$bytes" -eq 0 ]; then
+      echo "(empty file)"
+      continue
+    fi
+    sed 's/^/    /' "$file"
+  done < <(git ls-files --others --exclude-standard -z)
+
+  if [ "$had_any" -eq 0 ]; then
+    echo "none"
+  fi
+}
+
+if [ $# -lt 2 ]; then
+  usage
+  exit 2
+fi
+
+if [ "$1" = "--worktree" ]; then
+  if [ $# -gt 3 ]; then
+    usage
+    exit 2
+  fi
+  base=$2
+  git rev-parse --verify --quiet "$base" >/dev/null || { echo "bad BASE: $base" >&2; exit 2; }
+  if [ $# -eq 3 ]; then
+    out=$3
+    mkdir -p "$(dirname "$out")"
+  else
+    dir=$(workspace_dir)
+    out="$dir/review-worktree-$(short_rev "$base").diff"
+  fi
+
+  {
+    echo "# Review package: worktree against ${base}"
+    echo
+    echo "## Status"
+    git status --short
+    echo
+    echo "## Tracked files changed"
+    git diff --stat "$base" -- || true
+    echo
+    echo "## Tracked diff"
+    git diff -U10 "$base" -- || true
+    echo
+    echo "## Untracked files"
+    git ls-files --others --exclude-standard || true
+    echo
+    echo "## Untracked file contents"
+    write_untracked_contents
+  } > "$out"
+
+  echo "wrote ${out}: worktree against $(short_rev "$base"), $(wc -c < "$out" | tr -d ' ') bytes"
+  exit 0
+fi
+
+if [ $# -lt 2 ] || [ $# -gt 3 ]; then
+  usage
+  exit 2
+fi
+
+base=$1
+head=$2
+git rev-parse --verify --quiet "$base" >/dev/null || { echo "bad BASE: $base" >&2; exit 2; }
+git rev-parse --verify --quiet "$head" >/dev/null || { echo "bad HEAD: $head" >&2; exit 2; }
+
+if [ $# -eq 3 ]; then
+  out=$3
+  mkdir -p "$(dirname "$out")"
+else
+  dir=$(workspace_dir)
+  out="$dir/review-$(short_rev "$base")..$(short_rev "$head").diff"
+fi
+
+{
+  echo "# Review package: ${base}..${head}"
+  echo
+  echo "## Commits"
+  git log --oneline "${base}..${head}"
+  echo
+  echo "## Files changed"
+  git diff --stat "${base}..${head}"
+  echo
+  echo "## Diff"
+  git diff -U10 "${base}..${head}"
+} > "$out"
+
+commits=$(git rev-list --count "${base}..${head}")
+echo "wrote ${out}: ${commits} commit(s), $(wc -c < "$out" | tr -d ' ') bytes"
