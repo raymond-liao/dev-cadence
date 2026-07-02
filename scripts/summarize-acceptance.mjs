@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { readArtifactData } from './markdown-artifacts.mjs';
 import { defaultReportDirForSpecsDir, normalizeSpecsDir, RECORDS_DIR, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 const REQUIRED_FILES = [
@@ -100,69 +101,6 @@ function reportDisplayBase(specsDir) {
   return path.dirname(specsDir);
 }
 
-function firstYamlBlock(text) {
-  const match = text.match(/```ya?ml\n([\s\S]*?)```/);
-  return match ? match[1] : '';
-}
-
-function parseScalarYaml(block) {
-  const data = {};
-  const lines = block.split('\n');
-  let currentListKey = null;
-  let currentObjectKey = null;
-
-  for (const line of lines) {
-    if (!line.trim() || line.trim().startsWith('#')) continue;
-
-    const listItem = line.match(/^\s*-\s+(.*)$/);
-    if (listItem && currentListKey) {
-      if (!Array.isArray(data[currentListKey])) data[currentListKey] = [];
-      data[currentListKey].push(cleanValue(listItem[1]));
-      continue;
-    }
-
-    const nestedKeyValue = line.match(/^\s+([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
-    if (nestedKeyValue && currentObjectKey) {
-      const key = nestedKeyValue[1];
-      const rawValue = nestedKeyValue[2] || '';
-      if (!data[currentObjectKey] || Array.isArray(data[currentObjectKey])) {
-        data[currentObjectKey] = {};
-      }
-      data[currentObjectKey][key] = cleanValue(rawValue);
-      continue;
-    }
-
-    const keyValue = line.match(/^([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
-    if (!keyValue) continue;
-
-    const key = keyValue[1];
-    const rawValue = keyValue[2] || '';
-    if (rawValue.trim() === '') {
-      data[key] = [];
-      currentListKey = key;
-      currentObjectKey = key;
-    } else {
-      data[key] = cleanValue(rawValue);
-      currentListKey = null;
-      currentObjectKey = null;
-    }
-  }
-
-  return data;
-}
-
-function cleanValue(value) {
-  const trimmed = value.trim();
-  if (trimmed === 'null') return null;
-  if (trimmed === '[]') return [];
-  if (trimmed === 'true') return true;
-  if (trimmed === 'false') return false;
-  if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
-    return trimmed.slice(1, -1);
-  }
-  return trimmed;
-}
-
 function readArtifact(taskDir, fileName) {
   const filePath = path.join(taskDir, fileName);
   if (!fs.existsSync(filePath)) {
@@ -173,7 +111,7 @@ function readArtifact(taskDir, fileName) {
     fileName,
     path: filePath,
     exists: true,
-    data: parseScalarYaml(firstYamlBlock(text)),
+    data: readArtifactData(text),
     text,
   };
 }

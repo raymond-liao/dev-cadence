@@ -2,6 +2,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { findNearestConfig, parseArtifactLanguage } from './artifact-language.mjs';
+import {
+  readArtifactData,
+  yamlBlocks,
+} from './markdown-artifacts.mjs';
 import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 function printHelp() {
@@ -97,63 +101,6 @@ function relative(filePath) {
     return filePath;
   }
   return relativePath;
-}
-
-function yamlBlocks(text) {
-  const blocks = [];
-  const pattern = /```ya?ml\n([\s\S]*?)```/g;
-  for (const match of text.matchAll(pattern)) {
-    blocks.push(match[1]);
-  }
-  return blocks;
-}
-
-function firstYamlBlock(text) {
-  return yamlBlocks(text)[0] || '';
-}
-
-function parseScalar(value) {
-  const trimmed = value.trim();
-  if (trimmed === '') return '';
-  if (trimmed === '[]') return [];
-  if (trimmed === 'null') return null;
-  if (trimmed === 'true') return true;
-  if (trimmed === 'false') return false;
-  if (
-    (trimmed.startsWith('"') && trimmed.endsWith('"'))
-    || (trimmed.startsWith("'") && trimmed.endsWith("'"))
-  ) {
-    return trimmed.slice(1, -1);
-  }
-  return trimmed;
-}
-
-function parseTopLevelYaml(block) {
-  const result = {};
-  const lines = block.split('\n');
-  let currentKey = null;
-
-  for (const line of lines) {
-    if (!line.trim() || line.trim().startsWith('#')) continue;
-
-    const keyMatch = line.match(/^([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
-    if (keyMatch) {
-      currentKey = keyMatch[1];
-      const rawValue = keyMatch[2] ?? '';
-      result[currentKey] = rawValue.trim() === '' ? [] : parseScalar(rawValue);
-      continue;
-    }
-
-    const listMatch = line.match(/^\s+-\s+(.*)$/);
-    if (listMatch && currentKey) {
-      if (!Array.isArray(result[currentKey])) {
-        result[currentKey] = [];
-      }
-      result[currentKey].push(parseScalar(listMatch[1]));
-    }
-  }
-
-  return result;
 }
 
 function shouldCheckArtifactLanguage(configPath, targetDir) {
@@ -292,7 +239,7 @@ function taskDirectories(rootDir) {
 
 function readArtifactYaml(filePath) {
   if (!fs.existsSync(filePath)) return null;
-  return parseTopLevelYaml(firstYamlBlock(fs.readFileSync(filePath, 'utf8')));
+  return readArtifactData(fs.readFileSync(filePath, 'utf8'));
 }
 
 function normalizeList(value) {

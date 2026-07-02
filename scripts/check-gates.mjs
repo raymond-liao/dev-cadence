@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  markdownSection,
+  parseTopLevelYaml,
+  readArtifactData,
+  readGateData,
+} from './markdown-artifacts.mjs';
 import { normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
 
 const SPEC_FILES = {
@@ -91,110 +97,6 @@ function rel(baseDir, filePath) {
   return path.relative(baseDir, filePath) || '.';
 }
 
-function yamlBlocks(text) {
-  const blocks = [];
-  const pattern = /```ya?ml\n([\s\S]*?)```/g;
-  for (const match of text.matchAll(pattern)) {
-    blocks.push(match[1]);
-  }
-  return blocks;
-}
-
-function firstYamlBlock(text) {
-  return yamlBlocks(text)[0] || '';
-}
-
-function gateYamlBlock(text, gateId) {
-  const pattern = new RegExp(`^##\\s+Gate\\s+${gateId}\\b[\\s\\S]*?\`\`\`ya?ml\\n([\\s\\S]*?)\`\`\``, 'im');
-  const match = text.match(pattern);
-  return match ? match[1] : '';
-}
-
-function cleanValue(value) {
-  const trimmed = String(value).trim();
-  if (trimmed === '') return '';
-  if (trimmed === '[]') return [];
-  if (trimmed === 'null') return null;
-  if (trimmed === 'true') return true;
-  if (trimmed === 'false') return false;
-  if (
-    (trimmed.startsWith('"') && trimmed.endsWith('"'))
-    || (trimmed.startsWith("'") && trimmed.endsWith("'"))
-  ) {
-    return trimmed.slice(1, -1);
-  }
-  return trimmed;
-}
-
-function escapeRegExp(value) {
-  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function markdownSection(text, headingPattern) {
-  const pattern = new RegExp(`^#{1,6}\\s+${headingPattern}[^\\n]*\\n([\\s\\S]*?)(?=^#{1,6}\\s+|(?![\\s\\S]))`, 'im');
-  const match = text.match(pattern);
-  return match ? match[1] : '';
-}
-
-function markdownLabel(text, label) {
-  const escaped = escapeRegExp(label);
-  const pattern = new RegExp(`^\\s*(?:\\*\\*)?${escaped}(?:\\*\\*)?:\\s*(.*)$`, 'im');
-  const match = text.match(pattern);
-  return match ? cleanValue(match[1]) : '';
-}
-
-function markdownListAfterLabel(text, label) {
-  const escaped = escapeRegExp(label);
-  const pattern = new RegExp(`^\\s*(?:[-*]\\s+)?(?:\\*\\*)?${escaped}(?:\\*\\*)?:\\s*(.*)$`, 'i');
-  const lines = text.split('\n');
-  const startIndex = lines.findIndex((line) => pattern.test(line));
-  if (startIndex === -1) return [];
-
-  const values = [];
-  const firstValue = lines[startIndex].match(pattern)?.[1]?.trim();
-  if (firstValue) values.push(cleanValue(firstValue));
-
-  for (let index = startIndex + 1; index < lines.length; index += 1) {
-    const trimmed = lines[index].trim();
-    if (!trimmed) continue;
-    if (trimmed.startsWith('#')) break;
-    if (/^(?:[-*]\s+)?(?:\*\*)?[A-Za-z][A-Za-z0-9 /_-]*(?:\*\*)?:/.test(trimmed)) break;
-    const listItem = trimmed.match(/^[-*]\s+(.*)$/);
-    if (!listItem) break;
-    values.push(cleanValue(listItem[1]));
-  }
-
-  return values;
-}
-
-function parseTopLevelYaml(block) {
-  const data = {};
-  const lines = block.split('\n');
-  let currentKey = null;
-
-  for (const line of lines) {
-    if (!line.trim() || line.trim().startsWith('#')) continue;
-
-    const keyValue = line.match(/^([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
-    if (keyValue) {
-      currentKey = keyValue[1];
-      const rawValue = keyValue[2] ?? '';
-      data[currentKey] = rawValue.trim() === '' ? [] : cleanValue(rawValue);
-      continue;
-    }
-
-    const listItem = line.match(/^\s+-\s+(.*)$/);
-    if (listItem && currentKey) {
-      if (!Array.isArray(data[currentKey])) {
-        data[currentKey] = [];
-      }
-      data[currentKey].push(cleanValue(listItem[1]));
-    }
-  }
-
-  return data;
-}
-
 function readArtifact(taskDir, fileName, specsDir) {
   const filePath = path.join(taskDir, fileName);
   if (!fs.existsSync(filePath)) {
@@ -206,26 +108,14 @@ function readArtifact(taskDir, fileName, specsDir) {
     path: filePath,
     relativePath: rel(specsDir, filePath),
     exists: true,
-    data: parseTopLevelYaml(firstYamlBlock(text)),
+    data: readArtifactData(text),
     text,
   };
 }
 
 function readGate(artifact, gateId) {
   if (!artifact.exists) return {};
-  const yaml = parseTopLevelYaml(gateYamlBlock(artifact.text, gateId));
-  if (Object.keys(yaml).length > 0) return yaml;
-
-  const section = markdownSection(artifact.text, `Gate\\s+${gateId}\\b`);
-  if (!section) return {};
-  return {
-    gate_id: gateId,
-    status: markdownLabel(section, 'Status'),
-    decision: markdownLabel(section, 'Decision'),
-    human_override: markdownLabel(section, 'Human override'),
-    human_accepter: markdownLabel(section, 'Human accepter'),
-    residual_risk: markdownListAfterLabel(section, 'Residual risk'),
-  };
+  return readGateData(artifact.text, gateId);
 }
 
 function asList(value) {
@@ -382,7 +272,7 @@ function checkHarnessEvidence(result, taskDir, taskClass, implementation, specsD
       if (!fs.existsSync(baselinePath)) {
         fail(result, 'G4', `Missing pre-implementation baseline ${rel(specsDir, baselinePath)}`, [rel(specsDir, baselinePath)]);
       } else {
-        const baseline = parseTopLevelYaml(firstYamlBlock(fs.readFileSync(baselinePath, 'utf8')));
+        const baseline = readArtifactData(fs.readFileSync(baselinePath, 'utf8'));
         if (!boolTrue(baseline.implementation_authorized)) {
           fail(result, 'G4', `${rel(specsDir, baselinePath)} must set implementation_authorized: true`, [rel(specsDir, baselinePath)]);
         }
@@ -428,7 +318,9 @@ function checkG1(result, artifacts, taskClass) {
 function parseReadiness(text) {
   const pattern = /^##\s+Requirements Readiness Check\b[\s\S]*?```ya?ml\n([\s\S]*?)```/im;
   const match = text.match(pattern);
-  return parseTopLevelYaml(match ? match[1] : '');
+  const yaml = parseTopLevelYaml(match ? match[1] : '');
+  const section = markdownSection(text, 'Requirements Readiness Check\\b');
+  return { ...yaml, ...readArtifactData(section) };
 }
 
 function checkG2(result, artifacts, taskClass) {
@@ -460,13 +352,12 @@ function checkG3(result, artifacts, taskClass) {
     fail(result, 'G3', 'Missing tasks artifact', evidence);
     return;
   }
-  const taskStatus = artifacts.tasks.data.status || markdownLabel(artifacts.tasks.text, 'Status');
+  const taskStatus = artifacts.tasks.data.status;
   const verificationPlan = asList(artifacts.tasks.data.verification_plan);
-  const markdownVerificationPlan = markdownListAfterLabel(artifacts.tasks.text, 'Verification plan');
   if (!nonEmpty(taskStatus)) {
     fail(result, 'G3', 'Tasks artifact must record status', evidence);
   }
-  if (verificationPlan.length === 0 && markdownVerificationPlan.length === 0) {
+  if (verificationPlan.length === 0) {
     fail(result, 'G3', 'Tasks artifact must include verification_plan', evidence);
   }
   if (asList(artifacts.implementation.data.unplanned_changed_files).length > 0) {
