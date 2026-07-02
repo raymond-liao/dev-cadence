@@ -1,51 +1,8 @@
 # Dev Cadence
 
-Dev Cadence 是一套面向 AI coding agents 的工程交付纪律，用来把 AI 参与的软件变更组织成可审查、可交接、可验证、可验收的交付过程。
+Dev Cadence 是一套面向 AI coding agents 的工程交付纪律。它通过清晰的职责边界、交付节奏和证据机制，让 Human 与 AI 先对齐任务理解，再让 AI agents 在受控边界内完成工程工作，最后把结果和证据交回给 Human 验收与风险接受。
 
 它的目标是让 AI agents 成为真实软件工程中可信赖的交付参与者。
-
-## 核心架构
-
-```text
-┌──────────────────────────────────────────────────────────────┐
-│                          Human                               │
-│             Risk acceptance / final decisions                │
-└──────────────────────────────┬───────────────────────────────┘
-                               │ decisions, constraints
-                               ▼
-┌──────────────────────────────────────────────────────────────┐
-│                       Supervisor                             │
-│                 Workflow control / next step                 │
-└───────────────┬──────────────────────────────┬───────────────┘
-                │ execution request            │ run result
-                ▼                              ▲
-┌──────────────────────────────────────────────────────────────┐
-│                         Harness                              │
-│              Safe execution boundary / recording             │
-└───────────────┬──────────────────────────────┬───────────────┘
-                │ controlled context           │ artifacts/evidence
-                ▼                              ▲
-┌──────────────────────────────────────────────────────────────┐
-│                      Worker Agents                           │
-│                 Concrete engineering work                    │
-└──────────────────────────────────────────────────────────────┘
-```
-一句话区分：
-
-```text
-Human 决定是否接受风险。
-Supervisor 决定下一步该做什么。
-Harness 负责这一步怎么被安全执行和记录。
-Worker Agents 负责完成具体研发工作。
-```
-
-核心约束：
-
-1. Human 是最终意图、风险接受和最终验收的来源。
-2. Supervisor 控制 workflow state、routing、预算、循环和升级，不亲自写代码。
-3. Harness 包住一次执行，负责上下文、权限、工具边界、日志和证据记录。
-4. Worker Agents 交付具体研发产物，不能自行宣布完成或接受风险。
-5. Chat 不是事实来源，已确认 artifact 和实际执行证据才是后续执行依据。
 
 ## 快速开始
 

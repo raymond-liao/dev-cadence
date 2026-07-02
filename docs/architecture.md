@@ -1,10 +1,12 @@
 # Dev Cadence 架构
 
-Dev Cadence 的核心架构只区分四类角色：Human、Supervisor、Harness 和 Worker Agents。其他概念，例如 Skills、Gates、Artifacts 和执行工具，都是这些角色使用的机制或产物，不是并列的架构角色。
+对使用者来说，Dev Cadence 可以先理解为 Human、Dev Cadence runtime 和 AI agents 的三方协作：Human 决定目标和是否接受风险，Dev Cadence 控制交付节奏并记录证据，AI agents 完成具体工程工作。
+
+在内部责任边界上，Dev Cadence runtime 进一步区分 Supervisor 和 Harness。其他概念，例如 Skills、Gates、Artifacts 和执行工具，都是这些角色使用的机制或产物，不是并列的架构角色。
 
 当前 Codex Plugin 的发布资源边界见 [Codex Plugin 模块边界](codex-plugin-boundaries.md)。
 
-## 架构设计
+## 责任边界模型
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐

@@ -1,6 +1,6 @@
 # Dev Cadence 概览
 
-Dev Cadence 是一套面向 AI coding agents 的工程交付纪律。它把需求澄清、计划、实现、验证、Review 和人工验收组织成可审查、可交接、可验证、可验收的软件交付节奏。
+Dev Cadence 是一套面向 AI coding agents 的工程交付纪律。它通过清晰的职责边界、交付节奏和证据机制，让 Human 与 AI 先对齐任务理解，再让 AI agents 在受控边界内完成工程工作，最后把结果和证据交回给 Human 验收与风险接受。
 
 ## 定位
 
@@ -24,22 +24,11 @@ Dev Cadence 主要解决 AI agent 参与软件交付时的工程风险：
 - Worker Agent 容易自行宣布完成或接受风险。
 - 多 agent 协作缺少稳定的任务边界和交接协议。
 
-## 核心模型
-
-Dev Cadence 的核心架构只区分四类角色：Human、Supervisor、Harness 和 Worker Agents。
-
-- Human 决定目标、约束、权限、风险接受和最终验收。
-- Supervisor 决定 workflow state、routing、gate 和下一步。
-- Harness 负责安全执行边界、上下文注入、工具权限、日志和证据记录。
-- Worker Agents 负责完成需求、设计、计划、实现、测试、Review 和研究等具体工程工作。
-
-完整角色关系见 [Dev Cadence 架构](architecture.md)。
-
 ## 怎么阅读
 
 | 文档 | 说明                                              |
 |---|-------------------------------------------------|
-| [Dev Cadence 架构](architecture.md) | Human、Supervisor、Harness 和 Worker Agents 的核心关系  |
+| [Dev Cadence 架构](architecture.md) | Human、Supervisor、Harness 和 Worker Agents 的责任边界 |
 | [Dev Cadence 角色](roles/) | Human、Supervisor、Harness 和 Worker Agents 各自负责什么 |
 | [Dev Cadence 工作流](workflows/) | Dev Cadence 支持哪些工作流，每类任务怎么走                     |
 | [Dev Cadence 产物](artifacts/) | `specs/records/{task_id}/` 下每个产物是什么、怎么看         |
