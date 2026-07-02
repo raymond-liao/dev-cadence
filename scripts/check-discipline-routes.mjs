@@ -541,6 +541,87 @@ function checkCadenceResearchContract() {
   }
 }
 
+function checkCadenceSyncContract() {
+  const sourceFile = 'skills/cadence-sync/SKILL.md';
+  const text = readText(sourceFile);
+  const required = [
+    'Inspect, repair, diagnose, or reconcile a Dev Cadence repo-embedded repository contract.',
+    'Dev Cadence is already available from an embedded runtime, source checkout, global plugin, or supplied bundle',
+    'Use this Skill only for Dev Cadence repository contract maintenance after Dev Cadence is already available',
+    'Initial bootstrap happens outside a missing target-repo Skill:',
+    'use Dev Cadence source tooling, installation docs, a global plugin, or an explicit bundle path.',
+    'Repository contract setup is not a prerequisite for ordinary Dev Cadence help.',
+    'Treat a missing thin contract or `.dev-cadence/` runtime as local status',
+    '## When to Use',
+    'reconcile the repo-embedded `.dev-cadence/` runtime against an explicit bundle, source checkout, or expected version supplied by the Human/controller.',
+    '## Mode Selection',
+    '| `inspect` | Read contract files and report state. Do not write. |',
+    '| `reconcile` | Compare and align the repo-embedded runtime against an explicit `expected_bundle_path`, `expected_source_path`, or `expected_version` supplied by the Human/controller. |',
+    '| `repair` | Restore missing or malformed contract files without erasing project knowledge. |',
+    '| `diagnose` | Explain routing or initialization failures and recommend exact fixes. |',
+    '## Comparison Target Requirement',
+    'This Skill does not discover upstream Dev Cadence updates.',
+    'unless the Human/controller supplies a comparison target.',
+    'expected_bundle_path: optional',
+    'expected_source_path: optional',
+    'expected_version: optional',
+    'Without `expected_bundle_path`, `expected_source_path`, or `expected_version`, report local runtime status only.',
+    'Do not claim the runtime is current, stale, or updated.',
+    'Use `unknown` for freshness relative to upstream.',
+    '## Runtime Reconcile Path',
+    'When `expected_source_path` is supplied, use its `scripts/package-target-repo-bundle.mjs`',
+    'When `expected_bundle_path` is supplied, use it directly.',
+    'use `sync-target-repo-bundle.mjs --target <repo> --bundle-dir <bundle>`',
+    'Use `../../scripts/sync-repo-contract.mjs` only for thin contract inspection, initialization, or repair when the repo-embedded runtime bundle is not being reconciled.',
+    'Never use `sync-repo-contract.mjs` as proof that `.dev-cadence/` runtime is current',
+    'it does not install or update the full embedded runtime.',
+    '## Write Boundary',
+    'Allowed writes are limited to the contract files named in Scope.',
+    'Preserve repository-specific instructions in `AGENTS.md`',
+    'Preserve existing uncommented `.dev-cadence.yaml` user values.',
+    'Never delete legacy `.ai/` content by default.',
+    '## Drift Classification',
+    'Use `local_overlay` for repository-owned additions that should be preserved.',
+    'Classify generated-runtime comparison as `matches_expected` or `outdated_generated` only when an explicit comparison target was supplied.',
+    'allows product edits during contract maintenance',
+    'Use `conflict_needs_review` when local content contradicts hard stops',
+    '## Sync Report',
+    'comparison_target:',
+    'upstream_freshness:',
+    'forbidden_changes_avoided:',
+    'product files or task-specific specs were not touched.',
+    'repository contract status',
+    'required Human decisions',
+  ];
+
+  for (const phrase of required) {
+    if (!text.includes(phrase)) {
+      fail(`${sourceFile}: missing sync contract phrase: ${phrase}`);
+    }
+  }
+
+  const forbidden = [
+    'with evidence produced, unresolved blockers, gate status, and recommended next state',
+    'initialize or install Dev Cadence into a target repository',
+    'sync or update the repo-embedded `.dev-cadence/` runtime',
+    'Reconcile the repo-embedded runtime with the current target-repo bundle',
+    'generate a fresh target-repo bundle from the Dev Cadence source when the requested operation depends on current source state',
+    'Write only when the user explicitly asked to repair or update.',
+    'when the repo-embedded runtime bundle is not being synchronized.',
+    'Do not use this Skill for ordinary implementation, debugging, review, verification, acceptance, or artifact authoring.',
+    'finish the repository contract handoff first',
+    'Do not block delivery work just because the thin contract or `.dev-cadence/` runtime is absent',
+    'Initial bootstrap is not performed by a missing target-repo Skill.',
+    'Write only when the user explicitly asked to repair or reconcile.',
+    'allows product edits during initialization',
+  ];
+  for (const phrase of forbidden) {
+    if (text.includes(phrase)) {
+      fail(`${sourceFile}: sync Skill must report repository contract status, not generic gate status handoff: ${phrase}`);
+    }
+  }
+}
+
 function checkCadenceExecutingPlansContract() {
   const sourceFile = 'skills/cadence-executing-plans/SKILL.md';
   const text = readText(sourceFile);
@@ -1352,6 +1433,7 @@ checkUsingDevCadenceContract();
 checkCadenceClarifyContract();
 checkCadencePlanContract();
 checkCadenceResearchContract();
+checkCadenceSyncContract();
 checkCadenceExecutingPlansContract();
 checkCadenceSubagentDevelopmentContract();
 checkCadenceDispatchParallelContract();
