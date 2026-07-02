@@ -78,6 +78,10 @@ grep -q "### Task 1:" "${REPO_DIR}/specs/records/${TASK_ID}/03-tasks.md"
   1 \
   "${REPO_DIR}/task-1-brief.md" > /dev/null
 grep -q "### Task 1:" "${REPO_DIR}/task-1-brief.md"
+if grep -q "## Gate G3" "${REPO_DIR}/task-1-brief.md"; then
+  echo "task brief should stop before the Gate G3 section" >&2
+  exit 1
+fi
 test -f "${REPO_DIR}/specs/records/${TASK_ID}/08-acceptance.md"
 test -d "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1"
 test -f "${REPO_DIR}/specs/records/${TASK_ID}/runs/${TASK_ID}-dry-run-1/pre-implementation-status.md"
