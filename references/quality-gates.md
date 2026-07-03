@@ -1,6 +1,8 @@
 # Quality Gates
 
-Each gate must define inputs, outputs, pass condition, fail condition, evidence, override rules, and escalation.
+Use this reference when evaluating whether required evidence satisfies Dev
+Cadence gate conditions. Each gate must define inputs, outputs, pass condition,
+fail condition, evidence, override rules, and escalation.
 
 ## Gates
 

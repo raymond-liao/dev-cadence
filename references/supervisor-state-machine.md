@@ -1,6 +1,8 @@
 # Supervisor State Machine
 
-Use explicit state, not conversational judgment. Any skipped state must record its reason and residual risk.
+Use this reference when routing work through Supervisor states. Use explicit
+state, not conversational judgment. Any skipped state must record its reason and
+residual risk.
 
 ## States
 

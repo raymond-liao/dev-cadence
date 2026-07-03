@@ -1,8 +1,9 @@
 # Spec Templates
 
-This file defines the artifact contract and points to the reusable template
-files. Template Markdown bodies live under `templates/` and are the source of
-truth for generated artifacts. Do not duplicate full template bodies here.
+Use this reference when selecting task artifact or Harness run templates and
+checking their shared artifact contract. Template Markdown bodies live under
+`templates/` and are the source of truth for generated artifacts. Do not
+duplicate full template bodies here.
 
 ## Template Files
 

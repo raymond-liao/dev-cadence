@@ -1,6 +1,8 @@
 # Workflows
 
-Use workflows to route a task into the right state sequence and required artifacts. Task class can strengthen any workflow.
+Use this reference when selecting a delivery workflow and routing a task into
+the right state sequence and required artifacts. Task class can strengthen any
+workflow.
 
 The user does not need to choose a workflow. Supervisor infers `selected_workflow` from the request, records `selection_reason`, and treats explicit user wording such as "review this" or "handle as incident" as `workflow_hint`.
 
@@ -13,7 +15,6 @@ The user does not need to choose a workflow. Supervisor infers `selected_workflo
 - [`refactor`](#refactor)
 - [`research-spike`](#research-spike)
 - [`incident-fix`](#incident-fix)
-- [`release`](#release)
 
 ## Common Rules
 
@@ -32,6 +33,9 @@ The user does not need to choose a workflow. Supervisor infers `selected_workflo
 - Run `scripts/check-before-commit.mjs` before creating a Git commit. Add `--task-id <task_id>` when committing product paths that intentionally belong to an existing Dev Cadence workflow but the workflow specs are not in the same candidate.
 - Enforce hard stops from `SKILL.md` before implementation, review, and acceptance.
 - Record skipped states and residual risk.
+- Treat release, deploy, pipeline, CI/CD, and production operations as S2/Human
+  Gate boundary concerns, not `selected_workflow` values; record them inside
+  the selected delivery workflow and external pipeline configuration.
 - End with acceptance or blocked escalation.
 
 ## Scope Reconciliation
@@ -191,9 +195,3 @@ Required focus:
 - post-incident follow-up.
 
 Prefer minimal reversible fixes. Backfill missing normal artifacts after immediate risk is reduced.
-
-## `release`
-
-Release is a placeholder workflow in this first Skill version.
-
-Use it only to document release decisions, gates, evidence requirements, or handoff needs. Do not automate release execution unless a later Skill version adds explicit platform or CI integration rules.

@@ -87,7 +87,7 @@ Adapter boundaries follow replaceable execution techniques.
 
 Skill 的发布元信息由 `SKILL.md` frontmatter 和 `.codex-plugin/plugin.json` 维护。`skills/*/agents/` 不是 Dev Cadence 的源码或 runtime 契约，不应进入发布包或目标仓库 `.dev-cadence/`。
 
-`delivery-disciplines.md` 是默认交付纪律的路由入口；细节按状态拆到 clarify、planning、TDD、debugging、review 和 verification discipline references。Dev Cadence 自身规则维护使用 `references/source-maintenance/`，不作为目标仓库 runtime 规则发布。
+`delivery-disciplines.md` 是默认交付纪律的路由入口；细节按状态拆到 clarify、planning、TDD、debugging、review 和 verification 的 owning Skill 或 discipline reference。Dev Cadence 自身规则维护使用 `references/source-maintenance/`，不作为目标仓库 runtime 规则发布。
 
 `repository-rule-sync.md` 定义 repo-embedded contract 的初始化、检查、同步和修复规则。`scripts/package-target-repo-bundle.mjs` 生成目标仓库 bundle；`scripts/sync-target-repo-bundle.mjs` 把 bundle 同步到目标仓库。具体脚本清单以 `scripts/` 目录和 package boundary 测试为准。
 

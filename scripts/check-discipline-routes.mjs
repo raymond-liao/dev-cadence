@@ -91,7 +91,6 @@ function checkDeliveryStateTable() {
     'planning-discipline.md',
     'implementation-discipline.md',
     'execution-orchestration.md',
-    'debugging-discipline.md',
     'review-discipline.md',
     'verification-discipline.md',
     'adapters.md',
@@ -123,6 +122,10 @@ function checkDeliveryStateTable() {
     if (!exists(relativePath)) {
       fail(`${sourceFile}: route target missing: ${relativePath}`);
     }
+  }
+
+  if (text.includes('debugging-discipline.md')) {
+    fail(`${sourceFile}: debugging work must route directly to skills/cadence-debug/SKILL.md, not a global routing-marker reference`);
   }
 
   const sourceOnlyRequired = [

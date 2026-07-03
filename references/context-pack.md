@@ -1,6 +1,7 @@
 # Context Pack
 
-Context Pack defines what a Worker Agent should know. It does not define what the Agent is allowed to do.
+Use this reference when constructing the minimal context a Worker Agent should
+know. It does not define what the Agent is allowed to do.
 
 ## Schema
 

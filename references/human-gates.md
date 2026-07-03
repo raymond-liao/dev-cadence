@@ -1,6 +1,7 @@
 # Human Gates
 
-Human Gates record explicit human decisions. They are required when automation or agent judgment should not continue alone.
+Use this reference when a workflow needs explicit human decisions. Human Gates
+are required when automation or agent judgment should not continue alone.
 
 ## Types
 

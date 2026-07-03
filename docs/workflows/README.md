@@ -14,9 +14,9 @@ Workflow 描述一类任务从 intake 到 acceptance 的推进路径。它回答
 | [`refactor`](04-refactor.md) | 意图保持行为不变的结构调整 |
 | [`research-spike`](05-research-spike.md) | 技术选型、未知风险探索、方案比较 |
 | [`incident-fix`](06-incident-fix.md) | 紧急生产恢复或关键故障处理 |
-| [`release`](07-release.md) | 发布、打包、上线或发布前检查 |
-
 每个 workflow 单页说明使用场景、标准路径、主要角色、主要产物、gate 重点和 Human 介入点。
+
+`release`、deploy、pipeline/CI/CD 和 production action 不是独立 workflow；按实际交付内容选择 `feature-dev`、`bugfix`、`refactor`、`code-review`、`research-spike` 或 `incident-fix`，并作为 S2 / Human Gate / CI-CD boundary 处理。
 
 用户明确说“只做 review”“先调研”“按 incident 处理”时，该表达应记录为 `workflow_hint`。Supervisor 仍要根据风险校准最终 `selected_workflow`。
 

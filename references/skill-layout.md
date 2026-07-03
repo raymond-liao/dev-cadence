@@ -1,10 +1,10 @@
 # Skill Layout
 
-This file defines the runtime package boundaries for Dev Cadence. It is an
-index, not the full repository sync contract. Repository initialization and
-repair rules live in `repository-rule-sync.md`; artifact schemas live in
-`spec-templates.md`; workflow behavior lives in the workflow and discipline
-references.
+Use this reference when maintaining Dev Cadence runtime package boundaries and
+resource ownership. It is an index, not the full repository sync contract.
+Repository initialization and repair rules live in `repository-rule-sync.md`;
+artifact schemas live in `spec-templates.md`; workflow behavior lives in the
+workflow and discipline references.
 
 ## Package Shape
 
@@ -108,7 +108,6 @@ Runtime references are shared workflow rules used by target repositories:
 - `planning-discipline.md`
 - `implementation-discipline.md`
 - `execution-orchestration.md`
-- `debugging-discipline.md`
 - `review-discipline.md`
 - `verification-discipline.md`
 - `context-pack.md`
@@ -130,6 +129,8 @@ The full test-first implementation workflow lives in
 implementation evidence and exception contract used by runtime workflow states.
 Test anti-pattern guidance lives beside that Skill in
 `skills/cadence-tdd/testing-anti-patterns.md`.
+The full debugging workflow and debugging-specific techniques live in
+`skills/cadence-debug/SKILL.md` and its Skill-local resources.
 The full completion verification workflow lives in
 `skills/cadence-verify/SKILL.md`. `verification-discipline.md` remains the
 shared claim and gate contract used by runtime workflow states.

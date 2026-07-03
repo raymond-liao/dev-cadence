@@ -1,6 +1,7 @@
 # Task Classes
 
-Task class controls workflow strength. Choose the smallest class that covers risk, evidence needs, and blast radius.
+Use this reference when classifying task risk and workflow strength. Choose the
+smallest class that covers risk, evidence needs, and blast radius.
 
 ## Classification Algorithm
 

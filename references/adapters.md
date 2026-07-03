@@ -1,6 +1,7 @@
 # Adapters
 
-Adapters are optional replacement points for Worker execution techniques.
+Use this reference when selecting or constraining optional replacement points
+for Worker execution techniques.
 
 Dev Cadence owns Supervisor routing, Harness evidence, Quality Gates, Human Gates, permission policy, scope reconciliation, and final acceptance. An adapter may change how a bounded Worker state is executed, but it must not change what evidence is required or who can approve the result.
 

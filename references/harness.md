@@ -1,6 +1,8 @@
 # Harness
 
-Harness mediates Worker Agent execution through context injection, tool policy, permission policy, logging, and evidence capture.
+Use this reference when defining or auditing Harness-mediated Worker Agent
+execution: context injection, tool policy, permission policy, logging, and
+evidence capture.
 
 Harness is not an Agent and must not make semantic approval decisions.
 

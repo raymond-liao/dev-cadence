@@ -62,7 +62,7 @@ Load these references by state or condition:
 | `planning` | `planning-discipline.md` |
 | `implementation` for testable behavior | `implementation-discipline.md`; use `skills/cadence-tdd/SKILL.md` for full Red-Green-Refactor workflow; load `skills/cadence-tdd/testing-anti-patterns.md` when writing tests or mocks |
 | Worker dispatch, inline execution, subagent execution, parallel candidates | `execution-orchestration.md`; load `adapters.md` when an external adapter is configured or requested |
-| `bugfix`, `incident-fix`, unexpected behavior, failing tests | `debugging-discipline.md`; use `skills/cadence-debug/SKILL.md` for full debugging workflow |
+| `bugfix`, `incident-fix`, unexpected behavior, failing tests | `skills/cadence-debug/SKILL.md` |
 | Deep symptom, unclear origin, bad value propagation | `skills/cadence-debug/root-cause-tracing.md` |
 | Flaky async tests or arbitrary sleeps | `skills/cadence-debug/condition-based-waiting.md` |
 | Invalid data, unsafe state, boundary failures | `skills/cadence-debug/defense-in-depth.md` |

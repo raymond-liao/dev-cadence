@@ -17,7 +17,7 @@ Core principle: one Worker per independent problem domain, running concurrently,
 - `../../references/quality-gates.md`
 - `../../references/spec-templates.md`
 
-Load `../../references/debugging-discipline.md` when the Supervisor-selected work includes bug, incident, failing-test, or root-cause investigations.
+Load `../cadence-debug/SKILL.md` when the Supervisor-selected work includes bug, incident, failing-test, or root-cause investigations.
 
 ## Parallel Dispatch Gate
 
