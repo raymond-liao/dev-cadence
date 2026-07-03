@@ -7,6 +7,7 @@ REPO_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-gates.XXXXXX")"
 OUTPUT_DIR="$(mktemp -d "${TMP_ROOT}/dev-cadence-gates-output.XXXXXX")"
 LANG_REPO="$(mktemp -d "${TMP_ROOT}/dev-cadence-gates-language.XXXXXX")"
 OUTSIDE_REPO="$(mktemp -d "${TMP_ROOT}/dev-cadence-gates-outside.XXXXXX")"
+LOCAL_STATE_REPO="$(mktemp -d "${TMP_ROOT}/dev-cadence-gates-local-state.XXXXXX")"
 CONTRACT_REPO="$(mktemp -d "${TMP_ROOT}/dev-cadence-gates-contract.XXXXXX")"
 CONTRACT_BUNDLE="$(mktemp -d "${TMP_ROOT}/dev-cadence-gates-bundle.XXXXXX")"
 SPECS_DIR="${REPO_DIR}/specs/records"
@@ -16,7 +17,7 @@ RESEARCH_SPECS_DIR="${OUTPUT_DIR}/research-specs"
 TASK_ID="gate-fixture"
 RESEARCH_TASK_ID="research-fixture"
 RUN_ID="gate-fixture-run-1"
-trap 'rm -rf "${REPO_DIR}" "${OUTPUT_DIR}" "${LANG_REPO}" "${OUTSIDE_REPO}" "${CONTRACT_REPO}" "${CONTRACT_BUNDLE}"' EXIT
+trap 'rm -rf "${REPO_DIR}" "${OUTPUT_DIR}" "${LANG_REPO}" "${OUTSIDE_REPO}" "${LOCAL_STATE_REPO}" "${CONTRACT_REPO}" "${CONTRACT_BUNDLE}"' EXIT
 
 assert_command_fails_with() {
   local expected_text="$1"
@@ -50,6 +51,32 @@ node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
 grep -Fq "Scope: outside-dev-cadence" "${OUTPUT_DIR}/outside-ready.out"
 grep -Fq "Commit readiness: passed" "${OUTPUT_DIR}/outside-ready.out"
 grep -Fq "SKIP Commit candidate is outside Dev Cadence workflow; G1-G6 and Human Gate checks skipped." "${OUTPUT_DIR}/outside-ready.out"
+
+mkdir -p "${LOCAL_STATE_REPO}/docs" "${LOCAL_STATE_REPO}/.dev-cadence/sdd"
+git -C "${LOCAL_STATE_REPO}" init -q
+cat > "${LOCAL_STATE_REPO}/AGENTS.md" <<'EOF'
+# Test Agent Rules
+
+No embedded Dev Cadence runtime is configured here.
+EOF
+cat > "${LOCAL_STATE_REPO}/docs/backlog.md" <<'EOF'
+# Backlog
+EOF
+cat > "${LOCAL_STATE_REPO}/.gitignore" <<'EOF'
+.dev-cadence/
+EOF
+printf 'local state\n' > "${LOCAL_STATE_REPO}/.dev-cadence/sdd/state.txt"
+git -C "${LOCAL_STATE_REPO}" add AGENTS.md docs/backlog.md .gitignore
+git -C "${LOCAL_STATE_REPO}" commit -q -m "test: seed local state fixture"
+printf '\nLocal source repo guidance.\n' >> "${LOCAL_STATE_REPO}/AGENTS.md"
+printf '\n- backlog update\n' >> "${LOCAL_STATE_REPO}/docs/backlog.md"
+
+node "${ROOT_DIR}/scripts/check-before-commit.mjs" \
+  --repo-dir "${LOCAL_STATE_REPO}" \
+  --plugin-dir "${ROOT_DIR}" > "${OUTPUT_DIR}/local-state-ready.out"
+grep -Fq "Scope: outside-dev-cadence" "${OUTPUT_DIR}/local-state-ready.out"
+grep -Fq "Commit readiness: passed" "${OUTPUT_DIR}/local-state-ready.out"
+grep -Fq "SKIP Commit candidate is outside Dev Cadence workflow; G1-G6 and Human Gate checks skipped." "${OUTPUT_DIR}/local-state-ready.out"
 
 mkdir -p "${REPO_DIR}/src" "${SPECS_DIR}/${TASK_ID}/runs/${RUN_ID}"
 git -C "${REPO_DIR}" init -q
@@ -456,9 +483,10 @@ node "${ROOT_DIR}/scripts/package-target-repo-bundle.mjs" \
   --json > "${OUTPUT_DIR}/contract-bundle.json"
 git -C "${CONTRACT_REPO}" init -q
 cp -R "${CONTRACT_BUNDLE}/.dev-cadence/." "${CONTRACT_REPO}/.dev-cadence/"
-cat > "${CONTRACT_REPO}/AGENTS.md" <<'EOF'
-# Test Agent Rules
-EOF
+{
+  printf '# Test Agent Rules\n\n'
+  cat "${CONTRACT_BUNDLE}/AGENTS.dev-cadence-section.md"
+} > "${CONTRACT_REPO}/AGENTS.md"
 cat > "${CONTRACT_REPO}/.gitignore" <<'EOF'
 .dev-cadence.yaml
 EOF

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { defaultReportDirForSpecsDir, normalizeSpecsDir, resolveDefaultSpecsDir } from './specs-paths.mjs';
+import { END_MARKER, ENTRYPOINT_SKILL, START_MARKER } from './target-repo-contract.mjs';
 
 function printHelp() {
   console.log(`Usage: check-before-commit.mjs [options]
@@ -288,10 +289,19 @@ function isCovered(filePath, entries) {
   });
 }
 
+function declaresEmbeddedRuntime(options) {
+  const agentsPath = path.join(options.repoDir, 'AGENTS.md');
+  if (!fs.existsSync(agentsPath)) return false;
+  const agents = fs.readFileSync(agentsPath, 'utf8');
+  return agents.includes(START_MARKER)
+    && agents.includes(END_MARKER)
+    && agents.includes(ENTRYPOINT_SKILL);
+}
+
 function isContractPath(filePath, options) {
   const normalized = normalizePath(filePath);
   const specsGitkeep = `${specsRel(options)}/.gitkeep`;
-  const hasEmbeddedRuntime = fs.existsSync(path.join(options.repoDir, '.dev-cadence'));
+  const hasEmbeddedRuntime = declaresEmbeddedRuntime(options);
   return (
     normalized === specsGitkeep
     || normalized.startsWith('.dev-cadence/')
