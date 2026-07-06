@@ -14,6 +14,17 @@ intake -> classify -> review -> acceptance
 
 当用户要求验证，或 review 依赖尚不存在的证据时，加入 `test`。
 
+## 路线图
+
+| 步骤 | Dev Cadence 角色 | 做什么 | 使用 Skill |
+|---|---|---|---|
+| intake | Human / Supervisor | Human 提供 diff、branch、PR 或 patch；Supervisor 记录 review 范围。 | `using-dev-cadence` |
+| classify | Supervisor | 选择 `code-review`，判断 task class、证据需求和是否需要额外 `test`。 | `using-dev-cadence` |
+| review | Reviewer | 只读检查实际 diff、相关 artifacts、测试证据与剩余风险，输出 findings 和 review decision。 | `cadence-request-code-review` |
+| test（按需） | Harness / Worker | 当用户要求验证或 approval 依赖缺失证据时，运行/检查验证并记录结果。 | `cadence-verify` |
+| fix feedback（仅当用户要求修复） | Harness / Worker | 逐条验证 review finding；只修复有效问题，完成后交回 re-review。 | `cadence-code-review` |
+| acceptance | Supervisor / Human | Supervisor 汇总 review 结论和剩余风险；Human 决定接受或继续修复。 | `cadence-verify` |
+
 ## 主要角色
 
 - Supervisor 记录 review 范围和任务分级。

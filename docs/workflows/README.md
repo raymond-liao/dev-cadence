@@ -34,6 +34,30 @@ intake -> requirements -> planning -> implementation -> verification -> review -
 
 需要架构判断、公共契约变更、数据模型变更或跨模块影响时，在 planning 前加入 `design`。实现或验证发现问题时进入 `fix` loop，再回到 verification 和 review。`research-spike` 和 `incident-fix` 有各自的轻量或快速路径，见对应 workflow 单页。完整运行时规则见 [workflows.md](../../references/workflows.md)，状态机细则见 [supervisor-state-machine.md](../../references/supervisor-state-machine.md)。
 
+## 路线图总览
+
+| 步骤 | Dev Cadence 角色 | 做什么 | 常用 Skill |
+|---|---|---|---|
+| intake | Human / Supervisor | Human 提出请求；Supervisor 记录目标、约束、`workflow_hint` 和已知风险。 | `using-dev-cadence` |
+| classify | Supervisor | 选择 `selected_workflow`、`selection_reason` 和 task class；决定 gate 与 artifact 强度。 | `using-dev-cadence` |
+| requirements / clarify | Supervisor / Human | 澄清目标、范围、非目标、验收标准和关键取舍；Human 确认边界。 | `cadence-clarify` |
+| design? | Supervisor / Worker | 在架构、公共契约、数据模型或跨模块影响存在时形成设计输入。 | `cadence-clarify` / `cadence-plan` |
+| planning | Worker | 拆分可执行任务、目标文件、验证计划、风险和 review checkpoints。 | `cadence-plan` |
+| implementation / fix | Harness / Worker | Harness 约束执行边界并采集证据；Worker 实现、修复或按 incident 最小变更。 | `cadence-tdd` / `cadence-executing-plans` / `cadence-debug` |
+| verification | Harness / Worker | 运行测试、smoke check 或其他验证；记录 skipped checks 与 residual risk。 | `cadence-verify` |
+| review | Reviewer | 检查 spec compliance、code quality、测试证据和剩余风险。 | `cadence-request-code-review` |
+| rework loop | Supervisor / Harness / Worker / Reviewer | 对有效 findings 或验证失败进行修复、复验、复审，再回到对应 gate。 | `cadence-code-review` / `cadence-tdd` / `cadence-verify` |
+| acceptance | Supervisor / Human | Supervisor 汇总证据与 gate 状态；Human 做最终 acceptance。 | `cadence-verify` |
+
+```text
+Supervisor routes workflow
+  -> Harness executes controlled Worker runs
+  -> Worker produces bounded changes or evidence
+  -> Reviewer checks when required
+  -> Supervisor enforces gates
+  -> Human gives final acceptance
+```
+
 关键边界：
 
 - [Supervisor](../roles/02-supervisor.md) 控制状态流转。

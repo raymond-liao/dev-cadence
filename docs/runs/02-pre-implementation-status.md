@@ -14,7 +14,9 @@ Harness 或 Developer via Harness。
 
 ## 记录内容
 
-- tracked 和 untracked worktree status
+- base branch、base commit、delivery branch、worktree path
+- dirty preflight result、tracked 和 untracked worktree status
+- unrelated local edits 以及 block/quarantine/Human decision 处理方式
 - authorized target files
 - artifact files
 - G1、G2 when required、G3 status
@@ -30,4 +32,4 @@ S1/S2 implementation 或 fix run 缺少这个文件，或它被标记为 `post_h
 
 ## 如何阅读
 
-确认 `Implementation authorized: true` 且 `Post hoc backfill: false`，再检查 `Authorized target files` 是否覆盖实际修改范围。若 `Post hoc backfill: true`，必须有具名 Human override 和 residual risk 说明。
+确认 `Implementation authorized: true` 且 `Post hoc backfill: false`，再检查 base revision、delivery branch/worktree 和 `Authorized target files` 是否覆盖实际修改范围。若 dirty preflight 发现 unrelated local edits，必须记录 block、quarantine 或 Human decision。若 `Post hoc backfill: true`，必须有具名 Human override 和 residual risk 说明。

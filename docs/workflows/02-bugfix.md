@@ -14,6 +14,20 @@ intake -> classify -> requirements -> planning -> implementation -> test -> revi
 
 如果根因未知，应先经过 debugging discipline，再进入实现。
 
+## 路线图
+
+| 步骤 | Dev Cadence 角色 | 做什么 | 使用 Skill |
+|---|---|---|---|
+| intake | Human / Supervisor | Human 报告错误行为；Supervisor 建立 brief，记录 observed behavior 和影响范围。 | `using-dev-cadence` |
+| classify | Supervisor | 选择 `bugfix`，记录原因、task class、gate、证据要求和安全边界。 | `using-dev-cadence` |
+| requirements | Supervisor / Human | 澄清 expected behavior、比较维度、验收标准；不清楚时保持 blocked。 | `cadence-clarify` |
+| debugging | Harness / Worker | 在修复前复现或 characterization，调查根因；根因未知时不得直接修。 | `cadence-debug` |
+| planning | Worker | 制定受控修复计划、目标文件、回归测试/验证计划和风险说明。 | `cadence-plan` |
+| implementation | Harness / Worker | Harness 约束执行边界；Worker 针对已确认根因做最小修复，优先先写失败回归测试。 | `cadence-tdd` / `cadence-executing-plans` |
+| test | Harness / Worker | 验证原始症状已修复，运行回归检查；无法复现时记录证据缺口。 | `cadence-verify` |
+| review | Reviewer | 检查 diff、根因证据、验证证据和剩余风险；有效 findings 进入修复循环。 | `cadence-request-code-review` / `cadence-code-review` |
+| acceptance | Supervisor / Human | Supervisor 汇总修复、验证、review 和残余风险；Human 做具名最终验收。 | `cadence-verify` |
+
 ## 主要角色
 
 - Supervisor 负责任务分类并阻止不安全捷径。

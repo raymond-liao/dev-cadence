@@ -14,6 +14,20 @@ intake -> classify -> requirements -> design? -> planning -> implementation -> t
 
 涉及大范围、跨模块、public contract 或架构敏感重构时，必须进入 `design`。
 
+## 路线图
+
+| 步骤 | Dev Cadence 角色 | 做什么 | 使用 Skill |
+|---|---|---|---|
+| intake | Human / Supervisor | Human 提出重构目标；Supervisor 记录行为保持边界、非目标和风险。 | `using-dev-cadence` |
+| classify | Supervisor | 选择 `refactor`，判断 task class、风险触发项、是否需要 design 和 required gates。 | `using-dev-cadence` |
+| requirements | Supervisor / Human | 明确 behavior-preservation scope、non-goals、验收标准；Human 确认范围。 | `cadence-clarify` |
+| design? | Supervisor / Human | 大范围、跨模块、public contract 或架构敏感重构时，确认设计方案。 | `cadence-clarify` |
+| planning | Worker | 制定 target files、forbidden actions、任务顺序与验证计划。 | `cadence-plan` |
+| implementation | Harness / Worker | Harness 注入边界并记录证据；Worker 在批准范围内按计划重构。 | `cadence-executing-plans` / `cadence-tdd` |
+| test | Harness / Worker | 运行 characterization/regression checks，证明行为保持不变或记录 not-verified reason。 | `cadence-verify` |
+| review | Reviewer | 只读检查 scope、architecture fit、测试证据、maintainability 与剩余风险。 | `cadence-request-code-review` |
+| acceptance | Supervisor / Human | Supervisor 汇总证据、review 和残余风险；Human 接受最终结果或要求补救。 | `cadence-verify` |
+
 ## 主要角色
 
 - Supervisor 负责分类风险并阻止无边界重构。

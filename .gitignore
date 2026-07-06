@@ -5,7 +5,6 @@ Thumbs.db
 # Editor and local tool state
 .idea/
 .vscode/
-.hermes/
 *.swp
 *.swo
 

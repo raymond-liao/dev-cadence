@@ -16,6 +16,7 @@ Harness 或 Developer via Harness。
 
 - `Scope reconciliation status`
 - planned files and planned artifact files
+- git change evidence: base commit、parent commit、commit intent、intended checkpoint message、produced checkpoint commit/range、review base/head/range, or `N/A`/`none` when branch-based delivery was not used
 - actual changed files, untracked files, created artifact files, added components
 - unplanned changed files and deleted files
 - behavior and non-behavior changes
@@ -28,4 +29,4 @@ Harness 或 Developer via Harness。
 
 ## 如何阅读
 
-将 `Actual changes` 与 [03-tasks.md](../artifacts/03-tasks.md)、[05-implementation.md](../artifacts/05-implementation.md) 和实际 worktree status 对比，确认是否超出计划范围。`Files changed` 和 `Untracked files` 即使为空也要明确记录，避免漏掉未跟踪任务文件。
+将 `Actual changes` 与 [03-tasks.md](../artifacts/03-tasks.md)、[05-implementation.md](../artifacts/05-implementation.md) 和实际 worktree status 对比，确认是否超出计划范围。再检查 `Git change evidence` 是否能复现 checkpoint/review range，或在 non-branch runs 中明确为 `N/A`/`none`。`Files changed` 和 `Untracked files` 即使为空也要明确记录，避免漏掉未跟踪任务文件。
