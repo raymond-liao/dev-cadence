@@ -5,9 +5,11 @@ description: Use when a user asks to add or change user-visible or system-visibl
 
 # Feature Dev
 
-Use this skill to manage the Dev Cadence `feature-dev` workflow.
+Use this skill to run the Dev Cadence feature development workflow.
 
-This skill orchestrates vendored Superpowers skills from:
+Dev Cadence is a business-facing workflow wrapper around vendored Superpowers skills. It does not replace the Superpowers process. It makes each business stage visible to the user, fixes confirmation gates, and keeps the target repository on the vendored skill version.
+
+Use only vendored Superpowers skills from:
 
 ```text
 .dev-cadence/vendor/superpowers/skills/
@@ -17,19 +19,59 @@ Do not substitute globally installed Superpowers skills unless the user explicit
 
 Keep task artifacts in the target repository's normal project space. Do not write task artifacts, plans, reports, or acceptance records inside `.dev-cadence/`; that directory is the installed rules package.
 
-## Stage Order
+## Git Checkpoints
 
-Run exactly one stage at a time:
+Dev Cadence allows commits as workflow checkpoints after the user has confirmed a stage output.
+
+Before creating any Dev Cadence workflow commit:
+
+1. Confirm the current stage output has already been approved by the user.
+2. Confirm the work is on a dedicated branch for this feature or task.
+3. If the current branch is not dedicated to this task, propose a branch name and ask the user before creating or switching branches.
+4. Include only files related to the confirmed stage output.
+5. Report the commit hash after committing.
+
+Do not commit before the user confirms the current stage output.
+Do not push unless the user explicitly asks.
+
+## Dev Cadence Stages
+
+Present the work to the user using these business stages:
 
 ```text
-需求确认 -> 制定技术方案 -> 制定计划 -> 开发实施 -> 系统测试 -> 业务验收
+Requirements Confirmation -> Technical Solution -> Implementation Plan -> Development Implementation -> System Testing -> Business Acceptance
 ```
 
-Do not skip stages. Do not start implementation before the user has approved requirements, technical solution, and TDD implementation plan.
+Do not start implementation before the user has confirmed:
 
-## Stage 1: 需求确认
+- Requirements Confirmation
+- Technical Solution
+- Implementation Plan
 
-Purpose: produce `明确的需求`.
+## Superpowers Mapping
+
+Use the vendored Superpowers workflow as the execution method:
+
+```text
+brainstorming -> writing-plans -> test-driven-development / executing-plans -> verification-before-completion
+```
+
+Map it to Dev Cadence like this:
+
+| Dev Cadence stage | Superpowers work | Business output |
+| --- | --- | --- |
+| Requirements Confirmation | `brainstorming` requirement clarification | Confirmed requirements |
+| Technical Solution | `brainstorming` design/spec work | Technical solution |
+| Implementation Plan | `writing-plans` implementation plan | TDD implementation plan |
+| Development Implementation | `test-driven-development` and `executing-plans` | Working deliverable, test assets, implementation notes |
+| System Testing | `verification-before-completion` | System test report |
+| Business Acceptance | Dev Cadence user decision gate | Business acceptance record |
+
+The mapping is semantic, not one-skill-per-stage. If a Superpowers skill naturally spans more than one Dev Cadence stage, keep the Superpowers flow intact and make the Dev Cadence stage boundary explicit in the user-facing update.
+
+## Stage Rules
+
+### Requirements Confirmation
 
 Use:
 
@@ -37,42 +79,36 @@ Use:
 .dev-cadence/vendor/superpowers/skills/brainstorming/SKILL.md
 ```
 
-Apply only the requirements clarification parts:
+Clarify the user-visible or system-visible requirement. Before moving on, explicitly present:
 
-- understand the user goal and target project context;
-- ask one clarifying question at a time when needed;
-- identify scope, non-goals, acceptance criteria, obvious contradictions, and issues that need technical solution work;
-- present the clarified requirement for user approval.
+- confirmed scope;
+- non-goals;
+- acceptance criteria;
+- open questions or assumptions.
 
-Stop when the user confirms the requirement.
+Ask the user to confirm this stage. Do not start implementation planning or code.
 
-Do not produce a technical solution, implementation plan, or code in this stage.
+### Technical Solution
 
-## Stage 2: 制定技术方案
-
-Purpose: produce `技术方案`.
-
-Use:
+Continue with:
 
 ```text
 .dev-cadence/vendor/superpowers/skills/brainstorming/SKILL.md
 ```
 
-Apply only the design and approach parts:
+Use its design/spec guidance. Before moving on, explicitly present:
 
-- inspect the relevant project structure;
-- identify feasible technical approach;
-- list affected boundaries, constraints, risks, and tradeoffs;
-- ask for user decision when a business tradeoff or risk acceptance is needed;
-- present the technical solution for user approval.
+- recommended approach;
+- alternatives or tradeoffs when relevant;
+- affected modules and boundaries;
+- high-level testing strategy;
+- risks or constraints.
 
-Stop when the user confirms the technical solution.
+The Superpowers design/spec document is the persisted artifact for Requirements Confirmation and Technical Solution.
 
-Do not write the TDD implementation plan or code in this stage.
+Ask the user to confirm this stage. Do not write the TDD implementation plan or code yet.
 
-## Stage 3: 制定计划
-
-Purpose: produce `TDD 开发实施计划`.
+### Implementation Plan
 
 Use:
 
@@ -80,27 +116,11 @@ Use:
 .dev-cadence/vendor/superpowers/skills/writing-plans/SKILL.md
 ```
 
-The plan must serve only the next stage, `开发实施`.
+The plan is only for the next stage, Development Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
 
-The plan must include:
+Ask the user to confirm the plan before implementation starts.
 
-- input requirement and technical solution;
-- implementation modules;
-- behavior scenarios;
-- TDD cycles for each behavior;
-- failing test step;
-- minimal implementation step;
-- passing verification step;
-- refactor or cleanup step;
-- concrete output for each task.
-
-Do not create the system test plan or business acceptance plan in this stage.
-
-Stop when the user confirms the TDD implementation plan.
-
-## Stage 4: 开发实施
-
-Purpose: produce `可工作的交付物`, `配套测试资产`, and `实施记录`.
+### Development Implementation
 
 Use:
 
@@ -109,16 +129,7 @@ Use:
 .dev-cadence/vendor/superpowers/skills/executing-plans/SKILL.md
 ```
 
-Follow the approved TDD implementation plan.
-
-For each behavior:
-
-1. write the failing test;
-2. run it and confirm the expected failure;
-3. write minimal implementation;
-4. run the test and confirm it passes;
-5. refactor only after green;
-6. record what changed and what verification ran.
+Follow the confirmed plan. Development-stage verification belongs here: failing tests first, minimal implementation, passing focused tests, refactor after green, and implementation notes.
 
 If debugging is needed, use:
 
@@ -126,11 +137,7 @@ If debugging is needed, use:
 .dev-cadence/vendor/superpowers/skills/systematic-debugging/SKILL.md
 ```
 
-Do not push development-stage testing into `系统测试`.
-
-## Stage 5: 系统测试
-
-Purpose: produce `系统测试报告`.
+### System Testing
 
 Use:
 
@@ -138,42 +145,18 @@ Use:
 .dev-cadence/vendor/superpowers/skills/verification-before-completion/SKILL.md
 ```
 
-Verify the working deliverable in the target project:
-
-- read the confirmed requirement, technical solution, TDD implementation plan, and implementation record;
-- confirm actual changed scope and run entry points;
-- define system-level test scenarios from the requirement and actual changes;
-- execute system tests;
-- record passed checks, failures, skipped checks, residual risk, and whether the work can enter business acceptance.
-
-If system testing reveals a bug, use:
-
-```text
-.dev-cadence/vendor/superpowers/skills/systematic-debugging/SKILL.md
-```
+Verify the working deliverable against the confirmed requirement, technical solution, implementation plan, and actual changes. Record passed checks, failures, skipped checks, residual risk, and whether the work can enter business acceptance.
 
 Do not claim the system is ready without fresh verification evidence.
 
-## Stage 6: 业务验收
+### Business Acceptance
 
-Purpose: produce `业务验收记录`.
-
-Superpowers does not provide a dedicated business acceptance skill. Use this Dev Cadence rule:
+Superpowers does not provide a dedicated business acceptance skill. Use this Dev Cadence gate:
 
 - summarize the confirmed requirement;
 - summarize the technical solution and implementation result;
 - summarize system test evidence and residual risks;
 - ask the user for a named decision: accept, reject, or accept with residual risk;
-- record the decision and the accepted residual risks.
+- record the decision and accepted residual risks.
 
 Do not substitute system test success for user acceptance.
-
-## Review
-
-When code review is required, use:
-
-```text
-.dev-cadence/vendor/superpowers/skills/requesting-code-review/SKILL.md
-```
-
-Code review does not replace system testing or business acceptance.
