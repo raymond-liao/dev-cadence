@@ -243,3 +243,20 @@ The business acceptance record must include:
 - accepted residual risks, if any;
 - acceptance date;
 - final follow-up actions, if any.
+
+## Completion
+
+After Business Acceptance is accepted, invoke:
+
+```text
+.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md
+```
+
+Pass this Dev Cadence context into the finishing flow:
+
+- Business Acceptance has already been accepted.
+- The business acceptance record has been written or updated.
+- Ignored Dev Cadence run records under `build/dev-cadence/` may remain on disk after merge.
+- Do not push unless the user explicitly asks.
+
+Then follow the vendored finishing skill.

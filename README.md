@@ -20,10 +20,11 @@ src/
       SKILL.md
   vendor/
     superpowers/
+      LICENSE
       skills/
 ```
 
-`src/vendor/superpowers/skills/` 是从 `/Users/raymond/git/github/superpowers` 复制到本项目的固定版本，避免外部 skill 后续变更影响验证结果。
+`src/vendor/superpowers/` 是 Dev Cadence 随仓库固定的 Superpowers 副本，避免外部 skill 后续变更影响验证结果。Superpowers 使用 MIT License，license 原文保留在 `src/vendor/superpowers/LICENSE`。
 
 ## 构建产物
 
@@ -38,6 +39,7 @@ dist/
         SKILL.md
     vendor/
       superpowers/
+        LICENSE
         skills/
 ```
 
