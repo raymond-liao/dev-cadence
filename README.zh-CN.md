@@ -73,15 +73,15 @@ Problem Diagnosis -> Repair Solution -> Repair Plan -> Repair Implementation -> 
 
 工作流记录属于目标仓库的正常工作区，不存放在 `.dev-cadence` 里。
 
-长期的运行级记录是 Dev Cadence Run Manifest：
+任务级运行记录是 Dev Cadence Run Manifest：
 
 ```text
-build/dev-cadence/runs/<run-id>/manifest.md
+build/dev-cadence/<workflow>/<task-slug>/manifest.md
 ```
 
 manifest 应该串联：
 
-- 工作流类型和目标分支；
+- 工作流类型、任务 slug 和目标分支；
 - 阶段状态和阶段产物路径；
 - checkpoint commit；
 - 测试、检查和验证结果；

@@ -107,7 +107,37 @@ build/dev-cadence/feature-dev/<feature-slug>/system-test-report.md
 build/dev-cadence/feature-dev/<feature-slug>/business-acceptance-record.md
 ```
 
+Create and maintain a run manifest for every workflow run:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/manifest.md
+```
+
+The manifest is the run index. It does not replace the stage records.
+
+The manifest must include:
+
+- workflow, task slug, repository, branch, started at, current stage, and overall status;
+- a stage table with stage name, status, artifact path, user confirmation, checkpoint commit, and notes;
+- verification summary and residual risks once available;
+- business acceptance decision once available;
+- final integration decision after Completion.
+
+Use stage status values: `pending`, `in_progress`, `confirmed`, `blocked`, or `skipped`.
+Use overall status values: `in_progress`, `accepted`, `rejected`, `accepted_with_risk`, `integrated`, or `abandoned`.
+
+Update the manifest:
+
+- when the workflow starts;
+- whenever a stage record is created or updated;
+- after each checkpoint commit, adding the commit hash;
+- before entering Business Acceptance;
+- after the finishing flow records merge, PR, keep-branch, or discard decisions.
+
+If run records under `build/dev-cadence/` are ignored by the target repository, keep the manifest updated on disk and do not force-add ignored files unless the user or project policy requires it.
+
 Before moving to the next stage, ensure the current stage record exists and reflects the user's latest confirmed decision or the latest verification evidence.
+Also ensure the manifest points to the latest stage record and checkpoint commit before moving to the next stage.
 
 ## Stage Rules
 
