@@ -38,19 +38,22 @@ If the config file is missing or the value is unsupported, use `en`.
 
 ## Git Checkpoints
 
-Dev Cadence allows commits as workflow checkpoints after the user has confirmed a stage output.
+Dev Cadence uses commits as workflow checkpoints after the user has confirmed a stage output.
 
 Before creating any Dev Cadence workflow commit:
 
 1. Confirm the current stage output has already been approved by the user.
-2. Confirm the work is on a dedicated branch for this feature or task.
+2. Ensure the work is on a dedicated branch for this feature or task.
 3. If the current branch is not dedicated to this task, create or switch to a dedicated branch automatically and report the branch name.
 4. Include only files related to the confirmed stage output.
 5. Report the commit hash after committing.
 
+After the user confirms a stage output, create a checkpoint commit unless the user explicitly asks not to or unrelated uncommitted changes make the commit unsafe.
+
 Do not commit before the user confirms the current stage output.
 Do not push unless the user explicitly asks.
 If the current branch has unrelated uncommitted changes, stop and ask before switching branches or committing.
+Final merge, PR creation, branch cleanup, or discarding the branch belongs to Completion and requires the user's decision through the vendored finishing flow.
 
 ## Dev Cadence Stages
 
@@ -157,6 +160,13 @@ Use:
 Before writing the plan, use `using-git-worktrees` to create or verify the isolated feature workspace according to the vendored Superpowers rules.
 
 The plan is only for the next stage, Development Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
+
+The plan must include:
+
+- tasks that implement only the confirmed requirement and technical solution;
+- tests or checks for each acceptance criterion;
+- development-stage verification needed to prove the working deliverable;
+- completion conditions for Development Implementation.
 
 Ask the user to confirm the plan before implementation starts.
 

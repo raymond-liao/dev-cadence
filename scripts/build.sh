@@ -8,6 +8,7 @@ rm -rf "$TARGET_DIR"
 mkdir -p "$TARGET_DIR"
 
 cp "$ROOT_DIR/version" "$TARGET_DIR/version"
+cp "$ROOT_DIR/LICENSE" "$TARGET_DIR/LICENSE"
 cp "$ROOT_DIR/src/config.md" "$TARGET_DIR/config.md"
 cp "$ROOT_DIR/README.md" "$TARGET_DIR/README.md"
 cp "$ROOT_DIR/src/AGENTS-snippet.md" "$TARGET_DIR/AGENTS-snippet.md"
