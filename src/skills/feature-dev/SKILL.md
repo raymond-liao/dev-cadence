@@ -235,14 +235,14 @@ After the user gives the acceptance decision, write or update:
 build/dev-cadence/feature-dev/<feature-slug>/business-acceptance-record.md
 ```
 
-The business acceptance record must include:
+The business acceptance record must use this structure:
 
-- accepted requirement/spec source;
-- system test report source;
-- user decision: accepted, rejected, or accepted with residual risk;
-- accepted residual risks, if any;
-- acceptance date;
-- final follow-up actions, if any.
+- `Accepted Requirement Source`: confirmed spec and plan sources.
+- `System Test Report Source`: system test report source.
+- `User Decision`: accepted, rejected, or accepted with residual risk; include the user's acceptance statement and acceptance date.
+- `Accepted Result`: brief business summary of what was accepted.
+- `Accepted Residual Risks`: residual risks accepted by the user, if any.
+- `Final Follow-Up Actions`: final follow-up actions, if any.
 
 ## Completion
 
