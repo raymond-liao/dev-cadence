@@ -8,6 +8,7 @@ rm -rf "$TARGET_DIR"
 mkdir -p "$TARGET_DIR"
 
 cp "$ROOT_DIR/version" "$TARGET_DIR/version"
+cp "$ROOT_DIR/src/config.md" "$TARGET_DIR/config.md"
 cat > "$TARGET_DIR/README.md" <<'README'
 # Dev Cadence
 
@@ -28,6 +29,7 @@ Dev Cadence 用来约束 AI 按固定流程处理功能开发请求。
 ## 内容
 
 - `version`: Dev Cadence 版本。
+- `config.md`: Dev Cadence 配置。
 - `AGENTS-snippet.md`: 需要合并到 `AGENTS.md` 的入口片段。
 - `skills/feature-dev/SKILL.md`: 功能开发流程。
 - `vendor/superpowers/skills/`: 固定版本的 Superpowers skills。

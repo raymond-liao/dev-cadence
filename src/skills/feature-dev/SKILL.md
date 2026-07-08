@@ -19,6 +19,23 @@ Do not substitute globally installed Superpowers skills unless the user explicit
 
 Keep task artifacts in the target repository's normal project space. Do not write task artifacts, plans, reports, or acceptance records inside `.dev-cadence/`; that directory is the installed rules package.
 
+## Configuration
+
+Before producing user-facing workflow documents or records, read:
+
+```text
+.dev-cadence/config.md
+```
+
+Use `output_language` from that file for all workflow documents and records, including Superpowers spec documents, Superpowers plan documents, Dev Cadence records, and user-facing stage summaries.
+
+Supported values:
+
+- `en`: write documents and records in English.
+- `zh-CN`: write documents and records in Simplified Chinese.
+
+If the config file is missing or the value is unsupported, use `en`.
+
 ## Git Checkpoints
 
 Dev Cadence allows commits as workflow checkpoints after the user has confirmed a stage output.
