@@ -71,7 +71,7 @@ Do not start implementation before the user has confirmed:
 Use the vendored Superpowers workflow as the execution method:
 
 ```text
-brainstorming -> writing-plans -> test-driven-development / executing-plans -> verification-before-completion
+brainstorming -> using-git-worktrees -> writing-plans -> test-driven-development / subagent-driven-development / executing-plans -> requesting-code-review -> verification-before-completion
 ```
 
 Map it to Dev Cadence like this:
@@ -80,8 +80,8 @@ Map it to Dev Cadence like this:
 | --- | --- | --- |
 | Requirements Confirmation | `brainstorming` requirement clarification | Confirmed requirements |
 | Technical Solution | `brainstorming` design/spec work | Technical solution |
-| Implementation Plan | `writing-plans` implementation plan | TDD implementation plan |
-| Development Implementation | `test-driven-development` and `executing-plans` | Working deliverable, test assets, implementation notes |
+| Implementation Plan | `using-git-worktrees` and `writing-plans` | isolated workspace readiness, TDD implementation plan |
+| Development Implementation | `test-driven-development`, `subagent-driven-development`, `executing-plans`, and `requesting-code-review` | Working deliverable, test assets, implementation notes, code review evidence |
 | System Testing | `verification-before-completion` | System test report |
 | Business Acceptance | Dev Cadence user decision gate | Business acceptance record |
 
@@ -150,8 +150,11 @@ Ask the user to confirm this stage. Do not write the TDD implementation plan or 
 Use:
 
 ```text
+.dev-cadence/vendor/superpowers/skills/using-git-worktrees/SKILL.md
 .dev-cadence/vendor/superpowers/skills/writing-plans/SKILL.md
 ```
+
+Before writing the plan, use `using-git-worktrees` to create or verify the isolated feature workspace according to the vendored Superpowers rules.
 
 The plan is only for the next stage, Development Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
 
@@ -163,10 +166,16 @@ Use:
 
 ```text
 .dev-cadence/vendor/superpowers/skills/test-driven-development/SKILL.md
+.dev-cadence/vendor/superpowers/skills/subagent-driven-development/SKILL.md
 .dev-cadence/vendor/superpowers/skills/executing-plans/SKILL.md
+.dev-cadence/vendor/superpowers/skills/requesting-code-review/SKILL.md
 ```
 
 Follow the confirmed plan. Development-stage verification belongs here: failing tests first, minimal implementation, passing focused tests, refactor after green, and implementation notes.
+
+Use `subagent-driven-development` when the plan has independent tasks and the platform supports subagents. Use `executing-plans` when subagent-driven development is not available or not appropriate.
+
+Follow the Superpowers code review requirements during Development Implementation: review after each subagent-driven task, review after major feature completion, and review before merge. Fix Critical and Important findings before moving to System Testing, unless the user explicitly accepts the risk.
 
 If debugging is needed, use:
 
@@ -185,6 +194,7 @@ The implementation record must include:
 - implementation commit hash or changed files;
 - completed plan tasks;
 - tests and checks run during development;
+- code review evidence and unresolved review findings, if any;
 - skipped checks with reasons;
 - implementation notes and known residual risks.
 
