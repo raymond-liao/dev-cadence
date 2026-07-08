@@ -27,12 +27,13 @@ Before creating any Dev Cadence workflow commit:
 
 1. Confirm the current stage output has already been approved by the user.
 2. Confirm the work is on a dedicated branch for this feature or task.
-3. If the current branch is not dedicated to this task, propose a branch name and ask the user before creating or switching branches.
+3. If the current branch is not dedicated to this task, create or switch to a dedicated branch automatically and report the branch name.
 4. Include only files related to the confirmed stage output.
 5. Report the commit hash after committing.
 
 Do not commit before the user confirms the current stage output.
 Do not push unless the user explicitly asks.
+If the current branch has unrelated uncommitted changes, stop and ask before switching branches or committing.
 
 ## Dev Cadence Stages
 
