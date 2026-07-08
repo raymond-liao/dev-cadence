@@ -1,6 +1,10 @@
 # Dev Cadence
 
-Dev Cadence is a business workflow layer for coding agents. It is built on top of a fixed, vendored copy of Superpowers and a small set of project-level instructions that make delivery stages visible, reviewable, and repeatable.
+[简体中文](README.zh-CN.md)
+
+Dev Cadence is a software delivery governance framework for AI coding agents. It organizes AI development behavior into configurable business workflows and produces auditable stage records, test evidence, acceptance decisions, and integration decisions for each delivery.
+
+It is built on top of a fixed, vendored copy of Superpowers and a small set of project-level instructions that make delivery stages visible, reviewable, and repeatable.
 
 ## Quickstart
 
@@ -33,7 +37,23 @@ Dev Cadence does not replace Superpowers. It fixes the business workflow around 
 - where task artifacts belong;
 - which vendored Superpowers version the target repository uses.
 
+For each workflow run, Dev Cadence is intended to maintain a delivery evidence trail. A Dev Cadence Run Manifest ties the run together by recording the workflow type, branch, stage status, artifact paths, checkpoint commits, verification state, business acceptance state, and final integration decision.
+
 Because the skills trigger through the target repository's `AGENTS.md`, users do not need special prompt wording. Once installed, normal development requests should enter the matching Dev Cadence workflow automatically.
+
+## Enterprise Value
+
+As AI coding agents enter engineering teams, the core enterprise problem is no longer only whether AI can write code. The harder problem is whether AI-generated delivery work can be managed, verified, reviewed, accepted, and audited.
+
+Dev Cadence helps teams:
+
+- reduce quality risk before AI-generated code reaches the main branch;
+- reduce management risk from untracked AI decisions and undocumented verification;
+- make AI-assisted delivery consistent across teams and repositories;
+- preserve evidence for requirements, design decisions, tests, reviews, acceptance, and integration;
+- turn good AI development practices into a reusable company standard.
+
+Dev Cadence is not only a productivity tool for individual developers. It is a governance layer for using AI safely and consistently in real software delivery.
 
 ## Basic Workflows
 
@@ -51,6 +71,25 @@ Problem Diagnosis -> Repair Solution -> Repair Plan -> Repair Implementation -> 
 
 The detailed execution rules live in each workflow skill. The README is only the product and installation guide.
 
+## Delivery Evidence
+
+Workflow records belong in the target repository's normal workspace. They are not stored inside `.dev-cadence`.
+
+The long-term run-level record is the Dev Cadence Run Manifest:
+
+```text
+build/dev-cadence/runs/<run-id>/manifest.md
+```
+
+The manifest should connect:
+
+- workflow type and target branch;
+- stage status and stage artifact paths;
+- checkpoint commits;
+- tests, checks, and verification results;
+- business acceptance decision;
+- final merge, PR, keep-branch, or discard decision.
+
 ## What's Inside
 
 ```text
@@ -59,6 +98,7 @@ The detailed execution rules live in each workflow skill. The README is only the
   LICENSE
   config.md
   README.md
+  README.zh-CN.md
   AGENTS-snippet.md
   skills/
     using-dev-cadence/

@@ -1,0 +1,168 @@
+# Dev Cadence
+
+[English](README.md)
+
+Dev Cadence 是一个面向 AI 编程代理的软件交付治理框架。它把 AI 的开发行为组织成可配置的业务流程，并为每次交付生成可审计的阶段记录、测试证据、验收结论和集成决策。
+
+它基于固定版本的 vendored Superpowers，以及一小组项目级指令，让交付阶段变得可见、可审阅、可重复。
+
+## 快速开始
+
+构建安装包，把它复制到目标仓库，然后把目标仓库的 agent 指令接入 Dev Cadence：
+
+```bash
+bash scripts/build.sh
+cp -R dist/.dev-cadence /path/to/target-repo/.dev-cadence
+```
+
+然后把下面文件里的片段合并到目标仓库根目录的 `AGENTS.md`：
+
+```text
+.dev-cadence/AGENTS-snippet.md
+```
+
+## 工作方式
+
+当用户提出开发工作时，Dev Cadence 不会让 agent 直接写代码。agent 会先判断是否有已安装的 Dev Cadence 工作流适用。
+
+如果有适用的工作流，agent 会先执行该工作流，再进入实现。它会确认业务可读的阶段产物，记录阶段证据，然后使用 vendored Superpowers 提供的工程方法：brainstorming、systematic debugging、planning、test-driven development、code review、verification 和 branch finishing。
+
+Dev Cadence 不替代 Superpowers。它是在 Superpowers 外层固定业务交付流程：
+
+- 哪个工作流适用；
+- 哪些阶段需要用户确认；
+- 哪些记录必须存在；
+- 任务产物应该放在哪里；
+- 目标仓库使用哪个固定版本的 Superpowers。
+
+每次工作流运行都应该形成一条交付证据链。Dev Cadence Run Manifest 会把一次运行串起来，记录工作流类型、分支、阶段状态、产物路径、checkpoint commit、验证状态、业务验收状态和最终集成决策。
+
+因为技能通过目标仓库的 `AGENTS.md` 触发，用户不需要写特殊提示词。安装后，普通开发请求应该自动进入匹配的 Dev Cadence 工作流。
+
+## 企业价值
+
+随着 AI 编程代理进入研发团队，企业的核心问题不再只是“AI 能不能写代码”。更难的问题是：AI 生成的交付工作能不能被管理、验证、审阅、验收和审计。
+
+Dev Cadence 帮助团队：
+
+- 降低 AI 生成代码进入主干前的质量风险；
+- 降低 AI 决策不可追踪、验证不完整带来的管理风险；
+- 让跨团队、跨仓库的 AI 辅助交付保持一致；
+- 保留需求、设计决策、测试、评审、验收和集成证据；
+- 把好的 AI 开发实践沉淀为可复用的公司级标准。
+
+Dev Cadence 不只是提高单个开发者效率的工具。它是让企业安全、一致地使用 AI 参与真实软件交付的治理层。
+
+## 基础工作流
+
+**feature-dev** 用于新增用户可见或系统可见功能，以及对预期行为的主动变更。
+
+```text
+Requirements Confirmation -> Technical Solution -> Implementation Plan -> Development Implementation -> System Testing -> Business Acceptance
+```
+
+**bug-fix** 用于用户报告的 bug、错误、回归、失败测试、已破坏的预期行为和异常行为。
+
+```text
+Problem Diagnosis -> Repair Solution -> Repair Plan -> Repair Implementation -> Regression Verification -> Business Acceptance
+```
+
+详细执行规则在各工作流自己的 skill 里。README 只作为产品和安装说明。
+
+## 交付证据
+
+工作流记录属于目标仓库的正常工作区，不存放在 `.dev-cadence` 里。
+
+长期的运行级记录是 Dev Cadence Run Manifest：
+
+```text
+build/dev-cadence/runs/<run-id>/manifest.md
+```
+
+manifest 应该串联：
+
+- 工作流类型和目标分支；
+- 阶段状态和阶段产物路径；
+- checkpoint commit；
+- 测试、检查和验证结果；
+- 业务验收结论；
+- 最终 merge、PR、保留分支或丢弃分支决策。
+
+## 包含内容
+
+```text
+.dev-cadence/
+  version
+  LICENSE
+  config.md
+  README.md
+  README.zh-CN.md
+  AGENTS-snippet.md
+  skills/
+    using-dev-cadence/
+      SKILL.md
+    feature-dev/
+      SKILL.md
+    bug-fix/
+      SKILL.md
+  vendor/
+    superpowers/
+      LICENSE
+      RELEASE-NOTES.md
+      skills/
+```
+
+主要部分：
+
+- `AGENTS-snippet.md` - 合并到目标仓库根目录 `AGENTS.md` 的片段。
+- `skills/using-dev-cadence/` - 工作流入口选择器。
+- `skills/feature-dev/` - 功能开发工作流。
+- `skills/bug-fix/` - Bug 修复工作流。
+- `config.md` - 运行时配置，包括工作流输出语言。
+- `vendor/superpowers/` - Dev Cadence 使用的固定 Superpowers 副本。
+
+## 配置
+
+在下面文件中配置工作流输出语言：
+
+```text
+.dev-cadence/config.md
+```
+
+支持的值：
+
+- `en` - 英文工作流文档和记录。
+- `zh-CN` - 简体中文工作流文档和记录。
+
+## 运行规则
+
+- `.dev-cadence` 只包含工作流规则和 vendored skills。
+- 任务产物、计划、报告和验收记录属于目标仓库的正常工作区，不放在 `.dev-cadence` 中。
+- 不要在目标仓库里直接编辑 `vendor/superpowers/skills/`。需要修改时，在 Dev Cadence 源码中更新后重新构建。
+- 使用或分发该包时，保留 `vendor/superpowers/LICENSE` 和 `vendor/superpowers/RELEASE-NOTES.md`。
+
+## 源码开发
+
+源码树在 `src/` 下镜像安装包：
+
+```text
+src/
+  AGENTS-snippet.md
+  config.md
+  skills/
+  vendor/
+```
+
+构建安装包：
+
+```bash
+bash scripts/build.sh
+```
+
+构建脚本只会替换 `dist/.dev-cadence`。
+
+## 许可证
+
+Dev Cadence 使用 Apache License 2.0。见 `LICENSE`。
+
+Vendored Superpowers 副本使用 MIT License。见 `vendor/superpowers/LICENSE`。
