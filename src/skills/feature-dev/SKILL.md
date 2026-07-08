@@ -216,16 +216,15 @@ At the end of this stage, write or update:
 build/dev-cadence/feature-dev/<feature-slug>/system-test-report.md
 ```
 
-The system test report must include:
+The system test report must use this structure:
 
-- requirement/spec source;
-- implementation source;
-- test environment;
-- commands and checks executed;
-- manual checks executed;
-- pass/fail/skipped results;
-- residual risks;
-- recommendation on whether the work can enter Business Acceptance.
+- `Requirement And Implementation Sources`: requirement/spec source, plan source, and implementation source.
+- `Test Environment`: repository, branch, date, runtime, servers, tools, and relevant configuration.
+- `Test Cases`: a table with columns `ID`, `Scenario`, `Type`, `Execution`, `Result`, and `Evidence`. List every automated, manual, smoke, build, source-inspection, and skipped test case that matters to the confirmed requirement.
+- `Requirement Coverage`: map each acceptance criterion or important requirement to the test case IDs that cover it.
+- `Failed Or Skipped Checks`: failures and skipped checks with reasons. If none, write `None`.
+- `Residual Risks`: remaining risks after testing. If none, write `None`.
+- `Recommendation`: whether the work can enter Business Acceptance.
 
 ### Business Acceptance
 
