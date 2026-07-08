@@ -9,7 +9,7 @@ Do not rely on this file in place. It is only an installation snippet.
 ```markdown
 ## Dev Cadence
 
-When the user asks for a new user-visible or system-visible feature, first read and follow:
+When the user asks for development work, first read and follow:
 
-`.dev-cadence/skills/feature-dev/SKILL.md`
+`.dev-cadence/skills/using-dev-cadence/SKILL.md`
 ```

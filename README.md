@@ -1,63 +1,86 @@
 # Dev Cadence
 
-Dev Cadence 是一套用于约束 AI 辅助功能开发的 workflow skill 包。
+Dev Cadence is a business workflow layer for coding agents, built on top of vendored Superpowers skills and a small set of project-level instructions that make the agent follow visible delivery stages.
 
-本仓库构建一个可复制到目标项目的 `.dev-cadence` 目录。第一版只覆盖 `feature-dev` 的乐观路径：
+## Quickstart
+
+Copy `.dev-cadence` into your target repository, then merge `.dev-cadence/AGENTS-snippet.md` into the repository's root `AGENTS.md`.
+
+## How It Works
+
+Dev Cadence starts when a user asks for development work. The agent first reads `using-dev-cadence`, checks the installed flows, and only enters a flow when the request matches one.
+
+Right now, the installed business flow is `feature-dev`. It covers new user-visible or system-visible features and changes to intended feature behavior.
+
+Once `feature-dev` starts, the agent does not jump straight into code. It walks through the business stages with explicit user confirmation:
 
 ```text
-需求确认 -> 制定技术方案 -> 制定计划 -> 开发实施 -> 系统测试 -> 业务验收
+Requirements Confirmation -> Technical Solution -> Implementation Plan -> Development Implementation -> System Testing -> Business Acceptance
 ```
 
-## 源码结构
+The execution method still comes from Superpowers: brainstorming, writing plans, test-driven development, execution, verification, and branch finishing. Dev Cadence makes those steps visible as business stage outputs and records.
+
+## Install In A Target Repository
+
+Copy the built `.dev-cadence` directory into the target repository, then merge the snippet from `.dev-cadence/AGENTS-snippet.md` into the target repository's root `AGENTS.md`.
+
+After installation, development work requests first read:
 
 ```text
-version
-README.md
-src/
+.dev-cadence/skills/using-dev-cadence/SKILL.md
+```
+
+If the request is a new feature or a change to existing feature behavior, the entry skill routes to:
+
+```text
+.dev-cadence/skills/feature-dev/SKILL.md
+```
+
+## Installed Contents
+
+```text
+.dev-cadence/
+  version
+  config.md
+  README.md
   AGENTS-snippet.md
   skills/
+    using-dev-cadence/
+      SKILL.md
     feature-dev/
       SKILL.md
   vendor/
     superpowers/
       LICENSE
+      RELEASE-NOTES.md
       skills/
 ```
 
-`src/vendor/superpowers/` 是 Dev Cadence 随仓库固定的 Superpowers 副本，避免外部 skill 后续变更影响验证结果。Superpowers 使用 MIT License，license 原文保留在 `src/vendor/superpowers/LICENSE`。
+`vendor/superpowers/` is the fixed Superpowers copy used by Dev Cadence. Keep `vendor/superpowers/LICENSE` and `vendor/superpowers/RELEASE-NOTES.md` when using or distributing the package.
 
-## 构建产物
+## Runtime Rules
+
+- `.dev-cadence` contains workflow rules and vendored skills only.
+- Task artifacts, plans, reports, and acceptance records belong in the target repository's normal workspace, not inside `.dev-cadence`.
+- Do not edit `vendor/superpowers/skills/` inside target repositories. Update Dev Cadence source and rebuild instead.
+- Configure workflow output language in `.dev-cadence/config.md`.
+
+## Source Repository
+
+The source tree mirrors the installed package under `src/`:
 
 ```text
-dist/
-  .dev-cadence/
-    version
-    README.md
-    AGENTS-snippet.md
-    skills/
-      feature-dev/
-        SKILL.md
-    vendor/
-      superpowers/
-        LICENSE
-        skills/
+src/
+  AGENTS-snippet.md
+  config.md
+  skills/
+  vendor/
 ```
 
-## 构建命令
+Build the installable package with:
 
 ```bash
 bash scripts/build.sh
 ```
 
-构建脚本只删除 `dist/.dev-cadence`，不会删除整个 `dist`。
-
-`dist/.dev-cadence/README.md` 是安装产物说明，由 `scripts/build.sh` 直接生成，不复制仓库根目录的 `README.md`。
-
-## 复制到 Demo 项目
-
-```bash
-bash scripts/build.sh
-cp -R dist/.dev-cadence /path/to/demo/.dev-cadence
-```
-
-复制后，需要把 `.dev-cadence/AGENTS-snippet.md` 中的 snippet 合并到目标仓库根目录的 `AGENTS.md`。
+The build script only replaces `dist/.dev-cadence`.
