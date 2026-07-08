@@ -69,6 +69,25 @@ Map it to Dev Cadence like this:
 
 The mapping is semantic, not one-skill-per-stage. If a Superpowers skill naturally spans more than one Dev Cadence stage, keep the Superpowers flow intact and make the Dev Cadence stage boundary explicit in the user-facing update.
 
+## Stage Records
+
+The active AI agent is responsible for writing or updating the record for the stage it is executing. Do not rely on the conversation transcript as the only record.
+
+Use the Superpowers spec and plan documents as the records for the first three stages:
+
+- Requirements Confirmation and Technical Solution: `docs/superpowers/specs/<date>-<feature>-design.md`
+- Implementation Plan: `docs/superpowers/plans/<date>-<feature>.md`
+
+Create Dev Cadence records for the remaining stages:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/implementation-record.md
+build/dev-cadence/feature-dev/<feature-slug>/system-test-report.md
+build/dev-cadence/feature-dev/<feature-slug>/business-acceptance-record.md
+```
+
+Before moving to the next stage, ensure the current stage record exists and reflects the user's latest confirmed decision or the latest verification evidence.
+
 ## Stage Rules
 
 ### Requirements Confirmation
@@ -137,6 +156,20 @@ If debugging is needed, use:
 .dev-cadence/vendor/superpowers/skills/systematic-debugging/SKILL.md
 ```
 
+At the end of this stage, write or update:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/implementation-record.md
+```
+
+The implementation record must include:
+
+- implementation commit hash or changed files;
+- completed plan tasks;
+- tests and checks run during development;
+- skipped checks with reasons;
+- implementation notes and known residual risks.
+
 ### System Testing
 
 Use:
@@ -149,6 +182,23 @@ Verify the working deliverable against the confirmed requirement, technical solu
 
 Do not claim the system is ready without fresh verification evidence.
 
+At the end of this stage, write or update:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/system-test-report.md
+```
+
+The system test report must include:
+
+- requirement/spec source;
+- implementation source;
+- test environment;
+- commands and checks executed;
+- manual checks executed;
+- pass/fail/skipped results;
+- residual risks;
+- recommendation on whether the work can enter Business Acceptance.
+
 ### Business Acceptance
 
 Superpowers does not provide a dedicated business acceptance skill. Use this Dev Cadence gate:
@@ -160,3 +210,18 @@ Superpowers does not provide a dedicated business acceptance skill. Use this Dev
 - record the decision and accepted residual risks.
 
 Do not substitute system test success for user acceptance.
+
+After the user gives the acceptance decision, write or update:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/business-acceptance-record.md
+```
+
+The business acceptance record must include:
+
+- accepted requirement/spec source;
+- system test report source;
+- user decision: accepted, rejected, or accepted with residual risk;
+- accepted residual risks, if any;
+- acceptance date;
+- final follow-up actions, if any.
