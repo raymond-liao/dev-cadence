@@ -187,6 +187,19 @@ Also ensure the manifest points to the latest stage record and checkpoint commit
 
 ## Stage Rules
 
+### Enhanced Exploration Mode
+
+Use enhanced exploration mode for features that touch multiple files or modules, require architectural decisions, integrate with existing workflows, have unclear requirements, or introduce meaningful user-visible behavior. Do not force enhanced exploration mode for trivial, well-scoped changes.
+
+When enhanced exploration mode applies:
+
+- explore 2-3 independent perspectives before finalizing the Technical Solution, such as similar existing features, relevant architecture and data flow, UI or API patterns, testing strategy, integration boundaries, accessibility, security, or operational constraints;
+- each exploration perspective must identify key files with line references, established patterns, constraints, risks, and 5-10 essential files the main agent must read;
+- the main agent must read the essential files before writing the Technical Solution;
+- record the exploration summary in `requirements-and-solution.md` under `Codebase Exploration Findings`;
+- present multiple architecture alternatives in `requirements-and-solution.md`, including minimal-change, clean-architecture, and pragmatic-balance options when those options are meaningfully different;
+- recommend one option with concrete rationale and ask the user to confirm the Technical Solution before writing the implementation plan.
+
 ### Requirements Confirmation
 
 Use:
@@ -202,6 +215,8 @@ Clarify the user-visible or system-visible requirement. Before moving on, explic
 - acceptance criteria;
 - open questions or assumptions.
 
+If enhanced exploration mode might apply but the trigger is unclear, state the assumption and either enter enhanced exploration mode or explain why the request is trivial enough to skip it.
+
 Ask the user to confirm this stage. Do not start implementation planning or code.
 
 ### Technical Solution
@@ -215,7 +230,7 @@ Continue with:
 Use its design/spec guidance. Before moving on, explicitly present:
 
 - recommended approach;
-- alternatives or tradeoffs when relevant;
+- alternatives or tradeoffs when relevant, and for enhanced exploration mode include minimal-change, clean-architecture, and pragmatic-balance alternatives unless two or more are effectively identical;
 - affected modules and boundaries;
 - high-level testing strategy;
 - risks or constraints.
@@ -305,6 +320,8 @@ The implementation record must include:
 Completed plan task evidence must be kept in sync with the plan. Mark completed implementation-plan steps as `- [x]`. If the plan file cannot be updated, record the completed step numbers and the reason the checklist could not be updated in the implementation record.
 
 Code review evidence must be traceable. Record the review report or review package path. If no review artifact file exists, record the review input range, review method, reviewer conclusion, and unresolved findings.
+
+For enhanced exploration mode, code review evidence must cover multiple perspectives before moving to System Testing: correctness and bugs; simplicity, duplication, and maintainability; and project conventions, tests, accessibility, security, or performance as relevant to the feature. Record each perspective's conclusion and any Critical or Important findings.
 
 ### System Testing
 
