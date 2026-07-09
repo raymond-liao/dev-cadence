@@ -116,6 +116,7 @@ Stage records:
 build/dev-cadence/feature-dev/<feature-slug>/01-requirements-and-solution.md
 build/dev-cadence/feature-dev/<feature-slug>/02-implementation-plan.md
 build/dev-cadence/feature-dev/<feature-slug>/03-implementation-record.md
+build/dev-cadence/feature-dev/<feature-slug>/03-code-review-report.md
 build/dev-cadence/feature-dev/<feature-slug>/04-system-test-report.md
 build/dev-cadence/feature-dev/<feature-slug>/05-business-acceptance-record.md
 ```
@@ -263,6 +264,22 @@ The plan must include:
 - development-stage verification needed to prove the working deliverable;
 - completion conditions for Development Implementation.
 
+Before detailed task steps, the plan must include a `Task Overview` section that lets the user quickly scan the planned tasks without reading every step.
+
+Use this structure before the first detailed task:
+
+```text
+## Task Overview
+
+| Task | Goal | Files | Verification |
+| --- | --- | --- | --- |
+| Task 1: <task name> | <one-sentence outcome> | `<primary files>` | `<main checks>` |
+
+## Detailed Tasks
+```
+
+Each detailed task must have a matching row in `Task Overview`. Keep overview rows concise; detailed step-by-step execution stays under `Detailed Tasks`.
+
 At the end of this stage, write or update:
 
 ```text
@@ -313,13 +330,24 @@ The implementation record must include:
 - implementation commit hash or changed files;
 - completed plan tasks;
 - tests and checks run during development;
-- code review evidence and unresolved review findings, if any;
+- code review report path, summary, and unresolved review findings, if any;
 - skipped checks with reasons;
 - implementation notes and known residual risks.
 
 Completed plan task evidence must be kept in sync with the plan. Mark completed implementation-plan steps as `- [x]`. If the plan file cannot be updated, record the completed step numbers and the reason the checklist could not be updated in the implementation record.
 
-Code review evidence must be traceable and high signal.
+Code review evidence must be traceable and high signal. Write the detailed review report to:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/03-code-review-report.md
+```
+
+The implementation record must link to `03-code-review-report.md` and summarize:
+
+- review decision;
+- Critical findings count and status;
+- Important findings count and status;
+- unresolved findings or `None`.
 
 Before review, collect local rule sources from the target repository when they exist:
 
@@ -343,18 +371,46 @@ Use this `Code Review Evidence` structure in the implementation record:
 ```text
 ## Code Review Evidence
 
-- Review scope:
-- Rule sources:
-- Review perspectives:
-  - rules compliance:
-  - correctness / bugs:
-  - test / acceptance alignment:
-- Findings:
-  - Critical:
-  - Important:
-- Validation:
-- Fixes applied:
+- Report: build/dev-cadence/feature-dev/<feature-slug>/03-code-review-report.md
+- Review decision:
+- Critical findings:
+- Important findings:
 - Unresolved findings:
+```
+
+The code review report must use this checklist structure:
+
+```text
+# Code Review Report
+
+## Review Inputs
+
+- [ ] Changed files are listed.
+- [ ] Applicable `AGENTS.md` or `CLAUDE.md` rule sources are listed, or `None found` is recorded.
+- [ ] Confirmed requirements and technical solution source is linked.
+- [ ] Implementation plan source is linked.
+- [ ] Reviewed diff or commit range is identified by branch and commit hash when available.
+
+## Review Perspectives
+
+- [ ] Rules compliance reviewed.
+- [ ] Correctness / bugs reviewed.
+- [ ] Test / acceptance alignment reviewed.
+- [ ] Security, accessibility, performance, or operational concerns considered when relevant.
+
+## Findings
+
+- [ ] Critical findings recorded, or `None`.
+- [ ] Important findings recorded, or `None`.
+- [ ] Each Critical or Important finding has file/line evidence or a clearly stated proof.
+- [ ] Each Critical or Important finding has one validation state: `validated`, `not validated`, `fixed`, or `accepted risk`.
+
+## Review Decision
+
+- [ ] Safe to proceed to System Testing, or blocking reason recorded.
+- [ ] Fixes applied are listed, or `None`.
+- [ ] Unresolved findings are listed, or `None`.
+- [ ] Residual review risks are listed, or `None`.
 ```
 
 For enhanced exploration mode, code review evidence must cover multiple perspectives before moving to System Testing: correctness and bugs; simplicity, duplication, and maintainability; and project conventions, tests, accessibility, security, or performance as relevant to the feature. Record each perspective's conclusion and any Critical or Important findings.
@@ -443,5 +499,18 @@ Pass this Dev Cadence context into the finishing flow:
 - Do not push unless the user explicitly asks.
 
 After the finishing flow completes, update the manifest and business acceptance record with the final integration result. The manifest must include the merge, PR, keep-branch, or discard decision; worktree cleanup result; branch deletion or preservation result; final overall status; and non-`pending` checkpoint values for terminal stages.
+
+Before marking the run terminal, complete this readiness checklist:
+
+- [ ] Manifest has a terminal overall status and no `pending` checkpoint commit values.
+- [ ] Business acceptance record has `Final Follow-Up Actions` updated with actual past-tense results.
+- [ ] Implementation record has the final implementation commit hash or final changed-files state.
+- [ ] Implementation record links to `03-code-review-report.md`.
+- [ ] Code review report exists and all checklist items are checked or have an explicit reason.
+- [ ] System test report records skipped checks and residual risks honestly.
+- [ ] No stage record contains stale future-tense or pre-commit status that conflicts with the manifest.
+- [ ] Artifact paths are repository-relative; no local absolute paths are persisted unless explicitly requested by the user.
+
+If any checklist item is not satisfied, update the affected record before reporting Completion.
 
 Then follow the vendored finishing skill.
