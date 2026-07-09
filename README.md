@@ -104,7 +104,7 @@ The manifest should connect:
 .dev-cadence/
   version
   LICENSE
-  config.md
+  .dev-cadence.example.yaml
   README.md
   README.zh-CN.md
   AGENTS-snippet.md
@@ -128,15 +128,21 @@ The main pieces are:
 - `skills/using-dev-cadence/` - the entry workflow selector.
 - `skills/feature-dev/` - the feature development workflow.
 - `skills/bug-fix/` - the bug fix workflow.
-- `config.md` - runtime configuration, including workflow output language.
+- `.dev-cadence.example.yaml` - example runtime configuration for target repositories.
 - `vendor/superpowers/` - the fixed Superpowers copy used by Dev Cadence.
 
 ## Configuration
 
-Configure workflow output language in:
+To customize workflow output language, copy the example config to the target repository root:
+
+```bash
+cp .dev-cadence/.dev-cadence.example.yaml .dev-cadence.yaml
+```
+
+Then edit:
 
 ```text
-.dev-cadence/config.md
+.dev-cadence.yaml
 ```
 
 Supported values:
@@ -144,9 +150,12 @@ Supported values:
 - `en` - English workflow documents and records.
 - `zh-CN` - Simplified Chinese workflow documents and records.
 
+Keep user configuration outside `.dev-cadence`. The `.dev-cadence` directory is replaced during Dev Cadence updates.
+
 ## Runtime Rules
 
 - `.dev-cadence` contains workflow rules and vendored skills only.
+- User configuration belongs in `.dev-cadence.yaml` at the target repository root, not inside `.dev-cadence`.
 - Task artifacts, plans, reports, and acceptance records belong in the target repository's normal workspace, not inside `.dev-cadence`.
 - Do not edit `vendor/superpowers/skills/` inside target repositories. Update Dev Cadence source and rebuild instead.
 - Keep `vendor/superpowers/LICENSE` and `vendor/superpowers/RELEASE-NOTES.md` when using or distributing the package.
@@ -158,7 +167,7 @@ The source tree mirrors the installed package under `src/`:
 ```text
 src/
   AGENTS-snippet.md
-  config.md
+  .dev-cadence.example.yaml
   skills/
   vendor/
 ```

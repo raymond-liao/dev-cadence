@@ -24,7 +24,7 @@ Keep task artifacts in the target repository's normal project space. Do not writ
 Before producing user-facing workflow documents or records, read:
 
 ```text
-.dev-cadence/config.md
+.dev-cadence.yaml
 ```
 
 Use `output_language` from that file for all workflow documents and records, including Superpowers plan documents, Dev Cadence records, and user-facing stage summaries.
@@ -35,6 +35,7 @@ Supported values:
 - `zh-CN`: write documents and records in Simplified Chinese.
 
 If the config file is missing or the value is unsupported, use `en`.
+Do not read user configuration from `.dev-cadence/`; that directory is a replaceable installed package.
 
 ## Git Checkpoints
 

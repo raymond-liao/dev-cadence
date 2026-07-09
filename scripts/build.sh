@@ -9,7 +9,7 @@ mkdir -p "$TARGET_DIR"
 
 cp "$ROOT_DIR/version" "$TARGET_DIR/version"
 cp "$ROOT_DIR/LICENSE" "$TARGET_DIR/LICENSE"
-cp "$ROOT_DIR/src/config.md" "$TARGET_DIR/config.md"
+cp "$ROOT_DIR/src/.dev-cadence.example.yaml" "$TARGET_DIR/.dev-cadence.example.yaml"
 cp "$ROOT_DIR/README.md" "$TARGET_DIR/README.md"
 cp "$ROOT_DIR/README.zh-CN.md" "$TARGET_DIR/README.zh-CN.md"
 cp "$ROOT_DIR/src/AGENTS-snippet.md" "$TARGET_DIR/AGENTS-snippet.md"

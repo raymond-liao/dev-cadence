@@ -102,7 +102,7 @@ manifest 应该串联：
 .dev-cadence/
   version
   LICENSE
-  config.md
+  .dev-cadence.example.yaml
   README.md
   README.zh-CN.md
   AGENTS-snippet.md
@@ -126,15 +126,21 @@ manifest 应该串联：
 - `skills/using-dev-cadence/` - 工作流入口选择器。
 - `skills/feature-dev/` - 功能开发工作流。
 - `skills/bug-fix/` - Bug 修复工作流。
-- `config.md` - 运行时配置，包括工作流输出语言。
+- `.dev-cadence.example.yaml` - 目标仓库运行时配置示例。
 - `vendor/superpowers/` - Dev Cadence 使用的固定 Superpowers 副本。
 
 ## 配置
 
-在下面文件中配置工作流输出语言：
+如需自定义工作流输出语言，把示例配置复制到目标仓库根目录：
+
+```bash
+cp .dev-cadence/.dev-cadence.example.yaml .dev-cadence.yaml
+```
+
+然后编辑：
 
 ```text
-.dev-cadence/config.md
+.dev-cadence.yaml
 ```
 
 支持的值：
@@ -142,9 +148,12 @@ manifest 应该串联：
 - `en` - 英文工作流文档和记录。
 - `zh-CN` - 简体中文工作流文档和记录。
 
+用户配置不要放在 `.dev-cadence` 里。Dev Cadence 更新时会替换 `.dev-cadence` 目录。
+
 ## 运行规则
 
 - `.dev-cadence` 只包含工作流规则和 vendored skills。
+- 用户配置放在目标仓库根目录的 `.dev-cadence.yaml`，不要放在 `.dev-cadence` 中。
 - 任务产物、计划、报告和验收记录属于目标仓库的正常工作区，不放在 `.dev-cadence` 中。
 - 不要在目标仓库里直接编辑 `vendor/superpowers/skills/`。需要修改时，在 Dev Cadence 源码中更新后重新构建。
 - 使用或分发该包时，保留 `vendor/superpowers/LICENSE` 和 `vendor/superpowers/RELEASE-NOTES.md`。
@@ -156,7 +165,7 @@ manifest 应该串联：
 ```text
 src/
   AGENTS-snippet.md
-  config.md
+  .dev-cadence.example.yaml
   skills/
   vendor/
 ```
