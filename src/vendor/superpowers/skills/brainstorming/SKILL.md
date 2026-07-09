@@ -104,7 +104,7 @@ digraph brainstorming {
 **Documentation:**
 
 - Write the validated design/spec to the path required by the active Dev Cadence workflow, inside `build/dev-cadence/<workflow>/<task-slug>/`
-  - Default feature workflow path: `build/dev-cadence/feature-dev/<feature-slug>/requirements-and-solution.md`
+  - Default feature workflow path: `build/dev-cadence/feature-dev/<feature-slug>/01-requirements-and-solution.md`
   - User preferences for spec location override this default only when they do not conflict with the active Dev Cadence workflow
 - Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git

@@ -16,8 +16,8 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 **Context:** If working in an isolated worktree, it should have been created via the `superpowers:using-git-worktrees` skill at execution time.
 
 **Save plans to:** the path required by the active Dev Cadence workflow, inside `build/dev-cadence/<workflow>/<task-slug>/`.
-- Default feature workflow path: `build/dev-cadence/feature-dev/<feature-slug>/implementation-plan.md`
-- Default bug-fix workflow path: `build/dev-cadence/bug-fix/<bug-slug>/repair-plan.md`
+- Default feature workflow path: `build/dev-cadence/feature-dev/<feature-slug>/02-implementation-plan.md`
+- Default bug-fix workflow path: `build/dev-cadence/bug-fix/<bug-slug>/03-repair-plan.md`
 - User preferences for plan location override these defaults only when they do not conflict with the active Dev Cadence workflow
 
 ## Scope Check

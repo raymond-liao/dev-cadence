@@ -23,7 +23,7 @@
 - workflow：Dev Cadence 的业务交付流程，例如 `feature-dev` 和 `bug-fix`。
 - stage：workflow 内的业务阶段，例如需求确认、技术方案、系统测试、业务验收。
 - run manifest：一次 workflow 运行的索引文件，路径形如 `build/dev-cadence/<workflow>/<task-slug>/manifest.md`。
-- stage record：某个阶段的持久化记录，例如 `implementation-record.md`、`system-test-report.md`。
+- stage record：某个阶段的持久化记录，例如 `03-implementation-record.md`、`04-system-test-report.md`。
 - checkpoint commit：用户确认阶段输出后创建的 Git 检查点提交。
 - target repository：安装并运行 Dev Cadence 的业务仓库。
 - installed package：目标仓库中的 `.dev-cadence/` 目录。

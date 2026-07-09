@@ -113,12 +113,12 @@ build/dev-cadence/bug-fix/<bug-slug>/
 Use these records:
 
 ```text
-build/dev-cadence/bug-fix/<bug-slug>/problem-diagnosis-record.md
-build/dev-cadence/bug-fix/<bug-slug>/repair-solution.md
-build/dev-cadence/bug-fix/<bug-slug>/repair-plan.md
-build/dev-cadence/bug-fix/<bug-slug>/repair-record.md
-build/dev-cadence/bug-fix/<bug-slug>/regression-test-report.md
-build/dev-cadence/bug-fix/<bug-slug>/business-acceptance-record.md
+build/dev-cadence/bug-fix/<bug-slug>/01-problem-diagnosis-record.md
+build/dev-cadence/bug-fix/<bug-slug>/02-repair-solution.md
+build/dev-cadence/bug-fix/<bug-slug>/03-repair-plan.md
+build/dev-cadence/bug-fix/<bug-slug>/04-repair-record.md
+build/dev-cadence/bug-fix/<bug-slug>/05-regression-test-report.md
+build/dev-cadence/bug-fix/<bug-slug>/06-business-acceptance-record.md
 ```
 
 Subagent-driven development artifacts, when used, must be written under:
@@ -196,7 +196,7 @@ Do not propose or implement a fix until the root cause investigation has enough 
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/bug-fix/<bug-slug>/problem-diagnosis-record.md
+build/dev-cadence/bug-fix/<bug-slug>/01-problem-diagnosis-record.md
 ```
 
 Ask the user to confirm this stage. Do not write the repair plan or code yet.
@@ -224,7 +224,7 @@ Based on the diagnosis, define the repair approach. Before moving on, explicitly
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/bug-fix/<bug-slug>/repair-solution.md
+build/dev-cadence/bug-fix/<bug-slug>/02-repair-solution.md
 ```
 
 Ask the user to confirm this stage. Do not write the TDD repair plan or code yet.
@@ -254,7 +254,7 @@ The plan must include:
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/bug-fix/<bug-slug>/repair-plan.md
+build/dev-cadence/bug-fix/<bug-slug>/03-repair-plan.md
 ```
 
 Ask the user to confirm the plan before implementation starts.
@@ -293,7 +293,7 @@ If new debugging is needed, return to:
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/bug-fix/<bug-slug>/repair-record.md
+build/dev-cadence/bug-fix/<bug-slug>/04-repair-record.md
 ```
 
 The repair record must include:
@@ -361,7 +361,7 @@ Do not claim the bug is fixed or regression-free without fresh verification evid
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/bug-fix/<bug-slug>/regression-test-report.md
+build/dev-cadence/bug-fix/<bug-slug>/05-regression-test-report.md
 ```
 
 The regression test report must use this structure:
@@ -399,7 +399,7 @@ If the user's response does not clearly select one fixed option, ask the user to
 After the user gives the acceptance decision, write or update:
 
 ```text
-build/dev-cadence/bug-fix/<bug-slug>/business-acceptance-record.md
+build/dev-cadence/bug-fix/<bug-slug>/06-business-acceptance-record.md
 ```
 
 The business acceptance record must use this structure:

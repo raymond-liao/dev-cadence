@@ -113,11 +113,11 @@ build/dev-cadence/feature-dev/<feature-slug>/
 Stage records:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/requirements-and-solution.md
-build/dev-cadence/feature-dev/<feature-slug>/implementation-plan.md
-build/dev-cadence/feature-dev/<feature-slug>/implementation-record.md
-build/dev-cadence/feature-dev/<feature-slug>/system-test-report.md
-build/dev-cadence/feature-dev/<feature-slug>/business-acceptance-record.md
+build/dev-cadence/feature-dev/<feature-slug>/01-requirements-and-solution.md
+build/dev-cadence/feature-dev/<feature-slug>/02-implementation-plan.md
+build/dev-cadence/feature-dev/<feature-slug>/03-implementation-record.md
+build/dev-cadence/feature-dev/<feature-slug>/04-system-test-report.md
+build/dev-cadence/feature-dev/<feature-slug>/05-business-acceptance-record.md
 ```
 
 Subagent-driven development artifacts, when used, must be written under:
@@ -196,8 +196,8 @@ When enhanced exploration mode applies:
 - explore 2-3 independent perspectives before finalizing the Technical Solution, such as similar existing features, relevant architecture and data flow, UI or API patterns, testing strategy, integration boundaries, accessibility, security, or operational constraints;
 - each exploration perspective must identify key files with line references, established patterns, constraints, risks, and 5-10 essential files the main agent must read;
 - the main agent must read the essential files before writing the Technical Solution;
-- record the exploration summary in `requirements-and-solution.md` under `Codebase Exploration Findings`;
-- present multiple architecture alternatives in `requirements-and-solution.md`, including minimal-change, clean-architecture, and pragmatic-balance options when those options are meaningfully different;
+- record the exploration summary in `01-requirements-and-solution.md` under `Codebase Exploration Findings`;
+- present multiple architecture alternatives in `01-requirements-and-solution.md`, including minimal-change, clean-architecture, and pragmatic-balance options when those options are meaningfully different;
 - recommend one option with concrete rationale and ask the user to confirm the Technical Solution before writing the implementation plan.
 
 ### Requirements Confirmation
@@ -238,7 +238,7 @@ Use its design/spec guidance. Before moving on, explicitly present:
 The persisted artifact for Requirements Confirmation and Technical Solution is:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/requirements-and-solution.md
+build/dev-cadence/feature-dev/<feature-slug>/01-requirements-and-solution.md
 ```
 
 Ask the user to confirm this stage. Do not write the TDD implementation plan or code yet.
@@ -266,7 +266,7 @@ The plan must include:
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/implementation-plan.md
+build/dev-cadence/feature-dev/<feature-slug>/02-implementation-plan.md
 ```
 
 Ask the user to confirm the plan before implementation starts.
@@ -305,7 +305,7 @@ If debugging is needed, use:
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/implementation-record.md
+build/dev-cadence/feature-dev/<feature-slug>/03-implementation-record.md
 ```
 
 The implementation record must include:
@@ -374,7 +374,7 @@ Do not claim the system is ready without fresh verification evidence.
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/system-test-report.md
+build/dev-cadence/feature-dev/<feature-slug>/04-system-test-report.md
 ```
 
 The system test report must use this structure:
@@ -411,7 +411,7 @@ If the user's response does not clearly select one fixed option, ask the user to
 After the user gives the acceptance decision, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/business-acceptance-record.md
+build/dev-cadence/feature-dev/<feature-slug>/05-business-acceptance-record.md
 ```
 
 The business acceptance record must use this structure:
