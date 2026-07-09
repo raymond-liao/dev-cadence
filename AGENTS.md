@@ -55,6 +55,7 @@
 - 如果修改了规则文本，应使用 `rg --no-ignore` 检查 `src/` 和 `dist/.dev-cadence/` 是否同步包含关键规则。
 - `dist/` 和 `build/` 被忽略；不要为了提交分发产物而强制添加它们，除非用户明确要求。
 - 如果只改本仓库 `AGENTS.md`，不需要运行构建脚本。
+- 当修改会影响可安装 `.dev-cadence` 包、workflow 行为、安装片段、默认配置或用户可见交付规则时，提交前必须评估并更新根目录 `version`；如果决定不更新版本号，需要在最终说明中写明原因。
 
 ## Review 检查重点
 
@@ -62,6 +63,7 @@
 - 是否误改了 `dist/.dev-cadence/**` 而没有修改 `src/` 源文件。
 - 是否误改了 `src/vendor/superpowers/**`。
 - 修改 `src/skills/**` 后是否运行了 `bash scripts/build.sh`。
+- 影响可安装包或 workflow 行为的修改是否同步更新了根目录 `version`，或明确说明不更新版本号的理由。
 - feature-dev 和 bug-fix 中同类规则是否保持一致，差异是否有明确原因。
 - manifest、stage record、review evidence、coverage、business acceptance 等记录要求是否闭环。
 - 是否引入本机绝对路径、个人目录、临时 URL、token、密钥或其他不可移植信息。
