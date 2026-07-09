@@ -116,6 +116,22 @@ Subagent-driven development artifacts, when used, must be written under:
 build/dev-cadence/feature-dev/<feature-slug>/sdd/
 ```
 
+Visual companion artifacts, when used during Requirements Confirmation or Technical Solution, must stay under the same task directory by starting or restarting the vendored visual companion with the task directory as `--project-dir`:
+
+```bash
+.dev-cadence/vendor/superpowers/skills/brainstorming/scripts/start-server.sh \
+  --project-dir build/dev-cadence/feature-dev/<feature-slug> \
+  --open
+```
+
+This preserves the vendored Superpowers visual companion layout while keeping its files inside the Dev Cadence task directory:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/.superpowers/brainstorm/
+```
+
+Do not edit or fork the vendored visual companion scripts to change this path.
+
 Create and maintain a run manifest for every workflow run:
 
 ```text
