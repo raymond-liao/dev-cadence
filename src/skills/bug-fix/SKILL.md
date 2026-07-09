@@ -321,10 +321,17 @@ Superpowers does not provide a dedicated business acceptance skill. Use this Dev
 - summarize the confirmed problem;
 - summarize the root cause and repair result;
 - summarize regression evidence and residual risks;
-- ask the user for a named decision: accept, reject, or accept with residual risk;
-- record the decision and accepted residual risks.
+- ask the user to choose a business acceptance decision from fixed numbered options:
+  1. Accept
+  2. Reject
+  3. Accept with residual risk
+- get the business acceptor identity from the target repository's `git config user.name` and `git config user.email`; ask the user only if git identity is unavailable;
+- map the user's selected number or exact option text to the normalized decision, then record the decision, decision maker, exact decision time with timezone, and accepted residual risks.
 
 Do not substitute regression verification success for user acceptance.
+Do not infer acceptance from ambiguous positive feedback such as "looks good", "seems fine", "looks okay", "看起来没问题", "没问题", or similar wording.
+Only treat the response as a business acceptance decision when the user selects one of the numbered options or repeats the exact option text.
+If the user's response does not clearly select one fixed option, ask the user to choose again and do not write the business acceptance record yet.
 
 After the user gives the acceptance decision, write or update:
 
@@ -336,7 +343,9 @@ The business acceptance record must use this structure:
 
 - `Accepted Problem Source`: confirmed diagnosis and solution sources.
 - `Regression Test Report Source`: regression test report source.
-- `User Decision`: accepted, rejected, or accepted with residual risk; include the user's acceptance statement and acceptance date.
+- `User Decision`: normalized decision selected from the fixed options: accepted, rejected, or accepted with residual risk.
+- `Decision By`: target repository git identity that made the business acceptance decision, formatted as `user.name <user.email>` when both values are available.
+- `Decision At`: exact decision timestamp with timezone, preferably ISO 8601 with offset.
 - `Accepted Result`: brief business summary of what was accepted.
 - `Accepted Residual Risks`: residual risks accepted by the user, if any.
 - `Final Follow-Up Actions`: final follow-up actions, if any.
