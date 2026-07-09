@@ -143,6 +143,15 @@ The manifest must include:
 - business acceptance decision once available;
 - final integration decision after Completion.
 
+Repository and path fields must be portable:
+
+- identify the repository by repository name and, when available, `git remote get-url origin`;
+- record branches and commit hashes as the durable source of code identity;
+- write artifact paths, workspace paths, and run directory paths relative to the target repository root;
+- if working in the main checkout, record the workspace as `.` or `target repository root`;
+- if working in a project-local worktree, record it as `.worktrees/<branch-or-task-slug>` or `worktrees/<branch-or-task-slug>` instead of the machine's absolute path;
+- do not persist local absolute paths such as `/Users/...`, `/home/...`, or drive-letter paths in manifests or stage records unless the user explicitly asks for machine-local debugging evidence.
+
 Use stage status values: `pending`, `in_progress`, `confirmed`, `blocked`, or `skipped`.
 Use overall status values: `in_progress`, `accepted`, `rejected`, `accepted_with_risk`, `integrated`, or `abandoned`.
 
