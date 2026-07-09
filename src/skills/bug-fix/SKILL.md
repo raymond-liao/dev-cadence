@@ -155,6 +155,8 @@ Repository and path fields must be portable:
 Use stage status values: `pending`, `in_progress`, `confirmed`, `blocked`, or `skipped`.
 Use overall status values: `in_progress`, `accepted`, `rejected`, `accepted_with_risk`, `integrated`, or `abandoned`.
 
+When the overall status is `accepted`, `rejected`, `accepted_with_risk`, `integrated`, or `abandoned`, the manifest must not contain `pending` checkpoint commit values. For each stage, record the actual checkpoint commit hash, `skipped`, or `skipped: <reason>`.
+
 Update the manifest:
 
 - when the workflow starts;
@@ -304,6 +306,10 @@ The repair record must include:
 - skipped checks with reasons;
 - repair notes and known residual risks.
 
+Completed plan task evidence must be kept in sync with the plan. Mark completed repair-plan steps as `- [x]`. If the plan file cannot be updated, record the completed step numbers and the reason the checklist could not be updated in the repair record.
+
+Code review evidence must be traceable. Record the review report or review package path. If no review artifact file exists, record the review input range, review method, reviewer conclusion, and unresolved findings.
+
 ### Regression Verification
 
 Use:
@@ -327,11 +333,13 @@ The regression test report must use this structure:
 - `Problem And Repair Sources`: diagnosis source, solution source, plan source, and repair source.
 - `Test Environment`: repository, branch, date, runtime, servers, tools, and relevant configuration.
 - `Test Cases`: a table with columns `ID`, `Scenario`, `Type`, `Execution`, `Result`, and `Evidence`. List every automated, manual, smoke, build, source-inspection, regression, and skipped test case that matters to the confirmed bug and impact scope.
-- `Bug Fix Coverage`: map the original symptom, root cause, and repair acceptance points to the test case IDs that cover them.
-- `Impact Scope Coverage`: map each affected area from the Repair Solution to the test case IDs that cover it.
+- `Bug Fix Coverage`: map the original symptom, root cause, and repair acceptance points to test case IDs and an explicit status: `covered`, `skipped`, `not covered`, or `accepted risk`.
+- `Impact Scope Coverage`: map each affected area from the Repair Solution to test case IDs and an explicit status: `covered`, `skipped`, `not covered`, or `accepted risk`.
 - `Failed Or Skipped Checks`: failures and skipped checks with reasons. If none, write `None`.
 - `Residual Risks`: remaining risks after testing. If none, write `None`.
 - `Recommendation`: whether the fix can enter Business Acceptance.
+
+Coverage must be honest. If the original symptom, root cause, repair acceptance point, or affected area is not verified by an executed test or check, list it as `skipped`, `not covered`, or `accepted risk` in `Bug Fix Coverage` or `Impact Scope Coverage`; do not only mention it in `Residual Risks`.
 
 ### Business Acceptance
 
@@ -369,6 +377,8 @@ The business acceptance record must use this structure:
 - `Accepted Residual Risks`: residual risks accepted by the user, if any.
 - `Final Follow-Up Actions`: final follow-up actions, if any.
 
+After Completion, update `Final Follow-Up Actions` with the actual final result. Record whether the branch was merged, a PR was created, the branch was kept, or the work was discarded; also record whether any worktree was removed and whether the task branch was deleted or preserved. Do not leave final follow-up actions as future-tense TODOs when the manifest is in a terminal status.
+
 ## Completion
 
 After Business Acceptance is accepted, invoke:
@@ -383,5 +393,7 @@ Pass this Dev Cadence context into the finishing flow:
 - The business acceptance record has been written or updated.
 - Ignored Dev Cadence run records under `build/dev-cadence/` may remain on disk after merge.
 - Do not push unless the user explicitly asks.
+
+After the finishing flow completes, update the manifest and business acceptance record with the final integration result. The manifest must include the merge, PR, keep-branch, or discard decision; worktree cleanup result; branch deletion or preservation result; final overall status; and non-`pending` checkpoint values for terminal stages.
 
 Then follow the vendored finishing skill.
