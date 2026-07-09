@@ -21,37 +21,23 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
+      - name: Build package
+        run: bash scripts/build.sh
 
-      - name: Build Codex plugin package
-        run: node scripts/package-codex-plugin.mjs --clean
-
-      - name: Build target repo bundle
-        run: node scripts/package-target-repo-bundle.mjs --clean
+      - name: Check whitespace
+        run: git diff --check
 
   test:
     name: Test
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
-
       - name: Install test dependencies
         run: sudo apt-get update && sudo apt-get install -y ripgrep
 
-      - name: Configure Git test identity
-        run: |
-          git config --global user.name "Dev Cadence CI"
-          git config --global user.email "dev-cadence-ci@example.invalid"
-
       - name: Run test suite
-        run: bash tests/run-all.sh
+        run: bash scripts/check-all.sh
