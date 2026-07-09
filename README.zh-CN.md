@@ -73,11 +73,19 @@ Problem Diagnosis -> Repair Solution -> Repair Plan -> Repair Implementation -> 
 
 工作流记录属于目标仓库的正常工作区，不存放在 `.dev-cadence` 里。
 
-任务级运行记录是 Dev Cadence Run Manifest：
+任务级运行目录会把同一个任务的所有工作流产物放在一起：
+
+```text
+build/dev-cadence/<workflow>/<task-slug>/
+```
+
+任务级运行索引是 Dev Cadence Run Manifest：
 
 ```text
 build/dev-cadence/<workflow>/<task-slug>/manifest.md
 ```
+
+同一个任务目录还会包含阶段记录；如果使用 subagent-driven development，SDD 的任务 brief、实现报告、评审包和进度 ledger 会放在 `sdd/` 目录下。
 
 manifest 应该串联：
 

@@ -82,6 +82,22 @@ digraph process {
 }
 ```
 
+## Dev Cadence Task Directory
+
+All SDD files belong under the active Dev Cadence task directory:
+
+```text
+build/dev-cadence/<workflow>/<task-slug>/sdd/
+```
+
+Before running any script from this skill, `DEV_CADENCE_TASK_DIR` must be set to the task directory without the trailing `/sdd`, for example:
+
+```bash
+export DEV_CADENCE_TASK_DIR=build/dev-cadence/feature-dev/<feature-slug>
+```
+
+If this variable is missing, stop and set it from the active workflow before dispatching subagents.
+
 ## Pre-Flight Plan Review
 
 Before dispatching Task 1, scan the plan once for conflicts:
@@ -250,10 +266,10 @@ controllers that lost their place have re-dispatched entire completed task
 sequences — the single most expensive failure observed. Track progress in
 a ledger file, not only in todos.
 
-- At skill start, check for a ledger:
-  `cat "$(git rev-parse --show-toplevel)/.superpowers/sdd/progress.md"`. Tasks listed there
-  as complete are DONE — do not re-dispatch them; resume at the first task
-  not marked complete.
+- At skill start, run this skill's `scripts/sdd-workspace` helper and read
+  `progress.md` in the printed directory if it exists. Tasks listed there as
+  complete are DONE — do not re-dispatch them; resume at the first task not
+  marked complete.
 - When a task's review comes back clean, append one line to the ledger in
   the same message as your other bookkeeping:
   `Task N: complete (commits <base7>..<head7>, review clean)`.
@@ -274,7 +290,7 @@ a ledger file, not only in todos.
 ```
 You: I'm using Subagent-Driven Development to execute this plan.
 
-[Read plan file once: docs/superpowers/plans/feature-plan.md]
+[Read plan file once: build/dev-cadence/feature-dev/example-feature/implementation-plan.md]
 [Create todos for all tasks]
 
 Task 1: Hook installation script

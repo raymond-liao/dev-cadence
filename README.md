@@ -75,11 +75,19 @@ The detailed execution rules live in each workflow skill. The README is only the
 
 Workflow records belong in the target repository's normal workspace. They are not stored inside `.dev-cadence`.
 
-The task-level run record is the Dev Cadence Run Manifest:
+The task-level run directory keeps every workflow artifact for the task together:
+
+```text
+build/dev-cadence/<workflow>/<task-slug>/
+```
+
+The task-level run index is the Dev Cadence Run Manifest:
 
 ```text
 build/dev-cadence/<workflow>/<task-slug>/manifest.md
 ```
+
+The same task directory also contains stage records and, when subagent-driven development is used, SDD task briefs, implementer reports, review packages, and progress ledgers under `sdd/`.
 
 The manifest should connect:
 

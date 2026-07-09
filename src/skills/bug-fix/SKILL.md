@@ -94,15 +94,27 @@ The mapping is semantic, not one-skill-per-stage. If a Superpowers skill natural
 
 The active AI agent is responsible for writing or updating the record for the stage it is executing. Do not rely on the conversation transcript as the only record.
 
+Use one task directory for every workflow record and short-lived execution artifact:
+
+```text
+build/dev-cadence/bug-fix/<bug-slug>/
+```
+
 Use these records:
 
 ```text
 build/dev-cadence/bug-fix/<bug-slug>/problem-diagnosis-record.md
 build/dev-cadence/bug-fix/<bug-slug>/repair-solution.md
-docs/superpowers/plans/<date>-<bug-slug>-fix.md
+build/dev-cadence/bug-fix/<bug-slug>/repair-plan.md
 build/dev-cadence/bug-fix/<bug-slug>/repair-record.md
 build/dev-cadence/bug-fix/<bug-slug>/regression-test-report.md
 build/dev-cadence/bug-fix/<bug-slug>/business-acceptance-record.md
+```
+
+Subagent-driven development artifacts, when used, must be written under:
+
+```text
+build/dev-cadence/bug-fix/<bug-slug>/sdd/
 ```
 
 Create and maintain a run manifest for every workflow run:
@@ -221,7 +233,7 @@ The plan must include:
 At the end of this stage, write or update:
 
 ```text
-docs/superpowers/plans/<date>-<bug-slug>-fix.md
+build/dev-cadence/bug-fix/<bug-slug>/repair-plan.md
 ```
 
 Ask the user to confirm the plan before implementation starts.
@@ -242,6 +254,14 @@ Follow the confirmed plan. Development-stage verification belongs here: reproduc
 Use `subagent-driven-development` when the plan has independent tasks and the platform supports subagents. Use `executing-plans` when subagent-driven development is not available or not appropriate.
 
 Follow the Superpowers code review requirements during Repair Implementation. Fix Critical and Important findings before moving to Regression Verification, unless the user explicitly accepts the risk.
+
+Before using `subagent-driven-development`, set:
+
+```text
+DEV_CADENCE_TASK_DIR=build/dev-cadence/bug-fix/<bug-slug>
+```
+
+All SDD task briefs, implementer reports, review packages, and progress ledgers must stay under that task directory.
 
 If new debugging is needed, return to:
 

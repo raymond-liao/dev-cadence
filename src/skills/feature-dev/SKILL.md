@@ -94,17 +94,26 @@ The mapping is semantic, not one-skill-per-stage. If a Superpowers skill natural
 
 The active AI agent is responsible for writing or updating the record for the stage it is executing. Do not rely on the conversation transcript as the only record.
 
-Use the Superpowers spec and plan documents as the records for the first three stages:
-
-- Requirements Confirmation and Technical Solution: `docs/superpowers/specs/<date>-<feature>-design.md`
-- Implementation Plan: `docs/superpowers/plans/<date>-<feature>.md`
-
-Create Dev Cadence records for the remaining stages:
+Use one task directory for every workflow record and short-lived execution artifact:
 
 ```text
+build/dev-cadence/feature-dev/<feature-slug>/
+```
+
+Stage records:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/requirements-and-solution.md
+build/dev-cadence/feature-dev/<feature-slug>/implementation-plan.md
 build/dev-cadence/feature-dev/<feature-slug>/implementation-record.md
 build/dev-cadence/feature-dev/<feature-slug>/system-test-report.md
 build/dev-cadence/feature-dev/<feature-slug>/business-acceptance-record.md
+```
+
+Subagent-driven development artifacts, when used, must be written under:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/sdd/
 ```
 
 Create and maintain a run manifest for every workflow run:
@@ -174,7 +183,11 @@ Use its design/spec guidance. Before moving on, explicitly present:
 - high-level testing strategy;
 - risks or constraints.
 
-The Superpowers design/spec document is the persisted artifact for Requirements Confirmation and Technical Solution.
+The persisted artifact for Requirements Confirmation and Technical Solution is:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/requirements-and-solution.md
+```
 
 Ask the user to confirm this stage. Do not write the TDD implementation plan or code yet.
 
@@ -198,6 +211,12 @@ The plan must include:
 - development-stage verification needed to prove the working deliverable;
 - completion conditions for Development Implementation.
 
+At the end of this stage, write or update:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/implementation-plan.md
+```
+
 Ask the user to confirm the plan before implementation starts.
 
 ### Development Implementation
@@ -216,6 +235,14 @@ Follow the confirmed plan. Development-stage verification belongs here: failing 
 Use `subagent-driven-development` when the plan has independent tasks and the platform supports subagents. Use `executing-plans` when subagent-driven development is not available or not appropriate.
 
 Follow the Superpowers code review requirements during Development Implementation: review after each subagent-driven task, review after major feature completion, and review before merge. Fix Critical and Important findings before moving to System Testing, unless the user explicitly accepts the risk.
+
+Before using `subagent-driven-development`, set:
+
+```text
+DEV_CADENCE_TASK_DIR=build/dev-cadence/feature-dev/<feature-slug>
+```
+
+All SDD task briefs, implementer reports, review packages, and progress ledgers must stay under that task directory.
 
 If debugging is needed, use:
 

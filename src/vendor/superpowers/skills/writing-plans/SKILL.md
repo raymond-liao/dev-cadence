@@ -15,8 +15,10 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Context:** If working in an isolated worktree, it should have been created via the `superpowers:using-git-worktrees` skill at execution time.
 
-**Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
-- (User preferences for plan location override this default)
+**Save plans to:** the path required by the active Dev Cadence workflow, inside `build/dev-cadence/<workflow>/<task-slug>/`.
+- Default feature workflow path: `build/dev-cadence/feature-dev/<feature-slug>/implementation-plan.md`
+- Default bug-fix workflow path: `build/dev-cadence/bug-fix/<bug-slug>/repair-plan.md`
+- User preferences for plan location override these defaults only when they do not conflict with the active Dev Cadence workflow
 
 ## Scope Check
 
@@ -157,7 +159,7 @@ If you find issues, fix them inline. No need to re-review — just fix and move 
 
 After saving the plan, offer execution choice:
 
-**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
+**"Plan complete and saved to `<path>`. Two execution options:**
 
 **1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
 
