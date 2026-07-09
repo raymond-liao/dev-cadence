@@ -319,7 +319,43 @@ The implementation record must include:
 
 Completed plan task evidence must be kept in sync with the plan. Mark completed implementation-plan steps as `- [x]`. If the plan file cannot be updated, record the completed step numbers and the reason the checklist could not be updated in the implementation record.
 
-Code review evidence must be traceable. Record the review report or review package path. If no review artifact file exists, record the review input range, review method, reviewer conclusion, and unresolved findings.
+Code review evidence must be traceable and high signal.
+
+Before review, collect local rule sources from the target repository when they exist:
+
+- root `AGENTS.md`;
+- `AGENTS.md` or `CLAUDE.md` files in directories containing changed files or their parents.
+
+Apply only rule sources whose path scope covers the changed files. If no local rule sources exist, record `None found` and continue.
+
+Review must cover these perspectives:
+
+- `rules compliance`: violations of explicit AGENTS/CLAUDE rules that apply to the changed files;
+- `correctness / bugs`: functional bugs, missing imports, invalid state handling, error handling gaps, security issues, or other defects introduced by the change;
+- `test / acceptance alignment`: whether implementation and tests match the confirmed requirements, technical solution, implementation plan, and acceptance criteria.
+
+Only record high-signal findings. A finding must have file/line evidence or a clearly stated proof, must be introduced by the current change, and must affect functionality, rule compliance, security, maintainability, or acceptance. Do not record pure style preferences, speculative concerns, pre-existing issues, or issues a linter/formatter will catch unless they block delivery.
+
+For each Critical or Important finding, record one validation state: `validated`, `not validated`, `fixed`, or `accepted risk`. Unvalidated findings must not block System Testing, but must remain visible as review notes. Critical and Important validated findings must be fixed or explicitly accepted by the user before moving to System Testing.
+
+Use this `Code Review Evidence` structure in the implementation record:
+
+```text
+## Code Review Evidence
+
+- Review scope:
+- Rule sources:
+- Review perspectives:
+  - rules compliance:
+  - correctness / bugs:
+  - test / acceptance alignment:
+- Findings:
+  - Critical:
+  - Important:
+- Validation:
+- Fixes applied:
+- Unresolved findings:
+```
 
 For enhanced exploration mode, code review evidence must cover multiple perspectives before moving to System Testing: correctness and bugs; simplicity, duplication, and maintainability; and project conventions, tests, accessibility, security, or performance as relevant to the feature. Record each perspective's conclusion and any Critical or Important findings.
 
