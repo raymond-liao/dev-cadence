@@ -34,7 +34,16 @@ Supported values:
 - `en`: write documents and records in English.
 - `zh-CN`: write documents and records in Simplified Chinese.
 
+Use `worktree.enabled` to set the worktree preference before invoking the vendored `using-git-worktrees` skill:
+
+- `true`: create or verify an isolated worktree without asking.
+- `false`: work in the current checkout unless the user explicitly asks for a worktree.
+
+Use `worktree.directory` as the preferred project-local worktree directory when `worktree.enabled` is `true`.
+
 If the config file is missing or the value is unsupported, use `en`.
+If `worktree.enabled` is missing or unsupported, use `false`.
+If `worktree.directory` is missing, use `.worktrees`.
 Do not read user configuration from `.dev-cadence/`; that directory is a replaceable installed package.
 
 ## Git Checkpoints
@@ -218,7 +227,7 @@ Use:
 .dev-cadence/vendor/superpowers/skills/writing-plans/SKILL.md
 ```
 
-Before writing the plan, use `using-git-worktrees` to create or verify the isolated repair workspace according to the vendored Superpowers rules.
+Before writing the plan, apply the configured `worktree.enabled` and `worktree.directory`, then use `using-git-worktrees` to create or verify the isolated repair workspace according to the vendored Superpowers rules. When `worktree.enabled` is `true`, treat it as a predeclared user preference to create an isolated worktree and do not ask for worktree consent. When `worktree.enabled` is `false`, skip worktree creation unless the user explicitly asks for it.
 
 The plan is only for the next stage, Repair Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
 

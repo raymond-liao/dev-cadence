@@ -148,6 +148,12 @@ cp .dev-cadence/.dev-cadence.example.yaml .dev-cadence.yaml
 - `en` - 英文工作流文档和记录。
 - `zh-CN` - 简体中文工作流文档和记录。
 
+Worktree 配置：
+
+- `worktree.enabled: false` - 除非用户明确要求，否则在当前 checkout 中工作。
+- `worktree.enabled: true` - 不询问，自动创建或确认隔离 worktree。
+- `worktree.directory` - 优先使用的项目内 worktree 目录。
+
 用户配置不要放在 `.dev-cadence` 里。Dev Cadence 更新时会替换 `.dev-cadence` 目录。
 
 ## 运行规则

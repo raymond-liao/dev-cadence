@@ -150,6 +150,12 @@ Supported values:
 - `en` - English workflow documents and records.
 - `zh-CN` - Simplified Chinese workflow documents and records.
 
+Worktree options:
+
+- `worktree.enabled: false` - work in the current checkout unless explicitly requested.
+- `worktree.enabled: true` - create or verify an isolated worktree without asking.
+- `worktree.directory` - preferred project-local worktree directory.
+
 Keep user configuration outside `.dev-cadence`. The `.dev-cadence` directory is replaced during Dev Cadence updates.
 
 ## Runtime Rules
