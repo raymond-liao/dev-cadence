@@ -186,6 +186,6 @@ bash scripts/build.sh
 
 ## 许可证
 
-Dev Cadence 使用 Apache License 2.0。见 `LICENSE`。
+Dev Cadence 使用 MIT License。见 `LICENSE`。
 
 Vendored Superpowers 副本使用 MIT License。见 `vendor/superpowers/LICENSE`。

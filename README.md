@@ -188,6 +188,6 @@ The build script only replaces `dist/.dev-cadence`.
 
 ## License
 
-Dev Cadence is licensed under the Apache License 2.0. See `LICENSE`.
+Dev Cadence is licensed under the MIT License. See `LICENSE`.
 
 The vendored Superpowers copy is licensed under the MIT License. See `vendor/superpowers/LICENSE`.
