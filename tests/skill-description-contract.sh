@@ -46,8 +46,13 @@ assert_description \
   "src/skills/bug-fix/SKILL.md" \
   "Use when a user reports or asks to fix a bug, error, crash, regression, failing test, broken expected behavior, or unexpected behavior in a target project."
 
+assert_description \
+  "src/skills/refactor/SKILL.md" \
+  "Use when a user asks to improve internal code structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior in a target project."
+
 assert_no_process_summary "src/skills/using-dev-cadence/SKILL.md"
 assert_no_process_summary "src/skills/feature-dev/SKILL.md"
 assert_no_process_summary "src/skills/bug-fix/SKILL.md"
+assert_no_process_summary "src/skills/refactor/SKILL.md"
 
 printf 'Skill description contract checks passed.\n'

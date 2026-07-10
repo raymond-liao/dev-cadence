@@ -46,6 +46,7 @@ required_files=(
   "dist/.dev-cadence/skills/using-dev-cadence/SKILL.md"
   "dist/.dev-cadence/skills/feature-dev/SKILL.md"
   "dist/.dev-cadence/skills/bug-fix/SKILL.md"
+  "dist/.dev-cadence/skills/refactor/SKILL.md"
   "dist/.dev-cadence/vendor/superpowers/LICENSE"
   "dist/.dev-cadence/vendor/superpowers/RELEASE-NOTES.md"
 )
@@ -68,15 +69,22 @@ done < <(find "$ROOT_DIR/src/skills" -type f -print0)
 
 assert_match "04-code-review-report.md" "src/skills/feature-dev/SKILL.md"
 assert_match "04-code-review-report.md" "src/skills/bug-fix/SKILL.md"
+assert_match "04-code-review-report.md" "src/skills/refactor/SKILL.md"
 assert_match "01-requirements.md" "src/skills/feature-dev/SKILL.md"
 assert_match "02-technical-solution.md" "src/skills/feature-dev/SKILL.md"
 assert_match "03-implementation-plan.md" "src/skills/feature-dev/SKILL.md"
+assert_match "Behavior Baseline" "src/skills/refactor/SKILL.md"
+assert_match "Common Refactoring Methods" "src/skills/refactor/SKILL.md"
+assert_match "Regression Verification" "src/skills/refactor/SKILL.md"
 assert_match "Task Overview" "src/skills/feature-dev/SKILL.md"
 assert_match "Task Overview" "src/skills/bug-fix/SKILL.md"
+assert_match "Task Overview" "src/skills/refactor/SKILL.md"
 assert_match "Before marking the run terminal" "src/skills/feature-dev/SKILL.md"
 assert_match "Before marking the run terminal" "src/skills/bug-fix/SKILL.md"
+assert_match "Before marking the run terminal" "src/skills/refactor/SKILL.md"
 assert_match "Business Acceptance" "src/skills/feature-dev/SKILL.md"
 assert_match "Business Acceptance" "src/skills/bug-fix/SKILL.md"
+assert_match "Business Acceptance" "src/skills/refactor/SKILL.md"
 
 if find "$DIST_DIR" -path '*/build/dev-cadence/*' -print -quit | grep -q .; then
   fail "dist package contains old Dev Cadence run records"

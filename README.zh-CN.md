@@ -67,6 +67,12 @@ Requirements Confirmation -> Technical Solution -> Implementation Plan -> Develo
 Problem Diagnosis -> Repair Solution -> Repair Plan -> Repair Implementation -> Regression Verification -> Business Acceptance
 ```
 
+**refactor** 用于不主动改变预期行为的内部结构、模块化、可维护性、可测试性和依赖关系改进。
+
+```text
+Requirements Confirmation -> Refactor Solution -> Refactor Plan -> Refactor Implementation -> Regression Verification -> Business Acceptance
+```
+
 详细执行规则在各工作流自己的 skill 里。README 只作为产品和安装说明。
 
 ## 交付证据
@@ -113,6 +119,8 @@ manifest 应该串联：
       SKILL.md
     bug-fix/
       SKILL.md
+    refactor/
+      SKILL.md
   vendor/
     superpowers/
       LICENSE
@@ -126,6 +134,7 @@ manifest 应该串联：
 - `skills/using-dev-cadence/` - 工作流入口选择器。
 - `skills/feature-dev/` - 功能开发工作流。
 - `skills/bug-fix/` - Bug 修复工作流。
+- `skills/refactor/` - 保持行为不变的重构工作流。
 - `.dev-cadence.example.yaml` - 目标仓库运行时配置示例。
 - `vendor/superpowers/` - Dev Cadence 使用的固定 Superpowers 副本。
 

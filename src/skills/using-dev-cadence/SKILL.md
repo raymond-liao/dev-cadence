@@ -36,6 +36,7 @@ If no installed flow applies, handle the request normally.
 | Add a new user-visible or system-visible feature | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Change existing user-visible or system-visible feature behavior | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Report a bug, error, failing test, regression, or unexpected behavior | `.dev-cadence/skills/bug-fix/SKILL.md` |
+| Improve internal structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior | `.dev-cadence/skills/refactor/SKILL.md` |
 
 ## Flow Priority
 
@@ -43,7 +44,8 @@ When multiple flows might apply, choose the process flow before any implementati
 
 Use `bug-fix` when the existing expected behavior should already work and the user reports that it does not.
 Use `feature-dev` when the user asks to add behavior or intentionally change expected behavior.
-If a request mixes a defect report with a requested behavior change, ask whether the user wants a bug fix or a feature change before choosing a flow.
+Use `refactor` when the user asks to improve internal structure without intentionally changing expected behavior.
+If a request mixes two or more of a defect report, requested behavior change, and structural cleanup, ask which outcome is primary before choosing among `bug-fix`, `feature-dev`, and `refactor`. Do not require all three request types to be present before clarifying the flow.
 
 ## Active Workflow Continuation
 
@@ -76,6 +78,8 @@ These thoughts mean STOP and check the installed Dev Cadence flows:
 | "This sounds related to features, so feature-dev applies." | `feature-dev` applies only to new features or changes to intended feature behavior. |
 | "The user reported a bug, so feature-dev can handle it." | Bug reports use `bug-fix` unless the user asks to change intended behavior. |
 | "The user asked for a fix, so I can patch it directly." | Bug fixes must go through `bug-fix` when that flow is installed. |
+| "The user said refactor, so feature-dev is close enough." | Behavior-preserving structural work uses `refactor`, not `feature-dev`. |
+| "This refactor can include a small behavior improvement." | Intentional behavior changes must use `feature-dev`, or the user must split the work. |
 | "There is no exact flow, but feature-dev is close enough." | Do not force requests into a mismatched Dev Cadence flow. |
 | "I can mention future flows as options." | Only mention installed flows. |
 | "The request is unclear, but I can choose a flow anyway." | Ask one concise clarification question before choosing. |

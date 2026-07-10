@@ -69,6 +69,12 @@ Requirements Confirmation -> Technical Solution -> Implementation Plan -> Develo
 Problem Diagnosis -> Repair Solution -> Repair Plan -> Repair Implementation -> Regression Verification -> Business Acceptance
 ```
 
+**refactor** handles behavior-preserving internal improvements to structure, modularity, maintainability, testability, and dependencies.
+
+```text
+Requirements Confirmation -> Refactor Solution -> Refactor Plan -> Refactor Implementation -> Regression Verification -> Business Acceptance
+```
+
 The detailed execution rules live in each workflow skill. The README is only the product and installation guide.
 
 ## Delivery Evidence
@@ -115,6 +121,8 @@ The manifest should connect:
       SKILL.md
     bug-fix/
       SKILL.md
+    refactor/
+      SKILL.md
   vendor/
     superpowers/
       LICENSE
@@ -128,6 +136,7 @@ The main pieces are:
 - `skills/using-dev-cadence/` - the entry workflow selector.
 - `skills/feature-dev/` - the feature development workflow.
 - `skills/bug-fix/` - the bug fix workflow.
+- `skills/refactor/` - the behavior-preserving refactoring workflow.
 - `.dev-cadence.example.yaml` - example runtime configuration for target repositories.
 - `vendor/superpowers/` - the fixed Superpowers copy used by Dev Cadence.
 
