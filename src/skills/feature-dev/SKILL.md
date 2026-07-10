@@ -48,40 +48,43 @@ Do not read user configuration from `.dev-cadence/`; that directory is a replace
 
 ## Git Checkpoints
 
-Dev Cadence uses commits as workflow checkpoints after the user has confirmed a stage output.
+Dev Cadence uses commits for engineering progress and workflow checkpoints.
+
+Commits do not require user confirmation. User confirmation controls whether the workflow may advance to the next business stage; it does not control whether current in-scope work may be committed.
 
 Before creating any Dev Cadence workflow commit:
 
-1. Confirm the current stage output has already been approved by the user.
-2. Ensure the work is on a dedicated branch for this feature or task.
-3. If the current branch is not dedicated to this task, create or switch to a dedicated branch automatically and report the branch name.
-4. Include only files related to the confirmed stage output.
+1. Ensure the work is on a dedicated branch for this feature or task.
+2. If the current branch is not dedicated to this task, create or switch to a dedicated branch automatically and report the branch name.
+3. Include only files related to the active workflow scope and current progress.
+4. Run the checks appropriate for the files being committed.
 5. Report the commit hash after committing.
 
-After the user confirms a stage output, create a checkpoint commit unless the user explicitly asks not to or unrelated uncommitted changes make the commit unsafe.
+Create progress commits when the confirmed plan or a vendored Superpowers implementation skill requires them. After a stage record reaches a reviewable state, create a stage checkpoint commit without asking unless unrelated uncommitted changes make the commit unsafe.
 
-Do not commit before the user confirms the current stage output.
+A commit does not confirm the current stage, satisfy a user confirmation gate, or allow the workflow to advance. Record user confirmation separately in the manifest.
+If a stage has no related tracked changes because its records are ignored and it does not change tracked project files, do not create an empty commit unless project policy requires one. Record the checkpoint as `skipped: no tracked changes` and continue to the stage confirmation gate.
 Do not push unless the user explicitly asks.
 If the current branch has unrelated uncommitted changes, stop and ask before switching branches or committing.
-Final merge, PR creation, branch cleanup, or discarding the branch belongs to Completion and requires the user's decision through the vendored finishing flow.
+Before any action that would merge, create or update a PR, push, discard work, or delete a branch, get the user's explicit decision through Completion and the vendored finishing flow.
 
 ### User-Requested Commits During Active Runs
 
-Until Business Acceptance and Completion are finished, treat user requests to commit, submit, save, or checkpoint current changes as workflow control requests, not ordinary git commit requests.
+Until Business Acceptance and Completion are finished, a commit request changes Git state but does not change workflow state.
 
-Do not create an ordinary git commit for unfinished feature work, even if the user says "commit changes" or a localized equivalent. Only create checkpoint commits for confirmed stage outputs under the Git Checkpoints rules above.
+If the user asks to commit, save, or checkpoint current changes, commit current in-scope changes without asking after running appropriate checks. Record the commit hash in the current stage record or manifest when it is relevant to the evidence trail.
 
-If the user asks to commit while the current stage output is not confirmed, explain that the workflow cannot create a checkpoint yet, then continue the current stage by updating the relevant record, running required verification, or asking for the required confirmation.
+The commit does not confirm a stage or bypass testing, verification, business acceptance, or Completion. After committing, continue the active workflow from its current stage.
 
-If implementation changes exist but System Testing or Business Acceptance is not complete, continue the workflow through implementation records, code review evidence, system testing, and business acceptance instead of committing the work as a regular development commit.
+If there are no in-scope tracked changes, report that no commit was created and use `skipped: no tracked changes` for any stage checkpoint that needs a terminal manifest value.
 
 ### Commit Red Flags
 
 | Thought | Reality |
 | --- | --- |
-| "User asked to commit, so ordinary git commit is allowed." | Active feature runs allow checkpoint commits only for confirmed stage outputs. |
-| "Implementation is mostly done, commit now and test later." | Continue through implementation records, code review, System Testing, and Business Acceptance first. |
-| "This is just saving progress." | Save progress in stage records and the manifest, not an ordinary development commit. |
+| "User asked to commit, so the workflow is complete." | A commit only records current progress. Continue through the remaining stage gates. |
+| "I need user approval before every commit." | Commits do not require approval. Merge, PR, push, discard, and branch deletion decisions do. |
+| "The code is committed, so testing can happen later." | Commit timing does not relax implementation, review, System Testing, or Business Acceptance requirements. |
 
 ## Dev Cadence Stages
 
@@ -191,6 +194,7 @@ Use stage status values: `pending`, `in_progress`, `confirmed`, `blocked`, or `s
 Use overall status values: `in_progress`, `accepted`, `rejected`, `accepted_with_risk`, `integrated`, or `abandoned`.
 
 When the overall status is `accepted`, `rejected`, `accepted_with_risk`, `integrated`, or `abandoned`, the manifest must not contain `pending` checkpoint commit values. For each stage, record the actual checkpoint commit hash, `skipped`, or `skipped: <reason>`.
+Use `skipped: no tracked changes` when a stage produced only ignored records and no related tracked project change.
 
 Update the manifest:
 
@@ -335,6 +339,8 @@ At the end of this stage, write or update:
 build/dev-cadence/feature-dev/<feature-slug>/03-implementation-plan.md
 ```
 
+This active workflow path overrides any generic default plan path in the vendored writing-plans skill.
+
 Ask the user to confirm the plan before implementation starts.
 
 ### Development Implementation
@@ -351,6 +357,10 @@ Use:
 Follow the confirmed plan. Development-stage verification belongs here: failing tests first, minimal implementation, passing focused tests, refactor after green, and implementation notes.
 
 Use `subagent-driven-development` when the plan has independent tasks and the platform supports subagents. Use `executing-plans` when subagent-driven development is not available or not appropriate.
+
+Vendored implementation skills may create progress commits without asking. These commits do not confirm Development Implementation or advance the workflow.
+
+Return control to Dev Cadence after implementation and review. Do not invoke `finishing-a-development-branch` during Development Implementation, even if a vendored implementation skill normally invokes it after its tasks. This active workflow overrides that terminal step; proceed to System Testing instead.
 
 Follow the Superpowers code review requirements during Development Implementation: review after each subagent-driven task, review after major feature completion, and review before merge. Fix Critical and Important findings before moving to System Testing, unless the user explicitly accepts the risk.
 

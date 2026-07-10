@@ -8,12 +8,13 @@ It is built on top of a fixed, vendored copy of Superpowers and a small set of p
 
 ## Quickstart
 
-Build the package, copy it into your target repository, then wire the target repository's agent instructions to Dev Cadence:
+From a Dev Cadence source checkout, install or update the package in your target repository, then wire the target repository's agent instructions to Dev Cadence:
 
 ```bash
-bash scripts/build.sh
-cp -R dist/.dev-cadence /path/to/target-repo/.dev-cadence
+bash scripts/install.sh /path/to/target-repo
 ```
+
+The installer rebuilds the package and replaces the target repository's existing `.dev-cadence` directory, so updates do not retain stale files or create nested package directories. User configuration remains safe because `.dev-cadence.yaml` lives outside the installed package.
 
 Then merge the snippet from:
 
@@ -194,6 +195,18 @@ bash scripts/build.sh
 ```
 
 The build script only replaces `dist/.dev-cadence`.
+
+Install or update that package in a target repository with:
+
+```bash
+bash scripts/install.sh /path/to/target-repo
+```
+
+Run all source, package, installation, and workflow contract checks with:
+
+```bash
+bash scripts/check-all.sh
+```
 
 ## License
 

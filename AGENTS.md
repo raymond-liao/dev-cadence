@@ -11,16 +11,18 @@
 - `src/skills/using-dev-cadence/SKILL.md`：目标仓库中的工作流入口选择器。
 - `src/skills/feature-dev/SKILL.md`：功能开发工作流规则源文件。
 - `src/skills/bug-fix/SKILL.md`：Bug 修复工作流规则源文件。
+- `src/skills/refactor/SKILL.md`：保持行为不变的重构工作流规则源文件。
 - `src/AGENTS-snippet.md`：安装到目标仓库根 `AGENTS.md` 的片段，不等同于本仓库自己的 `AGENTS.md`。
 - `src/.dev-cadence.example.yaml`：目标仓库运行时配置示例。
 - `src/vendor/superpowers/`：固定版本的 vendored Superpowers 副本。
 - `dist/.dev-cadence/`：由 `bash scripts/build.sh` 生成的分发包，默认不要直接编辑。
+- `scripts/install.sh`：构建并替换目标仓库中的 `.dev-cadence` 安装包。
 - `build/`：本地工作流产物或临时记录，默认不要提交。
 - `docs/`：业务流程说明和设计资料；不要用它替代 workflow skill 的执行规则。
 
 ## 核心术语
 
-- workflow：Dev Cadence 的业务交付流程，例如 `feature-dev` 和 `bug-fix`。
+- workflow：Dev Cadence 的业务交付流程，例如 `feature-dev`、`bug-fix` 和 `refactor`。
 - stage：workflow 内的业务阶段，例如需求确认、技术方案、系统测试、业务验收。
 - run manifest：一次 workflow 运行的索引文件，路径形如 `build/dev-cadence/<workflow>/<task-slug>/manifest.md`。
 - stage record：某个阶段的持久化记录，例如 `03-implementation-record.md`、`04-system-test-report.md`。
@@ -32,6 +34,7 @@
 
 - 修改 feature 工作流时，优先改 `src/skills/feature-dev/SKILL.md`。
 - 修改 bug fix 工作流时，优先改 `src/skills/bug-fix/SKILL.md`。
+- 修改 refactor 工作流时，优先改 `src/skills/refactor/SKILL.md`。
 - 修改工作流入口选择规则时，改 `src/skills/using-dev-cadence/SKILL.md`。
 - 修改目标仓库接入说明片段时，改 `src/AGENTS-snippet.md`。
 - 修改目标仓库默认配置示例时，改 `src/.dev-cadence.example.yaml`。
@@ -45,13 +48,14 @@
 - 规则应写成明确的操作约束，优先使用 `must`、`do not`、`when`、`before`、`after` 这类可执行表述。
 - 阶段边界要清楚：哪些阶段需要用户确认、哪些记录必须存在、什么时候可以进入下一阶段。
 - 记录文件路径要具体，优先使用仓库相对路径。
-- 当 feature-dev 和 bug-fix 具有同类治理规则时，应保持结构和措辞尽量对称。
+- 当 feature-dev、bug-fix 和 refactor 具有同类治理规则时，应保持结构和措辞尽量对称。
 - 新规则应说明适用范围，避免把复杂流程强加给简单、低风险任务。
 
 ## 构建与验证
 
 - 修改 `src/skills/**` 后，运行 `bash scripts/build.sh` 同步 `dist/.dev-cadence`。
-- 提交前运行 `git diff --check`。
+- 提交前运行 `bash scripts/check-whitespace.sh`。
+- 提交前运行 `bash scripts/check-all.sh` 完成构建和契约验证。
 - 如果修改了规则文本，应使用 `rg --no-ignore` 检查 `src/` 和 `dist/.dev-cadence/` 是否同步包含关键规则。
 - `dist/` 和 `build/` 被忽略；不要为了提交分发产物而强制添加它们，除非用户明确要求。
 - 如果只改本仓库 `AGENTS.md`，不需要运行构建脚本。
@@ -64,7 +68,7 @@
 - 是否误改了 `src/vendor/superpowers/**`。
 - 修改 `src/skills/**` 后是否运行了 `bash scripts/build.sh`。
 - 影响可安装包或 workflow 行为的修改是否同步更新了根目录 `version`，或明确说明不更新版本号的理由。
-- feature-dev 和 bug-fix 中同类规则是否保持一致，差异是否有明确原因。
+- feature-dev、bug-fix 和 refactor 中同类规则是否保持一致，差异是否有明确原因。
 - manifest、stage record、review evidence、coverage、business acceptance 等记录要求是否闭环。
 - 是否引入本机绝对路径、个人目录、临时 URL、token、密钥或其他不可移植信息。
 - 是否把被 `.gitignore` 忽略的本地产物强制纳入提交。

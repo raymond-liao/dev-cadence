@@ -20,6 +20,12 @@ assert_same_file() {
   cmp -s "$ROOT_DIR/$left" "$ROOT_DIR/$right" || fail "files differ: $left -> $right"
 }
 
+assert_same_tree() {
+  local left="$1"
+  local right="$2"
+  diff -qr "$ROOT_DIR/$left" "$ROOT_DIR/$right" >/dev/null || fail "directory trees differ: $left -> $right"
+}
+
 assert_no_match() {
   local pattern="$1"
   local path="$2"
@@ -61,6 +67,7 @@ assert_same_file "README.md" "dist/.dev-cadence/README.md"
 assert_same_file "README.zh-CN.md" "dist/.dev-cadence/README.zh-CN.md"
 assert_same_file "src/.dev-cadence.example.yaml" "dist/.dev-cadence/.dev-cadence.example.yaml"
 assert_same_file "src/AGENTS-snippet.md" "dist/.dev-cadence/AGENTS-snippet.md"
+assert_same_tree "src/vendor" "dist/.dev-cadence/vendor"
 
 while IFS= read -r -d '' source_file; do
   rel_path="${source_file#"$ROOT_DIR/src/skills/"}"

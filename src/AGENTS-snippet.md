@@ -9,7 +9,7 @@ Do not rely on this file in place. It is only an installation snippet.
 ```markdown
 ## Dev Cadence
 
-When the user asks for development work, check Dev Cadence before any repository exploration, implementation, or clarifying question:
+When the user asks for development work, active-task follow-up, testing, verification, or commit/checkpoint operations, check Dev Cadence before any repository exploration, implementation, Git mutation, or clarifying question:
 
 `.dev-cadence/skills/using-dev-cadence/SKILL.md`
 

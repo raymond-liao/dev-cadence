@@ -8,12 +8,13 @@ Dev Cadence 是一个面向 AI 编程代理的软件交付治理框架。它把 
 
 ## 快速开始
 
-构建安装包，把它复制到目标仓库，然后把目标仓库的 agent 指令接入 Dev Cadence：
+在 Dev Cadence 源码 checkout 中，把 Dev Cadence 安装或更新到目标仓库，然后把目标仓库的 agent 指令接入 Dev Cadence：
 
 ```bash
-bash scripts/build.sh
-cp -R dist/.dev-cadence /path/to/target-repo/.dev-cadence
+bash scripts/install.sh /path/to/target-repo
 ```
+
+安装脚本会重新构建分发包并替换目标仓库中已有的 `.dev-cadence` 目录，因此更新时不会残留旧文件，也不会产生嵌套包目录。用户配置位于安装包外的 `.dev-cadence.yaml`，不会被替换。
 
 然后把下面文件里的片段合并到目标仓库根目录的 `AGENTS.md`：
 
@@ -192,6 +193,18 @@ bash scripts/build.sh
 ```
 
 构建脚本只会替换 `dist/.dev-cadence`。
+
+把安装包安装或更新到目标仓库：
+
+```bash
+bash scripts/install.sh /path/to/target-repo
+```
+
+运行源码、分发包、安装和 workflow 契约检查：
+
+```bash
+bash scripts/check-all.sh
+```
 
 ## 许可证
 

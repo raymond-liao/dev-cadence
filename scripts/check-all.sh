@@ -6,5 +6,5 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 bash scripts/build.sh
-git diff --check
+bash scripts/check-whitespace.sh
 bash tests/run-all.sh

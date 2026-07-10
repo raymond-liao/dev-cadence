@@ -53,7 +53,7 @@ Before choosing or starting a new Dev Cadence flow, check whether the conversati
 
 If there is an unfinished workflow and the user's latest request is a change, clarification, implementation adjustment, test feedback, review feedback, or acceptance feedback for that same task, continue the current workflow run. Do not create a new workflow run, task slug, requirements document, solution document, diagnosis document, or repair solution document.
 
-If there is an unfinished workflow and the user asks to commit, submit, save, or checkpoint current changes, continue the current workflow run and read its Git Checkpoints rules. Do not treat the request as a normal git commit.
+If there is an unfinished workflow and the user asks to commit, save, or checkpoint current changes, continue the current workflow run and read its Git Checkpoints rules. Commit the in-scope changes under the active workflow's Git rules, then continue from the same business stage; the commit does not confirm or complete the stage.
 
 If the request clearly exceeds the confirmed scope or repair boundary of the unfinished workflow, ask whether the user wants to expand the current task or start a separate task before creating any new workflow run or document.
 
@@ -84,4 +84,4 @@ These thoughts mean STOP and check the installed Dev Cadence flows:
 | "I can mention future flows as options." | Only mention installed flows. |
 | "The request is unclear, but I can choose a flow anyway." | Ask one concise clarification question before choosing. |
 | "There is an active workflow, but this sounds like a fresh request." | Check whether it belongs to the unfinished task before starting anything new. |
-| "The user asked to commit, so I can bypass the active workflow." | Commit/checkpoint requests inside an unfinished workflow must follow that workflow's Git Checkpoints rules. |
+| "The user asked to commit, so the active workflow is complete." | Commit the in-scope changes, then continue the unfinished workflow from its current stage. |
