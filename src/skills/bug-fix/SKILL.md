@@ -65,6 +65,16 @@ Do not push unless the user explicitly asks.
 If the current branch has unrelated uncommitted changes, stop and ask before switching branches or committing.
 Final merge, PR creation, branch cleanup, or discarding the branch belongs to Completion and requires the user's decision through the vendored finishing flow.
 
+### User-Requested Commits During Active Runs
+
+Until Business Acceptance and Completion are finished, treat user requests to commit, submit, save, or checkpoint current changes as workflow control requests, not ordinary git commit requests.
+
+Do not create an ordinary git commit for unfinished repair work, even if the user says "commit changes", "提交变更", or similar. Only create checkpoint commits for confirmed stage outputs under the Git Checkpoints rules above.
+
+If the user asks to commit while the current stage output is not confirmed, explain that the workflow cannot create a checkpoint yet, then continue the current stage by updating the relevant record, running required verification, or asking for the required confirmation.
+
+If repair changes exist but Regression Verification or Business Acceptance is not complete, continue the workflow through repair records, code review evidence, regression verification, and business acceptance instead of committing the work as a regular development commit.
+
 ## Dev Cadence Stages
 
 Present the work to the user using these business stages:

@@ -32,6 +32,7 @@ assert_match "entry active workflow continuation section" "## Active Workflow Co
 assert_match "entry unfinished workflow check" "unfinished Dev Cadence workflow" "$ENTRY_SKILL"
 assert_match "entry no new run for same task" "Do not create a new workflow run" "$ENTRY_SKILL"
 assert_match "entry out-of-scope confirmation" "expand the current task or start a separate task" "$ENTRY_SKILL"
+assert_match "entry active run commit gate" "Do not treat the request as a normal git commit" "$ENTRY_SKILL"
 
 assert_pair "configuration section" "## Configuration" "## Configuration"
 assert_pair "target config source" "\\.dev-cadence\\.yaml" "\\.dev-cadence\\.yaml"
@@ -39,6 +40,9 @@ assert_pair "output language rule" "output_language" "output_language"
 assert_pair "worktree preference rule" "worktree\\.enabled" "worktree\\.enabled"
 assert_pair "git checkpoints section" "## Git Checkpoints" "## Git Checkpoints"
 assert_pair "commit after confirmation rule" "After the user confirms a stage output" "After the user confirms a stage output"
+assert_pair "active run commit request gate" "## User-Requested Commits During Active Runs" "## User-Requested Commits During Active Runs"
+assert_pair "no ordinary active run commit" "Do not create an ordinary git commit for unfinished feature work" "Do not create an ordinary git commit for unfinished repair work"
+assert_pair "only checkpoint commits during active run" "Only create checkpoint commits for confirmed stage outputs" "Only create checkpoint commits for confirmed stage outputs"
 assert_pair "no push rule" "Do not push unless the user explicitly asks" "Do not push unless the user explicitly asks"
 
 assert_pair "manifest creation rule" "Create and maintain a run manifest" "Create and maintain a run manifest"
