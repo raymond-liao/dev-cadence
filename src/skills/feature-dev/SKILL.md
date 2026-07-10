@@ -186,6 +186,20 @@ If run records under `build/dev-cadence/` are ignored by the target repository, 
 Before moving to the next stage, ensure the current stage record exists and reflects the user's latest confirmed decision or the latest verification evidence.
 Also ensure the manifest points to the latest stage record and checkpoint commit before moving to the next stage.
 
+## Active Task Change Handling
+
+Until Business Acceptance and Completion are finished, treat user requests about the same feature as changes to the current workflow run.
+
+When the user asks for a requirement adjustment, scope clarification, implementation change, test change, review fix, or acceptance feedback that belongs to the current feature:
+
+- update the existing task directory under `build/dev-cadence/feature-dev/<feature-slug>/`;
+- update the existing stage records and manifest instead of creating a new feature slug, workflow run, requirements document, or technical solution document;
+- if the change affects an already confirmed stage, return to the earliest affected stage, mark affected later stages as `pending` or `in_progress` in the manifest, and refresh their records before moving forward again;
+- if implementation has already started, update `02-implementation-plan.md` when the plan no longer matches the requested change before continuing implementation;
+- preserve prior decisions and evidence in the relevant record when they still explain the task history, but make the latest confirmed scope, plan, and verification state explicit.
+
+If the requested change clearly exceeds the current confirmed scope, ask whether the user wants to expand the current feature or start a separate task before creating any new workflow run or document.
+
 ## Stage Rules
 
 ### Enhanced Exploration Mode

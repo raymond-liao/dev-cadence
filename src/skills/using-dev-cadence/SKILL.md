@@ -45,6 +45,16 @@ Use `bug-fix` when the existing expected behavior should already work and the us
 Use `feature-dev` when the user asks to add behavior or intentionally change expected behavior.
 If a request mixes a defect report with a requested behavior change, ask whether the user wants a bug fix or a feature change before choosing a flow.
 
+## Active Workflow Continuation
+
+Before choosing or starting a new Dev Cadence flow, check whether the conversation or existing run manifest indicates an unfinished Dev Cadence workflow for the current task.
+
+If there is an unfinished workflow and the user's latest request is a change, clarification, implementation adjustment, test feedback, review feedback, or acceptance feedback for that same task, continue the current workflow run. Do not create a new workflow run, task slug, requirements document, solution document, diagnosis document, or repair solution document.
+
+If the request clearly exceeds the confirmed scope or repair boundary of the unfinished workflow, ask whether the user wants to expand the current task or start a separate task before creating any new workflow run or document.
+
+Only start a new Dev Cadence flow when there is no unfinished workflow for the current task, the user explicitly asks for a new task, or the user confirms that an out-of-scope request should be handled separately.
+
 ## Decision Rules
 
 1. If the request clearly matches an available flow, read that flow skill completely and follow it.
