@@ -131,12 +131,13 @@ build/dev-cadence/feature-dev/<feature-slug>/
 Stage records:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/01-requirements-and-solution.md
-build/dev-cadence/feature-dev/<feature-slug>/02-implementation-plan.md
-build/dev-cadence/feature-dev/<feature-slug>/03-implementation-record.md
-build/dev-cadence/feature-dev/<feature-slug>/03-code-review-report.md
-build/dev-cadence/feature-dev/<feature-slug>/04-system-test-report.md
-build/dev-cadence/feature-dev/<feature-slug>/05-business-acceptance-record.md
+build/dev-cadence/feature-dev/<feature-slug>/01-requirements.md
+build/dev-cadence/feature-dev/<feature-slug>/02-technical-solution.md
+build/dev-cadence/feature-dev/<feature-slug>/03-implementation-plan.md
+build/dev-cadence/feature-dev/<feature-slug>/04-implementation-record.md
+build/dev-cadence/feature-dev/<feature-slug>/04-code-review-report.md
+build/dev-cadence/feature-dev/<feature-slug>/05-system-test-report.md
+build/dev-cadence/feature-dev/<feature-slug>/06-business-acceptance-record.md
 ```
 
 Subagent-driven development artifacts, when used, must be written under:
@@ -213,7 +214,7 @@ When the user asks for a requirement adjustment, scope clarification, implementa
 - update the existing task directory under `build/dev-cadence/feature-dev/<feature-slug>/`;
 - update the existing stage records and manifest instead of creating a new feature slug, workflow run, requirements document, or technical solution document;
 - if the change affects an already confirmed stage, return to the earliest affected stage, mark affected later stages as `pending` or `in_progress` in the manifest, and refresh their records before moving forward again;
-- if implementation has already started, update `02-implementation-plan.md` when the plan no longer matches the requested change before continuing implementation;
+- if implementation has already started, update `03-implementation-plan.md` when the plan no longer matches the requested change before continuing implementation;
 - preserve prior decisions and evidence in the relevant record when they still explain the task history, but make the latest confirmed scope, plan, and verification state explicit.
 
 If the requested change clearly exceeds the current confirmed scope, ask whether the user wants to expand the current feature or start a separate task before creating any new workflow run or document.
@@ -237,8 +238,8 @@ When enhanced exploration mode applies:
 - explore 2-3 independent perspectives before finalizing the Technical Solution, such as similar existing features, relevant architecture and data flow, UI or API patterns, testing strategy, integration boundaries, accessibility, security, or operational constraints;
 - each exploration perspective must identify key files with line references, established patterns, constraints, risks, and 5-10 essential files the main agent must read;
 - the main agent must read the essential files before writing the Technical Solution;
-- record the exploration summary in `01-requirements-and-solution.md` under `Codebase Exploration Findings`;
-- present multiple architecture alternatives in `01-requirements-and-solution.md`, including minimal-change, clean-architecture, and pragmatic-balance options when those options are meaningfully different;
+- record the exploration summary in `02-technical-solution.md` under `Codebase Exploration Findings`;
+- present multiple architecture alternatives in `02-technical-solution.md`, including minimal-change, clean-architecture, and pragmatic-balance options when those options are meaningfully different;
 - recommend one option with concrete rationale and ask the user to confirm the Technical Solution before writing the implementation plan.
 
 ### Requirements Confirmation
@@ -258,6 +259,12 @@ Clarify the user-visible or system-visible requirement. Before moving on, explic
 
 If enhanced exploration mode might apply but the trigger is unclear, state the assumption and either enter enhanced exploration mode or explain why the request is trivial enough to skip it.
 
+At the end of this stage, write or update:
+
+```text
+build/dev-cadence/feature-dev/<feature-slug>/01-requirements.md
+```
+
 Ask the user to confirm this stage. Do not start implementation planning or code.
 
 ### Technical Solution
@@ -276,11 +283,13 @@ Use its design/spec guidance. Before moving on, explicitly present:
 - high-level testing strategy;
 - risks or constraints.
 
-The persisted artifact for Requirements Confirmation and Technical Solution is:
+At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/01-requirements-and-solution.md
+build/dev-cadence/feature-dev/<feature-slug>/02-technical-solution.md
 ```
+
+The Technical Solution record must link to `01-requirements.md` as the confirmed requirement source. This active workflow path overrides any generic feature-spec default in the vendored brainstorming skill.
 
 Ask the user to confirm this stage. Do not write the TDD implementation plan or code yet.
 
@@ -323,7 +332,7 @@ Each detailed task must have a matching row in `Task Overview`. Keep overview ro
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/02-implementation-plan.md
+build/dev-cadence/feature-dev/<feature-slug>/03-implementation-plan.md
 ```
 
 Ask the user to confirm the plan before implementation starts.
@@ -362,7 +371,7 @@ If debugging is needed, use:
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/03-implementation-record.md
+build/dev-cadence/feature-dev/<feature-slug>/04-implementation-record.md
 ```
 
 The implementation record must include:
@@ -379,10 +388,10 @@ Completed plan task evidence must be kept in sync with the plan. Mark completed 
 Code review evidence must be traceable and high signal. Write the detailed review report to:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/03-code-review-report.md
+build/dev-cadence/feature-dev/<feature-slug>/04-code-review-report.md
 ```
 
-The implementation record must link to `03-code-review-report.md` and summarize:
+The implementation record must link to `04-code-review-report.md` and summarize:
 
 - review decision;
 - Critical findings count and status;
@@ -411,7 +420,7 @@ Use this `Code Review Evidence` structure in the implementation record:
 ```text
 ## Code Review Evidence
 
-- Report: build/dev-cadence/feature-dev/<feature-slug>/03-code-review-report.md
+- Report: build/dev-cadence/feature-dev/<feature-slug>/04-code-review-report.md
 - Review decision:
 - Critical findings:
 - Important findings:
@@ -470,12 +479,12 @@ Do not claim the system is ready without fresh verification evidence.
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/04-system-test-report.md
+build/dev-cadence/feature-dev/<feature-slug>/05-system-test-report.md
 ```
 
 The system test report must use this structure:
 
-- `Requirement And Implementation Sources`: requirement/spec source, plan source, and implementation source.
+- `Requirement, Technical Solution, And Implementation Sources`: requirements source, technical solution source, plan source, and implementation source.
 - `Test Environment`: repository, branch, date, runtime, servers, tools, and relevant configuration.
 - `Test Cases`: a table with columns `ID`, `Scenario`, `Type`, `Execution`, `Result`, and `Evidence`. List every automated, manual, smoke, build, source-inspection, and skipped test case that matters to the confirmed requirement.
 - `Requirement Coverage`: map each acceptance criterion or important requirement to test case IDs and an explicit status: `covered`, `skipped`, `not covered`, or `accepted risk`.
@@ -516,12 +525,12 @@ If the user's response does not clearly select one fixed option, ask the user to
 After the user gives the acceptance decision, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/05-business-acceptance-record.md
+build/dev-cadence/feature-dev/<feature-slug>/06-business-acceptance-record.md
 ```
 
 The business acceptance record must use this structure:
 
-- `Accepted Requirement Source`: confirmed spec and plan sources.
+- `Accepted Requirement And Solution Sources`: confirmed requirements, technical solution, and plan sources.
 - `System Test Report Source`: system test report source.
 - `User Decision`: normalized decision selected from the fixed options: accepted, rejected, or accepted with residual risk.
 - `Decision By`: target repository git identity that made the business acceptance decision, formatted as `user.name <user.email>` when both values are available.
@@ -554,7 +563,7 @@ Before marking the run terminal, complete this readiness checklist:
 - [ ] Manifest has a terminal overall status and no `pending` checkpoint commit values.
 - [ ] Business acceptance record has `Final Follow-Up Actions` updated with actual past-tense results.
 - [ ] Implementation record has the final implementation commit hash or final changed-files state.
-- [ ] Implementation record links to `03-code-review-report.md`.
+- [ ] Implementation record links to `04-code-review-report.md`.
 - [ ] Code review report exists and all checklist items are checked or have an explicit reason.
 - [ ] System test report records skipped checks and residual risks honestly.
 - [ ] No stage record contains stale future-tense or pre-commit status that conflicts with the manifest.

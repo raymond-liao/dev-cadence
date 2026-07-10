@@ -53,6 +53,9 @@ assert_pair "manifest status values" "Use stage status values" "Use stage status
 assert_pair "terminal checkpoint rule" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values"
 assert_pair "portable path rule" "do not persist local absolute paths" "do not persist local absolute paths"
 assert_pair "manifest update cadence" "whenever a stage record is created or updated" "whenever a stage record is created or updated"
+assert_match "feature requirements record" "01-requirements\\.md" "$FEATURE_SKILL"
+assert_match "feature technical solution record" "02-technical-solution\\.md" "$FEATURE_SKILL"
+assert_match "feature implementation plan record" "03-implementation-plan\\.md" "$FEATURE_SKILL"
 
 assert_pair "active task change handling" "## Active Task Change Handling" "## Active Task Change Handling"
 assert_pair "current run reuse" "current workflow run" "current workflow run"
@@ -72,7 +75,7 @@ assert_pair "code review evidence section" "Code Review Evidence" "Code Review E
 assert_pair "review inputs checklist" "## Review Inputs" "## Review Inputs"
 assert_pair "review perspectives checklist" "## Review Perspectives" "## Review Perspectives"
 assert_pair "review validation state" "validation state: .*validated.*not validated.*fixed.*accepted risk" "validation state: .*validated.*not validated.*fixed.*accepted risk"
-assert_pair "code review report path" "03-code-review-report\\.md" "04-code-review-report\\.md"
+assert_pair "code review report path" "04-code-review-report\\.md" "04-code-review-report\\.md"
 
 assert_pair "verification freshness rule" "Do not claim the system is ready without fresh verification evidence" "Do not claim the bug is fixed or regression-free without fresh verification evidence"
 assert_pair "test cases table contract" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence"
@@ -94,6 +97,10 @@ assert_pair "no stale future-tense records" "No stage record contains stale futu
 
 if rg --no-ignore -n "\p{Han}" "$FEATURE_SKILL" "$BUG_FIX_SKILL" | rg -v "zh-CN|Simplified Chinese" >/dev/null; then
   fail "English workflow skills contain mixed-language examples"
+fi
+
+if rg --no-ignore -n "01-requirements-and-solution\\.md" "$FEATURE_SKILL" >/dev/null; then
+  fail "feature workflow still uses combined requirements-and-solution record"
 fi
 
 printf 'Workflow symmetry checks passed.\n'

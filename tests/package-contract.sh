@@ -66,8 +66,11 @@ while IFS= read -r -d '' source_file; do
   assert_same_file "src/skills/$rel_path" "dist/.dev-cadence/skills/$rel_path"
 done < <(find "$ROOT_DIR/src/skills" -type f -print0)
 
-assert_match "03-code-review-report.md" "src/skills/feature-dev/SKILL.md"
+assert_match "04-code-review-report.md" "src/skills/feature-dev/SKILL.md"
 assert_match "04-code-review-report.md" "src/skills/bug-fix/SKILL.md"
+assert_match "01-requirements.md" "src/skills/feature-dev/SKILL.md"
+assert_match "02-technical-solution.md" "src/skills/feature-dev/SKILL.md"
+assert_match "03-implementation-plan.md" "src/skills/feature-dev/SKILL.md"
 assert_match "Task Overview" "src/skills/feature-dev/SKILL.md"
 assert_match "Task Overview" "src/skills/bug-fix/SKILL.md"
 assert_match "Before marking the run terminal" "src/skills/feature-dev/SKILL.md"
