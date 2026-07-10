@@ -33,6 +33,7 @@ assert_match "entry unfinished workflow check" "unfinished Dev Cadence workflow"
 assert_match "entry no new run for same task" "Do not create a new workflow run" "$ENTRY_SKILL"
 assert_match "entry out-of-scope confirmation" "expand the current task or start a separate task" "$ENTRY_SKILL"
 assert_match "entry active run commit gate" "Do not treat the request as a normal git commit" "$ENTRY_SKILL"
+assert_match "entry active workflow red flag" "The user asked to commit, so I can bypass the active workflow" "$ENTRY_SKILL"
 
 assert_pair "configuration section" "## Configuration" "## Configuration"
 assert_pair "target config source" "\\.dev-cadence\\.yaml" "\\.dev-cadence\\.yaml"
@@ -43,6 +44,8 @@ assert_pair "commit after confirmation rule" "After the user confirms a stage ou
 assert_pair "active run commit request gate" "## User-Requested Commits During Active Runs" "## User-Requested Commits During Active Runs"
 assert_pair "no ordinary active run commit" "Do not create an ordinary git commit for unfinished feature work" "Do not create an ordinary git commit for unfinished repair work"
 assert_pair "only checkpoint commits during active run" "Only create checkpoint commits for confirmed stage outputs" "Only create checkpoint commits for confirmed stage outputs"
+assert_pair "active run commit red flags" "### Commit Red Flags" "### Commit Red Flags"
+assert_pair "ordinary commit rationalization" "User asked to commit, so ordinary git commit is allowed" "User asked to commit, so ordinary git commit is allowed"
 assert_pair "no push rule" "Do not push unless the user explicitly asks" "Do not push unless the user explicitly asks"
 
 assert_pair "manifest creation rule" "Create and maintain a run manifest" "Create and maintain a run manifest"
@@ -56,6 +59,8 @@ assert_pair "current run reuse" "current workflow run" "current workflow run"
 assert_pair "existing records update" "update the existing stage records and manifest" "update the existing stage records and manifest"
 assert_pair "affected stage rollback" "return to the earliest affected stage" "return to the earliest affected stage"
 assert_pair "out-of-scope branch decision" "expand the current feature or start a separate task" "expand the current bug fix or start a separate task"
+assert_pair "active task red flags" "### Active Task Red Flags" "### Active Task Red Flags"
+assert_pair "new document rationalization" "start a new requirements document" "start a new diagnosis document"
 
 assert_pair "plan overview requirement" "Task Overview" "Task Overview"
 assert_pair "plan overview table" "\\| Task \\| Goal \\| Files \\| Verification \\|" "\\| Task \\| Goal \\| Files \\| Verification \\|"
@@ -74,7 +79,10 @@ assert_pair "test cases table contract" "Test Cases.*ID.*Scenario.*Type.*Executi
 assert_pair "coverage honesty rule" "Coverage must be honest" "Coverage must be honest"
 
 assert_pair "business acceptance numbered options" "fixed numbered options" "fixed numbered options"
+assert_pair "business acceptance feedback table" "### Ambiguous Acceptance Feedback" "### Ambiguous Acceptance Feedback"
+assert_pair "looks good is not acceptance" "looks good.*Not an acceptance decision" "looks good.*Not an acceptance decision"
 assert_pair "ambiguous acceptance rejection" "Do not infer acceptance from ambiguous positive feedback" "Do not infer acceptance from ambiguous positive feedback"
+assert_pair "localized positive feedback row" "Localized positive feedback.*Not an acceptance decision" "Localized positive feedback.*Not an acceptance decision"
 assert_pair "decision identity" "Decision By" "Decision By"
 assert_pair "decision timestamp" "Decision At" "Decision At"
 assert_pair "final follow-up actions" "Final Follow-Up Actions" "Final Follow-Up Actions"
@@ -83,5 +91,9 @@ assert_pair "completion finishing flow" "finishing-a-development-branch/SKILL\\.
 assert_pair "terminal readiness checklist" "Before marking the run terminal" "Before marking the run terminal"
 assert_pair "terminal manifest readiness" "Manifest has a terminal overall status" "Manifest has a terminal overall status"
 assert_pair "no stale future-tense records" "No stage record contains stale future-tense" "No stage record contains stale future-tense"
+
+if rg --no-ignore -n "\p{Han}" "$FEATURE_SKILL" "$BUG_FIX_SKILL" | rg -v "zh-CN|Simplified Chinese" >/dev/null; then
+  fail "English workflow skills contain mixed-language examples"
+fi
 
 printf 'Workflow symmetry checks passed.\n'

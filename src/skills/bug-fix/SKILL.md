@@ -69,11 +69,19 @@ Final merge, PR creation, branch cleanup, or discarding the branch belongs to Co
 
 Until Business Acceptance and Completion are finished, treat user requests to commit, submit, save, or checkpoint current changes as workflow control requests, not ordinary git commit requests.
 
-Do not create an ordinary git commit for unfinished repair work, even if the user says "commit changes", "提交变更", or similar. Only create checkpoint commits for confirmed stage outputs under the Git Checkpoints rules above.
+Do not create an ordinary git commit for unfinished repair work, even if the user says "commit changes" or a localized equivalent. Only create checkpoint commits for confirmed stage outputs under the Git Checkpoints rules above.
 
 If the user asks to commit while the current stage output is not confirmed, explain that the workflow cannot create a checkpoint yet, then continue the current stage by updating the relevant record, running required verification, or asking for the required confirmation.
 
 If repair changes exist but Regression Verification or Business Acceptance is not complete, continue the workflow through repair records, code review evidence, regression verification, and business acceptance instead of committing the work as a regular development commit.
+
+### Commit Red Flags
+
+| Thought | Reality |
+| --- | --- |
+| "User asked to commit, so ordinary git commit is allowed." | Active bug-fix runs allow checkpoint commits only for confirmed stage outputs. |
+| "The repair is mostly done, commit now and test later." | Continue through repair records, code review, Regression Verification, and Business Acceptance first. |
+| "This is just saving progress." | Save progress in stage records and the manifest, not an ordinary development commit. |
 
 ## Dev Cadence Stages
 
@@ -194,6 +202,14 @@ When the user provides additional symptoms, reproduction feedback, repair requir
 - preserve prior diagnosis, decisions, and evidence in the relevant record when they still explain the task history, but make the latest confirmed problem, repair boundary, plan, and verification state explicit.
 
 If the requested change clearly exceeds the current confirmed repair boundary, ask whether the user wants to expand the current bug fix or start a separate task before creating any new workflow run or document.
+
+### Active Task Red Flags
+
+| Thought | Reality |
+| --- | --- |
+| "The user added details, so start a new diagnosis document." | Same-bug changes update the current workflow run and existing records. |
+| "The confirmed repair plan is old, but keep implementing anyway." | Return to the earliest affected stage and refresh records before moving forward. |
+| "This sounds bigger, so silently start a new task." | Ask whether to expand the current bug fix or start a separate task. |
 
 ## Stage Rules
 
@@ -472,9 +488,18 @@ Superpowers does not provide a dedicated business acceptance skill. Use this Dev
 - map the user's selected number or exact option text to the normalized decision, then record the decision, decision maker, exact decision time with timezone, and accepted residual risks.
 
 Do not substitute regression verification success for user acceptance.
-Do not infer acceptance from ambiguous positive feedback such as "looks good", "seems fine", "looks okay", "看起来没问题", "没问题", or similar wording.
+Do not infer acceptance from ambiguous positive feedback such as "looks good", "seems fine", "looks okay", localized equivalents, or similar wording.
 Only treat the response as a business acceptance decision when the user selects one of the numbered options or repeats the exact option text.
 If the user's response does not clearly select one fixed option, ask the user to choose again and do not write the business acceptance record yet.
+
+### Ambiguous Acceptance Feedback
+
+| User says | Reality |
+| --- | --- |
+| "looks good" | Not an acceptance decision. Ask for one fixed option. |
+| "seems fine" or "looks okay" | Not an acceptance decision. Ask for one fixed option. |
+| Localized positive feedback | Not an acceptance decision. Ask for one fixed option. |
+| "ship it" | Ambiguous unless it selects or repeats one fixed option. |
 
 After the user gives the acceptance decision, write or update:
 

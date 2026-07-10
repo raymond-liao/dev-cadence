@@ -79,3 +79,5 @@ These thoughts mean STOP and check the installed Dev Cadence flows:
 | "There is no exact flow, but feature-dev is close enough." | Do not force requests into a mismatched Dev Cadence flow. |
 | "I can mention future flows as options." | Only mention installed flows. |
 | "The request is unclear, but I can choose a flow anyway." | Ask one concise clarification question before choosing. |
+| "There is an active workflow, but this sounds like a fresh request." | Check whether it belongs to the unfinished task before starting anything new. |
+| "The user asked to commit, so I can bypass the active workflow." | Commit/checkpoint requests inside an unfinished workflow must follow that workflow's Git Checkpoints rules. |
