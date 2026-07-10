@@ -1,6 +1,6 @@
 ---
 name: using-dev-cadence
-description: Use when working in a repository with Dev Cadence installed and the user asks for feature work, bug fixes, behavior changes, implementation, testing, verification, or development commits.
+description: Use when a Dev Cadence-installed repository receives development work, active-task follow-up, testing, verification, or commit/checkpoint requests.
 ---
 
 # Using Dev Cadence

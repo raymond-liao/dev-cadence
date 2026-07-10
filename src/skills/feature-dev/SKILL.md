@@ -1,6 +1,6 @@
 ---
 name: feature-dev
-description: Use when a user asks to add or change user-visible or system-visible feature behavior in a target project.
+description: Use when a user asks to add a capability or intentionally change expected user-visible or system-visible behavior in a target project.
 ---
 
 # Feature Dev

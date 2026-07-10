@@ -1,6 +1,6 @@
 ---
 name: bug-fix
-description: Use when a user reports a bug, error, regression, failing test, broken expected behavior, or unexpected behavior in a target project.
+description: Use when a user reports or asks to fix a bug, error, crash, regression, failing test, broken expected behavior, or unexpected behavior in a target project.
 ---
 
 # Bug Fix
