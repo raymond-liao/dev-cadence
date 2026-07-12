@@ -9,6 +9,8 @@ ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
 AGENTS_SNIPPET="$ROOT_DIR/src/AGENTS-snippet.md"
 REPO_AGENTS="$ROOT_DIR/AGENTS.md"
 REFACTOR_FLOW_DOC="$ROOT_DIR/docs/refactor-business-flow.md"
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TMP_DIR"' EXIT
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -33,6 +35,329 @@ assert_workflows() {
   assert_match "bug-fix $label" "$bug_pattern" "$BUG_FIX_SKILL"
   assert_match "refactor $label" "$refactor_pattern" "$REFACTOR_SKILL"
 }
+
+assert_not_match() {
+  local label="$1"
+  local pattern="$2"
+  local path="$3"
+
+  if rg --no-ignore -n "$pattern" "$path" >/dev/null; then
+    fail "unexpected $label in ${path#"$ROOT_DIR/"}"
+  fi
+}
+
+extract_h4_section() {
+  local path="$1"
+  local heading="$2"
+  local expected_parent="$3"
+
+  awk -v heading="$heading" -v expected_parent="$expected_parent" '
+    function fence_marker(line, text) {
+      text = line
+      sub(/^[[:space:]]*/, "", text)
+      if (substr(text, 1, 3) == "```") return "`"
+      if (substr(text, 1, 3) == "~~~") return "~"
+      return ""
+    }
+    function fence_size(line, marker, text, size) {
+      text = line
+      sub(/^[[:space:]]*/, "", text)
+      while (substr(text, size + 1, 1) == marker) size++
+      return size
+    }
+    function closes_fence(line, marker, minimum_size, text, size) {
+      text = line
+      sub(/^[[:space:]]*/, "", text)
+      while (substr(text, size + 1, 1) == marker) size++
+      return size >= minimum_size && substr(text, size + 1) ~ /^[[:space:]]*$/
+    }
+    function atx_heading(line, text, indent) {
+      text = line
+      while (indent < 3 && substr(text, 1, 1) == " ") {
+        text = substr(text, 2)
+        indent++
+      }
+      if (substr(text, 1, 1) == " " || substr(text, 1, 1) == "\t") return ""
+      return text
+    }
+    {
+      marker = fence_marker($0)
+      if (in_fence) {
+        if (capturing) print
+        if (marker == in_fence && closes_fence($0, in_fence, opening_fence_size)) {
+          in_fence = ""
+          opening_fence_size = 0
+        }
+        next
+      }
+      if (marker) {
+        if (capturing) print
+        in_fence = marker
+        opening_fence_size = fence_size($0, marker)
+        next
+      }
+      markdown_line = atx_heading($0)
+    }
+    markdown_line ~ /^#{1,2} / { parent = "" }
+    markdown_line ~ /^### / { parent = markdown_line }
+    markdown_line == heading {
+      count++
+      if (count == 1) {
+        parent_ok = (parent == expected_parent)
+        capturing = parent_ok
+        if (capturing) print $0
+      } else {
+        capturing = 0
+      }
+      next
+    }
+    capturing && markdown_line ~ /^#{1,4} / { capturing = 0 }
+    capturing { print }
+    END { if (count != 1 || !parent_ok) exit 1 }
+  ' "$path"
+}
+
+assert_h4_section_parser_rejects_stale_parent() {
+  local fixture="$TMP_DIR/h4-stale-parent.md"
+  local heading="#### Executing-Plans Pre-Commit Review"
+
+  cat >"$fixture" <<'EOF'
+### Development Implementation
+
+Implementation details.
+
+## Another Stage
+
+#### Executing-Plans Pre-Commit Review
+
+This heading is not part of Development Implementation.
+EOF
+
+  if extract_h4_section "$fixture" "$heading" "### Development Implementation" >/dev/null 2>&1; then
+    fail "H4 section parser accepted a stale H3 parent across an H2 boundary"
+  fi
+}
+
+assert_h4_section_parser_rejects_indented_parent_boundary() {
+  local fixture="$TMP_DIR/h4-indented-parent-boundary.md"
+  local heading="#### Executing-Plans Pre-Commit Review"
+
+  cat >"$fixture" <<'EOF'
+### Development Implementation
+
+  ## Another Stage
+
+#### Executing-Plans Pre-Commit Review
+EOF
+
+  if extract_h4_section "$fixture" "$heading" "### Development Implementation" >/dev/null 2>&1; then
+    fail "H4 section parser ignored an indented H2 boundary"
+  fi
+}
+
+assert_h4_section_parser_rejects_duplicate_heading() {
+  local fixture="$TMP_DIR/h4-duplicate-heading.md"
+  local heading="#### Executing-Plans Pre-Commit Review"
+
+  cat >"$fixture" <<'EOF'
+### Development Implementation
+
+#### Executing-Plans Pre-Commit Review
+
+First section.
+
+#### Common Implementation Rules
+
+Common rules.
+
+#### Executing-Plans Pre-Commit Review
+
+Duplicate section.
+EOF
+
+  if extract_h4_section "$fixture" "$heading" "### Development Implementation" >/dev/null 2>&1; then
+    fail "H4 section parser accepted duplicate headings"
+  fi
+}
+
+assert_h4_section_parser_ignores_fenced_headings() {
+  local fixture="$TMP_DIR/h4-fenced-heading.md"
+  local expected="$TMP_DIR/h4-fenced-heading-expected.md"
+  local actual="$TMP_DIR/h4-fenced-heading-actual.md"
+  local heading="#### Executing-Plans Pre-Commit Review"
+
+  cat >"$fixture" <<'EOF'
+### Development Implementation
+
+~~~text
+#### Executing-Plans Pre-Commit Review
+### This is code, not a parent heading
+~~~
+
+#### Executing-Plans Pre-Commit Review
+
+Review rules.
+
+##### Nested Details
+
+Nested content remains in the section.
+
+#### Common Implementation Rules
+
+Common rules are outside the section.
+EOF
+
+  cat >"$expected" <<'EOF'
+#### Executing-Plans Pre-Commit Review
+
+Review rules.
+
+##### Nested Details
+
+Nested content remains in the section.
+
+EOF
+
+  extract_h4_section "$fixture" "$heading" "### Development Implementation" >"$actual" ||
+    fail "H4 section parser counted a heading inside a fenced code block"
+  cmp -s "$expected" "$actual" || fail "H4 section parser extracted the wrong Markdown section"
+}
+
+assert_h4_section_parser_respects_fence_length() {
+  local fixture="$TMP_DIR/h4-long-fence.md"
+  local expected="$TMP_DIR/h4-long-fence-expected.md"
+  local actual="$TMP_DIR/h4-long-fence-actual.md"
+  local heading="#### Executing-Plans Pre-Commit Review"
+
+  cat >"$fixture" <<'EOF'
+### Development Implementation
+
+````text
+```
+#### Executing-Plans Pre-Commit Review
+### This is still code
+````
+
+#### Executing-Plans Pre-Commit Review
+
+Actual review rules.
+
+#### Common Implementation Rules
+EOF
+
+  cat >"$expected" <<'EOF'
+#### Executing-Plans Pre-Commit Review
+
+Actual review rules.
+
+EOF
+
+  extract_h4_section "$fixture" "$heading" "### Development Implementation" >"$actual" ||
+    fail "H4 section parser mishandled a longer fenced code block"
+  cmp -s "$expected" "$actual" || fail "H4 section parser closed a fenced code block too early"
+}
+
+assert_executing_plans_contract() {
+  local label="$1"
+  local path="$2"
+  local expected_parent="$3"
+  local heading="#### Executing-Plans Pre-Commit Review"
+  local section="$TMP_DIR/$label-executing-plans.md"
+  local sdd_section="$TMP_DIR/$label-sdd.md"
+  local common_section="$TMP_DIR/$label-common-implementation.md"
+  local pattern
+
+  extract_h4_section "$path" "$heading" "$expected_parent" >"$section" ||
+    fail "expected one executing-plans section under $expected_parent in ${path#"$ROOT_DIR/"}"
+
+  for pattern in \
+    'applies only when .*executing-plans.* is selected' \
+    'does not apply to .*subagent-driven-development' \
+    'plan-task-<n>' \
+    'progress-<n>-<k>' \
+    'final-review-fix-<k>' \
+    'recovery-fix-<review-id>-<k>' \
+    'reviewed-pending-commit' \
+    'recovery-required' \
+    'EXPECTED_PARENT_SHA=.*git rev-parse HEAD' \
+    'REVIEWED_TREE_SHA=.*git write-tree' \
+    'COMMIT_PARENT_SHA=.*COMMIT_SHA.*\^' \
+    'COMMITTED_TREE_SHA=.*COMMIT_SHA.*\{tree\}' \
+    'Immediately before committing, repeat both identity checks' \
+    'COMMIT_PARENT_SHA.*equals.*EXPECTED_PARENT_SHA' \
+    'COMMITTED_TREE_SHA.*equals.*REVIEWED_TREE_SHA' \
+    'git rev-list --reverse --first-parent' \
+    'classify each first-parent commit' \
+    'recorded stage checkpoint' \
+    'does not enter the implementation ledger' \
+    'unclassified commit' \
+    'first try to reconcile.*pending entry' \
+    'Expected parent.*actual immediate parent' \
+    'Committed parent' \
+    'Identity: exact.*Expected parent.*actual immediate parent' \
+    'Identity: retrospective.*Committed parent' \
+    'current plan task must remain .*in_progress' \
+    'final plan-task entry is .*verified' \
+    'Identity: retrospective' \
+    'Expected parent equals .*HEAD' \
+    'set .*COMMIT_SHA.*direct first-parent child' \
+    'recompute only .*COMMIT_PARENT_SHA.*COMMITTED_TREE_SHA' \
+    'do not reset .*COMMIT_SHA.*HEAD' \
+    'If the index differs, record why the pending snapshot was invalidated' \
+    'no blocking finding remains' \
+    'not validated.*remain visible' \
+    'accepted risk' \
+    'IMPLEMENTATION_BASE_SHA\.\.FINAL_IMPLEMENTATION_SHA' \
+    'exclude changes introduced only by recorded stage checkpoints' \
+    'latest verified implementation commit' \
+    'After any verified implementation commit created during final-review remediation' \
+    'final-review-fix.*recovery-fix' \
+    'validated finding that requires code changes' \
+    'next unused .*<k>' \
+    'one unit covers one commit' \
+    'Source finding IDs and Affected tasks' \
+    'Reopen an affected task only when' \
+    'If the fix expands confirmed scope' \
+    'Stage checkpoint commits remain governed by the Git Checkpoints rules' \
+    'Do not mix implementation changes into a stage checkpoint commit'
+  do
+    assert_match "$label executing-plans rule '$pattern'" "$pattern" "$section"
+  done
+
+  assert_not_match "$label SDD task directory inside executing-plans" 'DEV_CADENCE_TASK_DIR' "$section"
+  extract_h4_section "$path" "#### Subagent-Driven Development" "$expected_parent" >"$sdd_section" || fail "missing $label SDD section"
+  extract_h4_section "$path" "#### Common Implementation Rules" "$expected_parent" >"$common_section" || fail "missing $label common implementation section"
+  assert_match "$label SDD task directory" 'DEV_CADENCE_TASK_DIR' "$sdd_section"
+  assert_not_match "$label common implementation record inside SDD" 'At the end of this stage' "$sdd_section"
+  assert_not_match "$label common review evidence inside SDD" 'Code Review Evidence' "$sdd_section"
+  assert_match "$label common implementation record" 'At the end of this stage' "$common_section"
+  assert_match "$label common review evidence" 'Code Review Evidence' "$common_section"
+  assert_match "$label common rules apply to both execution paths" 'apply to both .*executing-plans.*subagent-driven-development' "$common_section"
+  awk '
+    /EXPECTED_PARENT_SHA=\$\(git rev-parse HEAD\)/ && !capture { capture = NR }
+    /^[[:space:]]*git diff --cached$/ { review = NR }
+    /test .*git rev-parse HEAD.*EXPECTED_PARENT_SHA/ { precommit_parent = NR }
+    /test .*git write-tree.*REVIEWED_TREE_SHA/ { precommit_tree = NR }
+    /Persist the complete ledger entry/ { pending = NR }
+    /Immediately before committing, repeat both identity checks/ { immediate_check = NR }
+    /Create the implementation commit/ { commit = NR }
+    /COMMIT_SHA=\$\(git rev-parse HEAD\)/ { identity = NR }
+    /COMMIT_PARENT_SHA.*equals.*EXPECTED_PARENT_SHA/ { committed_parent = NR }
+    /COMMITTED_TREE_SHA.*equals.*REVIEWED_TREE_SHA/ { committed_tree = NR }
+    END {
+      exit !(capture < review && review < precommit_parent && precommit_parent <= precommit_tree &&
+             precommit_tree < pending && pending < immediate_check && immediate_check < commit &&
+             commit < identity &&
+             identity < committed_parent && committed_parent <= committed_tree)
+    }
+  ' "$section" || fail "invalid executing-plans review order in ${path#"$ROOT_DIR/"}"
+}
+
+assert_h4_section_parser_rejects_stale_parent
+assert_h4_section_parser_rejects_indented_parent_boundary
+assert_h4_section_parser_rejects_duplicate_heading
+assert_h4_section_parser_ignores_fenced_headings
+assert_h4_section_parser_respects_fence_length
 
 assert_match "entry active workflow continuation section" "## Active Workflow Continuation" "$ENTRY_SKILL"
 assert_match "entry unfinished workflow check" "unfinished Dev Cadence workflow" "$ENTRY_SKILL"
@@ -98,6 +423,9 @@ assert_workflows "review validation state" "validation state: .*validated.*not v
 assert_workflows "code review report path" "04-code-review-report\\.md" "04-code-review-report\\.md" "04-code-review-report\\.md"
 assert_workflows "implementation returns to cadence" "Return control to Dev Cadence after implementation and review" "Return control to Dev Cadence after implementation and review" "Return control to Dev Cadence after implementation and review"
 assert_workflows "implementation defers finishing" "Do not invoke .*finishing-a-development-branch.* during .*Implementation" "Do not invoke .*finishing-a-development-branch.* during .*Implementation" "Do not invoke .*finishing-a-development-branch.* during .*Implementation"
+assert_executing_plans_contract "feature" "$FEATURE_SKILL" "### Development Implementation"
+assert_executing_plans_contract "bug-fix" "$BUG_FIX_SKILL" "### Repair Implementation"
+assert_executing_plans_contract "refactor" "$REFACTOR_SKILL" "### Refactor Implementation"
 
 assert_workflows "verification freshness rule" "Do not claim the system is ready without fresh verification evidence" "Do not claim the bug is fixed or regression-free without fresh verification evidence" "Do not claim the refactor is complete, safe, or regression-free without fresh verification evidence"
 assert_workflows "test cases table contract" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence"

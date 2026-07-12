@@ -2,7 +2,7 @@
 
 按顺序逐项处理。开始一个主任务前，先为该任务单独确认范围和实施计划；当前任务完成并验证后，再进入下一项。
 
-- [ ] 修复 Review 与 Checkpoint 身份模型：解决审查范围不完整、记录提交导致 HEAD 循环、未提交内容无法稳定标识的问题。
+- [x] 补齐 executing-plans 路径下实施提交的提交前审查机制。
 - [ ] 修复 Completion 状态机：让 accepted、accepted with risk、rejected、not-a-bug 和 manual recovery 都有明确终态。
 - [ ] 修复普通 Checkout 的 Finishing 流程：处理安全 merge、discard、SHA 校验、离线仓库和 already-integrated 场景。
 - [ ] 修复 Worktree 生命周期：处理 worktree 所有权、记录保存、清理、自定义目录和 detached HEAD。

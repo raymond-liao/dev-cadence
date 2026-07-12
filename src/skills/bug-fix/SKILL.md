@@ -341,6 +341,84 @@ Return control to Dev Cadence after implementation and review. Do not invoke `fi
 
 Follow the Superpowers code review requirements during Repair Implementation. Fix Critical and Important findings before moving to Regression Verification, unless the user explicitly accepts the risk.
 
+#### Executing-Plans Pre-Commit Review
+
+This subsection applies only when `executing-plans` is selected. It governs every implementation commit created while executing the confirmed repair plan, including plan-task commits, user-requested repair progress commits, and final-review fix commits. The active main agent must perform this review without requiring a subagent. It does not apply to `subagent-driven-development` task commits or stage checkpoint commits.
+
+Before the first implementation commit, capture and persist the implementation base in the repair record:
+
+```bash
+IMPLEMENTATION_BASE_SHA=$(git rev-parse HEAD)
+```
+
+The repair record must record the implementation base SHA before any implementation commit. Use one review unit for every commit:
+
+- `plan-task-<n>` for a commit required by the confirmed repair-plan task;
+- `progress-<n>-<k>` for a user-requested commit before repair-plan task `<n>` is complete;
+- `final-review-fix-<k>` for commits that resolve findings from the final whole-repair review;
+- `recovery-fix-<review-id>-<k>` for a corrective commit required to close retrospective findings for `<review-id>`.
+
+A progress unit runs checks appropriate to its staged work; the current plan task must remain `in_progress` and its checklist must not advance. A final-review fix unit cites its finding IDs and affected tasks and may cross completed-task file boundaries only to resolve those findings. A recovery-fix unit is limited to the changes required by its linked retrospective findings.
+
+Maintain an `Executing-Plans Commit Review Ledger` in the repair record. Each entry records the review ID and unit, commit type, state, Expected parent, Reviewed tree, staged files, checks, decision, commit hash, Committed parent, Committed tree, Identity, findings, residual risks, and separate Source finding IDs and Affected tasks fields when applicable. Allowed states are `reviewed-pending-commit` (reviewed snapshot persisted, commit not verified), `verified` (identity proven or retrospective review closed), and `recovery-required` (actual commit is not proven or its retrospective findings remain open). Identity is `pending`, `exact`, or `retrospective`.
+
+Before any implementation commit, run this gate:
+
+1. Stage only review-unit files. A final-review fix is scoped by its cited findings, not by a nonexistent current task. Do not stage unrelated changes.
+2. Capture the reviewed identity, then inspect the complete review-unit snapshot:
+
+   ```bash
+   EXPECTED_PARENT_SHA=$(git rev-parse HEAD)
+   REVIEWED_TREE_SHA=$(git write-tree)
+   git status --short
+   git diff --cached --stat
+   git diff --cached
+   ```
+
+3. Review the complete staged diff against the review unit, confirmed diagnosis and solution, repair plan, acceptance criteria, applicable repository rules, correctness and risk, required regression evidence, and scope. Fix findings, rerun relevant checks, restage, and repeat the complete gate.
+4. Confirm the reviewed identity is still current:
+
+   ```bash
+   test "$(git rev-parse HEAD)" = "$EXPECTED_PARENT_SHA"
+   test "$(git write-tree)" = "$REVIEWED_TREE_SHA"
+   ```
+
+5. Persist the complete ledger entry as `reviewed-pending-commit` with `Identity: pending` and read it back.
+6. Immediately before committing, repeat both identity checks. If either fails, repeat the complete gate and replace the stale pending evidence.
+7. Create the implementation commit only after the pending entry and identity checks pass, then capture the committed identity:
+
+    ```bash
+    COMMIT_SHA=$(git rev-parse HEAD)
+    COMMIT_PARENT_SHA=$(git rev-parse "${COMMIT_SHA}^")
+    COMMITTED_TREE_SHA=$(git rev-parse "${COMMIT_SHA}^{tree}")
+    ```
+
+8. Only after both comparisons pass may the entry become `verified` with `Identity: exact`: `COMMIT_PARENT_SHA` equals `EXPECTED_PARENT_SHA`, and `COMMITTED_TREE_SHA` equals `REVIEWED_TREE_SHA`. For `Identity: exact`, Expected parent is the Commit's actual immediate parent. Otherwise set `recovery-required` with `Identity: retrospective`, record Committed parent, and review `EXPECTED_PARENT_SHA..COMMIT_SHA`; for `Identity: retrospective`, use Committed parent rather than Expected parent when reconciling actual history. Stop further implementation commits except linked `recovery-fix-<review-id>-<k>` commits, each of which uses the normal exact-identity gate. Mark the recovery entry `verified` when the retrospective review is recorded and no blocking finding remains: validated Critical or Important findings are fixed or recorded as accepted risk after explicit user acceptance, while not validated and other non-blocking findings remain visible. Never call retrospective evidence pre-commit evidence.
+
+Do not mark a repair-plan task complete until its final plan-task entry is `verified`, its required checks pass, and its evidence is complete. A progress entry never completes a repair-plan task.
+
+When resuming, read `IMPLEMENTATION_BASE_SHA` and the complete ledger before continuing. Reconcile the ledger with:
+
+```bash
+git rev-list --reverse --first-parent "$IMPLEMENTATION_BASE_SHA..HEAD"
+```
+
+Before treating any history entry as unmatched, classify each first-parent commit after `IMPLEMENTATION_BASE_SHA`:
+
+- a commit recorded in the ledger is an implementation commit;
+- a commit whose hash is recorded as a stage checkpoint in the run manifest or current stage record is a recorded stage checkpoint; it does not enter the implementation ledger or require retrospective implementation review;
+- any other commit is an unclassified commit; first try to reconcile it with a pending entry using the identity rules below, and require retrospective review or user clarification only when no exact pending match exists.
+
+Verified ledger commits must appear in first-parent order, but recorded stage checkpoints may appear between them. For an exact entry, Expected parent must equal the Commit's actual immediate parent; for a retrospective entry, Committed parent must equal the actual immediate parent. Implementation commits do not need to be adjacent to one another. If a pending entry's Expected parent equals `HEAD`, no commit occurred. Continue if the index still equals its Reviewed tree. If the index differs, record why the pending snapshot was invalidated, repeat the complete gate, and replace its identity and review evidence before committing. If the direct first-parent child is a recorded stage checkpoint, the pending snapshot is stale; invalidate it and repeat the gate from the current `HEAD` after classifying later commits. Otherwise set `COMMIT_SHA` to the direct first-parent child and recompute only `COMMIT_PARENT_SHA` and `COMMITTED_TREE_SHA` for that selected commit using the last two committed-identity commands above; do not reset `COMMIT_SHA` from `HEAD`. If the parent and tree match, attach it as `verified` and `exact`. Any remaining unclassified commit requires retrospective review and `Identity: retrospective`; never fabricate pre-commit evidence. Recover a missing base only from the earliest ledger Expected parent after verifying the ordered history. Stop and ask the user for rewritten history, unexplained merges, broken ancestry, missing evidence, or ambiguous ownership; do not guess, amend, or rewrite history.
+
+After all repair-plan tasks have verified final entries and no entry remains pending or recovery-required, set `FINAL_IMPLEMENTATION_SHA` to the Commit hash of the latest verified implementation commit in the ledger and consolidate the ledger into `04-code-review-report.md`. The final review must cover the complete repair range `IMPLEMENTATION_BASE_SHA..FINAL_IMPLEMENTATION_SHA`; use that range as the ancestry boundary, but exclude changes introduced only by recorded stage checkpoints from repair findings and list those checkpoint hashes separately. Do not use `HEAD~1` for a multi-commit repair. If reviewer subagents are available, use `requesting-code-review` for an additional final independent review. If reviewer subagents are unavailable, the active main agent must perform the final whole-repair review and record its reviewed commit range, findings, fixes, and decision in the same report.
+
+If the final review produces a validated finding that requires code changes, create a `final-review-fix-<k>` unit with the next unused `<k>` and tie it to the finding IDs; because one unit covers one commit, additional commits use successive values. Keep completed repair-plan tasks closed for cross-task integration fixes. Reopen an affected task only when the finding proves that its acceptance criteria or required verification were not satisfied. If the fix expands confirmed scope, do not treat it as a review fix; follow Active Task Change Handling and return to the earliest affected stage. Every final-review fix commit must pass the normal exact-identity gate. After any verified implementation commit created during final-review remediation, whether `final-review-fix` or `recovery-fix`, set `FINAL_IMPLEMENTATION_SHA` to the latest verified implementation commit and repeat the final whole-repair review. Continue until no blocking finding remains or the user explicitly accepts the residual risk.
+
+This gate applies only to implementation commits created while executing the confirmed repair plan. Stage checkpoint commits remain governed by the Git Checkpoints rules. Do not mix implementation changes into a stage checkpoint commit.
+
+#### Subagent-Driven Development
+
 Before using `subagent-driven-development`, set:
 
 ```text
@@ -348,6 +426,10 @@ DEV_CADENCE_TASK_DIR=build/dev-cadence/bug-fix/<bug-slug>
 ```
 
 All SDD task briefs, implementer reports, review packages, and progress ledgers must stay under that task directory.
+
+#### Common Implementation Rules
+
+These common rules apply to both `executing-plans` and `subagent-driven-development`.
 
 If new debugging is needed, return to:
 
