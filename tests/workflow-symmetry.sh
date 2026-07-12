@@ -25,6 +25,14 @@ assert_match() {
   rg --no-ignore -n "$pattern" "$path" >/dev/null || fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
+assert_literal() {
+  local label="$1"
+  local literal="$2"
+  local path="$3"
+
+  rg --no-ignore -F -n -- "$literal" "$path" >/dev/null || fail "missing $label in ${path#"$ROOT_DIR/"}"
+}
+
 assert_workflows() {
   local label="$1"
   local feature_pattern="$2"
@@ -34,6 +42,48 @@ assert_workflows() {
   assert_match "feature $label" "$feature_pattern" "$FEATURE_SKILL"
   assert_match "bug-fix $label" "$bug_pattern" "$BUG_FIX_SKILL"
   assert_match "refactor $label" "$refactor_pattern" "$REFACTOR_SKILL"
+}
+
+assert_workflow_delivery_contract() {
+  local label="$1"
+  local path="$2"
+  local workflow_dir="$3"
+  local slug_placeholder="$4"
+  local stage_sequence="$5"
+  local task_dir="build/dev-cadence/$workflow_dir/<$slug_placeholder>"
+  local record
+
+  shift 5
+
+  assert_literal "$label stage sequence" "$stage_sequence" "$path"
+  assert_literal "$label task directory" "$task_dir/" "$path"
+  assert_literal "$label manifest path" "$task_dir/manifest.md" "$path"
+  assert_literal "$label SDD artifact path" "$task_dir/sdd/" "$path"
+  assert_match "$label manifest stage table fields" 'stage table with stage name, status, artifact path, user confirmation, checkpoint commit, and notes' "$path"
+
+  for record in "$@"; do
+    assert_literal "$label stage record $record" "$task_dir/$record" "$path"
+  done
+}
+
+assert_workflow_evidence_contract() {
+  local label="$1"
+  local path="$2"
+  local verification_source="$3"
+  local primary_coverage="$4"
+  local secondary_coverage="$5"
+  local acceptance_source="$6"
+  local verification_report_source="$7"
+
+  assert_literal "$label verification source field" "$verification_source" "$path"
+  assert_literal "$label primary coverage field" "$primary_coverage" "$path"
+  if [[ -n "$secondary_coverage" ]]; then
+    assert_literal "$label secondary coverage field" "$secondary_coverage" "$path"
+  fi
+  assert_literal "$label acceptance source field" "$acceptance_source" "$path"
+  assert_literal "$label acceptance verification source field" "$verification_report_source" "$path"
+  assert_literal "$label acceptance decision field" '`User Decision`' "$path"
+  assert_literal "$label accepted residual risks field" '`Accepted Residual Risks`' "$path"
 }
 
 assert_not_match() {
@@ -397,9 +447,46 @@ assert_workflows "terminal checkpoint rule" "must not contain .*pending.* checkp
 assert_workflows "no tracked changes checkpoint rule" "skipped: no tracked changes" "skipped: no tracked changes" "skipped: no tracked changes"
 assert_workflows "portable path rule" "do not persist local absolute paths" "do not persist local absolute paths" "do not persist local absolute paths"
 assert_workflows "manifest update cadence" "whenever a stage record is created or updated" "whenever a stage record is created or updated" "whenever a stage record is created or updated"
-assert_match "feature requirements record" "01-requirements\\.md" "$FEATURE_SKILL"
-assert_match "feature technical solution record" "02-technical-solution\\.md" "$FEATURE_SKILL"
-assert_match "feature implementation plan record" "03-implementation-plan\\.md" "$FEATURE_SKILL"
+
+assert_workflow_delivery_contract \
+  "feature" \
+  "$FEATURE_SKILL" \
+  "feature-dev" \
+  "feature-slug" \
+  "Requirements Confirmation -> Technical Solution -> Implementation Plan -> Development Implementation -> System Testing -> Business Acceptance" \
+  "01-requirements.md" \
+  "02-technical-solution.md" \
+  "03-implementation-plan.md" \
+  "04-implementation-record.md" \
+  "04-code-review-report.md" \
+  "05-system-test-report.md" \
+  "06-business-acceptance-record.md"
+assert_workflow_delivery_contract \
+  "bug-fix" \
+  "$BUG_FIX_SKILL" \
+  "bug-fix" \
+  "bug-slug" \
+  "Problem Diagnosis -> Repair Solution -> Repair Plan -> Repair Implementation -> Regression Verification -> Business Acceptance" \
+  "01-problem-diagnosis-record.md" \
+  "02-repair-solution.md" \
+  "03-repair-plan.md" \
+  "04-repair-record.md" \
+  "04-code-review-report.md" \
+  "05-regression-test-report.md" \
+  "06-business-acceptance-record.md"
+assert_workflow_delivery_contract \
+  "refactor" \
+  "$REFACTOR_SKILL" \
+  "refactor" \
+  "refactor-slug" \
+  "Requirements Confirmation -> Refactor Solution -> Refactor Plan -> Refactor Implementation -> Regression Verification -> Business Acceptance" \
+  "01-requirements.md" \
+  "02-refactor-solution.md" \
+  "03-refactor-plan.md" \
+  "04-refactor-record.md" \
+  "04-code-review-report.md" \
+  "05-regression-test-report.md" \
+  "06-business-acceptance-record.md"
 
 assert_workflows "active task change handling" "## Active Task Change Handling" "## Active Task Change Handling" "## Active Task Change Handling"
 assert_workflows "current run reuse" "current workflow run" "current workflow run" "current workflow run"
@@ -430,6 +517,30 @@ assert_executing_plans_contract "refactor" "$REFACTOR_SKILL" "### Refactor Imple
 assert_workflows "verification freshness rule" "Do not claim the system is ready without fresh verification evidence" "Do not claim the bug is fixed or regression-free without fresh verification evidence" "Do not claim the refactor is complete, safe, or regression-free without fresh verification evidence"
 assert_workflows "test cases table contract" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence"
 assert_workflows "coverage honesty rule" "Coverage must be honest" "Coverage must be honest" "Coverage must be honest"
+assert_workflow_evidence_contract \
+  "feature" \
+  "$FEATURE_SKILL" \
+  '`Requirement, Technical Solution, And Implementation Sources`' \
+  '`Requirement Coverage`' \
+  "" \
+  '`Accepted Requirement And Solution Sources`' \
+  '`System Test Report Source`'
+assert_workflow_evidence_contract \
+  "bug-fix" \
+  "$BUG_FIX_SKILL" \
+  '`Problem And Repair Sources`' \
+  '`Bug Fix Coverage`' \
+  '`Impact Scope Coverage`' \
+  '`Accepted Problem Source`' \
+  '`Regression Test Report Source`'
+assert_workflow_evidence_contract \
+  "refactor" \
+  "$REFACTOR_SKILL" \
+  '`Refactor Sources`' \
+  '`Behavior Baseline Coverage`' \
+  '`Structural Goal Coverage`' \
+  '`Accepted Refactor Sources`' \
+  '`Regression Test Report Source`'
 
 assert_workflows "business acceptance numbered options" "fixed numbered options" "fixed numbered options" "fixed numbered options"
 assert_workflows "business acceptance feedback table" "### Ambiguous Acceptance Feedback" "### Ambiguous Acceptance Feedback" "### Ambiguous Acceptance Feedback"
@@ -445,15 +556,6 @@ assert_workflows "terminal readiness checklist" "Before marking the run terminal
 assert_workflows "terminal manifest readiness" "Manifest has a terminal overall status" "Manifest has a terminal overall status" "Manifest has a terminal overall status"
 assert_workflows "no stale future-tense records" "No stage record contains stale future-tense" "No stage record contains stale future-tense" "No stage record contains stale future-tense"
 
-assert_match "refactor stage sequence" "Requirements Confirmation -> Refactor Solution -> Refactor Plan -> Refactor Implementation -> Regression Verification -> Business Acceptance" "$REFACTOR_SKILL"
-assert_match "refactor task directory" "build/dev-cadence/refactor/<refactor-slug>/" "$REFACTOR_SKILL"
-assert_match "refactor requirements record" "01-requirements\\.md" "$REFACTOR_SKILL"
-assert_match "refactor solution record" "02-refactor-solution\\.md" "$REFACTOR_SKILL"
-assert_match "refactor plan record" "03-refactor-plan\\.md" "$REFACTOR_SKILL"
-assert_match "refactor implementation record" "04-refactor-record\\.md" "$REFACTOR_SKILL"
-assert_match "refactor review report" "04-code-review-report\\.md" "$REFACTOR_SKILL"
-assert_match "refactor regression report" "05-regression-test-report\\.md" "$REFACTOR_SKILL"
-assert_match "refactor acceptance record" "06-business-acceptance-record\\.md" "$REFACTOR_SKILL"
 assert_match "refactor principles" "## Refactoring Principles" "$REFACTOR_SKILL"
 assert_match "refactor method catalog" "## Common Refactoring Methods" "$REFACTOR_SKILL"
 assert_match "refactor baseline requirement" "Behavior Baseline" "$REFACTOR_SKILL"
