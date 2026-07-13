@@ -73,9 +73,11 @@ Use the smallest method that achieves the confirmed structural goal:
 | Behavior protection | characterization tests, contract tests, snapshot or golden-sample tests, baseline build and test runs, manual regression checklists. |
 | Local cleanup | rename local symbols, extract function, inline trivial wrapper, split long function, extract constant, simplify conditional, remove dead code. |
 | Responsibility and boundary changes | move function or type, split large file, split mixed-responsibility module, merge over-fragmented modules, separate read/write paths, isolate side effects. |
-| Interface and data shape changes | introduce parameter object, introduce value object, encapsulate raw data, narrow public API, split stable and unstable interfaces, add compatibility adapter. |
+| Interface and data shape changes | introduce parameter object, introduce value object, encapsulate raw data, narrow internal interface, split stable and unstable internal interfaces, add compatibility adapter. |
 | Dependency direction changes | remove circular dependencies, invert dependency direction, extract port/interface, introduce adapter, make implicit global state explicit. |
 | Incremental migration | create new structure beside old structure, keep compatibility layer, migrate callers in small batches, run verification after each batch, delete old path only after migration evidence is complete. |
+
+Public APIs and external data shapes must remain compatible during refactoring. Keep interface and data-shape changes internal or preserve the external contract through a compatibility adapter. If the requested outcome intentionally changes an external contract, switch that work to `feature-dev`; if it restores broken expected behavior, use `bug-fix`.
 
 ### Refactor Red Flags
 

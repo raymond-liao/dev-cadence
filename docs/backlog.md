@@ -32,6 +32,7 @@
 - [x] [P1] 补齐 executing-plans 路径下实施提交的提交前审查机制。
 - [x] [P2] 补齐 Refactor 测试敏感性检查：新增 characterization 或 contract test 时执行可逆 sensitivity check，并通过契约测试保护该规则。
 - [x] [P2] 补齐最小验证阶段门禁：为 `feature-dev`、`bug-fix` 和 `refactor` 增加对称的 `ready`、`ready_with_risk` 和 `not_ready` 决策；阻止 `not_ready` 进入 Business Acceptance，并定义返回最早受影响阶段的最小返工规则。
+- [x] [P1] 修正 Refactor 公共契约矛盾：只允许收窄内部接口；公共 API 和外部数据形状必须保持兼容，主动契约变更转入 feature-dev 或 bug-fix。
 
 ## 评级说明
 

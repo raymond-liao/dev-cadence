@@ -653,6 +653,9 @@ assert_workflows "no stale future-tense records" "No stage record contains stale
 
 assert_match "refactor principles" "## Refactoring Principles" "$REFACTOR_SKILL"
 assert_match "refactor method catalog" "## Common Refactoring Methods" "$REFACTOR_SKILL"
+assert_not_match "refactor public API narrowing" "narrow public API" "$REFACTOR_SKILL"
+assert_match "refactor internal interface narrowing" "narrow internal interface" "$REFACTOR_SKILL"
+assert_match "refactor external contract compatibility" "Public APIs and external data shapes must remain compatible" "$REFACTOR_SKILL"
 assert_match "refactor baseline requirement" "Behavior Baseline" "$REFACTOR_SKILL"
 assert_match "refactor no feature mixing" "Do not mix new features, unrelated bug fixes, or stylistic preferences into refactoring work" "$REFACTOR_SKILL"
 assert_match "refactor tests-after red flag" "Code first, tests later" "$REFACTOR_SKILL"
