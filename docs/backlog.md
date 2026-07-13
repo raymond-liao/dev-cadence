@@ -8,7 +8,8 @@
 
 ## 待处理
 
-- [ ] [P1] 实现 Discovery workflow 和 PRD 契约：新增 `discovery` skill，支持从模糊想法首次建立 PRD 和增量更新已有 PRD；定义默认路径、基础结构、版本与 Change Log、需求状态、产品级 Decision、用户确认以及向 `work-item-planning` 的移交规则。
+- [ ] [P1] [S-001 首次 Discovery 与 PRD 基线](stories/S-001-initial-discovery-prd-baseline.md)
+- [ ] [P1] [S-002 PRD 增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
 - [ ] [P1] 实现 Work Item Planning workflow 和工作项契约：新增 `work-item-planning` skill，支持组合规划和单项登记；定义 `F/S/B/T` 卡片的 ID、结构、版本、状态、关系和 Roadmap，并将该 workflow 作为唯一建卡入口及开发 workflow 的移交方。
 - [ ] [P1] 打通工作项卡片与现有开发 workflow：更新 `using-dev-cadence`、`feature-dev`、`bug-fix` 和 `refactor`，实现卡片检查、缺卡路由、卡片版本引用、卡片与第一阶段记录的职责边界，以及开始、返工、验收和 Completion 后的状态与交付引用回写。
 - [ ] [P2] 补齐需求治理端到端验证和安装契约：验证从想法、PRD、工作项规划到 `feature-dev`、`bug-fix`、`refactor` 交付及 Roadmap 回写的完整链路，并覆盖构建、安装包、入口路由和现有目标仓库兼容。
@@ -38,6 +39,10 @@
 - [x] [P2] 补齐 Refactor 测试敏感性检查：新增 characterization 或 contract test 时执行可逆 sensitivity check，并通过契约测试保护该规则。
 - [x] [P2] 补齐最小验证阶段门禁：为 `feature-dev`、`bug-fix` 和 `refactor` 增加对称的 `ready`、`ready_with_risk` 和 `not_ready` 决策；阻止 `not_ready` 进入 Business Acceptance，并定义返回最早受影响阶段的最小返工规则。
 - [x] [P1] 修正 Refactor 公共契约矛盾：只允许收窄内部接口；公共 API 和外部数据形状必须保持兼容，主动契约变更转入 feature-dev 或 bug-fix。
+
+## 已关闭
+
+- [Superseded] 实现 Discovery workflow 和 PRD 契约：原任务已拆分为 [S-001 首次 Discovery 与 PRD 基线](stories/S-001-initial-discovery-prd-baseline.md) 和 [S-002 PRD 增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)。该状态只表示原任务被两个 Story 替代，不表示 Discovery workflow 已经实现。
 
 ## 评级说明
 
