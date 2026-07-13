@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-001`
-- Version：`3`
-- Status：`Ready`
+- Version：`4`
+- Status：`In Progress`
 - Priority：`P1`
 - Change Type：New
 
@@ -77,3 +77,4 @@
 | 1 | 2026-07-13 | 创建首次 Discovery 与 PRD 基线 Story。 | 将原 Discovery workflow 大任务拆成可独立交付的首次建立和增量维护能力。 |
 | 2 | 2026-07-13 | 补充 User Story、Story Relationships 和 Open Questions。 | 明确用户价值、后续阻塞关系和当前问题状态。 |
 | 3 | 2026-07-13 | 重写 User Story，移除 Dev Cadence、PRD 和 workflow 实现表述。 | User Story 应表达用户目标和价值，而不是内部实现方式或交付物。 |
+| 4 | 2026-07-13 | 将状态更新为 In Progress。 | 已启动对应的 feature-dev workflow run。 |
