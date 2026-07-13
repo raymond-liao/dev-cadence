@@ -14,4 +14,6 @@ When the user asks for development work, active-task follow-up, testing, verific
 `.dev-cadence/skills/using-dev-cadence/SKILL.md`
 
 If an installed Dev Cadence flow applies, use it. If no installed flow applies, handle the request normally.
+
+Root-level `*.md` files and all files under `docs/` do not require new or updated automated tests. Do not add or modify tests solely because those documentation files changed. If the same task changes executable behavior, test that executable behavior.
 ```

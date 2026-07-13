@@ -54,6 +54,7 @@
 ## 构建与验证
 
 - 修改 `src/skills/**` 后，运行 `bash scripts/build.sh` 同步 `dist/.dev-cadence`。
+- 根目录 `*.md` 和 `docs/**` 下的文件不要求新增或修改自动化测试；不要仅因这些文档变化而编写锁定自然语言措辞的测试。同一任务同时改变可执行行为时，只测试该可执行行为。
 - 提交前运行 `bash scripts/check-whitespace.sh`。
 - 提交前运行 `bash scripts/check-all.sh` 完成构建和契约验证。
 - 如果修改了规则文本，应使用 `rg --no-ignore` 检查 `src/` 和 `dist/.dev-cadence/` 是否同步包含关键规则。

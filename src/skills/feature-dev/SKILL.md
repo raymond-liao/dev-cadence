@@ -46,6 +46,15 @@ If `worktree.enabled` is missing or unsupported, use `false`.
 If `worktree.directory` is missing, use `.worktrees`.
 Do not read user configuration from `.dev-cadence/`; that directory is a replaceable installed package.
 
+## Documentation Test Boundary
+
+Root-level `*.md` files and all files under `docs/` do not require new or updated automated tests.
+Do not add or modify automated tests solely because these documentation files changed.
+Run existing formatting, link, spelling, or repository checks when they apply.
+If the same task changes executable behavior, test that executable behavior; do not create tests that lock human-facing documentation wording merely to manufacture a TDD RED phase.
+
+This boundary is path-based. It does not exempt `SKILL.md`, agent instructions, machine-consumed Markdown, executable specifications, or other runtime assets stored outside the target repository root and `docs/`.
+
 ## Git Checkpoints
 
 Dev Cadence uses commits for engineering progress and workflow checkpoints.
