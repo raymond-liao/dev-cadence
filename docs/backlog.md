@@ -8,6 +8,10 @@
 
 ## 待处理
 
+- [ ] [P1] 实现 Discovery workflow 和 PRD 契约：新增 `discovery` skill，支持从模糊想法首次建立 PRD 和增量更新已有 PRD；定义默认路径、基础结构、版本与 Change Log、需求状态、产品级 Decision、用户确认以及向 `work-item-planning` 的移交规则。
+- [ ] [P1] 实现 Work Item Planning workflow 和工作项契约：新增 `work-item-planning` skill，支持组合规划和单项登记；定义 `F/S/B/T` 卡片的 ID、结构、版本、状态、关系和 Roadmap，并将该 workflow 作为唯一建卡入口及开发 workflow 的移交方。
+- [ ] [P1] 打通工作项卡片与现有开发 workflow：更新 `using-dev-cadence`、`feature-dev`、`bug-fix` 和 `refactor`，实现卡片检查、缺卡路由、卡片版本引用、卡片与第一阶段记录的职责边界，以及开始、返工、验收和 Completion 后的状态与交付引用回写。
+- [ ] [P2] 补齐需求治理端到端验证和安装契约：验证从想法、PRD、工作项规划到 `feature-dev`、`bug-fix`、`refactor` 交付及 Roadmap 回写的完整链路，并覆盖构建、安装包、入口路由和现有目标仓库兼容。
 - [ ] [P1] 补齐 Business Acceptance 终态映射：让三个 workflow 的 `accepted`、`accepted_with_risk` 和 `rejected` 分别进入明确的 Completion 路径，并用对称契约测试验证每个决策的 manifest 终态和后续动作。
 - [ ] [P2] 绑定最终验证版本：记录精确 commit、branch 和 tracked working-tree 状态，防止代码变化后继续使用过期验证结论。
 - [ ] [P2] 传递实施与 Review 风险到验证阶段：使用稳定 ID 将跳过的实施检查、未解决 review finding 和已接受 review 风险完整写入最终验证报告。
@@ -26,6 +30,7 @@
 - [ ] [P0] 保存 Worktree 运行记录：在删除 Dev Cadence 所有的 worktree 前，将必须保留的 manifest 和 stage record 保存到不会随 worktree 删除的位置，并验证记录仍可访问。
 - [ ] [P1] 补齐 Detached HEAD Finishing：为外部管理的 detached HEAD 定义创建分支、创建 PR、保留和 discard 路径；不得假定当前存在可 push 或可删除的命名分支。
 - [ ] [P1] 记录 Worktree 清理结果：Completion 后在 manifest 和业务验收记录中写明 worktree 是否删除、由谁管理以及 task branch 是否删除或保留。
+- [ ] [P3] 规划发布与生产交付能力：后续设计 Release、Deployment、Post-deploy Verification 和 Incident/Hotfix workflow；当前只保留方向，不进入实施。
 
 ## 已完成
 
