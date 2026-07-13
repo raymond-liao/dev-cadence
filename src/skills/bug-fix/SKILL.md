@@ -544,6 +544,28 @@ Verify the working deliverable against the problem diagnosis, repair solution, r
 
 Do not claim the bug is fixed or regression-free without fresh verification evidence.
 
+#### Verification Decision Gate
+
+The final regression test report must record a normalized `Verification Decision`:
+
+- `ready`: executed evidence shows the confirmed goal is satisfied and no blocking gap remains.
+- `ready_with_risk`: executed evidence does not show a confirmed goal failure, but explicitly listed non-blocking skipped checks, uncovered optional areas, or residual risks remain for Business Acceptance.
+- `not_ready`: an executed check failed, a confirmed goal is unmet, required evidence is inconsistent, or a blocking gap remains.
+
+If the original bug still reproduces or a required bug-fix outcome lacks executed evidence, the decision must be `not_ready`. It must not be downgraded to `ready_with_risk`.
+
+Only `ready` and `ready_with_risk` may enter Business Acceptance.
+
+When the decision is `not_ready`:
+
+1. record the blocking evidence and the earliest affected stage in the regression test report;
+2. set the earliest affected stage to `in_progress` and later affected stages to `pending` in the manifest;
+3. mark confirmation and verification information invalidated by the finding as `superseded` instead of treating it as current evidence;
+4. update and reconfirm the affected stage records;
+5. repeat implementation review and verification as required before presenting Business Acceptance again.
+
+Historical confirmation and checkpoint information may remain for auditability, but the manifest must distinguish it from the current confirmation state.
+
 At the end of this stage, write or update:
 
 ```text
@@ -559,6 +581,7 @@ The regression test report must use this structure:
 - `Impact Scope Coverage`: map each affected area from the Repair Solution to test case IDs and an explicit status: `covered`, `skipped`, `not covered`, or `accepted risk`.
 - `Failed Or Skipped Checks`: failures and skipped checks with reasons. If none, write `None`.
 - `Residual Risks`: remaining risks after testing. If none, write `None`.
+- `Verification Decision`: exactly one of `ready`, `ready_with_risk`, or `not_ready`, determined by the Verification Decision Gate.
 - `Recommendation`: whether the fix can enter Business Acceptance.
 
 Coverage must be honest. If the original symptom, root cause, repair acceptance point, or affected area is not verified by an executed test or check, list it as `skipped`, `not covered`, or `accepted risk` in `Bug Fix Coverage` or `Impact Scope Coverage`; do not only mention it in `Residual Risks`.

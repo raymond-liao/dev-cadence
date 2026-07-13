@@ -4,7 +4,7 @@
 
 ## 进行中
 
-- [ ] 补齐最小验证阶段门禁：为 `feature-dev`、`bug-fix` 和 `refactor` 增加对称的 `ready`、`ready_with_risk` 和 `not_ready` 决策；阻止 `not_ready` 进入 Business Acceptance，并定义返回最早受影响阶段的最小返工规则。范围以 `docs/superpowers/specs/2026-07-12-workflow-stage-reliability-design.md` 为准。
+暂无。
 
 ## 待处理
 
@@ -31,3 +31,4 @@
 
 - [x] 补齐 executing-plans 路径下实施提交的提交前审查机制。
 - [x] 补齐 Refactor 测试敏感性检查：新增 characterization 或 contract test 时执行可逆 sensitivity check，并通过契约测试保护该规则。
+- [x] 补齐最小验证阶段门禁：为 `feature-dev`、`bug-fix` 和 `refactor` 增加对称的 `ready`、`ready_with_risk` 和 `not_ready` 决策；阻止 `not_ready` 进入 Business Acceptance，并定义返回最早受影响阶段的最小返工规则。

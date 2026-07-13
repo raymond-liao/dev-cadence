@@ -450,6 +450,35 @@ assert_executing_plans_contract() {
   ' "$section" || fail "invalid executing-plans review order in ${path#"$ROOT_DIR/"}"
 }
 
+assert_verification_decision_gate() {
+  local label="$1"
+  local path="$2"
+  local expected_parent="$3"
+  local required_failure_pattern="$4"
+  local section="$TMP_DIR/$label-verification-decision-gate.md"
+  local pattern
+
+  extract_h4_section "$path" "#### Verification Decision Gate" "$expected_parent" >"$section" ||
+    fail "expected one verification decision gate under $expected_parent in ${path#"$ROOT_DIR/"}"
+
+  for pattern in \
+    'Verification Decision' \
+    '`ready`' \
+    '`ready_with_risk`' \
+    '`not_ready`' \
+    'Only `ready` and `ready_with_risk` may enter Business Acceptance' \
+    "$required_failure_pattern" \
+    'blocking evidence.*earliest affected stage' \
+    'earliest affected stage.*`in_progress`' \
+    'later affected stages.*`pending`' \
+    'superseded' \
+    'update and reconfirm' \
+    'repeat implementation review and verification'
+  do
+    assert_match "$label verification decision gate '$pattern'" "$pattern" "$section"
+  done
+}
+
 assert_h4_section_parser_rejects_stale_parent
 assert_h4_section_parser_rejects_indented_parent_boundary
 assert_h4_section_parser_rejects_duplicate_heading
@@ -566,6 +595,21 @@ assert_executing_plans_contract "bug-fix" "$BUG_FIX_SKILL" "### Repair Implement
 assert_executing_plans_contract "refactor" "$REFACTOR_SKILL" "### Refactor Implementation"
 
 assert_workflows "verification freshness rule" "Do not claim the system is ready without fresh verification evidence" "Do not claim the bug is fixed or regression-free without fresh verification evidence" "Do not claim the refactor is complete, safe, or regression-free without fresh verification evidence"
+assert_verification_decision_gate \
+  "feature" \
+  "$FEATURE_SKILL" \
+  "### System Testing" \
+  'required acceptance criterion without executed evidence.*`not_ready`'
+assert_verification_decision_gate \
+  "bug-fix" \
+  "$BUG_FIX_SKILL" \
+  "### Regression Verification" \
+  '(original bug still reproduces|required bug-fix outcome lacks executed evidence).*`not_ready`'
+assert_verification_decision_gate \
+  "refactor" \
+  "$REFACTOR_SKILL" \
+  "### Regression Verification" \
+  '(behavior drift|unmet required structural goal).*`not_ready`'
 assert_workflows "test cases table contract" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence"
 assert_workflows "coverage honesty rule" "Coverage must be honest" "Coverage must be honest" "Coverage must be honest"
 assert_workflow_evidence_contract \
