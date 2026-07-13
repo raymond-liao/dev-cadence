@@ -33,7 +33,6 @@ tmp/
 # Language/tooling artifacts
 node_modules/
 dist/
-build/
 coverage/
 __pycache__/
 *.py[cod]
