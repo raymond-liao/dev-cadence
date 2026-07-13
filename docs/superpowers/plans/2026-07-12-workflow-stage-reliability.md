@@ -1,5 +1,7 @@
 # Workflow Stage Reliability Implementation Plan
 
+> **Status:** Superseded by the narrowed design in `docs/superpowers/specs/2026-07-12-workflow-stage-reliability-design.md`. Do not execute this broad plan or its backlog rewrite steps. Create a new minimal implementation plan for the active item in `docs/backlog.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Close the stage-gate and evidence-continuity gaps in `feature-dev`, `bug-fix`, and `refactor` without changing Completion, finishing, or worktree lifecycle behavior.
@@ -316,7 +318,7 @@ git commit -m "fix(refactor-flow): anchor behavior baseline evidence"
 ### Task 5: Update Backlog, Version, Distribution, And Verification
 
 **Files:**
-- Modify: `docs/workflow-reliability-backlog.md`
+- Modify: `docs/backlog.md`
 - Modify: `version`
 - Modify: `docs/superpowers/plans/2026-07-12-workflow-stage-reliability.md`
 - Generated, ignored: `dist/.dev-cadence/**`
@@ -407,6 +409,6 @@ git commit -m "fix(flow): address stage reliability review"
 - [ ] **Step 10: Commit release metadata**
 
 ```bash
-git add docs/workflow-reliability-backlog.md docs/superpowers/plans/2026-07-12-workflow-stage-reliability.md version
+git add docs/backlog.md docs/superpowers/plans/2026-07-12-workflow-stage-reliability.md version
 git commit -m "chore(release): prepare workflow reliability 0.8.3"
 ```

@@ -1,219 +1,145 @@
-# Workflow Stage Reliability Design
+# Minimal Workflow Stage Gate Design
 
 ## Context
 
-Dev Cadence currently defines the optimistic sequence for `feature-dev`, `bug-fix`, and `refactor`, but several stage outputs do not act as executable gates. A verification report can recommend that work must not enter business acceptance without forcing a return to an earlier stage. Evidence can also lose its identity or disappear while moving from implementation, through verification, to business acceptance.
+Dev Cadence defines the optimistic stage sequence for `feature-dev`, `bug-fix`, and `refactor`, but the final verification stage does not provide one small, normalized gate that determines whether the workflow may enter Business Acceptance.
 
-This design implements the narrowed fifth reliability backlog item. It covers workflow-specific stage gates, evidence continuity, and rework loops. It deliberately excludes the deferred Completion state machine, normal-checkout finishing behavior, and worktree lifecycle.
+The previous design for the fifth reliability backlog item combined this gate with tested-revision identity, evidence carry-forward, workflow-specific record expansion, bug RED/GREEN proof, and refactor baseline governance. Implementing all of those concerns together creates a broad change across three large workflow skills and their contract tests. That breadth makes the change harder to review and increases the chance of repeated corrective edits.
+
+This design narrows the fifth backlog item to the smallest shared stage-gate improvement. It adds one symmetric verification decision contract to the three workflows and defers the remaining reliability improvements to separate work.
 
 ## Goals
 
-- Make verification outcomes control whether a workflow may enter Business Acceptance.
-- Bind verification evidence to the exact tested repository revision.
-- Carry skipped checks, unresolved review items, and residual risks across stage boundaries without omission.
-- Add durable record contracts for feature requirements and technical solutions.
-- Prevent bug repair from advancing on an ambiguous diagnosis or unvalidated root cause.
-- Persist auditable bug reproduction, RED, and GREEN evidence.
-- Anchor refactor behavior baselines to the pre-refactor repository state.
-- Remove contradictions between behavior preservation and public-contract-changing refactor methods.
-- Add workflow-specific contract tests that fail when these rules are weakened or moved to the wrong stage.
+- Give System Testing and Regression Verification one normalized decision field.
+- Prevent a workflow with a blocking verification result from entering Business Acceptance.
+- Define the minimum rework action for a blocking result.
+- Keep the rule structure and wording symmetric across `feature-dev`, `bug-fix`, and `refactor`.
+- Add focused contract checks for only this gate.
+- Keep the implementation small enough to review and verify in one pass.
 
 ## Non-Goals
 
-- Do not define final statuses for accepted, accepted with risk, rejected, not-a-bug, or manual recovery.
-- Do not change merge, pull request, discard, branch deletion, or normal-checkout finishing commands.
-- Do not change worktree ownership, cleanup, or detached-HEAD behavior.
+- Do not add tested commit, branch, tree, or working-tree identity requirements.
+- Do not add `Carry-Forward Items` or expand evidence propagation contracts.
+- Do not expand feature requirements or technical-solution record structures.
+- Do not change bug diagnosis, root-cause validation, or RED/GREEN evidence rules.
+- Do not change refactor baseline, migration, or sensitivity-check rules.
+- Do not define Completion terminal states such as accepted, accepted with risk, rejected, not-a-bug, or manual recovery.
+- Do not change merge, pull request, discard, branch deletion, normal-checkout finishing, or worktree lifecycle behavior.
 - Do not modify vendored Superpowers skills.
-- Do not change the high-level six-stage business flow documented in the README files.
+- Do not change the public six-stage workflow sequence or installation interface documented in the README files.
 
 ## Considered Approaches
 
-### Minimal Text Patch
+### Minimal Shared Gate
 
-Add a few `must not proceed` sentences around verification. This has low churn, but it leaves revision identity, evidence carry-forward, bug TDD evidence, and refactor baseline integrity unresolved.
+Add the same normalized verification decision and blocking transition to the final verification stage of all three workflows. Add section-aware contract checks that cover only this rule.
 
-### Evidence-Closed Stage Gates
+This is the selected approach because it addresses the immediate stage-gate gap with the smallest behavioral and testing surface.
 
-Define normalized verification decisions, explicit rework transitions, tested-revision identity, carry-forward evidence, and workflow-specific record contracts. This adds enough structure for reliable execution and contract tests without entering deferred Completion or Git lifecycle work.
+### Gate Plus Evidence Identity
 
-This is the selected approach.
+Add the shared gate together with tested-revision identity and evidence carry-forward. This provides a stronger audit chain, but it requires more record fields, more transition rules, and substantially broader tests. It is deferred.
 
-### Full Governance State Machine
+### Full Workflow Reliability Package
 
-Model every business decision, finishing action, worktree state, and recovery state in one change. This would overlap the deferred second, third, and fourth backlog items and would make the change too broad to review safely.
+Add the gate, workflow-specific record contracts, bug proof requirements, refactor baseline governance, Completion behavior, and Git lifecycle handling together. This repeats the broad implementation shape that this narrowed design is intended to avoid.
 
-## Common Verification Gate
+## Verification Decision Gate
 
 Each System Testing or Regression Verification report must contain a normalized `Verification Decision`:
 
 - `ready`: executed evidence shows the confirmed goal is satisfied and no blocking gap remains.
-- `ready_with_risk`: no executed evidence disproves the confirmed goal, but explicitly listed skipped checks, uncovered areas, or non-blocking open items remain for the user to consider during Business Acceptance.
-- `not_ready`: an executed check failed, evidence shows a confirmed goal is unmet, required evidence is internally inconsistent, or a blocking gap remains.
+- `ready_with_risk`: executed evidence does not show a confirmed goal failure, but explicitly listed non-blocking skipped checks, uncovered optional areas, or residual risks remain for Business Acceptance.
+- `not_ready`: an executed check failed, a confirmed goal is unmet, required evidence is inconsistent, or a blocking gap remains.
 
-An acceptance criterion failure, an original bug that still reproduces, an observed refactor behavior drift, or an unmet required structural goal must be `not_ready`; these are not residual-risk shortcuts.
+A required acceptance criterion without executed evidence, an original bug that still reproduces, an unverified required bug-fix outcome, an observed refactor behavior drift, or an unmet required structural goal must be `not_ready`. These conditions must not be downgraded to `ready_with_risk`.
 
-Only `ready` and `ready_with_risk` may enter Business Acceptance. For `not_ready`, the agent must:
+Only `ready` and `ready_with_risk` may enter Business Acceptance.
 
-1. identify the earliest affected workflow stage;
-2. record the blocking evidence and the earliest affected stage in the verification report;
-3. set that stage to `in_progress` and later affected stages to `pending` in the manifest;
-4. update and reconfirm affected stage records;
-5. rerun implementation review and verification as required before presenting Business Acceptance.
+For `not_ready`, the workflow must:
 
-The existing Active Task Change Handling rule must also apply when the agent, implementation, review, or verification discovers information that invalidates a confirmed stage, not only when the user supplies a change.
+1. record the blocking evidence and identify the earliest affected stage in the verification report;
+2. set the earliest affected stage to `in_progress` and later affected stages to `pending` in the manifest;
+3. mark confirmation and verification information invalidated by the finding as superseded rather than treating it as current evidence;
+4. update and reconfirm the affected stage records;
+5. repeat implementation review and verification as required before presenting Business Acceptance again.
 
-## Tested Revision Identity
+Historical confirmation and checkpoint information may remain for auditability, but the manifest must distinguish it from the current confirmation state.
 
-Before final System Testing or Regression Verification begins, all in-scope deliverables must be represented by the current commit, and the tracked working tree must be clean. Ignored Dev Cadence records and ignored runtime artifacts do not violate this rule.
+## Workflow Placement
 
-The verification report must record:
+The same gate must be added without restructuring unrelated workflow content:
 
-- tested commit SHA;
-- tested branch;
-- tracked working-tree state before testing;
-- tracked working-tree state after testing;
-- confirmation that the tested commit did not change during the verification run.
+- `feature-dev`: under System Testing, before Business Acceptance.
+- `bug-fix`: under Regression Verification, before Business Acceptance.
+- `refactor`: under Regression Verification, before Business Acceptance.
 
-If the tested commit changes or in-scope tracked files become dirty, the verification decision is stale. The agent must finish or classify those changes and rerun the relevant verification before Business Acceptance.
-
-## Evidence Carry-Forward
-
-Each verification report must include `Carry-Forward Items`. Every skipped implementation check, unresolved review finding, accepted review risk, and known implementation risk must appear with:
-
-- stable source ID;
-- source record;
-- current disposition;
-- verification evidence or reason it remains unverified;
-- residual risk presented to Business Acceptance.
-
-Items may be marked resolved, covered, still open as residual risk, or invalidated with an explicit reason. They may not disappear between records. The Business Acceptance summary must include every remaining carry-forward item.
-
-## Feature Development Rules
-
-### Requirements Record
-
-`01-requirements.md` must persist the content currently required in the user-facing presentation:
-
-- confirmed scope;
-- non-goals;
-- acceptance criteria with stable IDs;
-- assumptions and open questions;
-- user confirmation reflected in the manifest.
-
-### Technical Solution Record
-
-`02-technical-solution.md` must persist:
-
-- requirements source;
-- recommended approach;
-- alternatives and tradeoffs when relevant;
-- affected modules and boundaries;
-- testing strategy;
-- risks and constraints;
-- `Codebase Exploration Findings` when enhanced exploration applies.
-
-The system test report must map acceptance criteria and material technical-solution constraints to evidence. It must also carry forward unresolved implementation and review evidence before deciding whether the feature is ready for Business Acceptance.
-
-## Bug Fix Rules
-
-### Diagnosis Entry Gate
-
-The diagnosis record must use normalized fields:
-
-- `Diagnosis Conclusion`: `confirmed_bug`, `ambiguous`, or `not_a_bug_candidate`;
-- `Root Cause State`: `validated` or `hypothesis`;
-- `Root Cause Evidence`: evidence that connects the proposed cause to the reported symptom;
-- `Reproduction State`: `reproduced` or `not_reproduced`, with equivalent causal evidence when direct reproduction is unavailable.
-
-Repair Solution may begin only when `Diagnosis Conclusion` is `confirmed_bug` and `Root Cause State` is `validated`. An ambiguous report, an untested root-cause hypothesis, or an unreproduced issue without equivalent causal evidence remains in Problem Diagnosis as `in_progress` or `blocked`.
-
-The not-a-bug terminal path remains deferred to the Completion state-machine backlog item.
-
-### Root-Cause Revisions
-
-If implementation, review, or verification disproves the confirmed root cause or repair boundary, the workflow must return to Problem Diagnosis. It must refresh and reconfirm Problem Diagnosis, Repair Solution, and Repair Plan before continuing implementation.
-
-### RED/GREEN Evidence
-
-The Repair Plan and Repair Record must use stable proof IDs. For each repaired behavior, the Repair Record must preserve:
-
-- reproduction or RED command/check;
-- expected failure;
-- actual failure evidence and why it proves the bug;
-- implementation change associated with the proof;
-- GREEN command/check;
-- actual passing evidence after the fix.
-
-The regression report must map the original symptom, root cause, repair acceptance points, impact scope, and behaviors required to remain unchanged to executed evidence.
-
-## Refactor Rules
-
-### Baseline Identity
-
-The Refactor Solution defines the semantic Behavior Baseline. Immediately before the first structural edit, after required baseline tests are established, the Refactor Record must capture:
-
-- baseline commit SHA;
-- baseline tree SHA;
-- clean tracked working-tree evidence;
-- stable baseline item IDs;
-- each protected behavior or contract;
-- expected observable result;
-- evidence command, test, snapshot, golden sample, or manual check;
-- sensitivity evidence or an explicit reason the protection is self-evident.
-
-After structural edits begin, current-code behavior cannot redefine the pre-refactor expectation. New baseline coverage must be verified against the captured baseline revision or recorded as an unverified risk.
-
-### Contract-Preserving Methods
-
-The refactor method catalog must not present narrowing a public API or changing an external data shape as ordinary behavior-preserving work. Interface and data-shape refactors must remain internal, preserve the external contract through compatibility adapters, or move to feature or bug-fix work after user confirmation.
-
-When incremental migration applies, the solution, plan, refactor record, and regression report must preserve a migration evidence chain covering:
-
-- known caller or consumer inventory;
-- compatibility strategy;
-- migrated and remaining callers;
-- remaining legacy references;
-- adapter retention or deletion decision;
-- evidence that old-path deletion is safe.
-
-### Existing Test Adequacy
-
-An existing test may protect a baseline item only when its relevant assertion clearly detects the protected behavior. Otherwise the agent must perform a reversible sensitivity check or add stronger characterization evidence before structural edits.
+Workflow-specific language may identify the relevant goal, but decision values and transition semantics must remain equivalent.
 
 ## Contract Tests
 
-`tests/workflow-symmetry.sh` will receive workflow-specific contract checks:
+`tests/workflow-symmetry.sh` will receive focused, section-aware checks that verify:
 
-- common verification decisions, rework transition, tested revision, and carry-forward evidence in all three workflows;
-- feature requirements and technical-solution record structures;
-- bug diagnosis entry gate, root-cause rollback, RED/GREEN evidence, and preserved-behavior coverage;
-- refactor baseline identity, no public-contract narrowing, migration evidence, and existing-test adequacy.
+- all three workflows define `ready`, `ready_with_risk`, and `not_ready` in the final verification stage;
+- only `ready` and `ready_with_risk` may enter Business Acceptance;
+- required unverified outcomes and observed confirmed-goal failures are `not_ready`;
+- `not_ready` records the blocking evidence and earliest affected stage;
+- affected manifest stages are returned to `in_progress` or `pending`;
+- invalidated confirmation or verification information is treated as superseded;
+- affected stages must be updated and reconfirmed before verification is repeated.
 
-Tests must first fail against the current skills, then pass after the rules are added. Section-aware checks must ensure rules remain under the correct workflow stage rather than merely existing somewhere in the file.
+The tests must not introduce assertions for deferred tested-revision identity, evidence carry-forward, workflow-specific record expansion, Completion, finishing, or worktree behavior.
 
-## Files And Release Handling
+## Files And Change Limits
 
-Expected source changes:
+Expected source changes for a later implementation:
 
 - `src/skills/feature-dev/SKILL.md`
 - `src/skills/bug-fix/SKILL.md`
 - `src/skills/refactor/SKILL.md`
 - `tests/workflow-symmetry.sh`
-- `docs/workflow-reliability-backlog.md`
+- `docs/backlog.md`
 - `version`
 
-After source edits, run `bash scripts/build.sh` to synchronize the ignored distribution package. The workflow behavior change increments the version from `0.8.2` to `0.8.3`. README files remain unchanged because the public six-stage sequence and installation interface do not change.
+Implementation must add one small, symmetric rule block to each workflow. It must not refactor surrounding sections or incorporate unrelated reliability findings discovered during verification.
 
-The fifth backlog item will be rewritten to cover workflow-specific stage gates, evidence continuity, and rework loops, with terminal-state work explicitly left to the deferred Completion item.
+After source edits, run `bash scripts/build.sh` to synchronize the ignored distribution package. Evaluate and update `version` because the installed workflow behavior changes. README files remain unchanged because the public workflow sequence and installation interface do not change.
+
+## Verification Strategy
+
+The intended verification sequence is:
+
+```bash
+bash tests/workflow-symmetry.sh
+bash scripts/build.sh
+bash scripts/check-all.sh
+```
+
+Run the focused workflow test before the full repository checks. If verification fails, fix only failures caused by the new gate or its assertions. Record unrelated failures separately instead of expanding this implementation.
+
+## Deferred Reliability Work
+
+The following concerns remain valid but require separate design and implementation work:
+
+- tested revision and clean working-tree identity;
+- carry-forward IDs and evidence completeness checks;
+- durable feature requirements and technical-solution contracts;
+- bug diagnosis entry gates and auditable RED/GREEN proof;
+- refactor baseline identity, migration evidence, and test sensitivity;
+- Completion state-machine terminal paths;
+- normal-checkout finishing reliability;
+- worktree lifecycle reliability;
+- broader end-to-end or fixture-based workflow execution tests.
+
+Deferring these concerns is an explicit scope decision, not a claim that they are already solved.
 
 ## Success Criteria
 
-- A verification report with `not_ready` cannot legally enter Business Acceptance.
-- A stale tested revision cannot be presented for Business Acceptance.
-- Implementation risks and unresolved review evidence remain visible through verification and acceptance.
-- Feature requirements and solution records can reconstruct the confirmed design after session loss.
-- Bug repair cannot start from an ambiguous diagnosis or an unvalidated root cause.
-- Bug repair records prove the RED/GREEN sequence for each repaired behavior.
-- Refactor regression evidence is anchored to the pre-refactor revision and cannot be silently redefined.
-- Public contract changes are not treated as ordinary behavior-preserving refactors.
-- Targeted workflow contract tests and the full repository check suite pass.
+- Every final verification report has one normalized decision.
+- A `not_ready` workflow cannot enter Business Acceptance.
+- Missing evidence for a required outcome cannot be classified as `ready_with_risk`.
+- A blocking finding returns the workflow to the earliest affected stage and invalidated current confirmation is not presented as valid.
+- The three workflows use equivalent gate semantics.
+- Focused workflow contract tests and the full repository check suite pass.
+- The implementation does not change deferred workflow reliability areas.
