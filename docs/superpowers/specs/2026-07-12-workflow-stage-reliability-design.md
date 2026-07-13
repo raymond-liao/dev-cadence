@@ -202,7 +202,7 @@ Expected source changes:
 - `docs/workflow-reliability-backlog.md`
 - `version`
 
-After source edits, run `bash scripts/build.sh` to synchronize the ignored distribution package. The workflow behavior change increments the version from `0.8.1` to `0.8.2`. README files remain unchanged because the public six-stage sequence and installation interface do not change.
+After source edits, run `bash scripts/build.sh` to synchronize the ignored distribution package. The workflow behavior change increments the version from `0.8.2` to `0.8.3`. README files remain unchanged because the public six-stage sequence and installation interface do not change.
 
 The fifth backlog item will be rewritten to cover workflow-specific stage gates, evidence continuity, and rework loops, with terminal-state work explicitly left to the deferred Completion item.
 

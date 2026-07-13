@@ -231,6 +231,24 @@ If the requested change clearly exceeds the current confirmed scope, ask whether
 | "The confirmed plan is old, but keep implementing anyway." | Return to the earliest affected stage and refresh records before moving forward. |
 | "This sounds bigger, so silently start a new task." | Ask whether to expand the current feature or start a separate task. |
 
+## Consolidated Brainstorming Confirmation
+
+For the brainstorming-backed Requirements Confirmation and Technical Solution stages, this active workflow overrides the vendored brainstorming instruction to request approval after each design subsection.
+
+A clarifying question is a decision input, not a stage confirmation. An approach selection is also a decision input, not a stage confirmation.
+
+Do not request approval after each subsection by default. Ask an additional question only when the answer materially changes the remaining requirements or design and is needed before the next part can be completed.
+
+After required clarification and exploration, use this order:
+
+1. Write or update the required stage record.
+2. Update the manifest for that record and create or record the stage checkpoint under the Git Checkpoints rules, using `skipped: no tracked changes` when applicable.
+3. Present the complete stage output in a single consolidated review that points to the written record.
+4. Request one final confirmation interaction for each completed version of the stage. Make the written stage record review and the stage confirmation the same interaction; do not request another confirmation after the user approves that record.
+5. After the user's decision, record the user confirmation separately in the manifest. A checkpoint commit does not count as confirmation.
+
+If the user's response changes the proposed stage output, update the same record and repeat this order before moving to the next stage.
+
 ## Stage Rules
 
 ### Enhanced Exploration Mode

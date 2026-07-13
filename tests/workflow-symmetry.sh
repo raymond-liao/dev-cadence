@@ -86,6 +86,53 @@ assert_workflow_evidence_contract() {
   assert_literal "$label accepted residual risks field" '`Accepted Residual Risks`' "$path"
 }
 
+assert_consolidated_brainstorming_confirmation() {
+  local label="$1"
+  local path="$2"
+  local solution_stage="$3"
+  local section="$TMP_DIR/$label-consolidated-brainstorming-confirmation.md"
+  local pattern
+
+  awk '
+    $0 == "## Consolidated Brainstorming Confirmation" {
+      count++
+      capturing = (count == 1)
+    }
+    capturing && $0 != "## Consolidated Brainstorming Confirmation" && /^#{1,2} / {
+      capturing = 0
+    }
+    capturing { print }
+    END { if (count != 1) exit 1 }
+  ' "$path" >"$section" || fail "expected one consolidated brainstorming confirmation section in ${path#"$ROOT_DIR/"}"
+
+  for pattern in \
+    '## Consolidated Brainstorming Confirmation' \
+    "Requirements Confirmation.*$solution_stage" \
+    'clarifying question.*decision input.*not.*stage confirmation' \
+    'approach selection.*decision input.*not.*stage confirmation' \
+    'Do not request approval after each subsection' \
+    'complete stage output.*single consolidated review' \
+    'one final confirmation interaction.*completed version' \
+    'materially changes.*remaining.*design' \
+    'written stage record review.*stage confirmation.*same interaction' \
+    'overrides.*vendored brainstorming.*approval after each design subsection'
+  do
+    assert_match "$label consolidated confirmation rule '$pattern'" "$pattern" "$section"
+  done
+
+  awk '
+    /Write or update the required stage record/ { record = NR }
+    /Update the manifest.*create or record the stage checkpoint/ { checkpoint = NR }
+    /complete stage output.*single consolidated review/ { review = NR }
+    /one final confirmation interaction/ { confirmation = NR }
+    /record the user confirmation separately in the manifest/ { manifest_confirmation = NR }
+    END {
+      exit !(record < checkpoint && checkpoint < review && review < confirmation &&
+             confirmation < manifest_confirmation)
+    }
+  ' "$section" || fail "invalid consolidated confirmation order in ${path#"$ROOT_DIR/"}"
+}
+
 assert_not_match() {
   local label="$1"
   local pattern="$2"
@@ -447,6 +494,10 @@ assert_workflows "terminal checkpoint rule" "must not contain .*pending.* checkp
 assert_workflows "no tracked changes checkpoint rule" "skipped: no tracked changes" "skipped: no tracked changes" "skipped: no tracked changes"
 assert_workflows "portable path rule" "do not persist local absolute paths" "do not persist local absolute paths" "do not persist local absolute paths"
 assert_workflows "manifest update cadence" "whenever a stage record is created or updated" "whenever a stage record is created or updated" "whenever a stage record is created or updated"
+
+assert_consolidated_brainstorming_confirmation "feature" "$FEATURE_SKILL" "Technical Solution"
+assert_consolidated_brainstorming_confirmation "refactor" "$REFACTOR_SKILL" "Refactor Solution"
+assert_not_match "bug-fix brainstorming confirmation override" "## Consolidated Brainstorming Confirmation" "$BUG_FIX_SKILL"
 
 assert_workflow_delivery_contract \
   "feature" \

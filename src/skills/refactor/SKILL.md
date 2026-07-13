@@ -258,6 +258,24 @@ If the requested change introduces new behavior, changes intended behavior, or a
 | "The confirmed refactor plan is old, but keep implementing anyway." | Return to the earliest affected stage and refresh records before moving forward. |
 | "This adds useful behavior, but it is small enough to stay in refactor." | Intentional behavior changes require feature scope or a separate feature task. |
 
+## Consolidated Brainstorming Confirmation
+
+For the brainstorming-backed Requirements Confirmation and Refactor Solution stages, this active workflow overrides the vendored brainstorming instruction to request approval after each design subsection.
+
+A clarifying question is a decision input, not a stage confirmation. An approach selection is also a decision input, not a stage confirmation.
+
+Do not request approval after each subsection by default. Ask an additional question only when the answer materially changes the remaining requirements or design and is needed before the next part can be completed.
+
+After required clarification and exploration, use this order:
+
+1. Write or update the required stage record.
+2. Update the manifest for that record and create or record the stage checkpoint under the Git Checkpoints rules, using `skipped: no tracked changes` when applicable.
+3. Present the complete stage output in a single consolidated review that points to the written record.
+4. Request one final confirmation interaction for each completed version of the stage. Make the written stage record review and the stage confirmation the same interaction; do not request another confirmation after the user approves that record.
+5. After the user's decision, record the user confirmation separately in the manifest. A checkpoint commit does not count as confirmation.
+
+If the user's response changes the proposed stage output, update the same record and repeat this order before moving to the next stage.
+
 ## Stage Rules
 
 ### Requirements Confirmation

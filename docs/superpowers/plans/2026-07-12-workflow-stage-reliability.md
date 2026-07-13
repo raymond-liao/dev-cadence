@@ -336,13 +336,13 @@ Leave the second, third, and fourth items unchecked.
 Change `version` from:
 
 ```text
-0.8.1
+0.8.2
 ```
 
 to:
 
 ```text
-0.8.2
+0.8.3
 ```
 
 - [ ] **Step 3: Mark completed plan steps**
@@ -408,5 +408,5 @@ git commit -m "fix(flow): address stage reliability review"
 
 ```bash
 git add docs/workflow-reliability-backlog.md docs/superpowers/plans/2026-07-12-workflow-stage-reliability.md version
-git commit -m "chore(release): prepare workflow reliability 0.8.2"
+git commit -m "chore(release): prepare workflow reliability 0.8.3"
 ```
