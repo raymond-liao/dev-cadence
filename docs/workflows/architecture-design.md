@@ -14,7 +14,7 @@ docs/architecture/<goal-slug>.md
 
 该流程只由明确的架构目标触发。缺少架构文档、Discovery 提到技术内容、Feature 需要局部技术方案等仓库状态或相邻活动都不会自动触发它。
 
-设计开始前确认目标、设计对象、范围、非范围、关键约束、详细程度和产物名称。文件名根据目标生成可移植的 kebab-case slug，不预设 Product、Capability 或 Work Item 分类。
+设计开始前确认目标、设计对象、范围、非范围、关键约束、详细程度和产物名称。文件名只表达用户确认的具体目标，并生成可移植的 kebab-case slug；不得从 Product、Capability、Work Item 或其他预设架构尺度/Scope 分类派生文件名，也不得添加这些分类前缀。
 
 ## 调查与方案
 

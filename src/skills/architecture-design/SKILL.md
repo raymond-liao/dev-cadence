@@ -42,7 +42,7 @@ Before investigating or drafting, confirm the following as one coherent design b
 
 Ask only questions whose answers materially change the design. When the user has explicitly delegated decisions, make conservative in-scope choices, record them as assumptions, and continue without manufacturing a confirmation interaction.
 
-Generate `<goal-slug>` from the confirmed goal as a clear, portable kebab-case filename. The directory already expresses the document type, so do not append `architecture` by default. Retain that word only when it is necessary to avoid ambiguity. Confirm the proposed path before writing unless the user has delegated naming authority.
+Generate `<goal-slug>` from the confirmed goal as a clear, portable kebab-case filename. The filename must express only the user's confirmed specific goal. Do not derive `<goal-slug>` from a preset architecture scale or Scope classification such as Product, Capability, or Work Item, and do not add those classifications as filename prefixes. The directory already expresses the document type, so do not append `architecture` by default. Retain that word only when it is necessary to avoid ambiguity. Confirm the proposed path before writing unless the user has delegated naming authority.
 
 ## Investigate The Necessary Current State
 
@@ -122,6 +122,7 @@ This workflow does not replace a Delivery Workflow's Technical Solution, Repair 
 Before declaring the architecture design complete, verify:
 
 - the confirmed goal, scope, non-scope, constraints, detail level, and output name are represented;
+- `<goal-slug>` expresses only the confirmed specific goal and has no preset architecture scale or Scope classification prefix;
 - necessary current-state evidence or explicit assumptions are present;
 - option count reflects meaningful choices rather than a quota;
 - choice markers match actual decision state;

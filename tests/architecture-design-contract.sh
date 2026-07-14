@@ -61,6 +61,11 @@ done
 assert_match "recommendation not selection" 'recommendation.*not.*selection|recommended.*must not.*Selected' "$SKILL"
 assert_literal "single output" 'docs/architecture/<goal-slug>.md' "$SKILL"
 assert_match "portable goal slug" 'kebab-case' "$SKILL"
+assert_literal \
+  "no preset classification naming" \
+  'Do not derive `<goal-slug>` from a preset architecture scale or Scope classification such as Product, Capability, or Work Item, and do not add those classifications as filename prefixes.' \
+  "$SKILL"
+assert_match "goal-only filename meaning" 'filename.*only.*confirmed.*specific goal|only.*specific goal.*filename' "$SKILL"
 assert_match "avoid redundant architecture suffix" 'do not.*append.*architecture|does not.*repeat.*architecture' "$SKILL"
 assert_match "tailored sections" '[Oo]mit.*not applicable|[Dd]o not.*empty sections' "$SKILL"
 assert_match "Mermaid preferred" '[Pp]refer Mermaid|Mermaid.*preferred' "$SKILL"
