@@ -55,10 +55,13 @@ for marker in '✅' '❌' '❓'; do
   assert_literal "routing marker $marker" "$marker"
 done
 
-assert_match "initial versus existing baseline" 'first.*PRD|existing.*PRD|existing.*product-design'
+assert_match "initial baseline route" 'first.*PRD|first.*product-design'
+assert_match "existing baseline boundary" 'existing.*PRD|existing.*product-design'
 assert_match "missing document does not trigger discovery" 'missing.*PRD.*does not|absence.*PRD.*does not'
-assert_match "bug versus behavior change" 'already.*expected|intentionally change.*expected behavior'
-assert_match "feature versus refactor" 'add.*behavior|without intentionally changing expected behavior'
+assert_match "bug route" 'already.*expected'
+assert_match "expected behavior change route" 'intentionally change.*expected behavior'
+assert_match "feature route" 'add.*behavior|new system-visible behavior'
+assert_match "behavior-preserving refactor route" 'without intentionally changing expected behavior'
 assert_match "repository state is insufficient" 'repository state.*does not.*trigger|does not.*trigger.*repository state'
 assert_match "one routing clarification question" 'one.*routing clarification question|one necessary.*clarification question'
 assert_match "examples are not keyword matching" 'not.*keyword|keywords.*not'
