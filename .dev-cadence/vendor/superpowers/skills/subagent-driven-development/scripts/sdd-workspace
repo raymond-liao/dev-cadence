@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Resolve and ensure the working-tree directory SDD uses for its short-lived
+# artifacts: task briefs, implementer reports, review packages, and the
+# progress ledger. Print the directory's absolute path.
+#
+# The workspace lives under the current Dev Cadence task directory so all
+# workflow artifacts for one task stay together. A self-ignoring .gitignore
+# keeps the workspace out of `git status` and out of accidental commits without
+# modifying any tracked file.
+#
+# Single source of truth for the workspace location, so task-brief and
+# review-package cannot drift to different directories.
+#
+# Usage: sdd-workspace
+set -euo pipefail
+
+root=$(git rev-parse --show-toplevel)
+
+if [ -z "${DEV_CADENCE_TASK_DIR:-}" ]; then
+  echo "DEV_CADENCE_TASK_DIR is required, for example: build/dev-cadence/feature-dev/<feature-slug>" >&2
+  exit 2
+fi
+
+case "$DEV_CADENCE_TASK_DIR" in
+  *..*)
+    echo "DEV_CADENCE_TASK_DIR must not contain '..': $DEV_CADENCE_TASK_DIR" >&2
+    exit 2
+    ;;
+esac
+
+case "$DEV_CADENCE_TASK_DIR" in
+  /*) task_dir="$DEV_CADENCE_TASK_DIR" ;;
+  *) task_dir="$root/${DEV_CADENCE_TASK_DIR#./}" ;;
+esac
+
+case "$task_dir" in
+  "$root"/*) ;;
+  *)
+    echo "DEV_CADENCE_TASK_DIR must resolve inside the repository: $DEV_CADENCE_TASK_DIR" >&2
+    exit 2
+    ;;
+esac
+
+dir="$task_dir/sdd"
+mkdir -p "$dir"
+printf '*\n' > "$dir/.gitignore"
+cd "$dir" && pwd

@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-001`
-- Version：`5`
-- Status：`In Progress`
+- Version：`6`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：New
 
@@ -53,7 +53,7 @@
 
 ## Story Relationships
 
-- Blocks：`S-002` 产品设计基线增量更新与版本治理；等待 S-001 Business Acceptance 后解除。
+- Blocks：无；`S-002` 的前置依赖已满足。
 
 ## 依赖
 
@@ -82,3 +82,4 @@
 | 3 | 2026-07-13 | 重写 User Story，移除 Dev Cadence、PRD 和 workflow 实现表述。 | User Story 应表达用户目标和价值，而不是内部实现方式或交付物。 |
 | 4 | 2026-07-13 | 将状态更新为 In Progress。 | 已启动对应的 feature-dev workflow run。 |
 | 5 | 2026-07-13 | 将范围更新为 PRD 与 Business Architecture 两文档基线，并完成待验收实现。 | Discovery skill、入口路由、产品设计文档契约、构建安装契约和公开说明已实现，等待 Business Acceptance。 |
+| 6 | 2026-07-14 | 将状态更新为 Done，并解除 S-002 的前置阻塞。 | 用户选择 `1. Accept`，S-001 已通过 Business Acceptance。 |

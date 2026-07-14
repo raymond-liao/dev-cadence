@@ -2,10 +2,6 @@
 
 按本文件顺序逐项处理。开始一个主任务前，先单独确认范围和实施计划；当前任务完成并验证后，再进入下一项。不要把多个待处理项合并为一次大范围修改。
 
-## 进行中
-
-- [ ] [P1] [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md)
-
 ## 待处理
 
 - [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
@@ -34,6 +30,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md)
 - [x] [P1] 补齐 executing-plans 路径下实施提交的提交前审查机制。
 - [x] [P2] 补齐 Refactor 测试敏感性检查：新增 characterization 或 contract test 时执行可逆 sensitivity check，并通过契约测试保护该规则。
 - [x] [P2] 补齐最小验证阶段门禁：为 `feature-dev`、`bug-fix` 和 `refactor` 增加对称的 `ready`、`ready_with_risk` 和 `not_ready` 决策；阻止 `not_ready` 进入 Business Acceptance，并定义返回最早受影响阶段的最小返工规则。
@@ -41,7 +38,7 @@
 
 ## 已关闭
 
-- [Superseded] 实现 Discovery workflow 和 PRD 契约：原任务已拆分为 [S-001 首次 Discovery 与 PRD 基线](stories/S-001-initial-discovery-prd-baseline.md) 和 [S-002 PRD 增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)。该状态只表示原任务被两个 Story 替代，不表示 Discovery workflow 已经实现。
+- [Superseded] 实现 Discovery workflow 和 PRD 契约：原任务已拆分为 [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md) 和 [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)。该条目的 Superseded 状态只说明任务被拆分；S-001 的实际完成状态以 Story 和运行记录为准。
 
 ## 评级说明
 

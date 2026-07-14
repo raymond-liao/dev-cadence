@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-002`
-- Version：`4`
-- Status：`Blocked`
+- Version：`5`
+- Status：`Ready`
 - Priority：`P1`
 - Change Type：Enhancement
 
@@ -54,11 +54,11 @@
 ## Story Relationships
 
 - Extends：`S-001` 首次 Discovery 与产品设计基线。
-- Depends On：`S-001` 首次 Discovery 与产品设计基线。
+- Depends On：`S-001` 首次 Discovery 与产品设计基线（已完成）。
 
 ## 依赖
 
-- `S-001` 首次 Discovery 与产品设计基线。
+- `S-001` 首次 Discovery 与产品设计基线（已完成）。
 
 ## 后续工作
 
@@ -67,7 +67,6 @@
 ## Open Questions
 
 - 当一次变化只影响 PRD 或 Business Architecture 之一时，两份文档应独立升版，还是保持共享的产品设计基线版本？
-- 当前仍被尚未完成 Business Acceptance 的 `S-001` 阻塞。
 
 ## 相关文档
 
@@ -83,3 +82,4 @@
 | 2 | 2026-07-13 | 将状态改为 Blocked，并补充 User Story、Story Relationships 和 Open Questions。 | S-002 依赖尚未实现的 S-001，不能标记为可进入开发。 |
 | 3 | 2026-07-13 | 重写 User Story，移除 Dev Cadence、PRD 和 workflow 实现表述。 | User Story 应表达用户目标和价值，而不是内部实现方式或交付物。 |
 | 4 | 2026-07-13 | 将增量治理范围对齐到 PRD 与 Business Architecture 两文档基线。 | S-001 已确定两份文档共同构成产品设计基线，后续增量流程不能继续使用单一 PRD 模型。 |
+| 5 | 2026-07-14 | 将状态更新为 Ready。 | S-001 已通过 Business Acceptance，前置依赖满足。 |

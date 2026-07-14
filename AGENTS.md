@@ -95,3 +95,13 @@
 - 不要在未确认适用范围时把规则同时扩散到 feature-dev 和 bug-fix。
 - 不要为了修 demo 个例而绕过 workflow skill 的规则源。
 - 不要提交 `.dev-cadence.yaml`、`.env`、临时日志、服务 PID、个人路径或密钥。
+
+## Dev Cadence
+
+When the user asks for product discovery, product ideas, requirements work, development work, active-task follow-up, testing, verification, or commit/checkpoint operations, check Dev Cadence before any repository exploration, product-design changes, implementation, Git mutation, or clarifying question:
+
+`.dev-cadence/skills/using-dev-cadence/SKILL.md`
+
+If an installed Dev Cadence flow applies, use it. If no installed flow applies, handle the request normally.
+
+Root-level `*.md` files and all files under `docs/` do not require new or updated automated tests. Do not add or modify tests solely because those documentation files changed. If the same task changes executable behavior, test that executable behavior.
