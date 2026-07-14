@@ -329,6 +329,24 @@ build/dev-cadence/bug-fix/<bug-slug>/03-repair-plan.md
 
 Ask the user to confirm the plan before implementation starts.
 
+#### Pre-Implementation Design Freshness Gate
+
+Immediately before entering Repair Implementation, revalidate that the confirmed diagnosis, Repair Solution, and Repair Plan still match the current repair context.
+
+Compare the current work item card version, confirmed diagnosis record, confirmed Repair Solution record, Repair Plan, and current code state. When present, also inspect authoritative product design, architecture, Decision, dependency state, and other sources referenced by the plan.
+
+Record the input identities, conclusion, and evidence summary in the manifest and current plan or repair record. The evidence must identify the card and document versions or paths used, the current branch and commit, relevant dependency state, and material repository changes since confirmation.
+
+Classify the result:
+
+- If the inputs remain valid, continue directly without asking the user to reconfirm unchanged content.
+- If the diagnosis, expected behavior, repair boundary, or acceptance criteria changed, return to the earliest affected Problem Diagnosis stage.
+- If architecture, data, interface, security, or repair-strategy assumptions changed, return to Repair Solution.
+- If only the task split, file list, order, or verification steps changed, return to Repair Plan.
+- Unrelated code changes, formatting changes, generated output, or files outside the affected boundary do not invalidate the design.
+
+When returning to an earlier stage, mark affected later confirmation and verification evidence as superseded, set the earliest affected stage to `in_progress`, set later affected stages to `pending`, refresh and reconfirm the affected records, and block implementation until the gate passes again.
+
 ### Repair Implementation
 
 Use:

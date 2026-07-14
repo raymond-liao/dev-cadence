@@ -396,6 +396,24 @@ This active workflow path overrides any generic default plan path in the vendore
 
 Ask the user to confirm the plan before implementation starts.
 
+#### Pre-Implementation Design Freshness Gate
+
+Immediately before entering Refactor Implementation, revalidate that the confirmed requirements, Refactor Solution, and Refactor Plan still match the current refactor context.
+
+Compare the current work item card version, confirmed requirements record, confirmed Refactor Solution record, Refactor Plan, and current code state. When present, also inspect authoritative product design, architecture, Decision, dependency state, and other sources referenced by the plan.
+
+Record the input identities, conclusion, and evidence summary in the manifest and current plan or refactor record. The evidence must identify the card and document versions or paths used, the current branch and commit, relevant dependency state, and material repository changes since confirmation.
+
+Classify the result:
+
+- If the inputs remain valid, continue directly without asking the user to reconfirm unchanged content.
+- If requirements, behavior baseline, refactor boundary, or acceptance criteria changed, return to the earliest affected Requirements Confirmation stage.
+- If architecture, data, interface, security, or refactor-strategy assumptions changed, return to Refactor Solution.
+- If only the task split, file list, order, or verification steps changed, return to Refactor Plan.
+- Unrelated code changes, formatting changes, generated output, or files outside the affected boundary do not invalidate the design.
+
+When returning to an earlier stage, mark affected later confirmation and verification evidence as superseded, set the earliest affected stage to `in_progress`, set later affected stages to `pending`, refresh and reconfirm the affected records, and block implementation until the gate passes again.
+
 ### Refactor Implementation
 
 Use these vendored skills as applicable:
