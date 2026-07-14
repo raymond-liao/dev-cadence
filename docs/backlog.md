@@ -8,7 +8,6 @@
 
 ## 待处理
 
-- [ ] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
 - [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 - [ ] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
 - [ ] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md)
@@ -43,6 +42,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
 - [x] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
 - [x] [P2] [T-001 工作项范围章节语义标识](tasks/T-001-work-item-scope-semantic-markers.md)
 - [x] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
@@ -89,7 +89,7 @@
 
 | 序号 | 可并行处理 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-007；S-003 | S-007：S-008；S-003：- | ✅ Ready |
+| 1 | S-003 | - | ✅ Ready |
 | 2 | S-010 | S-009 | ✅ Ready |
 | 3 | S-004 | S-003 | ⚠️ Blocked |
 | 4 | S-005 | S-007、S-010 | ⚠️ Blocked |

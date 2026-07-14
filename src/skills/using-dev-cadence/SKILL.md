@@ -47,6 +47,34 @@ That shared skill owns common document presentation rules. Do not duplicate its 
 | Report a bug, error, failing test, regression, or unexpected behavior | `.dev-cadence/skills/bug-fix/SKILL.md` |
 | Improve internal structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior | `.dev-cadence/skills/refactor/SKILL.md` |
 
+## Two-Stage Routing Decision
+
+Route requests in two distinct stages:
+
+1. **Stage 1: Discover candidates.** If there is even a 1% chance an installed workflow applies, identify and read each plausible candidate skill before taking development action.
+2. **Stage 2: Select the action.** After reading the candidates, either select the matching workflow, choose a different matching workflow, ask one necessary routing clarification question, or handle the request normally when no installed workflow applies.
+
+The 1% threshold is a candidate-reading rule. It does not automatically select or start a workflow. Base the final decision on the user's intended outcome and the candidate skills' boundaries, not on isolated keywords.
+
+## Representative Routing Examples
+
+These examples are representative intent decisions, not a keyword-matching list. The decision and reason remain authoritative when wording varies.
+
+| Category | Representative request | Decision and reason |
+| --- | --- | --- |
+| Initial Discovery | "I have an incomplete product idea; help me explore it and create our first PRD." | ✅ Select `discovery` because the user wants product exploration and the first product-design baseline. |
+| Incremental Discovery | "Update our existing PRD with the newly confirmed pricing model." | ❌ Do not use the installed initial `discovery` flow because an existing product-design baseline requires incremental reconciliation, which is not currently supported. Do not overwrite the baseline or pretend the missing workflow exists. |
+| Feature | "Add an export command that produces a JSON report." | ✅ Select `feature-dev` because the user wants new system-visible behavior. |
+| Bug Fix | "The export command is documented to include timestamps, but they are missing." | ✅ Select `bug-fix` because already expected behavior is not working. If the user instead asks to intentionally change expected behavior, select `feature-dev`. |
+| Refactor | "Extract the parser into smaller modules without intentionally changing expected behavior." | ✅ Select `refactor` because the requested outcome is behavior-preserving structural improvement. If the request also adds behavior, route that behavior change through `feature-dev` or clarify the primary outcome. |
+| Ordinary Request | "Explain what this configuration field means." | ❌ Handle normally because explanation alone does not request product discovery or a software change. |
+| Repository State Only | "This repository has no PRD." | ❌ Do not start Discovery from repository state alone. A missing PRD does not establish product-exploration intent. Existing code, work-item cards, or tests likewise do not trigger a workflow without a matching user goal. |
+| Ambiguous Mixed Intent | "Clean up this module and change how retries work." | ❓ Ask one necessary routing clarification question because the request mixes behavior-preserving cleanup and an expected-behavior change without identifying the primary outcome. |
+
+Keep this entry selector as the single authority for cross-workflow routing examples. Individual workflow skills retain their own applicability, stop conditions, and necessary local Red Flags; they do not copy this complete matrix.
+
+When adding a new workflow, review whether a representative request or adjacent boundary here needs one concise example. Do not add an example when the new workflow introduces no real routing ambiguity.
+
 ## Flow Priority
 
 When multiple flows might apply, choose the process flow before any implementation or domain skill.
