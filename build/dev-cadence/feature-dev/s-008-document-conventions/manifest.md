@@ -8,7 +8,7 @@
 - Workspace：`.`
 - Branch：`codex/s-008-document-conventions`
 - Started At：`2026-07-14T11:27:22+08:00`
-- Current Stage：`System Testing`
+- Current Stage：`Business Acceptance`
 - Overall Status：`in_progress`
 
 ## 工作项
@@ -24,16 +24,17 @@
 | Technical Solution | `confirmed` | [技术方案](02-technical-solution.md) | `confirmed: delegated by user on 2026-07-14` | `faa2897` | 采用共享辅助 skill 方案。 |
 | Implementation Plan | `confirmed` | [实施计划](03-implementation-plan.md) | `confirmed: delegated by user on 2026-07-14` | `a3561ef` | 三项 TDD 实施任务。 |
 | Development Implementation | `confirmed` | [实施记录](04-implementation-record.md) | `confirmed: delegated by user on 2026-07-14` | `74023b5` | 三项计划任务和 whole-feature review 完成。 |
-| System Testing | `in_progress` | [系统测试报告](05-system-test-report.md) | `pending` | `pending` | 独立验证已执行，正在固化证据。 |
-| Business Acceptance | `pending` | `06-business-acceptance-record.md` | `pending` | `pending` | 尚未开始。 |
+| System Testing | `confirmed` | [系统测试报告](05-system-test-report.md) | `verification decision: ready` | `7e235f4` | 所有验收标准有执行证据。 |
+| Business Acceptance | `in_progress` | `06-business-acceptance-record.md` | `pending` | `pending` | 等待用户最终业务验收决定。 |
 
 ## 验证摘要
 
-- 尚未开始。
+- Verification Decision：`ready`
+- 完整 `check-all`、whitespace、source/dist/dogfood 一致性和版本检查通过。
 
 ## 剩余风险
 
-- Requirements Confirmation 未发现剩余风险。
+- S-009 状态呈现和 S-010 快捷链接仍是独立 backlog 范围，不属于 S-008 缺口。
 
 ## Business Acceptance
 
