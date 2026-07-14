@@ -1,7 +1,7 @@
 # Goal-Driven Architecture Workflow System Test Report
 
 - Status: ✅ `passed`
-- Final implementation SHA: `00aacb31e3024274b8b66ed59842ffd6abd19196`
+- Final implementation SHA: `8c37150f927c89bbfe0c7c9c1399190d0e0b4cd2`
 - Tested at: `2026-07-14`
 
 ## Verification Commands
@@ -27,7 +27,7 @@
 | 6 | Shared Selected/Rejected/Pending/neutral semantics | ✅ `passed` |
 | 7 | Tailored architecture content and no empty-section requirement | ✅ `passed` |
 | 8 | Diagram-in-document and Mermaid preference | ✅ `passed` |
-| 9 | Single `docs/architecture/<goal-slug>.md` output and naming rules | ✅ `passed` |
+| 9 | Single `docs/architecture/<goal-slug>.md` output; filename expresses only the confirmed goal and forbids preset architecture scale/Scope classification derivation or prefixes | ✅ `passed` |
 | 10 | No approval claim before confirmation and consolidated summary | ✅ `passed` |
 | 11 | No code, planning, decomposition, testing, release, or delivery-solution replacement | ✅ `passed` |
 | 12 | Source/dist/package synchronization and semantic contract coverage | ✅ `passed` |

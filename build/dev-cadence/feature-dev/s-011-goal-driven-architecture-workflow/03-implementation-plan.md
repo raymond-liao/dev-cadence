@@ -58,6 +58,12 @@
 - [x] Verify synchronized key rules in source and dist.
 - [x] Perform whole-change review and close findings.
 
+### Task 6: Independent Review Fix
+
+- [x] Add a failing negative contract for preset architecture scale/Scope classification naming.
+- [x] Require `<goal-slug>` to express only the confirmed specific goal and prohibit Product, Capability, Work Item, or similar classification prefixes.
+- [x] Rebuild, review the fix identity, and run fresh full verification.
+
 ## Pre-Implementation Design Freshness
 
 - Work item: `docs/stories/S-011-goal-driven-architecture-workflow.md`, Version 2, Ready.

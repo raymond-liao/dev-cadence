@@ -24,6 +24,7 @@
 - `bash tests/package-contract.sh`: passed after source build.
 - `bash scripts/check-whitespace.sh`: passed.
 - Fresh `bash scripts/check-all.sh`: passed after `CR-I-001` was fixed.
+- Fresh `bash scripts/check-all.sh`: passed after `CR-I-002` was fixed.
 - Source/dist synchronization search: passed for trigger, output, record boundary, option semantics, Mermaid preference, and routing boundaries.
 
 ## Executing-Plans Commit Review Ledger
@@ -46,8 +47,8 @@
 
 ## Implementation Identity
 
-- Final implementation SHA: `00aacb31e3024274b8b66ed59842ffd6abd19196`.
-- Reviewed range: `c46f1d781cefb96e33ca82b82c59e65f4dc2aaf7..00aacb31e3024274b8b66ed59842ffd6abd19196`.
+- Final implementation SHA: `8c37150f927c89bbfe0c7c9c1399190d0e0b4cd2`.
+- Reviewed range: `c46f1d781cefb96e33ca82b82c59e65f4dc2aaf7..8c37150f927c89bbfe0c7c9c1399190d0e0b4cd2`.
 
 ### Review `S011-FINAL-1` / `final-review-fix-1`
 
@@ -67,12 +68,30 @@
 - Findings: `CR-I-001` fixed in the reviewed snapshot.
 - Residual risks: fresh full check remains required.
 
+### Review `S011-FINAL-2` / `final-review-fix-2`
+
+- Commit type: `final-review-fix`
+- State: `verified`
+- Source finding IDs: `CR-I-002`
+- Affected tasks: Task 6
+- Expected parent: `31a1acf07b03391f7365131c1c382ed4e4bff55a`
+- Reviewed tree: `3b12024528c4322cd41b65311615dcf32f7cb5f0`
+- Staged files: `src/skills/architecture-design/SKILL.md`, `tests/architecture-design-contract.sh`, `docs/workflows/architecture-design.md`.
+- Checks: focused Architecture Design, package, and whitespace contracts passed.
+- Decision: approved; the filename now expresses only the confirmed specific goal and explicitly prohibits preset architecture scale/Scope classification derivation and prefixes.
+- Commit hash: `8c37150f927c89bbfe0c7c9c1399190d0e0b4cd2`
+- Committed parent: `31a1acf07b03391f7365131c1c382ed4e4bff55a`
+- Committed tree: `3b12024528c4322cd41b65311615dcf32f7cb5f0`
+- Identity: `exact`
+- Findings: `CR-I-002` fixed in the reviewed snapshot.
+- Residual risks: fresh full check remains required.
+
 ## Code Review Evidence
 
 - Report: `build/dev-cadence/feature-dev/s-011-goal-driven-architecture-workflow/04-code-review-report.md`
 - Review decision: ✅ `passed`
 - Critical findings: 0
-- Important findings: 1 fixed (`CR-I-001`)
+- Important findings: 2 fixed (`CR-I-001`, `CR-I-002`)
 - Unresolved findings: None
 
 ## Residual Risks

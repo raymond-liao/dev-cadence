@@ -6,7 +6,7 @@
 - [x] Applicable rule source: repository root `AGENTS.md`.
 - [x] Confirmed requirements and technical solution are linked from the run records.
 - [x] Implementation plan: `build/dev-cadence/feature-dev/s-011-goal-driven-architecture-workflow/03-implementation-plan.md`.
-- [x] Reviewed range: `c46f1d781cefb96e33ca82b82c59e65f4dc2aaf7..00aacb31e3024274b8b66ed59842ffd6abd19196`.
+- [x] Reviewed range: `c46f1d781cefb96e33ca82b82c59e65f4dc2aaf7..8c37150f927c89bbfe0c7c9c1399190d0e0b4cd2`.
 
 ## Review Perspectives
 
@@ -27,6 +27,7 @@
 
 - Critical: 0.
 - Important: 1 fixed (`CR-I-001`: new entry and workflow descriptions were not synchronized with the exact skill-description contract).
+- Important: 1 fixed (`CR-I-002`: the authoritative skill now prohibits deriving or prefixing `<goal-slug>` with Product, Capability, Work Item, or another preset architecture scale/Scope classification and requires the filename to express only the confirmed specific goal).
 - Notes: 1 fixed before the original commit (README record-model wording).
 
 ## Decision
