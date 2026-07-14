@@ -4,11 +4,10 @@
 
 ## 进行中
 
-- 无。
+- [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 
 ## 待处理
 
-- [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 - [ ] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
 - [ ] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md)
 - [ ] [P1] [S-012 Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md)

@@ -39,15 +39,15 @@
 - Consumes: Story 验收标准和现有 `assert_literal` / `assert_match` helper。
 - Produces: 共享规则与四 workflow 必须满足的可执行契约。
 
-- [ ] **Step 1: 添加共享规则失败断言**
+- [x] **Step 1: 添加共享规则失败断言**
 
   断言三项选择条件、有意义文本、来源相对路径、稳定锚点、链接与精确路径并存、pending 目标、`docs/`/`build/` 生命周期、移动重命名、tracked/run 检查、禁止 URI 和机器路径例外。
 
-- [ ] **Step 2: 添加 workflow 对称接入失败断言**
+- [x] **Step 2: 添加 workflow 对称接入失败断言**
 
   对 discovery、feature-dev、bug-fix、refactor 循环断言共享 document-reference 契约和 tracked/run 链接检查时机，并断言入口不复制完整契约。
 
-- [ ] **Step 3: 运行 RED**
+- [x] **Step 3: 运行 RED**
 
   Run: `bash tests/document-conventions-contract.sh`
 
@@ -68,15 +68,15 @@
 - Consumes: Task 1 契约。
 - Produces: 单一共享链接规范，以及四 workflow 的对称应用门禁。
 
-- [ ] **Step 1: 添加最小共享 `Document References` 章节**
+- [x] **Step 1: 添加最小共享 `Document References` 章节**
 
   写入选择条件、格式、身份、生命周期、pending、验证和禁止范围；保留明确的 `must` / `do not` / `when` / `before` 表述。
 
-- [ ] **Step 2: 对称接入四个 workflow**
+- [x] **Step 2: 对称接入四个 workflow**
 
   每个 workflow 添加相同职责的短规则，只引用共享规范，不复制完整契约。
 
-- [ ] **Step 3: 运行 GREEN 和对称性回归**
+- [x] **Step 3: 运行 GREEN 和对称性回归**
 
   Run: `bash tests/document-conventions-contract.sh`
 
@@ -86,7 +86,7 @@
 
   Expected: `Workflow symmetry checks passed.`
 
-- [ ] **Step 4: 审查并提交实现任务**
+- [x] **Step 4: 审查并提交实现任务**
 
   暂存 Task 1-2 文件，记录 staged tree 身份，审查完整 staged diff，执行 focused checks，按 executing-plans ledger 验证精确 commit 身份。
 
@@ -103,11 +103,11 @@
 - Consumes: Task 2 的规则源和测试。
 - Produces: `0.12.0` 可安装包与完整验证证据。
 
-- [ ] **Step 1: 更新版本并添加契约保护**
+- [x] **Step 1: 更新版本并添加契约保护**
 
   将 `version` 更新为 `0.12.0`；现有 package/install contract 继续验证版本进入分发包和安装结果。
 
-- [ ] **Step 2: 构建并核对源/分发同步**
+- [x] **Step 2: 构建并核对源/分发同步**
 
   Run: `bash scripts/build.sh`
 
@@ -117,7 +117,7 @@
 
   Expected: 共享规则与四 workflow 关键接入同时出现在 `src/` 和 `dist/`。
 
-- [ ] **Step 3: 执行完整检查**
+- [x] **Step 3: 执行完整检查**
 
   Run: `bash scripts/check-whitespace.sh`
 
@@ -127,13 +127,13 @@
 
   Expected: 所有构建和契约检查通过。
 
-- [ ] **Step 4: 检查当前 run 文档链接与禁止路径**
+- [x] **Step 4: 检查当前 run 文档链接与禁止路径**
 
   对 `build/dev-cadence/feature-dev/s-010-document-reference-links/*.md` 中的仓库内相对链接解析目标存在性，并扫描 `/Users/`、`file://`、`vscode://`。
 
   Expected: 所有本地目标存在，禁止路径扫描无匹配。
 
-- [ ] **Step 5: 审查并提交版本任务**
+- [x] **Step 5: 审查并提交版本任务**
 
   暂存 `version`，记录 staged tree 身份，审查 diff，执行完整检查，并按 executing-plans ledger 验证精确 commit 身份。
 
