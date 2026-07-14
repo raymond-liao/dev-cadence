@@ -9,8 +9,8 @@
 - Workspace: `.worktrees/s-010-document-reference-links`
 - Branch: `codex/s-010-document-reference-links`
 - Started at: `2026-07-14 Asia/Shanghai`
-- Current stage: Business Acceptance
-- Overall status: ⚠️ `accepted_with_risk`
+- Current stage: Completion
+- Overall status: ✅ `integrated`
 
 ## Stage Status
 
@@ -42,5 +42,8 @@
 
 ## Final Integration Decision
 
-- Task branch preserved; project-local worktree preserved.
-- No merge, push, pull request, branch deletion, or worktree cleanup was performed.
+- Integration action：merged locally into `main`。
+- Merge commit：`2d670b9`。
+- Task branch `codex/s-010-document-reference-links` was deleted after the merge。
+- Project-local worktree `.worktrees/s-010-document-reference-links` was removed after the merge。
+- No push or pull request was performed。

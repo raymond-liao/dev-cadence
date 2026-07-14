@@ -35,6 +35,7 @@
 
 ## Final Follow-Up Actions
 
-- Task branch `codex/s-010-document-reference-links` was preserved.
-- Project-local worktree `.worktrees/s-010-document-reference-links` was preserved.
-- No merge, push, pull request, branch deletion, or worktree cleanup was performed.
+- Task branch `codex/s-010-document-reference-links` was merged locally into `main` at merge commit `2d670b9`.
+- Task branch `codex/s-010-document-reference-links` was deleted after the successful merge.
+- Project-local worktree `.worktrees/s-010-document-reference-links` was removed after the successful merge.
+- No push or pull request was performed.

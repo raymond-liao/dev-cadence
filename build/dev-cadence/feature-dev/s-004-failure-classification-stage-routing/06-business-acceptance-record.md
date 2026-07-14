@@ -40,7 +40,7 @@ None identified. The user explicitly selected `Accept with residual risk` even t
 
 ## Final Follow-Up Actions
 
-- The S-004 branch was not merged or pushed in this operation.
-- Branch `codex/s-004-failure-classification-stage-routing` was preserved.
-- Worktree `.worktrees/s-004-failure-classification-stage-routing` was preserved.
-- No branch deletion or worktree cleanup was performed.
+- The S-004 branch was merged locally into `main` at merge commit `436bf0b`.
+- Branch `codex/s-004-failure-classification-stage-routing` was deleted after the successful merge.
+- Worktree `.worktrees/s-004-failure-classification-stage-routing` was removed after the successful merge.
+- No push or pull request was performed.

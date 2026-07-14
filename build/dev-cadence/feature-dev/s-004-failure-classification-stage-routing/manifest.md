@@ -9,8 +9,8 @@
 - Workspace: `.worktrees/s-004-failure-classification-stage-routing`
 - Branch: `codex/s-004-failure-classification-stage-routing`
 - Started at: `2026-07-14 Asia/Shanghai`
-- Current stage: Business Acceptance
-- Overall status: ⚠️ `accepted_with_risk`
+- Current stage: Completion
+- Overall status: ✅ `integrated`
 
 ## Stage Status
 
@@ -43,7 +43,8 @@
 
 ## Final Integration Decision
 
-- Integration action: `not performed`
-- Branch: `codex/s-004-failure-classification-stage-routing` preserved.
-- Worktree: `.worktrees/s-004-failure-classification-stage-routing` preserved.
-- Push, merge, cleanup, and branch deletion were not performed.
+- Integration action: merged locally into `main`.
+- Merge commit: `436bf0b`.
+- Branch `codex/s-004-failure-classification-stage-routing` was deleted after the merge.
+- Worktree `.worktrees/s-004-failure-classification-stage-routing` was removed after the merge.
+- No push or pull request was performed.
