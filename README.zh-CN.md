@@ -67,7 +67,7 @@ docs/product-design/business-architecture.md
 Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation
 ```
 
-Discovery 负责产品需求和业务架构，不负责技术架构、工作项拆分或应用实现。分析阶段和最终确认门禁只在会话中执行，唯一持久化产出是 PRD 和 Business Architecture。当前 S-001 只创建第一版基线；增量更新由 S-002 实现。
+Discovery 负责产品需求和业务架构，不负责技术架构、工作项拆分或应用实现。分析阶段和最终确认门禁只在会话中执行，唯一 primary new outputs 是 PRD 和 Business Architecture。技术输入可以链接到既有权威技术资产，或按共享 Open Question Registry 自身规则执行支撑性 shared-asset maintenance；这既不是第三个 Discovery 主产物，也不是过程记录。当前 S-001 只创建第一版基线；对本次 Discovery 启动前已经存在的基线进行增量更新由 S-002 实现。
 
 **feature-dev** 用于新增用户可见或系统可见功能，以及对预期行为的主动变更。
 

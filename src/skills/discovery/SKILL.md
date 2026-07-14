@@ -29,7 +29,9 @@ Use Discovery for:
 - first-time creation of a Business Architecture;
 - product exploration that must become durable repository documents before work-item planning.
 
-Do not use this S-001 workflow to update or reconcile an existing product-design baseline. If either `docs/product-design/prd.md` or `docs/product-design/business-architecture.md` already exists, stop before changing either file and explain that incremental update belongs to the later product-design versioning capability.
+Do not use this S-001 workflow to update or reconcile a product-design baseline that was already present before the current first-time Discovery effort started. At workflow start, record in the conversation whether either `docs/product-design/prd.md` or `docs/product-design/business-architecture.md` already exists. If either document is a pre-existing or previously confirmed baseline, stop before changing either file and explain that incremental update belongs to the later product-design versioning capability.
+
+Documents created as the working baseline by the current Discovery effort do not trigger this stop rule. During the same conversation and user goal, continue editing that current Discovery draft after feedback or rejection until the user confirms it or abandons the effort.
 
 Direct requests for a clear feature, bug fix, or behavior-preserving refactor do not have to pass through Discovery. Route them to their matching installed delivery workflow.
 
@@ -111,6 +113,8 @@ Preserve technical input without making Discovery evaluate it:
 
 Moving, registering, linking, or excluding technical input must not be described as an accepted technical decision. Record it as preserved context for evaluation in the relevant technical-design stage.
 
+Technical Input Disposition is supporting shared-asset maintenance, not a third primary Discovery output and not a Discovery process record. Update or link an existing authoritative Story, Technical Task, technical solution, Decision, or other technical asset only when that asset's maintenance rules allow it. When no suitable owner exists, invoke the shared Open Question Registry according to its own on-demand creation rules. Do not automatically create a Story, Technical Task, Decision, or another technical-design asset merely to dispose of Discovery input.
+
 ## Workflow Boundary
 
 ### ✅ Discovery Must
@@ -142,14 +146,14 @@ The first four stages form one continuous exploration in the current conversatio
 
 ## Persistence And Continuation
 
-Discovery is an Asset Workflow. Its only persistent workflow outputs are:
+Discovery is an Asset Workflow. Its only primary new workflow outputs are:
 
 ```text
 docs/product-design/prd.md
 docs/product-design/business-architecture.md
 ```
 
-Do not create a run manifest, stage records, confirmation records, rejection records, or duplicate analysis documents. Background, goals, scope, constraints, risks, unresolved questions, rejected directions, and future scope must be written directly into the authoritative document that owns the content.
+Do not create a run manifest, stage records, confirmation records, rejection records, or duplicate analysis documents. Background, goals, scope, constraints, risks, unresolved questions, rejected directions, and future scope must be written directly into the authoritative document that owns the content. Supporting shared-asset maintenance performed through Technical Input Disposition does not become a Discovery primary output.
 
 Use the current conversation, the user's goal, and the authoritative product-design documents to determine whether a request continues the same Discovery effort. Do not depend on a process record to restore stage state. When conversation context is incomplete, inspect the current documents and ask only for information that materially affects the baseline.
 
@@ -266,7 +270,7 @@ Define scope, non-scope, product boundaries, business actors, domains, capabilit
 
 ### 4. Product Design Baseline Creation
 
-Before writing, verify that neither product-design document exists. If either exists, stop without modifying either document.
+Use the workflow-start snapshot to distinguish a pre-existing baseline from documents created by the current Discovery effort. If either product-design document was already present before this first-time Discovery started, stop without modifying either document. If the current effort created the working baseline, keep editing those same drafts through Product Design Confirmation feedback or rejection; do not mistake them for a pre-existing baseline and do not route that feedback to S-002.
 
 Before creating the initial baseline, run the Product And Technical Content Boundary classification over all source material and conclusions from the conversational analysis stages. Remove candidate implementation mechanisms from the product-design draft only after their disposition is recorded. Do not discard technical context.
 

@@ -69,7 +69,7 @@ docs/product-design/business-architecture.md
 Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation
 ```
 
-Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. Its analysis stages and final confirmation gate stay in the conversation; its only persistent outputs are the PRD and Business Architecture. The current S-001 capability creates only the first baseline; incremental updates belong to S-002.
+Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. Its analysis stages and final confirmation gate stay in the conversation; its only primary new outputs are the PRD and Business Architecture. Technical input may be linked to an existing authoritative technical asset or maintained through the shared Open Question Registry under that asset's own rules; this supporting shared-asset maintenance is not a third Discovery output or a process record. The current S-001 capability creates only the first baseline; incremental updates to a baseline that existed before the current Discovery effort belong to S-002.
 
 **feature-dev** handles new user-visible or system-visible features and intentional changes to expected behavior.
 
