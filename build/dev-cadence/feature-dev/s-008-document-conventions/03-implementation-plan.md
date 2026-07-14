@@ -32,7 +32,7 @@
 - Modify: `src/skills/using-dev-cadence/SKILL.md`
 - Modify: `version`
 
-- [ ] **Step 1: 写共享规范失败契约**
+- [x] **Step 1: 写共享规范失败契约**
 
 在 `tests/document-conventions-contract.sh` 中断言：
 
@@ -50,7 +50,7 @@ assert_match "entry reads convention before writing" 'before.*creat|before.*upda
 
 将脚本加入 `tests/run-all.sh`。在 package、install 和 description 测试中增加新 skill 的存在、同步和 description 断言。
 
-- [ ] **Step 2: 运行测试并确认 RED**
+- [x] **Step 2: 运行测试并确认 RED**
 
 Run:
 
@@ -60,7 +60,7 @@ bash tests/document-conventions-contract.sh
 
 Expected: FAIL，原因是 `src/skills/document-conventions/SKILL.md` 尚不存在。
 
-- [ ] **Step 3: 实现最小共享 skill 与入口规则**
+- [x] **Step 3: 实现最小共享 skill 与入口规则**
 
 创建 `src/skills/document-conventions/SKILL.md`，至少包含：
 
@@ -91,7 +91,7 @@ Every marker must retain explicit text, a decision, or a reason. Emoji must neve
 
 将 `version` 从 `0.9.0` 更新为 `0.10.0`。
 
-- [ ] **Step 4: 构建并确认 GREEN**
+- [x] **Step 4: 构建并确认 GREEN**
 
 Run:
 
@@ -105,7 +105,7 @@ bash tests/install-contract.sh
 
 Expected: 全部 PASS。
 
-- [ ] **Step 5: 执行 plan-task-1 pre-commit review 并提交**
+- [x] **Step 5: 执行 plan-task-1 pre-commit review 并提交**
 
 按照 Feature Dev 的 Executing-Plans Pre-Commit Review 规则：
 
@@ -137,7 +137,7 @@ git commit -m "feat(docs): add shared document conventions"
 - Modify: `src/skills/bug-fix/SKILL.md`
 - Modify: `src/skills/refactor/SKILL.md`
 
-- [ ] **Step 1: 扩展失败契约**
+- [x] **Step 1: 扩展失败契约**
 
 增加结构断言：
 
@@ -153,7 +153,7 @@ done
 
 同步更新 `tests/workflow-symmetry.sh` 中对三个 workflow 精确标题的对称断言。
 
-- [ ] **Step 2: 运行测试并确认 RED**
+- [x] **Step 2: 运行测试并确认 RED**
 
 Run:
 
@@ -164,7 +164,7 @@ bash tests/workflow-symmetry.sh
 
 Expected: 至少新视觉标题断言 FAIL。
 
-- [ ] **Step 3: 最小修改高价值区块**
+- [x] **Step 3: 最小修改高价值区块**
 
 执行以下有限修改：
 
@@ -177,7 +177,7 @@ feature-dev/bug-fix/refactor: Ambiguous Acceptance Feedback 增加 ❓
 
 不得更改列表正文、业务规则、阶段或状态值。
 
-- [ ] **Step 4: 确认 GREEN 与业务文本不变**
+- [x] **Step 4: 确认 GREEN 与业务文本不变**
 
 Run:
 
@@ -189,7 +189,7 @@ git diff --word-diff=porcelain -- src/skills/using-dev-cadence/SKILL.md src/skil
 
 Expected: tests PASS；word diff 只显示预期标题、Discovery 子标题和入口读取规则变化。
 
-- [ ] **Step 5: 执行 plan-task-2 pre-commit review 并提交**
+- [x] **Step 5: 执行 plan-task-2 pre-commit review 并提交**
 
 按同一 review ledger 规则暂存、检查并提交：
 
@@ -206,7 +206,7 @@ git commit -m "docs(skills): add semantic visual markers"
 - Modify: `build/dev-cadence/feature-dev/s-008-document-conventions/03-implementation-plan.md`
 - Modify: `build/dev-cadence/feature-dev/s-008-document-conventions/manifest.md`
 
-- [ ] **Step 1: 重新构建并更新 dogfood 安装包**
+- [x] **Step 1: 重新构建并更新 dogfood 安装包**
 
 Run:
 
@@ -217,7 +217,7 @@ bash scripts/install.sh .
 
 Expected: `.dev-cadence/skills/document-conventions/SKILL.md` 存在，安装版本为 `0.10.0`。
 
-- [ ] **Step 2: 运行完整开发验证**
+- [x] **Step 2: 运行完整开发验证**
 
 Run:
 
@@ -229,11 +229,11 @@ rg --no-ignore -n 'document-conventions|✅|❌|❓|⚠️|ℹ️' src/skills di
 
 Expected: 全部检查 PASS；source、dist 和 dogfood 安装包包含一致关键规则。
 
-- [ ] **Step 3: 完成 implementation record 和 whole-feature review**
+- [x] **Step 3: 完成 implementation record 和 whole-feature review**
 
 记录 `IMPLEMENTATION_BASE_SHA`、两项 plan-task commit、执行检查、变更文件和剩余风险。对 `IMPLEMENTATION_BASE_SHA..FINAL_IMPLEMENTATION_SHA` 做完整 review，填写 `04-code-review-report.md`，Critical/Important finding 必须修复或明确记录。
 
-- [ ] **Step 4: 提交 dogfood 与实现记录**
+- [x] **Step 4: 提交 dogfood 与实现记录**
 
 按 pre-commit review ledger 执行 `plan-task-3` 提交：
 
@@ -241,7 +241,7 @@ Expected: 全部检查 PASS；source、dist 和 dogfood 安装包包含一致关
 git commit -m "chore(repo): update document conventions dogfood"
 ```
 
-- [ ] **Step 5: 完成 Development Implementation 条件**
+- [x] **Step 5: 完成 Development Implementation 条件**
 
 确认：
 
