@@ -54,6 +54,20 @@ A recommendation is not a selection. Do not mark a recommended option as `✅ Se
 
 Use the marker in the option heading or decision column and retain the option name and decision text. Do not repeat it on every paragraph describing the option.
 
+## Work Item Scope Headings
+
+Feature, Story, Bug, and Task work-item cards must use these paired headings when they define delivery boundaries:
+
+```markdown
+## ✅ 范围
+
+## ❌ 非范围
+```
+
+`✅ 范围` means the content is included in or applicable to the current work item. `❌ 非范围` means the content is explicitly excluded from or not applicable to the current work item. These markers do not express content quality, completion, verification, or acceptance status.
+
+Keep the marker on the section heading and retain the heading text. Do not mechanically repeat the marker on ordinary list items beneath either section.
+
 ## Precision Boundaries
 
 Do not add emoji mechanically to ordinary prose, ordinary headings, or ordinary list items.
