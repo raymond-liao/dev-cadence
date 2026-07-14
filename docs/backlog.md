@@ -20,7 +20,6 @@
 - [ ] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md)
 - [ ] [P1] 实现 Work Item Planning workflow 和工作项契约：新增 `work-item-planning` skill，支持组合规划和单项登记；定义 `F/S/B/T` 卡片的 ID、结构、版本、状态、关系和 Roadmap，并将该 workflow 作为唯一建卡入口及开发 workflow 的移交方。
 - [ ] [P1] 打通工作项卡片与现有开发 workflow：更新 `using-dev-cadence`、`feature-dev`、`bug-fix` 和 `refactor`，实现卡片检查、缺卡路由、卡片版本引用、卡片与第一阶段记录的职责边界，以及开始、返工、验收和 Completion 后的状态与交付引用回写。
-- [ ] [P1] [S-003 实施前方案新鲜度门禁](stories/S-003-implementation-design-freshness-gate.md)
 - [ ] [P2] [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md)
 - [ ] [P2] 补齐需求治理端到端验证和安装契约：验证从想法、PRD、工作项规划到 `feature-dev`、`bug-fix`、`refactor` 交付及 Roadmap 回写的完整链路，并覆盖构建、安装包、入口路由和现有目标仓库兼容。
 - [ ] [P1] 补齐 Business Acceptance 终态映射：让三个 workflow 的 `accepted`、`accepted_with_risk` 和 `rejected` 分别进入明确的 Completion 路径，并用对称契约测试验证每个决策的 manifest 终态和后续动作。
@@ -45,6 +44,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-003 实施前方案新鲜度门禁](stories/S-003-implementation-design-freshness-gate.md)
 - [x] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
 - [x] [P1] [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md)
 - [x] [P1] 补齐 executing-plans 路径下实施提交的提交前审查机制。
@@ -89,7 +89,7 @@
 
 | 序号 | 可并行处理 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-007；S-009；T-001；S-003 | S-007、S-009、T-001：S-008；S-003：- | ✅ Ready |
+| 1 | S-007；S-009；T-001 | S-007、S-009、T-001：S-008 | ✅ Ready |
 | 2 | S-010；S-004 | S-010：S-009；S-004：S-003 | ⚠️ Blocked |
 | 3 | S-005 | S-007、S-010 | ⚠️ Blocked |
 | 4 | S-006 | S-005 | ⚠️ Blocked |
