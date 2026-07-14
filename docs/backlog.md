@@ -4,7 +4,7 @@
 
 ## 进行中
 
-- 无。
+- [ ] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
 
 ## 待处理
 
@@ -41,7 +41,6 @@
 
 ## 已完成
 
-- [x] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
 - [x] [P1] [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md)
 - [x] [P1] 补齐 executing-plans 路径下实施提交的提交前审查机制。
 - [x] [P2] 补齐 Refactor 测试敏感性检查：新增 characterization 或 contract test 时执行可逆 sensitivity check，并通过契约测试保护该规则。

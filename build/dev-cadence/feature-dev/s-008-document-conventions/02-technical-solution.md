@@ -11,6 +11,8 @@
 
 本 Story 先实现语义视觉基础层：五种标识、使用原则、禁止范围和示例。S-009、S-010 后续在同一 skill 中分别增加状态呈现和快捷链接规则。
 
+多方案文档采用显式选择语义：确认后在选定方案标题或决策单元格使用 `✅ Selected`；普通备选方案不加否定标识；明确拒绝使用 `❌ Rejected`；尚未选择使用 `❓ Decision Pending`。推荐状态不能自动升级为 Selected。
+
 ## Codebase Exploration Findings
 
 ### 视角一：构建与安装边界
@@ -77,5 +79,5 @@
 
 ## 方案结论
 
-- 采用共享 `document-conventions` skill。
+- ✅ Selected：采用共享 `document-conventions` skill。
 - 当前用户已明确要求不中途确认，因此该方案按 delegated confirmation 进入实施计划；所有记录仍保留完整阶段边界和证据。

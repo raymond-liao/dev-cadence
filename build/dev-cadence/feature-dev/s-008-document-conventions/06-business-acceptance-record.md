@@ -14,8 +14,9 @@
 
 ## User Decision
 
-- Decision：`accepted`
+- Decision：`superseded`
 - Selected Option：`1. Accept`
+- Superseded By：用户在 Completion 前新增多方案选定标识要求。
 
 ## Decision By
 
@@ -38,4 +39,4 @@
 
 ## Final Follow-Up Actions
 
-- Pending Completion integration decision.
+- Previous acceptance was superseded before integration. Task returned to Implementation Plan for Task 4.

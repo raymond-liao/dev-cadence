@@ -17,6 +17,7 @@
 | Task 1: 共享规范与入口接入 | 以 TDD 新增共享 skill、入口读取规则、描述与打包契约，并更新版本 | `tests/document-conventions-contract.sh`, `tests/run-all.sh`, `tests/package-contract.sh`, `tests/install-contract.sh`, `tests/skill-description-contract.sh`, `src/skills/document-conventions/SKILL.md`, `src/skills/using-dev-cadence/SKILL.md`, `version` | 聚焦契约测试、build、package/install contracts |
 | Task 2: Workflow 代表性视觉应用 | 在不改变业务语义的前提下更新 Boundary、Red Flags 和歧义反馈标题 | `tests/document-conventions-contract.sh`, `tests/workflow-symmetry.sh`, `src/skills/discovery/SKILL.md`, `src/skills/feature-dev/SKILL.md`, `src/skills/bug-fix/SKILL.md`, `src/skills/refactor/SKILL.md`, `src/skills/using-dev-cadence/SKILL.md` | 新契约、workflow symmetry、关键文本差异检查 |
 | Task 3: 分发、dogfood 与完整验证 | 构建分发包、更新本仓库安装包并验证全部契约 | `dist/.dev-cadence/**`, `.dev-cadence/**`, `build/dev-cadence/feature-dev/s-008-document-conventions/04-implementation-record.md`, `04-code-review-report.md` | `bash scripts/check-all.sh`, source/dist/install 同步检查 |
+| Task 4: 多方案选定标识 | 增加 Selected、Rejected 和 Decision Pending 的多方案表达规则并重新验证 | `tests/document-conventions-contract.sh`, `src/skills/document-conventions/SKILL.md`, `.dev-cadence/skills/document-conventions/SKILL.md` | RED/GREEN contract、完整检查、source/dist/dogfood 同步 |
 
 ## Detailed Tasks
 
@@ -252,3 +253,39 @@ FINAL_IMPLEMENTATION_SHA 指向最新实施提交
 完整 review 无未解决 Critical/Important finding
 完整开发检查通过
 ```
+
+### Task 4: 多方案选定标识
+
+**Files:**
+- Modify: `tests/document-conventions-contract.sh`
+- Modify: `src/skills/document-conventions/SKILL.md`
+- Modify: `.dev-cadence/skills/document-conventions/SKILL.md`（仅通过安装脚本生成）
+
+- [ ] **Step 1: 增加失败契约**
+
+要求共享 skill 明确定义 `✅ Selected`、`❌ Rejected`、`❓ Decision Pending`，并规定普通未选备选方案保持中性、推荐不能自动升级为 Selected。
+
+- [ ] **Step 2: 运行聚焦测试并确认 RED**
+
+Run: `bash tests/document-conventions-contract.sh`
+
+Expected: FAIL，原因是共享 skill 尚未定义多方案选择规则。
+
+- [ ] **Step 3: 实现最小规则并确认 GREEN**
+
+在 `document-conventions` 增加多方案比较章节和示例，再运行聚焦契约。
+
+- [ ] **Step 4: 构建、更新 dogfood 并完整验证**
+
+Run:
+
+```bash
+bash scripts/build.sh
+bash scripts/install.sh .
+bash scripts/check-whitespace.sh
+bash scripts/check-all.sh
+```
+
+- [ ] **Step 5: pre-commit review、提交并重复 whole-feature review**
+
+使用下一个 review ledger ID，验证 exact parent/tree，提交修正并重新生成 System Testing 与 Business Acceptance 输入。
