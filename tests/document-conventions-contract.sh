@@ -69,6 +69,35 @@ assert_match \
   'recommend.*not.*Selected|Do not mark.*recommend.*Selected|recommendation.*confirmed' \
   "$CONVENTIONS_SKILL"
 
+for status_display in \
+  '✅.*`confirmed`.*`completed`.*`accepted`.*`passed`.*`resolved`.*`integrated`' \
+  '🟢.*`ready`' \
+  '🔄.*`in_progress`' \
+  '⏳.*`pending`' \
+  '⛔.*`blocked`.*`not_ready`' \
+  '⚠️.*`ready_with_risk`.*`accepted_with_risk`' \
+  '❌.*`failed`.*`rejected`' \
+  '⏭️.*`skipped`'; do
+  assert_match "status display mapping $status_display" "$status_display" "$CONVENTIONS_SKILL"
+done
+
+assert_match \
+  "canonical status remains visible" \
+  'emoji.*canonical status|canonical status.*emoji|marker.*canonical status' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "canonical status uses inline code" \
+  'inline code|backticks|`emoji \+ canonical status`' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "status is not machine parsed from emoji" \
+  'machine.*emoji|emoji.*machine|not.*machine.*source' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "backlog and work item avoid duplicate markers" \
+  'Backlog.*work-item|work-item.*Backlog|checkbox.*duplicate|duplicate.*checkbox' \
+  "$CONVENTIONS_SKILL"
+
 assert_literal \
   "entry convention path" \
   '.dev-cadence/skills/document-conventions/SKILL.md' \
@@ -85,6 +114,17 @@ assert_literal "discovery forbidden boundary" "### ❌ Discovery Must Not" "$DIS
 for skill in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
   assert_match "workflow warning heading" '^### ⚠️ .*Red Flags$' "$skill"
   assert_literal "ambiguous feedback heading" "### ❓ Ambiguous Acceptance Feedback" "$skill"
+done
+
+for skill in "$DISCOVERY_SKILL" "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
+  assert_match \
+    "workflow applies shared status presentation" \
+    'status summaries?.*document-conventions|document-conventions.*status summaries?|shared status.*mapping|status presentation.*shared' \
+    "$skill"
+  assert_match \
+    "workflow status surfaces" \
+    'manifest.*stage|stage.*report|report.*acceptance|status summary' \
+    "$skill"
 done
 
 printf 'Document conventions contract checks passed.\n'

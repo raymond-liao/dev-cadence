@@ -54,6 +54,29 @@ A recommendation is not a selection. Do not mark a recommended option as `✅ Se
 
 Use the marker in the option heading or decision column and retain the option name and decision text. Do not repeat it on every paragraph describing the option.
 
+## User-Visible Status Presentation
+
+Use this shared mapping when a Dev Cadence-managed Markdown document or user-facing Markdown summary displays an explicit status:
+
+| Marker | Canonical status |
+| --- | --- |
+| ✅ | `confirmed`, `completed`, `accepted`, `passed`, `resolved`, `integrated` |
+| 🟢 | `ready` |
+| 🔄 | `in_progress` |
+| ⏳ | `pending` |
+| ⛔ | `blocked`, `not_ready` |
+| ⚠️ | `ready_with_risk`, `accepted_with_risk`, or another explicit risk status |
+| ❌ | `failed`, `rejected` |
+| ⏭️ | `skipped` |
+
+Display a mapped status as `emoji + canonical status`, with the canonical status in inline code. For example, render the status as 🔄 `in_progress`. The marker improves scanning; the canonical status remains the authoritative text.
+
+Apply the mapping to explicit status fields and compact status summaries in manifests, stage tables, stage records, test and coverage reports, review findings, verification decisions, business acceptance, Completion, and user-facing progress updates or confirmation requests.
+
+For Backlog and work-item status, preserve existing Markdown checkboxes, priorities, and canonical status fields. Add at most one status marker when it adds information; do not stack a mapped status marker with a checkbox or another marker that already communicates the same state.
+
+Do not infer, parse, or persist machine state from emoji. Emoji must not enter canonical status enum definitions or replace the canonical status text. If a status has no established mapping, keep the explicit status text neutral until its semantic category is defined instead of selecting a decorative marker.
+
 ## Precision Boundaries
 
 Do not add emoji mechanically to ordinary prose, ordinary headings, or ordinary list items.
