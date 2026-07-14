@@ -4,7 +4,7 @@
 
 ## 进行中
 
-- [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
+- 无。
 
 ## 待处理
 
@@ -40,6 +40,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 - [x] [P1] [S-003 实施前方案新鲜度门禁](stories/S-003-implementation-design-freshness-gate.md)
 - [x] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
 - [x] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
@@ -90,14 +91,13 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-010；S-004 | S-009；S-003 | ✅ Ready |
-| 2 | S-005 | S-007、S-010 | ⚠️ Blocked |
-| 3 | S-006 | S-005 | ⚠️ Blocked |
-| 4 | S-012 | S-006 | ⚠️ Blocked |
-| 5 | S-013；S-011 | S-012 | ⚠️ Blocked |
-| 6 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
-| 7 | Work Item Planning | S-002、S-012、T-001 | ⚠️ Blocked |
-| 8 | 工作项与开发 workflow 接入 | Work Item Planning | ⚠️ Blocked |
-| 9 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
+| 1 | S-004；S-005 | S-003；S-007、S-010 | ✅ Ready |
+| 2 | S-006 | S-005 | ⚠️ Blocked |
+| 3 | S-012 | S-006 | ⚠️ Blocked |
+| 4 | S-013；S-011 | S-012 | ⚠️ Blocked |
+| 5 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
+| 6 | Work Item Planning | S-002、S-012、T-001 | ⚠️ Blocked |
+| 7 | 工作项与开发 workflow 接入 | Work Item Planning | ⚠️ Blocked |
+| 8 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
 
 用户明确允许并行实施时才使用此表。表中暂时保留 Work Item Planning、工作项与开发 workflow 接入、需求治理端到端验证三个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。
