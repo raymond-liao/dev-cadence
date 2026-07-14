@@ -2,10 +2,10 @@
 
 ## Implementation Status
 
-- Status: `completed; awaiting Business Acceptance`
+- Status: `accepted and integrated`
 - Execution Mode: inline execution with vendored `executing-plans`
 - Commit: `52139c0`
-- Branch: `codex/s-001-discovery-prd-baseline`
+- Branch: `codex/s-001-discovery-prd-baseline` (merged and deleted)
 
 ## Implemented Behavior
 
@@ -61,6 +61,8 @@
 ## Remaining Boundary
 
 - S-001 creates only the first two-document baseline.
-- S-002 remains `Blocked` until S-001 receives Business Acceptance.
+- S-002 is `Ready` after S-001 Business Acceptance.
 - S-002 must later resolve whether PRD and Business Architecture use independent versions or a shared product-design baseline version.
-- Implementation commit `52139c0` was created after verification at the user's request. No push, merge, or final integration action was performed.
+- Implementation commit `52139c0` was created after verification at the user's request.
+- The accepted branch was fast-forward merged into local `main`, verified with `bash scripts/check-all.sh`, and deleted.
+- No push or Pull Request was created.

@@ -345,5 +345,5 @@ Human-facing Markdown under the repository root and `docs/**` will not receive n
 ## Technical Solution Decision
 
 - Recommended option: focused standalone Discovery skill.
-- Status: `awaiting user confirmation`.
+- Status: `confirmed by user and implemented`.
 - Stage checkpoint: `skipped: no tracked changes`.

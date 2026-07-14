@@ -40,7 +40,8 @@
 
 - Business Acceptance was recorded.
 - Acceptance checkpoint `01b4d0f` recorded the accepted Story state, S-002 readiness, dogfood installation, and repository AGENTS integration.
-- Final integration decision is pending Completion.
-- The task branch remains `codex/s-001-discovery-prd-baseline`.
+- The accepted branch was fast-forward merged into local `main`.
+- The merged result passed `bash scripts/check-all.sh`.
+- The task branch `codex/s-001-discovery-prd-baseline` was deleted after successful verification.
 - No worktree was created for this run.
-- No push, merge, branch deletion, or discard action has been performed.
+- No push or remote Pull Request was created.
