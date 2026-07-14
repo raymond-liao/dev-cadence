@@ -6,7 +6,7 @@
 - [x] Applicable rule sources are listed: root `AGENTS.md` and installed `feature-dev` workflow.
 - [x] Confirmed requirements and technical solution source is linked: [需求确认](01-requirements.md)、[技术方案](02-technical-solution.md)。
 - [x] Implementation plan source is linked: [实施计划](03-implementation-plan.md)。
-- [x] Reviewed diff is identified: branch `codex/s-008-document-conventions`, range `21389e35081d43c77913aebfdc556c5647f7eb31..3e3422f7ab8a18afc4b1b9bf5710f1c38e05bc66`.
+- [x] Reviewed diff is identified: branch `codex/s-008-document-conventions`, range `21389e35081d43c77913aebfdc556c5647f7eb31..cade97781027846ffcf27b3f0c6fdd95179bf221`.
 
 ### Changed Files
 
@@ -38,6 +38,7 @@
 - [x] Test / acceptance alignment reviewed: contract covers shared skill semantics, entry integration, package/install presence and representative workflow usage.
 - [x] Security, accessibility, performance, or operational concerns considered: emoji always retain text; no secrets, machine paths, executable behavior, or external dependency introduced.
 - [x] Simplicity and maintainability reviewed: one shared authority, no duplicated full mapping, selective workflow edits only.
+- [x] Solution choice semantics reviewed: only confirmed options use `✅ Selected`; viable alternatives remain neutral; explicit rejection and pending decisions remain distinct.
 
 ## Findings
 

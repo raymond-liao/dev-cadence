@@ -8,7 +8,7 @@
 - Workspace：`.`
 - Branch：`codex/s-008-document-conventions`
 - Started At：`2026-07-14T11:27:22+08:00`
-- Current Stage：`Implementation Plan`
+- Current Stage：`Business Acceptance`
 - Overall Status：`in_progress`
 
 ## 工作项
@@ -20,17 +20,17 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | `confirmed` | [需求确认](01-requirements.md) | `confirmed: explicit user feedback on 2026-07-14` | `pending` | 增加多方案选定标识要求。 |
-| Technical Solution | `confirmed` | [技术方案](02-technical-solution.md) | `confirmed: delegated by user on 2026-07-14` | `pending` | 增加 Selected/Rejected/Pending 语义。 |
-| Implementation Plan | `in_progress` | [实施计划](03-implementation-plan.md) | `delegated` | `pending` | 增加 Task 4。 |
-| Development Implementation | `pending` | [实施记录](04-implementation-record.md) | `superseded by user feedback` | `74023b5` | 原实施证据保留，等待 Task 4 更新。 |
-| System Testing | `pending` | [系统测试报告](05-system-test-report.md) | `superseded by user feedback` | `7e235f4` | 原 ready 结论不再是当前证据。 |
-| Business Acceptance | `pending` | [业务验收记录](06-business-acceptance-record.md) | `superseded by user feedback` | `5c26985` | 原 accepted 结论不再是当前验收。 |
+| Requirements Confirmation | `confirmed` | [需求确认](01-requirements.md) | `confirmed: explicit user feedback on 2026-07-14` | `15bbeaf` | 增加多方案选定标识要求。 |
+| Technical Solution | `confirmed` | [技术方案](02-technical-solution.md) | `confirmed: delegated by user on 2026-07-14` | `15bbeaf` | 增加 Selected/Rejected/Pending 语义。 |
+| Implementation Plan | `confirmed` | [实施计划](03-implementation-plan.md) | `confirmed: delegated by user on 2026-07-14` | `15bbeaf` | Task 4 已执行。 |
+| Development Implementation | `confirmed` | [实施记录](04-implementation-record.md) | `confirmed: delegated by user on 2026-07-14` | `pending` | Task 4 与重复 whole-feature review 完成。 |
+| System Testing | `confirmed` | [系统测试报告](05-system-test-report.md) | `verification decision: ready` | `pending` | 新增 AC-11 已覆盖。 |
+| Business Acceptance | `in_progress` | [业务验收记录](06-business-acceptance-record.md) | `pending` | `pending` | 等待重新验收。 |
 
 ## 验证摘要
 
-- Verification Decision：`superseded`
-- 需要完成 Task 4 后重新验证。
+- Verification Decision：`ready`
+- Task 4 后的完整 `check-all`、whitespace、source/dist/dogfood 一致性和方案选择语义检查通过。
 
 ## 剩余风险
 

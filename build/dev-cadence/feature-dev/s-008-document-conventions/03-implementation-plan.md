@@ -261,21 +261,21 @@ FINAL_IMPLEMENTATION_SHA 指向最新实施提交
 - Modify: `src/skills/document-conventions/SKILL.md`
 - Modify: `.dev-cadence/skills/document-conventions/SKILL.md`（仅通过安装脚本生成）
 
-- [ ] **Step 1: 增加失败契约**
+- [x] **Step 1: 增加失败契约**
 
 要求共享 skill 明确定义 `✅ Selected`、`❌ Rejected`、`❓ Decision Pending`，并规定普通未选备选方案保持中性、推荐不能自动升级为 Selected。
 
-- [ ] **Step 2: 运行聚焦测试并确认 RED**
+- [x] **Step 2: 运行聚焦测试并确认 RED**
 
 Run: `bash tests/document-conventions-contract.sh`
 
 Expected: FAIL，原因是共享 skill 尚未定义多方案选择规则。
 
-- [ ] **Step 3: 实现最小规则并确认 GREEN**
+- [x] **Step 3: 实现最小规则并确认 GREEN**
 
 在 `document-conventions` 增加多方案比较章节和示例，再运行聚焦契约。
 
-- [ ] **Step 4: 构建、更新 dogfood 并完整验证**
+- [x] **Step 4: 构建、更新 dogfood 并完整验证**
 
 Run:
 
@@ -286,6 +286,6 @@ bash scripts/check-whitespace.sh
 bash scripts/check-all.sh
 ```
 
-- [ ] **Step 5: pre-commit review、提交并重复 whole-feature review**
+- [x] **Step 5: pre-commit review、提交并重复 whole-feature review**
 
 使用下一个 review ledger ID，验证 exact parent/tree，提交修正并重新生成 System Testing 与 Business Acceptance 输入。

@@ -7,7 +7,7 @@
 - [实施计划](03-implementation-plan.md)
 - [实施记录](04-implementation-record.md)
 - [代码审查报告](04-code-review-report.md)
-- Implementation source：`3e3422f7ab8a18afc4b1b9bf5710f1c38e05bc66`
+- Implementation source：`cade97781027846ffcf27b3f0c6fdd95179bf221`
 
 ## Test Environment
 
@@ -29,6 +29,7 @@
 | ST-004 | 代表性视觉语义已应用 | Source inspection | 对三套 skills 执行视觉标题 `rg` | `passed` | Discovery Must/Must Not、Red Flags、Ambiguous Acceptance 标题均存在。 |
 | ST-005 | 版本与安装包一致 | Automated | 读取 `version`、`.dev-cadence/version` 并运行 install contract | `passed` | Source 与 dogfood 均为 `0.10.0`，临时目标安装两次通过。 |
 | ST-006 | 空白与 Git diff 完整性 | Automated | `bash scripts/check-whitespace.sh`、`git diff --check` | `passed` | 无空白错误或未提交内容错误。 |
+| ST-007 | 多方案选择语义 | Automated + source inspection | document conventions contract 与三套 skill `rg` | `passed` | `✅ Selected`、`❌ Rejected`、`❓ Decision Pending`、中性备选和推荐非选择规则均存在且三方一致。 |
 
 ## Requirement Coverage
 
@@ -44,6 +45,7 @@
 | AC-8：source、dist、dogfood 一致 | ST-001, ST-002 | `covered` |
 | AC-9：契约覆盖打包、入口和代表性使用 | ST-001 | `covered` |
 | AC-10：完整检查通过并更新版本 | ST-001, ST-005, ST-006 | `covered` |
+| AC-11：多方案文档正确区分已选、备选、拒绝和待决策 | ST-001, ST-002, ST-007 | `covered` |
 
 ## Failed Or Skipped Checks
 
