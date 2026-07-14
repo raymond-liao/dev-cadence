@@ -125,6 +125,8 @@ done
 assert_match "meaning-based classification" 'classify.*meaning.*source|meaning.*source.*classif' "$DISCOVERY_SKILL"
 assert_match "technical name is not confirmation" 'technical (name|product|term).*(must not|does not).*confirmed|must not.*technical (name|product|term).*confirmed' "$DISCOVERY_SKILL"
 assert_match "product constraint result boundary" 'constraint.*required result|required result.*constraint' "$DISCOVERY_SKILL"
+assert_literal "product constraints belong in PRD" 'Product-level constraints belong in the PRD, not Business Architecture.' "$DISCOVERY_SKILL"
+assert_not_match "Business Architecture product constraint exception" 'Business Architecture.*unless recording an explicit product constraint' "$DISCOVERY_SKILL"
 assert_match "measurable quality targets allowed" 'data residency.*regulatory.*compatibility.*performance.*availability.*security' "$DISCOVERY_SKILL"
 assert_match "mechanism excluded from product baseline" 'database.*framework.*protocol.*cloud service.*module.*interface.*deployment' "$DISCOVERY_SKILL"
 assert_match "authoritative technical handoff" 'Story.*Technical Task.*technical solution.*Decision|Decision.*technical solution.*Technical Task.*Story' "$DISCOVERY_SKILL"

@@ -49,3 +49,5 @@
 
 - Integration action: keep `codex/s-006-discovery-content-boundary` for parent-task integration.
 - No push or pull request was performed.
+- Worktree cleanup result: `preserved`.
+- Preservation reason: the parent batch task still needs the dedicated worktree and branch for integration and cross-card verification.

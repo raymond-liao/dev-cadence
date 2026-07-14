@@ -42,6 +42,63 @@ The Version 1 Story, confirmed records, S-005 dependency, branch, and base commi
 - Committed parent: `37e86d5bb2bccd69510251a9f48f61e2601a08b9`.
 - Committed tree: `5f10b54798d57259defe5071b6f0ed73bd85fa01`.
 
+### EPCR-002 / plan-task-2
+
+- Commit type: implementation
+- State: `verified`
+- Expected parent: `37e86d5bb2bccd69510251a9f48f61e2601a08b9`
+- Reviewed tree: `5f10b54798d57259defe5071b6f0ed73bd85fa01`
+- Staged files: `src/skills/discovery/SKILL.md`, `tests/discovery-contract.sh`
+- Checks: retrospective review of `37e86d5bb2bccd69510251a9f48f61e2601a08b9..fdda960b6bb2ff61f3b98cd5a3bca765297290f1`; focused Discovery contract; full repository checks.
+- Decision: ✅ `passed`; Task 2 was delivered inside the atomic implementation commit rather than a separate task commit.
+- Identity: `retrospective`
+- Findings: the later independent review found the Business Architecture product-constraint exception ambiguous; corrected by `final-review-fix-1`.
+- Residual risks: None after the linked fix.
+- Commit hash: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
+- Committed parent: `37e86d5bb2bccd69510251a9f48f61e2601a08b9`.
+- Committed tree: `5f10b54798d57259defe5071b6f0ed73bd85fa01`.
+
+### EPCR-003 / plan-task-3
+
+- Commit type: implementation
+- State: `verified`
+- Expected parent: `37e86d5bb2bccd69510251a9f48f61e2601a08b9`
+- Reviewed tree: `5f10b54798d57259defe5071b6f0ed73bd85fa01`
+- Staged files: `docs/backlog.md`, `docs/stories/S-006-discovery-product-technical-content-boundary.md`, `docs/workflows/discovery.md`, `version`
+- Checks: retrospective review of `37e86d5bb2bccd69510251a9f48f61e2601a08b9..fdda960b6bb2ff61f3b98cd5a3bca765297290f1`; Story/Backlog dependency review; version and documentation review.
+- Decision: ✅ `passed`; Task 3 was delivered inside the atomic implementation commit rather than a separate task commit.
+- Identity: `retrospective`
+- Findings: None.
+- Residual risks: None.
+- Commit hash: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
+- Committed parent: `37e86d5bb2bccd69510251a9f48f61e2601a08b9`.
+- Committed tree: `5f10b54798d57259defe5071b6f0ed73bd85fa01`.
+
+### EPCR-004 / plan-task-4
+
+- Commit type: implementation
+- State: `verified`
+- Expected parent: `37e86d5bb2bccd69510251a9f48f61e2601a08b9`
+- Reviewed tree: `5f10b54798d57259defe5071b6f0ed73bd85fa01`
+- Staged files: generated `dist/.dev-cadence/**` verification output; no ignored distribution files committed.
+- Checks: `bash scripts/build.sh`; `bash scripts/check-whitespace.sh`; `bash scripts/check-all.sh`; `rg --no-ignore` source/distribution comparison.
+- Decision: ✅ `passed`; Task 4 verification covered the atomic implementation tree and generated distribution.
+- Identity: `retrospective`
+- Findings: None.
+- Residual risks: None.
+- Commit hash: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
+- Committed parent: `37e86d5bb2bccd69510251a9f48f61e2601a08b9`.
+- Committed tree: `5f10b54798d57259defe5071b6f0ed73bd85fa01`.
+
+### EPCR-005 / final-review-fix-1
+
+- Commit type: final review fix
+- State: `reviewed-pending-commit`
+- Source finding IDs: `CR-I-001`, `CR-I-002`, `CR-I-003`, `CR-I-004`, `CR-I-005`
+- Affected tasks: Task 2, Task 4, and workflow completion records.
+- Decision: fixes prepared and focused RED/GREEN evidence captured; commit identity will be recorded after commit.
+- Identity: `pending`
+
 ## Final Implementation Identity
 
 - Final implementation SHA: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
@@ -53,3 +110,11 @@ The Version 1 Story, confirmed records, S-005 dependency, branch, and base commi
 - Task 2 Discovery boundary GREEN: ✅ `completed`.
 - Task 3 Public documentation and state: ✅ `completed`.
 - Task 4 Distribution and verification: ✅ `completed`.
+
+## Code Review Evidence
+
+- Report: `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/04-code-review-report.md`
+- Review decision: fixes applied; safe to repeat System Testing after the review-fix commit.
+- Critical findings: None.
+- Important findings: five, all fixed in `final-review-fix-1`.
+- Unresolved findings: None.

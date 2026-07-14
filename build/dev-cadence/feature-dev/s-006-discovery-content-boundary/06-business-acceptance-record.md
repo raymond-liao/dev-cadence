@@ -20,3 +20,8 @@
 
 - Keep the dedicated branch for the parent task to integrate with the other authorized backlog-card branches.
 - No push or pull request is authorized.
+
+## Worktree Cleanup Result
+
+- Result: `preserved`.
+- Reason: the parent batch task requires this dedicated worktree and branch to remain available for integration and cross-card verification; no cleanup was requested or authorized.

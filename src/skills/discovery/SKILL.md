@@ -89,6 +89,8 @@ The PRD may contain product goals, users and stakeholders, value, success criter
 
 Allowed product constraints include data residency, regulatory restrictions, compatibility requirements, measurable performance targets, availability targets, and user-visible security requirements. They may be recorded as verifiable non-functional requirements. State the required result and evidence boundary; do not select an unconfirmed implementation mechanism at the same time.
 
+Product-level constraints belong in the PRD, not Business Architecture.
+
 Business Architecture may contain only the business operating model: business actors, business domains, business capabilities, value streams, processes, business objects, states, business rules, business events, exceptions, and external business boundaries.
 
 PRD and Business Architecture retain their own in-scope `Open Questions`. The repository-level Registry may index those questions when useful, but it must not replace or empty the local sections.
@@ -262,9 +264,9 @@ The Business Architecture must explain:
 - important object states, allowed transitions, conditions, terminal states, and exceptional states;
 - business, validation, eligibility, permission, time, sequence, and consistency rules;
 - important business events, external participants, external system boundaries, inputs, and outputs;
-- known exceptions, edge cases, and product-level architecture constraints.
+- known exceptions, edge cases, and external business-boundary constraints.
 
-Business Architecture is not technical architecture. Do not prescribe code modules, databases, protocols, infrastructure, or deployment design unless recording an explicit product constraint without selecting an implementation.
+Business Architecture is not technical architecture. Do not prescribe code modules, databases, protocols, infrastructure, deployment design, or product-level constraints.
 
 ## Stage Rules
 
