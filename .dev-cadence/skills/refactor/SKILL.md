@@ -88,7 +88,7 @@ Use the smallest method that achieves the confirmed structural goal:
 
 Public APIs and external data shapes must remain compatible during refactoring. Keep interface and data-shape changes internal or preserve the external contract through a compatibility adapter. If the requested outcome intentionally changes an external contract, switch that work to `feature-dev`; if it restores broken expected behavior, use `bug-fix`.
 
-### Refactor Red Flags
+### ⚠️ Refactor Red Flags
 
 | Thought | Reality |
 | --- | --- |
@@ -132,7 +132,7 @@ The commit does not confirm a stage or bypass testing, verification, business ac
 
 If there are no in-scope tracked changes, report that no commit was created and use `skipped: no tracked changes` for any stage checkpoint that needs a terminal manifest value.
 
-### Commit Red Flags
+### ⚠️ Commit Red Flags
 
 | Thought | Reality |
 | --- | --- |
@@ -261,7 +261,7 @@ When the user asks for a scope clarification, structural target adjustment, impl
 
 If the requested change introduces new behavior, changes intended behavior, or asks to fix an unrelated defect, ask whether the user wants to expand the current work into a feature or bug-fix flow, split the request into a separate task, or keep the refactor behavior-preserving.
 
-### Active Task Red Flags
+### ⚠️ Active Task Red Flags
 
 | Thought | Reality |
 | --- | --- |
@@ -696,7 +696,7 @@ Do not infer acceptance from ambiguous positive feedback such as "looks good", "
 Only treat the response as a business acceptance decision when the user selects one of the numbered options or repeats the exact option text.
 If the user's response does not clearly select one fixed option, ask the user to choose again and do not write the business acceptance record yet.
 
-### Ambiguous Acceptance Feedback
+### ❓ Ambiguous Acceptance Feedback
 
 | User says | Reality |
 | --- | --- |

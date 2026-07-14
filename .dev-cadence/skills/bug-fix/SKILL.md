@@ -87,7 +87,7 @@ The commit does not confirm a stage or bypass testing, verification, business ac
 
 If there are no in-scope tracked changes, report that no commit was created and use `skipped: no tracked changes` for any stage checkpoint that needs a terminal manifest value.
 
-### Commit Red Flags
+### ⚠️ Commit Red Flags
 
 | Thought | Reality |
 | --- | --- |
@@ -216,7 +216,7 @@ When the user provides additional symptoms, reproduction feedback, repair requir
 
 If the requested change clearly exceeds the current confirmed repair boundary, ask whether the user wants to expand the current bug fix or start a separate task before creating any new workflow run or document.
 
-### Active Task Red Flags
+### ⚠️ Active Task Red Flags
 
 | Thought | Reality |
 | --- | --- |
@@ -614,7 +614,7 @@ Do not infer acceptance from ambiguous positive feedback such as "looks good", "
 Only treat the response as a business acceptance decision when the user selects one of the numbered options or repeats the exact option text.
 If the user's response does not clearly select one fixed option, ask the user to choose again and do not write the business acceptance record yet.
 
-### Ambiguous Acceptance Feedback
+### ❓ Ambiguous Acceptance Feedback
 
 | User says | Reality |
 | --- | --- |
