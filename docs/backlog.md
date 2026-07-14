@@ -15,10 +15,12 @@
 - [ ] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md)
 - [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
 - [ ] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md)
-- [ ] [P1] 实现 Work Item Planning workflow 和工作项契约：新增 `work-item-planning` skill，支持组合规划和单项登记；定义 `F/S/B/T` 卡片的 ID、结构、版本、状态、关系和 Roadmap，并将该 workflow 作为唯一建卡入口及开发 workflow 的移交方。
+- [ ] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
+- [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
 - [ ] [P1] 打通工作项卡片与现有开发 workflow：更新 `using-dev-cadence`、`feature-dev`、`bug-fix` 和 `refactor`，实现卡片检查、缺卡路由、卡片版本引用、卡片与第一阶段记录的职责边界，以及开始、返工、验收和 Completion 后的状态与交付引用回写。
 - [ ] [P2] [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md)
 - [ ] [P2] 补齐需求治理端到端验证和安装契约：验证从想法、PRD、工作项规划到 `feature-dev`、`bug-fix`、`refactor` 交付及 Roadmap 回写的完整链路，并覆盖构建、安装包、入口路由和现有目标仓库兼容。
+- [ ] [P3] [S-014 User Journey 分析](stories/S-014-user-journey-analysis.md)
 - [ ] [P1] 补齐 Business Acceptance 终态映射：让三个 workflow 的 `accepted`、`accepted_with_risk` 和 `rejected` 分别进入明确的 Completion 路径，并用对称契约测试验证每个决策的 manifest 终态和后续动作。
 - [ ] [P2] 绑定最终验证版本：记录精确 commit、branch 和 tracked working-tree 状态，防止代码变化后继续使用过期验证结论。
 - [ ] [P2] 传递实施与 Review 风险到验证阶段：使用稳定 ID 将跳过的实施检查、未解决 review finding 和已接受 review 风险完整写入最终验证报告。
@@ -69,21 +71,25 @@
 
 | Work Item | Depends On | Blocks |
 |---|---|---|
-| [S-007](stories/S-007-workflow-routing-examples.md) | S-008 | S-005 |
-| [S-009](stories/S-009-generated-status-presentation.md) | S-008 | S-010 |
-| [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | S-008 | Work Item Planning |
-| [S-010](stories/S-010-document-reference-links.md) | S-009 | S-005 |
-| [S-005](stories/S-005-open-question-registry.md) | S-007, S-010 | S-006, S-002 |
-| [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | S-005 | S-012, S-002 |
-| [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | S-006 | S-013, S-011, Work Item Planning |
-| [S-013](stories/S-013-simplify-discovery-process-records.md) | S-012 | S-002 |
-| [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | S-005, S-006, S-013 | Work Item Planning |
-| [S-011](stories/S-011-goal-driven-architecture-workflow.md) | S-012 | - |
-| Work Item Planning | S-002, S-012, T-001 | 工作项与开发 workflow 接入 |
-| 工作项与开发 workflow 接入 | Work Item Planning | 需求治理端到端验证 |
+| [S-001](stories/S-001-initial-discovery-prd-baseline.md) | - | S-002, S-013 |
+| [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | S-001, S-005, S-006, S-013 | S-015, 需求治理端到端验证 |
 | [S-003](stories/S-003-implementation-design-freshness-gate.md) | - | S-004 |
 | [S-004](stories/S-004-failure-classification-stage-routing.md) | S-003 | 需求治理端到端验证 |
-| 需求治理端到端验证 | S-002, 工作项与开发 workflow 接入, S-004 | - |
+| [S-005](stories/S-005-open-question-registry.md) | S-007, S-010 | S-006, S-002 |
+| [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | S-005 | S-012, S-002 |
+| [S-007](stories/S-007-workflow-routing-examples.md) | S-008 | S-005 |
+| [S-008](stories/S-008-skill-semantic-visual-markers.md) | - | S-007, S-009, S-011, T-001 |
+| [S-009](stories/S-009-generated-status-presentation.md) | S-008 | S-010 |
+| [S-010](stories/S-010-document-reference-links.md) | S-009 | S-005 |
+| [S-011](stories/S-011-goal-driven-architecture-workflow.md) | S-008, S-012 | - |
+| [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | S-006 | S-013, S-011, S-015 |
+| [S-013](stories/S-013-simplify-discovery-process-records.md) | S-001, S-012 | S-002 |
+| [S-014](stories/S-014-user-journey-analysis.md) | - | - |
+| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | S-002, S-012, T-001 | S-016 |
+| [S-016](stories/S-016-unified-backlog-board.md) | S-015 | 工作项与开发 workflow 接入 |
+| [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | S-008 | S-015 |
+| 工作项与开发 workflow 接入 | S-016 | 需求治理端到端验证 |
+| 需求治理端到端验证 | S-002, S-004, 工作项与开发 workflow 接入 | - |
 
 ## 当前可并行实施表
 
@@ -97,8 +103,10 @@
 | 4 | S-012 | S-006 | ⚠️ Blocked |
 | 5 | S-013；S-011 | S-012 | ⚠️ Blocked |
 | 6 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
-| 7 | Work Item Planning | S-002、S-012、T-001 | ⚠️ Blocked |
-| 8 | 工作项与开发 workflow 接入 | Work Item Planning | ⚠️ Blocked |
-| 9 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
+| 7 | S-015 | S-002、S-012、T-001 | ⚠️ Blocked |
+| 8 | S-016 | S-015 | ⚠️ Blocked |
+| 9 | 工作项与开发 workflow 接入 | S-016 | ⚠️ Blocked |
+| 10 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
+| 11 | S-014 | - | Draft |
 
-用户明确允许并行实施时才使用此表。表中暂时保留 Work Item Planning、工作项与开发 workflow 接入、需求治理端到端验证三个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。
+用户明确允许并行实施时才使用此表。表中暂时保留工作项与开发 workflow 接入、需求治理端到端验证两个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。
