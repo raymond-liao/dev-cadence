@@ -9,7 +9,7 @@
 - Workspace: `.worktrees/s-004-failure-classification-stage-routing`
 - Branch: `codex/s-004-failure-classification-stage-routing`
 - Started at: `2026-07-14 Asia/Shanghai`
-- Current stage: Requirements Confirmation
+- Current stage: Technical Solution
 - Overall status: 🔄 `in_progress`
 
 ## Stage Status
@@ -17,7 +17,7 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/01-requirements.md`) | `confirmed: user approved both tasks on 2026-07-14` | `ea7a5ea` | 用户确认需求与待确认假设，并授权后续阶段连续推进至 Business Acceptance。 |
-| Technical Solution | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/02-technical-solution.md` | `delegated confirmation` | `pending` | Enhanced Exploration required. |
+| Technical Solution | ✅ `confirmed` | [Technical Solution](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/02-technical-solution.md`) | `confirmed: delegated authority on 2026-07-14` | `pending` | Enhanced Exploration completed; pragmatic-balance option selected. |
 | Implementation Plan | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/03-implementation-plan.md` | `delegated confirmation` | `pending` | Worktree ready. |
 | Development Implementation | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/04-implementation-record.md` | `pending` | `pending` | Not started. |
 | System Testing | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/05-system-test-report.md` | `pending` | `pending` | Not started. |
