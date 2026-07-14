@@ -4,6 +4,7 @@
 
 ## 待处理
 
+- [ ] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
 - [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
 - [ ] [P1] 实现 Work Item Planning workflow 和工作项契约：新增 `work-item-planning` skill，支持组合规划和单项登记；定义 `F/S/B/T` 卡片的 ID、结构、版本、状态、关系和 Roadmap，并将该 workflow 作为唯一建卡入口及开发 workflow 的移交方。
 - [ ] [P1] 打通工作项卡片与现有开发 workflow：更新 `using-dev-cadence`、`feature-dev`、`bug-fix` 和 `refactor`，实现卡片检查、缺卡路由、卡片版本引用、卡片与第一阶段记录的职责边界，以及开始、返工、验收和 Completion 后的状态与交付引用回写。
