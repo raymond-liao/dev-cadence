@@ -13,6 +13,8 @@
 - [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 - [ ] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
 - [ ] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md)
+- [ ] [P1] [S-012 Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md)
+- [ ] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md)
 - [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
 - [ ] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md)
 - [ ] [P1] 实现 Work Item Planning workflow 和工作项契约：新增 `work-item-planning` skill，支持组合规划和单项登记；定义 `F/S/B/T` 卡片的 ID、结构、版本、状态、关系和 Roadmap，并将该 workflow 作为唯一建卡入口及开发 workflow 的移交方。

@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-011`
-- Version：`1`
+- Version：`2`
 - Status：`Ready`
 - Priority：`P1`
 - Change Type：Feature
@@ -70,18 +70,19 @@
 
 ## Story Relationships
 
-- Follows：`S-001` 首次 Discovery 与产品设计基线。
+- Follows：`S-012` Asset 与 Delivery Workflow 记录边界。
 - Related：Feature Dev、Bug Fix 和 Refactor 的 Solution 阶段。
 - Related：`S-006` Discovery 产品与技术内容边界。
 
 ## 依赖
 
 - `S-008` Skill 语义视觉规范。
+- `S-012` Asset 与 Delivery Workflow 记录边界。
 
 ## 后续工作
 
 - 在有实际需求后，再评估是否需要为架构文档增加独立版本治理或变更记录规则。
-- 在有实际审计需求后，再评估是否需要 run manifest、阶段记录和 checkpoint。
+- 后续审计需求应优先通过架构文档自身的版本与变化记录解决，不重新引入独立 run manifest、阶段记录或 checkpoint。
 - Work Item Planning 后续可以引用已经存在的架构文档，但本 Story 不建立强制前置关系。
 
 ## Open Questions
@@ -93,6 +94,7 @@
 - [S-001 首次 Discovery 与产品设计基线](S-001-initial-discovery-prd-baseline.md)
 - [S-006 Discovery 产品与技术内容边界](S-006-discovery-product-technical-content-boundary.md)
 - [S-008 Skill 语义视觉规范](S-008-skill-semantic-visual-markers.md)
+- [S-012 Asset 与 Delivery Workflow 记录边界](S-012-asset-delivery-workflow-record-boundary.md)
 - [Backlog](../backlog.md)
 
 ## Change Log
@@ -100,3 +102,4 @@
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建目标驱动的架构设计 Workflow Story。 | 为用户明确提出的架构目标提供统一、轻量的设计流程和按目标命名的单一架构文档产出。 |
+| 2 | 2026-07-14 | 增加 Asset Workflow 记录边界依赖。 | 架构设计应复用统一的无独立过程记录契约，而不是单独定义例外。 |
