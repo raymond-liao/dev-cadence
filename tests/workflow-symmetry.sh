@@ -507,7 +507,7 @@ assert_workflows "external git operation confirmation" "merge, create or update 
 assert_workflows "active run commit request gate" "## User-Requested Commits During Active Runs" "## User-Requested Commits During Active Runs" "## User-Requested Commits During Active Runs"
 assert_workflows "active run commit allowed" "commit current in-scope changes without asking" "commit current in-scope changes without asking" "commit current in-scope changes without asking"
 assert_workflows "commit cannot bypass stages" "does not confirm a stage or bypass testing, verification, business acceptance, or Completion" "does not confirm a stage or bypass testing, verification, business acceptance, or Completion" "does not confirm a stage or bypass testing, verification, business acceptance, or Completion"
-assert_workflows "active run commit red flags" "### Commit Red Flags" "### Commit Red Flags" "### Commit Red Flags"
+assert_workflows "active run commit red flags" "### ⚠️ Commit Red Flags" "### ⚠️ Commit Red Flags" "### ⚠️ Commit Red Flags"
 assert_workflows "commit completion rationalization" "User asked to commit, so the workflow is complete" "User asked to commit, so the workflow is complete" "User asked to commit, so the workflow is complete"
 assert_workflows "no push rule" "Do not push unless the user explicitly asks" "Do not push unless the user explicitly asks" "Do not push unless the user explicitly asks"
 assert_workflows "documentation test exemption" "Root-level .*\\*\\.md.*docs/.*do not require new or updated automated tests" "Root-level .*\\*\\.md.*docs/.*do not require new or updated automated tests" "Root-level .*\\*\\.md.*docs/.*do not require new or updated automated tests"
@@ -571,7 +571,7 @@ assert_workflows "current run reuse" "current workflow run" "current workflow ru
 assert_workflows "existing records update" "update the existing stage records and manifest" "update the existing stage records and manifest" "update the existing stage records and manifest"
 assert_workflows "affected stage rollback" "return to the earliest affected stage" "return to the earliest affected stage" "return to the earliest affected stage"
 assert_workflows "out-of-scope branch decision" "expand the current feature or start a separate task" "expand the current bug fix or start a separate task" "split the request into a separate task"
-assert_workflows "active task red flags" "### Active Task Red Flags" "### Active Task Red Flags" "### Active Task Red Flags"
+assert_workflows "active task red flags" "### ⚠️ Active Task Red Flags" "### ⚠️ Active Task Red Flags" "### ⚠️ Active Task Red Flags"
 assert_workflows "new document rationalization" "start a new requirements document" "start a new diagnosis document" "start a new refactor document"
 
 assert_workflows "plan overview requirement" "Task Overview" "Task Overview" "Task Overview"
@@ -636,7 +636,7 @@ assert_workflow_evidence_contract \
   '`Regression Test Report Source`'
 
 assert_workflows "business acceptance numbered options" "fixed numbered options" "fixed numbered options" "fixed numbered options"
-assert_workflows "business acceptance feedback table" "### Ambiguous Acceptance Feedback" "### Ambiguous Acceptance Feedback" "### Ambiguous Acceptance Feedback"
+assert_workflows "business acceptance feedback table" "### ❓ Ambiguous Acceptance Feedback" "### ❓ Ambiguous Acceptance Feedback" "### ❓ Ambiguous Acceptance Feedback"
 assert_workflows "looks good is not acceptance" "looks good.*Not an acceptance decision" "looks good.*Not an acceptance decision" "looks good.*Not an acceptance decision"
 assert_workflows "ambiguous acceptance rejection" "Do not infer acceptance from ambiguous positive feedback" "Do not infer acceptance from ambiguous positive feedback" "Do not infer acceptance from ambiguous positive feedback"
 assert_workflows "localized positive feedback row" "Localized positive feedback.*Not an acceptance decision" "Localized positive feedback.*Not an acceptance decision" "Localized positive feedback.*Not an acceptance decision"

@@ -4,6 +4,10 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONVENTIONS_SKILL="$ROOT_DIR/src/skills/document-conventions/SKILL.md"
 ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+DISCOVERY_SKILL="$ROOT_DIR/src/skills/discovery/SKILL.md"
+FEATURE_SKILL="$ROOT_DIR/src/skills/feature-dev/SKILL.md"
+BUG_FIX_SKILL="$ROOT_DIR/src/skills/bug-fix/SKILL.md"
+REFACTOR_SKILL="$ROOT_DIR/src/skills/refactor/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -62,5 +66,14 @@ assert_match \
   "entry reads convention before writing" \
   'Before creating or updating.*Dev Cadence-managed Markdown|before.*creat.*Markdown|before.*updat.*Markdown' \
   "$ENTRY_SKILL"
+
+assert_literal "entry warning heading" "## ⚠️ Red Flags" "$ENTRY_SKILL"
+assert_literal "discovery required boundary" "### ✅ Discovery Must" "$DISCOVERY_SKILL"
+assert_literal "discovery forbidden boundary" "### ❌ Discovery Must Not" "$DISCOVERY_SKILL"
+
+for skill in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
+  assert_match "workflow warning heading" '^### ⚠️ .*Red Flags$' "$skill"
+  assert_literal "ambiguous feedback heading" "### ❓ Ambiguous Acceptance Feedback" "$skill"
+done
 
 printf 'Document conventions contract checks passed.\n'

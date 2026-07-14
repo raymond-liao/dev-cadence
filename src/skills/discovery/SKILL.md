@@ -63,14 +63,14 @@ Do not invent facts, requirements, roles, processes, objects, states, or rules t
 
 ## Workflow Boundary
 
-Discovery must:
+### ✅ Discovery Must
 
 - create only the first product-design baseline version;
 - keep product and business design durable outside `.dev-cadence/`;
 - preserve unresolved and rejected material visibly;
 - finish with one consolidated user confirmation covering both product-design documents.
 
-Discovery must not cross these boundaries:
+### ❌ Discovery Must Not
 
 - Do not create Feature, Story, Bug, or Technical Task cards.
 - Do not create or maintain a work-item Roadmap.

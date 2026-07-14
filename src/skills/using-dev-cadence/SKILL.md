@@ -80,7 +80,7 @@ Only start a new Dev Cadence flow when there is no unfinished workflow for the c
 
 Then announce the selected Dev Cadence flow and follow the flow skill exactly.
 
-## Red Flags
+## ⚠️ Red Flags
 
 These thoughts mean STOP and check the installed Dev Cadence flows:
 
