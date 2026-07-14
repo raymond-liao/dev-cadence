@@ -25,7 +25,7 @@
 | Implementation Plan | `confirmed` | [实施计划](03-implementation-plan.md) | `confirmed: delegated by user on 2026-07-14` | `15bbeaf` | Task 4 已执行。 |
 | Development Implementation | `confirmed` | [实施记录](04-implementation-record.md) | `confirmed: delegated by user on 2026-07-14` | `1783d49` | Task 4 与重复 whole-feature review 完成。 |
 | System Testing | `confirmed` | [系统测试报告](05-system-test-report.md) | `verification decision: ready` | `70378da` | 备选方案标题标识已纳入证据。 |
-| Business Acceptance | `confirmed` | [业务验收记录](06-business-acceptance-record.md) | `accepted by user: option 1` | `pending` | 用户重新选择 Accept。 |
+| Business Acceptance | `confirmed` | [业务验收记录](06-business-acceptance-record.md) | `accepted by user: option 1` | `fa3dd88` | 用户重新选择 Accept。 |
 
 ## 验证摘要
 
