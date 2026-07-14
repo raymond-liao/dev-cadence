@@ -408,7 +408,7 @@ Route each classification as follows:
 - `design_conflict`: return to Technical Solution.
 - `architecture_conflict`: return to Technical Solution and reassess the relevant Architecture and Decision sources before reconfirming the solution.
 - `environment_issue`: keep the current business stage as `blocked`, keep the overall status as `in_progress`, and record reproducible evidence plus unblock conditions. Do not report the implementation or verification as passed, failed, or ready solely because the environment is blocked.
-- `missing_dependency`: return to the earliest stage that can resolve the dependency. If the current task cannot resolve it, block the run and record the responsible owner and unblock conditions without reporting a false verification conclusion.
+- `missing_dependency`: return a requirement dependency to Requirements Confirmation, a solution dependency to Technical Solution, and an execution dependency to Implementation Plan or Development Implementation, choosing the earliest stage that can resolve it. If the current task cannot resolve it, block the run and record the responsible owner and unblock conditions without reporting a false verification conclusion.
 
 Do not retry the same failure without new evidence, a corrective action, or an environment change. After remediation, rerun the check associated with the stable failure ID and record exactly one failure lifecycle result: `closed`, `reclassified`, or `blocked`. These failure lifecycle results are internal record values and must not become Backlog or work-item statuses.
 
