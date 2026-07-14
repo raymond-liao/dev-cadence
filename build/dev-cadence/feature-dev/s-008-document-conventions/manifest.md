@@ -9,7 +9,7 @@
 - Branch：`codex/s-008-document-conventions`
 - Started At：`2026-07-14T11:27:22+08:00`
 - Current Stage：`Completion`
-- Overall Status：`in_progress`
+- Overall Status：`integrated`
 
 ## 工作项
 
@@ -47,4 +47,12 @@
 
 ## 最终集成
 
-- Decision：`pending`
+- Decision：`local merge`
+- Base Branch：`main`
+- Base Before Merge：`e4015439fdb741fc1bc0b44787cab8de9fde0ce9`
+- Integrated Feature SHA：`23a9136f1df23149262690e2407dba8dee04af53`
+- Merge Result：`fast-forward`
+- Post-Merge Verification：`bash scripts/check-all.sh` and `bash scripts/check-whitespace.sh` passed on `main`.
+- Worktree Cleanup：`not applicable; normal checkout`
+- Feature Branch：`codex/s-008-document-conventions` deleted after successful verification.
+- Push：`not performed`

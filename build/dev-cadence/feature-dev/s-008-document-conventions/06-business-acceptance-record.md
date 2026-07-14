@@ -43,4 +43,8 @@
 
 ## Final Follow-Up Actions
 
-- Pending Completion integration decision.
+- Fast-forward merged `codex/s-008-document-conventions` into local `main` at `23a9136f1df23149262690e2407dba8dee04af53`.
+- Re-ran `bash scripts/check-all.sh` and `bash scripts/check-whitespace.sh` on merged `main`; both passed.
+- No linked worktree required cleanup because the task used the normal checkout.
+- Deleted the merged feature branch.
+- Did not push.
