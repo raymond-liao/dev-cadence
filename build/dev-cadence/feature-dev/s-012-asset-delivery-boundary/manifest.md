@@ -16,7 +16,7 @@
 | Requirements Confirmation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/01-requirements.md` | Confirmed by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Story Version 1 is Ready with no Open Questions. |
 | Technical Solution | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/02-technical-solution.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Shared contract plus local Delivery declarations selected. |
 | Implementation Plan | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/03-implementation-plan.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Worktree and freshness gate verified. |
-| Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/04-implementation-record.md` | Delegated by the 2026-07-14 batch execution instruction | `a5067cdca2a2b357ca8041ca5f046cee3b2e8001` | Exact pre-commit identity verified; code review passed. |
+| Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/04-implementation-record.md` | Delegated by the 2026-07-14 batch execution instruction | `d53c7fd5bc2750f5a65206fadf59504ecc3a432b` | CR-I-001 fixed; original and final-review-fix commits have exact identity. |
 | System Testing | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/05-system-test-report.md` | Delegated by the 2026-07-14 batch execution instruction | `4ab28684b9b8b09975d2ba50c81031b03f6cf4ae` | Full repository checks passed; 10/10 acceptance criteria covered. |
 | Business Acceptance | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/06-business-acceptance-record.md` | Delegated by the 2026-07-14 batch execution instruction | `4ab28684b9b8b09975d2ba50c81031b03f6cf4ae` | Decision ✅ `accepted`; branch retained for parent integration. |
 
@@ -28,15 +28,16 @@
 
 ## Verification Summary
 
-- Implementation commit: `a5067cdca2a2b357ca8041ca5f046cee3b2e8001`.
+- Original implementation commit: `a5067cdca2a2b357ca8041ca5f046cee3b2e8001`.
+- Final reviewed implementation commit: `d53c7fd5bc2750f5a65206fadf59504ecc3a432b`.
 - Workflow record checkpoint: `4ab28684b9b8b09975d2ba50c81031b03f6cf4ae`.
-- Code review: ✅ `passed`; Critical 0, Important 0.
+- Code review: ✅ `passed`; Critical 0, Important 1 fixed.
 - System testing: 🟢 `ready`; fresh build, whitespace, and full checks passed.
 - Acceptance coverage: 10/10 criteria covered.
 
 ## Residual Risks
 
-- Discovery legacy run records remain until S-013 performs the scoped migration.
+- Discovery legacy run records remain under one explicit temporary precedence exception until S-013 performs the scoped migration and removes the exception.
 
 ## Business Acceptance Decision
 

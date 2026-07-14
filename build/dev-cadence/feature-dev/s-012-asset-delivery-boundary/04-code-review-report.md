@@ -6,7 +6,7 @@
 - [x] Applicable rule source: repository root `AGENTS.md`; no narrower `AGENTS.md` or `CLAUDE.md` applies.
 - [x] Confirmed requirements: [Requirements Confirmation](01-requirements.md); solution: [Technical Solution](02-technical-solution.md).
 - [x] Implementation plan: [Implementation Plan](03-implementation-plan.md).
-- [x] Reviewed branch/range: `codex/s-012-asset-delivery-boundary`, `3cb8acacf0d7cee7c53b3ea7dd452fa99b764809..a5067cdca2a2b357ca8041ca5f046cee3b2e8001`.
+- [x] Reviewed branch/range: `codex/s-012-asset-delivery-boundary`, `3cb8acacf0d7cee7c53b3ea7dd452fa99b764809..d53c7fd5bc2750f5a65206fadf59504ecc3a432b`; workflow-record-only commits excluded from implementation findings.
 
 ## Review Perspectives
 
@@ -19,9 +19,16 @@
 ## Findings
 
 - [x] Critical findings: None.
-- [x] Important findings: None.
-- [x] Each Critical or Important finding has evidence: Not applicable.
-- [x] Validation states: Not applicable.
+- [x] Important findings: `CR-I-001` validated and fixed.
+- [x] Evidence: `src/skills/using-dev-cadence/SKILL.md` Asset `must` rules conflicted with `src/skills/discovery/SKILL.md` legacy Run Records and Git Checkpoints instructions.
+- [x] Validation state: `fixed` in exact-identity `final-review-fix-1` commit `d53c7fd5bc2750f5a65206fadf59504ecc3a432b`.
+
+### CR-I-001: Asset Contract Conflicted With Discovery Legacy Instructions
+
+- Severity: Important.
+- State: `fixed`.
+- Proof: the shared entry prohibited all Asset run records while the installed Discovery skill still required a manifest, stage records, and checkpoints. Without precedence, an agent could not follow both instructions.
+- Fix: add a single Discovery-only transition rule giving its own legacy instructions temporary priority until S-013, require removal during S-013, prohibit propagation to Work Item Planning, Architecture Design, or new Asset workflows, and correct the Story acceptance language to describe the target model.
 
 ## Acceptance Review
 
@@ -39,6 +46,6 @@
 ## Review Decision
 
 - [x] ✅ Safe to proceed to System Testing.
-- [x] Fixes applied: None.
+- [x] Fixes applied: `CR-I-001` transition-contract correction.
 - [x] Unresolved findings: None.
 - [x] Residual review risk: Discovery still has legacy run records until S-013; the transition is explicit and no new Asset workflow may copy it.

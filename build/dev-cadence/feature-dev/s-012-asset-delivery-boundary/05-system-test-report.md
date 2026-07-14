@@ -1,13 +1,14 @@
 # System Test Report
 
 - Status: 🟢 `ready`
-- Verification source: local dedicated worktree `codex/s-012-asset-delivery-boundary` at implementation commit `a5067cdca2a2b357ca8041ca5f046cee3b2e8001` plus uncommitted workflow records.
+- Verification source: local dedicated worktree `codex/s-012-asset-delivery-boundary` at final reviewed implementation commit `d53c7fd5bc2750f5a65206fadf59504ecc3a432b` plus updated workflow records.
 
 ## Commands And Results
 
 | Command | Result |
 | --- | --- |
 | `bash tests/asset-delivery-record-contract.sh` | ✅ Passed. |
+| Transition RED/GREEN | ✅ Test first failed for missing Discovery precedence, then passed after the scoped exception was added. |
 | `bash tests/discovery-contract.sh` | ✅ Passed; legacy Discovery behavior was not accidentally rewritten. |
 | `bash tests/routing-contract.sh` | ✅ Passed. |
 | `bash tests/workflow-symmetry.sh` | ✅ Passed; Delivery evidence contracts remain intact. |
@@ -24,7 +25,7 @@
 
 ## Residual Risks
 
-- Discovery continues to create legacy process records until S-013. This is a scoped transition dependency, not an unrecorded implementation gap in S-012.
+- Discovery continues to create legacy process records until S-013. Its own instructions temporarily take priority only for Discovery; the tested exception cannot propagate to another Asset Workflow and must be removed by S-013.
 
 ## Verification Decision
 

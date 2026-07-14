@@ -4,7 +4,7 @@
 - Acceptance source: 2026-07-14 batch execution authorization to complete all Ready cards without intermediate confirmation.
 - Verification report: [System Test Report](05-system-test-report.md)
 - `User Decision`: `accepted`
-- `Accepted Residual Risks`: Discovery legacy process records remain until the separately scoped S-013 migration.
+- `Accepted Residual Risks`: Discovery legacy process records remain under an explicit Discovery-only precedence exception until the separately scoped S-013 migration removes both the records and exception.
 
 ## Accepted Outcome
 
