@@ -48,6 +48,7 @@ required_files=(
   "dist/.dev-cadence/.dev-cadence.example.yaml"
   "dist/.dev-cadence/AGENTS-snippet.md"
   "dist/.dev-cadence/skills/using-dev-cadence/SKILL.md"
+  "dist/.dev-cadence/skills/document-conventions/SKILL.md"
   "dist/.dev-cadence/skills/discovery/SKILL.md"
   "dist/.dev-cadence/skills/feature-dev/SKILL.md"
   "dist/.dev-cadence/skills/bug-fix/SKILL.md"

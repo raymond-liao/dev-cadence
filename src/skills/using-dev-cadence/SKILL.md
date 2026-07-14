@@ -29,6 +29,14 @@ If an installed flow applies, read that flow skill completely and follow it exac
 
 If no installed flow applies, handle the request normally.
 
+Before creating or updating Dev Cadence-managed Markdown documents, records, reports, examples, or summaries, read and follow:
+
+```text
+.dev-cadence/skills/document-conventions/SKILL.md
+```
+
+That shared skill owns common document presentation rules. Do not duplicate its complete semantic mapping in this entry skill or individual business workflow skills.
+
 ## Available Flows
 
 | User request | Flow |

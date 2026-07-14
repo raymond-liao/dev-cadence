@@ -20,6 +20,7 @@ mkdir -p "$TARGET_REPO"
 bash "$INSTALL_SCRIPT" "$TARGET_REPO"
 
 test -f "$TARGET_REPO/.dev-cadence/version" || fail "first install did not create package"
+test -f "$TARGET_REPO/.dev-cadence/skills/document-conventions/SKILL.md" || fail "first install did not create document-conventions skill"
 cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "installed version differs from source"
 
 printf 'stale\n' > "$TARGET_REPO/.dev-cadence/stale-file"
@@ -28,5 +29,8 @@ bash "$INSTALL_SCRIPT" "$TARGET_REPO"
 test ! -e "$TARGET_REPO/.dev-cadence/stale-file" || fail "update retained a stale package file"
 test ! -d "$TARGET_REPO/.dev-cadence/.dev-cadence" || fail "update nested the package directory"
 cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "updated version differs from source"
+cmp -s \
+  "$ROOT_DIR/src/skills/document-conventions/SKILL.md" \
+  "$TARGET_REPO/.dev-cadence/skills/document-conventions/SKILL.md" || fail "installed document-conventions skill differs from source"
 
 printf 'Install contract checks passed.\n'
