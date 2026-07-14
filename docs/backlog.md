@@ -18,7 +18,6 @@
 - [ ] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
 - [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
 - [ ] [P1] 打通工作项卡片与现有开发 workflow：更新 `using-dev-cadence`、`feature-dev`、`bug-fix` 和 `refactor`，实现卡片检查、缺卡路由、卡片版本引用、卡片与第一阶段记录的职责边界，以及开始、返工、验收和 Completion 后的状态与交付引用回写。
-- [ ] [P2] [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md)
 - [ ] [P2] 补齐需求治理端到端验证和安装契约：验证从想法、PRD、工作项规划到 `feature-dev`、`bug-fix`、`refactor` 交付及 Roadmap 回写的完整链路，并覆盖构建、安装包、入口路由和现有目标仓库兼容。
 - [ ] [P3] [S-014 User Journey 分析](stories/S-014-user-journey-analysis.md)
 - [ ] [P1] 补齐 Business Acceptance 终态映射：让三个 workflow 的 `accepted`、`accepted_with_risk` 和 `rejected` 分别进入明确的 Completion 路径，并用对称契约测试验证每个决策的 manifest 终态和后续动作。
@@ -43,6 +42,7 @@
 
 ## 已完成
 
+- [x] [P2] [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md)
 - [x] [P1] [S-003 实施前方案新鲜度门禁](stories/S-003-implementation-design-freshness-gate.md)
 - [x] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
 - [x] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
@@ -97,7 +97,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-010；S-004 | S-009；S-003 | ✅ Ready |
+| 1 | S-010 | S-009 | ✅ Ready |
 | 2 | S-005 | S-007、S-010 | ⚠️ Blocked |
 | 3 | S-006 | S-005 | ⚠️ Blocked |
 | 4 | S-012 | S-006 | ⚠️ Blocked |

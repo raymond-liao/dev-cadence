@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-004`
-- Version：`1`
-- Status：`Ready`
+- Version：`3`
+- Status：`Done`
 - Priority：`P2`
 - Change Type：Enhancement
 
@@ -87,3 +87,5 @@
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建实施与测试失败分类和阶段返回 Story。 | 让返工根据失败根因返回正确阶段，并阻止无差别重试或削弱有效测试。 |
+| 2 | 2026-07-14 | 将状态更新为 In Progress。 | S-004 已完成实施、review 和系统测试，正在等待 Business Acceptance。 |
+| 3 | 2026-07-14 | 将状态更新为 Done。 | 用户选择 Accept with residual risk；系统测试未识别残余风险，验收记录保持 Accepted Residual Risks 为 None identified。 |

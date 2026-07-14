@@ -351,6 +351,30 @@ Classify the result:
 
 When returning to an earlier stage, mark affected later confirmation and verification evidence as superseded, set the earliest affected stage to `in_progress`, set later affected stages to `pending`, refresh and reconfirm the affected records, and block implementation until the gate passes again.
 
+### Failure Classification And Stage Routing
+
+Use this lifecycle for blocking failures observed during implementation, compilation or build, automated testing, Regression Verification, regression checks, or implementation-stage code review. Classify from inspectable evidence, not from the failure symptom alone.
+
+Use exactly these canonical classifications: `implementation_bug`, `test_bug`, `environment_issue`, `unclear_requirement`, `design_conflict`, `architecture_conflict`, and `missing_dependency`.
+
+Assign every failure a stable failure ID that remains unchanged across remediation, reruns, and reclassification. The complete failure record belongs in the stage record that observed the failure; the manifest contains only the current routing or blocking summary. Record the failure ID, evidence, classification rationale, remediation round, return target, and result. When a failure originates from code review, also record its source finding ID.
+
+Route each classification as follows:
+
+- `implementation_bug`: return to Repair Implementation.
+- `test_bug`: return to the test asset owner or the test-correction step within Repair Implementation. Do not delete, skip, or weaken an effective test to hide an implementation failure. If the test asset owner is external, keep `test_bug`, record the owner and unblock conditions, and do not relabel it as `missing_dependency`.
+- `unclear_requirement`: return to Problem Diagnosis, the earliest requirement or diagnosis stage for this workflow.
+- `design_conflict`: return to Repair Solution.
+- `architecture_conflict`: return to Repair Solution and reassess the relevant Architecture and Decision sources before reconfirming the solution.
+- `environment_issue`: keep the current business stage as `blocked`, keep the overall status as `in_progress`, and record reproducible evidence plus unblock conditions. Do not report the implementation or verification as passed, failed, or ready solely because the environment is blocked.
+- `missing_dependency`: return a requirement dependency to Problem Diagnosis, a solution dependency to Repair Solution, and an execution dependency to Repair Plan or Repair Implementation, choosing the earliest stage that can resolve it. If the current task cannot resolve it, block the run and record the responsible owner and unblock conditions without reporting a false verification conclusion.
+
+Do not retry the same failure without new evidence, a corrective action, or an environment change. After remediation, rerun the check associated with the stable failure ID and record exactly one failure lifecycle result: `closed`, `reclassified`, or `blocked`. These failure lifecycle results are internal record values and must not become Backlog or work-item statuses.
+
+Only a validated blocking code review finding enters this failure lifecycle; preserve its source finding ID. Keep non-blocking or unvalidated findings in the existing code review evidence model.
+
+When routing returns to an earlier stage, reuse the active-task rollback semantics: set the earliest affected stage to `in_progress`, set later affected stages to `pending`, mark invalidated confirmation and verification evidence as `superseded`, refresh the affected records, and obtain the confirmations required by this workflow before continuing.
+
 ### Repair Implementation
 
 Use:
