@@ -23,8 +23,8 @@
 | Requirements Confirmation | `confirmed` | [需求确认](01-requirements.md) | `confirmed: explicit user feedback on 2026-07-14` | `15bbeaf` | 增加多方案选定标识要求。 |
 | Technical Solution | `confirmed` | [技术方案](02-technical-solution.md) | `confirmed: delegated by user on 2026-07-14` | `15bbeaf` | 增加 Selected/Rejected/Pending 语义。 |
 | Implementation Plan | `confirmed` | [实施计划](03-implementation-plan.md) | `confirmed: delegated by user on 2026-07-14` | `15bbeaf` | Task 4 已执行。 |
-| Development Implementation | `confirmed` | [实施记录](04-implementation-record.md) | `confirmed: delegated by user on 2026-07-14` | `pending` | Task 4 与重复 whole-feature review 完成。 |
-| System Testing | `confirmed` | [系统测试报告](05-system-test-report.md) | `verification decision: ready` | `pending` | 新增 AC-11 已覆盖。 |
+| Development Implementation | `confirmed` | [实施记录](04-implementation-record.md) | `confirmed: delegated by user on 2026-07-14` | `1783d49` | Task 4 与重复 whole-feature review 完成。 |
+| System Testing | `confirmed` | [系统测试报告](05-system-test-report.md) | `verification decision: ready` | `1783d49` | 新增 AC-11 已覆盖。 |
 | Business Acceptance | `in_progress` | [业务验收记录](06-business-acceptance-record.md) | `pending` | `pending` | 等待重新验收。 |
 
 ## 验证摘要
