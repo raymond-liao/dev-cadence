@@ -27,51 +27,51 @@
 
 **Step 1: Write the failing symmetric contract**
 
-- [ ] Add assertions for the exact seven canonical classifications.
-- [ ] Add assertions for stable failure identity and required record fields.
-- [ ] Add assertions for all routing categories, the no-weakening test rule, retry prerequisites, rerun results, blocking semantics, review source linkage, and S-003 rollback semantics.
-- [ ] Assert that lifecycle results are not Backlog or work-item statuses.
+- [x] Add assertions for the exact seven canonical classifications.
+- [x] Add assertions for stable failure identity and required record fields.
+- [x] Add assertions for all routing categories, the no-weakening test rule, retry prerequisites, rerun results, blocking semantics, review source linkage, and S-003 rollback semantics.
+- [x] Assert that lifecycle results are not Backlog or work-item statuses.
 
 **Step 2: Verify RED**
 
-- [ ] Run `bash tests/workflow-symmetry.sh`.
-- [ ] Expected: failure because the new `Failure Classification And Stage Routing` sections and canonical terms do not exist.
+- [x] Run `bash tests/workflow-symmetry.sh`.
+- [x] Expected: failure because the new `Failure Classification And Stage Routing` sections and canonical terms do not exist.
 
 **Step 3: Implement the minimum workflow rules**
 
-- [ ] Add the same contract structure to feature-dev, bug-fix, and refactor.
-- [ ] Keep only workflow-specific stage names different.
-- [ ] Place complete failure records in the observing stage record and only routing/blocking summaries in the manifest.
-- [ ] Preserve overall `in_progress` for environment or externally blocked dependency handling.
-- [ ] Link validated blocking review findings using their source finding IDs.
+- [x] Add the same contract structure to feature-dev, bug-fix, and refactor.
+- [x] Keep only workflow-specific stage names different.
+- [x] Place complete failure records in the observing stage record and only routing/blocking summaries in the manifest.
+- [x] Preserve overall `in_progress` for environment or externally blocked dependency handling.
+- [x] Link validated blocking review findings using their source finding IDs.
 
 **Step 4: Verify GREEN and refactor**
 
-- [ ] Run `bash tests/workflow-symmetry.sh`.
-- [ ] Expected: all workflow symmetry checks pass.
-- [ ] Review the three sections side by side and remove avoidable semantic drift while keeping stage names correct.
+- [x] Run `bash tests/workflow-symmetry.sh`.
+- [x] Expected: all workflow symmetry checks pass.
+- [x] Review the three sections side by side and remove avoidable semantic drift while keeping stage names correct.
 
 **Step 5: Update package version and build**
 
-- [ ] Change root `version` from `0.11.0` to `0.12.0` because installed workflow behavior changes additively.
-- [ ] Run `bash scripts/build.sh`.
-- [ ] Verify canonical rules in `src/` and `dist/.dev-cadence/` with `rg --no-ignore`.
+- [x] Change root `version` from `0.11.0` to `0.12.0` because installed workflow behavior changes additively.
+- [x] Run `bash scripts/build.sh`.
+- [x] Verify canonical rules in `src/` and `dist/.dev-cadence/` with `rg --no-ignore`.
 
 **Step 6: Development verification and self-review**
 
-- [ ] Run `bash scripts/check-whitespace.sh`.
-- [ ] Run `bash scripts/check-all.sh`.
-- [ ] Review the staged diff against the requirements, solution, AGENTS.md, and acceptance criteria.
-- [ ] Commit only the implementation files after the executing-plans identity gate passes.
+- [x] Run `bash scripts/check-whitespace.sh`.
+- [x] Run `bash scripts/check-all.sh`.
+- [x] Review the staged diff against the requirements, solution, AGENTS.md, and acceptance criteria.
+- [x] Commit only the implementation files after the executing-plans identity gate passes.
 
 ## Development Implementation Completion Conditions
 
-- [ ] All acceptance criteria have executable contract coverage or explicit source/distribution verification.
-- [ ] The focused RED/GREEN cycle is recorded.
-- [ ] All three workflow sections are symmetric apart from stage mappings.
-- [ ] `dist/.dev-cadence/` is regenerated, not directly edited.
-- [ ] Version is `0.12.0` in source and generated package.
-- [ ] No Critical or Important review finding remains unresolved.
+- [x] All acceptance criteria have executable contract coverage or explicit source/distribution verification.
+- [x] The focused RED/GREEN cycle is recorded.
+- [x] All three workflow sections are symmetric apart from stage mappings.
+- [x] `dist/.dev-cadence/` is regenerated, not directly edited.
+- [x] Version is `0.12.0` in source and generated package.
+- [x] No Critical or Important review finding remains unresolved.
 
 ## Pre-Implementation Design Freshness Gate
 
