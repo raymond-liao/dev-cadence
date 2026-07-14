@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`T-001`
-- Version：`2`
-- Status：`In Progress`
+- Version：`3`
+- Status：`Done`
 - Priority：`P2`
 - Change Type：Documentation Governance
 
@@ -85,3 +85,4 @@
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建工作项范围章节语义标识任务。 | 使用共享正反语义提升 Feature、Story、Bug 和 Task 边界的扫描效率，同时避免逐项装饰造成视觉噪声。 |
 | 2 | 2026-07-14 | 修正范围标题的语言边界并返回实施状态。 | 用户验收发现共享规则错误地把简体中文标题强制用于英文输出；标识语义应固定，标题文字必须本地化。 |
+| 3 | 2026-07-14 | 通过修正后的业务验收。 | 语言中性规则和 `Thought` / `Reality` Red Flags 已验证并获接受。 |

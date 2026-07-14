@@ -4,7 +4,7 @@
 
 ## 进行中
 
-- [ ] [P2] [T-001 工作项范围章节语义标识](tasks/T-001-work-item-scope-semantic-markers.md)
+- 无。
 
 ## 待处理
 
@@ -44,6 +44,7 @@
 
 ## 已完成
 
+- [x] [P2] [T-001 工作项范围章节语义标识](tasks/T-001-work-item-scope-semantic-markers.md)
 - [x] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
 - [x] [P1] [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md)
 - [x] [P1] 补齐 executing-plans 路径下实施提交的提交前审查机制。
