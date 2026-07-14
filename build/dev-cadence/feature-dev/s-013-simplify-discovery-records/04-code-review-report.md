@@ -6,7 +6,7 @@
 - [x] Applicable rule source: repository root `AGENTS.md`; no narrower rule file applies.
 - [x] Confirmed requirements and technical solution: [Requirements](01-requirements.md), [Technical Solution](02-technical-solution.md).
 - [x] Implementation plan: [Implementation Plan](03-implementation-plan.md).
-- [x] Reviewed range: branch `codex/s-013-simplify-discovery-records`, `c46f1d781cefb96e33ca82b82c59e65f4dc2aaf7..94ee67c2a9116da9eae1e724993b3f5a632d7785`; committed tree `c9d2223a0fc965d125eb6828f5c9cca0a22b52b1` exactly matches the reviewed tree.
+- [x] Reviewed range: branch `codex/s-013-simplify-discovery-records`, `c46f1d781cefb96e33ca82b82c59e65f4dc2aaf7..a5cc1d4bceddcf95cc44ac8375c6ada9c0399fa8`; implementation trees `c9d2223a0fc965d125eb6828f5c9cca0a22b52b1` and `57d88f775c9d6135e0840920281758637b4169c8` exactly match their reviewed snapshots. Stage checkpoint `1c6447571c89057ee843827300646da6ba83a03f` is excluded from implementation findings.
 
 ## Review Perspectives
 
@@ -19,13 +19,15 @@
 ## Findings
 
 - [x] Critical findings: None.
-- [x] Important findings: None.
-- [x] Each Critical or Important finding has evidence: Not applicable.
-- [x] Validation states: Not applicable.
+- [x] Important finding `IMP-001` (`fixed`): the existing-document stop gate now distinguishes a baseline present before workflow start from drafts created by the current Discovery effort, so Stage 5 feedback remains in the current flow.
+- [x] Important finding `IMP-002` (`fixed`): the rule now defines PRD and Business Architecture as the only primary new outputs, treats existing technical asset or Registry work as supporting shared-asset maintenance, and forbids automatic technical-card creation.
+- [x] Important finding `IMP-003` (`fixed`): uninterrupted batch execution is no longer Business Acceptance; Story, Backlog, manifest, and acceptance record remain pending the user's final decision.
+- [x] Each Important finding has a clearly stated behavioral proof and a scoped staged fix.
+- [x] Validation states are recorded above.
 
 ## Review Decision
 
 - [x] Safe to proceed to System Testing.
-- [x] Fixes applied: split the shared document-conventions contract so Discovery validates asset status summaries and final product-document links rather than Delivery manifest/report surfaces.
+- [x] Fixes applied: prior Document Conventions correction plus the three Important review fixes above.
 - [x] Unresolved findings: None.
-- [x] Residual review risks: None; post-commit source/dist parity and full-suite verification passed.
+- [x] Residual review risks: None; exact commit identity and fresh full-suite verification passed after the three Important fixes.
