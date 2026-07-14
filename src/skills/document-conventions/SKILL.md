@@ -41,6 +41,19 @@ Use semantic markers when they materially improve scanning or comparison, especi
 
 Prefer one marker on a section heading over repeating the same marker on every ordinary list item beneath it.
 
+## Solution Choice Markers
+
+When a technical solution or another document compares multiple options, make the confirmed decision easy to scan without misrepresenting the alternatives:
+
+- use `✅ Selected` only for the option the user has confirmed;
+- keep unselected but still viable alternatives neutral, without a positive or negative marker;
+- use `❌ Rejected` only when the option was explicitly rejected;
+- use `❓ Decision Pending` while no option has been confirmed.
+
+A recommendation is not a selection. Do not mark a recommended option as `✅ Selected` until the user confirms it or the active workflow has explicit delegated authority to make that decision.
+
+Use the marker in the option heading or decision column and retain the option name and decision text. Do not repeat it on every paragraph describing the option.
+
 ## Precision Boundaries
 
 Do not add emoji mechanically to ordinary prose, ordinary headings, or ordinary list items.

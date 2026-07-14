@@ -57,6 +57,17 @@ assert_match \
   "machine-sensitive exclusion" \
   'filenames|paths|commands|IDs|configuration|canonical status' \
   "$CONVENTIONS_SKILL"
+assert_literal "selected solution marker" "✅ Selected" "$CONVENTIONS_SKILL"
+assert_literal "rejected solution marker" "❌ Rejected" "$CONVENTIONS_SKILL"
+assert_literal "pending solution marker" "❓ Decision Pending" "$CONVENTIONS_SKILL"
+assert_match \
+  "unselected alternatives stay neutral" \
+  'unselected.*neutral|alternatives.*neutral|Do not mark.*unselected.*Rejected' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "recommendation is not selection" \
+  'recommend.*not.*Selected|Do not mark.*recommend.*Selected|recommendation.*confirmed' \
+  "$CONVENTIONS_SKILL"
 
 assert_literal \
   "entry convention path" \
