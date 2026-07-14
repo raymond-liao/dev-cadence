@@ -9,7 +9,6 @@
 ## 待处理
 
 - [ ] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
-- [ ] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
 - [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 - [ ] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
 - [ ] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md)
@@ -44,6 +43,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
 - [x] [P2] [T-001 工作项范围章节语义标识](tasks/T-001-work-item-scope-semantic-markers.md)
 - [x] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
 - [x] [P1] [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md)
@@ -89,15 +89,16 @@
 
 | 序号 | 可并行处理 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-007；S-009；S-003 | S-007、S-009：S-008；S-003：- | ✅ Ready |
-| 2 | S-010；S-004 | S-010：S-009；S-004：S-003 | ⚠️ Blocked |
-| 3 | S-005 | S-007、S-010 | ⚠️ Blocked |
-| 4 | S-006 | S-005 | ⚠️ Blocked |
-| 5 | S-012 | S-006 | ⚠️ Blocked |
-| 6 | S-013；S-011 | S-012 | ⚠️ Blocked |
-| 7 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
-| 8 | Work Item Planning | S-002、S-012、T-001 | ⚠️ Blocked |
-| 9 | 工作项与开发 workflow 接入 | Work Item Planning | ⚠️ Blocked |
-| 10 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
+| 1 | S-007；S-003 | S-007：S-008；S-003：- | ✅ Ready |
+| 2 | S-010 | S-009 | ✅ Ready |
+| 3 | S-004 | S-003 | ⚠️ Blocked |
+| 4 | S-005 | S-007、S-010 | ⚠️ Blocked |
+| 5 | S-006 | S-005 | ⚠️ Blocked |
+| 6 | S-012 | S-006 | ⚠️ Blocked |
+| 7 | S-013；S-011 | S-012 | ⚠️ Blocked |
+| 8 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
+| 9 | Work Item Planning | S-002、S-012、T-001 | ⚠️ Blocked |
+| 10 | 工作项与开发 workflow 接入 | Work Item Planning | ⚠️ Blocked |
+| 11 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
 
 用户明确允许并行实施时才使用此表。S-009 和 T-001 都会修改 `document-conventions`，合并前需要协调共享规则和契约测试。表中暂时保留 Work Item Planning、工作项与开发 workflow 接入、需求治理端到端验证三个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。
