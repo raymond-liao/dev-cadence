@@ -4,7 +4,7 @@
 
 ## 进行中
 
-- [ ] [P2] [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md)
+- 无。
 
 ## 待处理
 
@@ -40,6 +40,7 @@
 
 ## 已完成
 
+- [x] [P2] [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md)
 - [x] [P1] [S-003 实施前方案新鲜度门禁](stories/S-003-implementation-design-freshness-gate.md)
 - [x] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
 - [x] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
@@ -90,7 +91,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-010；S-004 | S-009；S-003 | ✅ Ready |
+| 1 | S-010 | S-009 | ✅ Ready |
 | 2 | S-005 | S-007、S-010 | ⚠️ Blocked |
 | 3 | S-006 | S-005 | ⚠️ Blocked |
 | 4 | S-012 | S-006 | ⚠️ Blocked |
