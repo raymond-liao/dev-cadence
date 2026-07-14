@@ -43,6 +43,10 @@ assert_description \
   "Use when creating or updating Dev Cadence-managed Markdown documents, examples, reports, or summaries."
 
 assert_description \
+  "src/skills/open-question-registry/SKILL.md" \
+  "Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or remove repository-level unresolved questions."
+
+assert_description \
   "src/skills/discovery/SKILL.md" \
   "Use when a user wants to explore an incomplete product idea, business problem, or product direction and create the first PRD and Business Architecture baseline in a target project."
 
@@ -60,6 +64,7 @@ assert_description \
 
 assert_no_process_summary "src/skills/using-dev-cadence/SKILL.md"
 assert_no_process_summary "src/skills/document-conventions/SKILL.md"
+assert_no_process_summary "src/skills/open-question-registry/SKILL.md"
 assert_no_process_summary "src/skills/discovery/SKILL.md"
 assert_no_process_summary "src/skills/feature-dev/SKILL.md"
 assert_no_process_summary "src/skills/bug-fix/SKILL.md"

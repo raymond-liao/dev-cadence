@@ -37,6 +37,14 @@ Before creating or updating Dev Cadence-managed Markdown documents, records, rep
 
 That shared skill owns common document presentation rules. Do not duplicate its complete semantic mapping in this entry skill or individual business workflow skills.
 
+For repository-level unresolved-question maintenance, read and follow:
+
+```text
+.dev-cadence/skills/open-question-registry/SKILL.md
+```
+
+That shared capability owns Registry discovery, on-demand creation, entry fields, single-body ownership, migration, terminal removal, and Change Log rules. Do not duplicate its complete lifecycle contract in this entry skill or individual business workflows.
+
 ## Available Flows
 
 | User request | Flow |
@@ -46,6 +54,15 @@ That shared skill owns common document presentation rules. Do not duplicate its 
 | Change existing user-visible or system-visible feature behavior | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Report a bug, error, failing test, regression, or unexpected behavior | `.dev-cadence/skills/bug-fix/SKILL.md` |
 | Improve internal structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior | `.dev-cadence/skills/refactor/SKILL.md` |
+
+## Shared Asset Capabilities
+
+Open Question Registry maintenance is a shared asset capability, not a six-stage business workflow.
+
+- When the user directly asks to view or maintain repository-level Open Questions, read `.dev-cadence/skills/open-question-registry/SKILL.md` and perform that bounded asset operation without starting feature-dev, bug-fix, refactor, or discovery solely for the maintenance request.
+- When an active workflow finds a question that the current artifact cannot reasonably hold, reuse the Registry skill and then return to the active workflow.
+- If the request also asks to change product behavior, fix a defect, refactor code, or create the first product-design baseline, select the matching business workflow first; Registry maintenance remains a supporting operation within that workflow.
+- Do not infer a Registry operation merely because unresolved questions exist in repository documents. Repository state alone does not authorize asset changes.
 
 ## Two-Stage Routing Decision
 
@@ -68,6 +85,7 @@ These examples are representative intent decisions, not a keyword-matching list.
 | Bug Fix | "The export command is documented to include timestamps, but they are missing." | ✅ Select `bug-fix` because already expected behavior is not working. If the user instead asks to intentionally change expected behavior, select `feature-dev`. |
 | Refactor | "Extract the parser into smaller modules without intentionally changing expected behavior." | ✅ Select `refactor` because the requested outcome is behavior-preserving structural improvement. If the request also adds behavior, route that behavior change through `feature-dev` or clarify the primary outcome. |
 | Ordinary Request | "Explain what this configuration field means." | ❌ Handle normally because explanation alone does not request product discovery or a software change. |
+| Open Question Registry | "Show me the repository-level Open Questions and register this cross-document issue." | ✅ Use the shared `open-question-registry` capability because the requested outcome is bounded maintenance of the unresolved-question index, not a delivery workflow. |
 | Repository State Only | "This repository has no PRD." | ❌ Do not start Discovery from repository state alone. A missing PRD does not establish product-exploration intent. Existing code, work-item cards, or tests likewise do not trigger a workflow without a matching user goal. |
 | Ambiguous Mixed Intent | "Clean up this module and change how retries work." | ❓ Ask one necessary routing clarification question because the request mixes behavior-preserving cleanup and an expected-behavior change without identifying the primary outcome. |
 
