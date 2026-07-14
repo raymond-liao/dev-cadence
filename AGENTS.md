@@ -17,7 +17,7 @@
 - `src/vendor/superpowers/`：固定版本的 vendored Superpowers 副本。
 - `dist/.dev-cadence/`：由 `bash scripts/build.sh` 生成的分发包，默认不要直接编辑。
 - `scripts/install.sh`：构建并替换目标仓库中的 `.dev-cadence` 安装包。
-- `build/`：本地工作流产物或临时记录，默认不要提交。
+- `build/`：Dev Cadence 工作流运行记录和短期执行产物。
 - `docs/`：业务流程说明和设计资料；不要用它替代 workflow skill 的执行规则。
 
 ## 核心术语
@@ -58,7 +58,7 @@
 - 提交前运行 `bash scripts/check-whitespace.sh`。
 - 提交前运行 `bash scripts/check-all.sh` 完成构建和契约验证。
 - 如果修改了规则文本，应使用 `rg --no-ignore` 检查 `src/` 和 `dist/.dev-cadence/` 是否同步包含关键规则。
-- `dist/` 和 `build/` 被忽略；不要为了提交分发产物而强制添加它们，除非用户明确要求。
+- `dist/` 被忽略；不要为了提交分发产物而强制添加它，除非用户明确要求。
 - 如果只改本仓库 `AGENTS.md`，不需要运行构建脚本。
 - 当修改会影响可安装 `.dev-cadence` 包、workflow 行为、安装片段、默认配置或用户可见交付规则时，提交前必须评估并更新根目录 `version`；如果决定不更新版本号，需要在最终说明中写明原因。
 

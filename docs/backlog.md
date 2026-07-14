@@ -85,11 +85,13 @@
 | [S-004](stories/S-004-failure-classification-stage-routing.md) | S-003 | 需求治理端到端验证 |
 | 需求治理端到端验证 | S-002, 工作项与开发 workflow 接入, S-004 | - |
 
-## 并行实施顺序表
+## 当前可并行实施表
 
-| 序号 | 可并行处理 | 前置条件 | 状态 |
+本表只展示尚未完成的工作项。相同序号的工作项可以并行实施；进入下一序号前，必须满足该序号中相关前置条件。某项完成并进入“已完成”后，必须从本表删除；随后根据 Dependency Table 重新计算其直接后继项的 `Ready` 或 `Blocked` 状态。
+
+| 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-010；S-004 | S-010：S-009；S-004：S-003 | ✅ Ready |
+| 1 | S-010；S-004 | S-009；S-003 | ✅ Ready |
 | 2 | S-005 | S-007、S-010 | ⚠️ Blocked |
 | 3 | S-006 | S-005 | ⚠️ Blocked |
 | 4 | S-012 | S-006 | ⚠️ Blocked |
@@ -99,4 +101,4 @@
 | 8 | 工作项与开发 workflow 接入 | Work Item Planning | ⚠️ Blocked |
 | 9 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
 
-用户明确允许并行实施时才使用此表。S-009 和 T-001 都会修改 `document-conventions`，合并前需要协调共享规则和契约测试。表中暂时保留 Work Item Planning、工作项与开发 workflow 接入、需求治理端到端验证三个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。
+用户明确允许并行实施时才使用此表。表中暂时保留 Work Item Planning、工作项与开发 workflow 接入、需求治理端到端验证三个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。
