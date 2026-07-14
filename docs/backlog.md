@@ -64,3 +64,40 @@
 - `P1`：会阻止 workflow 可靠闭环，或使特殊环境无法完成交付的问题。
 - `P2`：会使验证、风险或行为保护证据失效、不完整或不可追溯的问题。
 - `P3`：改善会话恢复和长期审计质量，但不直接造成不安全交付的问题。
+
+## Dependency Table
+
+| Work Item | Depends On | Blocks |
+|---|---|---|
+| [S-007](stories/S-007-workflow-routing-examples.md) | S-008 | S-005 |
+| [S-009](stories/S-009-generated-status-presentation.md) | S-008 | S-010 |
+| [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | S-008 | Work Item Planning |
+| [S-010](stories/S-010-document-reference-links.md) | S-009 | S-005 |
+| [S-005](stories/S-005-open-question-registry.md) | S-007, S-010 | S-006, S-002 |
+| [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | S-005 | S-012, S-002 |
+| [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | S-006 | S-013, S-011, Work Item Planning |
+| [S-013](stories/S-013-simplify-discovery-process-records.md) | S-012 | S-002 |
+| [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | S-005, S-006, S-013 | Work Item Planning |
+| [S-011](stories/S-011-goal-driven-architecture-workflow.md) | S-012 | - |
+| Work Item Planning | S-002, S-012, T-001 | 工作项与开发 workflow 接入 |
+| 工作项与开发 workflow 接入 | Work Item Planning | 需求治理端到端验证 |
+| [S-003](stories/S-003-implementation-design-freshness-gate.md) | - | S-004 |
+| [S-004](stories/S-004-failure-classification-stage-routing.md) | S-003 | 需求治理端到端验证 |
+| 需求治理端到端验证 | S-002, 工作项与开发 workflow 接入, S-004 | - |
+
+## 并行实施顺序表
+
+| 序号 | 可并行处理 | 前置条件 | 状态 |
+|---:|---|---|---|
+| 1 | S-007；S-009；T-001；S-003 | S-007、S-009、T-001：S-008；S-003：- | ✅ Ready |
+| 2 | S-010；S-004 | S-010：S-009；S-004：S-003 | ⚠️ Blocked |
+| 3 | S-005 | S-007、S-010 | ⚠️ Blocked |
+| 4 | S-006 | S-005 | ⚠️ Blocked |
+| 5 | S-012 | S-006 | ⚠️ Blocked |
+| 6 | S-013；S-011 | S-012 | ⚠️ Blocked |
+| 7 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
+| 8 | Work Item Planning | S-002、S-012、T-001 | ⚠️ Blocked |
+| 9 | 工作项与开发 workflow 接入 | Work Item Planning | ⚠️ Blocked |
+| 10 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
+
+用户明确允许并行实施时才使用此表。S-009 和 T-001 都会修改 `document-conventions`，合并前需要协调共享规则和契约测试。表中暂时保留 Work Item Planning、工作项与开发 workflow 接入、需求治理端到端验证三个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。
