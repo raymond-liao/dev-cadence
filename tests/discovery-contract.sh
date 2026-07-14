@@ -57,11 +57,6 @@ assert_literal \
   "$DISCOVERY_SKILL"
 
 for literal in \
-  'build/dev-cadence/discovery/<discovery-slug>/manifest.md' \
-  '01-background-and-problem.md' \
-  '02-goals-and-value.md' \
-  '03-scope-and-business-architecture.md' \
-  '05-product-design-confirmation-record.md' \
   'docs/product-design/prd.md' \
   'docs/product-design/business-architecture.md'
 do
@@ -97,9 +92,14 @@ assert_not_match "Pending Decisions heading" '^#{1,6} Pending Decisions$' "$DISC
 assert_match "existing document refusal" 'either.*product-design document.*exists|either.*prd\.md.*business-architecture\.md.*exists' "$DISCOVERY_SKILL"
 assert_match "no document approval metadata" 'do not.*approval metadata|must not.*approval metadata' "$DISCOVERY_SKILL"
 assert_match "one final confirmation" 'one.*consolidated.*confirmation' "$DISCOVERY_SKILL"
-assert_literal "checkpoint is not confirmation" 'A checkpoint commit does not count as user confirmation.' "$DISCOVERY_SKILL"
-assert_match "ignored run records stay ignored" 'ignored.*run records.*do not force-add|do not force-add.*ignored.*run records' "$DISCOVERY_SKILL"
-assert_match "no push without request" 'Do not push unless the user explicitly asks' "$DISCOVERY_SKILL"
+assert_match "analysis stays conversational" 'analysis stages.*current conversation|current conversation.*analysis stages' "$DISCOVERY_SKILL"
+assert_match "no process records" '[Mm]ust not create.*run manifest.*stage records.*confirmation records|[Dd]o not create.*run manifest.*stage records.*confirmation records' "$DISCOVERY_SKILL"
+assert_match "no Discovery checkpoints" '[Mm]ust not require.*dedicated branch.*checkpoint|[Dd]o not require.*dedicated branch.*checkpoint' "$DISCOVERY_SKILL"
+assert_match "ordinary Git rules" 'ordinary Git rules' "$DISCOVERY_SKILL"
+assert_match "conversation-based continuation" 'current conversation.*user.*goal.*authoritative.*documents|authoritative.*documents.*current conversation' "$DISCOVERY_SKILL"
+assert_not_match "legacy Discovery run directory" 'build/dev-cadence/discovery/' "$DISCOVERY_SKILL"
+assert_not_match "legacy Discovery stage records" '01-background-and-problem\.md|02-goals-and-value\.md|03-scope-and-business-architecture\.md|05-product-design-confirmation-record\.md' "$DISCOVERY_SKILL"
+assert_not_match "legacy Discovery manifest" 'Discovery manifest|manifest\.md|update the manifest|record.*manifest' "$DISCOVERY_SKILL"
 
 for literal in \
   'Product And Technical Content Boundary' \
@@ -150,6 +150,7 @@ assert_literal "entry Discovery flow" '.dev-cadence/skills/discovery/SKILL.md' "
 assert_match "entry initial discovery route" 'incomplete product idea|broad product idea' "$ENTRY_SKILL"
 assert_match "entry initial business architecture route" 'initial.*Business Architecture|first.*Business Architecture' "$ENTRY_SKILL"
 assert_match "entry existing baseline boundary" 'existing.*PRD|existing.*product-design' "$ENTRY_SKILL"
+assert_not_match "temporary Discovery exception" 'Until S-013 is complete|Remove this exception when S-013 migrates Discovery' "$ENTRY_SKILL"
 
 for flow in feature-dev bug-fix refactor; do
   assert_literal "entry direct $flow flow" ".dev-cadence/skills/$flow/SKILL.md" "$ENTRY_SKILL"

@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-Dev Cadence 是一个面向 AI 编程代理的软件交付治理框架。它把 AI 的开发行为组织成可配置的业务流程，并为每次交付生成可审计的阶段记录、测试证据、验收结论和集成决策。
+Dev Cadence 是一个面向 AI 编程代理的软件交付治理框架。它把 AI 工作组织成可配置的业务流程：Asset Workflow 维护长期权威文档，Delivery Workflow 生成可审计的阶段记录、测试证据、验收结论和集成决策。
 
 它基于固定版本的 vendored Superpowers，以及一小组项目级指令，让交付阶段变得可见、可审阅、可重复。
 
@@ -26,17 +26,17 @@ bash scripts/install.sh /path/to/target-repo
 
 当用户提出产品探索、需求工作或开发工作时，Dev Cadence 会先判断是否有已安装的工作流适用，而不是直接编写产品文档或代码。
 
-如果有适用的工作流，agent 会先执行该工作流，再进入实现。它会确认业务可读的阶段产物，记录阶段证据，然后使用 vendored Superpowers 提供的工程方法：brainstorming、systematic debugging、planning、test-driven development、code review、verification 和 branch finishing。
+如果有适用的工作流，agent 会先执行该工作流，再进入实现。Asset Workflow 在会话中完成分析和确认门禁，只持久化权威资产；Delivery Workflow 记录阶段证据，并使用 vendored Superpowers 提供的工程方法：brainstorming、systematic debugging、planning、test-driven development、code review、verification 和 branch finishing。
 
 Dev Cadence 不替代 Superpowers。它是在 Superpowers 外层固定业务交付流程：
 
 - 哪个工作流适用；
 - 哪些阶段需要用户确认；
-- 哪些记录必须存在；
+- 哪些长期资产或交付记录必须存在；
 - 任务产物应该放在哪里；
 - 目标仓库使用哪个固定版本的 Superpowers。
 
-每次工作流运行都应该形成一条交付证据链。Dev Cadence Run Manifest 会把一次运行串起来，记录工作流类型、分支、阶段状态、产物路径、checkpoint commit、验证状态、业务验收状态和最终集成决策。
+每次 Delivery Workflow 运行都应该形成一条交付证据链。Dev Cadence Run Manifest 会把一次运行串起来，记录工作流类型、分支、阶段状态、产物路径、checkpoint commit、验证状态、业务验收状态和最终集成决策。Asset Workflow 不创建 manifest，也不持久化与权威资产重复的过程记录。
 
 因为技能通过目标仓库的 `AGENTS.md` 触发，用户不需要写特殊提示词。安装后，普通产品探索和开发请求应该自动进入匹配的 Dev Cadence 工作流。
 
@@ -67,7 +67,7 @@ docs/product-design/business-architecture.md
 Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation
 ```
 
-Discovery 负责产品需求和业务架构，不负责技术架构、工作项拆分或应用实现。当前 S-001 只创建第一版基线；增量更新由 S-002 实现。
+Discovery 负责产品需求和业务架构，不负责技术架构、工作项拆分或应用实现。分析阶段和最终确认门禁只在会话中执行，唯一持久化产出是 PRD 和 Business Architecture。当前 S-001 只创建第一版基线；增量更新由 S-002 实现。
 
 **feature-dev** 用于新增用户可见或系统可见功能，以及对预期行为的主动变更。
 
@@ -91,7 +91,7 @@ Requirements Confirmation -> Refactor Solution -> Refactor Plan -> Refactor Impl
 
 ## 交付证据
 
-工作流记录属于目标仓库的正常工作区，不存放在 `.dev-cadence` 里。
+Delivery Workflow 记录属于目标仓库的正常工作区，不存放在 `.dev-cadence` 里。Discovery 属于 Asset Workflow，不创建这套交付记录。
 
 任务级运行目录会把同一个任务的所有工作流产物放在一起：
 

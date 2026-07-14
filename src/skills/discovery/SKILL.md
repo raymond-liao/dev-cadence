@@ -35,13 +35,13 @@ Direct requests for a clear feature, bug fix, or behavior-preserving refactor do
 
 ## Configuration
 
-Before producing user-facing workflow documents or records, read:
+Before producing user-facing product-design documents or summaries, read:
 
 ```text
 .dev-cadence.yaml
 ```
 
-Use `output_language` for product-design documents, stage records, manifest content, and user-facing summaries:
+Use `output_language` for product-design documents and user-facing summaries:
 
 - `en`: English;
 - `zh-CN`: Simplified Chinese.
@@ -50,11 +50,11 @@ If the configuration is missing or unsupported, use `en`.
 
 ## Generated Status Presentation
 
-When writing or updating user-visible status summaries, apply the shared status presentation mapping from `document-conventions`. Use it consistently for the manifest and stage table, stage records and reports, review and test conclusions, coverage, verification, business acceptance, Completion, and user-facing progress summaries while preserving every canonical status value.
+When writing a user-facing status summary, apply the shared status presentation mapping from `document-conventions`. Preserve the canonical status text and do not add workflow status fields to the product-design documents.
 
 ## Generated Document References
 
-Apply the shared document-reference rules from `document-conventions` to every Dev Cadence-managed Markdown document. Check local links in all tracked Markdown before each commit; check local links in all generated documents for the current run before Completion. Keep the complete selection, identity, lifecycle, and URI contract in the shared skill rather than duplicating it here.
+Apply the shared document-reference rules from `document-conventions` to every Dev Cadence-managed Markdown document. Check local links in all tracked Markdown before each commit; check local links in both product-design documents before requesting final confirmation. Keep the complete selection, identity, lifecycle, and URI contract in the shared skill rather than duplicating it here.
 
 ## Inputs And Source Precedence
 
@@ -118,6 +118,7 @@ Moving, registering, linking, or excluding technical input must not be described
 - create only the first product-design baseline version;
 - keep product and business design durable outside `.dev-cadence/`;
 - preserve unresolved and rejected material visibly;
+- keep analysis stages in the current conversation rather than persisting copies of the workflow process;
 - finish with one consolidated user confirmation covering both product-design documents.
 
 ### ❌ Discovery Must Not
@@ -127,6 +128,8 @@ Moving, registering, linking, or excluding technical input must not be described
 - Do not design technical architecture, modules, services, databases, APIs, or deployment topology.
 - Do not create database migrations.
 - Do not modify application code.
+- Do not create a run manifest, stage records, confirmation records, or other persistent workflow-process copies.
+- Do not require a dedicated branch, workflow checkpoint commits, empty commits, or checkpoint hash bookkeeping.
 - Do not perform implementation, system testing, Business Acceptance, release, deployment, or branch finishing.
 
 ## Stage Sequence
@@ -135,49 +138,22 @@ Moving, registering, linking, or excluding technical input must not be described
 Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation
 ```
 
-The first four stages form one continuous exploration. Do not request separate approval after every subsection. Ask a question only when the answer materially affects the remaining product design. Stage 5 presents both complete documents for one consolidated confirmation.
+The first four stages form one continuous exploration in the current conversation. Do not request separate approval after every subsection. Ask a question only when the answer materially affects the remaining product design. Stage 5 presents both complete documents for one consolidated confirmation.
 
-## Run Records
+## Persistence And Continuation
 
-Use one repository-relative run directory:
-
-```text
-build/dev-cadence/discovery/<discovery-slug>/
-```
-
-Create and maintain:
+Discovery is an Asset Workflow. Its only persistent workflow outputs are:
 
 ```text
-build/dev-cadence/discovery/<discovery-slug>/manifest.md
-build/dev-cadence/discovery/<discovery-slug>/01-background-and-problem.md
-build/dev-cadence/discovery/<discovery-slug>/02-goals-and-value.md
-build/dev-cadence/discovery/<discovery-slug>/03-scope-and-business-architecture.md
-build/dev-cadence/discovery/<discovery-slug>/05-product-design-confirmation-record.md
+docs/product-design/prd.md
+docs/product-design/business-architecture.md
 ```
 
-Stage 4 writes the durable product-design documents directly. Do not create duplicate PRD or Business Architecture copies in the run directory.
+Do not create a run manifest, stage records, confirmation records, rejection records, or duplicate analysis documents. Background, goals, scope, constraints, risks, unresolved questions, rejected directions, and future scope must be written directly into the authoritative document that owns the content.
 
-The manifest must include:
+Use the current conversation, the user's goal, and the authoritative product-design documents to determine whether a request continues the same Discovery effort. Do not depend on a process record to restore stage state. When conversation context is incomplete, inspect the current documents and ask only for information that materially affects the baseline.
 
-- workflow, discovery slug, repository, workspace, branch, started at, current stage, and overall status;
-- both durable product-design document paths and version `1`;
-- a stage table with status, artifact, user confirmation, checkpoint commit, and notes;
-- important Open Questions and residual product-design risks;
-- the final user decision once available.
-
-Use repository-relative paths. Do not persist machine-specific absolute paths, temporary service state, tokens, or secrets.
-
-Use stage status values `pending`, `in_progress`, `confirmed`, `blocked`, or `skipped`. Use overall status values `in_progress`, `confirmed`, `rejected`, or `abandoned`.
-
-## Git Checkpoints
-
-Before creating a checkpoint, ensure the work is on a dedicated branch and include only files related to the active Discovery run. Run checks appropriate to the changed files and report the commit hash.
-
-Create a checkpoint when a stage produces reviewable tracked changes. If ignored run records are the only stage output, do not force-add ignored run records; record `skipped: no tracked changes` in the manifest. Do not create empty commits.
-
-A checkpoint commit does not count as user confirmation. Record the final user decision separately in the manifest and confirmation record.
-
-Do not push unless the user explicitly asks. Do not merge, discard, rewrite history, or delete a branch as part of Discovery.
+Discovery must not require a dedicated branch or workflow checkpoint commits. When the user asks to commit or save product-design changes, follow the target repository's ordinary Git rules and the user's request. Do not describe ordinary commits as workflow checkpoints, and do not put commit hashes or Git audit fields in the product-design documents. A commit does not replace the final user-confirmation gate.
 
 ## Product-Design Documents
 
@@ -194,7 +170,7 @@ Use `Open Questions` as the only unresolved-material section. Do not create sepa
 
 Preserve explicitly rejected product or business directions under `Rejected Directions`. Put intentionally deferred product work under PRD `Future Scope`.
 
-The product-design documents must not contain workflow approval metadata. Do not add approval status, approver, approval timestamp, checkpoint commit, or run status fields. Those belong only in the Discovery manifest and confirmation record.
+The product-design documents must not contain workflow approval metadata. Do not add approval status, approver, approval timestamp, checkpoint commit, or run status fields.
 
 ### PRD Contract
 
@@ -278,23 +254,23 @@ Use:
 .dev-cadence/vendor/superpowers/skills/brainstorming/SKILL.md
 ```
 
-Collect the source inventory, current situation, problem statement, affected users, observed evidence, assumptions, conflicts, and motivation. Write `01-background-and-problem.md` and update the manifest.
+Collect the source inventory, current situation, problem statement, affected users, observed evidence, assumptions, conflicts, and motivation in the current conversation. Carry confirmed product facts into the PRD and unresolved product questions into its `Open Questions`.
 
 ### 2. Goal And Value Definition
 
-Define intended outcomes, user value, business value, success criteria, and the cost of leaving the problem unresolved. Write `02-goals-and-value.md` and update the manifest.
+Define intended outcomes, user value, business value, success criteria, and the cost of leaving the problem unresolved in the current conversation. Write confirmed results directly into the PRD.
 
 ### 3. Scope And Business Architecture Analysis
 
-Define scope, non-scope, product boundaries, business actors, domains, capabilities, value streams, processes, business objects, state lifecycles, rules, policies, constraints, risks, Open Questions, Rejected Directions, and Future Scope. Write `03-scope-and-business-architecture.md` and update the manifest.
+Define scope, non-scope, product boundaries, business actors, domains, capabilities, value streams, processes, business objects, state lifecycles, rules, policies, constraints, risks, Open Questions, Rejected Directions, and Future Scope in the current conversation. Write each conclusion directly into the PRD or Business Architecture according to its content responsibility.
 
 ### 4. Product Design Baseline Creation
 
 Before writing, verify that neither product-design document exists. If either exists, stop without modifying either document.
 
-Before creating the initial baseline, run the Product And Technical Content Boundary classification over the source material and all stage records. Remove candidate implementation mechanisms from the product-design draft only after their disposition is recorded. Do not discard technical context.
+Before creating the initial baseline, run the Product And Technical Content Boundary classification over all source material and conclusions from the conversational analysis stages. Remove candidate implementation mechanisms from the product-design draft only after their disposition is recorded. Do not discard technical context.
 
-Create both version-1 documents from the current stage records and source material. Keep their responsibilities separate and cross-reference them where useful. Do not fabricate completeness. Update the manifest to point to both durable documents.
+Create both version-1 documents from the source material and current conversational conclusions. Keep their responsibilities separate and cross-reference them where useful. Do not fabricate completeness.
 
 A later incremental Discovery mode must apply the same boundary to new input. If an existing baseline contains historical mixed product and technical content, do not silently delete, rewrite, or move it; S-002 must coordinate the authoritative source, migration, version change, and user confirmation.
 
@@ -311,11 +287,11 @@ Present one concise review containing:
 
 The review must also summarize each material technical input excluded from the product-design baseline, its current authoritative document or Registry entry, and its suggested resolution stage. Describe this as a handoff for later evaluation, not as approval of the suggested implementation.
 
-Ask for one consolidated user confirmation of both documents. A commit or checkpoint does not count as confirmation.
+Ask for one consolidated user confirmation of both documents. A commit does not count as confirmation.
 
-If the user requests changes, update the earliest affected stage record and both durable documents as needed, then present the complete baseline again. Do not start a separate Discovery run for feedback on the same baseline.
+If the user requests changes, update the affected authoritative documents and any related `Open Questions`, `Rejected Directions`, or `Future Scope`, then present the complete baseline again. Do not create a process record or start a separate Discovery run for feedback on the same baseline.
 
-After confirmation, write `05-product-design-confirmation-record.md`, record the user decision in the manifest, and set overall status to `confirmed`. If rejected, record the rejection without claiming the baseline is ready.
+After confirmation, state that the version-1 product-design baseline is confirmed. Do not create a separate confirmation record or add approval metadata to either document. If the user rejects the baseline, do not claim it is confirmed and do not create a separate rejection record; continue refining the same authoritative documents only when the user requests changes.
 
 ## Completion Output
 

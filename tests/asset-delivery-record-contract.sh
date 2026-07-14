@@ -25,6 +25,15 @@ assert_match() {
     fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
+assert_not_match() {
+  local label="$1"
+  local pattern="$2"
+  local path="$3"
+  if rg --no-ignore -n "$pattern" "$path" >/dev/null; then
+    fail "unexpected $label in ${path#"$ROOT_DIR/"}"
+  fi
+}
+
 assert_literal "record model section" "## Workflow Record Models" "$ENTRY_SKILL"
 assert_literal "Asset class" "Asset Workflow" "$ENTRY_SKILL"
 assert_literal "Delivery class" "Delivery Workflow" "$ENTRY_SKILL"
@@ -57,18 +66,9 @@ assert_match "Delivery continuation" 'Delivery Workflow.*manifest|manifest.*Deli
 assert_match "Asset continuation" 'Asset Workflow.*conversation.*user goal.*authoritative asset|conversation.*user goal.*authoritative asset.*Asset Workflow' "$ENTRY_SKILL"
 assert_match "single model selection" 'new workflow.*exactly one.*record model|exactly one.*record model.*new workflow' "$ENTRY_SKILL"
 assert_match "no mixed model" 'must not mix|do not mix' "$ENTRY_SKILL"
-assert_literal "S-013 migration boundary" "S-013" "$ENTRY_SKILL"
-assert_literal \
-  "temporary Discovery precedence" \
-  "Until S-013 is complete, Discovery's own legacy run-record and checkpoint instructions temporarily take precedence over the Asset Workflow persistence rules for Discovery only." \
-  "$ENTRY_SKILL"
-assert_literal \
-  "transition removal trigger" \
-  "Remove this exception when S-013 migrates Discovery." \
-  "$ENTRY_SKILL"
-assert_literal \
-  "exception non-propagation" \
-  "This exception must not apply to Work Item Planning, Architecture Design, or any new Asset Workflow." \
+assert_not_match \
+  "temporary Discovery exception" \
+  'Until S-013 is complete|legacy run-record and checkpoint instructions|Remove this exception when S-013 migrates Discovery' \
   "$ENTRY_SKILL"
 
 for skill in feature-dev bug-fix refactor; do

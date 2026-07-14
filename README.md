@@ -2,7 +2,7 @@
 
 [简体中文](README.zh-CN.md)
 
-Dev Cadence is a software delivery governance framework for AI coding agents. It organizes AI development behavior into configurable business workflows and produces auditable stage records, test evidence, acceptance decisions, and integration decisions for each delivery.
+Dev Cadence is a software delivery governance framework for AI coding agents. It organizes AI work into configurable business workflows: Asset Workflows maintain durable authoritative documents, while Delivery Workflows produce auditable stage records, test evidence, acceptance decisions, and integration decisions.
 
 It is built on top of a fixed, vendored copy of Superpowers and a small set of project-level instructions that make delivery stages visible, reviewable, and repeatable.
 
@@ -28,17 +28,17 @@ into the target repository's root `AGENTS.md`.
 
 Dev Cadence starts when a user asks for product discovery, requirements work, or development work. The agent first checks whether an installed Dev Cadence workflow applies instead of jumping directly into product documents or code.
 
-If a workflow applies, the agent uses that workflow before implementation. It confirms the business-facing stage outputs, records the stage artifacts, and then uses the vendored Superpowers skills for the underlying engineering method: brainstorming, systematic debugging, planning, test-driven development, code review, verification, and branch finishing.
+If a workflow applies, the agent uses that workflow before implementation. Asset Workflows keep analysis and confirmation gates in the conversation and persist only authoritative assets. Delivery Workflows record stage artifacts and use the vendored Superpowers skills for the underlying engineering method: brainstorming, systematic debugging, planning, test-driven development, code review, verification, and branch finishing.
 
 Dev Cadence does not replace Superpowers. It fixes the business workflow around Superpowers:
 
 - which workflow applies;
 - which stages require user confirmation;
-- which records must exist;
+- which durable assets or delivery records must exist;
 - where task artifacts belong;
 - which vendored Superpowers version the target repository uses.
 
-For each workflow run, Dev Cadence is intended to maintain a delivery evidence trail. A Dev Cadence Run Manifest ties the run together by recording the workflow type, branch, stage status, artifact paths, checkpoint commits, verification state, business acceptance state, and final integration decision.
+For each Delivery Workflow run, Dev Cadence maintains a delivery evidence trail. A Dev Cadence Run Manifest ties the run together by recording the workflow type, branch, stage status, artifact paths, checkpoint commits, verification state, business acceptance state, and final integration decision. Asset Workflows do not create manifests or process-record copies of their authoritative documents.
 
 Because the skills trigger through the target repository's `AGENTS.md`, users do not need special prompt wording. Once installed, normal product-discovery and development requests should enter the matching Dev Cadence workflow automatically.
 
@@ -69,7 +69,7 @@ docs/product-design/business-architecture.md
 Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation
 ```
 
-Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. The current S-001 capability creates only the first baseline; incremental updates belong to S-002.
+Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. Its analysis stages and final confirmation gate stay in the conversation; its only persistent outputs are the PRD and Business Architecture. The current S-001 capability creates only the first baseline; incremental updates belong to S-002.
 
 **feature-dev** handles new user-visible or system-visible features and intentional changes to expected behavior.
 
@@ -93,7 +93,7 @@ The detailed execution rules live in each workflow skill. The README is only the
 
 ## Delivery Evidence
 
-Workflow records belong in the target repository's normal workspace. They are not stored inside `.dev-cadence`.
+Delivery Workflow records belong in the target repository's normal workspace. They are not stored inside `.dev-cadence`. Discovery is an Asset Workflow and does not create this delivery record set.
 
 The task-level run directory keeps every workflow artifact for the task together:
 

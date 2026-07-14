@@ -8,7 +8,6 @@
 
 ## 待处理
 
-- [ ] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md)
 - [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
 - [ ] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md)
 - [ ] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
@@ -38,6 +37,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md)
 - [x] [P1] [S-012 Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md)
 - [x] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md)
 - [x] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
@@ -120,8 +120,8 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-013；S-011 | S-012 | ✅ Ready |
-| 2 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
+| 1 | S-011 | S-012 | ✅ Ready |
+| 2 | S-002 | S-005、S-006、S-013 | ✅ Ready |
 | 3 | S-015 | S-002、S-012、T-001 | ⚠️ Blocked |
 | 4 | S-016 | S-015 | ⚠️ Blocked |
 | 5 | S-017 | S-015、S-016 | ⚠️ Blocked |

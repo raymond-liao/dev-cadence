@@ -70,8 +70,6 @@ Delivery Workflows maintain a complete delivery evidence chain under `build/dev-
 
 When adding a new workflow, classify it as exactly one record model before defining its records. It must not mix the models by persisting both a durable authoritative asset and duplicate process facts for the same Asset Workflow, or by removing evidence required to recover and verify a Delivery Workflow.
 
-Discovery is classified as an Asset Workflow by this contract, but its existing implementation predates the model. Until S-013 is complete, Discovery's own legacy run-record and checkpoint instructions temporarily take precedence over the Asset Workflow persistence rules for Discovery only. Remove this exception when S-013 migrates Discovery. This exception must not apply to Work Item Planning, Architecture Design, or any new Asset Workflow.
-
 ## Shared Asset Capabilities
 
 Open Question Registry maintenance is a shared asset capability, not a six-stage business workflow.
