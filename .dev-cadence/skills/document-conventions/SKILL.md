@@ -54,6 +54,52 @@ A recommendation is not a selection. Do not mark a recommended option as `✅ Se
 
 Use the marker in the option heading or decision column and retain the option name and decision text. Do not repeat it on every paragraph describing the option.
 
+## User-Visible Status Presentation
+
+Use this shared mapping when a Dev Cadence-managed Markdown document or user-facing Markdown summary displays an explicit status:
+
+| Marker | Canonical status |
+| --- | --- |
+| ✅ | `confirmed`, `completed`, `accepted`, `passed`, `resolved`, `integrated` |
+| 🟢 | `ready` |
+| 🔄 | `in_progress` |
+| ⏳ | `pending` |
+| ⛔ | `blocked`, `not_ready` |
+| ⚠️ | `ready_with_risk`, `accepted_with_risk`, or another explicit risk status |
+| ❌ | `failed`, `rejected` |
+| ⏭️ | `skipped` |
+
+Display a mapped status as `emoji + canonical status`, with the canonical status in inline code. For example, render the status as 🔄 `in_progress`. The marker improves scanning; the canonical status remains the authoritative text.
+
+Apply the mapping to explicit status fields and compact status summaries in manifests, stage tables, stage records, test and coverage reports, review findings, verification decisions, business acceptance, Completion, and user-facing progress updates or confirmation requests.
+
+For Backlog and work-item status, preserve existing Markdown checkboxes, priorities, and canonical status fields. Add at most one status marker when it adds information; do not stack a mapped status marker with a checkbox or another marker that already communicates the same state.
+
+Do not infer, parse, or persist machine state from emoji. Emoji must not enter canonical status enum definitions or replace the canonical status text. If a status has no established mapping, keep the explicit status text neutral until its semantic category is defined instead of selecting a decorative marker.
+
+## Work Item Scope Headings
+
+Feature, Story, Bug, and Task work-item cards must use paired included-scope and excluded-scope headings when they define delivery boundaries. Keep the markers fixed, but localize the heading text to the configured `output_language` or the document's established language.
+
+```markdown
+## ✅ <localized included-scope heading>
+
+## ❌ <localized excluded-scope heading>
+```
+
+`✅` means the content is included in or applicable to the current work item. `❌` means the content is explicitly excluded from or not applicable to the current work item. These markers do not express content quality, completion, verification, or acceptance status.
+
+Keep the marker on the section heading and retain the heading text. Do not mechanically repeat the marker on ordinary list items beneath either section.
+
+### ⚠️ Red Flags
+
+| Thought | Reality |
+| --- | --- |
+| "The shared rule can name this repository's heading words." | The shared rule defines marker semantics and localization; the current document chooses localized heading words. |
+| "I need to list every supported language in the shared rule." | Use localized heading placeholders; do not enumerate human languages. |
+| "`✅` means this scope has been completed, verified, or accepted." | `✅` only means the content belongs to the current work item. |
+| "I should add `✅` or `❌` to every scope list item." | Put the marker on the heading once; ordinary list items remain plain text. |
+
 ## Precision Boundaries
 
 Do not add emoji mechanically to ordinary prose, ordinary headings, or ordinary list items.

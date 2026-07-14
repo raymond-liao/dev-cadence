@@ -116,6 +116,8 @@ manifest 应该串联：
 - 业务验收结论；
 - 最终 merge、PR、保留分支或丢弃分支决策。
 
+Dev Cadence 使用共享语义标识加 canonical status 文本呈现明确的用户可见状态，例如 🔄 `in_progress` 或 ⚠️ `ready_with_risk`。文本仍是权威来源，机器读取的正式状态值保持不变；标识只用于提高 manifest、阶段记录、报告、验收摘要和进度更新的扫描效率。
+
 ## 包含内容
 
 ```text

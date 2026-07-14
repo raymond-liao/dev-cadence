@@ -46,6 +46,10 @@ If `worktree.enabled` is missing or unsupported, use `false`.
 If `worktree.directory` is missing, use `.worktrees`.
 Do not read user configuration from `.dev-cadence/`; that directory is a replaceable installed package.
 
+## Generated Status Presentation
+
+When writing or updating user-visible status summaries, apply the shared status presentation mapping from `document-conventions`. Use it consistently for the manifest and stage table, stage records and reports, review and test conclusions, coverage, verification, business acceptance, Completion, and user-facing progress summaries while preserving every canonical status value.
+
 ## Documentation Test Boundary
 
 Root-level `*.md` files and all files under `docs/` do not require new or updated automated tests.

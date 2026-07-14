@@ -118,6 +118,8 @@ The manifest should connect:
 - business acceptance decision;
 - final merge, PR, keep-branch, or discard decision.
 
+Dev Cadence presents explicit user-visible statuses with a shared semantic marker plus the canonical status text, such as 🔄 `in_progress` or ⚠️ `ready_with_risk`. The text remains authoritative and machine-consumed status values are unchanged; markers are only a scanning aid for manifests, stage records, reports, acceptance summaries, and progress updates.
+
 ## What's Inside
 
 ```text

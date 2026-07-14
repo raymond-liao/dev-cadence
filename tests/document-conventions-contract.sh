@@ -8,6 +8,12 @@ DISCOVERY_SKILL="$ROOT_DIR/src/skills/discovery/SKILL.md"
 FEATURE_SKILL="$ROOT_DIR/src/skills/feature-dev/SKILL.md"
 BUG_FIX_SKILL="$ROOT_DIR/src/skills/bug-fix/SKILL.md"
 REFACTOR_SKILL="$ROOT_DIR/src/skills/refactor/SKILL.md"
+WORK_ITEM_DIRS=(
+  "$ROOT_DIR/docs/features"
+  "$ROOT_DIR/docs/stories"
+  "$ROOT_DIR/docs/bugs"
+  "$ROOT_DIR/docs/tasks"
+)
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -68,6 +74,72 @@ assert_match \
   "recommendation is not selection" \
   'recommend.*not.*Selected|Do not mark.*recommend.*Selected|recommendation.*confirmed' \
   "$CONVENTIONS_SKILL"
+assert_literal "localized work item included scope heading" "## ✅ <localized included-scope heading>" "$CONVENTIONS_SKILL"
+assert_literal "localized work item excluded scope heading" "## ❌ <localized excluded-scope heading>" "$CONVENTIONS_SKILL"
+assert_match \
+  "work item scope heading localization" \
+  'output_language|document.*language|localized' \
+  "$CONVENTIONS_SKILL"
+assert_literal "work item scope red flags" "### ⚠️ Red Flags" "$CONVENTIONS_SKILL"
+assert_match "work item scope red flag table" "\| Thought \| Reality \|" "$CONVENTIONS_SKILL"
+assert_match \
+  "work item types" \
+  'Feature.*Story.*Bug.*Task' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "scope marker meaning boundary" \
+  'included|applicable|包含|适用' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "non-scope marker meaning boundary" \
+  'excluded|not applicable|排除|不适用' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "scope markers do not mean quality" \
+  'quality|acceptance|质量|验收' \
+  "$CONVENTIONS_SKILL"
+
+for work_item_dir in "${WORK_ITEM_DIRS[@]}"; do
+  [[ -d "$work_item_dir" ]] || continue
+
+  while IFS= read -r work_item; do
+    assert_literal "included scope heading" "## ✅ 范围" "$work_item"
+    assert_literal "excluded scope heading" "## ❌ 非范围" "$work_item"
+
+    if rg -n '^## (范围|非范围)$' "$work_item" >/dev/null; then
+      fail "legacy scope heading in ${work_item#"$ROOT_DIR/"}"
+    fi
+  done < <(find "$work_item_dir" -maxdepth 1 -type f -name '*.md' -print)
+done
+
+for status_display in \
+  '✅.*`confirmed`.*`completed`.*`accepted`.*`passed`.*`resolved`.*`integrated`' \
+  '🟢.*`ready`' \
+  '🔄.*`in_progress`' \
+  '⏳.*`pending`' \
+  '⛔.*`blocked`.*`not_ready`' \
+  '⚠️.*`ready_with_risk`.*`accepted_with_risk`' \
+  '❌.*`failed`.*`rejected`' \
+  '⏭️.*`skipped`'; do
+  assert_match "status display mapping $status_display" "$status_display" "$CONVENTIONS_SKILL"
+done
+
+assert_match \
+  "canonical status remains visible" \
+  'emoji.*canonical status|canonical status.*emoji|marker.*canonical status' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "canonical status uses inline code" \
+  'inline code|backticks|`emoji \+ canonical status`' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "status is not machine parsed from emoji" \
+  'machine.*emoji|emoji.*machine|not.*machine.*source' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "backlog and work item avoid duplicate markers" \
+  'Backlog.*work-item|work-item.*Backlog|checkbox.*duplicate|duplicate.*checkbox' \
+  "$CONVENTIONS_SKILL"
 
 assert_literal \
   "entry convention path" \
@@ -85,6 +157,17 @@ assert_literal "discovery forbidden boundary" "### ❌ Discovery Must Not" "$DIS
 for skill in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
   assert_match "workflow warning heading" '^### ⚠️ .*Red Flags$' "$skill"
   assert_literal "ambiguous feedback heading" "### ❓ Ambiguous Acceptance Feedback" "$skill"
+done
+
+for skill in "$DISCOVERY_SKILL" "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
+  assert_match \
+    "workflow applies shared status presentation" \
+    'status summaries?.*document-conventions|document-conventions.*status summaries?|shared status.*mapping|status presentation.*shared' \
+    "$skill"
+  assert_match \
+    "workflow status surfaces" \
+    'manifest.*stage|stage.*report|report.*acceptance|status summary' \
+    "$skill"
 done
 
 printf 'Document conventions contract checks passed.\n'

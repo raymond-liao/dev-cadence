@@ -22,7 +22,7 @@
 
 作为阅读 Dev Cadence 交付文档的用户，我希望文档之间的引用可以直接点击打开，以便快速追踪需求、方案、实施、验证和验收上下文。
 
-## 范围
+## ✅ 范围
 
 - 在 S-008 创建、S-009 扩展的 `document-conventions` 共享 skill 中增加统一文档引用链接规则。
 - `using-dev-cadence` 继续只负责要求 workflow 在创建或更新 Dev Cadence 管理的 Markdown 前读取共享规范，不保存完整链接契约。
@@ -47,7 +47,7 @@
 - 更新已实现 workflow 的文档输出接入规则，保持 feature-dev、bug-fix、refactor 和 discovery 对共享 `document-conventions` 的使用方式对称；各 workflow 不复制完整链接契约。
 - 更新契约测试，验证关键文档引用使用 Markdown 链接、路径保持仓库相对且不包含本机绝对路径，同时避免锁死具体链接文本。
 
-## 非范围
+## ❌ 非范围
 
 - 不把所有出现的文件路径都机械转换为链接。
 - 不为尚不存在的计划产物创建失效链接。

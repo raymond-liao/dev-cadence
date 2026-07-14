@@ -22,7 +22,7 @@
 
 作为 Dev Cadence 使用者，我希望只有 Feature、Bug 和 Refactor 软件交付过程维护独立运行记录，以便产品设计、工作项和架构文档保持简洁，同时实施工作仍具有完整、可恢复和可审计的证据链。
 
-## 范围
+## ✅ 范围
 
 - 定义 Asset Workflow：Discovery、Work Item Planning 和 Architecture Design。
 - 定义 Delivery Workflow：Feature Dev、Bug Fix 和 Refactor。
@@ -37,7 +37,7 @@
 - 新增 workflow 时必须明确属于 Asset 或 Delivery 类别，并采用对应记录契约，不得自行混合两种模型。
 - 更新共享规则、已安装 workflow 说明和契约测试，验证分类、记录边界和禁止事项。
 
-## 非范围
+## ❌ 非范围
 
 - 不删除或弱化 Feature Dev、Bug Fix 和 Refactor 的 manifest、阶段记录、Review、测试、验收或 Completion 证据。
 - 不把 Delivery Workflow 的过程状态迁移到 Story、PRD 或 Architecture 文档。
