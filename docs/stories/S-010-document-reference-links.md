@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-010`
-- Version：`2`
+- Version：`3`
 - Status：`Ready`
 - Priority：`P1`
 - Change Type：Enhancement
@@ -24,7 +24,8 @@
 
 ## 范围
 
-- 为 Dev Cadence 生成的 Markdown 文档定义统一的文档引用链接规则。
+- 在 S-008 创建、S-009 扩展的 `document-conventions` 共享 skill 中增加统一文档引用链接规则。
+- `using-dev-cadence` 继续只负责要求 workflow 在创建或更新 Dev Cadence 管理的 Markdown 前读取共享规范，不保存完整链接契约。
 - 当正文、列表、表格或摘要引用已经存在的仓库内文档时，使用 `[有意义的名称](相对路径)` 形式，不只显示普通文本或行内代码路径。
 - 只有同时满足“目标真实存在、引用面向阅读导航、目标生命周期不短于来源文档”时才使用快捷链接；不满足条件时保留精确路径和状态说明。
 - Markdown 链接使用相对于当前文档位置的可移植路径，不持久化本机绝对路径或编辑器专用 URI。
@@ -43,7 +44,7 @@
 - 对本地 Markdown 链接执行完整性检查：从来源文档目录解析相对路径，验证目标存在，并在支持可靠验证时检查章节锚点。
 - 包含空格或特殊字符的目标路径必须使用合法且可验证的 Markdown 链接写法，不通过本机专用路径绕过转义问题。
 - 提交前检查 tracked Markdown 文档中的本地链接；workflow 完成阶段前检查当前 run 内已生成文档的本地链接。
-- 更新已实现 workflow 的文档输出契约，保持 feature-dev、bug-fix、refactor 和 discovery 的同类引用规则对称。
+- 更新已实现 workflow 的文档输出接入规则，保持 feature-dev、bug-fix、refactor 和 discovery 对共享 `document-conventions` 的使用方式对称；各 workflow 不复制完整链接契约。
 - 更新契约测试，验证关键文档引用使用 Markdown 链接、路径保持仓库相对且不包含本机绝对路径，同时避免锁死具体链接文本。
 
 ## 非范围
@@ -72,18 +73,18 @@
 11. 提交前检查 tracked Markdown 链接，workflow 完成前检查当前 run 已生成文档的链接，失效目标会阻止完成声明。
 12. 持久化文档不包含本机绝对路径、`file://` 或编辑器专用 URI。
 13. Feature、Bug Fix、Refactor 和 Discovery 的同类文档引用规则保持对称。
-14. 契约测试覆盖选择性链接、路径身份保留、生命周期方向、目标存在性和禁止 URI，同时避免锁死具体显示名称。
+14. 链接规则只在 `document-conventions` 中集中维护，各 workflow 和入口不包含可能漂移的完整副本。
+15. 契约测试覆盖共享 skill 接入、选择性链接、路径身份保留、生命周期方向、目标存在性和禁止 URI，同时避免锁死具体显示名称。
 
 ## Story Relationships
 
-- Follows：`S-008` Skill 语义视觉规范。
-- Related：`S-009` 生成文档状态呈现、现有 workflow 的 manifest 和阶段记录契约。
+- Follows：`S-009` 生成文档状态呈现。
+- Related：现有 workflow 的 manifest 和阶段记录契约。
 - Precedes：`S-005` 全局 Open Question Registry。
 
 ## 依赖
 
-- 无硬性功能依赖。
-- 建议在 S-008 之后实施，使规则示例沿用统一的视觉组织方式。
+- `S-009` 生成文档状态呈现。
 
 ## 后续工作
 
@@ -107,3 +108,4 @@
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建文档引用快捷链接 Story。 | 让跨文档来源和结果引用可以直接导航，同时保留路径数据的精确性和可移植性。 |
 | 2 | 2026-07-14 | 增加选择性链接、路径身份、文档生命周期和链接完整性规则。 | 只有真实存在且适合导航的目标才应使用快捷链接，长期文档不能依赖临时记录，审计路径也不能被链接替代。 |
+| 3 | 2026-07-14 | 明确链接规则扩展共享 `document-conventions` skill，并依赖 S-009。 | 文档公共规则需要集中维护，入口和各 workflow 只负责读取与遵守，不能复制多套链接契约。 |
