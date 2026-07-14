@@ -58,6 +58,18 @@ assert_match "Asset continuation" 'Asset Workflow.*conversation.*user goal.*auth
 assert_match "single model selection" 'new workflow.*exactly one.*record model|exactly one.*record model.*new workflow' "$ENTRY_SKILL"
 assert_match "no mixed model" 'must not mix|do not mix' "$ENTRY_SKILL"
 assert_literal "S-013 migration boundary" "S-013" "$ENTRY_SKILL"
+assert_literal \
+  "temporary Discovery precedence" \
+  "Until S-013 is complete, Discovery's own legacy run-record and checkpoint instructions temporarily take precedence over the Asset Workflow persistence rules for Discovery only." \
+  "$ENTRY_SKILL"
+assert_literal \
+  "transition removal trigger" \
+  "Remove this exception when S-013 migrates Discovery." \
+  "$ENTRY_SKILL"
+assert_literal \
+  "exception non-propagation" \
+  "This exception must not apply to Work Item Planning, Architecture Design, or any new Asset Workflow." \
+  "$ENTRY_SKILL"
 
 for skill in feature-dev bug-fix refactor; do
   path="$ROOT_DIR/src/skills/$skill/SKILL.md"

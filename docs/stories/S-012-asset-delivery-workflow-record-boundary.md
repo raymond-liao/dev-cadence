@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-012`
-- Version：`2`
+- Version：`3`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
@@ -35,6 +35,7 @@
 - Delivery Workflow 的 Requirements、Diagnosis、Refactor Scope 和 Solution 记录属于当前软件交付 run，不因为 Asset Workflow 简化而删除。
 - `using-dev-cadence` 的 Active Workflow Continuation 必须区分两类 workflow：Delivery Workflow 通过 manifest 恢复，Asset Workflow 通过当前会话、用户目标和权威资产识别延续上下文。
 - 新增 workflow 时必须明确属于 Asset 或 Delivery 类别，并采用对应记录契约，不得自行混合两种模型。
+- 本 Story 定义 Asset Workflow 的目标记录模型；在 S-013 完成前，现有 Discovery 自身的 legacy run-record 和 checkpoint 指令仅对 Discovery 暂时优先，且不得扩散到 Work Item Planning、Architecture Design 或其他新增 Asset Workflow。
 - 更新共享规则、已安装 workflow 说明和契约测试，验证分类、记录边界和禁止事项。
 
 ## ❌ 非范围
@@ -50,8 +51,8 @@
 ## 验收标准
 
 1. Dev Cadence 明确定义 Asset Workflow 和 Delivery Workflow，并列出当前属于两类的 workflow。
-2. Discovery、Work Item Planning 和 Architecture Design 只维护长期业务资产，不要求独立 manifest、stage record、确认记录或阶段 checkpoint。
-3. Asset Workflow 的分析和确认可以在会话内执行，但不会复制为持久化过程文件。
+2. 目标记录模型要求 Discovery、Work Item Planning 和 Architecture Design 只维护长期业务资产，不要求独立 manifest、stage record、确认记录或阶段 checkpoint；现有 Discovery 在 S-013 迁移完成前保留唯一、明确的 legacy 例外。
+3. Asset Workflow 的分析和确认可以在会话内执行，但目标模型不会复制为持久化过程文件；Discovery 当前 legacy 副本由 S-013 删除。
 4. PRD、Story、Backlog 和 Architecture 通过自身 Version、Change Log、状态、关系、Open Questions 或 Rejected Directions 表达长期业务事实。
 5. Asset Workflow 不把 commit hash、审批人、审批时间或 workflow 状态写入业务资产。
 6. Feature Dev、Bug Fix 和 Refactor 继续保存恢复实施现场和验证交付结果所需的完整证据链。
@@ -95,3 +96,4 @@
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建 Asset 与 Delivery Workflow 记录边界 Story。 | 让长期业务资产避免重复过程记录，同时保留软件交付所需的实施证据链。 |
 | 2 | 2026-07-14 | 完成 workflow 分类、记录模型、延续识别和 Delivery 证据保留契约。 | 为 S-013、S-011 和后续 Asset Workflow 提供统一持久化边界，同时保持现有软件交付证据链。 |
+| 3 | 2026-07-14 | 明确 Discovery legacy 记录在 S-013 完成前的临时优先级和唯一例外边界。 | 避免目标 Asset 记录模型与现有 Discovery 指令互相冲突，同时不提前实施 S-013。 |
