@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`T-001`
-- Version：`1`
-- Status：`Ready`
+- Version：`2`
+- Status：`In Progress`
 - Priority：`P2`
 - Change Type：Documentation Governance
 
@@ -21,7 +21,7 @@
 ## ✅ 范围
 
 - 在共享 `document-conventions` skill 中增加工作项范围章节规则。
-- 规定 Feature、Story、Bug 和 Task 卡使用 `## ✅ 范围` 和 `## ❌ 非范围` 标题。
+- 规定 Feature、Story、Bug 和 Task 卡使用固定的 `✅` / `❌` 语义标识，标题文字遵守 `output_language` 或文档既有语言；当前 `zh-CN` 仓库使用 `## ✅ 范围` 和 `## ❌ 非范围`。
 - 明确 `✅` 表示包含或适用于当前工作项，`❌` 表示明确排除或不适用于当前工作项，不表示内容质量判断。
 - 标识只放在章节标题，不要求给范围和非范围中的普通列表条目逐项添加 emoji。
 - 批量更新 `docs/stories/` 下现有 Story 卡和 `docs/tasks/` 下现有 Task 卡的范围与非范围标题。
@@ -42,7 +42,7 @@
 
 ## 验收标准
 
-1. `document-conventions` 明确要求 Feature、Story、Bug 和 Task 工作项卡片使用 `## ✅ 范围` 和 `## ❌ 非范围`。
+1. `document-conventions` 明确要求 Feature、Story、Bug 和 Task 工作项卡片使用本地化的 `✅` included-scope 和 `❌` excluded-scope 标题；英文使用 `## ✅ Scope` 和 `## ❌ Out of Scope`，简体中文使用 `## ✅ 范围` 和 `## ❌ 非范围`。
 2. 共享规则明确说明两个标识分别表示当前工作项的包含范围和明确排除范围，不表达质量或验收判断。
 3. `docs/stories/` 和 `docs/tasks/` 下所有现有工作项卡片使用统一的范围章节标题。
 4. 普通范围与非范围列表条目不会被机械添加重复 emoji。
@@ -83,3 +83,4 @@
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建工作项范围章节语义标识任务。 | 使用共享正反语义提升 Feature、Story、Bug 和 Task 边界的扫描效率，同时避免逐项装饰造成视觉噪声。 |
+| 2 | 2026-07-14 | 修正范围标题的语言边界并返回实施状态。 | 用户验收发现共享规则错误地把简体中文标题强制用于英文输出；标识语义应固定，标题文字必须本地化。 |

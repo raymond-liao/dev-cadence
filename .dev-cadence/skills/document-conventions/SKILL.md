@@ -56,15 +56,15 @@ Use the marker in the option heading or decision column and retain the option na
 
 ## Work Item Scope Headings
 
-Feature, Story, Bug, and Task work-item cards must use these paired headings when they define delivery boundaries:
+Feature, Story, Bug, and Task work-item cards must use paired included-scope and excluded-scope headings when they define delivery boundaries. Keep the markers fixed, but localize the heading text to the configured `output_language` or the document's established language.
 
 ```markdown
-## ✅ 范围
+## ✅ Scope
 
-## ❌ 非范围
+## ❌ Out of Scope
 ```
 
-`✅ 范围` means the content is included in or applicable to the current work item. `❌ 非范围` means the content is explicitly excluded from or not applicable to the current work item. These markers do not express content quality, completion, verification, or acceptance status.
+For `zh-CN`, use `## ✅ 范围` and `## ❌ 非范围`. `✅` means the content is included in or applicable to the current work item. `❌` means the content is explicitly excluded from or not applicable to the current work item. These markers do not express content quality, completion, verification, or acceptance status.
 
 Keep the marker on the section heading and retain the heading text. Do not mechanically repeat the marker on ordinary list items beneath either section.
 
