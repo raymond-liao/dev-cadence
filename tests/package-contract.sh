@@ -49,6 +49,7 @@ required_files=(
   "dist/.dev-cadence/AGENTS-snippet.md"
   "dist/.dev-cadence/skills/using-dev-cadence/SKILL.md"
   "dist/.dev-cadence/skills/document-conventions/SKILL.md"
+  "dist/.dev-cadence/skills/open-question-registry/SKILL.md"
   "dist/.dev-cadence/skills/discovery/SKILL.md"
   "dist/.dev-cadence/skills/feature-dev/SKILL.md"
   "dist/.dev-cadence/skills/bug-fix/SKILL.md"
@@ -90,6 +91,7 @@ assert_match "Before marking the run terminal" "src/skills/refactor/SKILL.md"
 assert_match "Business Acceptance" "src/skills/feature-dev/SKILL.md"
 assert_match "Business Acceptance" "src/skills/bug-fix/SKILL.md"
 assert_match "Business Acceptance" "src/skills/refactor/SKILL.md"
+assert_match "docs/open-questions.md" "src/skills/open-question-registry/SKILL.md"
 
 if find "$DIST_DIR" -path '*/build/dev-cadence/*' -print -quit | grep -q .; then
   fail "dist package contains old Dev Cadence run records"

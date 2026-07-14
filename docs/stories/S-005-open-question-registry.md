@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-005`
-- Version：`2`
-- Status：`Ready`
+- Version：`3`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
 
@@ -95,3 +95,4 @@ PRD、Business Architecture、Story、Technical Task 和技术方案都可能拥
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建全局 Open Question Registry Story。 | 为跨文档未决问题提供统一全局视图和共享维护能力，同时避免重复正文及各 workflow 分别实现创建逻辑。 |
 | 2 | 2026-07-14 | 增加已确认问题移除和 Registry Change Log 规则。 | 当前索引应只呈现仍未解决的问题，同时需要通过 Change Log 保留问题新增、迁移和移除历史。 |
+| 3 | 2026-07-14 | 完成共享 Registry skill、入口路由、按需创建与生命周期契约及分发验证。 | S-005 的 12 项验收标准已实现并通过契约测试，后续 S-006 可进入实施。 |

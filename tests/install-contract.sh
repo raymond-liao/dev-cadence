@@ -21,6 +21,8 @@ bash "$INSTALL_SCRIPT" "$TARGET_REPO"
 
 test -f "$TARGET_REPO/.dev-cadence/version" || fail "first install did not create package"
 test -f "$TARGET_REPO/.dev-cadence/skills/document-conventions/SKILL.md" || fail "first install did not create document-conventions skill"
+test -f "$TARGET_REPO/.dev-cadence/skills/open-question-registry/SKILL.md" || fail "first install did not create open-question-registry skill"
+test ! -e "$TARGET_REPO/docs/open-questions.md" || fail "install created an empty target-repository Open Question Registry"
 cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "installed version differs from source"
 
 printf 'stale\n' > "$TARGET_REPO/.dev-cadence/stale-file"
@@ -32,5 +34,8 @@ cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "updated 
 cmp -s \
   "$ROOT_DIR/src/skills/document-conventions/SKILL.md" \
   "$TARGET_REPO/.dev-cadence/skills/document-conventions/SKILL.md" || fail "installed document-conventions skill differs from source"
+cmp -s \
+  "$ROOT_DIR/src/skills/open-question-registry/SKILL.md" \
+  "$TARGET_REPO/.dev-cadence/skills/open-question-registry/SKILL.md" || fail "installed open-question-registry skill differs from source"
 
 printf 'Install contract checks passed.\n'
