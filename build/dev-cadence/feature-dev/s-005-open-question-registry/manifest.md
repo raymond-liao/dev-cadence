@@ -55,4 +55,5 @@
 - Merge commit: `8814e1bb17b2631a002d365d4ba569ccb3bec879`.
 - Workflow records checkpoint: `c5e137a`.
 - No push or pull request was performed.
-- Project-local worktree and task branch are scheduled for cleanup after merged-result verification.
+- Project-local worktree `.worktrees/s-005-open-question-registry` was removed after merged-result verification.
+- Task branch `codex/s-005-open-question-registry` was deleted after the merge.
