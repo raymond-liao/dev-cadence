@@ -48,6 +48,10 @@ Use `output_language` for product-design documents, stage records, manifest cont
 
 If the configuration is missing or unsupported, use `en`.
 
+## Generated Status Presentation
+
+When writing or updating user-visible status summaries, apply the shared status presentation mapping from `document-conventions`. Use it consistently for the manifest and stage table, stage records and reports, review and test conclusions, coverage, verification, business acceptance, Completion, and user-facing progress summaries while preserving every canonical status value.
+
 ## Inputs And Source Precedence
 
 Use all relevant available sources:

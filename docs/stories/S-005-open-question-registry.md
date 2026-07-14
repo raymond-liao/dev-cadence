@@ -22,7 +22,7 @@ PRD、Business Architecture、Story、Technical Task 和技术方案都可能拥
 
 作为持续维护软件需求和交付工作的用户，我希望从一个入口看到仓库中全部未解决问题及其归属，以便评估遗留事项，同时避免同一个问题在多个文档中重复维护。
 
-## 范围
+## ✅ 范围
 
 - 新增独立的共享 `open-question-registry` skill；它不是业务 workflow，不创建单独的 workflow run。
 - `docs/open-questions.md` 采用按需创建：安装 Dev Cadence、启动会话或启动 workflow 时不预先创建，首次确实需要登记全局问题时才创建。
@@ -40,7 +40,7 @@ PRD、Business Architecture、Story、Technical Task 和技术方案都可能拥
 - 用户直接要求查看、登记、迁移、整理或解决仓库级遗留问题时，`using-dev-cadence` 能够路由到该共享能力。
 - 为 Registry 文档格式、按需创建、单一正文来源、迁移和入口路由增加契约验证。
 
-## 非范围
+## ❌ 非范围
 
 - 不把所有问题正文集中复制到 `docs/open-questions.md`。
 - 不移除 PRD、Business Architecture、工作项或技术方案自身的 Open Questions。
