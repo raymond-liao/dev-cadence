@@ -141,6 +141,68 @@ assert_match \
   'Backlog.*work-item|work-item.*Backlog|checkbox.*duplicate|duplicate.*checkbox' \
   "$CONVENTIONS_SKILL"
 
+assert_literal "document reference section" "## Document References" "$CONVENTIONS_SKILL"
+assert_match \
+  "selective document link conditions" \
+  'target.*exist.*reading navigation.*lifecycle|exist.*navigation.*lifecycle' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "meaningful document link text" \
+  'meaningful.*link text|link text.*responsibility|link text.*content' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "source-relative repository links" \
+  'relative to the source document|source document.*relative|relative.*current document' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "stable heading anchors" \
+  'stable.*heading anchor|heading anchor.*stable|confirm.*anchor' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "navigation and exact identity coexist" \
+  'navigation.*exact repository-relative path|link.*exact.*path|exact.*path.*link' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "uncreated targets remain pending" \
+  'not.*created.*pending|pending.*planned path|target.*exists.*link' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "docs do not depend on build records" \
+  'docs/.*do not.*build/|docs/.*must not.*build/|build/.*temporary.*docs/' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "build records may link durable documents" \
+  'build/.*same run|build/.*docs/' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "renamed document links are updated" \
+  'move.*rename.*update.*link|rename.*update.*link' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "tracked markdown links checked before commit" \
+  'Before.*commit.*all tracked Markdown|all tracked Markdown.*before.*commit' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "current run links checked before completion" \
+  'Before.*Completion.*current run|current run.*before.*Completion' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "machine path values remain exact" \
+  'command arguments|configuration values|output locations|machine-readable.*identity' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "portable URI boundary" \
+  'file://.*vscode://|vscode://.*file://|editor-specific URI' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "no machine absolute paths" \
+  'machine-specific absolute path|local absolute path|/Users/' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "spaces and special characters use valid links" \
+  'spaces.*special characters.*valid.*Markdown link|special characters.*legal.*Markdown link' \
+  "$CONVENTIONS_SKILL"
+
 assert_literal \
   "entry convention path" \
   '.dev-cadence/skills/document-conventions/SKILL.md' \
@@ -168,6 +230,22 @@ for skill in "$DISCOVERY_SKILL" "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKI
     "workflow status surfaces" \
     'manifest.*stage|stage.*report|report.*acceptance|status summary' \
     "$skill"
+  assert_match \
+    "workflow applies shared document references" \
+    'document references?.*document-conventions|document-conventions.*document references?|shared document-reference' \
+    "$skill"
+  assert_match \
+    "workflow checks tracked markdown before commit" \
+    'all tracked Markdown.*before.*commit|before.*commit.*all tracked Markdown' \
+    "$skill"
+  assert_match \
+    "workflow checks current run before completion" \
+    'current run.*before.*Completion|before.*Completion.*current run' \
+    "$skill"
 done
+
+if rg --no-ignore -n 'target.*exist.*reading navigation.*lifecycle' "$ENTRY_SKILL" >/dev/null; then
+  fail "entry skill duplicates the complete document-reference selection contract"
+fi
 
 printf 'Document conventions contract checks passed.\n'

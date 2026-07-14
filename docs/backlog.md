@@ -8,7 +8,6 @@
 
 ## 待处理
 
-- [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 - [ ] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
 - [ ] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md)
 - [ ] [P1] [S-012 Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md)
@@ -43,6 +42,7 @@
 ## 已完成
 
 - [x] [P2] [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md)
+- [x] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 - [x] [P1] [S-003 实施前方案新鲜度门禁](stories/S-003-implementation-design-freshness-gate.md)
 - [x] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
 - [x] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
@@ -97,16 +97,15 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-010 | S-009 | ✅ Ready |
-| 2 | S-005 | S-007、S-010 | ⚠️ Blocked |
-| 3 | S-006 | S-005 | ⚠️ Blocked |
-| 4 | S-012 | S-006 | ⚠️ Blocked |
-| 5 | S-013；S-011 | S-012 | ⚠️ Blocked |
-| 6 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
-| 7 | S-015 | S-002、S-012、T-001 | ⚠️ Blocked |
-| 8 | S-016 | S-015 | ⚠️ Blocked |
-| 9 | 工作项与开发 workflow 接入 | S-016 | ⚠️ Blocked |
-| 10 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
-| 11 | S-014 | - | Draft |
+| 1 | S-005 | S-007、S-010 | ✅ Ready |
+| 2 | S-006 | S-005 | ⚠️ Blocked |
+| 3 | S-012 | S-006 | ⚠️ Blocked |
+| 4 | S-013；S-011 | S-012 | ⚠️ Blocked |
+| 5 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
+| 6 | S-015 | S-002、S-012、T-001 | ⚠️ Blocked |
+| 7 | S-016 | S-015 | ⚠️ Blocked |
+| 8 | 工作项与开发 workflow 接入 | S-016 | ⚠️ Blocked |
+| 9 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
+| 10 | S-014 | - | Draft |
 
 用户明确允许并行实施时才使用此表。表中暂时保留工作项与开发 workflow 接入、需求治理端到端验证两个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。

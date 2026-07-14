@@ -52,6 +52,10 @@ If the configuration is missing or unsupported, use `en`.
 
 When writing or updating user-visible status summaries, apply the shared status presentation mapping from `document-conventions`. Use it consistently for the manifest and stage table, stage records and reports, review and test conclusions, coverage, verification, business acceptance, Completion, and user-facing progress summaries while preserving every canonical status value.
 
+## Generated Document References
+
+Apply the shared document-reference rules from `document-conventions` to every Dev Cadence-managed Markdown document. Check local links in all tracked Markdown before each commit; check local links in all generated documents for the current run before Completion. Keep the complete selection, identity, lifecycle, and URI contract in the shared skill rather than duplicating it here.
+
 ## Inputs And Source Precedence
 
 Use all relevant available sources:
