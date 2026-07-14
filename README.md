@@ -26,7 +26,7 @@ into the target repository's root `AGENTS.md`.
 
 ## How It Works
 
-Dev Cadence starts when a user asks for development work. The agent does not jump straight into code. It first checks whether an installed Dev Cadence workflow applies.
+Dev Cadence starts when a user asks for product discovery, requirements work, or development work. The agent first checks whether an installed Dev Cadence workflow applies instead of jumping directly into product documents or code.
 
 If a workflow applies, the agent uses that workflow before implementation. It confirms the business-facing stage outputs, records the stage artifacts, and then uses the vendored Superpowers skills for the underlying engineering method: brainstorming, systematic debugging, planning, test-driven development, code review, verification, and branch finishing.
 
@@ -40,7 +40,7 @@ Dev Cadence does not replace Superpowers. It fixes the business workflow around 
 
 For each workflow run, Dev Cadence is intended to maintain a delivery evidence trail. A Dev Cadence Run Manifest ties the run together by recording the workflow type, branch, stage status, artifact paths, checkpoint commits, verification state, business acceptance state, and final integration decision.
 
-Because the skills trigger through the target repository's `AGENTS.md`, users do not need special prompt wording. Once installed, normal development requests should enter the matching Dev Cadence workflow automatically.
+Because the skills trigger through the target repository's `AGENTS.md`, users do not need special prompt wording. Once installed, normal product-discovery and development requests should enter the matching Dev Cadence workflow automatically.
 
 ## Enterprise Value
 
@@ -57,6 +57,19 @@ Dev Cadence helps teams:
 Dev Cadence is not only a productivity tool for individual developers. It is a governance layer for using AI safely and consistently in real software delivery.
 
 ## Basic Workflows
+
+**discovery** turns an incomplete product idea or business problem into the first version of two durable product-design documents:
+
+```text
+docs/product-design/prd.md
+docs/product-design/business-architecture.md
+```
+
+```text
+Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation
+```
+
+Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. The current S-001 capability creates only the first baseline; incremental updates belong to S-002.
 
 **feature-dev** handles new user-visible or system-visible features and intentional changes to expected behavior.
 
@@ -118,6 +131,8 @@ The manifest should connect:
   skills/
     using-dev-cadence/
       SKILL.md
+    discovery/
+      SKILL.md
     feature-dev/
       SKILL.md
     bug-fix/
@@ -135,6 +150,7 @@ The main pieces are:
 
 - `AGENTS-snippet.md` - the snippet to merge into the target repository's root `AGENTS.md`.
 - `skills/using-dev-cadence/` - the entry workflow selector.
+- `skills/discovery/` - the initial product-discovery and product-design baseline workflow.
 - `skills/feature-dev/` - the feature development workflow.
 - `skills/bug-fix/` - the bug fix workflow.
 - `skills/refactor/` - the behavior-preserving refactoring workflow.

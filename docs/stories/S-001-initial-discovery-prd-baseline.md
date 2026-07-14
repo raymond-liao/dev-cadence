@@ -1,16 +1,16 @@
-# S-001 首次 Discovery 与 PRD 基线
+# S-001 首次 Discovery 与产品设计基线
 
 ## 基本信息
 
 - ID：`S-001`
-- Version：`4`
+- Version：`5`
 - Status：`In Progress`
 - Priority：`P1`
 - Change Type：New
 
 ## 目标
 
-让目标仓库能够从一个不完整的想法、反馈、业务问题或产品方向开始，通过独立的 `discovery` workflow 形成并确认第一版 PRD，为后续工作项规划提供稳定的需求基线。
+让目标仓库能够从一个不完整的想法、反馈、业务问题或产品方向开始，通过独立的 `discovery` workflow 形成并确认第一版 PRD 和 Business Architecture，为后续工作项规划提供稳定的产品设计基线。
 
 ## 背景
 
@@ -24,33 +24,36 @@
 
 - 新增 `discovery` workflow skill。
 - 支持从模糊输入探索背景、目标用户、问题、价值、成功标准、范围、非范围、约束和开放问题。
-- 定义 PRD 的默认路径和基础结构。
-- 创建 PRD 版本 `1` 和初始 Change Log。
-- 区分 `Confirmed`、`Draft`、`Open Question`、`Rejected` 和 `Future Scope`。
-- 在 PRD 中保存产品级 Decision。
-- 获取用户对 PRD 基线版本的确认。
+- 在 `docs/product-design/` 下创建 PRD 和 Business Architecture。
+- 创建两份文档的版本 `1` 和各自的 Change Log。
+- PRD 保存产品目标、用户价值、范围、能力、需求、约束、开放问题、拒绝方向和未来范围。
+- Business Architecture 保存业务角色、业务域、能力、流程、业务对象、状态、规则、异常和外部边界。
+- 统一使用 `Open Questions` 保存未解决事项，不建立 `Draft Ideas` 或 `Pending Decisions`。
+- 获取用户对两份文档组成的完整产品设计基线的一次确认，并把确认证据保存在 workflow 运行记录中。
 - 将 `discovery` 接入 `using-dev-cadence`、构建流程和安装包。
 
 ## 非范围
 
-- 不实现已有 PRD 的增量更新和升版；由 `S-002` 处理。
+- 不实现已有产品设计文档的增量更新和升版；由 `S-002` 处理。
 - 不创建 Feature、Story、Bug 或 Technical Task 卡片。
 - 不维护工作项 Roadmap。
 - 不实现 `work-item-planning` workflow。
+- 不设计技术架构。
 - 不修改目标仓库应用代码。
 
 ## 验收标准
 
 1. 用户可以从一个不完整想法启动 `discovery`，不需要预先提供完整需求或验收标准。
-2. workflow 能形成包含目标、用户、价值、成功标准、范围、非范围、约束、开放问题和产品级 Decision 的 PRD 版本 `1`。
-3. PRD 明确区分已确认、草稿、开放问题、已拒绝和未来范围，不会把未确认内容静默提升为已确认需求。
-4. 用户确认 PRD 基线前，workflow 不宣称需求探索完成。
-5. `discovery` 不创建工作项卡片或修改应用代码。
-6. 源 skill、入口选择器和构建后的安装包包含一致的 Discovery workflow。
+2. workflow 能形成 `docs/product-design/prd.md` 版本 `1`，包含产品目标、用户、价值、成功标准、范围、非范围、能力、需求、约束、`Open Questions`、`Rejected Directions`、`Future Scope` 和 Change Log。
+3. workflow 能形成 `docs/product-design/business-architecture.md` 版本 `1`，包含业务角色、业务域、业务能力、价值流、流程、业务对象、状态、规则、策略、异常、外部边界、`Open Questions`、`Rejected Directions` 和 Change Log。
+4. 未解决内容只保存在 `Open Questions`，不会被静默提升为已确认的产品或业务架构内容。
+5. 用户确认完整产品设计基线前，workflow 不宣称 Discovery 完成；确认信息只记录在 run manifest 和确认记录中。
+6. `discovery` 不创建工作项卡片、不设计技术架构，也不修改应用代码。
+7. 源 skill、入口选择器和构建后的安装包包含一致的 Discovery workflow。
 
 ## Story Relationships
 
-- Blocks：`S-002` PRD 增量更新与版本治理。
+- Blocks：`S-002` 产品设计基线增量更新与版本治理；等待 S-001 Business Acceptance 后解除。
 
 ## 依赖
 
@@ -58,8 +61,8 @@
 
 ## 后续工作
 
-- `S-002` 在该 PRD 基线能力上增加增量更新和版本治理。
-- Work Item Planning workflow 读取确认后的 PRD 版本并建立工作项。
+- `S-002` 在该产品设计基线能力上增加增量更新和版本治理。
+- Work Item Planning workflow 读取确认后的 PRD 和 Business Architecture 并建立工作项。
 
 ## Open Questions
 
@@ -78,3 +81,4 @@
 | 2 | 2026-07-13 | 补充 User Story、Story Relationships 和 Open Questions。 | 明确用户价值、后续阻塞关系和当前问题状态。 |
 | 3 | 2026-07-13 | 重写 User Story，移除 Dev Cadence、PRD 和 workflow 实现表述。 | User Story 应表达用户目标和价值，而不是内部实现方式或交付物。 |
 | 4 | 2026-07-13 | 将状态更新为 In Progress。 | 已启动对应的 feature-dev workflow run。 |
+| 5 | 2026-07-13 | 将范围更新为 PRD 与 Business Architecture 两文档基线，并完成待验收实现。 | Discovery skill、入口路由、产品设计文档契约、构建安装契约和公开说明已实现，等待 Business Acceptance。 |

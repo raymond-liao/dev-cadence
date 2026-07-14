@@ -36,7 +36,11 @@ assert_no_process_summary() {
 
 assert_description \
   "src/skills/using-dev-cadence/SKILL.md" \
-  "Use when a Dev Cadence-installed repository receives development work, active-task follow-up, testing, verification, or commit/checkpoint requests."
+  "Use when a Dev Cadence-installed repository receives product discovery, requirements, development work, active-task follow-up, testing, verification, or commit/checkpoint requests."
+
+assert_description \
+  "src/skills/discovery/SKILL.md" \
+  "Use when a user wants to explore an incomplete product idea, business problem, or product direction and create the first PRD and Business Architecture baseline in a target project."
 
 assert_description \
   "src/skills/feature-dev/SKILL.md" \
@@ -51,6 +55,7 @@ assert_description \
   "Use when a user asks to improve internal code structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior in a target project."
 
 assert_no_process_summary "src/skills/using-dev-cadence/SKILL.md"
+assert_no_process_summary "src/skills/discovery/SKILL.md"
 assert_no_process_summary "src/skills/feature-dev/SKILL.md"
 assert_no_process_summary "src/skills/bug-fix/SKILL.md"
 assert_no_process_summary "src/skills/refactor/SKILL.md"

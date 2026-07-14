@@ -24,7 +24,7 @@ Established pattern:
 
 Constraints and risks:
 
-- S-001 must not advertise incremental PRD update behavior reserved for S-002.
+- S-001 must not advertise incremental product-design update behavior reserved for S-002.
 - Existing active-run continuation must remain intact for the three delivery workflows.
 - Discovery must not become a hidden prerequisite for direct development requests.
 
@@ -289,7 +289,7 @@ Update:
 - `tests/run-all.sh`;
 - `README.md` and `README.zh-CN.md` workflow overview;
 - `src/AGENTS-snippet.md` trigger wording;
-- `version` with a patch release;
+- `version` with a minor release because Discovery adds a new installable workflow;
 - `docs/backlog.md` and the S-001 Story status only after implementation and verification.
 
 No `scripts/build.sh` change is needed because it already copies `src/skills` recursively.

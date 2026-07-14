@@ -1,6 +1,6 @@
 ---
 name: using-dev-cadence
-description: Use when a Dev Cadence-installed repository receives development work, active-task follow-up, testing, verification, or commit/checkpoint requests.
+description: Use when a Dev Cadence-installed repository receives product discovery, requirements, development work, active-task follow-up, testing, verification, or commit/checkpoint requests.
 ---
 
 # Using Dev Cadence
@@ -17,7 +17,7 @@ IF A DEV CADENCE FLOW APPLIES TO THE TASK, YOU DO NOT HAVE A CHOICE. YOU MUST US
 This is not negotiable. You cannot rationalize your way out of this.
 </EXTREMELY-IMPORTANT>
 
-Use this skill before any development response or action in a repository with Dev Cadence installed.
+Use this skill before any product discovery, requirements, or development response or action in a repository with Dev Cadence installed.
 
 Dev Cadence flows are explicit business workflows. Do not force a request into a flow just because the request is related to software.
 
@@ -33,6 +33,7 @@ If no installed flow applies, handle the request normally.
 
 | User request | Flow |
 | --- | --- |
+| Explore an incomplete product idea, business problem, or product direction and create the first PRD or Business Architecture | `.dev-cadence/skills/discovery/SKILL.md` |
 | Add a new user-visible or system-visible feature | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Change existing user-visible or system-visible feature behavior | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Report a bug, error, failing test, regression, or unexpected behavior | `.dev-cadence/skills/bug-fix/SKILL.md` |
@@ -41,6 +42,10 @@ If no installed flow applies, handle the request normally.
 ## Flow Priority
 
 When multiple flows might apply, choose the process flow before any implementation or domain skill.
+
+Use `discovery` for broad product ideas, business problems, first-time product definition, or first-time PRD or Business Architecture creation.
+Do not force a clear Feature, Bug, or Refactor request through Discovery. Direct development requests continue to their matching delivery workflow.
+This installed Discovery capability creates only the first product-design baseline. A request to update an existing PRD or existing product-design baseline is not supported by S-001; do not overwrite it or claim incremental versioning is available.
 
 Use `bug-fix` when the existing expected behavior should already work and the user reports that it does not.
 Use `feature-dev` when the user asks to add behavior or intentionally change expected behavior.
@@ -51,7 +56,7 @@ If a request mixes two or more of a defect report, requested behavior change, an
 
 Before choosing or starting a new Dev Cadence flow, check whether the conversation or existing run manifest indicates an unfinished Dev Cadence workflow for the current task.
 
-If there is an unfinished workflow and the user's latest request is a change, clarification, implementation adjustment, test feedback, review feedback, or acceptance feedback for that same task, continue the current workflow run. Do not create a new workflow run, task slug, requirements document, solution document, diagnosis document, or repair solution document.
+If there is an unfinished workflow and the user's latest request is a change, clarification, product-design adjustment, implementation adjustment, test feedback, review feedback, or acceptance feedback for that same task, continue the current workflow run. Do not create a new workflow run, task slug, requirements document, solution document, diagnosis document, or repair solution document.
 
 If there is an unfinished workflow and the user asks to commit, save, or checkpoint current changes, continue the current workflow run and read its Git Checkpoints rules. Commit the in-scope changes under the active workflow's Git rules, then continue from the same business stage; the commit does not confirm or complete the stage.
 
@@ -74,6 +79,9 @@ These thoughts mean STOP and check the installed Dev Cadence flows:
 | Thought | Reality |
 | --- | --- |
 | "This is just a small development task." | Small development tasks still need flow checking. |
+| "This is only a broad product idea, so no workflow applies." | Initial product discovery uses `discovery`. |
+| "The user wants an initial Business Architecture, so feature-dev is close enough." | First-time product-design baselines use `discovery`. |
+| "An existing PRD needs changes, so I can run the initial Discovery flow again." | S-001 must not overwrite or incrementally reconcile an existing product-design baseline. |
 | "I need to inspect files before deciding." | Flow checking comes before repository exploration. |
 | "This sounds related to features, so feature-dev applies." | `feature-dev` applies only to new features or changes to intended feature behavior. |
 | "The user reported a bug, so feature-dev can handle it." | Bug reports use `bug-fix` unless the user asks to change intended behavior. |

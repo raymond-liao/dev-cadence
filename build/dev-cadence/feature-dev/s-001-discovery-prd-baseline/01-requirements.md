@@ -26,7 +26,7 @@ A user planning a software product or new capability can clarify the problem, go
 
 ## Explicit Non-Goals
 
-- Do not implement incremental PRD updates or PRD version increments beyond version 1; that belongs to `S-002`.
+- Do not implement incremental product-design updates or version increments beyond version 1; that belongs to `S-002`.
 - Do not create or update Feature, Story, Bug, or Technical Task cards.
 - Do not implement `work-item-planning` or maintain a work-item roadmap.
 - Do not design technical architecture or modify application code in target repositories.
