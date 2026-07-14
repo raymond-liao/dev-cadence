@@ -71,6 +71,9 @@ assert_not_match \
   'Until S-013 is complete|legacy run-record and checkpoint instructions|Remove this exception when S-013 migrates Discovery' \
   "$ENTRY_SKILL"
 
+assert_literal "Architecture Design Asset declaration" "This is an Asset Workflow." "$ROOT_DIR/src/skills/architecture-design/SKILL.md"
+assert_match "Architecture Design no run records" 'must not create.*run manifest|run manifest.*must not create' "$ROOT_DIR/src/skills/architecture-design/SKILL.md"
+
 for skill in feature-dev bug-fix refactor; do
   path="$ROOT_DIR/src/skills/$skill/SKILL.md"
   assert_literal "$skill Delivery declaration" "This is a Delivery Workflow." "$path"

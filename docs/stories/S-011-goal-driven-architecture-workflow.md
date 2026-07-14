@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-011`
-- Version：`2`
-- Status：`Ready`
+- Version：`3`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -103,3 +103,4 @@
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建目标驱动的架构设计 Workflow Story。 | 为用户明确提出的架构目标提供统一、轻量的设计流程和按目标命名的单一架构文档产出。 |
 | 2 | 2026-07-14 | 增加 Asset Workflow 记录边界依赖。 | 架构设计应复用统一的无独立过程记录契约，而不是单独定义例外。 |
+| 3 | 2026-07-14 | 完成目标驱动的 Architecture Design Asset Workflow、入口路由、安装包与契约验证。 | 为明确的架构设计目标提供单一权威文档产出，并保持 Asset/Delivery 记录边界。 |

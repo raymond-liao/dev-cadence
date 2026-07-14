@@ -26,7 +26,7 @@ into the target repository's root `AGENTS.md`.
 
 ## How It Works
 
-Dev Cadence starts when a user asks for product discovery, requirements work, or development work. The agent first checks whether an installed Dev Cadence workflow applies instead of jumping directly into product documents or code.
+Dev Cadence starts when a user asks for product discovery, architecture design, requirements work, or development work. The agent first checks whether an installed Dev Cadence workflow applies instead of jumping directly into product documents or code.
 
 If a workflow applies, the agent uses that workflow before implementation. Asset Workflows keep analysis and confirmation gates in the conversation and persist only authoritative assets. Delivery Workflows record stage artifacts and use the vendored Superpowers skills for the underlying engineering method: brainstorming, systematic debugging, planning, test-driven development, code review, verification, and branch finishing.
 
@@ -71,6 +71,14 @@ Background And Problem Exploration -> Goal And Value Definition -> Scope And Bus
 
 Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. Its analysis stages and final confirmation gate stay in the conversation; its only primary new outputs are the PRD and Business Architecture. Technical input may be linked to an existing authoritative technical asset or maintained through the shared Open Question Registry under that asset's own rules; this supporting shared-asset maintenance is not a third Discovery output or a process record. The current S-001 capability creates only the first baseline; incremental updates to a baseline that existed before the current Discovery effort belong to S-002.
 
+**architecture-design** handles explicit requests to design, propose, or review architecture for a stated goal. It creates one goal-named authoritative asset:
+
+```text
+docs/architecture/<goal-slug>.md
+```
+
+It investigates only the necessary current state, compares meaningful alternatives when they exist, and keeps diagrams inside the architecture document with Mermaid preferred. It is not triggered by repository state and does not replace a delivery workflow's task-scoped solution.
+
 **feature-dev** handles new user-visible or system-visible features and intentional changes to expected behavior.
 
 ```text
@@ -91,7 +99,11 @@ Requirements Confirmation -> Refactor Solution -> Refactor Plan -> Refactor Impl
 
 The detailed execution rules live in each workflow skill. The README is only the product and installation guide.
 
-## Delivery Evidence
+## Workflow Records
+
+Asset Workflows such as Architecture Design create or update authoritative documents under `docs/` and do not duplicate their process into run manifests, stage records, confirmation records, or checkpoint commits.
+
+Delivery Workflows retain the evidence described below.
 
 Delivery Workflow records belong in the target repository's normal workspace. They are not stored inside `.dev-cadence`. Discovery is an Asset Workflow and does not create this delivery record set.
 
@@ -135,6 +147,8 @@ Dev Cadence presents explicit user-visible statuses with a shared semantic marke
       SKILL.md
     discovery/
       SKILL.md
+    architecture-design/
+      SKILL.md
     feature-dev/
       SKILL.md
     bug-fix/
@@ -153,6 +167,7 @@ The main pieces are:
 - `AGENTS-snippet.md` - the snippet to merge into the target repository's root `AGENTS.md`.
 - `skills/using-dev-cadence/` - the entry workflow selector.
 - `skills/discovery/` - the initial product-discovery and product-design baseline workflow.
+- `skills/architecture-design/` - the explicit, goal-driven architecture design workflow.
 - `skills/feature-dev/` - the feature development workflow.
 - `skills/bug-fix/` - the bug fix workflow.
 - `skills/refactor/` - the behavior-preserving refactoring workflow.
