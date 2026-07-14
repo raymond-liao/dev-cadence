@@ -16,9 +16,9 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/01-requirements.md`) | `pending` | `ea7a5ea` | 等待用户确认待确认假设。 |
-| Technical Solution | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/02-technical-solution.md` | `pending` | `pending` | Enhanced Exploration required. |
-| Implementation Plan | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/03-implementation-plan.md` | `pending` | `pending` | Worktree ready. |
+| Requirements Confirmation | ✅ `confirmed` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/01-requirements.md`) | `confirmed: user approved both tasks on 2026-07-14` | `ea7a5ea` | 用户确认需求与待确认假设，并授权后续阶段连续推进至 Business Acceptance。 |
+| Technical Solution | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/02-technical-solution.md` | `delegated confirmation` | `pending` | Enhanced Exploration required. |
+| Implementation Plan | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/03-implementation-plan.md` | `delegated confirmation` | `pending` | Worktree ready. |
 | Development Implementation | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/04-implementation-record.md` | `pending` | `pending` | Not started. |
 | System Testing | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/05-system-test-report.md` | `pending` | `pending` | Not started. |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/06-business-acceptance-record.md` | `pending` | `pending` | Not started. |
