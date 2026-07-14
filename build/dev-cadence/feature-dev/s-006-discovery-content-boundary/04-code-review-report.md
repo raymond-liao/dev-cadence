@@ -8,7 +8,7 @@
 - [x] Applicable rule source is listed: repository-root `AGENTS.md`; no narrower `AGENTS.md` or `CLAUDE.md` applies.
 - [x] Confirmed requirements and technical solution are linked: [Requirements Confirmation](01-requirements.md) and [Technical Solution](02-technical-solution.md).
 - [x] Implementation plan is linked: [Implementation Plan](03-implementation-plan.md).
-- [x] Reviewed range is identified: branch `codex/s-006-discovery-content-boundary`, base `37e86d5bb2bccd69510251a9f48f61e2601a08b9`, original implementation `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`, records commit `690ffabd4f5a7d4878fea7496a235ade405cbd8d`, plus the staged `final-review-fix-1` snapshot.
+- [x] Reviewed range is identified: branch `codex/s-006-discovery-content-boundary`, range `37e86d5bb2bccd69510251a9f48f61e2601a08b9..28dc8870034d92e5d6bc23bd1ef0c8623d328048`; original implementation `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`, records commit `690ffabd4f5a7d4878fea7496a235ade405cbd8d`, final review fix `28dc8870034d92e5d6bc23bd1ef0c8623d328048`.
 
 ## Review Perspectives
 
@@ -31,7 +31,7 @@
 
 ## Review Decision
 
-- [x] Safe to proceed to System Testing after the review-fix commit and fresh full verification.
+- [x] Safe to proceed to System Testing; the review-fix commit and fresh full verification passed.
 - [x] Fixes applied: `CR-I-001` through `CR-I-005`.
 - [x] Unresolved findings: None.
 - [x] Residual review risks: semantic document compliance remains instruction- and contract-driven; no parser is introduced by S-006.

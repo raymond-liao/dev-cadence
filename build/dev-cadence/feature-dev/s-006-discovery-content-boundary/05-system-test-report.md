@@ -2,7 +2,7 @@
 
 - Status: ✅ `passed`
 - Branch: `codex/s-006-discovery-content-boundary`
-- Tested implementation: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`
+- Tested implementation: `28dc8870034d92e5d6bc23bd1ef0c8623d328048`
 - Package version: `0.14.0`
 
 ## Commands And Results
@@ -14,7 +14,9 @@
 | `bash scripts/check-whitespace.sh` | ✅ `passed`. |
 | `bash scripts/check-all.sh` | ✅ `passed`; package, Discovery, document conventions, Registry, routing, symmetry, description, install, and whitespace contracts passed. |
 | `rg --no-ignore` synchronization checks | ✅ `passed`; key boundary, final-summary, and S-002 migration rules exist in source and distribution. |
-| `git diff --check 37e86d5..fdda960` | ✅ `passed`. |
+| `git diff --check 37e86d5..28dc887` | ✅ `passed`. |
+
+The final verification includes the independent-review correction that assigns product-level constraints exclusively to PRD and forbids the prior Business Architecture exception.
 
 ## Acceptance Coverage
 

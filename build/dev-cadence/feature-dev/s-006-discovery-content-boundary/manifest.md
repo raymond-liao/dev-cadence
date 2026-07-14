@@ -16,7 +16,7 @@
 | Requirements Confirmation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/01-requirements.md` | Confirmed by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | S-006 Version 1 was Ready and had no open questions. |
 | Technical Solution | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/02-technical-solution.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Minimal extension of the existing Discovery contract selected. |
 | Implementation Plan | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/03-implementation-plan.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Worktree verified; freshness gate passed. |
-| Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/04-implementation-record.md` | Delegated by the 2026-07-14 batch execution instruction | `fdda960b6bb2ff61f3b98cd5a3bca765297290f1` | TDD RED/GREEN complete; exact commit identity verified; code review passed. |
+| Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/04-implementation-record.md` | Delegated by the 2026-07-14 batch execution instruction | `28dc8870034d92e5d6bc23bd1ef0c8623d328048` | TDD RED/GREEN complete; independent-review fixes verified; code review passed. |
 | System Testing | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/05-system-test-report.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Verification decision 🟢 `ready`; 11/11 acceptance criteria covered. |
 | Business Acceptance | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/06-business-acceptance-record.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Decision ✅ `accepted`; branch retained for parent-task integration. |
 
@@ -32,7 +32,8 @@
 
 ## Verification Summary
 
-- Implementation commit: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
+- Original implementation commit: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
+- Final reviewed implementation commit: `28dc8870034d92e5d6bc23bd1ef0c8623d328048`.
 - Code review: ✅ `passed`; Critical 0, Important 0, Minor 0.
 - System testing: 🟢 `ready`; full repository checks passed and all 11 acceptance criteria are covered.
 

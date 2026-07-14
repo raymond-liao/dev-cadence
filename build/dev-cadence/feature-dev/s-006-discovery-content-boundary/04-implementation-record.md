@@ -93,16 +93,26 @@ The Version 1 Story, confirmed records, S-005 dependency, branch, and base commi
 ### EPCR-005 / final-review-fix-1
 
 - Commit type: final review fix
-- State: `reviewed-pending-commit`
+- State: `verified`
 - Source finding IDs: `CR-I-001`, `CR-I-002`, `CR-I-003`, `CR-I-004`, `CR-I-005`
 - Affected tasks: Task 2, Task 4, and workflow completion records.
-- Decision: fixes prepared and focused RED/GREEN evidence captured; commit identity will be recorded after commit.
-- Identity: `pending`
+- Expected parent: `690ffabd4f5a7d4878fea7496a235ade405cbd8d`
+- Reviewed tree: `d618cdaeb20307fec35b24a3f2aac4f81090c42c`
+- Staged files: `src/skills/discovery/SKILL.md`, `tests/discovery-contract.sh`, `03-implementation-plan.md`, `04-code-review-report.md`, `04-implementation-record.md`, `06-business-acceptance-record.md`, and `manifest.md`.
+- Checks: focused boundary RED/GREEN; `bash scripts/build.sh`; `bash scripts/check-whitespace.sh`; `bash scripts/check-all.sh`; `git diff --check`; source/distribution synchronization.
+- Decision: ✅ `passed`; all five Important findings are fixed and fresh full verification passes.
+- Identity: `retrospective`
+- Findings: None unresolved.
+- Residual risks: semantic content compliance remains instruction- and contract-driven.
+- Commit hash: `28dc8870034d92e5d6bc23bd1ef0c8623d328048`.
+- Committed parent: `690ffabd4f5a7d4878fea7496a235ade405cbd8d`.
+- Committed tree: `d618cdaeb20307fec35b24a3f2aac4f81090c42c`.
 
 ## Final Implementation Identity
 
-- Final implementation SHA: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
-- Exact identity: committed parent equals Expected parent and committed tree equals Reviewed tree.
+- Original implementation SHA: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
+- Final reviewed implementation SHA: `28dc8870034d92e5d6bc23bd1ef0c8623d328048`.
+- Identity note: the original implementation has exact pre-commit identity; the independent-review correction has verified retrospective identity with its committed parent and tree recorded above.
 
 ## Plan Completion
 

@@ -5,7 +5,7 @@
 ## Acceptance Input
 
 - Work item: `docs/stories/S-006-discovery-product-technical-content-boundary.md`, Version 2, Status Done.
-- Implementation: `fdda960b6bb2ff61f3b98cd5a3bca765297290f1`.
+- Implementation: `28dc8870034d92e5d6bc23bd1ef0c8623d328048`.
 - System test: [System Test Report](05-system-test-report.md).
 - User delegation: the 2026-07-14 instruction authorized uninterrupted implementation of the listed Ready backlog cards and requested that major decisions be summarized only at the end.
 
