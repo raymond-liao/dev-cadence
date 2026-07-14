@@ -7,6 +7,8 @@ description: Use when a user reports or asks to fix a bug, error, crash, regress
 
 Use this skill to run the Dev Cadence bug fix workflow.
 
+This is a Delivery Workflow. Preserve its complete diagnosis, implementation, and verification evidence chain under `build/dev-cadence/bug-fix/<bug-slug>/` according to the shared record-model contract in `using-dev-cadence`.
+
 Dev Cadence is a business-facing workflow wrapper around vendored Superpowers skills. It does not replace the Superpowers process. It makes each business stage visible to the user, fixes confirmation gates, and keeps the target repository on the vendored skill version.
 
 Use only vendored Superpowers skills from:

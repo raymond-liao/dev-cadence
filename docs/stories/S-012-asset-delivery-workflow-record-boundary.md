@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-012`
-- Version：`1`
-- Status：`Ready`
+- Version：`2`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
 
@@ -94,3 +94,4 @@
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建 Asset 与 Delivery Workflow 记录边界 Story。 | 让长期业务资产避免重复过程记录，同时保留软件交付所需的实施证据链。 |
+| 2 | 2026-07-14 | 完成 workflow 分类、记录模型、延续识别和 Delivery 证据保留契约。 | 为 S-013、S-011 和后续 Asset Workflow 提供统一持久化边界，同时保持现有软件交付证据链。 |
