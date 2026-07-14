@@ -14,9 +14,12 @@
 
 ## User Decision
 
-- Decision：`superseded`
+- Decision：`accepted`
 - Selected Option：`1. Accept`
-- Superseded By：用户在 Completion 前新增多方案选定标识要求。
+
+## Previous Decision History
+
+- `2026-07-14T11:53:17+08:00`：`accepted`，随后因用户新增多方案选定标识要求而 superseded。
 
 ## Decision By
 
@@ -24,7 +27,7 @@
 
 ## Decision At
 
-- `2026-07-14T11:53:17+08:00`
+- `2026-07-14T12:56:18+08:00`
 
 ## Accepted Result
 
@@ -32,6 +35,7 @@
 - 接受 `using-dev-cadence` 的共享规范读取规则。
 - 接受 Discovery、Feature Dev、Bug Fix 和 Refactor 的代表性视觉标识更新。
 - 接受版本升级到 `0.10.0` 及 source、dist、dogfood 安装包同步结果。
+- 接受技术方案备选项直接使用 `❌ Rejected` 和 `✅ Selected` 标题标识。
 
 ## Accepted Residual Risks
 
@@ -39,4 +43,4 @@
 
 ## Final Follow-Up Actions
 
-- Previous acceptance was superseded before integration. Task returned to Implementation Plan for Task 4.
+- Pending Completion integration decision.
