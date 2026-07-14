@@ -39,6 +39,7 @@
 ## Final Follow-Up Actions
 
 - Business Acceptance was recorded.
+- Acceptance checkpoint `01b4d0f` recorded the accepted Story state, S-002 readiness, dogfood installation, and repository AGENTS integration.
 - Final integration decision is pending Completion.
 - The task branch remains `codex/s-001-discovery-prd-baseline`.
 - No worktree was created for this run.
