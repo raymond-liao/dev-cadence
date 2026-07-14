@@ -4,6 +4,10 @@
 
 ## 待处理
 
+- [ ] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
+- [ ] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
+- [ ] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
+- [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
 - [ ] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
 - [ ] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md)
 - [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
