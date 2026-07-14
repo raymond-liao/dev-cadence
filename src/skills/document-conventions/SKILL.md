@@ -77,6 +77,24 @@ For Backlog and work-item status, preserve existing Markdown checkboxes, priorit
 
 Do not infer, parse, or persist machine state from emoji. Emoji must not enter canonical status enum definitions or replace the canonical status text. If a status has no established mapping, keep the explicit status text neutral until its semantic category is defined instead of selecting a decorative marker.
 
+## Document References
+
+Use a Markdown link for a repository document only when all three conditions hold: the target exists, the reference is for reading navigation, and the target lifecycle is at least as durable as the source document. Otherwise keep the exact repository-relative path or planned path as text and state its status.
+
+For a navigational reference:
+
+- use meaningful link text that describes the target document's responsibility or content instead of repeating its full path;
+- resolve the link path relative to the source document so it remains portable across checkouts;
+- link to a heading anchor only when the anchor is stable and can be confirmed from the target document; otherwise link to the document itself;
+- when a manifest or stage record also needs an auditable file identity, keep both the navigation link and the exact repository-relative path;
+- when the target has not been created, show ⏳ `pending` and its planned path without a link, then add the link only after verifying that the target exists.
+
+Respect document lifecycle direction. Long-lived documents under `docs/` must not use temporary records under `build/` as authoritative sources. Records under `build/` may link to existing records from the same run and to durable documents under `docs/`, but the link does not promote a run record into a long-lived business source.
+
+When you move or rename a document, update affected repository Markdown links and verify that no old reference remains. Before a commit, check local links in tracked Markdown documents affected by the change. Before Completion, also check local links in every generated document for the current run. A missing local target blocks the commit or Completion claim until the link is corrected or represented as a non-link pending path.
+
+Keep command arguments, configuration values, output locations, code examples, and machine-readable file identity as exact path text in inline code or code blocks. Do not persist machine-specific absolute paths, `file://`, `vscode://`, or another editor-specific URI as a portable document reference. External sources may use standard Markdown URL links with meaningful source names.
+
 ## Work Item Scope Headings
 
 Feature, Story, Bug, and Task work-item cards must use paired included-scope and excluded-scope headings when they define delivery boundaries. Keep the markers fixed, but localize the heading text to the configured `output_language` or the document's established language.
