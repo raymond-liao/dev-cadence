@@ -29,7 +29,7 @@
 | ST-004 | 代表性视觉语义已应用 | Source inspection | 对三套 skills 执行视觉标题 `rg` | `passed` | Discovery Must/Must Not、Red Flags、Ambiguous Acceptance 标题均存在。 |
 | ST-005 | 版本与安装包一致 | Automated | 读取 `version`、`.dev-cadence/version` 并运行 install contract | `passed` | Source 与 dogfood 均为 `0.10.0`，临时目标安装两次通过。 |
 | ST-006 | 空白与 Git diff 完整性 | Automated | `bash scripts/check-whitespace.sh`、`git diff --check` | `passed` | 无空白错误或未提交内容错误。 |
-| ST-007 | 多方案选择语义 | Automated + source inspection | document conventions contract 与三套 skill `rg` | `passed` | `✅ Selected`、`❌ Rejected`、`❓ Decision Pending`、中性备选和推荐非选择规则均存在且三方一致。 |
+| ST-007 | 多方案选择语义 | Automated + source inspection | document conventions contract、三套 skill 与当前技术方案 `rg` | `passed` | 共享规则三方一致；当前技术方案在备选方案标题中将 A/B 标记为 `❌ Rejected`，C 标记为 `✅ Selected`。 |
 
 ## Requirement Coverage
 

@@ -36,6 +36,7 @@
 
 - S-009 状态呈现和 S-010 快捷链接仍是独立 backlog 范围，不属于 S-008 缺口。
 - 用户发现 S-008 未从 Backlog 待处理移入进行中；已在 Business Acceptance 前补齐 Story 与 Backlog 状态回写。
+- 用户指出多方案标识应直接出现在技术方案的备选方案标题中；已将 A/B 标记为 Rejected、C 标记为 Selected，并更新测试证据。
 
 ## Business Acceptance
 
