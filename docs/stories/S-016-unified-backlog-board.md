@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-016`
-- Version：`1`
+- Version：`2`
 - Status：`Draft`
 - Priority：`P1`
 - Change Type：Feature
@@ -53,14 +53,12 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 
 ## Story Relationships
 
-- Related：Work Item Planning workflow。
-- Related：Story Map。
+- Depends On：`S-015` 工作项规划 Workflow 与工作项契约。
 - Related：工作项卡片与开发 workflow 接入。
 
 ## 依赖
 
-- Work Item Planning workflow 和工作项契约。
-- Story Map 的工作项关联方式。
+- `S-015` 工作项规划 Workflow 与工作项契约。
 
 ## Open Questions
 
@@ -79,3 +77,4 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建统一 Backlog 看板卡片。 | 用一份最小状态看板替代重复的 Product Backlog、Sprint 和 Sprint Backlog 工作项集合。 |
+| 2 | 2026-07-14 | 将 Work Item Planning 和 Story Map 的文本前置条件统一绑定到 S-015。 | S-015 已同时负责 workflow、工作项契约和 Story Map，S-016 应使用稳定工作项 ID 表达单一依赖。 |

@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-002`
-- Version：`7`
+- Version：`8`
 - Status：`Blocked`
 - Priority：`P1`
 - Change Type：Enhancement
@@ -81,12 +81,14 @@
 - Depends On：`S-001` 首次 Discovery 与产品设计基线（已完成）。
 - Depends On：`S-005` 全局 Open Question Registry。
 - Depends On：`S-006` Discovery 产品与技术内容边界。
+- Depends On：`S-013` Discovery 过程记录简化。
 
 ## 依赖
 
 - `S-001` 首次 Discovery 与产品设计基线（已完成）。
 - `S-005` 全局 Open Question Registry。
 - `S-006` Discovery 产品与技术内容边界。
+- `S-013` Discovery 过程记录简化。
 
 ## 后续工作
 
@@ -102,6 +104,7 @@
 - [S-001 首次 Discovery 与产品设计基线](S-001-initial-discovery-prd-baseline.md)
 - [S-005 全局 Open Question Registry](S-005-open-question-registry.md)
 - [S-006 Discovery 产品与技术内容边界](S-006-discovery-product-technical-content-boundary.md)
+- [S-013 Discovery 过程记录简化](S-013-simplify-discovery-process-records.md)
 - [Backlog](../backlog.md)
 
 ## Change Log
@@ -115,3 +118,4 @@
 | 5 | 2026-07-14 | 将状态更新为 Ready。 | S-001 已通过 Business Acceptance，前置依赖满足。 |
 | 6 | 2026-07-14 | 补充增量模式触发、仓库文档发现、迁移选择和独立版本治理规则。 | S-002 必须适配目标仓库已有产品文档，不能只识别 Dev Cadence 默认路径，也不能在缺少现有基线时错误启动更新流程。 |
 | 7 | 2026-07-14 | 增加产品与技术内容边界、历史混合内容处理及 Registry 移交规则，并将状态改为 Blocked。 | 增量更新必须避免技术方案进入产品设计基线，同时不能静默删除历史内容或丢失尚无承载位置的技术问题；S-005 和 S-006 尚未完成。 |
+| 8 | 2026-07-14 | 补充对 S-013 Discovery 过程记录简化的明确依赖。 | 增量更新应建立在简化后的 PRD 与 Business Architecture 双资产模型上，不能继续依赖将被移除的 Discovery 过程记录。 |

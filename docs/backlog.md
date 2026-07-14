@@ -16,28 +16,28 @@
 - [ ] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md)
 - [ ] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
 - [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
-- [ ] [P1] 打通工作项卡片与现有开发 workflow：更新 `using-dev-cadence`、`feature-dev`、`bug-fix` 和 `refactor`，实现卡片检查、缺卡路由、卡片版本引用、卡片与第一阶段记录的职责边界，以及开始、返工、验收和 Completion 后的状态与交付引用回写。
-- [ ] [P2] 补齐需求治理端到端验证和安装契约：验证从想法、PRD、工作项规划到 `feature-dev`、`bug-fix`、`refactor` 交付及 Roadmap 回写的完整链路，并覆盖构建、安装包、入口路由和现有目标仓库兼容。
+- [ ] [P1] [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md)
+- [ ] [P2] [T-002 需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md)
 - [ ] [P3] [S-014 User Journey 分析](stories/S-014-user-journey-analysis.md)
-- [ ] [P1] 补齐 Business Acceptance 终态映射：让三个 workflow 的 `accepted`、`accepted_with_risk` 和 `rejected` 分别进入明确的 Completion 路径，并用对称契约测试验证每个决策的 manifest 终态和后续动作。
-- [ ] [P2] 绑定最终验证版本：记录精确 commit、branch 和 tracked working-tree 状态，防止代码变化后继续使用过期验证结论。
-- [ ] [P2] 传递实施与 Review 风险到验证阶段：使用稳定 ID 将跳过的实施检查、未解决 review finding 和已接受 review 风险完整写入最终验证报告。
-- [ ] [P2] 传递验证风险到 Business Acceptance：确保最终验证报告中仍未解决的稳定 ID、跳过检查和剩余风险全部出现在业务验收摘要与记录中。
-- [ ] [P0] 修复普通 Checkout 本地 Merge：在执行前固定 base branch、feature branch 和预期 SHA；安全处理离线仓库与 already-integrated 分支，并在合并后验证实际结果。
-- [ ] [P0] 修复普通 Checkout Discard：在删除前确认精确 branch 和 commit 范围，处理当前分支与未提交改动，要求明确 discard 确认，并验证目标分支确实被删除或保留。
-- [ ] [P1] 补齐 Bug `not-a-bug` 终态：让已确认并非缺陷的问题能够结束 bug-fix run，记录判断依据、用户确认和非 `pending` 的终态 manifest。
-- [ ] [P1] 补齐 manual recovery 终态：当正常 Completion 无法继续时，允许三个 workflow 记录恢复原因、保留状态和最终 `abandoned` 结果；不要在此任务中处理具体 merge、discard 或 worktree 命令。
-- [ ] [P2] 补齐 Bug 诊断门禁：阻止根因未验证或问题仍有歧义的 bug fix 进入 Repair Solution。
-- [ ] [P2] 补齐 Bug RED/GREEN 证据：当存在自动测试或可重复检查时，用稳定 proof ID 记录修复前失败、关联修改和修复后通过证据；无法直接复现时记录替代因果证据和原因。
-- [ ] [P2] 补齐 Refactor 基线身份：将行为基线绑定到重构前版本，防止使用重构后的行为重新定义原始预期。
-- [ ] [P2] 补齐 Refactor 迁移开始契约：仅在渐进迁移、兼容层或多调用方场景中记录调用方清单、兼容策略、迁移批次和待迁移范围。
-- [ ] [P2] 补齐 Refactor 旧路径删除门禁：删除旧路径前验证剩余引用、迁移完成状态、适配器保留决策和删除安全证据。
-- [ ] [P3] 补齐 Feature 持久化记录契约：确保 requirements 和 technical solution 记录能够在会话中断后重建已确认的范围、验收标准和方案约束。
-- [ ] [P0] 补齐 Worktree 所有权识别：使用创建来源而不是目录名称判断清理所有权，并支持 `.dev-cadence.yaml` 配置的自定义 worktree 目录。
-- [ ] [P0] 保存 Worktree 运行记录：在删除 Dev Cadence 所有的 worktree 前，将必须保留的 manifest 和 stage record 保存到不会随 worktree 删除的位置，并验证记录仍可访问。
-- [ ] [P1] 补齐 Detached HEAD Finishing：为外部管理的 detached HEAD 定义创建分支、创建 PR、保留和 discard 路径；不得假定当前存在可 push 或可删除的命名分支。
-- [ ] [P1] 记录 Worktree 清理结果：Completion 后在 manifest 和业务验收记录中写明 worktree 是否删除、由谁管理以及 task branch 是否删除或保留。
-- [ ] [P3] 规划发布与生产交付能力：后续设计 Release、Deployment、Post-deploy Verification 和 Incident/Hotfix workflow；当前只保留方向，不进入实施。
+- [ ] [P1] [S-018 Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md)
+- [ ] [P2] [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md)
+- [ ] [P2] [S-020 实施与 Review 风险传递到验证阶段](stories/S-020-implementation-review-risk-to-verification.md)
+- [ ] [P2] [S-021 验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md)
+- [ ] [P0] [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md)
+- [ ] [P0] [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md)
+- [ ] [P1] [S-022 Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md)
+- [ ] [P1] [S-023 Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md)
+- [ ] [P2] [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md)
+- [ ] [P2] [S-025 Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md)
+- [ ] [P2] [S-026 Refactor 基线身份](stories/S-026-refactor-baseline-identity.md)
+- [ ] [P2] [S-027 Refactor 迁移开始契约](stories/S-027-refactor-migration-start-contract.md)
+- [ ] [P2] [S-028 Refactor 旧路径删除门禁](stories/S-028-refactor-legacy-path-removal-gate.md)
+- [ ] [P3] [S-029 Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md)
+- [ ] [P0] [S-030 Worktree 所有权识别](stories/S-030-worktree-ownership-detection.md)
+- [ ] [P0] [S-031 保存 Worktree 运行记录](stories/S-031-preserve-worktree-run-records.md)
+- [ ] [P1] [S-032 Detached HEAD Finishing](stories/S-032-detached-head-finishing.md)
+- [ ] [P1] [S-033 Worktree 清理结果记录](stories/S-033-worktree-cleanup-result-recording.md)
+- [ ] [P3] [S-034 发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md)
 
 ## 已完成
 
@@ -49,10 +49,10 @@
 - [x] [P2] [T-001 工作项范围章节语义标识](tasks/T-001-work-item-scope-semantic-markers.md)
 - [x] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
 - [x] [P1] [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md)
-- [x] [P1] 补齐 executing-plans 路径下实施提交的提交前审查机制。
-- [x] [P2] 补齐 Refactor 测试敏感性检查：新增 characterization 或 contract test 时执行可逆 sensitivity check，并通过契约测试保护该规则。
-- [x] [P2] 补齐最小验证阶段门禁：为 `feature-dev`、`bug-fix` 和 `refactor` 增加对称的 `ready`、`ready_with_risk` 和 `not_ready` 决策；阻止 `not_ready` 进入 Business Acceptance，并定义返回最早受影响阶段的最小返工规则。
-- [x] [P1] 修正 Refactor 公共契约矛盾：只允许收窄内部接口；公共 API 和外部数据形状必须保持兼容，主动契约变更转入 feature-dev 或 bug-fix。
+- [x] [P1] [T-003 Executing-Plans 实施提交前审查](tasks/T-003-executing-plans-pre-commit-review.md)
+- [x] [P2] [S-035 Refactor 测试敏感性检查](stories/S-035-refactor-test-sensitivity-check.md)
+- [x] [P2] [S-036 最小验证阶段门禁](stories/S-036-minimal-verification-stage-gate.md)
+- [x] [P1] [B-003 Refactor 公共契约兼容性](bugs/B-003-refactor-public-contract-compatibility.md)
 
 ## 已关闭
 
@@ -72,24 +72,47 @@
 | Work Item | Depends On | Blocks |
 |---|---|---|
 | [S-001](stories/S-001-initial-discovery-prd-baseline.md) | - | S-002, S-013 |
-| [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | S-001, S-005, S-006, S-013 | S-015, 需求治理端到端验证 |
+| [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | S-001, S-005, S-006, S-013 | S-015 |
 | [S-003](stories/S-003-implementation-design-freshness-gate.md) | - | S-004 |
-| [S-004](stories/S-004-failure-classification-stage-routing.md) | S-003 | 需求治理端到端验证 |
-| [S-005](stories/S-005-open-question-registry.md) | S-007, S-010 | S-006, S-002 |
+| [S-004](stories/S-004-failure-classification-stage-routing.md) | S-003 | T-002 |
+| [S-005](stories/S-005-open-question-registry.md) | - | S-006, S-002 |
 | [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | S-005 | S-012, S-002 |
-| [S-007](stories/S-007-workflow-routing-examples.md) | S-008 | S-005 |
+| [S-007](stories/S-007-workflow-routing-examples.md) | S-008 | - |
 | [S-008](stories/S-008-skill-semantic-visual-markers.md) | - | S-007, S-009, S-011, T-001 |
 | [S-009](stories/S-009-generated-status-presentation.md) | S-008 | S-010 |
-| [S-010](stories/S-010-document-reference-links.md) | S-009 | S-005 |
+| [S-010](stories/S-010-document-reference-links.md) | S-009 | - |
 | [S-011](stories/S-011-goal-driven-architecture-workflow.md) | S-008, S-012 | - |
 | [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | S-006 | S-013, S-011, S-015 |
 | [S-013](stories/S-013-simplify-discovery-process-records.md) | S-001, S-012 | S-002 |
 | [S-014](stories/S-014-user-journey-analysis.md) | - | - |
-| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | S-002, S-012, T-001 | S-016 |
-| [S-016](stories/S-016-unified-backlog-board.md) | S-015 | 工作项与开发 workflow 接入 |
+| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | S-002, S-012, T-001 | S-016, S-017, T-002 |
+| [S-016](stories/S-016-unified-backlog-board.md) | S-015 | S-017, T-002 |
 | [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | S-008 | S-015 |
-| 工作项与开发 workflow 接入 | S-016 | 需求治理端到端验证 |
-| 需求治理端到端验证 | S-002, S-004, 工作项与开发 workflow 接入 | - |
+| [S-017](stories/S-017-work-item-development-workflow-integration.md) | S-015, S-016 | T-002, S-029 |
+| [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) | S-004, S-015, S-016, S-017 | - |
+| [S-018](stories/S-018-business-acceptance-terminal-mapping.md) | - | - |
+| [S-019](stories/S-019-final-verification-revision-binding.md) | - | - |
+| [S-020](stories/S-020-implementation-review-risk-to-verification.md) | - | - |
+| [S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | - |
+| [B-001](bugs/B-001-normal-checkout-local-merge-safety.md) | - | - |
+| [B-002](bugs/B-002-normal-checkout-discard-safety.md) | - | - |
+| [S-022](stories/S-022-bug-not-a-bug-terminal-state.md) | - | - |
+| [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
+| [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
+| [S-025](stories/S-025-bug-red-green-evidence.md) | - | - |
+| [S-026](stories/S-026-refactor-baseline-identity.md) | - | - |
+| [S-027](stories/S-027-refactor-migration-start-contract.md) | - | S-028 |
+| [S-028](stories/S-028-refactor-legacy-path-removal-gate.md) | S-027 | - |
+| [S-029](stories/S-029-feature-persistent-record-contract.md) | S-017 | - |
+| [S-030](stories/S-030-worktree-ownership-detection.md) | - | S-031, S-033 |
+| [S-031](stories/S-031-preserve-worktree-run-records.md) | S-030 | S-033 |
+| [S-032](stories/S-032-detached-head-finishing.md) | - | - |
+| [S-033](stories/S-033-worktree-cleanup-result-recording.md) | S-030, S-031 | - |
+| [S-034](stories/S-034-release-and-production-delivery-capability.md) | - | - |
+| [T-003](tasks/T-003-executing-plans-pre-commit-review.md) | - | - |
+| [S-035](stories/S-035-refactor-test-sensitivity-check.md) | - | - |
+| [S-036](stories/S-036-minimal-verification-stage-gate.md) | - | - |
+| [B-003](bugs/B-003-refactor-public-contract-compatibility.md) | - | - |
 
 ## 当前可并行实施表
 
@@ -97,15 +120,18 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-005 | S-007、S-010 | ✅ Ready |
+| 1 | S-005 | - | ✅ Ready |
 | 2 | S-006 | S-005 | ⚠️ Blocked |
 | 3 | S-012 | S-006 | ⚠️ Blocked |
 | 4 | S-013；S-011 | S-012 | ⚠️ Blocked |
 | 5 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
 | 6 | S-015 | S-002、S-012、T-001 | ⚠️ Blocked |
 | 7 | S-016 | S-015 | ⚠️ Blocked |
-| 8 | 工作项与开发 workflow 接入 | S-016 | ⚠️ Blocked |
-| 9 | 需求治理端到端验证 | S-002、工作项与开发 workflow 接入、S-004 | ⚠️ Blocked |
+| 8 | S-017 | S-015、S-016 | ⚠️ Blocked |
+| 9 | T-002 | S-004、S-015、S-016、S-017 | ⚠️ Blocked |
 | 10 | S-014 | - | Draft |
+| 11 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；S-026；S-027；S-030；S-032；S-034 | - | Draft |
+| 12 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
+| 13 | S-033 | S-030、S-031 | ⚠️ Blocked |
 
-用户明确允许并行实施时才使用此表。表中暂时保留工作项与开发 workflow 接入、需求治理端到端验证两个已明确命名的链路节点；其他尚未建立 `S-nnn` 或 `T-nnn` 卡片的 Backlog 条目暂不进入表格。
+用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。
