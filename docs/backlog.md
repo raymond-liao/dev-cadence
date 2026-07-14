@@ -2,9 +2,12 @@
 
 按本文件顺序逐项处理。开始一个主任务前，先单独确认范围和实施计划；当前任务完成并验证后，再进入下一项。不要把多个待处理项合并为一次大范围修改。
 
-## 待处理
+## 进行中
 
 - [ ] [P1] [S-008 Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md)
+
+## 待处理
+
 - [ ] [P1] [S-007 Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md)
 - [ ] [P1] [S-009 生成文档状态呈现](stories/S-009-generated-status-presentation.md)
 - [ ] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)

@@ -35,6 +35,7 @@
 ## 剩余风险
 
 - S-009 状态呈现和 S-010 快捷链接仍是独立 backlog 范围，不属于 S-008 缺口。
+- 用户发现 S-008 未从 Backlog 待处理移入进行中；已在 Business Acceptance 前补齐 Story 与 Backlog 状态回写。
 
 ## Business Acceptance
 
