@@ -69,6 +69,46 @@ When sources disagree, prefer explicit user confirmations, then existing reposit
 
 Do not invent facts, requirements, roles, processes, objects, states, or rules to make the documents look complete.
 
+## Product And Technical Content Boundary
+
+Apply this boundary consistently when creating the first product-design baseline and when a later incremental Discovery capability classifies new input. The current workflow still stops when a baseline already exists; S-002 owns incremental reconciliation and version governance.
+
+You must classify every relevant input by meaning and source, including its authority and intended owner. Use these categories:
+
+- A `product requirement` describes why the product exists, who it serves, the value or outcome it must produce, a capability it must provide, or a user-visible result.
+- `business architecture content` describes business actors, domains, capabilities, value streams, processes, business objects, states, rules, events, exceptions, or external business boundaries.
+- An `external or product-level constraint` describes a required result or boundary the product must satisfy without selecting how it is implemented.
+- An `implementation suggestion` describes a candidate mechanism for achieving a result and requires later technical evaluation.
+- A technical question records unresolved implementation information without treating any candidate answer as selected.
+
+Classify source-faithful input by what the user actually established. The presence of a concrete technical name, product, or term does not make it a confirmed product requirement or an accepted technical decision. Preserve whether the source stated a mandatory external constraint, a preference, an example, a question, or a candidate mechanism.
+
+### ✅ Product-Design Content
+
+The PRD may contain product goals, users and stakeholders, value, success criteria, scope, product capabilities, product requirements, user-visible outcomes, non-functional requirements, product constraints, confirmed assumptions, and external dependencies.
+
+Allowed product constraints include data residency, regulatory restrictions, compatibility requirements, measurable performance targets, availability targets, and user-visible security requirements. They may be recorded as verifiable non-functional requirements. State the required result and evidence boundary; do not select an unconfirmed implementation mechanism at the same time.
+
+Business Architecture may contain only the business operating model: business actors, business domains, business capabilities, value streams, processes, business objects, states, business rules, business events, exceptions, and external business boundaries.
+
+PRD and Business Architecture retain their own in-scope `Open Questions`. The repository-level Registry may index those questions when useful, but it must not replace or empty the local sections.
+
+### ❌ Implementation Content
+
+Do not put concrete code modules, service decomposition, database products, frameworks, libraries, API paths, request or response schemas, protocol choices, algorithms, cloud services, infrastructure, deployment topology, retry or timeout implementation parameters, test implementation, Mock strategies, or operational implementation steps in the PRD or Business Architecture.
+
+Candidate mechanisms include database, framework, protocol, cloud service, module, interface, and deployment suggestions even when they appear in the original request. Do not rewrite them as product constraints merely to retain them in the product-design baseline.
+
+### Technical Input Disposition
+
+Preserve technical input without making Discovery evaluate it:
+
+1. When a Story, Technical Task, technical solution, Decision, or another durable technical document already owns the subject, write the input there or link to that authoritative source according to its maintenance rules.
+2. When no suitable authoritative document or owner exists and the input should not be lost, use `.dev-cadence/skills/open-question-registry/SKILL.md` to register it in the Open Question Registry with its original status and suggested resolution stage.
+3. Keep product or business questions that belong to the PRD or Business Architecture in that document's `Open Questions`; do not move them out merely because the Registry exists.
+
+Moving, registering, linking, or excluding technical input must not be described as an accepted technical decision. Record it as preserved context for evaluation in the relevant technical-design stage.
+
 ## Workflow Boundary
 
 ### ✅ Discovery Must
@@ -250,7 +290,11 @@ Define scope, non-scope, product boundaries, business actors, domains, capabilit
 
 Before writing, verify that neither product-design document exists. If either exists, stop without modifying either document.
 
+Before creating the initial baseline, run the Product And Technical Content Boundary classification over the source material and all stage records. Remove candidate implementation mechanisms from the product-design draft only after their disposition is recorded. Do not discard technical context.
+
 Create both version-1 documents from the current stage records and source material. Keep their responsibilities separate and cross-reference them where useful. Do not fabricate completeness. Update the manifest to point to both durable documents.
+
+A later incremental Discovery mode must apply the same boundary to new input. If an existing baseline contains historical mixed product and technical content, do not silently delete, rewrite, or move it; S-002 must coordinate the authoritative source, migration, version change, and user confirmation.
 
 ### 5. Product Design Confirmation
 
@@ -262,6 +306,8 @@ Present one concise review containing:
 - Rejected Directions and Future Scope;
 - both document paths and version numbers;
 - the boundary before work-item planning and technical architecture.
+
+The review must also summarize each material technical input excluded from the product-design baseline, its current authoritative document or Registry entry, and its suggested resolution stage. Describe this as a handoff for later evaluation, not as approval of the suggested implementation.
 
 Ask for one consolidated user confirmation of both documents. A commit or checkpoint does not count as confirmation.
 

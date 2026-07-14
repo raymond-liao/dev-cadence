@@ -101,6 +101,40 @@ assert_literal "checkpoint is not confirmation" 'A checkpoint commit does not co
 assert_match "ignored run records stay ignored" 'ignored.*run records.*do not force-add|do not force-add.*ignored.*run records' "$DISCOVERY_SKILL"
 assert_match "no push without request" 'Do not push unless the user explicitly asks' "$DISCOVERY_SKILL"
 
+for literal in \
+  'Product And Technical Content Boundary' \
+  'product requirement' \
+  'business architecture content' \
+  'external or product-level constraint' \
+  'implementation suggestion' \
+  'source-faithful' \
+  'concrete code modules' \
+  'database products' \
+  'API paths' \
+  'request or response schemas' \
+  'protocol choices' \
+  'deployment topology' \
+  'retry or timeout implementation parameters' \
+  '.dev-cadence/skills/open-question-registry/SKILL.md' \
+  'technical input excluded from the product-design baseline' \
+  'suggested resolution stage'
+do
+  assert_literal "Discovery content boundary $literal" "$literal" "$DISCOVERY_SKILL"
+done
+
+assert_match "meaning-based classification" 'classify.*meaning.*source|meaning.*source.*classif' "$DISCOVERY_SKILL"
+assert_match "technical name is not confirmation" 'technical (name|product|term).*(must not|does not).*confirmed|must not.*technical (name|product|term).*confirmed' "$DISCOVERY_SKILL"
+assert_match "product constraint result boundary" 'constraint.*required result|required result.*constraint' "$DISCOVERY_SKILL"
+assert_match "measurable quality targets allowed" 'data residency.*regulatory.*compatibility.*performance.*availability.*security' "$DISCOVERY_SKILL"
+assert_match "mechanism excluded from product baseline" 'database.*framework.*protocol.*cloud service.*module.*interface.*deployment' "$DISCOVERY_SKILL"
+assert_match "authoritative technical handoff" 'Story.*Technical Task.*technical solution.*Decision|Decision.*technical solution.*Technical Task.*Story' "$DISCOVERY_SKILL"
+assert_match "Registry fallback" 'no.*authoritative.*(document|owner).*(Open Question Registry|open-question-registry)|Open Question Registry.*no.*authoritative' "$DISCOVERY_SKILL"
+assert_match "local product questions retained" 'PRD.*Business Architecture.*Open Questions|Open Questions.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
+assert_match "handoff is not acceptance" 'must not.*accepted technical decision|do not.*accepted technical decision' "$DISCOVERY_SKILL"
+assert_match "initial boundary gate" 'Before.*initial.*baseline|initial.*baseline.*before' "$DISCOVERY_SKILL"
+assert_match "incremental input boundary" 'incremental.*new input|new input.*incremental' "$DISCOVERY_SKILL"
+assert_match "historical migration delegated to S-002" 'historical.*S-002|S-002.*historical' "$DISCOVERY_SKILL"
+
 for pattern in \
   'Do not create.*Feature.*Story.*Bug.*Technical Task' \
   'Do not.*technical architecture' \

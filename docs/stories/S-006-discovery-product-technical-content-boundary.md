@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-006`
-- Version：`1`
-- Status：`Ready`
+- Version：`2`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
 
@@ -96,3 +96,4 @@
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建 Discovery 产品与技术内容边界 Story。 | 防止技术方案混入产品设计基线，同时保留用户在需求讨论中提供的有价值技术输入。 |
+| 2 | 2026-07-14 | 完成 Discovery 内容分类、产品约束例外、技术输入移交、基线检查与契约验证。 | S-006 的 11 项验收标准已实现，S-012 可进入实施。 |
