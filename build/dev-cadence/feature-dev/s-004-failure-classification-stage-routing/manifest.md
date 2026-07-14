@@ -21,7 +21,7 @@
 | Implementation Plan | ✅ `confirmed` | [Implementation Plan](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/03-implementation-plan.md`) | `confirmed: delegated authority on 2026-07-14` | `dabb2bb` | Worktree verified; freshness gate passed at `a095aab`. |
 | Development Implementation | ✅ `confirmed` | [Implementation Record](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/04-implementation-record.md`) | `confirmed: delegated continuous execution on 2026-07-14` | `892d1d7` | Implementation commits `2eb81e1` and `90afb09`; review passed with CR-I-001 fixed. |
 | System Testing | ✅ `confirmed` | [System Test Report](05-system-test-report.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/05-system-test-report.md`) | `confirmed: delegated continuous execution on 2026-07-14` | `892d1d7` | Verification Decision: `ready`; no skipped checks or residual risks. |
-| Business Acceptance | ✅ `confirmed` | [Business Acceptance Record](06-business-acceptance-record.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/06-business-acceptance-record.md`) | `accepted_with_risk: option 3 selected on 2026-07-14` | `pending` | Accepted Residual Risks: None identified; no risk was inferred. |
+| Business Acceptance | ✅ `confirmed` | [Business Acceptance Record](06-business-acceptance-record.md) (`build/dev-cadence/feature-dev/s-004-failure-classification-stage-routing/06-business-acceptance-record.md`) | `accepted_with_risk: option 3 selected on 2026-07-14` | `b466b13` | Accepted Residual Risks: None identified; no risk was inferred. |
 
 ## Verification Summary
 
