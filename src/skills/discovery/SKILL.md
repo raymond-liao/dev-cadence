@@ -54,7 +54,7 @@ When writing or updating user-visible status summaries, apply the shared status 
 
 ## Generated Document References
 
-Apply the shared document-reference rules from `document-conventions` to every Dev Cadence-managed Markdown document. Check local links in affected tracked Markdown before each commit; check local links in all generated documents for the current run before Completion. Keep the complete selection, identity, lifecycle, and URI contract in the shared skill rather than duplicating it here.
+Apply the shared document-reference rules from `document-conventions` to every Dev Cadence-managed Markdown document. Check local links in all tracked Markdown before each commit; check local links in all generated documents for the current run before Completion. Keep the complete selection, identity, lifecycle, and URI contract in the shared skill rather than duplicating it here.
 
 ## Inputs And Source Precedence
 

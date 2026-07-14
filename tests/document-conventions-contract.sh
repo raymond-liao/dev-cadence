@@ -180,7 +180,7 @@ assert_match \
   "$CONVENTIONS_SKILL"
 assert_match \
   "tracked markdown links checked before commit" \
-  'Before.*commit.*tracked Markdown|tracked Markdown.*before.*commit' \
+  'Before.*commit.*all tracked Markdown|all tracked Markdown.*before.*commit' \
   "$CONVENTIONS_SKILL"
 assert_match \
   "current run links checked before completion" \
@@ -197,6 +197,10 @@ assert_match \
 assert_match \
   "no machine absolute paths" \
   'machine-specific absolute path|local absolute path|/Users/' \
+  "$CONVENTIONS_SKILL"
+assert_match \
+  "spaces and special characters use valid links" \
+  'spaces.*special characters.*valid.*Markdown link|special characters.*legal.*Markdown link' \
   "$CONVENTIONS_SKILL"
 
 assert_literal \
@@ -232,7 +236,7 @@ for skill in "$DISCOVERY_SKILL" "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKI
     "$skill"
   assert_match \
     "workflow checks tracked markdown before commit" \
-    'tracked Markdown.*before.*commit|before.*commit.*tracked Markdown' \
+    'all tracked Markdown.*before.*commit|before.*commit.*all tracked Markdown' \
     "$skill"
   assert_match \
     "workflow checks current run before completion" \
