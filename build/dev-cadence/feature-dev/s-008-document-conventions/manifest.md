@@ -25,7 +25,7 @@
 | Implementation Plan | `confirmed` | [实施计划](03-implementation-plan.md) | `confirmed: delegated by user on 2026-07-14` | `a3561ef` | 三项 TDD 实施任务。 |
 | Development Implementation | `confirmed` | [实施记录](04-implementation-record.md) | `confirmed: delegated by user on 2026-07-14` | `74023b5` | 三项计划任务和 whole-feature review 完成。 |
 | System Testing | `confirmed` | [系统测试报告](05-system-test-report.md) | `verification decision: ready` | `7e235f4` | 所有验收标准有执行证据。 |
-| Business Acceptance | `confirmed` | [业务验收记录](06-business-acceptance-record.md) | `accepted by user: option 1` | `pending` | 用户于 2026-07-14 选择 Accept。 |
+| Business Acceptance | `confirmed` | [业务验收记录](06-business-acceptance-record.md) | `accepted by user: option 1` | `5c26985` | 用户于 2026-07-14 选择 Accept。 |
 
 ## 验证摘要
 
