@@ -16,7 +16,7 @@
 - Product documents contain Change Logs but no workflow approval metadata.
 - Discovery must not create Feature, Story, Bug, Technical Task, Roadmap, technical architecture, migrations, or application code.
 - Do not modify `src/vendor/superpowers/**`.
-- Do not create commits; leave all implementation changes uncommitted for user review.
+- During implementation and verification, leave changes uncommitted for user review. If the user later explicitly requests a commit, commit the verified change set without treating that commit as Business Acceptance.
 
 ---
 
@@ -215,4 +215,4 @@ Mark Development Implementation and System Testing complete in the manifest, lea
 
 - Execution mode: inline execution with vendored `executing-plans`.
 - User authorization: continue through implementation and verification without intermediate confirmation.
-- Git constraint: do not commit; leave all changes for user confirmation.
+- Git result: implementation remained uncommitted through verification; the user later requested all changes be committed. Commit `52139c0` records the verified implementation without changing Business Acceptance state.

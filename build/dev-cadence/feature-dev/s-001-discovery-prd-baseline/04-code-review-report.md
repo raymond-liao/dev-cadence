@@ -11,7 +11,7 @@
 
 ## Review Perspectives
 
-- [x] Rules compliance reviewed: source files changed instead of `dist/` or vendored Superpowers; build regenerates dist; version evaluated and bumped to `0.9.0`; run records use repository-relative paths; no implementation commit or push was created.
+- [x] Rules compliance reviewed: source files changed instead of `dist/` or vendored Superpowers; build regenerates dist; version evaluated and bumped to `0.9.0`; run records use repository-relative paths; no push was created. Verified implementation was later committed as `52139c0` at the user's request.
 - [x] Correctness and bugs reviewed: initial-only behavior, existing-document refusal, two-document responsibilities, stage order, confirmation separation, active-run continuation, and direct delivery routing were checked.
 - [x] Test and acceptance alignment reviewed: all eight acceptance criteria map to executable contract, package, installation, source inspection, or full-check evidence.
 - [x] Simplicity, duplication, and maintainability reviewed: Discovery is one focused 275-line skill; existing delivery workflow internals and vendored Superpowers remain unchanged.

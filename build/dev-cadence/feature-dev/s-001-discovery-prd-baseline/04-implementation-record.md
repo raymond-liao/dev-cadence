@@ -4,7 +4,7 @@
 
 - Status: `completed; awaiting Business Acceptance`
 - Execution Mode: inline execution with vendored `executing-plans`
-- Commit: `skipped: user requested no implementation commit`
+- Commit: `52139c0`
 - Branch: `codex/s-001-discovery-prd-baseline`
 
 ## Implemented Behavior
@@ -63,4 +63,4 @@
 - S-001 creates only the first two-document baseline.
 - S-002 remains `Blocked` until S-001 receives Business Acceptance.
 - S-002 must later resolve whether PRD and Business Architecture use independent versions or a shared product-design baseline version.
-- No implementation commit, push, merge, or final integration action was performed.
+- Implementation commit `52139c0` was created after verification at the user's request. No push, merge, or final integration action was performed.
