@@ -74,12 +74,14 @@ assert_match \
   "recommendation is not selection" \
   'recommend.*not.*Selected|Do not mark.*recommend.*Selected|recommendation.*confirmed' \
   "$CONVENTIONS_SKILL"
-assert_literal "English work item included scope heading" "## ✅ Scope" "$CONVENTIONS_SKILL"
-assert_literal "English work item excluded scope heading" "## ❌ Out of Scope" "$CONVENTIONS_SKILL"
+assert_literal "localized work item included scope heading" "## ✅ <localized included-scope heading>" "$CONVENTIONS_SKILL"
+assert_literal "localized work item excluded scope heading" "## ❌ <localized excluded-scope heading>" "$CONVENTIONS_SKILL"
 assert_match \
   "work item scope heading localization" \
-  'output_language|document language|localized' \
+  'output_language|document.*language|localized' \
   "$CONVENTIONS_SKILL"
+assert_literal "work item scope red flags" "### ⚠️ Red Flags" "$CONVENTIONS_SKILL"
+assert_match "work item scope red flag table" "\| Thought \| Reality \|" "$CONVENTIONS_SKILL"
 assert_match \
   "work item types" \
   'Feature.*Story.*Bug.*Task' \

@@ -27,6 +27,7 @@
 - 批量更新 `docs/stories/` 下现有 Story 卡和 `docs/tasks/` 下现有 Task 卡的范围与非范围标题。
 - 更新已存在的工作项模板、示例或工作项契约，使后续 Feature、Story、Bug 和 Task 自动使用统一标题。
 - 保持标题文字存在，不能只用 emoji 表达章节含义。
+- 共享规则使用语言中性的标题占位符和 `Thought` / `Reality` Red Flags 表，不枚举具体人类语言或把当前仓库的标题文字提升为跨仓库契约。
 - 更新契约测试，验证共享规则和现有工作项标题保持一致，同时避免锁死工作项正文措辞。
 - 运行构建和安装包同步，使 source、dist 和 dogfood 安装包包含相同规则。
 
@@ -42,7 +43,7 @@
 
 ## 验收标准
 
-1. `document-conventions` 明确要求 Feature、Story、Bug 和 Task 工作项卡片使用本地化的 `✅` included-scope 和 `❌` excluded-scope 标题；英文使用 `## ✅ Scope` 和 `## ❌ Out of Scope`，简体中文使用 `## ✅ 范围` 和 `## ❌ 非范围`。
+1. `document-conventions` 明确要求 Feature、Story、Bug 和 Task 工作项卡片使用本地化的 `✅` included-scope 和 `❌` excluded-scope 标题，不把任何具体人类语言的标题写成共享契约。
 2. 共享规则明确说明两个标识分别表示当前工作项的包含范围和明确排除范围，不表达质量或验收判断。
 3. `docs/stories/` 和 `docs/tasks/` 下所有现有工作项卡片使用统一的范围章节标题。
 4. 普通范围与非范围列表条目不会被机械添加重复 emoji。

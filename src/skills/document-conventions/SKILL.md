@@ -59,14 +59,23 @@ Use the marker in the option heading or decision column and retain the option na
 Feature, Story, Bug, and Task work-item cards must use paired included-scope and excluded-scope headings when they define delivery boundaries. Keep the markers fixed, but localize the heading text to the configured `output_language` or the document's established language.
 
 ```markdown
-## ✅ Scope
+## ✅ <localized included-scope heading>
 
-## ❌ Out of Scope
+## ❌ <localized excluded-scope heading>
 ```
 
-For `zh-CN`, use `## ✅ 范围` and `## ❌ 非范围`. `✅` means the content is included in or applicable to the current work item. `❌` means the content is explicitly excluded from or not applicable to the current work item. These markers do not express content quality, completion, verification, or acceptance status.
+`✅` means the content is included in or applicable to the current work item. `❌` means the content is explicitly excluded from or not applicable to the current work item. These markers do not express content quality, completion, verification, or acceptance status.
 
 Keep the marker on the section heading and retain the heading text. Do not mechanically repeat the marker on ordinary list items beneath either section.
+
+### ⚠️ Red Flags
+
+| Thought | Reality |
+| --- | --- |
+| "The shared rule can name this repository's heading words." | The shared rule defines marker semantics and localization; the current document chooses localized heading words. |
+| "I need to list every supported language in the shared rule." | Use localized heading placeholders; do not enumerate human languages. |
+| "`✅` means this scope has been completed, verified, or accepted." | `✅` only means the content belongs to the current work item. |
+| "I should add `✅` or `❌` to every scope list item." | Put the marker on the heading once; ordinary list items remain plain text. |
 
 ## Precision Boundaries
 
