@@ -20,7 +20,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | `in_progress` | [Requirements](01-requirements.md) | `pending` | `pending` | Awaiting consolidated review. |
+| Requirements Confirmation | `in_progress` | [Requirements](01-requirements.md) | `pending` | `1609208` | Awaiting consolidated review. |
 | Technical Solution | `pending` | `02-technical-solution.md` | `pending` | `pending` | Not started. |
 | Implementation Plan | `pending` | `03-implementation-plan.md` | `pending` | `pending` | Not started. |
 | Development Implementation | `pending` | `04-implementation-record.md` | `pending` | `pending` | Not started. |
