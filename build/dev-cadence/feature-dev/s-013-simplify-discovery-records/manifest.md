@@ -20,8 +20,8 @@
 
 ## Design Freshness Gate
 
-- Card: `docs/stories/S-013-simplify-discovery-process-records.md`, Version 3, status `In Progress` pending Business Acceptance.
-- Dependency baseline: S-001 and S-012 are complete; implementation base is `c46f1d781cefb96e33ca82b82c59e65f4dc2aaf7`.
+- Card: `docs/stories/S-013-simplify-discovery-process-records.md`, Version 4, status `In Progress` pending Business Acceptance.
+- Dependency evidence: S-001 is complete; S-012 implementation and System Testing evidence are available, while S-012 remains `In Progress` with Business Acceptance pending. Implementation base is `c46f1d781cefb96e33ca82b82c59e65f4dc2aaf7`.
 - Relevant authoritative sources: S-013 card, S-012 record-model contract, current Discovery skill, current entry selector, README workflow descriptions, and Discovery contract tests.
 - Conclusion: ✅ `passed`. The card, dependency state, branch, and repository implementation agree. No repository change after confirmation invalidates the plan.
 
