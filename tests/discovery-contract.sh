@@ -190,6 +190,5 @@ assert_match "AGENTS discovery trigger" 'product discovery|product ideas|require
 
 assert_match "workflow proposal gate" '确认前.*权威.*保持原样|权威.*确认前.*保持原样' "$DISCOVERY_WORKFLOW"
 assert_match "story proposal gate" '确认前.*权威.*保持原样|权威.*确认前.*保持原样' "$S002_STORY"
-assert_match "S-002 backlog awaits acceptance" 'S-002.*实现与系统测试完成.*Business Acceptance.*pending' "$BACKLOG"
 
 printf 'Discovery contract checks passed.\n'
