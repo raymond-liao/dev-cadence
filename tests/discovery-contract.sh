@@ -48,7 +48,7 @@ assert_file "Discovery skill" "$DISCOVERY_SKILL"
 
 assert_literal \
   "Discovery description" \
-  "description: Use when a user wants to explore an incomplete product idea, business problem, or product direction and create the first PRD and Business Architecture baseline in a target project." \
+  "description: Use when a user wants to explore a product idea or update an existing product-design baseline in a target project." \
   "$DISCOVERY_SKILL"
 
 assert_literal \
@@ -89,7 +89,21 @@ assert_match "conflict preservation" 'conflict.*Open Questions|Open Questions.*c
 assert_literal "single unresolved section" 'Use `Open Questions` as the only unresolved-material section.' "$DISCOVERY_SKILL"
 assert_not_match "Draft Ideas heading" '^#{1,6} Draft Ideas$' "$DISCOVERY_SKILL"
 assert_not_match "Pending Decisions heading" '^#{1,6} Pending Decisions$' "$DISCOVERY_SKILL"
-assert_match "pre-existing baseline refusal" 'before.*Discovery.*(already|pre-existing|existing).*product-design|product-design.*(already|pre-existing|existing).*before.*Discovery' "$DISCOVERY_SKILL"
+assert_match "incremental intent and candidate trigger" 'intent.*update.*existing.*(baseline|product-design).*(credible|trusted).*candidate|(credible|trusted).*candidate.*intent.*update' "$DISCOVERY_SKILL"
+assert_match "no candidate does not fall back" 'no.*(credible|trusted).*candidate.*must not.*(initial|first-time)|must not.*(initial|first-time).*no.*(credible|trusted).*candidate' "$DISCOVERY_SKILL"
+assert_match "content based candidate discovery" 'content.*not.*(path|file name)|not.*(path|file name).*content' "$DISCOVERY_SKILL"
+for excluded in '.dev-cadence/' 'dist/' 'build/' 'vendor/' 'node_modules/' '.git/'; do
+  assert_literal "candidate scan excludes $excluded" "$excluded" "$DISCOVERY_SKILL"
+done
+assert_match "multiple candidate authority confirmation" 'multiple.*candidate.*confirm.*authoritative|confirm.*authoritative.*multiple.*candidate' "$DISCOVERY_SKILL"
+assert_match "non-standard path migration choice" 'non-standard.*(path|file name).*confirm.*migrat|confirm.*migrat.*non-standard' "$DISCOVERY_SKILL"
+assert_match "combined document split choice" 'combined.*document.*confirm.*split|confirm.*split.*combined.*document' "$DISCOVERY_SKILL"
+assert_match "independent product document versions" 'PRD.*Business Architecture.*independent.*version|independent.*version.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
+assert_match "non-material change keeps version" 'spelling.*formatting.*path.*file name.*link.*must not.*version|must not.*version.*spelling.*formatting' "$DISCOVERY_SKILL"
+assert_match "historical mixed content confirmation" 'historical mixed.*explicit.*confirm|explicit.*confirm.*historical mixed' "$DISCOVERY_SKILL"
+assert_match "resolved local questions removed" 'confirmed.*remove.*Open Questions|remove.*Open Questions.*confirmed' "$DISCOVERY_SKILL"
+assert_match "registry coordination" 'Registry.*Change Log|Change Log.*Registry' "$DISCOVERY_SKILL"
+assert_match "work item impact handoff" 'work-item-planning.*impact|impact.*work-item-planning' "$DISCOVERY_SKILL"
 assert_match "current draft remains editable" 'current.*Discovery.*(draft|working baseline).*(feedback|rejection|changes).*edit|edit.*current.*Discovery.*(draft|working baseline)' "$DISCOVERY_SKILL"
 assert_match "startup baseline snapshot" 'At.*workflow start.*record|workflow start.*whether.*document.*exist' "$DISCOVERY_SKILL"
 assert_match "no document approval metadata" 'do not.*approval metadata|must not.*approval metadata' "$DISCOVERY_SKILL"
@@ -140,7 +154,7 @@ assert_match "local product questions retained" 'PRD.*Business Architecture.*Ope
 assert_match "handoff is not acceptance" 'must not.*accepted technical decision|do not.*accepted technical decision' "$DISCOVERY_SKILL"
 assert_match "initial boundary gate" 'Before.*initial.*baseline|initial.*baseline.*before' "$DISCOVERY_SKILL"
 assert_match "incremental input boundary" 'incremental.*new input|new input.*incremental' "$DISCOVERY_SKILL"
-assert_match "historical migration delegated to S-002" 'historical.*S-002|S-002.*historical' "$DISCOVERY_SKILL"
+assert_not_match "future S-002 delegation" 'S-002 owns incremental|later product-design versioning capability' "$DISCOVERY_SKILL"
 
 for pattern in \
   'Do not create.*Feature.*Story.*Bug.*Technical Task' \

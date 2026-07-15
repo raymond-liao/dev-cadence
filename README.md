@@ -58,7 +58,7 @@ Dev Cadence is not only a productivity tool for individual developers. It is a g
 
 ## Basic Workflows
 
-**discovery** turns an incomplete product idea or business problem into the first version of two durable product-design documents:
+**discovery** turns an incomplete product idea or business problem into two durable product-design documents, and can incrementally update an existing confirmed baseline:
 
 ```text
 docs/product-design/prd.md
@@ -69,7 +69,7 @@ docs/product-design/business-architecture.md
 Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation
 ```
 
-Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. Its analysis stages and final confirmation gate stay in the conversation; its only primary new outputs are the PRD and Business Architecture. Technical input may be linked to an existing authoritative technical asset or maintained through the shared Open Question Registry under that asset's own rules; this supporting shared-asset maintenance is not a third Discovery output or a process record. The current S-001 capability creates only the first baseline; incremental updates to a baseline that existed before the current Discovery effort belong to S-002.
+Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. Its analysis stages and final confirmation gate stay in the conversation; its only primary outputs are the PRD and Business Architecture. Technical input may be linked to an existing authoritative technical asset or maintained through the shared Open Question Registry under that asset's own rules; this supporting shared-asset maintenance is not a third Discovery output or a process record. Incremental mode requires explicit update intent plus a credible repository candidate, confirms ambiguous authority or structural migration before editing, independently versions the affected documents, and hands work-item impacts to `work-item-planning`.
 
 **architecture-design** handles explicit requests to design, propose, or review architecture for a stated goal. It creates one goal-named authoritative asset:
 
@@ -166,7 +166,7 @@ The main pieces are:
 
 - `AGENTS-snippet.md` - the snippet to merge into the target repository's root `AGENTS.md`.
 - `skills/using-dev-cadence/` - the entry workflow selector.
-- `skills/discovery/` - the initial product-discovery and product-design baseline workflow.
+- `skills/discovery/` - initial and incremental product discovery and product-design baseline governance.
 - `skills/architecture-design/` - the explicit, goal-driven architecture design workflow.
 - `skills/feature-dev/` - the feature development workflow.
 - `skills/bug-fix/` - the bug fix workflow.

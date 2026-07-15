@@ -48,7 +48,7 @@ assert_description \
 
 assert_description \
   "src/skills/discovery/SKILL.md" \
-  "Use when a user wants to explore an incomplete product idea, business problem, or product direction and create the first PRD and Business Architecture baseline in a target project."
+  "Use when a user wants to explore a product idea or update an existing product-design baseline in a target project."
 
 assert_description \
   "src/skills/architecture-design/SKILL.md" \

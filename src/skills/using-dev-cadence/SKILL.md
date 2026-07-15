@@ -49,7 +49,7 @@ That shared capability owns Registry discovery, on-demand creation, entry fields
 
 | User request | Flow |
 | --- | --- |
-| Explore an incomplete product idea, business problem, or product direction and create the first PRD or Business Architecture | `.dev-cadence/skills/discovery/SKILL.md` |
+| Explore a product idea, create the first PRD or Business Architecture, or update an existing product-design baseline | `.dev-cadence/skills/discovery/SKILL.md` |
 | Explicitly design, propose, or review architecture for a stated goal | `.dev-cadence/skills/architecture-design/SKILL.md` |
 | Add a new user-visible or system-visible feature | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Change existing user-visible or system-visible feature behavior | `.dev-cadence/skills/feature-dev/SKILL.md` |
@@ -96,7 +96,7 @@ These examples are representative intent decisions, not a keyword-matching list.
 | Category | Representative request | Decision and reason |
 | --- | --- | --- |
 | Initial Discovery | "I have an incomplete product idea; help me explore it and create our first PRD." | ✅ Select `discovery` because the user wants product exploration and the first product-design baseline. |
-| Incremental Discovery | "Update our existing PRD with the newly confirmed pricing model." | ❌ Do not use the installed initial `discovery` flow because an existing product-design baseline requires incremental reconciliation, which is not currently supported. Do not overwrite the baseline or pretend the missing workflow exists. |
+| Incremental Discovery | "Update our existing PRD with the newly confirmed pricing model." | ✅ Select `discovery` when repository discovery also finds a credible product-design candidate; the skill then confirms the authoritative source before editing. If no credible candidate exists, do not silently switch to initial Discovery. |
 | Architecture Design | "Design the target architecture for our payment-event ingestion goal." | ✅ Select `architecture-design` because the user explicitly requests architecture for a stated goal. |
 | Architecture Repository State | "This repository has no architecture document." | ❌ Do not start `architecture-design` because repository state does not establish an architecture-design goal. |
 | Delivery Solution | "Add payment-event ingestion and design its implementation." | ✅ Select `feature-dev`; `architecture-design` does not replace the delivery workflow's task-scoped Technical Solution. |
@@ -116,9 +116,9 @@ When adding a new workflow, review whether a representative request or adjacent 
 
 When multiple flows might apply, choose the process flow before any implementation or domain skill.
 
-Use `discovery` for broad product ideas, business problems, first-time product definition, or first-time PRD or Business Architecture creation.
+Use `discovery` for broad product ideas, business problems, first-time product definition, first-time PRD or Business Architecture creation, or an explicit intent to update an existing product-design baseline when repository discovery finds a credible candidate. Incremental Discovery requires both update intent and a credible or trusted candidate; repository state alone does not trigger it. If update intent exists but no candidate is found, do not silently switch to initial Discovery.
 Do not force a clear Feature, Bug, or Refactor request through Discovery. Direct development requests continue to their matching delivery workflow.
-This installed Discovery capability creates only the first product-design baseline. A request to update an existing PRD or existing product-design baseline is not supported by S-001; do not overwrite it or claim incremental versioning is available.
+Discovery owns both initial creation and confirmed incremental product-design updates. Read its skill before selecting a mode; do not infer authority from a file name alone.
 
 Use `architecture-design` only when the user explicitly asks for architecture design, an architecture proposal, or an architecture review for a stated goal. Do not infer it from repository state, technical content, Discovery activity, or a delivery workflow's need for a local solution. The standalone asset may inform delivery work, but `architecture-design` does not replace Feature Dev's Technical Solution, Bug Fix's Repair Solution, or Refactor's Refactor Solution.
 

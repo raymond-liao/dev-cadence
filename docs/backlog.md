@@ -4,12 +4,12 @@
 
 ## 进行中
 
+- [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md) - 实现进行中，Business Acceptance 尚未开始。
 - [ ] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md) - 实现与系统测试完成，等待 Business Acceptance。
 - [ ] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md) - 实现与系统测试完成，等待 Business Acceptance。
 
 ## 待处理
 
-- [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
 - [ ] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
 - [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
 - [ ] [P1] [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md)
@@ -119,7 +119,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
+| 1 | S-002 | S-005、S-006、S-013 | ⏳ In Progress |
 | 2 | S-015 | S-002、S-012、T-001 | ⚠️ Blocked |
 | 3 | S-016 | S-015 | ⚠️ Blocked |
 | 4 | S-017 | S-015、S-016 | ⚠️ Blocked |

@@ -1,6 +1,6 @@
 ---
 name: discovery
-description: Use when a user wants to explore an incomplete product idea, business problem, or product direction and create the first PRD and Business Architecture baseline in a target project.
+description: Use when a user wants to explore a product idea or update an existing product-design baseline in a target project.
 ---
 
 # Discovery
@@ -9,7 +9,7 @@ description: Use when a user wants to explore an incomplete product idea, busine
 If you were dispatched as a subagent to execute a specific task, ignore this skill.
 </SUBAGENT-STOP>
 
-Use this skill to turn incomplete product input into the first durable product-design baseline for a target repository.
+Use this skill to create the first durable product-design baseline or incrementally update an existing confirmed baseline for a target repository.
 
 Discovery is a product workflow. It clarifies what product should exist and how it operates as a business system. It does not design the technical implementation or deliver application changes.
 
@@ -27,9 +27,19 @@ Use Discovery for:
 - first-time product definition;
 - first-time creation of a PRD;
 - first-time creation of a Business Architecture;
-- product exploration that must become durable repository documents before work-item planning.
+- product exploration that must become durable repository documents before work-item planning;
+- an explicit request to update, revise, reconcile, or extend an existing product-design baseline when repository discovery also finds at least one credible candidate product-design document.
 
-Do not use this S-001 workflow to update or reconcile a product-design baseline that was already present before the current first-time Discovery effort started. At workflow start, record in the conversation whether either `docs/product-design/prd.md` or `docs/product-design/business-architecture.md` already exists. If either document is a pre-existing or previously confirmed baseline, stop before changing either file and explain that incremental update belongs to the later product-design versioning capability.
+Select `initial mode` for first-time product exploration and `incremental mode` only when both conditions are true:
+
+1. the user expresses intent to update an existing product-design baseline; and
+2. repository discovery finds at least one credible candidate PRD, Business Architecture, or combined product-design document.
+
+Incremental mode requires intent to update an existing product-design baseline and a credible candidate in the repository.
+
+Repository state alone does not trigger incremental mode. An update request without a credible candidate must not silently fall back to initial or first-time Discovery. Explain that no existing product-design baseline was found and ask the user to provide an authoritative path or make a separate first-time creation request.
+
+At workflow start, record in the conversation whether the default product-design documents exist and, for incremental intent, scan the repository root and normal project documentation directories for candidates. Identify candidates by content and responsibility, not only by path or file name. Exclude `.dev-cadence/`, `dist/`, `build/`, `vendor/`, `node_modules/`, and `.git/` from the scan.
 
 Documents created as the working baseline by the current Discovery effort do not trigger this stop rule. During the same conversation and user goal, continue editing that current Discovery draft after feedback or rejection until the user confirms it or abandons the effort.
 
@@ -73,7 +83,7 @@ Do not invent facts, requirements, roles, processes, objects, states, or rules t
 
 ## Product And Technical Content Boundary
 
-Apply this boundary consistently when creating the first product-design baseline and when a later incremental Discovery capability classifies new input. The current workflow still stops when a baseline already exists; S-002 owns incremental reconciliation and version governance.
+Apply this boundary consistently in initial mode and when incremental mode classifies new input or historical mixed content.
 
 You must classify every relevant input by meaning and source, including its authority and intended owner. Use these categories:
 
@@ -119,7 +129,7 @@ Technical Input Disposition is supporting shared-asset maintenance, not a third 
 
 ### ✅ Discovery Must
 
-- create only the first product-design baseline version;
+- create the first product-design baseline or update a confirmed baseline through incremental mode;
 - keep product and business design durable outside `.dev-cadence/`;
 - preserve unresolved and rejected material visibly;
 - keep analysis stages in the current conversation rather than persisting copies of the workflow process;
@@ -161,14 +171,16 @@ Discovery must not require a dedicated branch or workflow checkpoint commits. Wh
 
 ## Product-Design Documents
 
-The durable baseline consists of exactly these primary documents:
+The standard durable baseline consists of these primary documents:
 
 ```text
 docs/product-design/prd.md
 docs/product-design/business-architecture.md
 ```
 
-Both documents start with `Document Information` containing version `1` and `Last Updated`, and each contains its own `Change Log`. Change Log rows record version, date, change, and reason. Do not put Git commit hashes in the product documents.
+In initial mode, both documents start with `Document Information` containing version `1` and `Last Updated`. In incremental mode, preserve the current version and history until a confirmed substantive change requires a new version. Each document contains its own `Change Log`; rows record version, date, change, and reason. Do not put Git commit hashes in the product documents.
+
+PRD and Business Architecture versions are independent. Increment only the affected document when its product intent, scope, success criteria, constraints, actors, domains, capabilities, processes, objects, states, rules, or other owned substantive content changes. Pure spelling, formatting, path migration, file name changes, and link-only updates must not increment the version. Preserve all existing body content, `Rejected Directions`, `Future Scope`, and `Change Log` history unless the user explicitly confirms a substantive replacement or removal.
 
 Use `Open Questions` as the only unresolved-material section. Do not create separate Draft Ideas or Pending Decisions sections. When an answer is confirmed, move the conclusion into the relevant body section. Keep an unresolved question only while it remains unresolved.
 
@@ -250,6 +262,20 @@ Business Architecture is not technical architecture. Do not prescribe code modul
 
 ## Stage Rules
 
+### Incremental Baseline Selection And Preparation
+
+Before changing an existing baseline:
+
+1. Inspect each credible candidate's actual path, owned content, current version, `Last Updated`, and `Change Log`.
+2. When multiple candidates exist, responsibilities are unclear, or sources conflict, explain the evidence and obtain one explicit user confirmation of the authoritative source before modification. Do not merge or overwrite competing candidates automatically.
+3. For a non-standard path or file name, explain the current path, recommended standard path and file name, and affected repository references. Confirm migration explicitly. If migration is declined, continue at the existing authoritative path; do not create a competing duplicate. If approved, move or rename the asset, update repository references, and preserve its content, version, and `Change Log`.
+4. When one combined document owns both PRD and Business Architecture responsibilities, confirm whether to keep it combined or split it. Do not split automatically. A confirmed split preserves content and history and establishes one unambiguous authority for each responsibility.
+5. If an authoritative baseline contains historical mixed technical, workflow-status, approval, test-implementation, deployment, or operational content, explain the classification evidence, suggested authoritative destination, and affected references. Historical mixed content requires explicit user confirmation before removal or migration. Preserve necessary history and register unresolved ownerless technical items through the Open Question Registry.
+
+In short: for a non-standard path, confirm migration; for a combined document, confirm the split choice; and never change historical mixed content without explicit confirmation.
+
+These decisions remain in the current conversation and authoritative assets. Discovery must not create a manifest, stage record, or confirmation record to store actual document paths, version combinations, migration choices, or split choices.
+
 ### 1. Background And Problem Exploration
 
 Use:
@@ -270,13 +296,17 @@ Define scope, non-scope, product boundaries, business actors, domains, capabilit
 
 ### 4. Product Design Baseline Creation
 
-Use the workflow-start snapshot to distinguish a pre-existing baseline from documents created by the current Discovery effort. If either product-design document was already present before this first-time Discovery started, stop without modifying either document. If the current effort created the working baseline, keep editing those same drafts through Product Design Confirmation feedback or rejection; do not mistake them for a pre-existing baseline and do not route that feedback to S-002.
+Use the workflow-start snapshot to distinguish a pre-existing baseline from documents created by the current Discovery effort. In initial mode, if either product-design document was already present before this first-time Discovery started, stop without modifying either document and explain that an explicit update request is required for incremental mode. If the current effort created the working baseline, keep editing those same drafts through Product Design Confirmation feedback or rejection; do not mistake them for a pre-existing baseline. In incremental mode, use the confirmed authoritative candidate paths rather than assuming the standard paths.
 
 Before creating the initial baseline, run the Product And Technical Content Boundary classification over all source material and conclusions from the conversational analysis stages. Remove candidate implementation mechanisms from the product-design draft only after their disposition is recorded. Do not discard technical context.
 
-Create both version-1 documents from the source material and current conversational conclusions. Keep their responsibilities separate and cross-reference them where useful. Do not fabricate completeness.
+In initial mode, create both version-1 documents from the source material and current conversational conclusions. Keep their responsibilities separate and cross-reference them where useful. Do not fabricate completeness.
 
-A later incremental Discovery mode must apply the same boundary to new input. If an existing baseline contains historical mixed product and technical content, do not silently delete, rewrite, or move it; S-002 must coordinate the authoritative source, migration, version change, and user confirmation.
+In incremental mode, classify each new input as an addition, business-architecture change, correction, replacement, rejection, Open Question, or Future Scope change, then identify whether it affects the PRD, Business Architecture, or both. Apply the Product And Technical Content Boundary before editing. Update only confirmed conclusions; keep unresolved product or business matters in the owning document's `Open Questions`.
+
+When a question is confirmed, remove it from the relevant `Open Questions` and write the conclusion into the correct authoritative body. Put confirmed technical conclusions in their technical authority, not the product-design baseline. When a repository-level Registry entry represents the same resolved question, remove it according to the Open Question Registry skill and preserve the index change in the Registry `Change Log`.
+
+Record potential impact on existing work items and active development tasks in the final review and hand it to `work-item-planning`. Do not silently modify Feature, Story, Bug, Technical Task, Roadmap, or active delivery state.
 
 ### 5. Product Design Confirmation
 
@@ -287,6 +317,8 @@ Present one concise review containing:
 - important Open Questions and their impact;
 - Rejected Directions and Future Scope;
 - both document paths and version numbers;
+- for incremental mode, the previous and proposed independent version of each document and the reason for every increment or unchanged version;
+- potential impacts to existing work items for later `work-item-planning` evaluation;
 - the boundary before work-item planning and technical architecture.
 
 The review must also summarize each material technical input excluded from the product-design baseline, its current authoritative document or Registry entry, and its suggested resolution stage. Describe this as a handoff for later evaluation, not as approval of the suggested implementation.
@@ -295,13 +327,13 @@ Ask for one consolidated user confirmation of both documents. A commit does not 
 
 If the user requests changes, update the affected authoritative documents and any related `Open Questions`, `Rejected Directions`, or `Future Scope`, then present the complete baseline again. Do not create a process record or start a separate Discovery run for feedback on the same baseline.
 
-After confirmation, state that the version-1 product-design baseline is confirmed. Do not create a separate confirmation record or add approval metadata to either document. If the user rejects the baseline, do not claim it is confirmed and do not create a separate rejection record; continue refining the same authoritative documents only when the user requests changes.
+After confirmation, state that the displayed product-design path and version combination is confirmed. In initial mode this is version 1 of both standard documents. In incremental mode, append `Change Log` rows only for substantively changed documents and treat the complete confirmed combination as the new planning baseline. Do not create a separate confirmation record or add approval metadata to either document. If the user rejects the baseline, do not claim it is confirmed and do not create a separate rejection record; continue refining the same authoritative documents only when the user requests changes.
 
 ## Completion Output
 
 Return:
 
-- product-design files created;
+- authoritative product-design files created or updated, using their actual paths;
 - version numbers;
 - concise product and business-architecture summary;
 - important Open Questions, Rejected Directions, and Future Scope;
