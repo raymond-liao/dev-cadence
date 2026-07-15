@@ -1,15 +1,31 @@
 # Business Acceptance Record
 
-- Status: ✅ `accepted`
-- Acceptance source: 2026-07-14 batch execution authorization to complete all Ready cards without intermediate confirmation.
-- Verification report: [System Test Report](05-system-test-report.md)
-- `User Decision`: `accepted`
-- `Accepted Residual Risks`: Discovery legacy process records remain under an explicit Discovery-only precedence exception until the separately scoped S-013 migration removes both the records and exception.
+- Status: ⏳ `pending`
 
-## Accepted Outcome
+## Accepted Requirement And Solution Sources
 
-- Asset and Delivery Workflow record models are explicit and enforceable.
-- Delivery evidence remains complete.
-- Asset continuation no longer depends on a manifest contract.
-- S-013 and S-011 are Ready; S-002 remains Blocked on S-013.
-- The branch is retained for parent-task integration; no push or pull request was performed.
+- `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/01-requirements.md`
+- `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/02-technical-solution.md`
+- `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/03-implementation-plan.md`
+
+## System Test Report Source
+
+- `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/05-system-test-report.md`
+
+## User Decision
+
+- Decision: ⏳ `pending`
+- Decision By: pending; do not infer from batch execution authorization.
+- Decision At: pending.
+
+## Accepted Result
+
+Pending user decision. Implementation and System Testing are complete; no result has been accepted yet.
+
+## Accepted Residual Risks
+
+Pending user decision. The verification record preserves the Discovery legacy-record exception until S-013 is accepted.
+
+## Final Follow-Up Actions
+
+⏳ `pending` until Business Acceptance and the subsequent Completion decision. No push was performed.

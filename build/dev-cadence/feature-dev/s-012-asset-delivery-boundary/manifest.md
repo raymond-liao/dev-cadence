@@ -6,8 +6,8 @@
 - Workspace: `.worktrees/s-012-asset-delivery-boundary`
 - Branch: `codex/s-012-asset-delivery-boundary`
 - Started at: `2026-07-14`
-- Current stage: Completion
-- Overall status: ✅ `accepted`
+- Current stage: Business Acceptance
+- Overall status: 🔄 `in_progress`
 
 ## Stage Table
 
@@ -18,12 +18,12 @@
 | Implementation Plan | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/03-implementation-plan.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Worktree and freshness gate verified. |
 | Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/04-implementation-record.md` | Delegated by the 2026-07-14 batch execution instruction | `d53c7fd5bc2750f5a65206fadf59504ecc3a432b` | CR-I-001 fixed; original and final-review-fix commits have exact identity. |
 | System Testing | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/05-system-test-report.md` | Delegated by the 2026-07-14 batch execution instruction | `4ab28684b9b8b09975d2ba50c81031b03f6cf4ae` | Full repository checks passed; 10/10 acceptance criteria covered. |
-| Business Acceptance | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/06-business-acceptance-record.md` | Delegated by the 2026-07-14 batch execution instruction | `4ab28684b9b8b09975d2ba50c81031b03f6cf4ae` | Decision ✅ `accepted`; branch retained for parent integration. |
+| Business Acceptance | ⏳ `pending` | `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/06-business-acceptance-record.md` | Not yet provided; uninterrupted batch execution is not Business Acceptance. | `pending` | Awaiting the user's final unified decision. |
 
 ## Design Freshness Gate
 
 - Inputs: S-012 Version 1, requirements, technical solution, implementation plan, branch `codex/s-012-asset-delivery-boundary`, base `3cb8acacf0d7cee7c53b3ea7dd452fa99b764809`.
-- Dependency state: S-006 Done.
+- Dependency state at implementation start: S-006 implementation and verification evidence were present; S-006 is currently In Progress pending Business Acceptance.
 - Conclusion: valid; no material repository changes invalidate the plan.
 
 ## Verification Summary
@@ -41,12 +41,9 @@
 
 ## Business Acceptance Decision
 
-- Decision: ✅ `accepted`.
+- Decision: ⏳ `pending`.
 - Record: `build/dev-cadence/feature-dev/s-012-asset-delivery-boundary/06-business-acceptance-record.md`.
 
-## Final Integration Decision
+## Final Follow-Up Actions
 
-- Integration action: keep `codex/s-012-asset-delivery-boundary` for parent-task integration.
-- No push or pull request was performed.
-- Worktree cleanup result: `preserved`.
-- Preservation reason: the parent batch task needs the dedicated branch for integration and dependent-card execution.
+⏳ `pending` until the user makes the Business Acceptance and Completion decisions. No push was performed.

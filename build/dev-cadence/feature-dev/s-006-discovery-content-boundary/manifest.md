@@ -6,8 +6,8 @@
 - Workspace: `.worktrees/s-006-discovery-content-boundary`
 - Branch: `codex/s-006-discovery-content-boundary`
 - Started at: `2026-07-14`
-- Current stage: Completion
-- Overall status: ✅ `accepted`
+- Current stage: Business Acceptance
+- Overall status: 🔄 `in_progress`
 
 ## Stage Table
 
@@ -18,11 +18,11 @@
 | Implementation Plan | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/03-implementation-plan.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Worktree verified; freshness gate passed. |
 | Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/04-implementation-record.md` | Delegated by the 2026-07-14 batch execution instruction | `28dc8870034d92e5d6bc23bd1ef0c8623d328048` | TDD RED/GREEN complete; independent-review fixes verified; code review passed. |
 | System Testing | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/05-system-test-report.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Verification decision 🟢 `ready`; 11/11 acceptance criteria covered. |
-| Business Acceptance | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/06-business-acceptance-record.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Decision ✅ `accepted`; branch retained for parent-task integration. |
+| Business Acceptance | ⏳ `pending` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/06-business-acceptance-record.md` | Not yet provided; uninterrupted batch execution is not Business Acceptance. | `pending` | Awaiting the user's final unified decision. |
 
 ## Design Freshness Gate
 
-- Work item: `docs/stories/S-006-discovery-product-technical-content-boundary.md`, Version 1, Status Ready.
+- Work item at implementation start: `docs/stories/S-006-discovery-product-technical-content-boundary.md`, Version 1, Status Ready; current Story is Version 3, Status In Progress pending Business Acceptance.
 - Confirmed requirement: `01-requirements.md`.
 - Confirmed solution: `02-technical-solution.md`.
 - Implementation plan: `03-implementation-plan.md`.
@@ -43,12 +43,9 @@
 
 ## Business Acceptance Decision
 
-- Decision: ✅ `accepted`.
+- Decision: ⏳ `pending`.
 - Record: `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/06-business-acceptance-record.md`.
 
-## Final Integration Decision
+## Final Follow-Up Actions
 
-- Integration action: keep `codex/s-006-discovery-content-boundary` for parent-task integration.
-- No push or pull request was performed.
-- Worktree cleanup result: `preserved`.
-- Preservation reason: the parent batch task still needs the dedicated worktree and branch for integration and cross-card verification.
+⏳ `pending` until the user makes the Business Acceptance and Completion decisions. No push was performed.

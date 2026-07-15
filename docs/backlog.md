@@ -7,6 +7,8 @@
 - [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md) - 实现与系统测试完成，等待 Business Acceptance（pending）。
 - [ ] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md) - 实现与系统测试完成，等待 Business Acceptance。
 - [ ] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md) - 实现与系统测试完成，等待 Business Acceptance。
+- [ ] [P1] [S-012 Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md) - 实现与系统测试完成，等待 Business Acceptance。
+- [ ] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md) - 实现与系统测试完成，等待 Business Acceptance。
 
 ## 待处理
 
@@ -37,8 +39,6 @@
 
 ## 已完成
 
-- [x] [P1] [S-012 Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md)
-- [x] [P1] [S-006 Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md)
 - [x] [P1] [S-005 全局 Open Question Registry](stories/S-005-open-question-registry.md)
 - [x] [P2] [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md)
 - [x] [P1] [S-010 文档引用快捷链接](stories/S-010-document-reference-links.md)
@@ -119,14 +119,17 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-002 | S-005、S-006、S-013 | ⏳ In Progress |
-| 2 | S-015 | S-002、S-012、T-001 | ⚠️ Blocked |
-| 3 | S-016 | S-015 | ⚠️ Blocked |
-| 4 | S-017 | S-015、S-016 | ⚠️ Blocked |
-| 5 | T-002 | S-004、S-015、S-016、S-017 | ⚠️ Blocked |
-| 6 | S-014 | - | Draft |
-| 7 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；S-026；S-027；S-030；S-032；S-034 | - | Draft |
-| 8 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
-| 9 | S-033 | S-030、S-031 | ⚠️ Blocked |
+| 1 | S-006 | S-005 | ⏳ In Progress |
+| 2 | S-012 | S-006 | ⚠️ Blocked |
+| 3 | S-013；S-011 | S-001、S-012；S-008、S-012 | ⚠️ Blocked |
+| 4 | S-002 | S-005、S-006、S-013 | ⚠️ Blocked |
+| 5 | S-015 | S-002、S-012、T-001 | ⚠️ Blocked |
+| 6 | S-016 | S-015 | ⚠️ Blocked |
+| 7 | S-017 | S-015、S-016 | ⚠️ Blocked |
+| 8 | T-002 | S-004、S-015、S-016、S-017 | ⚠️ Blocked |
+| 9 | S-014 | - | Draft |
+| 10 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；S-026；S-027；S-030；S-032；S-034 | - | Draft |
+| 11 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
+| 12 | S-033 | S-030、S-031 | ⚠️ Blocked |
 
 用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。

@@ -1,27 +1,31 @@
 # Business Acceptance Record
 
-- Status: ✅ `accepted`
+- Status: ⏳ `pending`
 
-## Acceptance Input
+## Accepted Requirement And Solution Sources
 
-- Work item: `docs/stories/S-006-discovery-product-technical-content-boundary.md`, Version 2, Status Done.
-- Implementation: `28dc8870034d92e5d6bc23bd1ef0c8623d328048`.
-- System test: [System Test Report](05-system-test-report.md).
-- User delegation: the 2026-07-14 instruction authorized uninterrupted implementation of the listed Ready backlog cards and requested that major decisions be summarized only at the end.
+- `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/01-requirements.md`
+- `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/02-technical-solution.md`
+- `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/03-implementation-plan.md`
 
-## Decision
+## System Test Report Source
 
-- Decision: ✅ `accepted`.
-- Decision maker: delegated to the active agent by the user.
-- Accepted value: Discovery now separates product requirements, business architecture, product-level constraints, implementation suggestions, and technical questions; preserves technical context without making a technical decision; and provides initial/future-incremental gates and final handoff evidence.
-- Residual risk: semantic compliance depends on workflow execution rather than a generated-document parser. No additional risk status is required because this is the established governance mechanism and all Story acceptance criteria are covered.
+- `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/05-system-test-report.md`
 
-## Integration Authorization
+## User Decision
 
-- Keep the dedicated branch for the parent task to integrate with the other authorized backlog-card branches.
-- No push or pull request is authorized.
+- Decision: ⏳ `pending`
+- Decision By: pending; do not infer from batch execution authorization.
+- Decision At: pending.
 
-## Worktree Cleanup Result
+## Accepted Result
 
-- Result: `preserved`.
-- Reason: the parent batch task requires this dedicated worktree and branch to remain available for integration and cross-card verification; no cleanup was requested or authorized.
+Pending user decision. Implementation and System Testing are complete; no result has been accepted yet.
+
+## Accepted Residual Risks
+
+Pending user decision. The verification record preserves the identified residual risk.
+
+## Final Follow-Up Actions
+
+⏳ `pending` until Business Acceptance and the subsequent Completion decision. No push was performed.

@@ -1,19 +1,31 @@
 # Business Acceptance Record
 
 - Status: ⏳ `pending`
-- Decision date: Pending.
-- Decision basis: Uninterrupted batch execution authorized implementation without intermediate confirmation; it did not authorize Business Acceptance.
 
-## Acceptance Decision
+## Accepted Requirement And Solution Sources
 
-Pending the user's final unified decision. Implementation and System Testing evidence will be presented together after review remediation completes.
+- `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/01-requirements.md`
+- `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/02-technical-solution.md`
+- `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/03-implementation-plan.md`
 
-## Accepted Risk
+## System Test Report Source
 
-Pending user decision; no risk is proposed for acceptance.
+- `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/05-system-test-report.md`
 
-## Completion
+## User Decision
 
-- Integration decision: Pending Business Acceptance.
-- Push: Not performed.
-- Worktree cleanup: Not started while the workflow remains active.
+- Decision: ⏳ `pending`
+- Decision By: pending; do not infer from batch execution authorization.
+- Decision At: pending.
+
+## Accepted Result
+
+Pending user decision. Implementation and System Testing are complete; no result has been accepted yet.
+
+## Accepted Residual Risks
+
+Pending user decision; no risk has been accepted.
+
+## Final Follow-Up Actions
+
+⏳ `pending` until Business Acceptance and the subsequent Completion decision. No push was performed.

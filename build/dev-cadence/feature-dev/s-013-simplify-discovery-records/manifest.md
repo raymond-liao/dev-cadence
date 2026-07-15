@@ -33,6 +33,6 @@
 
 ⏳ `pending`. Implementation and System Testing are complete, but the user has not yet made the final Business Acceptance decision.
 
-## Final Integration Decision
+## Final Follow-Up Actions
 
-Pending Business Acceptance and Completion decision; no push.
+⏳ `pending` until the user makes the Business Acceptance and Completion decisions. No push was performed.
