@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-002`
-- Version：`10`
-- Status：`In Progress`
+- Version：`11`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
 
@@ -124,3 +124,4 @@
 | 8 | 2026-07-14 | 补充对 S-013 Discovery 过程记录简化的明确依赖。 | 增量更新应建立在简化后的 PRD 与 Business Architecture 双资产模型上，不能继续依赖将被移除的 Discovery 过程记录。 |
 | 9 | 2026-07-14 | 实现增量 Discovery、候选发现、权威来源协调、独立版本治理和工作项影响移交，并将状态更新为 In Progress。 | 实现与系统测试进入执行阶段；Business Acceptance 尚未完成。 |
 | 10 | 2026-07-15 | 增加确认前会话 proposal 与确认后原子写入门禁，并定义综合单文件的双职责独立版本治理。 | 防止未确认增量内容提前污染权威资产，并确保综合文档不会丢失 PRD 与 Business Architecture 的独立版本语义。 |
+| 11 | 2026-07-15 | 记录 Business Acceptance 并将状态更新为 Done。 | 用户选择 `1. Accept`，S-002 交付结果已验收。 |

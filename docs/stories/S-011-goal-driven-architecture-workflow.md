@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-011`
-- Version：`4`
-- Status：`In Progress`
+- Version：`5`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -105,3 +105,4 @@
 | 2 | 2026-07-14 | 增加 Asset Workflow 记录边界依赖。 | 架构设计应复用统一的无独立过程记录契约，而不是单独定义例外。 |
 | 3 | 2026-07-14 | 完成目标驱动的 Architecture Design Asset Workflow、入口路由、安装包与契约验证。 | 为明确的架构设计目标提供单一权威文档产出，并保持 Asset/Delivery 记录边界。 |
 | 4 | 2026-07-15 | 将状态从 Done 修正为 In Progress。 | 实现与系统测试已完成，但批量执行授权不构成 Business Acceptance。 |
+| 5 | 2026-07-15 | 记录 Business Acceptance 并将状态更新为 Done。 | 用户选择 `1. Accept`，S-011 交付结果已验收。 |

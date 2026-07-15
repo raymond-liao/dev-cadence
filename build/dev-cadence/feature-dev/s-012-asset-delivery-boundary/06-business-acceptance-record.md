@@ -1,6 +1,6 @@
 # Business Acceptance Record
 
-- Status: ⏳ `pending`
+- Status: ✅ `accepted`
 
 ## Accepted Requirement And Solution Sources
 
@@ -14,18 +14,18 @@
 
 ## User Decision
 
-- Decision: ⏳ `pending`
-- Decision By: pending; do not infer from batch execution authorization.
-- Decision At: pending.
+- Decision: `1. Accept`
+- Decision By: `RaymondLiao <yaoyu.liao@highsoft.ltd>`
+- Decision At: `2026-07-15T10:19:39+0800`
 
 ## Accepted Result
 
-Pending user decision. Implementation and System Testing are complete; no result has been accepted yet.
+The user accepted the completed S-012 implementation and System Testing result.
 
 ## Accepted Residual Risks
 
-Pending user decision. The verification record preserves the Discovery legacy-record exception until S-013 is accepted.
+None accepted. S-013 is accepted in the same batch, so the former temporary Discovery legacy-record exception is closed.
 
 ## Final Follow-Up Actions
 
-⏳ `pending` until Business Acceptance and the subsequent Completion decision. No push was performed.
+Local merge into `main` was requested and remains pending final integration. No push was performed.
