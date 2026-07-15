@@ -2,9 +2,9 @@
 
 [English](README.md)
 
-Dev Cadence 是一个面向 AI 编程代理的软件交付治理框架。它把 AI 工作组织成可配置的业务流程：Asset Workflow 维护长期权威文档，Delivery Workflow 生成可审计的阶段记录、测试证据、验收结论和集成决策。
+Dev Cadence 帮助团队以清晰、可审阅、可信赖的方式开展 AI 参与的软件研发，覆盖从产品探索到验证交付的完整过程。
 
-它基于固定版本的 vendored Superpowers，以及一小组项目级指令，让交付阶段变得可见、可审阅、可重复。
+它为 AI 软件研发 agent 提供明确的工作流、确认门禁、长期资产和可验证的交付证据。
 
 ## 快速开始
 
@@ -130,48 +130,6 @@ manifest 应该串联：
 
 Dev Cadence 使用共享语义标识加 canonical status 文本呈现明确的用户可见状态，例如 🔄 `in_progress` 或 ⚠️ `ready_with_risk`。文本仍是权威来源，机器读取的正式状态值保持不变；标识只用于提高 manifest、阶段记录、报告、验收摘要和进度更新的扫描效率。
 
-## 包含内容
-
-```text
-.dev-cadence/
-  version
-  LICENSE
-  .dev-cadence.example.yaml
-  README.md
-  README.zh-CN.md
-  AGENTS-snippet.md
-  skills/
-    using-dev-cadence/
-      SKILL.md
-    discovery/
-      SKILL.md
-    architecture-design/
-      SKILL.md
-    feature-dev/
-      SKILL.md
-    bug-fix/
-      SKILL.md
-    refactor/
-      SKILL.md
-  vendor/
-    superpowers/
-      LICENSE
-      RELEASE-NOTES.md
-      skills/
-```
-
-主要部分：
-
-- `AGENTS-snippet.md` - 合并到目标仓库根目录 `AGENTS.md` 的片段。
-- `skills/using-dev-cadence/` - 工作流入口选择器。
-- `skills/discovery/` - 首次与增量产品探索及产品设计基线治理工作流。
-- `skills/architecture-design/` - 显式触发、目标驱动的架构设计工作流。
-- `skills/feature-dev/` - 功能开发工作流。
-- `skills/bug-fix/` - Bug 修复工作流。
-- `skills/refactor/` - 保持行为不变的重构工作流。
-- `.dev-cadence.example.yaml` - 目标仓库运行时配置示例。
-- `vendor/superpowers/` - Dev Cadence 使用的固定 Superpowers 副本。
-
 ## 配置
 
 如需自定义工作流输出语言，把示例配置复制到目标仓库根目录：
@@ -207,40 +165,8 @@ Worktree 配置：
 - 不要在目标仓库里直接编辑 `vendor/superpowers/skills/`。需要修改时，在 Dev Cadence 源码中更新后重新构建。
 - 使用或分发该包时，保留 `vendor/superpowers/LICENSE` 和 `vendor/superpowers/RELEASE-NOTES.md`。
 
-## 源码开发
-
-源码树在 `src/` 下镜像安装包：
-
-```text
-src/
-  AGENTS-snippet.md
-  .dev-cadence.example.yaml
-  skills/
-  vendor/
-```
-
-构建安装包：
-
-```bash
-bash scripts/build.sh
-```
-
-构建脚本只会替换 `dist/.dev-cadence`。
-
-把安装包安装或更新到目标仓库：
-
-```bash
-bash scripts/install.sh /path/to/target-repo
-```
-
-运行源码、分发包、安装和 workflow 契约检查：
-
-```bash
-bash scripts/check-all.sh
-```
-
 ## 许可证
 
-Dev Cadence 使用 MIT License。见 `LICENSE`。
+Dev Cadence 使用 [MIT License](LICENSE)。
 
-Vendored Superpowers 副本使用 MIT License。见 `vendor/superpowers/LICENSE`。
+Vendored Superpowers 副本保留其 MIT License，安装包内路径为 `vendor/superpowers/LICENSE`。

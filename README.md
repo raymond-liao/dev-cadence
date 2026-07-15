@@ -2,9 +2,9 @@
 
 [简体中文](README.zh-CN.md)
 
-Dev Cadence is a software delivery governance framework for AI coding agents. It organizes AI work into configurable business workflows: Asset Workflows maintain durable authoritative documents, while Delivery Workflows produce auditable stage records, test evidence, acceptance decisions, and integration decisions.
+Dev Cadence helps teams make AI-assisted software development clear, reviewable, and reliable, from product discovery through verified delivery.
 
-It is built on top of a fixed, vendored copy of Superpowers and a small set of project-level instructions that make delivery stages visible, reviewable, and repeatable.
+It gives AI software development agents explicit workflows, confirmation gates, durable artifacts, and verifiable delivery evidence.
 
 ## Quickstart
 
@@ -132,48 +132,6 @@ The manifest should connect:
 
 Dev Cadence presents explicit user-visible statuses with a shared semantic marker plus the canonical status text, such as 🔄 `in_progress` or ⚠️ `ready_with_risk`. The text remains authoritative and machine-consumed status values are unchanged; markers are only a scanning aid for manifests, stage records, reports, acceptance summaries, and progress updates.
 
-## What's Inside
-
-```text
-.dev-cadence/
-  version
-  LICENSE
-  .dev-cadence.example.yaml
-  README.md
-  README.zh-CN.md
-  AGENTS-snippet.md
-  skills/
-    using-dev-cadence/
-      SKILL.md
-    discovery/
-      SKILL.md
-    architecture-design/
-      SKILL.md
-    feature-dev/
-      SKILL.md
-    bug-fix/
-      SKILL.md
-    refactor/
-      SKILL.md
-  vendor/
-    superpowers/
-      LICENSE
-      RELEASE-NOTES.md
-      skills/
-```
-
-The main pieces are:
-
-- `AGENTS-snippet.md` - the snippet to merge into the target repository's root `AGENTS.md`.
-- `skills/using-dev-cadence/` - the entry workflow selector.
-- `skills/discovery/` - initial and incremental product discovery and product-design baseline governance.
-- `skills/architecture-design/` - the explicit, goal-driven architecture design workflow.
-- `skills/feature-dev/` - the feature development workflow.
-- `skills/bug-fix/` - the bug fix workflow.
-- `skills/refactor/` - the behavior-preserving refactoring workflow.
-- `.dev-cadence.example.yaml` - example runtime configuration for target repositories.
-- `vendor/superpowers/` - the fixed Superpowers copy used by Dev Cadence.
-
 ## Configuration
 
 To customize workflow output language, copy the example config to the target repository root:
@@ -209,40 +167,8 @@ Keep user configuration outside `.dev-cadence`. The `.dev-cadence` directory is 
 - Do not edit `vendor/superpowers/skills/` inside target repositories. Update Dev Cadence source and rebuild instead.
 - Keep `vendor/superpowers/LICENSE` and `vendor/superpowers/RELEASE-NOTES.md` when using or distributing the package.
 
-## Source Development
-
-The source tree mirrors the installed package under `src/`:
-
-```text
-src/
-  AGENTS-snippet.md
-  .dev-cadence.example.yaml
-  skills/
-  vendor/
-```
-
-Build the installable package with:
-
-```bash
-bash scripts/build.sh
-```
-
-The build script only replaces `dist/.dev-cadence`.
-
-Install or update that package in a target repository with:
-
-```bash
-bash scripts/install.sh /path/to/target-repo
-```
-
-Run all source, package, installation, and workflow contract checks with:
-
-```bash
-bash scripts/check-all.sh
-```
-
 ## License
 
-Dev Cadence is licensed under the MIT License. See `LICENSE`.
+Dev Cadence is licensed under the [MIT License](LICENSE).
 
-The vendored Superpowers copy is licensed under the MIT License. See `vendor/superpowers/LICENSE`.
+The vendored Superpowers copy retains its MIT license in the installed package at `vendor/superpowers/LICENSE`.
