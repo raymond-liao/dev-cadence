@@ -7,6 +7,8 @@ description: Use when a user asks to add a capability or intentionally change ex
 
 Use this skill to run the Dev Cadence feature development workflow.
 
+This is a Delivery Workflow. Preserve its complete implementation and verification evidence chain under `build/dev-cadence/feature-dev/<feature-slug>/` according to the shared record-model contract in `using-dev-cadence`.
+
 Dev Cadence is a business-facing workflow wrapper around vendored Superpowers skills. It does not replace the Superpowers process. It makes each business stage visible to the user, fixes confirmation gates, and keeps the target repository on the vendored skill version.
 
 Use only vendored Superpowers skills from:
@@ -49,6 +51,10 @@ Do not read user configuration from `.dev-cadence/`; that directory is a replace
 ## Generated Status Presentation
 
 When writing or updating user-visible status summaries, apply the shared status presentation mapping from `document-conventions`. Use it consistently for the manifest and stage table, stage records and reports, review and test conclusions, coverage, verification, business acceptance, Completion, and user-facing progress summaries while preserving every canonical status value.
+
+## Generated Document References
+
+Apply the shared document-reference rules from `document-conventions` to every Dev Cadence-managed Markdown document. Check local links in all tracked Markdown before each commit; check local links in all generated documents for the current run before Completion. Keep the complete selection, identity, lifecycle, and URI contract in the shared skill rather than duplicating it here.
 
 ## Documentation Test Boundary
 
@@ -391,6 +397,30 @@ Classify the result:
 - Unrelated code changes, formatting changes, generated output, or files outside the affected boundary do not invalidate the design.
 
 When returning to an earlier stage, mark affected later confirmation and verification evidence as superseded, set the earliest affected stage to `in_progress`, set later affected stages to `pending`, refresh and reconfirm the affected records, and block implementation until the gate passes again.
+
+### Failure Classification And Stage Routing
+
+Use this lifecycle for blocking failures observed during implementation, compilation or build, automated testing, System Testing, regression checks, or implementation-stage code review. Classify from inspectable evidence, not from the failure symptom alone.
+
+Use exactly these canonical classifications: `implementation_bug`, `test_bug`, `environment_issue`, `unclear_requirement`, `design_conflict`, `architecture_conflict`, and `missing_dependency`.
+
+Assign every failure a stable failure ID that remains unchanged across remediation, reruns, and reclassification. The complete failure record belongs in the stage record that observed the failure; the manifest contains only the current routing or blocking summary. Record the failure ID, evidence, classification rationale, remediation round, return target, and result. When a failure originates from code review, also record its source finding ID.
+
+Route each classification as follows:
+
+- `implementation_bug`: return to Development Implementation.
+- `test_bug`: return to the test asset owner or the test-correction step within Development Implementation. Do not delete, skip, or weaken an effective test to hide an implementation failure. If the test asset owner is external, keep `test_bug`, record the owner and unblock conditions, and do not relabel it as `missing_dependency`.
+- `unclear_requirement`: return to Requirements Confirmation, the earliest requirement stage for this workflow.
+- `design_conflict`: return to Technical Solution.
+- `architecture_conflict`: return to Technical Solution and reassess the relevant Architecture and Decision sources before reconfirming the solution.
+- `environment_issue`: keep the current business stage as `blocked`, keep the overall status as `in_progress`, and record reproducible evidence plus unblock conditions. Do not report the implementation or verification as passed, failed, or ready solely because the environment is blocked.
+- `missing_dependency`: return a requirement dependency to Requirements Confirmation, a solution dependency to Technical Solution, and an execution dependency to Implementation Plan or Development Implementation, choosing the earliest stage that can resolve it. If the current task cannot resolve it, block the run and record the responsible owner and unblock conditions without reporting a false verification conclusion.
+
+Do not retry the same failure without new evidence, a corrective action, or an environment change. After remediation, rerun the check associated with the stable failure ID and record exactly one failure lifecycle result: `closed`, `reclassified`, or `blocked`. These failure lifecycle results are internal record values and must not become Backlog or work-item statuses.
+
+Only a validated blocking code review finding enters this failure lifecycle; preserve its source finding ID. Keep non-blocking or unvalidated findings in the existing code review evidence model.
+
+When routing returns to an earlier stage, reuse the active-task rollback semantics: set the earliest affected stage to `in_progress`, set later affected stages to `pending`, mark invalidated confirmation and verification evidence as `superseded`, refresh the affected records, and obtain the confirmations required by this workflow before continuing.
 
 ### Development Implementation
 
