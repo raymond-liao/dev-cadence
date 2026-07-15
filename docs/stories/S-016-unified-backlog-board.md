@@ -3,14 +3,14 @@
 ## 基本信息
 
 - ID：`S-016`
-- Version：`2`
-- Status：`Draft`
+- Version：`3`
+- Status：`Blocked`
 - Priority：`P1`
 - Change Type：Feature
 
 ## 目标
 
-使用一份统一、类似看板的 Backlog 管理全部工作项及当前交付选择，不再分别维护 Product Backlog、Sprint 和 Sprint Backlog 的重复工作项集合。
+使用一份统一 Backlog 管理全部工作项的状态、优先级、关系、阻塞和建议实施顺序，不再维护 Product Backlog、Sprint Backlog 或其他重复工作项集合。
 
 ## 背景
 
@@ -20,41 +20,50 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 
 ## User Story
 
-作为规划和跟踪产品交付的用户，我希望在一份 Backlog 看板中查看所有工作项及其当前工作项状态，以便避免在 Product Backlog、Sprint 和 Sprint Backlog 之间重复维护相同内容。
+作为规划和跟踪产品交付的用户，我希望在一份 Backlog 中查看所有工作项的状态、优先级、关系和建议顺序，以便避免维护重复列表并清楚判断下一项工作。
 
 ## ✅ 范围
 
-- 使用一份统一 Backlog 表达全部候选工作项、当前交付选择和已完成工作项。
-- Backlog 关联具体工作项卡片，并可引用对应 Story Map 位置或切片。
-- 工作项状态只使用 `Draft`、`Ready`、`In Progress` 和 `Done`。
-- Work Item Planning 创建工作项时使用 `Draft`，规划完成后更新为 `Ready`。
-- 工作项进入 Feature Dev、Bug Fix 或 Refactor 后更新为 `In Progress`。
-- 对应交付 workflow 完整结束后更新为 `Done`。
+- 使用一份统一 Backlog 表达全部候选、进行中、受阻、完成和已关闭工作项。
+- Backlog 关联具体工作项卡片，并可引用对应 Story Map、Milestone 或 Iteration Plan。
+- 工作项状态统一使用 `Draft`、`Ready`、`In Progress`、`Blocked`、`Done`、`Superseded` 和 `Dropped`。
+- Backlog 汇总工作项类型、状态、优先级、Size、关系、阻塞和建议实施顺序，但不复制卡片详细定义。
+- Work Item Planning 负责 Backlog 的首次创建、文档结构、规划排序和无关工作项不受影响的增量更新规则。
+- Story 只有完成 Work Item Analysis、用户确认定义并且没有阻止开发的开放问题时才能进入 `Ready`。
+- Task 不强制在实施前达到 `Ready`；Bug 不以 `Ready` 或已知根因为进入 `bug-fix` 的硬前置条件。
+- 工作项进入对应 Delivery Workflow 后更新为 `In Progress`；开发、验证和业务验收闭环后更新为 `Done`。
+- 明确决策不再处理的工作项使用 `Dropped`；被新工作项替代时使用 `Superseded`。
+- 硬依赖、阻塞、替代和关联关系必须显式记录，不得只依赖 Story Map 位置推断。
 - Backlog 只在工作项生命周期发生变化时更新，不跟踪 workflow 内部阶段。
 - Backlog 的创建、结构、排序和规划使用方式由 Work Item Planning 定义。
 
 ## ❌ 非范围
 
 - 不为 Product Backlog、Sprint 和 Sprint Backlog 分别保存重复工作项集合。
-- 不增加 `Blocked`、`Selected`、`Awaiting Acceptance`、`Awaiting Integration` 或其他未经确认的工作项状态。
+- 不增加 `Selected`、`Awaiting Acceptance`、`Awaiting Integration` 或其他未经确认的工作项状态。
 - 不在 Backlog 中展示 Requirements、Solution、Implementation、Testing 或 Business Acceptance 等 workflow 内部阶段。
 - 不把普通代码提交、Review 中间过程或测试执行过程写入 Backlog。
-- 不在本卡片阶段确定最终 Markdown 看板布局。
+- 不复制工作项卡片正文、验收条件或 Delivery Workflow 运行记录。
+- 不在本 Story 中实现相对 Size 估算算法或 Iteration Plan 容量校准。
 
 ## 验收标准
 
 1. 项目只维护一份统一 Backlog 工作项集合，不复制 Product Backlog 或 Sprint Backlog。
-2. Backlog 能够表达全部工作项及当前交付选择。
-3. 工作项状态严格限制为 `Draft`、`Ready`、`In Progress` 和 `Done`。
-4. Work Item Planning 负责工作项从创建到 `Ready` 的规划状态变化。
-5. 负责实施该卡片的交付 workflow 将状态更新为 `In Progress`，并在完整结束后更新为 `Done`。
-6. workflow 内部阶段、临时等待状态和实施细节不会成为 Backlog 状态。
-7. Backlog 只在工作项级生命周期变化时更新，不作为高频运行日志。
+2. Backlog 能够汇总全部工作项的卡片引用、类型、状态、优先级、Size、关系、阻塞和建议顺序。
+3. 工作项状态严格限制为 `Draft`、`Ready`、`In Progress`、`Blocked`、`Done`、`Superseded` 和 `Dropped`。
+4. Story、Task 和 Bug 的 `Ready` 与 Delivery 启动规则保持各自边界，不使用统一的机械状态推进。
+5. Work Item Planning 创建并维护 Backlog 结构和规划顺序，其他 workflow 只同步自身职责范围内的生命周期变化。
+6. workflow 内部阶段、临时等待状态和实施细节不会成为 Backlog 状态或正文。
+7. Backlog 增量更新不会机械重排无关工作项，硬依赖和阻塞均有显式记录。
+8. Backlog 只在工作项级事实变化时更新，不作为高频运行日志。
 
 ## Story Relationships
 
 - Depends On：`S-015` 工作项规划 Workflow 与工作项契约。
-- Related：工作项卡片与开发 workflow 接入。
+- Precedes：`S-017` 工作项卡片与开发 Workflow 接入。
+- Precedes：`S-039` Iteration Plan 与容量校准。
+- Related：`S-037` 工作项分析 Workflow。
+- Related：`S-038` 工作项相对 Size 估算。
 
 ## 依赖
 
@@ -62,14 +71,16 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 
 ## Open Questions
 
-- Backlog 的最终 Markdown 布局和当前交付选择的表达方式。
-- 卡片状态与 Backlog 展示之间的同步方式。
-- `Done` 是否要求完成代码集成，还是以交付 workflow 的 Completion 结束为准。
+- 无。
 
 ## 相关文档
 
 - [工作项规划流程](../workflows/work-item-planning.md)
 - [S-015 工作项规划 Workflow 与工作项契约](S-015-work-item-planning-workflow-contract.md)
+- [S-017 工作项卡片与开发 Workflow 接入](S-017-work-item-development-workflow-integration.md)
+- [S-037 工作项分析 Workflow](S-037-work-item-analysis-workflow.md)
+- [S-038 工作项相对 Size 估算](S-038-work-item-relative-size-estimation.md)
+- [S-039 Iteration Plan 与容量校准](S-039-iteration-plan-capacity-calibration.md)
 - [Backlog](../backlog.md)
 
 ## Change Log
@@ -78,3 +89,4 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建统一 Backlog 看板卡片。 | 用一份最小状态看板替代重复的 Product Backlog、Sprint 和 Sprint Backlog 工作项集合。 |
 | 2 | 2026-07-14 | 将 Work Item Planning 和 Story Map 的文本前置条件统一绑定到 S-015。 | S-015 已同时负责 workflow、工作项契约和 Story Map，S-016 应使用稳定工作项 ID 表达单一依赖。 |
+| 3 | 2026-07-15 | 扩展统一状态、规划关系和 Backlog 职责，并将状态更新为 Blocked。 | 工作项规划与分析方案已经确认不同工作项的成熟度和启动规则，Backlog 必须作为统一投影视图而不是机械状态看板。 |
