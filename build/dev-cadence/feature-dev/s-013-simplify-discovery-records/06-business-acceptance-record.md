@@ -28,4 +28,7 @@ None.
 
 ## Final Follow-Up Actions
 
-Local merge into `main` was requested and remains pending final integration. No push was performed.
+- The accepted work was merged locally into `main` at merge commit `04d8b59c8d902d3f1950c938adfbf6b54c91750e`.
+- Project-local worktree `.worktrees/s-013-simplify-discovery-records` and task branch `codex/s-013-simplify-discovery-records` were preserved for audit.
+- Batch integration worktree `.worktrees/batch-discovery-architecture` was removed, and its branch was deleted.
+- No push or pull request was performed.

@@ -6,8 +6,8 @@
 - Workspace: `.worktrees/s-013-simplify-discovery-records`
 - Branch: `codex/s-013-simplify-discovery-records`
 - Started at: `2026-07-14`
-- Current stage: Business Acceptance
-- Overall status: ✅ `accepted`
+- Current stage: Completion
+- Overall status: ✅ `integrated`
 
 | Stage | Status | Artifact | User confirmation | Checkpoint commit | Notes |
 | --- | --- | --- | --- | --- | --- |
@@ -16,7 +16,7 @@
 | Implementation Plan | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/03-implementation-plan.md` | Pre-authorized; worktree execution explicitly requested. | `skipped: no tracked changes` | TDD and executing-plans selected. |
 | Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/04-implementation-record.md` | Pre-authorized execution completed. | `a5cc1d4bceddcf95cc44ac8375c6ada9c0399fa8` | Original implementation and Important review fixes have exact reviewed-tree identity. |
 | System Testing | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/05-system-test-report.md` | Pre-authorized verification completed. | `skipped: evidence consolidated in final workflow record commit` | Fresh focused and full checks passed. |
-| Business Acceptance | ✅ `accepted` | `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/06-business-acceptance-record.md` | `1. Accept` by `RaymondLiao <yaoyu.liao@highsoft.ltd>` at `2026-07-15T10:19:39+0800` | `pending acceptance checkpoint` | Accepted without residual risk. |
+| Business Acceptance | ✅ `accepted` | `build/dev-cadence/feature-dev/s-013-simplify-discovery-records/06-business-acceptance-record.md` | `1. Accept` by `RaymondLiao <yaoyu.liao@highsoft.ltd>` at `2026-07-15T10:19:39+0800` | `27cad036abae00594249b08c89da3b25967dc067` | Accepted without residual risk. |
 
 ## Design Freshness Gate
 
@@ -33,6 +33,11 @@
 
 ✅ `accepted`. The user selected `1. Accept` at `2026-07-15T10:19:39+0800`.
 
-## Final Follow-Up Actions
+## Final Integration Decision
 
-⏳ Final integration is pending. The user requested local merge into `main`; no push was performed.
+- Integration action: merged locally into `main`.
+- Merge commit: `04d8b59c8d902d3f1950c938adfbf6b54c91750e`.
+- Project-local worktree `.worktrees/s-013-simplify-discovery-records` was preserved for audit.
+- Task branch `codex/s-013-simplify-discovery-records` was preserved for audit.
+- Batch integration worktree `.worktrees/batch-discovery-architecture` was removed, and its branch was deleted.
+- No push or pull request was performed.

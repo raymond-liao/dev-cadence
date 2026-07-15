@@ -6,8 +6,8 @@
 - Workspace: `.worktrees/s-006-discovery-content-boundary`
 - Branch: `codex/s-006-discovery-content-boundary`
 - Started at: `2026-07-14`
-- Current stage: Business Acceptance
-- Overall status: ✅ `accepted`
+- Current stage: Completion
+- Overall status: ✅ `integrated`
 
 ## Stage Table
 
@@ -18,7 +18,7 @@
 | Implementation Plan | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/03-implementation-plan.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Worktree verified; freshness gate passed. |
 | Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/04-implementation-record.md` | Delegated by the 2026-07-14 batch execution instruction | `28dc8870034d92e5d6bc23bd1ef0c8623d328048` | TDD RED/GREEN complete; independent-review fixes verified; code review passed. |
 | System Testing | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/05-system-test-report.md` | Delegated by the 2026-07-14 batch execution instruction | `skipped: no tracked changes` | Verification decision 🟢 `ready`; 11/11 acceptance criteria covered. |
-| Business Acceptance | ✅ `accepted` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/06-business-acceptance-record.md` | `1. Accept` by `RaymondLiao <yaoyu.liao@highsoft.ltd>` at `2026-07-15T10:19:39+0800` | `pending acceptance checkpoint` | Accepted without residual risk. |
+| Business Acceptance | ✅ `accepted` | `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/06-business-acceptance-record.md` | `1. Accept` by `RaymondLiao <yaoyu.liao@highsoft.ltd>` at `2026-07-15T10:19:39+0800` | `27cad036abae00594249b08c89da3b25967dc067` | Accepted without residual risk. |
 
 ## Design Freshness Gate
 
@@ -46,6 +46,11 @@
 - Decision: ✅ `accepted` (`1. Accept`).
 - Record: `build/dev-cadence/feature-dev/s-006-discovery-content-boundary/06-business-acceptance-record.md`.
 
-## Final Follow-Up Actions
+## Final Integration Decision
 
-⏳ Final integration is pending. The user requested local merge into `main`; no push was performed.
+- Integration action: merged locally into `main`.
+- Merge commit: `04d8b59c8d902d3f1950c938adfbf6b54c91750e`.
+- Project-local worktree `.worktrees/s-006-discovery-content-boundary` was preserved for audit.
+- Task branch `codex/s-006-discovery-content-boundary` was preserved for audit.
+- Batch integration worktree `.worktrees/batch-discovery-architecture` was removed, and its branch was deleted.
+- No push or pull request was performed.

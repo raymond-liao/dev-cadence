@@ -28,4 +28,7 @@ None accepted. S-013 is accepted in the same batch, so the former temporary Disc
 
 ## Final Follow-Up Actions
 
-Local merge into `main` was requested and remains pending final integration. No push was performed.
+- The accepted work was merged locally into `main` at merge commit `04d8b59c8d902d3f1950c938adfbf6b54c91750e`.
+- Project-local worktree `.worktrees/s-012-asset-delivery-boundary` and task branch `codex/s-012-asset-delivery-boundary` were preserved for audit.
+- Batch integration worktree `.worktrees/batch-discovery-architecture` was removed, and its branch was deleted.
+- No push or pull request was performed.
