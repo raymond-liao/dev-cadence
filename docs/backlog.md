@@ -4,7 +4,7 @@
 
 ## 进行中
 
-- [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md) - 实现进行中，Business Acceptance 尚未开始。
+- [ ] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md) - 实现与系统测试完成，等待 Business Acceptance（pending）。
 - [ ] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md) - 实现与系统测试完成，等待 Business Acceptance。
 - [ ] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md) - 实现与系统测试完成，等待 Business Acceptance。
 

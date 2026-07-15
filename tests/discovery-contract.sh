@@ -5,6 +5,9 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DISCOVERY_SKILL="$ROOT_DIR/src/skills/discovery/SKILL.md"
 ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
 AGENTS_SNIPPET="$ROOT_DIR/src/AGENTS-snippet.md"
+DISCOVERY_WORKFLOW="$ROOT_DIR/docs/workflows/discovery.md"
+S002_STORY="$ROOT_DIR/docs/stories/S-002-discovery-prd-incremental-versioning.md"
+BACKLOG="$ROOT_DIR/docs/backlog.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -98,7 +101,15 @@ done
 assert_match "multiple candidate authority confirmation" 'multiple.*candidate.*confirm.*authoritative|confirm.*authoritative.*multiple.*candidate' "$DISCOVERY_SKILL"
 assert_match "non-standard path migration choice" 'non-standard.*(path|file name).*confirm.*migrat|confirm.*migrat.*non-standard' "$DISCOVERY_SKILL"
 assert_match "combined document split choice" 'combined.*document.*confirm.*split|confirm.*split.*combined.*document' "$DISCOVERY_SKILL"
+assert_match "incremental proposal before mutation" 'incremental mode.*(proposal|proposed revised baseline).*(must not|do not).*modif.*authoritative|authoritative.*unchanged.*(proposal|confirmation)' "$DISCOVERY_SKILL"
+assert_match "feedback updates proposal only" '(feedback|rejection).*(proposal|proposed revised baseline).*authoritative.*unchanged|authoritative.*unchanged.*(feedback|rejection)' "$DISCOVERY_SKILL"
+assert_match "confirmed atomic baseline write" 'After.*confirm.*atomic.*(write|apply)|atomic.*(write|apply).*after.*confirm' "$DISCOVERY_SKILL"
+assert_match "supporting maintenance after confirmation" 'supporting asset maintenance.*after.*confirm|after.*confirm.*supporting asset maintenance' "$DISCOVERY_SKILL"
+assert_match "no incremental draft files" 'Do not.*(draft|proposal).*(file|process artifact)|must not.*(draft|proposal).*(file|process artifact)' "$DISCOVERY_SKILL"
 assert_match "independent product document versions" 'PRD.*Business Architecture.*independent.*version|independent.*version.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
+assert_match "combined document responsibility versions" 'combined document.*`PRD Version`.*`Business Architecture Version`|`PRD Version`.*`Business Architecture Version`.*combined document' "$DISCOVERY_SKILL"
+assert_match "combined responsibility change log" 'combined document.*Change Log.*responsibility|Change Log.*responsibility.*combined document' "$DISCOVERY_SKILL"
+assert_match "combined path reports two versions" 'same.*path.*(PRD|product).*[Vv]ersion.*Business Architecture.*[Vv]ersion|one path.*two.*responsibility.*version' "$DISCOVERY_SKILL"
 assert_match "non-material change keeps version" 'spelling.*formatting.*path.*file name.*link.*must not.*version|must not.*version.*spelling.*formatting' "$DISCOVERY_SKILL"
 assert_match "historical mixed content confirmation" 'historical mixed.*explicit.*confirm|explicit.*confirm.*historical mixed' "$DISCOVERY_SKILL"
 assert_match "resolved local questions removed" 'confirmed.*remove.*Open Questions|remove.*Open Questions.*confirmed' "$DISCOVERY_SKILL"
@@ -176,5 +187,9 @@ for flow in feature-dev bug-fix refactor; do
 done
 
 assert_match "AGENTS discovery trigger" 'product discovery|product ideas|requirements work' "$AGENTS_SNIPPET"
+
+assert_match "workflow proposal gate" '确认前.*权威.*保持原样|权威.*确认前.*保持原样' "$DISCOVERY_WORKFLOW"
+assert_match "story proposal gate" '确认前.*权威.*保持原样|权威.*确认前.*保持原样' "$S002_STORY"
+assert_match "S-002 backlog awaits acceptance" 'S-002.*实现与系统测试完成.*Business Acceptance.*pending' "$BACKLOG"
 
 printf 'Discovery contract checks passed.\n'

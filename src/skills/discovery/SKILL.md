@@ -125,6 +125,8 @@ Moving, registering, linking, or excluding technical input must not be described
 
 Technical Input Disposition is supporting shared-asset maintenance, not a third primary Discovery output and not a Discovery process record. Update or link an existing authoritative Story, Technical Task, technical solution, Decision, or other technical asset only when that asset's maintenance rules allow it. When no suitable owner exists, invoke the shared Open Question Registry according to its own on-demand creation rules. Do not automatically create a Story, Technical Task, Decision, or another technical-design asset merely to dispose of Discovery input.
 
+In incremental mode, the disposition rules above determine the proposed destination, but do not authorize an immediate write, link update, Registry registration, or Registry removal. Include every supporting asset change in the proposal and defer it until the consolidated product-design confirmation.
+
 ## Workflow Boundary
 
 ### ✅ Discovery Must
@@ -163,7 +165,7 @@ docs/product-design/prd.md
 docs/product-design/business-architecture.md
 ```
 
-Do not create a run manifest, stage records, confirmation records, rejection records, or duplicate analysis documents. Background, goals, scope, constraints, risks, unresolved questions, rejected directions, and future scope must be written directly into the authoritative document that owns the content. Supporting shared-asset maintenance performed through Technical Input Disposition does not become a Discovery primary output.
+Do not create a run manifest, stage records, confirmation records, rejection records, or duplicate analysis documents. In initial mode, background, goals, scope, constraints, risks, unresolved questions, rejected directions, and future scope must be written directly into the authoritative document that owns the content. In incremental mode, keep them in the in-conversation proposal until consolidated confirmation, then apply them to the authoritative document that owns the content. Supporting shared-asset maintenance performed through Technical Input Disposition does not become a Discovery primary output.
 
 Use the current conversation, the user's goal, and the authoritative product-design documents to determine whether a request continues the same Discovery effort. Do not depend on a process record to restore stage state. When conversation context is incomplete, inspect the current documents and ask only for information that materially affects the baseline.
 
@@ -178,9 +180,9 @@ docs/product-design/prd.md
 docs/product-design/business-architecture.md
 ```
 
-In initial mode, both documents start with `Document Information` containing version `1` and `Last Updated`. In incremental mode, preserve the current version and history until a confirmed substantive change requires a new version. Each document contains its own `Change Log`; rows record version, date, change, and reason. Do not put Git commit hashes in the product documents.
+In initial mode, both documents start with `Document Information` containing version `1` and `Last Updated`. In incremental mode with separate documents, preserve each current version and history until a confirmed substantive change requires a new version. Each document contains its own `Change Log`; rows record version, date, change, and reason. Do not put Git commit hashes in the product documents.
 
-PRD and Business Architecture versions are independent. Increment only the affected document when its product intent, scope, success criteria, constraints, actors, domains, capabilities, processes, objects, states, rules, or other owned substantive content changes. Pure spelling, formatting, path migration, file name changes, and link-only updates must not increment the version. Preserve all existing body content, `Rejected Directions`, `Future Scope`, and `Change Log` history unless the user explicitly confirms a substantive replacement or removal.
+PRD and Business Architecture versions are independent. With separate documents, increment only the affected document when its product intent, scope, success criteria, constraints, actors, domains, capabilities, processes, objects, states, rules, or other owned substantive content changes. When the user keeps a combined document, it must maintain separate `PRD Version` and `Business Architecture Version` fields, or equivalently explicit responsibility-version fields, plus Change Log entries labeled with the affected responsibility. Increment only the substantively changed responsibility version. A final review of a combined document reports one path with two responsibility versions; splitting it establishes one independent `Version` and Change Log in each resulting file. Pure spelling, formatting, path migration, file name changes, and link-only updates must not increment either document or responsibility version. Preserve all existing body content, `Rejected Directions`, `Future Scope`, and `Change Log` history unless the user explicitly confirms a substantive replacement or removal.
 
 Use `Open Questions` as the only unresolved-material section. Do not create separate Draft Ideas or Pending Decisions sections. When an answer is confirmed, move the conclusion into the relevant body section. Keep an unresolved question only while it remains unresolved.
 
@@ -268,13 +270,13 @@ Before changing an existing baseline:
 
 1. Inspect each credible candidate's actual path, owned content, current version, `Last Updated`, and `Change Log`.
 2. When multiple candidates exist, responsibilities are unclear, or sources conflict, explain the evidence and obtain one explicit user confirmation of the authoritative source before modification. Do not merge or overwrite competing candidates automatically.
-3. For a non-standard path or file name, explain the current path, recommended standard path and file name, and affected repository references. Confirm migration explicitly. If migration is declined, continue at the existing authoritative path; do not create a competing duplicate. If approved, move or rename the asset, update repository references, and preserve its content, version, and `Change Log`.
-4. When one combined document owns both PRD and Business Architecture responsibilities, confirm whether to keep it combined or split it. Do not split automatically. A confirmed split preserves content and history and establishes one unambiguous authority for each responsibility.
-5. If an authoritative baseline contains historical mixed technical, workflow-status, approval, test-implementation, deployment, or operational content, explain the classification evidence, suggested authoritative destination, and affected references. Historical mixed content requires explicit user confirmation before removal or migration. Preserve necessary history and register unresolved ownerless technical items through the Open Question Registry.
+3. For a non-standard path or file name, explain the current path, recommended standard path and file name, and affected repository references. Confirm the migration choice explicitly, but defer any move, rename, or reference update until the consolidated baseline confirmation. If migration is declined, keep the proposal at the existing authoritative path and do not propose a competing duplicate. If approved, the final atomic application moves or renames the asset, updates repository references, and preserves its content, version, and `Change Log`.
+4. When one combined document owns both PRD and Business Architecture responsibilities, confirm whether to keep it combined or split it. Do not split automatically or create split files before consolidated baseline confirmation. A confirmed split proposal preserves content and history and establishes one unambiguous authority for each responsibility when atomically applied. A retained combined document follows the independent responsibility-version contract above.
+5. If an authoritative baseline contains historical mixed technical, workflow-status, approval, test-implementation, deployment, or operational content, explain the classification evidence, suggested authoritative destination, and affected references. Historical mixed content requires explicit user confirmation before removal or migration, and the selected cleanup remains part of the in-conversation proposal until consolidated confirmation. Preserve necessary history and propose Registry disposition for unresolved ownerless technical items.
 
 In short: for a non-standard path, confirm migration; for a combined document, confirm the split choice; and never change historical mixed content without explicit confirmation.
 
-These decisions remain in the current conversation and authoritative assets. Discovery must not create a manifest, stage record, or confirmation record to store actual document paths, version combinations, migration choices, or split choices.
+These decisions and the proposed revised baseline remain in the current conversation before confirmation. Discovery must not create a manifest, stage record, confirmation record, draft file, proposal file, or another process artifact to store actual document paths, version combinations, migration choices, split choices, or proposed content.
 
 ### 1. Background And Problem Exploration
 
@@ -284,15 +286,15 @@ Use:
 .dev-cadence/vendor/superpowers/skills/brainstorming/SKILL.md
 ```
 
-Collect the source inventory, current situation, problem statement, affected users, observed evidence, assumptions, conflicts, and motivation in the current conversation. Carry confirmed product facts into the PRD and unresolved product questions into its `Open Questions`.
+Collect the source inventory, current situation, problem statement, affected users, observed evidence, assumptions, conflicts, and motivation in the current conversation. In initial mode, carry confirmed product facts into the PRD and unresolved product questions into its `Open Questions`. In incremental mode, carry them into the in-conversation proposed revised baseline without modifying the authoritative asset.
 
 ### 2. Goal And Value Definition
 
-Define intended outcomes, user value, business value, success criteria, and the cost of leaving the problem unresolved in the current conversation. Write confirmed results directly into the PRD.
+Define intended outcomes, user value, business value, success criteria, and the cost of leaving the problem unresolved in the current conversation. In initial mode, write confirmed results directly into the PRD. In incremental mode, incorporate them only into the in-conversation proposal before final confirmation.
 
 ### 3. Scope And Business Architecture Analysis
 
-Define scope, non-scope, product boundaries, business actors, domains, capabilities, value streams, processes, business objects, state lifecycles, rules, policies, constraints, risks, Open Questions, Rejected Directions, and Future Scope in the current conversation. Write each conclusion directly into the PRD or Business Architecture according to its content responsibility.
+Define scope, non-scope, product boundaries, business actors, domains, capabilities, value streams, processes, business objects, state lifecycles, rules, policies, constraints, risks, Open Questions, Rejected Directions, and Future Scope in the current conversation. In initial mode, write each conclusion directly into the PRD or Business Architecture according to its content responsibility. In incremental mode, place it only in the proposed revised baseline until final confirmation.
 
 ### 4. Product Design Baseline Creation
 
@@ -302,21 +304,23 @@ Before creating the initial baseline, run the Product And Technical Content Boun
 
 In initial mode, create both version-1 documents from the source material and current conversational conclusions. Keep their responsibilities separate and cross-reference them where useful. Do not fabricate completeness.
 
-In incremental mode, classify each new input as an addition, business-architecture change, correction, replacement, rejection, Open Question, or Future Scope change, then identify whether it affects the PRD, Business Architecture, or both. Apply the Product And Technical Content Boundary before editing. Update only confirmed conclusions; keep unresolved product or business matters in the owning document's `Open Questions`.
+In incremental mode, first read the authoritative content, versions, and history without changing them. Classify each new input as an addition, business-architecture change, correction, replacement, rejection, Open Question, or Future Scope change, then identify whether it affects the PRD, Business Architecture, or both. Apply the Product And Technical Content Boundary and form a complete proposed revised baseline plus change summary in the conversation. Before consolidated confirmation, do not modify, move, rename, split, or create a replacement for any authoritative product-design asset; it must remain byte-for-byte unchanged. Keep unresolved product or business matters unresolved in the owning responsibility's proposed `Open Questions`.
 
-When a question is confirmed, remove it from the relevant `Open Questions` and write the conclusion into the correct authoritative body. Put confirmed technical conclusions in their technical authority, not the product-design baseline. When a repository-level Registry entry represents the same resolved question, remove it according to the Open Question Registry skill and preserve the index change in the Registry `Change Log`.
+In the proposal, show confirmed questions removed from the relevant `Open Questions` and their conclusions placed in the correct body. Propose confirmed technical conclusions for their technical authority, not the product-design baseline. When a repository-level Registry entry represents the same resolved question, include its removal and Registry `Change Log` entry in the supporting asset maintenance proposal; do not perform that maintenance before consolidated confirmation.
+
+Perform supporting asset maintenance only after consolidated confirmation and as part of applying the confirmed proposal.
 
 Record potential impact on existing work items and active development tasks in the final review and hand it to `work-item-planning`. Do not silently modify Feature, Story, Bug, Technical Task, Roadmap, or active delivery state.
 
 ### 5. Product Design Confirmation
 
-Present one concise review containing:
+Present the complete proposed revised baseline and one concise change summary containing:
 
 - confirmed product goal, users, value, scope, and capabilities;
 - business domains, actors, main processes, objects, states, and rules;
 - important Open Questions and their impact;
 - Rejected Directions and Future Scope;
-- both document paths and version numbers;
+- all actual authoritative document paths and responsibility version numbers, including the same path paired with both versions when a combined document is retained;
 - for incremental mode, the previous and proposed independent version of each document and the reason for every increment or unchanged version;
 - potential impacts to existing work items for later `work-item-planning` evaluation;
 - the boundary before work-item planning and technical architecture.
@@ -325,9 +329,9 @@ The review must also summarize each material technical input excluded from the p
 
 Ask for one consolidated user confirmation of both documents. A commit does not count as confirmation.
 
-If the user requests changes, update the affected authoritative documents and any related `Open Questions`, `Rejected Directions`, or `Future Scope`, then present the complete baseline again. Do not create a process record or start a separate Discovery run for feedback on the same baseline.
+If the user requests changes or rejects the proposal, update only the in-conversation proposed revised baseline and related change summary, then present the complete proposal again when requested. The on-disk authoritative assets and supporting assets remain unchanged. Do not create a draft file, process record, or separate Discovery run for feedback on the same baseline.
 
-After confirmation, state that the displayed product-design path and version combination is confirmed. In initial mode this is version 1 of both standard documents. In incremental mode, append `Change Log` rows only for substantively changed documents and treat the complete confirmed combination as the new planning baseline. Do not create a separate confirmation record or add approval metadata to either document. If the user rejects the baseline, do not claim it is confirmed and do not create a separate rejection record; continue refining the same authoritative documents only when the user requests changes.
+After confirmation, state that the displayed product-design path and version combination is confirmed. In initial mode this is version 1 of both standard documents. In incremental mode, atomically apply the complete confirmed proposal: write only affected authoritative product-design assets, perform approved migration or splitting, increment only substantively changed document or responsibility versions, append responsibility-appropriate `Change Log` rows, update affected references, and then perform the confirmed supporting asset maintenance. If any required write fails, do not present a partially updated combination as the new baseline; restore or complete the confirmed combination before reporting success. Only this applied complete combination becomes the new planning baseline. Do not create a separate confirmation record or add approval metadata to either document. If the user rejects the baseline, do not claim it is confirmed, do not modify the authoritative assets, and do not create a separate rejection record; continue refining only the in-conversation proposal when the user requests changes.
 
 ## Completion Output
 
