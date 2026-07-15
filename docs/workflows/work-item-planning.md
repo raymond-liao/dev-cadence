@@ -1,170 +1,423 @@
 # 工作项规划流程
 
-本文说明 Dev Cadence 的 `work-item-planning` 业务流程，包括适用场景、阶段目标、主要产出以及与其他 workflow 的边界。本文面向 Dev Cadence 维护者、流程评审者和希望了解工作项治理模型的使用者。
+本文说明 Dev Cadence 的 `work-item-planning` 业务流程，包括适用场景、阶段目标、Story Map、Milestone、估算、工作项和 Backlog 的职责边界。本文面向 Dev Cadence 维护者、流程评审者和希望了解工作项治理模型的使用者。
 
 目标仓库中的实际执行规则将由 `src/skills/work-item-planning/SKILL.md` 定义并生成安装内容。本文用于说明业务流程设计，不替代 workflow skill。
 
 ## 目的
 
-工作项规划流程是 Feature、Story、Bug 和 Technical Task 卡片的统一创建与维护入口。它既可以读取已确认的 PRD 并规划一组工作项，也可以接收用户直接提出的单项工作并建立对应卡片。卡片可以从只有 ID 和标题开始，随后在分析中逐步完善。
+工作项规划流程把已确认的产品设计组织成可以审阅和调整的交付结构。它维护 Story Map、Milestone、Iteration Plan、轻量 Story、Task、Bug 卡片和统一 Backlog，但不重新分析 Feature，也不负责把所有工作项细化到可以实施的程度。
+
+产品级组合规划使用以下输入：
+
+```text
+已确认的 User Journey
++ 已确认的 PRD
++ 已确认的 Business Architecture
+        |
+work-item-planning
+        |
+Story Map + Milestone + Iteration Plan + 轻量工作项 + Backlog
+```
+
+Feature 由 Discovery 在 User Journey 中创建和维护。Work Item Planning 只引用已确认的 Feature，不创建 Feature 卡片，不改变 Feature ID、Type、标题、业务身份或顺序。
 
 ## 适用场景
 
-- 首次将已确认 PRD 拆分成 Feature 和工作项。
-- 增量维护已有 Feature、Story、Bug、Technical Task 和 Roadmap。
-- 根据新需求、用户反馈、已知缺陷或工程需求增加和调整卡片。
-- 为没有现有卡片的单项功能、Bug 或技术任务创建并确认工作项卡片。
-- 分析工作项的依赖、阻塞、优先级、实施顺序和下一步动作。
+- 根据已确认的产品设计基线形成或更新 Story Map。
+- 从 System Feature 识别轻量 Story 和必要 Task。
+- 根据 Path 提出 MVP 和后续 Milestone 候选，并由用户确认阶段性交付范围。
+- 对 Story Map 中的 Story 和 Task 进行相对 Size 估算。
+- 根据团队假设、首个迭代容量校准、优先级、依赖和 Size 形成完整 Iteration Plan。
+- 创建或复用明确单项请求对应的轻量 Story、Task 或 Bug 卡片。
+- 协调工作项的规划关系、优先级、建议顺序和 Backlog 汇总。
+- 在用户明确要求时，协调产品设计变化对现有 Story Map、Milestone、卡片关系和 Backlog 的影响。
 
 ## 不适用场景
 
-- 从模糊想法建立或更新 PRD：使用 `discovery`。
-- 对单个工作项进行技术设计和开发实施：使用 `feature-dev`、`bug-fix` 或 `refactor`。
+- 建立或改变 User Journey、Feature、PRD 或 Business Architecture：使用 `discovery`。
+- 详细分析 Story、Task 或 Bug 的需求和问题定义：使用后续安装的 `work-item-analysis`。
+- 调查 Bug 根因、设计修复方案或实施修复：使用 `bug-fix`。
+- 为 Story 设计技术方案或实施产品行为：使用 `feature-dev`。
+- 实施 Task 或行为保持的结构调整：根据目标使用 `feature-dev`、`bug-fix` 或 `refactor`。
 - 执行发布、部署或生产事故处理：不属于当前流程范围。
-
-## 流程阶段
-
-| 阶段 | 目标 | 主要产出 |
-|---|---|---|
-| 1. 规划输入确认 | 读取已确认的 PRD 和现有规划资产，或者读取用户直接提出的单项工作；判断本次采用组合规划模式还是单项登记模式，并明确受影响范围。 | 规划模式；输入基线；受影响范围 |
-| 2. Feature 组织 | 在组合规划模式下，按用户能力、业务领域或平台关注点建立或调整 Feature；单项登记模式不强制创建或关联 Feature。 | `F-nnn` Feature 卡片或 Feature 关联结论 |
-| 3. 工作项识别 | 从 PRD、反馈、缺陷、工程需求或单项请求中识别 Story、Bug 和 Technical Task，为每项工作分配稳定 ID 和标题。 | `S-nnn`、`B-nnn`、`T-nnn` 卡片 |
-| 4. 卡片分析 | 逐步补充目标、范围、验收或完成条件、业务或技术规则、依赖、开放问题、相关决策和 Change Log，并更新成熟度状态。 | 已更新的工作项卡片 |
-| 5. 关系与顺序规划 | 识别依赖、阻塞、扩展、修改、替代和关联关系，并综合用户价值、风险降低、基础能力和可测试性确定建议顺序。 | 工作项关系；建议实施顺序 |
-| 6. Roadmap 确认 | 汇总 Feature 和工作项的状态、优先级、依赖及下一步动作，由用户确认本次规划结果。 | 已确认的 Roadmap 更新 |
 
 ## 规划模式
 
 ### 组合规划模式
 
-组合规划模式用于从已确认的 PRD 建立或增量维护一组规划资产：
+组合规划模式读取已确认的 User Journey、PRD 和 Business Architecture，形成或增量维护产品级规划结构：
 
 ```text
-已确认的 PRD
-      |
-Feature 拆分
-      |
-多个 S / B / T 卡片
-      |
-依赖、顺序和 Roadmap
+Journey 中的 Offline / System Feature
+        |
+Story Map Backbone
+        |
+System Feature 下的 Story 和必要 Task
+        |
+Path、Milestone、Iteration Plan、Size 和 Backlog
 ```
 
-该模式必须记录使用的 PRD 版本，并在产品级需求发生变化时返回 `discovery` 更新 PRD。
+缺少形成完整规划所需的产品结论时，不得在 Work Item Planning 中猜测或补写产品需求。需要形成新的产品结论时返回 Discovery。产品设计基线不完整时仍可使用单项登记模式，但不得声称已经形成完整 Story Map。
 
 ### 单项登记模式
 
-单项登记模式用于处理没有现有卡片的明确工作请求：
+单项登记模式处理用户直接提出的明确 Story、Task 或 Bug：
 
 ```text
-单项功能、Bug 或技术任务
-          |
-识别 S / B / T 类型
-          |
-创建和分析一张卡片
-          |
-用户确认进入开发所需的信息
-          |
-移交对应开发 workflow
+明确单项请求
+    |
+创建或复用轻量卡片
+    |
+更新必要 Backlog 引用
 ```
 
-该模式不要求先有 PRD，不强制创建 Feature，也不重排无关工作项。新卡片仍必须进入统一 Roadmap，以保持项目级追溯能力。
+单项登记不自动修改 User Journey、PRD、Business Architecture、Story Map 或 Milestone，也不重排无关工作项。只有用户明确要求把单项工作纳入产品规划时，才评估并更新受影响的规划资产。
+
+## 流程阶段
+
+| 阶段 | 目标 | 主要产出 |
+| --- | --- | --- |
+| 1. 规划输入与范围确认 | 确认组合规划或单项登记模式，读取当前权威资产和版本，明确本次规划范围及不受影响的资产。 | 规划模式；输入基线；规划范围 |
+| 2. 规划结构形成 | 组合规划时形成或更新 Story Map、轻量工作项、Milestone 候选、Size 估算、Iteration Plan 和 Backlog；单项登记时只创建或复用当前卡片并更新必要 Backlog 引用。 | 完整规划提案或单项登记提案 |
+| 3. 规划结果确认 | 展示所有拟议资产变化、Milestone 范围、估算结果、Iteration Plan、未决项和不更新理由；用户确认后原子写入受影响资产。 | 已确认的 Story Map、Milestone、Iteration Plan、工作项卡片和 Backlog 更新 |
+
+所有阶段都只作为会话内工作方法，不创建 manifest、阶段记录或 checkpoint。用户确认前不得把提案写入正式资产。用户可以只确认提案的一部分；未确认部分保持现有权威内容不变。
+
+规划确认不表示 Story Map 中的所有卡片已经达到 `Ready`。组合规划允许创建只有稳定 ID、标题、所属 Feature、Path、Milestone 候选和初步 Size 的轻量 `Draft` 卡片。
+
+## Story Map
+
+Story Map 是 Work Item Planning 维护的产品级交付结构。默认路径为：
+
+```text
+docs/product-planning/story-map.md
+```
+
+当前只维护一张逻辑上的全局 Story Map，不提前设计子目录、拆分阈值或多张竞争 Story Map。
+
+### Backbone（Feature 主干）
+
+Backbone 是 Story Map 顶部按业务顺序排列的 Feature 主干。它从已确认的 User Journey 中提取 Offline 和 System Feature，保留完整业务线及其先后关系，并作为下方 Story 和必要 Task 的组织框架。Backbone 不是新的业务资产，不复制或重新定义 Feature。
+
+- Story Map 必须按 User Journey 从左到右引用全部 Offline 和 System Feature。
+- Feature 表头必须显示 Type、Feature ID 和 Title。
+- Offline Feature 保留业务上下文，但其下不创建系统 Story 或 Task。
+- System Feature 下可以放置 Story，以及使 Feature 或 Milestone 成立所必需的 Task。
+- 同一个 Feature 在 Journey Map 多个角色行中出现时，在 Story Map Backbone 中只出现一次。
+- Story Map 不重新定义或改变 Feature；发现 Feature 缺失、含义不清或顺序需要变化时返回 Discovery。
+
+### Markdown Table 布局
+
+Story Map 使用普通 Markdown Table：
+
+- 第一列固定为 `Path`。
+- 后续列按 Journey 业务顺序表示 Feature。
+- 每个 Path 可以占多行；Path 名称只写在第一行，后续连续空白单元格继承上方最近的非空 Path。
+- 每个单元格只放一个 Story 或 Task，并显示 Size、稳定 ID 和 Title。
+- 空单元格表示该位置没有工作项，不是待补全项。
+- Story 必须有且只有一个主要 System Feature；可以关联其他 Feature，但在 Story Map 中只出现一次。
+- Task 可以选择关联 Feature 或 Story；没有明确产品关系的 Task 可以只进入 Backlog。
+- Bug 不进入 Story Map，只进入 Backlog并关联受影响的 Feature或Story。
+
+同一个 Feature、同一个 Path 的工作项数量决定 Feature 使用的列数：
+
+```text
+1-5 个工作项   -> 1 列
+6-10 个工作项  -> 2 列
+11 个及以上    -> 3 列
+```
+
+最多使用三列。Feature 的实际列数取其所有 Path 中需要的最大列数。非空 Feature 表头开始一个 Feature，后续连续空表头继承左侧最近的非空 Feature；下一个非空 Feature 表头开始下一个 Feature。
+
+多列时按先从左到右、再从上到下的顺序放置工作项。Feature 从左到右保持 Journey 业务顺序；同一 Feature、同一 Path 中的工作项位置从左到右、从上到下表达优先级和建议交付顺序。位置不自动表示硬依赖，必须先完成的依赖仍在卡片或 Backlog 中明确记录。
+
+示例：
+
+| Path | `[System] F-001 申请出差` |  | `[System] F-002 批准出差` |
+| --- | --- | --- | --- |
+| Happy Path | `[M] S-001 提交出差申请` | `[S] S-002 查看申请状态` | `[M] S-007 批准完整申请` |
+|  | `[S] T-003 准备默认申请规则` |  | `[S] S-008 查看审批资料` |
+| Alternative Path | `[M] S-009 补充申请信息` |  | `[M] S-010 要求补充资料` |
+| Sad Path | `[L] S-011 处理提交失败` |  | `[M] S-012 拒绝出差申请` |
+
+### Path
+
+Path 是 Story Map 中的规划分类，不是工作项类型或状态：
+
+- `Happy Path`：完成主要业务价值的路径。
+- `Alternative Path`：业务可以继续，但采用不同处理方式的路径。
+- `Sad Path`：业务失败、终止或需要恢复的路径。
+
+同一个工作项只在 Story Map 中出现一次。Path 只保存在 Story Map 中，不作为 Story 或 Task 卡片必须同步的权威字段。
+
+## Milestone 与 MVP
+
+代理必须根据 Path 提出 Milestone 候选，但不得自动把候选写成正式规划。默认候选是：
+
+```text
+MVP                 -> 默认从 Happy Path 提出
+Alternative Paths   -> 默认从 Alternative Path 提出
+Failure And Recovery -> 默认从 Sad Path 提出
+```
+
+默认候选不是固定范围。用户可以把 Alternative 或 Sad Path 工作项纳入 MVP，把非必要 Happy Path 工作项移到后续 Milestone，合并或拆分候选，并调整标题和目标。
+
+正式 Milestone 至少包含：
+
+```text
+ID | Title | Goal | Included Work Items | Derived From
+```
+
+- Milestone 使用稳定的 `M-nnn` ID。
+- MVP 是用户确认的第一个 Milestone，不是自动计算结果。
+- `Included Work Items` 必须固定记录具体 Story 和 Task ID，不能只动态引用整个 Path。
+- `Derived From` 可以记录建议来源 Path，但新增 Path 工作项不会自动进入已确认 Milestone。
+- 同一个工作项同时只能属于一个未完成 Milestone；后续 Milestone可以依赖已经完成的工作项，但不得重复计算范围。
+- Milestone 不复制卡片正文、状态或验收条件。
+- Milestone 默认不包含日期；只有用户明确需要时才记录目标日期。
+- 未经用户确认的内容必须标记为 proposed，不得写入权威 Story Map。
+
+Milestone 使用独立表格放在 Story Map 主表之后，避免破坏 `Path x Feature` 布局。
+
+## Size 估算
+
+Story Map 中的 Story 和 Task 必须使用统一的相对 Size：
+
+```text
+XS / S / M / L / XL / ?
+```
+
+`?` 表示现有信息不足以形成可信估算。Size 表示相对工作量、复杂度和已知不确定性的综合判断，不表示工期。
+
+估算必须由 Work Item Planning 完成，并遵循以下顺序：
+
+```text
+形成 Story Map 和轻量工作项
+-> 选择范围相对清楚、规模适中且有代表性的候选基准卡
+-> 说明选择理由并由用户确认
+-> 将基准卡固定为 M
+-> 相对基准卡自动估算其余 Story 和 Task
+-> 汇总并由用户确认
+-> 写入 Story Map、卡片和 Backlog
+```
+
+估算汇总必须展示：
+
+- 每张卡片的 Size；
+- 每个 Path 的 Size 分布；
+- 每个 Milestone 的 Size 分布；
+- 所有 `?` 和 `XL` 工作项；
+- 与基准卡相比存在明显不确定性的估算。
+
+不得为了完成估算而猜测 `?` 工作项。用户可以调整单张卡片 Size，也可以更换基准卡后重新估算。增量规划默认复用现有基准卡；基准卡被删除、Superseded 或范围实质变化时，必须重新选择并由用户确认。
+
+其他 workflow 发现范围变化可能导致 Size 失效时，只标记需要重新估算，不自行修改 Size。重新估算必须返回 Work Item Planning。仅 Size 变化不递增工作项定义版本，但必须同步 Story Map、卡片、Backlog 和相关 Change Log。
+
+## Iteration Plan（迭代计划）
+
+Iteration Plan 是 Story Map 内的完整分批实施路线，不创建独立 Sprint Plan 文件。它说明整个规划预计分成哪些有顺序的迭代、每个迭代包含哪些工作项、迭代目标和规模如何，以及排期依赖的团队与容量假设。
+
+Iteration Plan 与 Path、Milestone 的职责不同：
+
+```text
+Path
+= 业务路径分类和默认优先级
+
+Milestone
+= 用户确认的阶段性业务目标和范围
+
+Iteration Plan
+= 在团队容量、Size、依赖和风险约束下形成的分批实施路线
+```
+
+不得把 Path 或 Milestone 机械映射成 Iteration。一个 Milestone 可以跨多个 Iteration；一个 Iteration 也可以推进多个 Milestone。Iteration 可以跨 Feature 和 Path，但必须形成明确的迭代目标，并尊重 Story Map 优先级和硬依赖。
+
+### 默认团队假设
+
+首次形成 Iteration Plan 时，Work Item Planning 默认使用：
+
+```text
+Team Size: 8
+Team Profile: Cross-functional delivery team
+Availability: Normal
+Iteration Capacity: Not calibrated
+```
+
+默认假设用于让规划可以立即开始，不表示目标仓库已经确认真实团队配置。不得从 Git 作者、提交历史或系统账户推断团队人数、角色或可用性。仓库已有可信团队配置时优先读取；没有时使用默认假设。
+
+开始时不得要求用户一次性确认团队人数、成员组成、技能、休假、历史吞吐量和其他完整参数。只有发现明确专业能力瓶颈、用户说明特殊可用性，或仓库事实与默认假设冲突时，才提出一个当前规划必需的问题。
+
+### 首个迭代容量校准
+
+Work Item Planning 必须先只形成一个候选迭代，不得在容量尚未校准时直接把全部工作排入多个 Iteration。候选必须综合：
+
+- 当前优先 Milestone；
+- Story Map 顺序；
+- Story 的 `Ready` 状态；
+- Task 和 Bug 的不确定性；
+- 硬依赖；
+- 已确认 Size；
+- 默认团队假设；
+- 是否形成可验证的阶段性结果；
+- 是否集中放入过多 `L`、`XL` 或 `?` 工作项；
+- 是否存在明显的专业能力瓶颈。
+
+候选摘要至少展示 Iteration Goal、工作项 ID、类型、Size、选择原因、Size 分布、团队假设和已知不确定性。然后使用以下确认问题：
+
+> 当前候选按“8 人跨职能团队、正常可用性”的默认假设形成。你认为这些卡片安排在一个迭代内是否合适？如果工作量偏多或偏少，或者实际团队人数、角色构成、可用性与默认假设不同，请说明差异；我会先调整当前迭代，再以确认后的容量安排后续迭代。
+
+用户只回答“合适”即可继续，不需要逐项确认团队配置。其他回答按以下规则处理：
+
+- 用户认为工作量偏多或偏少时，代理根据优先级、依赖和业务闭环主动调整候选，不要求用户自行计算容量。
+- 用户补充团队人数、角色构成或可用性时，更新团队画像，检查专业能力瓶颈并重新形成首个候选迭代。
+- 用户不确定时，采用保守方案，减少候选范围并保留容量缓冲。
+- 用户只要求移入或移出某张卡片时，重新检查 Size 分布、依赖和迭代目标，其他团队假设保持不变。
+
+首个迭代确认后，它的工作项组合、Size 分布和当时采用的团队画像共同构成当前 Iteration Plan 的容量基准。
+
+### 剩余迭代安排
+
+容量基准确认后，Work Item Planning 才安排剩余工作项：
+
+- 后续 Iteration 的规模参考已确认首个迭代，不使用跨团队通用的 `Size -> 人日` 换算。
+- 比较工作项总量以及 `XS / S / M / L / XL / ?` 分布，不只比较卡片数量。
+- 保持硬依赖、Story Map 优先级和 Milestone 目标。
+- 避免把多个 `XL`、`?` 或高风险 Bug 集中在同一个 Iteration。
+- 检查团队角色构成带来的专业能力瓶颈；没有具体构成时明确沿用默认跨职能团队假设。
+- 每个 Iteration 必须有明确 Goal；工作无法合理装入时增加 Iteration，不为了减少迭代数量而超载。
+- 工作项可以暂不安排 Iteration，继续保留在 Story Map 或 Backlog。
+- 同一个未完成工作项只能安排到一个 Iteration。
+
+完整计划必须说明哪些 Iteration 与容量基准相近、哪些因依赖而偏小、哪些包含较高不确定性，以及哪些判断依赖默认团队配置。用户确认完整 Iteration Plan 后才写入 Story Map。
+
+### Story Map 中的记录
+
+Story Map 至少保存规划依据和完整 Iteration Plan：
+
+```text
+Iteration Planning Basis
+-> Team Size
+-> Team Profile
+-> Availability
+-> Capacity Baseline Iteration
+-> Baseline Size Distribution
+-> Known Constraints
+
+Iteration Plan
+-> Iteration
+-> Goal
+-> Included Work Items
+-> Size Distribution
+-> Dependencies
+-> Risks And Uncertainty
+```
+
+Iteration 不提前绑定固定日期，除非用户明确要求。Iteration Plan 可以引用 Story Map 中的 Story 和必要 Task，也可以引用本次实施路线需要的 Bug 或只存在于 Backlog 的独立 Task；后两类工作项不会因此进入 Story Map 主表。
+
+进入 Iteration Plan 的 Bug 和独立 Task 也必须使用同一基准卡完成 Size 估算。它们的 Size 写入卡片和 Backlog，并进入 Iteration 的 Size 分布，但不会因此写入 Story Map 主表。
+
+工作项未完成时不得自动移动到下一 Iteration，必须在后续 Work Item Planning 中重新确认。调整 Iteration 不改变工作项定义，因此不自动递增卡片版本。Iteration Plan 不保存实际开发进度；状态仍由卡片和 Backlog 管理。
+
+增量规划默认复用现有团队画像和容量基准。团队规模、角色构成、可用性或实际交付能力明显变化时，必须重新形成并确认一个候选迭代，再更新剩余计划。
 
 ## 工作项模型
 
-| 类型 | ID | 职责 |
-|---|---|---|
-| Feature | `F-nnn` | 组织共享业务能力、领域或平台关注点，不直接进入开发 workflow。 |
-| Story | `S-nnn` | 描述需要新增或有意改变的用户或业务行为。 |
-| Bug | `B-nnn` | 描述既有预期行为与实际行为之间的偏差；创建时不要求已经确认根因。 |
-| Technical Task | `T-nnn` | 描述工程能力、技术债、基础设施或治理工作，不伪装成用户故事。 |
+| 类型 | ID | 规划职责 |
+| --- | --- | --- |
+| Story | `S-nnn` | 表达某类用户或业务角色希望实现的目标和价值，并归属于一个主要 System Feature。 |
+| Task | `T-nnn` | 表达使 Feature、Story 或交付范围成立，但不适合写成 User Story 的明确工作。 |
+| Bug | `B-nnn` | 表达既有预期行为与已观察行为之间的候选偏差；建卡时不要求确认根因。 |
 
-工作项类型说明工作为什么存在，开发 workflow 说明工作如何交付：
+Feature 使用 Discovery 分配的 `F-nnn`，不是工作项卡片类型。Story、Task 和 Bug ID 在仓库内全局唯一。
+
+Task 可以使用可选 `Nature` 描述其性质，例如 `Functional`、`Technical`、`Business Preparation`、`Migration` 或 `Verification`。`Nature` 不产生不同状态模型或独立卡片类型。
+
+## 轻量卡片与状态
+
+Work Item Planning 可以创建轻量卡片：
 
 ```text
-S-nnn -> feature-dev
-B-nnn -> bug-fix
-T-nnn -> feature-dev / bug-fix / refactor
+ID
+Version
+Status
+Title
+简短目标或业务结果
+产品或工作项引用
+Size（进入 Story Map 时）
+Change Log
 ```
 
-## 卡片状态
+卡片状态使用：
 
-- `Draft`：工作项已经被识别，但仍在分析。
-- `Needs Review`：已形成可审阅内容，等待用户或业务确认。
-- `Ready`：工作项已经具备进入对应开发 workflow 的条件；它不表示已经完成该开发 workflow 的需求确认、问题诊断或技术设计。
+- `Draft`：工作项已识别，但尚未完成需要的分析。
+- `Ready`：Story 已经完成 Work Item Analysis 并具备进入 `feature-dev` 的条件；其他类型可以使用，但不是统一开发硬门禁。
+- `In Progress`：正在通过 Delivery Workflow 交付。
 - `Blocked`：被开放问题、决策冲突或未满足依赖阻塞。
-- `In Progress`：正在通过开发 workflow 交付。
 - `Done`：开发、验证和业务验收已经闭环。
 - `Superseded`：已被新的工作项替代，不应再选择实施。
 - `Dropped`：经过明确决策后不再计划处理。
 
-## 卡片版本与历史
+Story 必须达到 `Ready` 才能进入 `feature-dev`。Task 不强制提前达到 `Ready`，可以在对应 Delivery Workflow 开始时分析目标、范围和完成条件；用户确认本次实施范围前不得修改代码。Bug 可以直接进入 `bug-fix`，不以 `Ready` 或已知根因为启动条件。
 
-- 每张 Feature、Story、Bug 和 Technical Task 卡片使用从 `1` 开始的独立递增整数版本号。
-- 目标、范围、验收或完成条件、行为预期、依赖、约束或决策发生实质变化时必须升版并增加卡片内 Change Log。
-- 仅修正拼写、排版或链接时不升版。
-- Change Log 记录版本、日期、变化摘要和原因，不记录 Git commit hash。
-- 卡片版本是 workflow 引用和影响判断使用的业务身份；Git 历史负责保存完整旧内容。
+Task 分析发现实际需要新的产品行为时，不得继续把它伪装成 Task；必须建立或关联 Story，并按 Story 的 Work Item Analysis 和 `Ready` 规则处理。
 
-## 卡片与开发记录的边界
+## Backlog 与关系
 
-工作项卡片是长期、跨运行的权威定义。开发 workflow 的第一阶段记录保存本次运行使用的卡片版本、选定范围和用户确认，不完整复制卡片并形成第二份权威需求。
+统一 Backlog 是工作项状态、优先级、关系、阻塞和建议实施顺序的权威汇总视图。Story Map 保存业务结构、Path、Milestone 和 Size，不复制卡片正文；Backlog 也不复制卡片详细定义。
 
-Story 或 Technical Task 进入 `feature-dev` 或 `refactor` 时，第一阶段记录至少引用：
+Backlog 的首次创建、文档结构、排序规则和规划使用方式必须由 Work Item Planning 定义。组合规划或单项登记发现目标仓库尚无统一 Backlog 时，由 Work Item Planning 在用户确认规划结果后创建；不得要求其他 workflow 先创建 Backlog，也不得创建 Product Backlog、Sprint Backlog 或其他平行工作项集合。
 
-```text
-Work Item
-Card Path
-Card Version
-Selected Scope For This Run
-Included Acceptance Or Completion Criteria
-Explicit Exclusions
-Run-Specific Clarifications
-User Confirmation
-```
+其他 workflow 可以按照既有 Backlog 结构同步其职责范围内的工作项生命周期变化，但不得重新定义 Backlog 布局、改变规划排序规则或执行无关工作项重排。需要改变 Backlog 结构、优先级或规划顺序时必须返回 Work Item Planning。
 
-Bug 卡片保存长期问题身份、期望行为、已观察行为、影响和已知复现条件。`bug-fix` 的问题诊断记录保存本次调查产生的复现证据、假设、根因、因果证据、修复边界和回归风险。
+- 组合规划更新本次范围内的工作项和必要关系，不机械重排无关 Backlog。
+- 单项登记只更新当前卡片及必要 Backlog 引用。
+- Task 可以关联 Feature 或 Story；没有明确产品关系的通用 Task 可以只进入 Backlog。
+- Bug 关联受影响的 Feature 或 Story，但不进入 Story Map。
+- 硬依赖、阻塞、替代和关联关系必须显式记录，不能只依赖 Story Map 位置推断。
 
-准确分工是：
+## 卡片版本与共享修改权
 
-```text
-工作项卡片：工作项的权威定义和长期演进
-阶段记录：本次 workflow 使用的卡片版本、选定范围和确认结果
-manifest：本次 workflow 的运行状态、阶段索引和 checkpoint commit
-Git 历史：卡片和规则文件的完整内容历史
-```
+- 每张 Story、Task 和 Bug 卡片使用从 `1` 开始的独立递增整数版本号。
+- 目标、范围、预期行为、验收或完成条件、关键依赖或需求决策发生实质变化时必须升版。
+- 仅修正拼写、排版、链接、执行状态或 Size 时不升版。
+- Change Log 使用 `Version | Recorded At | Recorded By | Change | Reason`；身份和时间规则与其他 Asset Workflow 保持一致。
+- Git 历史负责保存完整旧内容，卡片不记录 commit hash、checkpoint 或 workflow 状态。
 
-## 卡片创建与移交
+卡片是跨 workflow 共享的长期权威资产，不由创建它的 workflow 独占。各 workflow 可以在自身职责范围内根据已确认事实创建或更新卡片：
 
-- `work-item-planning` 是 Feature、Story、Bug 和 Technical Task 卡片的唯一创建者。
-- `using-dev-cadence` 收到开发请求时先检查是否存在对应卡片；没有卡片时必须先进入 `work-item-planning`，不得由开发 workflow 自行建卡。
-- 用户不需要手动发起两次请求。入口选择器可以先运行单项登记模式，卡片确认后再路由到对应开发 workflow。
-- 请求引用已有卡片时必须复用，不创建重复 ID 或平行卡片。
-- 单项登记只处理当前工作，不执行批量拆解、无关 Roadmap 重排或无关需求分析。
-- 卡片达到 `Ready` 且不存在阻止启动的依赖后，移交 `feature-dev`、`bug-fix` 或 `refactor`。
-- 开发 workflow 启动后将卡片更新为 `In Progress`；完成后回写 `Done`、验收结果和交付引用。
+- Work Item Planning 更新规划关系、Story Map、Milestone、Size 和 Backlog 信息。
+- Work Item Analysis 更新目标、范围、预期行为、验收或完成条件、异常现象、影响和需求决策。
+- Delivery Workflow 更新诊断证据、选定范围、交付状态、结果、验证、验收和交付引用。
+- Discovery 只有在用户明确要求协调产品设计与工作项时才更新产品追溯关系，不因产品资产变化自动改卡。
 
-## 关键规则
+发现已有卡片时必须复用，不得创建重复 ID 或平行卡片。写回前必须检查当前卡片版本；发现事实或版本冲突时不得静默覆盖，必须展示冲突并由用户决定。
 
-- 卡片可以从只有 ID 和标题开始；`Draft`、`Blocked` 和 `Ready` 描述分析成熟度，不是卡片是否允许存在的条件。
-- 不得为了消除 `Draft` 或 `Blocked` 而机械拆分缺乏独立价值或独立验收意义的工作项。
-- Technical Task 不必强制归属某个 Feature；跨 Feature 的平台、基础设施和治理任务可以独立存在，但必须记录影响范围。
-- Bug 不要求在建卡时确认根因；根因定位属于 `bug-fix` 的问题诊断阶段。
-- Roadmap 是汇总视图，不是卡片详细内容的权威来源；标题、状态和关系变化时必须同步。
-- 产品级需求发生变化时不得在卡片中静默改写 PRD，应返回 `discovery` 更新并确认 PRD 后再进行增量规划。
-- 已进入开发的卡片升版后必须判断当前 run 是否受影响；受影响时返回最早受影响阶段，不受影响时记录判断依据。
-- 工作项卡片和 Roadmap 保存在目标仓库正常项目空间，不得写入可替换的 `.dev-cadence/` 安装包。
-- 不生成额外业务 Run Log；Dev Cadence manifest 和阶段记录保存 workflow 执行过程。
+## 产品设计变化的规划协调
+
+Discovery 发现工作项可能受影响时，只报告影响，不自动修改 Story Map、Milestone、卡片或 Backlog。用户明确要求协调规划时，Work Item Planning：
+
+1. 对比 Feature ID、Type、标题、业务身份和顺序；
+2. 识别受影响的 Story Map 位置、Milestone、卡片关系和 Backlog；
+3. 对被删除或替代 Feature 下的工作项提出保留、移动、标记 `Superseded` 或移出 Story Map 的方案；
+4. 用户确认后原子更新所有受影响规划资产。
+
+不得因为 Feature 变化自动删除 Story、Task 或 Bug，也不得用已实现代码反向改写产品设计共识。
 
 ## 与其他 Workflow 的关系
 
 ```text
-已确认的 PRD
-      |
+discovery
+-> User Journey + Feature + PRD + Business Architecture
+
 work-item-planning
-      |
-F / S / B / T + Roadmap
-      |
+-> Story Map + Milestone + Iteration Plan + 轻量 Story / Task / Bug + Backlog
+
+work-item-analysis
+-> 单项或批量分析 Story / Task / Bug
+
 feature-dev / bug-fix / refactor
+-> 技术方案、实施、验证、验收和交付证据
 ```
 
-`discovery` 负责 PRD，`work-item-planning` 负责创建和维护工作项，三个开发 workflow 负责消费已有卡片并完成单项交付。明确的单项请求如果没有卡片，先经过 `work-item-planning` 的单项登记模式，再进入对应开发 workflow。
+Work Item Planning 负责回答需要交付哪些工作以及如何组织，不负责详细回答每个工作项具体要交付什么，也不负责回答如何实现。
