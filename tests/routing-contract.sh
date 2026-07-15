@@ -57,6 +57,9 @@ done
 
 assert_match "initial baseline route" 'first.*PRD|first.*product-design'
 assert_match "existing baseline boundary" 'existing.*PRD|existing.*product-design'
+assert_match "incremental route requires intent and candidate" 'intent.*(credible|trusted).*candidate|(credible|trusted).*candidate.*intent'
+assert_match "incremental representative route" 'Incremental Discovery.*Select `discovery`.*credible.*candidate|credible.*candidate.*Select `discovery`'
+assert_not_match "obsolete unsupported incremental route" 'incremental reconciliation, which is not currently supported|installed initial `discovery` flow.*existing product-design baseline' "$ENTRY_SKILL"
 assert_match "missing document does not trigger discovery" 'missing.*PRD.*does not|absence.*PRD.*does not'
 assert_match "bug route" 'already.*expected'
 assert_match "expected behavior change route" 'intentionally change.*expected behavior'

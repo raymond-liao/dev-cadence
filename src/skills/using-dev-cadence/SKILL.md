@@ -1,6 +1,6 @@
 ---
 name: using-dev-cadence
-description: Use when a Dev Cadence-installed repository receives product discovery, requirements, development work, active-task follow-up, testing, verification, or commit/checkpoint requests.
+description: Use when a Dev Cadence-installed repository receives product discovery, architecture design, requirements, development work, active-task follow-up, testing, verification, or commit/checkpoint requests.
 ---
 
 # Using Dev Cadence
@@ -49,11 +49,27 @@ That shared capability owns Registry discovery, on-demand creation, entry fields
 
 | User request | Flow |
 | --- | --- |
-| Explore an incomplete product idea, business problem, or product direction and create the first PRD or Business Architecture | `.dev-cadence/skills/discovery/SKILL.md` |
+| Explore a product idea, create the first PRD or Business Architecture, or update an existing product-design baseline | `.dev-cadence/skills/discovery/SKILL.md` |
+| Explicitly design, propose, or review architecture for a stated goal | `.dev-cadence/skills/architecture-design/SKILL.md` |
 | Add a new user-visible or system-visible feature | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Change existing user-visible or system-visible feature behavior | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Report a bug, error, failing test, regression, or unexpected behavior | `.dev-cadence/skills/bug-fix/SKILL.md` |
 | Improve internal structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior | `.dev-cadence/skills/refactor/SKILL.md` |
+
+## Workflow Record Models
+
+Every Dev Cadence workflow belongs to exactly one record model:
+
+- **Asset Workflow:** Discovery, Work Item Planning, and Architecture Design.
+- **Delivery Workflow:** Feature Dev, Bug Fix, and Refactor.
+
+Asset Workflows only create or update durable authoritative assets under `docs/`. They may use analysis steps and user confirmation gates in the current conversation, but they must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or other persistent copies of the workflow process.
+
+Asset business facts belong in the authoritative asset itself. Use the asset's Version, Change Log, status, relationships, Open Questions, and Rejected Directions to preserve current conclusions, changes, unresolved issues, rejected choices, and durable context. Asset Workflows must not write commit hashes, approver identities, approval timestamps, or workflow run status into business assets. Their Git commits follow the user's request and the target repository's ordinary commit rules; do not describe those commits as workflow checkpoints.
+
+Delivery Workflows maintain a complete delivery evidence chain under `build/dev-cadence/<workflow>/<task-slug>/`. Keep requirements, diagnosis, or refactor-scope records as part of the active delivery run, together with solution, implementation plan, implementation, review, testing, business acceptance, Git integration, and cleanup evidence. These records restore the implementation context and bind confirmed inputs to code and verification; they are not competing long-term business assets.
+
+When adding a new workflow, classify it as exactly one record model before defining its records. It must not mix the models by persisting both a durable authoritative asset and duplicate process facts for the same Asset Workflow, or by removing evidence required to recover and verify a Delivery Workflow.
 
 ## Shared Asset Capabilities
 
@@ -80,7 +96,10 @@ These examples are representative intent decisions, not a keyword-matching list.
 | Category | Representative request | Decision and reason |
 | --- | --- | --- |
 | Initial Discovery | "I have an incomplete product idea; help me explore it and create our first PRD." | ✅ Select `discovery` because the user wants product exploration and the first product-design baseline. |
-| Incremental Discovery | "Update our existing PRD with the newly confirmed pricing model." | ❌ Do not use the installed initial `discovery` flow because an existing product-design baseline requires incremental reconciliation, which is not currently supported. Do not overwrite the baseline or pretend the missing workflow exists. |
+| Incremental Discovery | "Update our existing PRD with the newly confirmed pricing model." | ✅ Select `discovery` when repository discovery also finds a credible product-design candidate; the skill then confirms the authoritative source before editing. If no credible candidate exists, do not silently switch to initial Discovery. |
+| Architecture Design | "Design the target architecture for our payment-event ingestion goal." | ✅ Select `architecture-design` because the user explicitly requests architecture for a stated goal. |
+| Architecture Repository State | "This repository has no architecture document." | ❌ Do not start `architecture-design` because repository state does not establish an architecture-design goal. |
+| Delivery Solution | "Add payment-event ingestion and design its implementation." | ✅ Select `feature-dev`; `architecture-design` does not replace the delivery workflow's task-scoped Technical Solution. |
 | Feature | "Add an export command that produces a JSON report." | ✅ Select `feature-dev` because the user wants new system-visible behavior. |
 | Bug Fix | "The export command is documented to include timestamps, but they are missing." | ✅ Select `bug-fix` because already expected behavior is not working. If the user instead asks to intentionally change expected behavior, select `feature-dev`. |
 | Refactor | "Extract the parser into smaller modules without intentionally changing expected behavior." | ✅ Select `refactor` because the requested outcome is behavior-preserving structural improvement. If the request also adds behavior, route that behavior change through `feature-dev` or clarify the primary outcome. |
@@ -97,9 +116,11 @@ When adding a new workflow, review whether a representative request or adjacent 
 
 When multiple flows might apply, choose the process flow before any implementation or domain skill.
 
-Use `discovery` for broad product ideas, business problems, first-time product definition, or first-time PRD or Business Architecture creation.
+Use `discovery` for broad product ideas, business problems, first-time product definition, first-time PRD or Business Architecture creation, or an explicit intent to update an existing product-design baseline when repository discovery finds a credible candidate. Incremental Discovery requires both update intent and a credible or trusted candidate; repository state alone does not trigger it. If update intent exists but no candidate is found, do not silently switch to initial Discovery.
 Do not force a clear Feature, Bug, or Refactor request through Discovery. Direct development requests continue to their matching delivery workflow.
-This installed Discovery capability creates only the first product-design baseline. A request to update an existing PRD or existing product-design baseline is not supported by S-001; do not overwrite it or claim incremental versioning is available.
+Discovery owns both initial creation and confirmed incremental product-design updates. Read its skill before selecting a mode; do not infer authority from a file name alone.
+
+Use `architecture-design` only when the user explicitly asks for architecture design, an architecture proposal, or an architecture review for a stated goal. Do not infer it from repository state, technical content, Discovery activity, or a delivery workflow's need for a local solution. The standalone asset may inform delivery work, but `architecture-design` does not replace Feature Dev's Technical Solution, Bug Fix's Repair Solution, or Refactor's Refactor Solution.
 
 Use `bug-fix` when the existing expected behavior should already work and the user reports that it does not.
 Use `feature-dev` when the user asks to add behavior or intentionally change expected behavior.
@@ -108,11 +129,16 @@ If a request mixes two or more of a defect report, requested behavior change, an
 
 ## Active Workflow Continuation
 
-Before choosing or starting a new Dev Cadence flow, check whether the conversation or existing run manifest indicates an unfinished Dev Cadence workflow for the current task.
+Before choosing or starting a new Dev Cadence flow, identify its record model and check for an unfinished Dev Cadence workflow using the matching continuation source.
+
+- For a Delivery Workflow, use the conversation and existing run manifest to restore the current task, confirmed records, stage, code identity, verification evidence, and integration state.
+- For an Asset Workflow, use the current conversation, user goal, and authoritative asset to identify whether the request continues the same asset change. Do not create a manifest or process record solely to make continuation possible.
 
 If there is an unfinished workflow and the user's latest request is a change, clarification, product-design adjustment, implementation adjustment, test feedback, review feedback, or acceptance feedback for that same task, continue the current workflow run. Do not create a new workflow run, task slug, requirements document, solution document, diagnosis document, or repair solution document.
 
-If there is an unfinished workflow and the user asks to commit, save, or checkpoint current changes, continue the current workflow run and read its Git Checkpoints rules. Commit the in-scope changes under the active workflow's Git rules, then continue from the same business stage; the commit does not confirm or complete the stage.
+If there is an unfinished Delivery Workflow and the user asks to commit, save, or checkpoint current changes, continue the current workflow run and read its Git Checkpoints rules. Commit the in-scope changes under the active workflow's Git rules, then continue from the same business stage; the commit does not confirm or complete the stage.
+
+If there is an unfinished Asset Workflow and the user asks to commit or save the asset changes, follow the target repository's ordinary Git rules and the user's request. Do not create a checkpoint record or add workflow metadata to the asset. The commit does not replace any user confirmation gate required by the Asset Workflow.
 
 If the request clearly exceeds the confirmed scope or repair boundary of the unfinished workflow, ask whether the user wants to expand the current task or start a separate task before creating any new workflow run or document.
 

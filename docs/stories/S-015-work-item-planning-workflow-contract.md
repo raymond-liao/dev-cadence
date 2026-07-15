@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-015`
-- Version：`2`
-- Status：`Draft`
+- Version：`3`
+- Status：`Ready`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -97,3 +97,4 @@
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建 Work Item Planning Story Map 卡片。 | 为整体产品开发计划增加用户活动、任务、Story 和交付切片结构。 |
 | 2 | 2026-07-14 | 合并 Work Item Planning workflow、工作项契约与 Story Map 范围。 | Story Map 是 Work Item Planning 的核心规划能力，不应作为独立交付项。 |
+| 3 | 2026-07-15 | 将状态更新为 Ready。 | S-002、S-012 和 T-001 均已完成，S-015 的全部前置依赖已满足。 |

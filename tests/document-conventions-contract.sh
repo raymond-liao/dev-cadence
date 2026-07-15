@@ -227,16 +227,28 @@ for skill in "$DISCOVERY_SKILL" "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKI
     'status summaries?.*document-conventions|document-conventions.*status summaries?|shared status.*mapping|status presentation.*shared' \
     "$skill"
   assert_match \
-    "workflow status surfaces" \
-    'manifest.*stage|stage.*report|report.*acceptance|status summary' \
-    "$skill"
-  assert_match \
     "workflow applies shared document references" \
     'document references?.*document-conventions|document-conventions.*document references?|shared document-reference' \
     "$skill"
   assert_match \
     "workflow checks tracked markdown before commit" \
     'all tracked Markdown.*before.*commit|before.*commit.*all tracked Markdown' \
+    "$skill"
+done
+
+assert_match \
+  "Discovery status surface" \
+  'user-facing status summar' \
+  "$DISCOVERY_SKILL"
+assert_match \
+  "Discovery checks authoritative documents before confirmation" \
+  'product-design documents.*before.*confirmation|before.*confirmation.*product-design documents' \
+  "$DISCOVERY_SKILL"
+
+for skill in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
+  assert_match \
+    "workflow status surfaces" \
+    'manifest.*stage|stage.*report|report.*acceptance|status summary' \
     "$skill"
   assert_match \
     "workflow checks current run before completion" \
