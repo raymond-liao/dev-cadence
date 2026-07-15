@@ -3,14 +3,14 @@
 ## 基本信息
 
 - ID：`T-002`
-- Version：`1`
+- Version：`2`
 - Status：`Draft`
 - Priority：`P2`
 - Change Type：Quality Engineering
 
 ## 任务目标
 
-验证从想法、PRD、工作项规划到三个开发 workflow 交付及 Backlog 回写的完整链路，并覆盖构建、安装包、入口路由和现有目标仓库兼容。
+验证从想法、User Journey、Feature、PRD、Business Architecture、工作项规划到三个开发 workflow 交付及 Backlog 回写的完整链路，并覆盖构建、安装包、入口路由和现有目标仓库兼容。
 
 ## 背景
 
@@ -18,7 +18,9 @@
 
 ## ✅ 范围
 
-- 覆盖想法到首次 PRD、工作项规划和开发 workflow 移交。
+- 覆盖想法到首次 User Journey、Feature、PRD、Business Architecture、工作项规划和开发 workflow 移交。
+- 验证 Discovery 创建并维护 Journey 与 Feature，Work Item Planning 只引用已确认 Feature 并在 `System` Feature 下创建 Story 或必要 Task。
+- 验证重要 Product Requirement 和关键 Business Architecture 内容能够追溯到已确认 Journey 或 Feature。
 - 分别覆盖 feature-dev、bug-fix 和 refactor 的代表性路径。
 - 验证工作项状态、交付引用和 Backlog 回写。
 - 验证 source、dist、安装包和入口路由一致性。
@@ -32,9 +34,10 @@
 
 ## 完成条件
 
-1. 完整链路在临时目标仓库中可重复执行和验证。
+1. 从模糊想法到 User Journey、Feature、PRD、Business Architecture、Story Map、工作项、开发交付和 Backlog 回写的完整链路在临时目标仓库中可重复执行和验证。
 2. 三个开发 workflow 均覆盖卡片消费与 Backlog 回写。
-3. 构建、安装和兼容性检查对失败提供可定位证据。
+3. Journey、Feature、产品设计和工作项之间的权威职责及追溯关系得到验证，不出现重复 Feature 定义。
+4. 构建、安装和兼容性检查对失败提供可定位证据。
 
 ## Task Relationships
 
@@ -54,6 +57,7 @@
 ## 相关文档
 
 - [S-004 实施与测试失败分类和阶段返回](../stories/S-004-failure-classification-stage-routing.md)
+- [S-014 Discovery User Journey 与 Feature 基线](../stories/S-014-user-journey-analysis.md)
 - [S-015 工作项规划 Workflow 与工作项契约](../stories/S-015-work-item-planning-workflow-contract.md)
 - [S-016 统一 Backlog 看板](../stories/S-016-unified-backlog-board.md)
 - [S-017 工作项卡片与开发 Workflow 接入](../stories/S-017-work-item-development-workflow-integration.md)
@@ -64,3 +68,4 @@
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建需求治理端到端验证任务。 | 用安装后的完整链路验证跨 workflow 契约和兼容性。 |
+| 2 | 2026-07-15 | 将 User Journey、Feature 和三资产产品设计基线纳入端到端验证范围。 | Discovery 已确认 Journey 和 Feature 的上游权威职责，完整治理链路必须验证其向规划与交付阶段的传递。 |

@@ -8,11 +8,11 @@
 
 ## 待处理
 
+- [ ] [P1] [S-014 Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md)
 - [ ] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
 - [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
 - [ ] [P1] [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md)
 - [ ] [P2] [T-002 需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md)
-- [ ] [P3] [S-014 User Journey 分析](stories/S-014-user-journey-analysis.md)
 - [ ] [P1] [S-018 Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md)
 - [ ] [P2] [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md)
 - [ ] [P2] [S-020 实施与 Review 风险传递到验证阶段](stories/S-020-implementation-review-risk-to-verification.md)
@@ -71,21 +71,21 @@
 
 | Work Item | Depends On | Blocks |
 |---|---|---|
-| [S-001](stories/S-001-initial-discovery-prd-baseline.md) | - | S-002, S-013 |
-| [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | S-001, S-005, S-006, S-013 | S-015 |
+| [S-001](stories/S-001-initial-discovery-prd-baseline.md) | - | S-002, S-013, S-014 |
+| [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | S-001, S-005, S-006, S-013 | S-014, S-015 |
 | [S-003](stories/S-003-implementation-design-freshness-gate.md) | - | S-004 |
 | [S-004](stories/S-004-failure-classification-stage-routing.md) | S-003 | T-002 |
-| [S-005](stories/S-005-open-question-registry.md) | - | S-006, S-002 |
-| [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | S-005 | S-012, S-002 |
+| [S-005](stories/S-005-open-question-registry.md) | - | S-006, S-002, S-014 |
+| [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | S-005 | S-012, S-002, S-014 |
 | [S-007](stories/S-007-workflow-routing-examples.md) | S-008 | - |
 | [S-008](stories/S-008-skill-semantic-visual-markers.md) | - | S-007, S-009, S-011, T-001 |
 | [S-009](stories/S-009-generated-status-presentation.md) | S-008 | S-010 |
 | [S-010](stories/S-010-document-reference-links.md) | S-009 | - |
 | [S-011](stories/S-011-goal-driven-architecture-workflow.md) | S-008, S-012 | - |
 | [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | S-006 | S-013, S-011, S-015 |
-| [S-013](stories/S-013-simplify-discovery-process-records.md) | S-001, S-012 | S-002 |
-| [S-014](stories/S-014-user-journey-analysis.md) | - | - |
-| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | S-002, S-012, T-001 | S-016, S-017, T-002 |
+| [S-013](stories/S-013-simplify-discovery-process-records.md) | S-001, S-012 | S-002, S-014 |
+| [S-014](stories/S-014-user-journey-analysis.md) | S-001, S-002, S-005, S-006, S-013 | S-015 |
+| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | S-002, S-012, S-014, T-001 | S-016, S-017, T-002 |
 | [S-016](stories/S-016-unified-backlog-board.md) | S-015 | S-017, T-002 |
 | [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | S-008 | S-015 |
 | [S-017](stories/S-017-work-item-development-workflow-integration.md) | S-015, S-016 | T-002, S-029 |
@@ -120,11 +120,11 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-015 | S-002、S-012、T-001 | ✅ Ready |
-| 2 | S-016 | S-015 | ⚠️ Blocked |
-| 3 | S-017 | S-015、S-016 | ⚠️ Blocked |
-| 4 | T-002 | S-004、S-015、S-016、S-017 | ⚠️ Blocked |
-| 5 | S-014 | - | Draft |
+| 1 | S-014 | S-001、S-002、S-005、S-006、S-013 | ✅ Ready |
+| 2 | S-015 | S-002、S-012、S-014、T-001 | ⚠️ Blocked |
+| 3 | S-016 | S-015 | ⚠️ Blocked |
+| 4 | S-017 | S-015、S-016 | ⚠️ Blocked |
+| 5 | T-002 | S-004、S-015、S-016、S-017 | ⚠️ Blocked |
 | 6 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；S-026；S-027；S-030；S-032；S-034 | - | Draft |
 | 7 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
 | 8 | S-033 | S-030、S-031 | ⚠️ Blocked |
