@@ -1,5 +1,5 @@
 Status: done
-Commit: pending
+Commit: a496a0b
 Scope:
 - Added `tests/work-item-planning-contract.sh`.
 - Updated `tests/run-all.sh`, `tests/routing-contract.sh`, `tests/asset-delivery-record-contract.sh`, `tests/package-contract.sh`, `tests/skill-description-contract.sh`.
