@@ -58,18 +58,19 @@ Dev Cadence is not only a productivity tool for individual developers. It is a g
 
 ## Basic Workflows
 
-**discovery** turns an incomplete product idea or business problem into two durable product-design documents, and can incrementally update an existing confirmed baseline:
+**discovery** turns an incomplete product idea or business problem into a coherent three-asset product-design baseline, and can incrementally update an existing confirmed baseline:
 
 ```text
+docs/product-design/user-journey.md
 docs/product-design/prd.md
 docs/product-design/business-architecture.md
 ```
 
 ```text
-Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation
+Background And Problem Exploration -> User Journey Analysis -> User Journey Confirmation -> PRD And Business Architecture Derivation -> Product Design Confirmation
 ```
 
-Discovery covers product requirements and business architecture, not technical architecture, work-item decomposition, or application implementation. Its analysis stages and final confirmation gate stay in the conversation; its only primary outputs are the PRD and Business Architecture. Technical input may be linked to an existing authoritative technical asset or maintained through the shared Open Question Registry under that asset's own rules; this supporting shared-asset maintenance is not a third Discovery output or a process record. Incremental mode requires explicit update intent plus a credible repository candidate, keeps the authoritative assets unchanged while a complete revision is proposed in the conversation, and atomically applies affected content, independent versions, Change Logs, and supporting maintenance only after consolidated confirmation. A retained combined document keeps separate PRD and Business Architecture responsibility versions. Work-item impacts are handed to `work-item-planning`.
+Discovery covers the User Journey, product requirements, and business architecture, not technical architecture, work-item decomposition, or application implementation. Its two confirmation gates are User Journey Confirmation and Product Design Confirmation. Discovery creates and maintains the Feature Definitions in the User Journey; Work Item Planning only references confirmed Features and does not define them. A complete product-design baseline requires the User Journey, PRD, and Business Architecture to remain consistent. The analysis stages and both confirmation gates stay in the conversation; its primary outputs are the User Journey, PRD, and Business Architecture. Technical input may be linked to an existing authoritative technical asset or maintained through the shared Open Question Registry under that asset's own rules; this supporting shared-asset maintenance is not an additional Discovery output or a process record. Incremental mode requires explicit update intent plus a credible repository candidate, keeps the authoritative assets unchanged while a complete revision is proposed in the conversation, and atomically applies affected content, independent versions, Change Logs, and supporting maintenance only after consolidated confirmation. A retained combined document keeps separate User Journey, PRD, and Business Architecture responsibility versions. Work-item impacts are handed to `work-item-planning`.
 
 **architecture-design** handles explicit requests to design, propose, or review architecture for a stated goal. It creates one goal-named authoritative asset:
 
