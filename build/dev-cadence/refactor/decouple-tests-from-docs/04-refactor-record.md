@@ -2,7 +2,7 @@
 
 ## 状态
 
-🔄 `in_progress` - 实施修改已完成，等待代码审查和回归记录。
+✅ `confirmed` - 实施修改已完成，代码审查无发现。
 
 ## 实施基线
 
@@ -39,7 +39,7 @@
 
 - docs 实例不再作为自动化测试输入；这是确认方案要求的行为。
 - 未发现需要迁移到测试内 Markdown fixture 的可执行解析行为。
-- 代码审查和最终回归记录尚未完成。
+- 最终回归报告已补充，业务验收尚未完成。
 
 ## Executing-Plans Commit Review Ledger
 
@@ -47,4 +47,4 @@
 
 | Review ID | 单元 | 状态 | Identity | Expected parent | Reviewed tree | Commit hash | 决定 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `review-implementation-1` | `plan-tasks-1-and-2` | ⏳ `pending` | `pending` | `2bf044694cd70e543d782880fdd7cec3f6a6030f` | ⏳ `pending` | ⏳ `pending` | 等待提交后独立审查。 |
+| `review-implementation-1` | `plan-tasks-1-and-2` | ✅ `verified` | `retrospective` | `2bf044694cd70e543d782880fdd7cec3f6a6030f` | `b3b1b43fa1d318e1d5f515bcd3ba3978d45888a5` | `fe6997d26c363063fd6d948cfa41379fb05f7014` | 独立审查无 Critical/Important/Minor 发现；为提交后回顾证据。 |
