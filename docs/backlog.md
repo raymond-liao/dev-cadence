@@ -8,27 +8,27 @@
 
 ## 待处理
 
-- [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
+- [ ] [P0] [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md)
+- [ ] [P0] [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md)
+- [ ] [P2] [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md)
 - [ ] [P1] [S-037 工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md)
-- [ ] [P1] [S-038 工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md)
+- [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
 - [ ] [P1] [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md)
-- [ ] [P1] [S-039 Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md)
-- [ ] [P2] [T-002 需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md)
+- [ ] [P3] [S-029 Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md)
 - [ ] [P1] [S-018 Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md)
 - [ ] [P2] [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md)
 - [ ] [P2] [S-020 实施与 Review 风险传递到验证阶段](stories/S-020-implementation-review-risk-to-verification.md)
 - [ ] [P2] [S-021 验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md)
-- [ ] [P0] [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md)
-- [ ] [P0] [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md)
-- [ ] [P1] [S-022 Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md)
-- [ ] [P1] [S-023 Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md)
 - [ ] [P2] [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md)
+- [ ] [P1] [S-022 Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md)
 - [ ] [P2] [S-025 Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md)
-- [ ] [P2] [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md)
 - [ ] [P2] [S-026 Refactor 基线身份](stories/S-026-refactor-baseline-identity.md)
 - [ ] [P2] [S-027 Refactor 迁移开始契约](stories/S-027-refactor-migration-start-contract.md)
 - [ ] [P2] [S-028 Refactor 旧路径删除门禁](stories/S-028-refactor-legacy-path-removal-gate.md)
-- [ ] [P3] [S-029 Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md)
+- [ ] [P1] [S-023 Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md)
+- [ ] [P1] [S-038 工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md)
+- [ ] [P1] [S-039 Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md)
+- [ ] [P2] [T-002 需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md)
 - [ ] [P0] [S-030 Worktree 所有权识别](stories/S-030-worktree-ownership-detection.md)
 - [ ] [P0] [S-031 保存 Worktree 运行记录](stories/S-031-preserve-worktree-run-records.md)
 - [ ] [P1] [S-032 Detached HEAD Finishing](stories/S-032-detached-head-finishing.md)
@@ -128,11 +128,24 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 2 | S-016；S-037；S-038 | S-015 | ✅ Ready |
-| 3 | S-017；S-039 | S-015、S-016、S-037；S-016、S-038 | ⚠️ Blocked |
-| 4 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
-| 5 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；B-006；S-026；S-027；S-030；S-032；S-034 | - | Draft |
-| 6 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
-| 7 | S-033 | S-030、S-031 | ⚠️ Blocked |
+| 2 | B-001；B-002；B-006 | - | Draft |
+| 3 | S-037 | S-015 | ✅ Ready |
+| 4 | S-016 | S-015 | ✅ Ready |
+| 5 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
+| 6 | S-029 | S-017 | ⚠️ Blocked |
+| 7 | S-018；S-019；S-020；S-021 | - | Draft |
+| 8 | S-024 | - | Draft |
+| 9 | S-022；S-025 | - | Draft |
+| 10 | S-026；S-027 | - | Draft |
+| 11 | S-028 | S-027 | ⚠️ Blocked |
+| 12 | S-023 | - | Draft |
+| 13 | S-038 | S-015 | ✅ Ready |
+| 14 | S-039 | S-016、S-038 | ⚠️ Blocked |
+| 15 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
+| 16 | S-030 | - | Draft |
+| 17 | S-031 | S-030 | ⚠️ Blocked |
+| 18 | S-032 | - | Draft |
+| 19 | S-033 | S-030、S-031 | ⚠️ Blocked |
+| 20 | S-034 | - | Draft |
 
 用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。
