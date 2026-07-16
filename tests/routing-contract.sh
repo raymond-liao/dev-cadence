@@ -67,7 +67,7 @@ assert_match "work item planning route" 'Work Item Portfolio Planning.*Select `w
 assert_match "direct work item intake route" 'Direct Work Item Intake.*Select `work-item-planning`|Select `work-item-planning`.*Direct Work Item Intake'
 assert_match "work item planning asset boundary" 'work-item-planning.*Asset Workflow.*must not create Delivery run records|must not create Delivery run records.*work-item-planning'
 assert_match "work item discovery boundary" 'Discovery Boundary.*must not define or reinterpret|must not define or reinterpret.*Discovery Boundary'
-assert_match "work item repository state boundary" 'repository already contains Story cards.*does not trigger the workflow|repository state alone does not trigger the workflow'
+assert_match "work item repository state boundary" 'Do not auto-start `work-item-planning` merely because the repository already contains Story cards, Task cards, Bug cards, Backlog entries, or a Story Map; repository state alone does not trigger the workflow\.'
 assert_match "delivery handoff route" 'Delivery Handoff.*Select `feature-dev`, `bug-fix`, or `refactor`|Select `feature-dev`, `bug-fix`, or `refactor`.*Delivery Handoff'
 assert_match "Journey baseline route" 'User Journey.*Feature.*Select `discovery`|Select `discovery`.*User Journey.*Feature'
 assert_match "product Feature ownership" 'product.*Feature.*Discovery|Discovery.*product.*Feature'
