@@ -36,4 +36,4 @@
 
 ## Final Integration Decision
 
-✅ `integrated`; fast-forward merged locally into `main` at `58bb0fa`, final records committed at `6cd7c73`, then the feature worktree and branch were cleaned up after verification.
+✅ `integrated`; fast-forward merged locally into `main` at `58bb0fa`, final records committed at `a028dd9`, then the feature worktree and branch were cleaned up after verification.
