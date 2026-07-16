@@ -9,7 +9,7 @@
 - Workspace: `.worktrees/s-014-user-journey-baseline`
 - Branch: `codex/s-014-user-journey-baseline`
 - Started At: `2026-07-16 Asia/Shanghai`
-- Current Stage: Development Implementation
+- Current Stage: Business Acceptance
 - Overall Status: 🔄 `in_progress`
 
 ## 阶段表
@@ -19,13 +19,14 @@
 | Requirements Confirmation | ✅ `confirmed` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/01-requirements.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `141307f2b36441bfc50e477f391fc09d02079644` | S-014 Version 2 为 Ready，依赖均完成且无 Open Questions。 |
 | Technical Solution | ✅ `confirmed` | [技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/02-technical-solution.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `141307f2b36441bfc50e477f391fc09d02079644` | 选择在 Discovery 权威 skill 内实现三资产、两道确认门。 |
 | Implementation Plan | ✅ `confirmed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/03-implementation-plan.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `86f077965f5415ba0b7c68c18a68bdfd8d412e24` | SDD preflight 冲突已修正；freshness decision 保持 🟢 `ready`。 |
-| Development Implementation | 🔄 `in_progress` | [实施记录](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/04-implementation-record.md`) | delegated continuous execution | `pending` | Subagent-driven development 已开始。 |
-| System Testing | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/05-system-test-report.md` | pending | `pending` | 尚未开始。 |
+| Development Implementation | ✅ `confirmed` | [实施记录](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/04-implementation-record.md`) | delegated continuous execution | `1c03992` | 四个计划任务、最终 review fixes 和代码审查已完成。 |
+| System Testing | ✅ `confirmed` | [系统测试报告](05-system-test-report.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/05-system-test-report.md`) | delegated continuous execution | `abd43ea` | Verification Decision 🟢 `ready`；fresh `check-all` 通过。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
 
 ## 验证摘要
 
 - Worktree baseline：`bash scripts/check-all.sh` 在 `a6f6951f3d8a484661bf3aa769670517b4940a44` 通过。
+- Final system verification：`bash scripts/check-all.sh` 在最终 fix `1c03992` 后通过。
 - Pre-Implementation Design Freshness：🟢 `ready`。
 
 ## Pre-Implementation Design Freshness
