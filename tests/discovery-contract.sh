@@ -153,6 +153,7 @@ assert_match "Business Architecture traceability" 'Business Architecture.*Journe
 assert_match "Journey unaffected incremental path" 'does not affect.*User Journey.*do not.*reconfirm.*rewrite.*increment|do not.*reconfirm.*rewrite.*increment.*User Journey' "$DISCOVERY_SKILL"
 assert_match "legacy baseline migration" 'PRD.*Business Architecture.*without.*User Journey|without.*User Journey.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
 assert_literal "Change Log fields" 'Version | Recorded At | Recorded By | Change | Reason' "$DISCOVERY_SKILL"
+assert_not_match "legacy four-field Change Log wording" 'rows record version, date, change, and reason' "$DISCOVERY_SKILL"
 assert_literal "all product-design assets use Change Log contract" 'User Journey, PRD, and Business Architecture must each use this Change Log contract.' "$DISCOVERY_SKILL"
 assert_match "Change Log timezone" 'Recorded At.*(timezone|time zone).*ISO 8601|ISO 8601.*(timezone|time zone).*Recorded At' "$DISCOVERY_SKILL"
 assert_match "Recorded By git config precedence" 'repository-level.*user\.name.*user\.email.*global|user\.name.*user\.email.*repository-level.*global' "$DISCOVERY_SKILL"

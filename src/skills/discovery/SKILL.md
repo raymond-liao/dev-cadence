@@ -182,7 +182,7 @@ docs/product-design/prd.md
 docs/product-design/business-architecture.md
 ```
 
-In initial mode, all three documents start with `Document Information` containing version `1` and `Last Updated`. In incremental mode, preserve each current version and history until a confirmed substantive change requires a new version. Each document contains its own `Change Log`; rows record version, date, change, and reason. Do not put Git commit hashes in the product documents.
+In initial mode, all three documents start with `Document Information` containing version `1` and `Last Updated`. In incremental mode, preserve each current version and history until a confirmed substantive change requires a new version. Each document contains its own `Change Log`; every row must use the exact `Version | Recorded At | Recorded By | Change | Reason` columns defined below. Do not put Git commit hashes in the product documents.
 
 User Journey, PRD, and Business Architecture must each use this Change Log contract. The columns are exactly:
 
