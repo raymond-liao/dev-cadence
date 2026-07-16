@@ -17,7 +17,7 @@
 | 重构方案 | ✅ `confirmed` | [重构方案记录](02-refactor-solution.md) | 用户于 `2026-07-16` 确认采用唯一方案 | `51ec27673c867025c25442b59fc27e97c1627c77` | 删除 docs 实例断言，保留权威源契约检查。 |
 | 重构计划 | ✅ `confirmed` | [重构计划](03-refactor-plan.md) | 用户于 `2026-07-16` 确认 | `9595aedbdd111d4a38470f87e2a2e695792a9726` | 计划已确认，在隔离 worktree 执行。 |
 | 重构实施 | ✅ `confirmed` | [重构实施记录](04-refactor-record.md) | 用户于 `2026-07-16` 授权实施 | `fe6997d26c363063fd6d948cfa41379fb05f7014` | 两处测试 docs 输入边界已移除。 |
-| 回归验证 | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) | 实施后验证已完成 | ⏳ `pending` | 等待记录提交后回写检查点。 |
+| 回归验证 | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) | 实施后验证已完成 | `e701451e3674feba52e994df795f16ae28e95af5` | 回归测试和完整 check-all 已通过。 |
 | 业务验收 | ⏳ `pending` | [业务验收记录](06-business-acceptance-record.md) | ⏳ `pending` | ⏳ `pending` | 等待用户验收决定。 |
 
 ## 验证摘要
