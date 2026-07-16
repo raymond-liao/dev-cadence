@@ -83,6 +83,7 @@ assert_match "offline context only" 'keep `Offline` Features as business context
 assert_match "system items only" 'allow Stories and only necessary Tasks under `System` Features' "$SKILL"
 assert_match "three planning paths" 'Happy Path.*Alternative Path.*Sad Path|Sad Path.*Alternative Path.*Happy Path' "$SKILL"
 assert_match "bugs stay out of story map" 'Bug cards do not enter the Story Map' "$SKILL"
+assert_literal "story map not execution-status board" "do not treat Story Map as an execution-status board or a workflow-run log" "$SKILL"
 
 assert_match "milestone ids" 'Milestones must use stable `M-nnn` IDs' "$SKILL"
 assert_literal "milestone schema" "ID | Title | Goal | Included Work Items | Derived From" "$SKILL"
@@ -115,7 +116,8 @@ assert_match "atomic write after confirmation" 'atomically write only the confir
 assert_match "partial confirmation" 'The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content' "$SKILL"
 
 assert_literal "handoff boundary" "After planning confirmation, hand the confirmed Story, Task, or Bug to the matching downstream workflow. Do not copy Delivery Workflow evidence into planning assets." "$SKILL"
-assert_match "no standalone work item analysis" '`work-item-analysis` for detailed single-item scope and readiness analysis' "$SKILL"
+assert_match "no standalone detailed analysis replacement" 'does not replace:|It does not replace:' "$SKILL"
+assert_match "detailed single-item scope boundary" 'detailed single-item scope and readiness analysis' "$SKILL"
 assert_not_match "delivery stage records" '04-code-review-report\.md|01-requirements\.md|02-technical-solution\.md|03-implementation-plan\.md|Business Acceptance' "$SKILL"
 assert_not_match "delivery build records" 'build/dev-cadence/(feature-dev|bug-fix|refactor)/' "$SKILL"
 assert_not_match "personal absolute paths" '/Users/|/private/tmp|/private/var|[A-Za-z]:\\Users\\' "$SKILL"
