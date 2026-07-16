@@ -22,4 +22,4 @@ None identified.
 
 ## Integration Decision
 
-✅ `integrated`; locally merged into `main` without push or PR, and the feature worktree/branch were cleaned up after verification.
+✅ `integrated`; locally merged into `main` at `58bb0fa`, final records committed at `6cd7c73`, without push or PR; the feature worktree/branch were cleaned up after verification.
