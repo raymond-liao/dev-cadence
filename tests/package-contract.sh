@@ -100,8 +100,8 @@ assert_match "Business Acceptance" "src/skills/refactor/SKILL.md"
 assert_match "docs/open-questions.md" "src/skills/open-question-registry/SKILL.md"
 assert_match "docs/product-planning/story-map.md" "src/skills/work-item-planning/SKILL.md"
 assert_match "docs/backlog.md" "src/skills/work-item-planning/SKILL.md"
-assert_match "Story must reach `Ready` before entering `feature-dev`" "src/skills/work-item-planning/SKILL.md"
-assert_match "Bug may enter `bug-fix` without a `Ready` precondition" "src/skills/work-item-planning/SKILL.md"
+assert_match 'Story must reach `Ready` before entering `feature-dev`' "src/skills/work-item-planning/SKILL.md"
+assert_match 'Bug may enter `bug-fix` without a `Ready` precondition' "src/skills/work-item-planning/SKILL.md"
 
 if find "$DIST_DIR" -path '*/build/dev-cadence/*' -print -quit | grep -q .; then
   fail "dist package contains old Dev Cadence run records"
