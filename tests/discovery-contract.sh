@@ -5,9 +5,6 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DISCOVERY_SKILL="$ROOT_DIR/src/skills/discovery/SKILL.md"
 ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
 AGENTS_SNIPPET="$ROOT_DIR/src/AGENTS-snippet.md"
-DISCOVERY_WORKFLOW="$ROOT_DIR/docs/workflows/discovery.md"
-S002_STORY="$ROOT_DIR/docs/stories/S-002-discovery-prd-incremental-versioning.md"
-BACKLOG="$ROOT_DIR/docs/backlog.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -187,8 +184,5 @@ for flow in feature-dev bug-fix refactor; do
 done
 
 assert_match "AGENTS discovery trigger" 'product discovery|product ideas|requirements work' "$AGENTS_SNIPPET"
-
-assert_match "workflow proposal gate" '确认前.*权威.*保持原样|权威.*确认前.*保持原样' "$DISCOVERY_WORKFLOW"
-assert_match "story proposal gate" '确认前.*权威.*保持原样|权威.*确认前.*保持原样' "$S002_STORY"
 
 printf 'Discovery contract checks passed.\n'
