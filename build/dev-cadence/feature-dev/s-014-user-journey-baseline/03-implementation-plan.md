@@ -21,7 +21,7 @@
 - 不新增多 Journey 目录、根索引、拆分阈值、Story Map 或工作项规划行为。
 - `dist/.dev-cadence/**` 只能由 `bash scripts/build.sh` 生成，不直接编辑、不强制加入 Git。
 - 根版本从 `0.17.1` 升到 `0.18.0`。
-- 每个实施提交前遵守 Feature Dev 的 staged-tree review gate；任务记录不混入实施提交。
+- 使用 subagent-driven development 时，每个任务由 fresh implementer 完成 TDD、自审和提交，再由独立 task reviewer 审查 spec compliance 与 code quality；任务记录不混入实施提交。
 
 ---
 
@@ -144,7 +144,7 @@
 
 - [ ] **Step 6: 自审并提交 Task 1**
 
-  Stage only `tests/discovery-contract.sh` and `src/skills/discovery/SKILL.md`，执行 staged-tree review gate 和 `git diff --cached --check`，修复所有 Critical/Important 问题后提交：
+  Stage only `tests/discovery-contract.sh` and `src/skills/discovery/SKILL.md`，执行 `git diff --cached --check` 和实现者自审后提交；随后由独立 task reviewer 完成 spec compliance 与 code quality 审查：
 
   ```bash
   git commit -m "feat(discovery): add journey-led baseline"
@@ -201,7 +201,7 @@
 
 - [ ] **Step 5: 自审并提交 Task 2**
 
-  Stage only `tests/routing-contract.sh` and `src/skills/using-dev-cadence/SKILL.md`，执行 staged-tree review gate 后提交：
+  Stage only `tests/routing-contract.sh` and `src/skills/using-dev-cadence/SKILL.md`，实现者自审后提交；随后由独立 task reviewer 审查：
 
   ```bash
   git commit -m "feat(flow): route product journey definitions"
@@ -278,7 +278,7 @@
 
 - [ ] **Step 5: 自审并提交 Task 3**
 
-  确认 `git status --short` 不包含被忽略的 `dist/`，stage only 双语 README、package contract 和 version，执行 staged-tree review gate 后提交：
+  确认 `git status --short` 不包含被忽略的 `dist/`，stage only 双语 README、package contract 和 version，实现者自审后提交；随后由独立 task reviewer 审查：
 
   ```bash
   git commit -m "docs(discovery): publish journey-led workflow"
@@ -349,7 +349,7 @@
 
 - [ ] **Step 6: 自审并提交 Task 4**
 
-  Stage only S-014、S-015 和 Backlog 三个 tracked 文档，执行 staged-tree review gate 后提交：
+  Stage only S-014、S-015 和 Backlog 三个 tracked 文档，实现者自审后提交；随后由独立 task reviewer 审查：
 
   ```bash
   git commit -m "docs(backlog): complete journey baseline"
@@ -359,7 +359,7 @@
 
 ## Development Implementation 完成条件
 
-- Tasks 1-4 的复选框全部完成，且每个实施提交通过 staged-tree review gate 并记录 exact identity。
+- Tasks 1-4 的复选框全部完成，且每个任务都有 implementer commit、测试报告，以及 spec compliance 与 code quality 均通过的独立 task review。
 - S-014 的 12 项验收标准均有实现与开发阶段验证映射。
 - Discovery、routing、package focused contracts 和 fresh `bash scripts/check-all.sh` 全部通过。
 - `src/` 与 `dist/.dev-cadence/` 同步包含三资产、五阶段、两道门、Journey/Feature 身份和增量协调规则。

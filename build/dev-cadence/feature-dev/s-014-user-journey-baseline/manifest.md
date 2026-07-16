@@ -16,10 +16,10 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | ✅ `confirmed` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/01-requirements.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `skipped: no tracked changes` | S-014 Version 2 为 Ready，依赖均完成且无 Open Questions。 |
-| Technical Solution | ✅ `confirmed` | [技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/02-technical-solution.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `skipped: no tracked changes` | 选择在 Discovery 权威 skill 内实现三资产、两道确认门。 |
-| Implementation Plan | ✅ `confirmed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/03-implementation-plan.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `pending` | Worktree 与健康基线已验证；freshness decision 为 🟢 `ready`。 |
-| Development Implementation | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/04-implementation-record.md` | pending | `pending` | 尚未开始。 |
+| Requirements Confirmation | ✅ `confirmed` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/01-requirements.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `141307f2b36441bfc50e477f391fc09d02079644` | S-014 Version 2 为 Ready，依赖均完成且无 Open Questions。 |
+| Technical Solution | ✅ `confirmed` | [技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/02-technical-solution.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `141307f2b36441bfc50e477f391fc09d02079644` | 选择在 Discovery 权威 skill 内实现三资产、两道确认门。 |
+| Implementation Plan | 🔄 `in_progress` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/03-implementation-plan.md`) | delegated continuous execution | `141307f2b36441bfc50e477f391fc09d02079644` | SDD preflight 正在移除仅适用于 executing-plans 的 review ledger 冲突。 |
+| Development Implementation | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/04-implementation-record.md` | pending | `pending` | 等待修正后的 plan checkpoint。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/05-system-test-report.md` | pending | `pending` | 尚未开始。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
 
