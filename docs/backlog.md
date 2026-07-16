@@ -8,7 +8,6 @@
 
 ## 待处理
 
-- [ ] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
 - [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
 - [ ] [P1] [S-037 工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md)
 - [ ] [P1] [S-038 工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md)
@@ -38,6 +37,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
 - [x] [P1] [S-014 Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md)
 - [x] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
 - [x] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md)
@@ -128,8 +128,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-015 | S-002、S-012、S-014、T-001 | ✅ Ready |
-| 2 | S-016；S-037；S-038 | S-015 | ⚠️ Blocked |
+| 2 | S-016；S-037；S-038 | S-015 | ✅ Ready |
 | 3 | S-017；S-039 | S-015、S-016、S-037；S-016、S-038 | ⚠️ Blocked |
 | 4 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
 | 5 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；B-006；S-026；S-027；S-030；S-032；S-034 | - | Draft |
