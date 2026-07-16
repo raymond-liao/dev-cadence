@@ -6,7 +6,7 @@
 - 工作区：`.`
 - 分支：`codex/decouple-tests-from-docs`
 - 开始日期：`2026-07-16`
-- 当前阶段：重构方案
+- 当前阶段：重构计划
 - 总体状态：🔄 `in_progress`
 
 ## 阶段表
@@ -14,8 +14,8 @@
 | 阶段 | 状态 | 产物 | 用户确认 | 检查点提交 | 说明 |
 | --- | --- | --- | --- | --- | --- |
 | 需求确认 | ✅ `confirmed` | [需求确认记录](01-requirements.md) | 用户于 `2026-07-16` 确认 | `62857009047bc2b652a1baa20511f6fb0837ad4b` | 范围已确认。 |
-| 重构方案 | 🔄 `in_progress` | [重构方案记录](02-refactor-solution.md) | ⏳ `pending` | ⏳ `pending` | 聚焦于删除 docs 实例扫描，保留权威源断言。 |
-| 重构计划 | ⏳ `pending` | `build/dev-cadence/refactor/decouple-tests-from-docs/03-refactor-plan.md` | ⏳ `pending` | ⏳ `pending` | - |
+| 重构方案 | ✅ `confirmed` | [重构方案记录](02-refactor-solution.md) | 用户于 `2026-07-16` 确认采用唯一方案 | `cb0669f0ed1a1579e33a43b31aa33839361456e3` | 删除 docs 实例断言，保留权威源契约检查。 |
+| 重构计划 | 🔄 `in_progress` | `build/dev-cadence/refactor/decouple-tests-from-docs/03-refactor-plan.md` | ⏳ `pending` | ⏳ `pending` | 准备进入计划编制。 |
 | 重构实施 | ⏳ `pending` | `build/dev-cadence/refactor/decouple-tests-from-docs/04-refactor-record.md` | ⏳ `pending` | ⏳ `pending` | - |
 | 回归验证 | ⏳ `pending` | `build/dev-cadence/refactor/decouple-tests-from-docs/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | - |
 | 业务验收 | ⏳ `pending` | `build/dev-cadence/refactor/decouple-tests-from-docs/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | - |
