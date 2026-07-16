@@ -43,9 +43,13 @@ assert_match "one-percent is not automatic selection" '1%.*does not.*automatical
 for category in \
   'Initial Discovery' \
   'Incremental Discovery' \
+  'Work Item Portfolio Planning' \
+  'Direct Work Item Intake' \
+  'Discovery Boundary' \
   'Feature' \
   'Bug Fix' \
   'Refactor' \
+  'Delivery Handoff' \
   'Ordinary Request'
 do
   assert_literal "representative category $category" "$category"
@@ -59,6 +63,12 @@ assert_match "initial baseline route" 'first.*PRD|first.*product-design'
 assert_match "existing baseline boundary" 'existing.*PRD|existing.*product-design'
 assert_match "incremental route requires intent and candidate" 'intent.*(credible|trusted).*candidate|(credible|trusted).*candidate.*intent'
 assert_match "incremental representative route" 'Incremental Discovery.*Select `discovery`.*credible.*candidate|credible.*candidate.*Select `discovery`'
+assert_match "work item planning route" 'Work Item Portfolio Planning.*Select `work-item-planning`|Select `work-item-planning`.*Work Item Portfolio Planning'
+assert_match "direct work item intake route" 'Direct Work Item Intake.*Select `work-item-planning`|Select `work-item-planning`.*Direct Work Item Intake'
+assert_match "work item planning asset boundary" 'work-item-planning.*Asset Workflow.*must not create Delivery run records|must not create Delivery run records.*work-item-planning'
+assert_match "work item discovery boundary" 'Discovery Boundary.*must not define or reinterpret|must not define or reinterpret.*Discovery Boundary'
+assert_match "work item repository state boundary" 'repository already contains Story cards.*does not trigger the workflow|repository state alone does not trigger the workflow'
+assert_match "delivery handoff route" 'Delivery Handoff.*Select `feature-dev`, `bug-fix`, or `refactor`|Select `feature-dev`, `bug-fix`, or `refactor`.*Delivery Handoff'
 assert_match "Journey baseline route" 'User Journey.*Feature.*Select `discovery`|Select `discovery`.*User Journey.*Feature'
 assert_match "product Feature ownership" 'product.*Feature.*Discovery|Discovery.*product.*Feature'
 assert_match "implementation Feature boundary" 'implement.*Feature.*feature-dev|feature-dev.*implement.*Feature'
@@ -74,7 +84,7 @@ assert_match "one routing clarification question" 'one.*routing clarification qu
 assert_match "examples are not keyword matching" 'not.*keyword|keywords.*not'
 assert_match "new workflow review rule" 'new workflow.*review|review.*new workflow'
 
-for skill in discovery feature-dev bug-fix refactor; do
+for skill in discovery feature-dev bug-fix refactor work-item-planning; do
   assert_not_match \
     "duplicated routing matrix in $skill" \
     '^## Representative Routing Examples$' \

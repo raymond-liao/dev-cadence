@@ -73,6 +73,11 @@ assert_not_match \
 
 assert_literal "Architecture Design Asset declaration" "This is an Asset Workflow." "$ROOT_DIR/src/skills/architecture-design/SKILL.md"
 assert_match "Architecture Design no run records" 'must not create.*run manifest|run manifest.*must not create' "$ROOT_DIR/src/skills/architecture-design/SKILL.md"
+assert_literal "Work Item Planning Asset declaration" "This is an Asset Workflow." "$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
+assert_match "Work Item Planning durable docs assets" 'durable planning assets under `docs/`|create or update only durable planning assets' "$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
+assert_match "Work Item Planning no run records" 'must not create `build/dev-cadence/` run manifests?.*stage records?.*confirmation records?.*checkpoint commits?' "$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
+assert_match "Work Item Planning no delivery evidence copy" 'must not copy the Delivery Workflow record chain|Do not copy Delivery Workflow evidence into planning assets' "$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
+assert_not_match "Work Item Planning delivery evidence headings" '04-code-review-report\.md|01-requirements\.md|02-technical-solution\.md|03-implementation-plan\.md|Business Acceptance' "$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
 
 for skill in feature-dev bug-fix refactor; do
   path="$ROOT_DIR/src/skills/$skill/SKILL.md"
