@@ -222,8 +222,12 @@ assert_match \
   'user-facing status summar' \
   "$DISCOVERY_SKILL"
 assert_match \
-  "Discovery checks authoritative documents before confirmation" \
-  'product-design documents.*before.*confirmation|before.*confirmation.*product-design documents' \
+  "Discovery checks existing Journey proposal references before Journey Confirmation" \
+  'Before User Journey Confirmation.*Journey proposal.*(local links|references).*targets already exist|Journey proposal.*(local links|references).*targets already exist.*before User Journey Confirmation' \
+  "$DISCOVERY_SKILL"
+assert_match \
+  "Discovery checks the three-asset combination before Product Design Confirmation" \
+  'Before Product Design Confirmation.*(three|all three).*product-design assets.*local links|(three|all three).*product-design assets.*local links.*before Product Design Confirmation' \
   "$DISCOVERY_SKILL"
 
 for skill in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
