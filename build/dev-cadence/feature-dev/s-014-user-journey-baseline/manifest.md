@@ -10,7 +10,7 @@
 - Branch: `codex/s-014-user-journey-baseline`
 - Started At: `2026-07-16 Asia/Shanghai`
 - Current Stage: Completion
-- Overall Status: ✅ `accepted`
+- Overall Status: ✅ `integrated`
 
 ## 阶段表
 
@@ -56,4 +56,8 @@
 
 ## 最终集成决定
 
-- Decision: ⏳ `pending`
+- Decision: `merged locally`
+- Merge Commit: `a50f077`
+- Worktree Cleanup: `.worktrees/s-014-user-journey-baseline` removed after verification。
+- Task Branch: `codex/s-014-user-journey-baseline` deleted。
+- Push / Pull Request: none。

@@ -28,4 +28,6 @@ None accepted. B-006 remains a separate backlog item for delivery-record evidenc
 
 ## Final Follow-Up Actions
 
-- Pending the Completion integration decision; no merge, pull request, push, or worktree cleanup has been performed.
+- The accepted work was merged locally into `main` at merge commit `a50f077`.
+- Project-local worktree `.worktrees/s-014-user-journey-baseline` was removed and task branch `codex/s-014-user-journey-baseline` was deleted after verification.
+- No push or pull request was performed.
