@@ -184,6 +184,14 @@ docs/product-design/business-architecture.md
 
 In initial mode, all three documents start with `Document Information` containing version `1` and `Last Updated`. In incremental mode, preserve each current version and history until a confirmed substantive change requires a new version. Each document contains its own `Change Log`; rows record version, date, change, and reason. Do not put Git commit hashes in the product documents.
 
+User Journey, PRD, and Business Architecture must each use this Change Log contract. The columns are exactly:
+
+```text
+Version | Recorded At | Recorded By | Change | Reason
+```
+
+`Recorded At` must be a timezone-aware ISO 8601 timestamp. Read `user.name` and `user.email` from repository-level Git config first, then fall back to global Git config. When an email is available, record `Name <email>`; when only a name is available, record the name. When both the Git username and email are missing, ask the user before writing the Change Log and do not infer an identity. `Recorded By` and `Recorded At` are Change Log fields only; they are not approval metadata or approval time.
+
 User Journey, PRD, and Business Architecture versions are independent. Increment the User Journey only when a confirmed revision changes its business line, boundary, Journey Map, or Feature Definitions. When an input does not affect the User Journey, do not reconfirm, rewrite, or increment the User Journey; derive and confirm only the affected PRD, Business Architecture, and supporting maintenance.
 
 PRD and Business Architecture versions are independent. With separate documents, increment only the affected document when its product intent, scope, success criteria, constraints, actors, domains, capabilities, processes, objects, states, rules, or other owned substantive content changes. When the user keeps a combined document, it must maintain separate `PRD Version` and `Business Architecture Version` fields, or equivalently explicit responsibility-version fields, plus Change Log entries labeled with the affected responsibility. Increment only the substantively changed responsibility version. A final review of a combined document reports one path with two responsibility versions; splitting it establishes one independent `Version` and Change Log in each resulting file. Pure spelling, formatting, path migration, file name changes, and link-only updates must not increment either document or responsibility version. Preserve all existing body content, `Rejected Directions`, `Future Scope`, and `Change Log` history unless the user explicitly confirms a substantive replacement or removal.
@@ -213,6 +221,8 @@ The Journey Map must be a normal Markdown Table. Rows represent roles, and colum
 
 Every Journey and Feature identity must be repository-globally unique. Use `J-nnn` for a Journey ID and `F-nnn` for a Feature ID, where `nnn` is a zero-padded three-digit sequence.
 
+Before creating or modifying a Journey or Feature identity, scan the repository's product-design documents and credible product-design candidates for existing identities and their business meaning. Preserve every existing ID when its business identity remains the same. If the scan finds a collision, refuse the write. If the business identity cannot be determined or a conflict remains, keep the proposed identity and its disposition in `Open Questions` until the user resolves it. IDs must not be silently renumbered.
+
 Feature Definitions must use these fixed fields:
 
 ```text
@@ -220,6 +230,8 @@ ID | Type | Title | Description
 ```
 
 `Type` allows only `Offline` and `System`. When the business identity is unchanged, a rename or Type adjustment must retain the ID. When multiple roles use the same Feature, reuse that same Feature and its ID rather than defining role-specific duplicates.
+
+Discovery is the sole owner of confirmed Journey and Feature identities. Work Item Planning and other workflows may only reference confirmed Feature Definitions; they must not redefine a Feature's ID, Type, Title, business identity, or Journey order. If another workflow discovers a missing identity or a meaning or sequence change, return the request to Discovery for confirmation and maintenance rather than editing the identity locally.
 
 ### PRD Contract
 
