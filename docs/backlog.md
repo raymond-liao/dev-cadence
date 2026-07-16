@@ -26,6 +26,7 @@
 - [ ] [P1] [S-023 Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md)
 - [ ] [P2] [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md)
 - [ ] [P2] [S-025 Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md)
+- [ ] [P2] [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md)
 - [ ] [P2] [S-026 Refactor 基线身份](stories/S-026-refactor-baseline-identity.md)
 - [ ] [P2] [S-027 Refactor 迁移开始契约](stories/S-027-refactor-migration-start-contract.md)
 - [ ] [P2] [S-028 Refactor 旧路径删除门禁](stories/S-028-refactor-legacy-path-removal-gate.md)
@@ -103,6 +104,7 @@
 | [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
 | [S-025](stories/S-025-bug-red-green-evidence.md) | - | - |
+| [B-006](bugs/B-006-delivery-record-evidence-completeness.md) | - | - |
 | [S-026](stories/S-026-refactor-baseline-identity.md) | - | - |
 | [S-027](stories/S-027-refactor-migration-start-contract.md) | - | S-028 |
 | [S-028](stories/S-028-refactor-legacy-path-removal-gate.md) | S-027 | - |
@@ -131,7 +133,7 @@
 | 3 | S-016；S-037；S-038 | S-015 | ⚠️ Blocked |
 | 4 | S-017；S-039 | S-015、S-016、S-037；S-016、S-038 | ⚠️ Blocked |
 | 5 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
-| 6 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；S-026；S-027；S-030；S-032；S-034 | - | Draft |
+| 6 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；B-006；S-026；S-027；S-030；S-032；S-034 | - | Draft |
 | 7 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
 | 8 | S-033 | S-030、S-031 | ⚠️ Blocked |
 
