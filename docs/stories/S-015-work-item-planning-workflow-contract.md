@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-015`
-- Version：`5`
-- Status：`Blocked`
+- Version：`6`
+- Status：`Ready`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -116,3 +116,4 @@
 | 3 | 2026-07-15 | 将状态更新为 Ready。 | S-002、S-012 和 T-001 均已完成，S-015 的全部前置依赖已满足。 |
 | 4 | 2026-07-15 | 将 User Journey 和 Feature 改为必需的上游产品设计输入，并将状态更新为 Blocked。 | S-014 已重新定义 Discovery 对 Journey 和 Feature 的权威职责；Work Item Planning 必须等待该职责实现后再创建 Story Map 和工作项。 |
 | 5 | 2026-07-15 | 补全 Story Map、Path、Milestone、轻量卡片和共享修改契约，并将 Size、Iteration Plan 和 Work Item Analysis 拆分为后继工作项。 | 工作项规划流程设计已经明确核心资产边界和后续能力，需要让实施卡完整承接已确认方案而不覆盖 Journey-led 上游关系。 |
+| 6 | 2026-07-16 | S-014 已完成，User Journey 与 Feature 基线依赖全部满足，状态更新为 Ready。 | Work Item Planning 现在可以基于已确认的三资产产品设计基线进入实施。 |
