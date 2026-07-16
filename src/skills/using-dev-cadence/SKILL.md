@@ -50,6 +50,7 @@ That shared capability owns Registry discovery, on-demand creation, entry fields
 | User request | Flow |
 | --- | --- |
 | Explore a product idea, create the first PRD or Business Architecture, update an existing product-design baseline, or create or maintain a product-level User Journey and its Feature Definitions through Discovery | `.dev-cadence/skills/discovery/SKILL.md` |
+| 基于已确认的 User Journey、PRD 和 Business Architecture 做组合规划，维护 Story Map，或登记单个明确的 Story、Task、Bug 工作项 | `.dev-cadence/skills/work-item-planning/SKILL.md` |
 | Explicitly design, propose, or review architecture for a stated goal | `.dev-cadence/skills/architecture-design/SKILL.md` |
 | Add a new user-visible or system-visible feature | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Change existing user-visible or system-visible feature behavior | `.dev-cadence/skills/feature-dev/SKILL.md` |
@@ -98,8 +99,12 @@ These examples are representative intent decisions, not a keyword-matching list.
 | Initial Discovery | "I have an incomplete product idea; help me explore it and create our first PRD." | ✅ Select `discovery` because the user wants product exploration and the first product-design baseline. |
 | Incremental Discovery | "Update our existing PRD with the newly confirmed pricing model." | ✅ Select `discovery` when repository discovery also finds a credible product-design candidate; the skill then confirms the authoritative source before editing. If no credible candidate exists, do not silently switch to initial Discovery. |
 | Product Journey | "Define the checkout journey and the product capabilities it requires." | ✅ Select `discovery` to create or maintain the product-level User Journey and its Feature Definitions because Discovery owns that product-design baseline. |
+| Work Item Portfolio Planning | "根据已确认的 User Journey、PRD 和 Business Architecture，帮我规划 Story Map、Milestone 和下一批 Story。" | ✅ Select `work-item-planning` because the user wants组合规划 based on confirmed product-design assets. `work-item-planning` is an Asset Workflow and must not create Delivery run records. |
+| Direct Work Item Intake | "登记一个明确的 Bug 卡片，并把它挂到现有 Backlog。" | ✅ Select `work-item-planning` when the requested outcome is creating or maintaining a single clear Story, Task, or Bug card rather than implementing the change. |
+| Discovery Boundary | "这个 Feature 的业务含义还不清楚，先帮我补完整 Feature 定义再拆 Story。" | ✅ Select `discovery` because Discovery owns product-design baselines, User Journey, and Feature identity. `work-item-planning` only references confirmed Features and must not define or reinterpret them. |
 | Architecture Design | "Design the target architecture for our payment-event ingestion goal." | ✅ Select `architecture-design` because the user explicitly requests architecture for a stated goal. |
 | Architecture Repository State | "This repository has no architecture document." | ❌ Do not start `architecture-design` because repository state does not establish an architecture-design goal. |
+| Delivery Handoff | "这些 Story 已确认，开始实现导出命令。" | ✅ Select `feature-dev`, `bug-fix`, or `refactor` after the work item is confirmed and the user now wants delivery. `work-item-planning` prepares and hands off work items; it does not replace delivery workflows' implementation, diagnosis, or refactor records. |
 | Delivery Solution | "Add payment-event ingestion and design its implementation." | ✅ Select `feature-dev`; `architecture-design` does not replace the delivery workflow's task-scoped Technical Solution. |
 | Feature | "Please implement a Feature that adds an export command producing a JSON report." | ✅ Select `feature-dev` because the user wants new system-visible behavior. |
 | Bug Fix | "The export command is documented to include timestamps, but they are missing." | ✅ Select `bug-fix` because already expected behavior is not working. If the user instead asks to intentionally change expected behavior, select `feature-dev`. |
@@ -121,8 +126,13 @@ Use `discovery` for broad product ideas, business problems, first-time product d
 Creating or maintaining a product-level User Journey and its Feature Definitions selects `discovery`; Discovery owns that product-design baseline.
 Do not force a clear Feature, Bug, or Refactor request through Discovery. Direct development requests continue to their matching delivery workflow.
 Discovery owns both initial creation and confirmed incremental product-design updates. Read its skill before selecting a mode; do not infer authority from a file name alone.
+If the user wants to change Feature meaning, User Journey order, PRD conclusions, or Business Architecture content before planning work items, return to `discovery` instead of patching product-design facts inside `work-item-planning`.
 
 Use `architecture-design` only when the user explicitly asks for architecture design, an architecture proposal, or an architecture review for a stated goal. Do not infer it from repository state, technical content, Discovery activity, or a delivery workflow's need for a local solution. The standalone asset may inform delivery work, but `architecture-design` does not replace Feature Dev's Technical Solution, Bug Fix's Repair Solution, or Refactor's Refactor Solution.
+
+Use `work-item-planning` when the user wants an Asset Workflow that turns confirmed product-design assets into planning assets, such as Story Map, Milestone, or Story/Task/Bug cards, or when the user wants to register one clear work item without starting delivery. Do not auto-start `work-item-planning` merely because the repository already contains Story cards, Task cards, Bug cards, Backlog entries, or a Story Map; repository state alone does not trigger the workflow.
+`work-item-planning` owns planning assets and work-item registration, not Feature definition or delivery execution. Keep the full cross-workflow routing matrix only in this entry skill; do not copy the complete matrix into `.dev-cadence/skills/work-item-planning/SKILL.md`.
+After a work item is confirmed and the user asks to implement, repair, or refactor it, hand off to `feature-dev`, `bug-fix`, or `refactor` according to the requested delivery outcome.
 
 Use `bug-fix` when the existing expected behavior should already work and the user reports that it does not.
 Use `feature-dev` when the user asks to implement a Feature, add behavior, or intentionally change expected behavior.
