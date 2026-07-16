@@ -22,6 +22,8 @@
 - [ ] [P2] [S-021 验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md)
 - [ ] [P0] [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md)
 - [ ] [P0] [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md)
+- [ ] [P1] [B-004 `output_language` 中文配置未稳定生效](bugs/B-004-output-language-configuration-not-consistently-applied.md)
+- [ ] [P1] [B-005 Refactor 确认阶段未提供用户选项](bugs/B-005-refactor-confirmation-options-missing.md)
 - [ ] [P1] [S-022 Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md)
 - [ ] [P1] [S-023 Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md)
 - [ ] [P2] [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md)
@@ -99,6 +101,8 @@
 | [S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | - |
 | [B-001](bugs/B-001-normal-checkout-local-merge-safety.md) | - | - |
 | [B-002](bugs/B-002-normal-checkout-discard-safety.md) | - | - |
+| [B-004](bugs/B-004-output-language-configuration-not-consistently-applied.md) | - | - |
+| [B-005](bugs/B-005-refactor-confirmation-options-missing.md) | - | - |
 | [S-022](stories/S-022-bug-not-a-bug-terminal-state.md) | - | - |
 | [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
@@ -131,7 +135,7 @@
 | 3 | S-016；S-037；S-038 | S-015 | ⚠️ Blocked |
 | 4 | S-017；S-039 | S-015、S-016、S-037；S-016、S-038 | ⚠️ Blocked |
 | 5 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
-| 6 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；S-026；S-027；S-030；S-032；S-034 | - | Draft |
+| 6 | S-018；S-019；S-020；S-021；B-001；B-002；B-004；B-005；S-022；S-023；S-024；S-025；S-026；S-027；S-030；S-032；S-034 | - | Draft |
 | 7 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
 | 8 | S-033 | S-030、S-031 | ⚠️ Blocked |
 
