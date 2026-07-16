@@ -68,6 +68,16 @@ assert_match "planning scope confirmation stage" 'Planning Inputs And Scope Conf
 assert_match "planning proposal stage" 'Planning Structure Proposal' "$SKILL"
 assert_match "planning confirmation stage" 'Planning Result Confirmation' "$SKILL"
 
+assert_literal \
+  "target repository output language config" \
+  'Before producing workflow guidance, in-conversation proposals, user-facing planning summaries, or planning assets, read `.dev-cadence.yaml` from the target repository root.' \
+  "$SKILL"
+assert_literal "english output language" '- `output_language: en` uses English.' "$SKILL"
+assert_literal "simplified chinese output language" '- `output_language: zh-CN` uses Simplified Chinese.' "$SKILL"
+assert_literal "output language fallback" '- If the file or value is missing or unsupported, use English.' "$SKILL"
+assert_literal "selected output language surfaces" 'Use the selected language for workflow guidance, in-conversation proposals, user-facing planning summaries, and durable planning assets.' "$SKILL"
+assert_not_match "fixed zh-CN output language" 'must write.*`zh-CN`|Do not fall back to `en`' "$SKILL"
+
 assert_match "input precedence conversation" '1\..*current conversation.*explicit user confirmations' "$SKILL"
 assert_match "input precedence product assets" '2\..*User Journey, PRD, and Business Architecture assets' "$SKILL"
 assert_match "input precedence planning assets" '3\..*Story Map, Backlog, and existing Story / Task / Bug cards' "$SKILL"
@@ -76,6 +86,9 @@ assert_literal "authoritative backlog path" "docs/backlog.md" "$SKILL"
 assert_match "authoritative story card path" 'docs/stories/S-nnn-<slug>\.md' "$SKILL"
 assert_match "authoritative task card path" 'docs/tasks/T-nnn-<slug>\.md' "$SKILL"
 assert_match "authoritative bug card path" 'docs/bugs/B-nnn-<slug>\.md' "$SKILL"
+assert_literal "docs-only durable planning assets" 'Work Item Planning may persist only authoritative planning assets under `docs/`.' "$SKILL"
+assert_literal "no rule package mutation" 'It must not create or update rule documents or modify the installed `.dev-cadence/` package.' "$SKILL"
+assert_not_match "rule document durable asset" 'rule document updates' "$SKILL"
 assert_literal "feature ownership boundary" "Discovery is the sole owner of confirmed User Journey, PRD, Business Architecture, and Feature identities and conclusions." "$SKILL"
 assert_match "cannot create feature cards" 'create Feature cards;' "$SKILL"
 assert_match "must not change feature identity" 'change a Feature ID, Type, Title, business identity, or Journey order' "$SKILL"
@@ -104,6 +117,13 @@ assert_match "task id pattern" 'Task: `T-nnn`' "$SKILL"
 assert_match "bug id pattern" 'Bug: `B-nnn`' "$SKILL"
 assert_block "minimum card fields" $'ID\nVersion\nStatus\nTitle\nGoal or business result\nProduct or work-item references\nRelationships\nChange Log' "$SKILL"
 assert_literal 'relationships required' '`Relationships` is required. Dependencies, blockers, replacements, related items, and similar planning relationships must be recorded explicitly instead of being implied only by Story Map position or narrative text.' "$SKILL"
+assert_literal "shared card ownership" 'Work-item cards are shared assets across workflows; the workflow that creates a card does not exclusively own it.' "$SKILL"
+assert_literal "planning-owned card updates" 'Work Item Planning may update planning relationships, Story Map placement, Milestone membership, Size, and Backlog references.' "$SKILL"
+assert_literal "analysis-owned card updates" 'Work Item Analysis may update detailed definitions such as the goal, scope, expected behavior, and acceptance conditions.' "$SKILL"
+assert_literal "delivery-owned card updates" 'Delivery Workflows may update diagnosis, delivery status, results, verification, and delivery references.' "$SKILL"
+assert_literal "discovery traceability boundary" 'Discovery may update traceability relationships only when the user explicitly asks to coordinate product design and work items.' "$SKILL"
+assert_literal "shared card conflict stop" 'When any workflow finds a Version or visible-fact conflict, it must stop and require a user decision before continuing.' "$SKILL"
+assert_literal "no downstream workflow implementation" 'These shared ownership boundaries do not implement S-017 cross-workflow writeback or the S-037 Work Item Analysis workflow.' "$SKILL"
 
 for status in '`Draft`' '`Ready`' '`In Progress`' '`Blocked`' '`Done`' '`Superseded`' '`Dropped`'; do
   assert_match "canonical status $status" "$status" "$SKILL"

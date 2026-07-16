@@ -36,18 +36,15 @@ Do not start this workflow from repository state alone. A missing Story Map, mis
 
 ## Configuration
 
-Before producing user-facing planning documents or summaries, read:
+Before producing workflow guidance, in-conversation proposals, user-facing planning summaries, or planning assets, read `.dev-cadence.yaml` from the target repository root.
 
-```text
-.dev-cadence.yaml
-```
+- `output_language: en` uses English.
+- `output_language: zh-CN` uses Simplified Chinese.
+- If the file or value is missing or unsupported, use English.
 
-Use `output_language` for user-facing planning assets and summaries:
+Use the selected language for workflow guidance, in-conversation proposals, user-facing planning summaries, and durable planning assets.
 
-- `en`: English
-- `zh-CN`: Simplified Chinese
-
-This workflow must write its rule document updates, planning proposals, and planning assets in `zh-CN`. Do not fall back to `en` for this workflow. Shared configuration may continue to serve other workflows and surfaces under their own rules.
+Do not read user configuration from the replaceable installed `.dev-cadence/` package.
 
 ## Generated Status Presentation
 
@@ -70,7 +67,11 @@ When sources disagree, prefer explicit user confirmations, then authoritative re
 
 ## Durable Planning Assets
 
-Work Item Planning may create or update only durable planning assets such as:
+Work Item Planning may persist only authoritative planning assets under `docs/`.
+
+It must not create or update rule documents or modify the installed `.dev-cadence/` package.
+
+Durable planning assets include:
 
 ```text
 docs/product-planning/story-map.md
@@ -236,6 +237,19 @@ Change Log
 When the planning scope already includes a confirmed size field, the card may also include `Size`. Do not invent a standalone size-estimation process here.
 
 Task cards may include optional `Nature`, but `Nature` does not create a new card type or a different lifecycle model.
+
+## Shared Card Ownership Boundary
+
+Work-item cards are shared assets across workflows; the workflow that creates a card does not exclusively own it.
+
+- Work Item Planning may update planning relationships, Story Map placement, Milestone membership, Size, and Backlog references.
+- Work Item Analysis may update detailed definitions such as the goal, scope, expected behavior, and acceptance conditions.
+- Delivery Workflows may update diagnosis, delivery status, results, verification, and delivery references.
+- Discovery may update traceability relationships only when the user explicitly asks to coordinate product design and work items.
+
+Each workflow must limit its changes to its owned facts and preserve fields owned by other workflows. When any workflow finds a Version or visible-fact conflict, it must stop and require a user decision before continuing.
+
+These shared ownership boundaries do not implement S-017 cross-workflow writeback or the S-037 Work Item Analysis workflow.
 
 ## Work-Item Status Contract
 
