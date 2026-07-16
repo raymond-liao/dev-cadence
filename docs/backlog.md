@@ -8,7 +8,6 @@
 
 ## 待处理
 
-- [ ] [P1] [S-014 Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md)
 - [ ] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
 - [ ] [P1] [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md)
 - [ ] [P1] [S-037 工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md)
@@ -39,6 +38,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-014 Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md)
 - [x] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
 - [x] [P1] [S-013 Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md)
 - [x] [P1] [S-011 目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md)
@@ -128,13 +128,12 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 1 | S-014 | S-001、S-002、S-005、S-006、S-013 | ✅ Ready |
-| 2 | S-015 | S-002、S-012、S-014、T-001 | ⚠️ Blocked |
-| 3 | S-016；S-037；S-038 | S-015 | ⚠️ Blocked |
-| 4 | S-017；S-039 | S-015、S-016、S-037；S-016、S-038 | ⚠️ Blocked |
-| 5 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
-| 6 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；B-006；S-026；S-027；S-030；S-032；S-034 | - | Draft |
-| 7 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
-| 8 | S-033 | S-030、S-031 | ⚠️ Blocked |
+| 1 | S-015 | S-002、S-012、S-014、T-001 | ✅ Ready |
+| 2 | S-016；S-037；S-038 | S-015 | ⚠️ Blocked |
+| 3 | S-017；S-039 | S-015、S-016、S-037；S-016、S-038 | ⚠️ Blocked |
+| 4 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
+| 5 | S-018；S-019；S-020；S-021；B-001；B-002；S-022；S-023；S-024；S-025；B-006；S-026；S-027；S-030；S-032；S-034 | - | Draft |
+| 6 | S-028；S-029；S-031 | S-027；S-017；S-030 | ⚠️ Blocked |
+| 7 | S-033 | S-030、S-031 | ⚠️ Blocked |
 
 用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。

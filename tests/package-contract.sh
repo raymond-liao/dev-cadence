@@ -45,6 +45,8 @@ test -d "$DIST_DIR" || fail "missing dist package; run bash scripts/build.sh fir
 required_files=(
   "dist/.dev-cadence/version"
   "dist/.dev-cadence/LICENSE"
+  "dist/.dev-cadence/README.md"
+  "dist/.dev-cadence/README.zh-CN.md"
   "dist/.dev-cadence/.dev-cadence.example.yaml"
   "dist/.dev-cadence/AGENTS-snippet.md"
   "dist/.dev-cadence/skills/using-dev-cadence/SKILL.md"
@@ -63,6 +65,8 @@ for path in "${required_files[@]}"; do
   assert_file "$path"
 done
 
+assert_same_file "README.md" "dist/.dev-cadence/README.md"
+assert_same_file "README.zh-CN.md" "dist/.dev-cadence/README.zh-CN.md"
 assert_same_file "version" "dist/.dev-cadence/version"
 assert_same_file "LICENSE" "dist/.dev-cadence/LICENSE"
 assert_same_file "src/.dev-cadence.example.yaml" "dist/.dev-cadence/.dev-cadence.example.yaml"

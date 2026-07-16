@@ -26,6 +26,14 @@ assert_literal() {
   rg --no-ignore -F -n -- "$literal" "$path" >/dev/null || fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
+assert_block() {
+  local label="$1"
+  local block="$2"
+  local path="$3"
+
+  rg --no-ignore -U -F -n -- "$block" "$path" >/dev/null || fail "missing $label in ${path#"$ROOT_DIR/"}"
+}
+
 assert_match() {
   local label="$1"
   local pattern="$2"
@@ -52,8 +60,16 @@ assert_literal \
   "$DISCOVERY_SKILL"
 
 assert_literal \
+  "User Journey output" \
+  "docs/product-design/user-journey.md" \
+  "$DISCOVERY_SKILL"
+
+assert_literal "Journey analysis stage" 'User Journey Analysis' "$DISCOVERY_SKILL"
+assert_literal "Journey confirmation stage" 'User Journey Confirmation' "$DISCOVERY_SKILL"
+assert_literal "derivation stage" 'PRD And Business Architecture Derivation' "$DISCOVERY_SKILL"
+assert_literal \
   "Discovery stage sequence" \
-  "Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation" \
+  "Background And Problem Exploration -> User Journey Analysis -> User Journey Confirmation -> PRD And Business Architecture Derivation -> Product Design Confirmation" \
   "$DISCOVERY_SKILL"
 
 for literal in \
@@ -114,8 +130,58 @@ assert_match "registry coordination" 'Registry.*Change Log|Change Log.*Registry'
 assert_match "work item impact handoff" 'work-item-planning.*impact|impact.*work-item-planning' "$DISCOVERY_SKILL"
 assert_match "current draft remains editable" 'current.*Discovery.*(draft|working baseline).*(feedback|rejection|changes).*edit|edit.*current.*Discovery.*(draft|working baseline)' "$DISCOVERY_SKILL"
 assert_match "startup baseline snapshot" 'At.*workflow start.*record|workflow start.*whether.*document.*exist' "$DISCOVERY_SKILL"
+assert_match "all Discovery runs scan candidates" 'At workflow start.*scan.*(on|for) every Discovery run|scan.*(on|for) every Discovery run.*At workflow start' "$DISCOVERY_SKILL"
+assert_match "incremental intent does not gate scan" 'incremental intent.*(only determines|determines only).*candidate.*(use|used)|does not determine whether scanning occurs' "$DISCOVERY_SKILL"
+assert_not_match "conditional incremental candidate scan" 'for incremental intent, scan the repository' "$DISCOVERY_SKILL"
+assert_match "non-default candidate initial guard" 'non-default.*(path|candidate).*(initial mode|Version 1)|initial mode.*Version 1.*non-default.*(path|candidate)' "$DISCOVERY_SKILL"
+assert_match "legacy PRD and Business Architecture without Journey" 'legacy.*PRD.*Business Architecture.*without.*User Journey.*(first|form).*Journey|PRD.*Business Architecture.*without.*User Journey.*first.*Journey' "$DISCOVERY_SKILL"
+assert_match "initial mode pre-existing baseline guard" 'pre-existing.*(authoritative|credible candidate).*(User Journey|PRD|Business Architecture|combined product-design).*(do not|must not).*select.*initial mode.*(do not|must not).*write.*Version 1' "$DISCOVERY_SKILL"
+assert_match "initial mode candidate overwrite prohibition" 'do not overwrite or replace the candidate|must not overwrite or replace the candidate' "$DISCOVERY_SKILL"
+assert_match "pre-existing baseline requires update intent and path" 'pre-existing.*(ask|require).*explicit.*update intent.*authoritative path|explicit.*update intent.*authoritative path.*pre-existing' "$DISCOVERY_SKILL"
+assert_match "current Discovery draft exemption" 'working drafts.*current Discovery conversation.*exempt|current Discovery conversation.*working drafts.*exempt' "$DISCOVERY_SKILL"
+assert_not_match "initial mode may overwrite pre-existing baseline" 'pre-existing.*may select initial mode|pre-existing.*can select initial mode|pre-existing.*should select initial mode|pre-existing.*may write Version 1|pre-existing.*can write Version 1|pre-existing.*should write Version 1|overwrite.*candidate.*without.*update intent' "$DISCOVERY_SKILL"
 assert_match "no document approval metadata" 'do not.*approval metadata|must not.*approval metadata' "$DISCOVERY_SKILL"
-assert_match "one final confirmation" 'one.*consolidated.*confirmation' "$DISCOVERY_SKILL"
+assert_match "two confirmation gates" 'two confirmation gates|two.*confirmation.*gates' "$DISCOVERY_SKILL"
+assert_match "Journey gate blocks derivation" 'User Journey.*confirmed.*before.*PRD.*Business Architecture|do not.*derive.*PRD.*Business Architecture.*until.*User Journey.*confirmed' "$DISCOVERY_SKILL"
+assert_match "Journey identity" 'J-nnn|J-[0-9]{3}' "$DISCOVERY_SKILL"
+assert_match "Feature identity" 'F-nnn|F-[0-9]{3}' "$DISCOVERY_SKILL"
+assert_literal "User Journey contract heading" '### User Journey Contract' "$DISCOVERY_SKILL"
+assert_block \
+  "User Journey section schema" \
+  $'Document Information\nJourney ID\nBusiness Line And Boundary\nJourney Map\nFeature Definitions\nOpen Questions\nRejected Directions\nChange Log' \
+  "$DISCOVERY_SKILL"
+assert_literal "Journey Map format" 'normal Markdown Table' "$DISCOVERY_SKILL"
+assert_match "Journey Map role rows" 'Rows represent roles' "$DISCOVERY_SKILL"
+assert_match "Journey Map ordered columns" 'columns represent.*business sequence.*left to right' "$DISCOVERY_SKILL"
+assert_match "Journey Map inherited empty headers" 'contiguous.*empty.*column headers.*inherits.*nearest.*non-empty.*stage header.*left' "$DISCOVERY_SKILL"
+assert_literal "Feature definition fields" 'ID | Type | Title | Description' "$DISCOVERY_SKILL"
+assert_match "Feature types" 'Offline.*System|System.*Offline' "$DISCOVERY_SKILL"
+assert_match "stable Feature identity" 'rename.*Type.*retain.*ID|retain.*ID.*rename.*Type' "$DISCOVERY_SKILL"
+assert_match "shared Feature identity" 'multiple roles.*same Feature|same Feature.*multiple roles' "$DISCOVERY_SKILL"
+assert_match "PRD traceability" 'Product Requirement.*Journey.*Feature' "$DISCOVERY_SKILL"
+assert_match "Business Architecture traceability" 'Business Architecture.*Journey.*Feature' "$DISCOVERY_SKILL"
+assert_match "Journey unaffected incremental path" 'does not affect.*User Journey.*do not.*reconfirm.*rewrite.*increment|do not.*reconfirm.*rewrite.*increment.*User Journey' "$DISCOVERY_SKILL"
+assert_match "legacy baseline migration" 'PRD.*Business Architecture.*without.*User Journey|without.*User Journey.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
+assert_literal "Change Log fields" 'Version | Recorded At | Recorded By | Change | Reason' "$DISCOVERY_SKILL"
+assert_not_match "legacy four-field Change Log wording" 'rows record version, date, change, and reason' "$DISCOVERY_SKILL"
+assert_literal "all product-design assets use Change Log contract" 'User Journey, PRD, and Business Architecture must each use this Change Log contract.' "$DISCOVERY_SKILL"
+assert_match "Change Log timezone" 'Recorded At.*(timezone|time zone).*ISO 8601|ISO 8601.*(timezone|time zone).*Recorded At' "$DISCOVERY_SKILL"
+assert_match "Recorded By git config precedence" 'repository-level.*user\.name.*user\.email.*global|user\.name.*user\.email.*repository-level.*global' "$DISCOVERY_SKILL"
+assert_literal "Recorded By email format" 'Name <email>' "$DISCOVERY_SKILL"
+assert_match "Recorded By missing identity prompt" '(username and email|user\.name and user\.email).*missing.*(ask|require).*before.*writ|before.*writ.*(ask|require).*(username and email|user\.name and user\.email)' "$DISCOVERY_SKILL"
+assert_match "Recorded By is not approval metadata" 'Recorded By.*(not|does not).*approval metadata|approval metadata.*Recorded By.*(not|does not)' "$DISCOVERY_SKILL"
+assert_match "ID allocation scans product design" '(creating|modif).*Journey.*Feature.*scan.*(repository|product-design)|(repository|product-design).*scan.*(creating|modif).*Journey.*Feature' "$DISCOVERY_SKILL"
+assert_match "ID collision rejects write" '(collision|collides).*refus.*write|refus.*write.*(collision|collides)' "$DISCOVERY_SKILL"
+assert_match "ID ambiguity becomes Open Question" '(business identity|conflict).*Open Questions|Open Questions.*(business identity|conflict)' "$DISCOVERY_SKILL"
+assert_match "ID renumbering forbidden" 'must not.*silently.*renumber|do not.*(silently )?renumber|renumber.*forbidden|renumber.*must not' "$DISCOVERY_SKILL"
+assert_literal "Discovery owns Feature identities" 'Discovery is the sole owner of confirmed Journey and Feature identities.' "$DISCOVERY_SKILL"
+assert_match "cross-workflow Feature references only" '(Work Item Planning and other workflows|other workflows.*Work Item Planning).*(only reference|reference only)' "$DISCOVERY_SKILL"
+assert_match "cross-workflow identity redefinition forbidden" '(must not|do not).*redefin.*(ID|Type|Title|business identity|order)|(ID|Type|Title|business identity|order).*must not.*redefin' "$DISCOVERY_SKILL"
+assert_match "ownership changes return Discovery" '(missing|meaning|order|sequence).*return.*Discovery|return.*Discovery.*(missing|meaning|order|sequence)' "$DISCOVERY_SKILL"
+assert_match "Journey gate link validation" 'Before User Journey Confirmation.*(verify|check).*Journey proposal.*local (links|references)|Journey proposal.*local (links|references).*before User Journey Confirmation' "$DISCOVERY_SKILL"
+assert_match "Journey link check does not create assets" 'Before User Journey Confirmation.*do not.*(derive|create).*authoritative asset' "$DISCOVERY_SKILL"
+assert_match "Product Design gate link validation" 'Before Product Design Confirmation.*(verify|check).*(three|all three).*product-design.*local links|(three|all three).*product-design.*local links.*before Product Design Confirmation' "$DISCOVERY_SKILL"
+assert_match "Product Design link check does not write unconfirmed assets" 'Before Product Design Confirmation.*without writing.*not-yet-confirmed authoritative asset' "$DISCOVERY_SKILL"
 assert_match "analysis stays conversational" 'analysis stages.*current conversation|current conversation.*analysis stages' "$DISCOVERY_SKILL"
 assert_match "no process records" '[Mm]ust not create.*run manifest.*stage records.*confirmation records|[Dd]o not create.*run manifest.*stage records.*confirmation records' "$DISCOVERY_SKILL"
 assert_match "no Discovery checkpoints" '[Mm]ust not require.*dedicated branch.*checkpoint|[Dd]o not require.*dedicated branch.*checkpoint' "$DISCOVERY_SKILL"
@@ -127,6 +193,9 @@ assert_match "no automatic technical card creation" 'Do not automatically create
 assert_not_match "legacy Discovery run directory" 'build/dev-cadence/discovery/' "$DISCOVERY_SKILL"
 assert_not_match "legacy Discovery stage records" '01-background-and-problem\.md|02-goals-and-value\.md|03-scope-and-business-architecture\.md|05-product-design-confirmation-record\.md' "$DISCOVERY_SKILL"
 assert_not_match "legacy Discovery manifest" 'Discovery manifest|manifest\.md|update the manifest|record.*manifest' "$DISCOVERY_SKILL"
+assert_not_match "legacy stage sequence" 'Goal And Value Definition -> Scope And Business Architecture Analysis' "$DISCOVERY_SKILL"
+assert_not_match "dual-only primary outputs" 'only primary.*outputs.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
+assert_not_match "single gate for all assets" 'one consolidated user confirmation covering both product-design documents' "$DISCOVERY_SKILL"
 
 for literal in \
   'Product And Technical Content Boundary' \
