@@ -47,7 +47,7 @@ Use `output_language` for user-facing planning assets and summaries:
 - `en`: English
 - `zh-CN`: Simplified Chinese
 
-If the configuration is missing or unsupported, use `en`.
+This workflow must write its rule document updates, planning proposals, and planning assets in `zh-CN`. Do not fall back to `en` for this workflow. Shared configuration may continue to serve other workflows and surfaces under their own rules.
 
 ## Generated Status Presentation
 
@@ -86,7 +86,7 @@ Current planning assets are long-lived business assets. Keep business facts in t
 
 ## Product-Design Ownership Boundary
 
-Discovery is the sole owner of confirmed Journey and Feature identities. Work Item Planning may only reference confirmed Feature Definitions.
+Discovery is the sole owner of confirmed User Journey, PRD, Business Architecture, and Feature identities and conclusions. Work Item Planning may only reference confirmed Feature Definitions and must not redefine those product-design assets while planning.
 
 Work Item Planning must not:
 
@@ -227,8 +227,11 @@ Status
 Title
 Goal or business result
 Product or work-item references
+Relationships
 Change Log
 ```
+
+`Relationships` is required. Dependencies, blockers, replacements, related items, and similar planning relationships must be recorded explicitly instead of being implied only by Story Map position or narrative text.
 
 When the planning scope already includes a confirmed size field, the card may also include `Size`. Do not invent a standalone size-estimation process here.
 
