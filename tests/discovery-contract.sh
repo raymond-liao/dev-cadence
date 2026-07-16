@@ -52,8 +52,16 @@ assert_literal \
   "$DISCOVERY_SKILL"
 
 assert_literal \
+  "User Journey output" \
+  "docs/product-design/user-journey.md" \
+  "$DISCOVERY_SKILL"
+
+assert_literal "Journey analysis stage" 'User Journey Analysis' "$DISCOVERY_SKILL"
+assert_literal "Journey confirmation stage" 'User Journey Confirmation' "$DISCOVERY_SKILL"
+assert_literal "derivation stage" 'PRD And Business Architecture Derivation' "$DISCOVERY_SKILL"
+assert_literal \
   "Discovery stage sequence" \
-  "Background And Problem Exploration -> Goal And Value Definition -> Scope And Business Architecture Analysis -> Product Design Baseline Creation -> Product Design Confirmation" \
+  "Background And Problem Exploration -> User Journey Analysis -> User Journey Confirmation -> PRD And Business Architecture Derivation -> Product Design Confirmation" \
   "$DISCOVERY_SKILL"
 
 for literal in \
@@ -115,7 +123,18 @@ assert_match "work item impact handoff" 'work-item-planning.*impact|impact.*work
 assert_match "current draft remains editable" 'current.*Discovery.*(draft|working baseline).*(feedback|rejection|changes).*edit|edit.*current.*Discovery.*(draft|working baseline)' "$DISCOVERY_SKILL"
 assert_match "startup baseline snapshot" 'At.*workflow start.*record|workflow start.*whether.*document.*exist' "$DISCOVERY_SKILL"
 assert_match "no document approval metadata" 'do not.*approval metadata|must not.*approval metadata' "$DISCOVERY_SKILL"
-assert_match "one final confirmation" 'one.*consolidated.*confirmation' "$DISCOVERY_SKILL"
+assert_match "two confirmation gates" 'two confirmation gates|two.*confirmation.*gates' "$DISCOVERY_SKILL"
+assert_match "Journey gate blocks derivation" 'User Journey.*confirmed.*before.*PRD.*Business Architecture|do not.*derive.*PRD.*Business Architecture.*until.*User Journey.*confirmed' "$DISCOVERY_SKILL"
+assert_match "Journey identity" 'J-nnn|J-[0-9]{3}' "$DISCOVERY_SKILL"
+assert_match "Feature identity" 'F-nnn|F-[0-9]{3}' "$DISCOVERY_SKILL"
+assert_literal "Feature definition fields" 'ID | Type | Title | Description' "$DISCOVERY_SKILL"
+assert_match "Feature types" 'Offline.*System|System.*Offline' "$DISCOVERY_SKILL"
+assert_match "stable Feature identity" 'rename.*Type.*retain.*ID|retain.*ID.*rename.*Type' "$DISCOVERY_SKILL"
+assert_match "shared Feature identity" 'multiple roles.*same Feature|same Feature.*multiple roles' "$DISCOVERY_SKILL"
+assert_match "PRD traceability" 'Product Requirement.*Journey.*Feature' "$DISCOVERY_SKILL"
+assert_match "Business Architecture traceability" 'Business Architecture.*Journey.*Feature' "$DISCOVERY_SKILL"
+assert_match "Journey unaffected incremental path" 'does not affect.*User Journey.*do not.*reconfirm.*rewrite.*increment|do not.*reconfirm.*rewrite.*increment.*User Journey' "$DISCOVERY_SKILL"
+assert_match "legacy baseline migration" 'PRD.*Business Architecture.*without.*User Journey|without.*User Journey.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
 assert_match "analysis stays conversational" 'analysis stages.*current conversation|current conversation.*analysis stages' "$DISCOVERY_SKILL"
 assert_match "no process records" '[Mm]ust not create.*run manifest.*stage records.*confirmation records|[Dd]o not create.*run manifest.*stage records.*confirmation records' "$DISCOVERY_SKILL"
 assert_match "no Discovery checkpoints" '[Mm]ust not require.*dedicated branch.*checkpoint|[Dd]o not require.*dedicated branch.*checkpoint' "$DISCOVERY_SKILL"
@@ -127,6 +146,9 @@ assert_match "no automatic technical card creation" 'Do not automatically create
 assert_not_match "legacy Discovery run directory" 'build/dev-cadence/discovery/' "$DISCOVERY_SKILL"
 assert_not_match "legacy Discovery stage records" '01-background-and-problem\.md|02-goals-and-value\.md|03-scope-and-business-architecture\.md|05-product-design-confirmation-record\.md' "$DISCOVERY_SKILL"
 assert_not_match "legacy Discovery manifest" 'Discovery manifest|manifest\.md|update the manifest|record.*manifest' "$DISCOVERY_SKILL"
+assert_not_match "legacy stage sequence" 'Goal And Value Definition -> Scope And Business Architecture Analysis' "$DISCOVERY_SKILL"
+assert_not_match "dual-only primary outputs" 'only primary.*outputs.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
+assert_not_match "single gate for all assets" 'one consolidated user confirmation covering both product-design documents' "$DISCOVERY_SKILL"
 
 for literal in \
   'Product And Technical Content Boundary' \
