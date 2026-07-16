@@ -26,6 +26,14 @@ assert_literal() {
   rg --no-ignore -F -n -- "$literal" "$path" >/dev/null || fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
+assert_block() {
+  local label="$1"
+  local block="$2"
+  local path="$3"
+
+  rg --no-ignore -U -F -n -- "$block" "$path" >/dev/null || fail "missing $label in ${path#"$ROOT_DIR/"}"
+}
+
 assert_match() {
   local label="$1"
   local pattern="$2"
@@ -127,6 +135,15 @@ assert_match "two confirmation gates" 'two confirmation gates|two.*confirmation.
 assert_match "Journey gate blocks derivation" 'User Journey.*confirmed.*before.*PRD.*Business Architecture|do not.*derive.*PRD.*Business Architecture.*until.*User Journey.*confirmed' "$DISCOVERY_SKILL"
 assert_match "Journey identity" 'J-nnn|J-[0-9]{3}' "$DISCOVERY_SKILL"
 assert_match "Feature identity" 'F-nnn|F-[0-9]{3}' "$DISCOVERY_SKILL"
+assert_literal "User Journey contract heading" '### User Journey Contract' "$DISCOVERY_SKILL"
+assert_block \
+  "User Journey section schema" \
+  $'Document Information\nJourney ID\nBusiness Line And Boundary\nJourney Map\nFeature Definitions\nOpen Questions\nRejected Directions\nChange Log' \
+  "$DISCOVERY_SKILL"
+assert_literal "Journey Map format" 'normal Markdown Table' "$DISCOVERY_SKILL"
+assert_match "Journey Map role rows" 'Rows represent roles' "$DISCOVERY_SKILL"
+assert_match "Journey Map ordered columns" 'columns represent.*business sequence.*left to right' "$DISCOVERY_SKILL"
+assert_match "Journey Map inherited empty headers" 'contiguous.*empty.*column headers.*inherits.*nearest.*non-empty.*stage header.*left' "$DISCOVERY_SKILL"
 assert_literal "Feature definition fields" 'ID | Type | Title | Description' "$DISCOVERY_SKILL"
 assert_match "Feature types" 'Offline.*System|System.*Offline' "$DISCOVERY_SKILL"
 assert_match "stable Feature identity" 'rename.*Type.*retain.*ID|retain.*ID.*rename.*Type' "$DISCOVERY_SKILL"
@@ -135,6 +152,10 @@ assert_match "PRD traceability" 'Product Requirement.*Journey.*Feature' "$DISCOV
 assert_match "Business Architecture traceability" 'Business Architecture.*Journey.*Feature' "$DISCOVERY_SKILL"
 assert_match "Journey unaffected incremental path" 'does not affect.*User Journey.*do not.*reconfirm.*rewrite.*increment|do not.*reconfirm.*rewrite.*increment.*User Journey' "$DISCOVERY_SKILL"
 assert_match "legacy baseline migration" 'PRD.*Business Architecture.*without.*User Journey|without.*User Journey.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
+assert_match "Journey gate link validation" 'Before User Journey Confirmation.*(verify|check).*Journey proposal.*local (links|references)|Journey proposal.*local (links|references).*before User Journey Confirmation' "$DISCOVERY_SKILL"
+assert_match "Journey link check does not create assets" 'Before User Journey Confirmation.*do not.*(derive|create).*authoritative asset' "$DISCOVERY_SKILL"
+assert_match "Product Design gate link validation" 'Before Product Design Confirmation.*(verify|check).*(three|all three).*product-design.*local links|(three|all three).*product-design.*local links.*before Product Design Confirmation' "$DISCOVERY_SKILL"
+assert_match "Product Design link check does not write unconfirmed assets" 'Before Product Design Confirmation.*without writing.*not-yet-confirmed authoritative asset' "$DISCOVERY_SKILL"
 assert_match "analysis stays conversational" 'analysis stages.*current conversation|current conversation.*analysis stages' "$DISCOVERY_SKILL"
 assert_match "no process records" '[Mm]ust not create.*run manifest.*stage records.*confirmation records|[Dd]o not create.*run manifest.*stage records.*confirmation records' "$DISCOVERY_SKILL"
 assert_match "no Discovery checkpoints" '[Mm]ust not require.*dedicated branch.*checkpoint|[Dd]o not require.*dedicated branch.*checkpoint' "$DISCOVERY_SKILL"

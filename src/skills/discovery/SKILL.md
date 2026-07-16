@@ -66,7 +66,7 @@ When writing a user-facing status summary, apply the shared status presentation 
 
 ## Generated Document References
 
-Apply the shared document-reference rules from `document-conventions` to every Dev Cadence-managed Markdown document. Check local links in all tracked Markdown before each commit; check local links in all three product-design documents before requesting either confirmation. Keep the complete selection, identity, lifecycle, and URI contract in the shared skill rather than duplicating it here.
+Apply the shared document-reference rules from `document-conventions` to every Dev Cadence-managed Markdown document. Check local links in all tracked Markdown before each commit. Before User Journey Confirmation, verify only the Journey proposal's local links and references whose targets already exist; do not derive or create PRD, Business Architecture, or any authoritative asset for this check. Before Product Design Confirmation, verify all three product-design assets' local links as one proposed combination without writing any not-yet-confirmed authoritative asset. Keep the complete selection, identity, lifecycle, and URI contract in the shared skill rather than duplicating it here.
 
 ## Inputs And Source Precedence
 
