@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-036`
-- Version：`1`
+- Version：`2`
 - Status：`Done`
 - Priority：`P2`
 - Change Type：Feature
@@ -46,7 +46,6 @@
 
 - Implementation Commit：`4dbbb6a6f1fab7c60d79147528468ec8db55bfb4`。
 - 主要修改：三个开发 workflow skill 和 `tests/workflow-symmetry.sh`。
-- 实施计划：`docs/superpowers/plans/2026-07-13-minimal-workflow-stage-gate.md`。
 - 版本在该提交中完成更新。
 
 ## Open Questions
@@ -55,7 +54,6 @@
 
 ## 相关文档
 
-- [最小验证阶段门禁实施计划](../superpowers/plans/2026-07-13-minimal-workflow-stage-gate.md)
 - [Backlog](../backlog.md)
 
 ## Change Log
@@ -63,3 +61,4 @@
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-14 | 根据既有实现、计划和 Git 历史补录已完成 Story。 | 原能力已在 `4dbbb6a` 完成交付，但 Backlog 仅保留纯文本完成项。 |
+| 2 | 2026-07-16 | 删除已移除的历史 Superpowers 实施计划引用。 | `docs/superpowers/` 已删除，保留 Implementation Commit 作为交付证据。 |
