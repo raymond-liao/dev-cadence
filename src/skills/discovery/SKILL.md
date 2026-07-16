@@ -41,6 +41,8 @@ Repository state alone does not trigger incremental mode. An update request with
 
 At workflow start, record in the conversation whether the default User Journey, PRD, and Business Architecture documents exist and, for incremental intent, scan the repository root and normal project documentation directories for candidates. Identify candidates by content and responsibility, not only by path or file name. Exclude `.dev-cadence/`, `dist/`, `build/`, `vendor/`, `node_modules/`, and `.git/` from the scan.
 
+When the workflow-start snapshot finds any pre-existing authoritative or credible candidate User Journey, PRD, Business Architecture, or combined product-design asset, and the user has not explicitly requested update, revision, or reconciliation, do not select initial mode, do not write Version 1, and do not overwrite or replace the candidate. Explain the existing baseline and ask for explicit update intent and an authoritative path before proceeding. Only working drafts created by the current Discovery conversation are exempt from this stop rule.
+
 Documents created as the working baseline by the current Discovery effort do not trigger this stop rule. During the same conversation and user goal, continue editing that current Discovery draft after feedback or rejection until the user confirms it or abandons the effort.
 
 Direct requests for a clear feature, bug fix, or behavior-preserving refactor do not have to pass through Discovery. Route them to their matching installed delivery workflow.
