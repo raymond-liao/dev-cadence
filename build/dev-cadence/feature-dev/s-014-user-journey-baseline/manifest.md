@@ -9,8 +9,8 @@
 - Workspace: `.worktrees/s-014-user-journey-baseline`
 - Branch: `codex/s-014-user-journey-baseline`
 - Started At: `2026-07-16 Asia/Shanghai`
-- Current Stage: Business Acceptance
-- Overall Status: 🔄 `in_progress`
+- Current Stage: Completion
+- Overall Status: ✅ `accepted`
 
 ## 阶段表
 
@@ -21,7 +21,7 @@
 | Implementation Plan | ✅ `confirmed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/03-implementation-plan.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `86f077965f5415ba0b7c68c18a68bdfd8d412e24` | SDD preflight 冲突已修正；freshness decision 保持 🟢 `ready`。 |
 | Development Implementation | ✅ `confirmed` | [实施记录](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/04-implementation-record.md`) | delegated continuous execution | `1c03992` | 四个计划任务、最终 review fixes 和代码审查已完成。 |
 | System Testing | ✅ `confirmed` | [系统测试报告](05-system-test-report.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/05-system-test-report.md`) | delegated continuous execution | `abd43ea` | Verification Decision 🟢 `ready`；fresh `check-all` 通过。 |
-| Business Acceptance | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
+| Business Acceptance | ✅ `accepted` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/06-business-acceptance-record.md`) | `1. Accept` by `RaymondLiao <yaoyu.liao@highsoft.ltd>` at `2026-07-16T16:49:25+0800` | `pending` | S-014 已通过用户业务验收，等待 Completion 集成决策。 |
 
 ## 验证摘要
 
@@ -49,7 +49,10 @@
 
 ## 业务验收
 
-- Decision: ⏳ `pending`
+- Decision: ✅ `accepted`
+- User Decision: `1. Accept`
+- Decision By: `RaymondLiao <yaoyu.liao@highsoft.ltd>`
+- Decision At: `2026-07-16T16:49:25+0800`
 
 ## 最终集成决定
 
