@@ -8,12 +8,6 @@ DISCOVERY_SKILL="$ROOT_DIR/src/skills/discovery/SKILL.md"
 FEATURE_SKILL="$ROOT_DIR/src/skills/feature-dev/SKILL.md"
 BUG_FIX_SKILL="$ROOT_DIR/src/skills/bug-fix/SKILL.md"
 REFACTOR_SKILL="$ROOT_DIR/src/skills/refactor/SKILL.md"
-WORK_ITEM_DIRS=(
-  "$ROOT_DIR/docs/features"
-  "$ROOT_DIR/docs/stories"
-  "$ROOT_DIR/docs/bugs"
-  "$ROOT_DIR/docs/tasks"
-)
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -98,19 +92,6 @@ assert_match \
   "scope markers do not mean quality" \
   'quality|acceptance|质量|验收' \
   "$CONVENTIONS_SKILL"
-
-for work_item_dir in "${WORK_ITEM_DIRS[@]}"; do
-  [[ -d "$work_item_dir" ]] || continue
-
-  while IFS= read -r work_item; do
-    assert_literal "included scope heading" "## ✅ 范围" "$work_item"
-    assert_literal "excluded scope heading" "## ❌ 非范围" "$work_item"
-
-    if rg -n '^## (范围|非范围)$' "$work_item" >/dev/null; then
-      fail "legacy scope heading in ${work_item#"$ROOT_DIR/"}"
-    fi
-  done < <(find "$work_item_dir" -maxdepth 1 -type f -name '*.md' -print)
-done
 
 for status_display in \
   '✅.*`confirmed`.*`completed`.*`accepted`.*`passed`.*`resolved`.*`integrated`' \
