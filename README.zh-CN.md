@@ -68,7 +68,7 @@ docs/product-design/business-architecture.md
 Background And Problem Exploration -> User Journey Analysis -> User Journey Confirmation -> PRD And Business Architecture Derivation -> Product Design Confirmation
 ```
 
-Discovery 负责 User Journey、产品需求和业务架构，不负责技术架构、工作项拆分或应用实现。它有两道确认门：User Journey Confirmation 和 Product Design Confirmation。Discovery 创建并维护 User Journey 中的 Feature Definitions；Work Item Planning 只引用已确认的 Feature，不负责定义 Feature。完整产品设计基线要求 User Journey、PRD 和 Business Architecture 三项资产保持一致。分析阶段和两道确认门都只在会话中执行，primary outputs 是 User Journey、PRD 和 Business Architecture。技术输入可以链接到既有权威技术资产，或按共享 Open Question Registry 自身规则执行支撑性 shared-asset maintenance；这既不是额外的 Discovery 主产物，也不是过程记录。增量模式必须同时具备明确更新意图和可信仓库候选文档；在会话中展示完整修订提案期间保持权威资产不变，统一确认后才原子应用受影响内容、独立版本、Change Log 和支撑资产维护。保留综合单文件时，User Journey、PRD 与 Business Architecture 职责仍分别维护版本。工作项影响移交 `work-item-planning`。
+Discovery 负责 User Journey、产品需求和业务架构，不负责技术架构、工作项拆分或应用实现。它有两道确认门：User Journey Confirmation 和 Product Design Confirmation。Discovery 创建并维护 User Journey 中的 Feature Definitions；Work Item Planning 只引用已确认的 Feature，不负责定义 Feature。完整产品设计基线要求 User Journey、PRD 和 Business Architecture 三项资产保持一致。分析阶段和两道确认门都只在会话中执行，primary outputs 是 User Journey、PRD 和 Business Architecture。技术输入可以链接到既有权威技术资产，或按共享 Open Question Registry 自身规则执行支撑性 shared-asset maintenance；这既不是额外的 Discovery 主产物，也不是过程记录。增量模式必须同时具备明确更新意图和可信仓库候选文档；在会话中展示完整修订提案期间保持权威资产不变，Product Design Confirmation 后才原子应用受影响内容、独立版本、Change Log 和支撑资产维护。保留综合单文件时，User Journey、PRD 与 Business Architecture 职责仍分别维护版本。工作项影响移交 `work-item-planning`。
 
 **architecture-design** 用于用户明确提出的目标驱动架构设计、架构方案或架构评审，核心产出只有一份按目标命名的权威文档：
 

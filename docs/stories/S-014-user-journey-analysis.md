@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-014`
-- Version：`3`
-- Status：`Done`
+- Version：`4`
+- Status：`In Progress`
 - Priority：`P1`
 - Change Type：Enhancement
 
@@ -104,3 +104,4 @@
 | 1 | 2026-07-14 | 创建 User Journey 分析卡片。 | 将 User Journey 作为可选产品分析能力保留到后续设计。 |
 | 2 | 2026-07-15 | 将卡片重定义为 Discovery 内的 User Journey 与 Feature 基线增强，并更新优先级、依赖和验收范围。 | 最新 Discovery 流程已确认 Journey 是 PRD 与 Business Architecture 的前置权威资产，Feature 必须由 Discovery 统一创建和维护。 |
 | 3 | 2026-07-16 | 三资产两门契约已实现并验证，完成 User Journey 与 Feature 基线交付。 | Discovery 源码、分发包、入口路由、公开说明和契约验证已同步通过。 |
+| 4 | 2026-07-16 | 实施与系统验证已完成，等待 Business Acceptance 后再进入 Done。 | Delivery Workflow 规则要求 Business Acceptance 不能由实施授权替代。 |

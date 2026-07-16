@@ -4,12 +4,12 @@
 - Task Slug: `s-014-user-journey-baseline`
 - Work Item: [S-014 Discovery User Journey 与 Feature 基线](../../../../docs/stories/S-014-user-journey-analysis.md)
 - Work Item Path: `docs/stories/S-014-user-journey-analysis.md`
-- Work Item Version: `2`
+- Work Item Version: `4`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Workspace: `.worktrees/s-014-user-journey-baseline`
 - Branch: `codex/s-014-user-journey-baseline`
 - Started At: `2026-07-16 Asia/Shanghai`
-- Current Stage: Implementation Plan
+- Current Stage: Development Implementation
 - Overall Status: 🔄 `in_progress`
 
 ## 阶段表
@@ -18,8 +18,8 @@
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/01-requirements.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `141307f2b36441bfc50e477f391fc09d02079644` | S-014 Version 2 为 Ready，依赖均完成且无 Open Questions。 |
 | Technical Solution | ✅ `confirmed` | [技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/02-technical-solution.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `141307f2b36441bfc50e477f391fc09d02079644` | 选择在 Discovery 权威 skill 内实现三资产、两道确认门。 |
-| Implementation Plan | 🔄 `in_progress` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/03-implementation-plan.md`) | delegated continuous execution | `141307f2b36441bfc50e477f391fc09d02079644` | SDD preflight 正在移除仅适用于 executing-plans 的 review ledger 冲突。 |
-| Development Implementation | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/04-implementation-record.md` | pending | `pending` | 等待修正后的 plan checkpoint。 |
+| Implementation Plan | ✅ `confirmed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/03-implementation-plan.md`) | `confirmed: delegated by the user's parallel implementation instruction on 2026-07-16` | `86f077965f5415ba0b7c68c18a68bdfd8d412e24` | SDD preflight 冲突已修正；freshness decision 保持 🟢 `ready`。 |
+| Development Implementation | 🔄 `in_progress` | [实施记录](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-014-user-journey-baseline/04-implementation-record.md`) | delegated continuous execution | `pending` | Subagent-driven development 已开始。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/05-system-test-report.md` | pending | `pending` | 尚未开始。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
 
