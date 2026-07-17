@@ -14,7 +14,7 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 |---|---|---|---|---|---|
 | Problem Diagnosis | ✅ `confirmed` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ✅ `confirmed` | `c117bce` | Confirmed by the user after source inspection and the isolated Git reproduction. |
-| Repair Solution | 🔄 `in_progress` | [Repair Solution](02-repair-solution.md) | ⏳ `pending` | ⏳ `pending` | Define the minimal local-merge identity and verification contract. |
+| Repair Solution | 🔄 `in_progress` | [Repair Solution](02-repair-solution.md) | ⏳ `pending` | `c4d2809` | Define the minimal local-merge identity and verification contract; user confirmation pending. |
 | Repair Plan | ⏳ `pending` | `03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | Must wait for Repair Solution confirmation. |
 | Repair Implementation | ⏳ `pending` | `04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | No implementation started. |
 | Regression Verification | ⏳ `pending` | `05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | No verification started. |
