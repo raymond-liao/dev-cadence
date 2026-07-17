@@ -22,8 +22,8 @@
 | Repair Solution | ✅ `confirmed` | `02-repair-solution.md` | confirmed by user | `7fa0975` | Use worktree config propagation plus a minimal language identity snapshot. |
 | Repair Plan | ✅ `confirmed` | `03-repair-plan.md` | confirmed by user | `7fa0975` | Confirmed plan executed. |
 | Repair Implementation | ✅ `confirmed` | `04-repair-record.md` | plan gate satisfied | `4cf27b4` | Implementation and final-review fix complete. |
-| Code Review | ✅ `confirmed` | `04-code-review-report.md` | review passed | `4cf27b4` | I-1 and I-2 fixed; no unresolved Critical or Important findings. |
-| Regression Verification | ⚠️ `confirmed` | `05-regression-test-report.md` | verification passed with risk | `4cf27b4` | `ready_with_risk`; external host generation remains for Business Acceptance. |
+| Code Review | ✅ `confirmed` | `04-code-review-report.md` | review passed | `e717c53` | I-1 and I-2 fixed; I-3 evidence closure recorded; no unresolved Critical or Important findings. |
+| Regression Verification | ⚠️ `confirmed` | `05-regression-test-report.md` | verification passed with risk | `e717c53` | `ready_with_risk`; external host generation remains for Business Acceptance. |
 | Business Acceptance | 🔄 `in_progress` | `06-business-acceptance-record.md` | pending | pending | Awaiting user decision on the documented residual risk. |
 
 ## Verification Summary
