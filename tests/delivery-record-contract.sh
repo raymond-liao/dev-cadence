@@ -90,6 +90,12 @@ create_fixture() {
 - Method: test first."
   plan_sha="$(commit_paths "$repo" "plan" "$plan_path")"
 
+  if [[ "$scenario" == "invalid-multi-range" ]]; then
+    write_file "$repo" "src/earlier.sh" "#!/usr/bin/env bash
+echo earlier"
+    commit_paths "$repo" "earlier implementation" "src/earlier.sh" >/dev/null
+  fi
+
   write_file "$repo" "$source_path" "#!/usr/bin/env bash
 echo repaired"
   write_file "$repo" "$implementation_path" "# Repair Record
@@ -104,6 +110,8 @@ echo repaired"
 
   implementation_record_text="# Repair Record
 
+
+- Implementation Base SHA: \`$plan_sha\`
 - Final Implementation SHA: \`$implementation_sha\`
 - Final Review: \`approved\`
 
@@ -115,6 +123,8 @@ echo repaired"
     invalid-placeholder)
       implementation_record_text="# Repair Record
 
+
+- Implementation Base SHA: \`$plan_sha\`
 - Final Implementation SHA: \`$implementation_sha\`
 - Final Review: \`approved\`
 
@@ -125,8 +135,20 @@ pending"
     invalid-review)
       implementation_record_text="# Repair Record
 
+
+- Implementation Base SHA: \`$plan_sha\`
 - Final Implementation SHA: \`$implementation_sha\`
 - Final Review: \`pending\`
+
+## Changed Files
+
+- \`src/example.sh\`"
+      ;;
+    invalid-missing-review)
+      implementation_record_text="# Repair Record
+
+- Implementation Base SHA: \`$plan_sha\`
+- Final Implementation SHA: \`$implementation_sha\`
 
 ## Changed Files
 
@@ -176,6 +198,11 @@ echo changed after skipped"
 
 - Test Result: \`passed\`
 - Command: \`bash tests/delivery-record-contract.sh\`"
+  if [[ "$scenario" == "invalid-missing-test-result" ]]; then
+    verification_text="# Regression Test Report
+
+- Command: \`bash tests/delivery-record-contract.sh\`"
+  fi
   write_file "$repo" "$verification_path" "$verification_text"
   verification_sha="$(commit_paths "$repo" "verification" "$verification_path")"
 
@@ -233,6 +260,10 @@ echo changed after skipped"
       sed -i.bak '/| Regression Verification |/d' "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$run_dir_rel/manifest.md.bak"
       ;;
+    valid-abandoned)
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/; s/| Business Acceptance | `confirmed`/| Business Acceptance | `skipped`/' "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
   esac
 
   printf '%s\n' "$run_dir"
@@ -267,6 +298,9 @@ run_expect_success "$valid_run"
 valid_no_tracked_changes_run="$(create_fixture "valid-no-tracked-changes")"
 run_expect_success "$valid_no_tracked_changes_run"
 
+valid_abandoned_run="$(create_fixture "valid-abandoned")"
+run_expect_success "$valid_abandoned_run"
+
 placeholder_run="$(create_fixture "invalid-placeholder")"
 run_expect_failure "$placeholder_run" "FAIL: implementation record has pending Changed Files"
 
@@ -296,5 +330,14 @@ run_expect_failure "$invalid_changed_files_run" "FAIL: Changed Files do not matc
 
 invalid_missing_verification_run="$(create_fixture "invalid-missing-verification")"
 run_expect_failure "$invalid_missing_verification_run" "FAIL: terminal manifest is missing verification record artifact"
+
+invalid_multi_range_run="$(create_fixture "invalid-multi-range")"
+run_expect_failure "$invalid_multi_range_run" "FAIL: Changed Files do not match final implementation commit range"
+
+invalid_missing_review_run="$(create_fixture "invalid-missing-review")"
+run_expect_failure "$invalid_missing_review_run" "FAIL: terminal implementation record is missing final review conclusion"
+
+invalid_missing_test_result_run="$(create_fixture "invalid-missing-test-result")"
+run_expect_failure "$invalid_missing_test_result_run" "FAIL: terminal verification record is missing test conclusion"
 
 printf 'Delivery record contract checks passed.\n'

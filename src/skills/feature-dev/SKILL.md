@@ -547,7 +547,7 @@ At the end of this stage, write or update:
 build/dev-cadence/feature-dev/<feature-slug>/04-implementation-record.md
 ```
 
-For committed tracked changes, terminal evidence must include the final implementation commit hash and final changed-files state. If a terminal or stage checkpoint has no tracked changes, record `skipped: no tracked changes` instead of substituting alternative evidence.
+For committed tracked changes, terminal evidence must include the Implementation Base SHA, final implementation commit hash, and final changed-files state derived from that implementation range. If a terminal or stage checkpoint has no tracked changes, record `skipped: no tracked changes` instead of substituting alternative evidence.
 
 After writing or updating the stage record, follow this sequence exactly: Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator.
 

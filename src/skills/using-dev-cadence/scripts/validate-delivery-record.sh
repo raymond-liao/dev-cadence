@@ -102,7 +102,7 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
 
   valid_status "$status" || fail "unknown stage status '$status' for stage '$stage'"
 
-  if [[ "$terminal_mode" -eq 1 && "$status" != "confirmed" ]]; then
+  if [[ "$terminal_mode" -eq 1 && "$status" != "confirmed" && "$status" != "skipped" ]]; then
     terminal_stage_gap="$stage ($status)"
   fi
 
@@ -161,7 +161,7 @@ done < <(
 
 if [[ "$terminal_mode" -eq 1 ]]; then
   case "$overall_status" in
-    accepted|rejected|accepted_with_risk|integrated)
+    accepted|rejected|accepted_with_risk|integrated|abandoned)
       ;;
     *)
       fail "terminal manifest has non-terminal overall status '$overall_status'"
@@ -215,6 +215,7 @@ else
   [[ "$final_sha_value" =~ ^[0-9a-f]{7,40}$ ]] || fail "implementation record has invalid final implementation SHA '$final_sha_value'"
   git -C "$repo_root_abs" rev-parse --verify "$final_sha_value^{commit}" >/dev/null 2>&1 ||
     fail "implementation record references unknown final implementation SHA '$final_sha_value'"
+  [[ -n "$base_sha_line" ]] || fail "committed implementation record is missing Implementation Base SHA"
   changed_files_section="$(awk '
     /^## Changed Files/ { in_section=1; next }
     in_section && /^## / { exit }
@@ -229,18 +230,14 @@ else
   [[ -n "$declared_changed_paths" ]] || fail "implementation record has no concrete Changed Files paths"
 
   run_dir_rel="${run_dir_abs#"$repo_root_abs/"}"
-  if [[ -n "$base_sha_line" ]]; then
-    if [[ "$base_sha_line" == *\`* ]]; then
-      base_sha_value="$(extract_backtick_value "$base_sha_line")"
-    else
-      base_sha_value="$(trim "${base_sha_line#*:}")"
-    fi
-    git -C "$repo_root_abs" rev-parse --verify "$base_sha_value^{commit}" >/dev/null 2>&1 ||
-      fail "implementation record references unknown Implementation Base SHA '$base_sha_value'"
-    actual_changed_paths="$(git -C "$repo_root_abs" diff --name-only "$base_sha_value..$final_sha_value")"
+  if [[ "$base_sha_line" == *\`* ]]; then
+    base_sha_value="$(extract_backtick_value "$base_sha_line")"
   else
-    actual_changed_paths="$(git -C "$repo_root_abs" diff-tree --root --no-commit-id --name-only -r "$final_sha_value")"
+    base_sha_value="$(trim "${base_sha_line#*:}")"
   fi
+  git -C "$repo_root_abs" rev-parse --verify "$base_sha_value^{commit}" >/dev/null 2>&1 ||
+    fail "implementation record references unknown Implementation Base SHA '$base_sha_value'"
+  actual_changed_paths="$(git -C "$repo_root_abs" diff --name-only "$base_sha_value..$final_sha_value")"
   actual_changed_paths="$(printf '%s\n' "$actual_changed_paths" | awk -v run_dir="$run_dir_rel/" 'index($0, run_dir) != 1 && NF' | LC_ALL=C sort -u)"
   [[ "$declared_changed_paths" == "$actual_changed_paths" ]] ||
     fail "Changed Files do not match final implementation commit range"
@@ -251,11 +248,15 @@ if rg -n 'sdd/progress\.md|sdd/[^[:space:])`]*' "$implementation_record_path" >/
 fi
 
 if [[ "$terminal_mode" -eq 1 ]]; then
+  review_conclusion="$(rg -n '^(?:- )?(Final Review|Review Result):' "$implementation_record_path" | head -n 1 || true)"
+  [[ -n "$review_conclusion" ]] || fail "terminal implementation record is missing final review conclusion"
   if rg -n 'Final Review: `pending`|Review Result: `pending`' "$implementation_record_path" >/dev/null; then
     fail "terminal implementation record retains pending final review"
   fi
 
   if [[ -n "$verification_record_path" && -f "$verification_record_path" ]]; then
+    test_conclusion="$(rg -n '^(?:- )?(Test Result|Verification Result):' "$verification_record_path" | head -n 1 || true)"
+    [[ -n "$test_conclusion" ]] || fail "terminal verification record is missing test conclusion"
     if rg -n 'Test Result: `pending`|Verification Result: `pending`' "$verification_record_path" >/dev/null; then
       fail "terminal verification record retains pending result"
     fi
