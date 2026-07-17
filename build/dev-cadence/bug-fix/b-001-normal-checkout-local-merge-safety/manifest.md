@@ -55,8 +55,8 @@
 - Verification: integrated `main` passed `bash scripts/check-all.sh` and `bash scripts/check-whitespace.sh`; implementation commit `9d21c8a` is an ancestor of `main`.
 - Parallel-work isolation: B-006 ancestor commit `9d53244` and its run records were excluded; no parallel task branch was merged.
 - Push: not performed.
-- Worktree: `.worktrees/b-001-normal-checkout-local-merge-safety` preserved for audit because selective integration rewrote commit identities.
-- Task branch: `codex/b-001-normal-checkout-local-merge-safety` preserved for audit; it was not force-deleted.
+- Worktree: `.worktrees/b-001-normal-checkout-local-merge-safety` removed after confirming it was clean and the integrated contract passed on `main`.
+- Task branch: `codex/b-001-normal-checkout-local-merge-safety` deleted after selective integration was verified on `main`.
 
 ## Residual Risks
 

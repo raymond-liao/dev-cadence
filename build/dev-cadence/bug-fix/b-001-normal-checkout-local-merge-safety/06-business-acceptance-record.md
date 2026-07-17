@@ -36,4 +36,4 @@
 - 集成后的 `main` 已通过 `bash scripts/check-all.sh` 和 `bash scripts/check-whitespace.sh`。
 - B-006 祖先提交 `9d53244` 及其运行记录未被集成；未合并任何并行任务分支。
 - 未执行 push。
-- `.worktrees/b-001-normal-checkout-local-merge-safety` 和 `codex/b-001-normal-checkout-local-merge-safety` 已保留用于审计；由于选择性集成重写了提交身份，未进行强制删除。
+- 已确认 B-001 worktree 干净且当前 `main` 上的 Finishing local merge contract 通过，随后删除 `.worktrees/b-001-normal-checkout-local-merge-safety` 和任务分支 `codex/b-001-normal-checkout-local-merge-safety`。
