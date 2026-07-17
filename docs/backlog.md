@@ -20,6 +20,8 @@
 - [ ] [P2] [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md)
 - [ ] [P2] [S-020 实施与 Review 风险传递到验证阶段](stories/S-020-implementation-review-risk-to-verification.md)
 - [ ] [P2] [S-021 验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md)
+- [ ] [P1] [B-004 `output_language` 中文配置未稳定生效](bugs/B-004-output-language-configuration-not-consistently-applied.md)
+- [ ] [P1] [B-005 Refactor 确认阶段未提供用户选项](bugs/B-005-refactor-confirmation-options-missing.md)
 - [ ] [P2] [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md)
 - [ ] [P1] [S-022 Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md)
 - [ ] [P2] [S-025 Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md)
@@ -101,6 +103,8 @@
 | [S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | - |
 | [B-001](bugs/B-001-normal-checkout-local-merge-safety.md) | - | - |
 | [B-002](bugs/B-002-normal-checkout-discard-safety.md) | - | - |
+| [B-004](bugs/B-004-output-language-configuration-not-consistently-applied.md) | - | - |
+| [B-005](bugs/B-005-refactor-confirmation-options-missing.md) | - | - |
 | [S-022](stories/S-022-bug-not-a-bug-terminal-state.md) | - | - |
 | [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
@@ -131,7 +135,7 @@
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
 | 2 | S-040 | S-005、S-010 | ✅ Ready |
-| 3 | B-001；B-002；B-006 | - | Draft |
+| 3 | B-001；B-002；B-004；B-005；B-006 | - | Draft |
 | 4 | S-037 | S-015 | ✅ Ready |
 | 5 | S-016 | S-015 | ✅ Ready |
 | 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
