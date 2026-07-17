@@ -31,10 +31,10 @@
 **Files:**
 - Modify: `src/skills/work-item-planning/SKILL.md` near Backlog And Planning Relationships.
 
-- [ ] Add a `Parallel Work View Contract` stating that the table is a candidate view, not a second status model or direct code-implementation board.
-- [ ] Define `状态` as card lifecycle only and `下一步 Workflow / 入口门禁` as an independent field.
-- [ ] Define Story, Task, Bug, and Blocked semantics without adding statuses or changing downstream gates.
-- [ ] Add a negative boundary that the view must not imply automatic start or direct code modification.
+- [x] Add a `Parallel Work View Contract` stating that the table is a candidate view, not a second status model or direct code-implementation board.
+- [x] Define `状态` as card lifecycle only and `下一步 Workflow / 入口门禁` as an independent field.
+- [x] Define Story, Task, Bug, and Blocked semantics without adding statuses or changing downstream gates.
+- [x] Add a negative boundary that the view must not imply automatic start or direct code modification.
 - [ ] Run the new contract test before the source edit and record the expected failure.
 
 ### Task 2: Backlog projection
@@ -42,11 +42,11 @@
 **Files:**
 - Modify: `docs/backlog.md:144-168`.
 
-- [ ] Keep the heading and row order unchanged.
-- [ ] Add the fifth column `下一步 Workflow / 入口门禁`.
-- [ ] Add explicit qualifications for every existing row: Story rows require `Ready` for `feature-dev`; Task rows route by confirmed goal; Bug rows allow `bug-fix` diagnosis but not code changes; Blocked rows remain dependency-blocked.
-- [ ] Keep card status values and `⚠️ Blocked` / `✅ Ready` presentation intact.
-- [ ] Preserve the existing rule that the table is used only after user authorization for parallel work.
+- [x] Keep the heading and row order unchanged.
+- [x] Add the fifth column `下一步 Workflow / 入口门禁`.
+- [x] Add explicit qualifications for every existing row: Story rows require `Ready` for `feature-dev`; Task rows route by confirmed goal; Bug rows allow `bug-fix` diagnosis but not code changes; Blocked rows remain dependency-blocked.
+- [x] Keep card status values and `⚠️ Blocked` / `✅ Ready` presentation intact.
+- [x] Preserve the existing rule that the table is used only after user authorization for parallel work.
 
 ### Task 3: Contract coverage
 
@@ -54,21 +54,21 @@
 - Create: `tests/parallel-work-table-contract.sh`.
 - Modify: `tests/run-all.sh`.
 
-- [ ] Assert the source contract and exact five-column Backlog header.
-- [ ] Assert the Backlog contains positive semantics for Draft Bug diagnosis and the prohibition on direct code changes.
-- [ ] Assert Story, Task, and Blocked qualification text exists.
-- [ ] Assert canonical statuses remain present and no new `可启动`/`可实施` status is introduced.
-- [ ] Run the standalone script and `bash tests/run-all.sh`.
+- [x] Assert the source contract and exact five-column Backlog header.
+- [x] Assert the Backlog contains positive semantics for Draft Bug diagnosis and the prohibition on direct code changes.
+- [x] Assert Story, Task, and Blocked qualification text exists.
+- [x] Assert canonical statuses remain present and no new `可启动`/`可实施` status is introduced.
+- [x] Run the standalone script and `bash tests/run-all.sh`.
 
 ### Task 4: Package synchronization
 
 **Files:**
 - Generate: `dist/.dev-cadence/**` with `bash scripts/build.sh`.
 
-- [ ] Run `bash scripts/build.sh`.
-- [ ] Run `bash tests/check-all.sh` from the worktree root.
-- [ ] Run `bash scripts/check-whitespace.sh` and `git diff --check`.
-- [ ] Record source and Backlog changes in `04-repair-record.md`; do not force-add generated `dist/`.
+- [x] Run `bash scripts/build.sh`.
+- [x] Run `bash tests/check-all.sh` from the worktree root.
+- [x] Run `bash scripts/check-whitespace.sh` and `git diff --check`.
+- [x] Record source and Backlog changes in `04-repair-record.md`; do not force-add generated `dist/`.
 
 ## Completion Conditions
 
@@ -82,4 +82,3 @@
 - Scope coverage: source rule, Backlog projection, tests and package build are represented.
 - Placeholder scan: all checks name concrete files and commands.
 - Compatibility: no new status or automatic workflow start is introduced.
-
