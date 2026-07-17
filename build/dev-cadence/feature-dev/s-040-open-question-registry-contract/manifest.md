@@ -5,11 +5,11 @@
 - Workflow: `feature-dev`
 - Task Slug: `s-040-open-question-registry-contract`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
-- Branch: `codex/s-040-open-question-registry-contract`
-- Workspace: `.worktrees/s-040-open-question-registry-contract`
+- Branch: `main`
+- Workspace: `target repository root`
 - Started At: `2026-07-17T12:12:14+08:00`
 - Current Stage: Completion
-- Overall Status: 🔄 `in_progress`
+- Overall Status: ✅ `integrated`
 
 ## Stage Table
 
@@ -33,7 +33,7 @@
 - Confirmed requirements: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/01-requirements.md`, checkpoint `78e1365`.
 - Confirmed Technical Solution: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/02-technical-solution.md`, checkpoint `35b3270`.
 - Confirmed Implementation Plan: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/03-implementation-plan.md`, checkpoint `4627bd5`.
-- Current branch and commit: `codex/s-040-open-question-registry-contract` at `4627bd5b31836d695a8f1fbb97e1117d57519919`.
+- Final branch and commit: `main` at merge commit `47d7ecbe6170c84344a298980b9a5813f4c1bb6f`.
 - Dependencies: S-005 Version `3` and S-010 Version `5` remain `Done`.
 - Material repository changes since confirmation: None outside confirmed workflow records.
 - Conclusion: ✅ `passed`; confirmed requirements, solution, plan, dependencies, and code state remain aligned.
@@ -44,8 +44,11 @@
 
 ## Business Acceptance
 
-- Decision: ⏳ `pending`.
+- Decision: ✅ `accepted`; user selected `1. Accept`.
 
 ## Final Integration Decision
 
-- ⏳ `pending` until Business Acceptance and Completion.
+- Decision: ✅ `integrated` into `main` by merge commit `47d7ecbe6170c84344a298980b9a5813f4c1bb6f`.
+- Push: not performed.
+- Worktree: `.worktrees/s-040-open-question-registry-contract` removed after merge.
+- Branch: `codex/s-040-open-question-registry-contract` deleted after merge.

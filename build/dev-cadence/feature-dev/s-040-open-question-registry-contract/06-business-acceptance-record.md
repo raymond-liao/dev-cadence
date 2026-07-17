@@ -35,4 +35,4 @@ None.
 
 ## Final Follow-Up Actions
 
-Completion is pending the user's branch integration decision. No merge, push, worktree cleanup, or branch deletion has been performed.
+The accepted implementation was merged into `main` with merge commit `47d7ecbe6170c84344a298980b9a5813f4c1bb6f`. No push was performed. The dedicated worktree `.worktrees/s-040-open-question-registry-contract` was removed and branch `codex/s-040-open-question-registry-contract` was deleted after the merge.
