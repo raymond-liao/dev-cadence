@@ -44,6 +44,7 @@ assert_match "delegated context required" '[Rr]efuse.*direct|direct.*[Rr]efuse|m
 assert_match "cached diff inspection" 'git diff (--cached|--staged)' "$COMMIT_SKILL"
 assert_match "no staging rule" 'must not.*git add|[Dd]o not.*git add' "$COMMIT_SKILL"
 assert_not_match "git add command" '^[[:space:]]*git add([[:space:]]|$)' "$COMMIT_SKILL"
+assert_match "mixed declared scope blocks" '[Ss]top.*more than one declared Dev Cadence.*scope|more than one declared Dev Cadence.*scope.*[Ss]top' "$COMMIT_SKILL"
 assert_match "sensitive files block" '[Ss]ensitive.*block|block.*[Ss]ensitive' "$COMMIT_SKILL"
 assert_match "optional scope" 'scope.*optional|optional.*scope' "$COMMIT_SKILL"
 assert_match "style means formatting" 'style.*format|format.*style' "$COMMIT_SKILL"
