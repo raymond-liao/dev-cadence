@@ -15,7 +15,7 @@
 |---|---|---|---|---|---|
 | Problem Diagnosis | ✅ `confirmed` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ✅ `confirmed` | `c117bce` | Confirmed by the user after source inspection and the isolated Git reproduction. |
 | Repair Solution | ✅ `confirmed` | [Repair Solution](02-repair-solution.md) | ✅ `confirmed` | `c4d2809` | User confirmed the fixed-SHA local-only Merge solution and version `0.21.1`. |
-| Repair Plan | 🔄 `in_progress` | [Repair Plan](03-repair-plan.md) | ⏳ `pending` | ⏳ `pending` | TDD plan for source rule, contract tests, package sync, and verification. |
+| Repair Plan | 🔄 `in_progress` | [Repair Plan](03-repair-plan.md) | ⏳ `pending` | `e92cd31` | TDD plan for source rule, contract tests, package sync, and verification; user confirmation pending. |
 | Repair Implementation | ⏳ `pending` | `04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | No implementation started. |
 | Regression Verification | ⏳ `pending` | `05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | No verification started. |
 | Business Acceptance | ⏳ `pending` | `06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | No acceptance decision requested. |
