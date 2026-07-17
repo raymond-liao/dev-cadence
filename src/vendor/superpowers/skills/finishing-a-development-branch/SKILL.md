@@ -175,6 +175,8 @@ For choice 2, list every additional external or unknown path and require a secon
 
 - The workflow-only choice must preserve external and unknown paths byte-for-byte and path-for-path.
 - Move a normal checkout or owned worktree off the task branch before deleting that exact branch.
+- B-002 whole-run Discard must not proceed from or move into detached HEAD; detached HEAD remains outside B-002 whole-run Discard.
+- Before returning success, successful postconditions require an attached, verified non-task branch.
 - Delete the run directory last in a normal checkout.
 - Remove a current-run-owned worktree last after branch and path postconditions pass.
 - The finishing flow must not remove an external or unknown worktree.
@@ -187,6 +189,7 @@ Return exactly one normalized result:
 - `discard_blocked`: identity changed, preservation could not be proven, or any destructive/postcondition step failed.
 
 Keep existing ordinary Option 4 behavior for callers that do not supply Dev Cadence current-run context, except retain the already-required typed `discard` confirmation.
+The B-002 detached-HEAD restriction does not change ordinary non-Dev-Cadence behavior.
 
 #### Option 4: Discard
 

@@ -36,6 +36,8 @@ assert_literal "blocked normalized result" '`discard_blocked`'
 assert_literal "records deleted last" "Delete the run directory last"
 assert_literal "owned worktree only" "must not remove an external or unknown worktree"
 assert_literal "postcondition verification" "Verify the exact branch, worktree, path, and run-directory postconditions"
+assert_literal "detached HEAD exclusion" "must not proceed from or move into detached HEAD"
+assert_literal "attached branch postcondition" "successful postconditions require an attached, verified non-task branch"
 assert_no_match "unscoped hard reset" '^[[:space:]]*git reset --hard([[:space:]]|$)'
 assert_no_match "unscoped clean" '^[[:space:]]*git clean -fd([[:space:]]|$)'
 
