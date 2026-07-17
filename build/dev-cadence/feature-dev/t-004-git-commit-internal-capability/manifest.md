@@ -13,9 +13,9 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 |---|---|---|---|---|---|
-| Requirements Confirmation | ✅ `confirmed` | [T-004 需求确认](01-requirements.md) | 用户明确要求直接修改，并将边界澄清为不得在 Dev Cadence 之外调用；随后确认 Version 4。 | ⏳ `pending` | 覆盖所有已安装 Workflow 和入口直接路由的 shared capability。 |
-| Technical Solution | ✅ `confirmed` | [T-004 技术方案](02-technical-solution.md) | 用户选择由 `using-dev-cadence` 集中路由，方式与 Document Conventions 相同；随后确认 Version 4。 | ⏳ `pending` | 入口拥有调用边界，shared skill 拥有完整提交规则，各调用方保留自己的提交语义。 |
-| Implementation Plan | 🔄 `in_progress` | `build/dev-cadence/feature-dev/t-004-git-commit-internal-capability/03-implementation-plan.md` | pending | ⏳ `pending` | 隔离 worktree 已建立，基线检查通过。 |
+| Requirements Confirmation | ✅ `confirmed` | [T-004 需求确认](01-requirements.md) | 用户明确要求直接修改，并将边界澄清为不得在 Dev Cadence 之外调用；随后确认 Version 4。 | `964ce00` | 覆盖所有已安装 Workflow 和入口直接路由的 shared capability。 |
+| Technical Solution | ✅ `confirmed` | [T-004 技术方案](02-technical-solution.md) | 用户选择由 `using-dev-cadence` 集中路由，方式与 Document Conventions 相同；随后确认 Version 4。 | `964ce00` | 入口拥有调用边界，shared skill 拥有完整提交规则，各调用方保留自己的提交语义。 |
+| Implementation Plan | 🔄 `in_progress` | [T-004 实施计划](03-implementation-plan.md) | pending | `964ce00` | TDD 计划已写入并等待用户确认；尚未修改执行规则。 |
 | Development Implementation | ⏳ `pending` | `build/dev-cadence/feature-dev/t-004-git-commit-internal-capability/04-implementation-record.md` | pending | ⏳ `pending` | |
 | System Testing | ⏳ `pending` | `build/dev-cadence/feature-dev/t-004-git-commit-internal-capability/05-system-test-report.md` | pending | ⏳ `pending` | |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/feature-dev/t-004-git-commit-internal-capability/06-business-acceptance-record.md` | pending | ⏳ `pending` | |
