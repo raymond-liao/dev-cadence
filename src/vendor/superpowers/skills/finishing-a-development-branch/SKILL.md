@@ -54,14 +54,37 @@ This determines which menu to show and how cleanup works:
 | `GIT_DIR != GIT_COMMON`, named branch | Standard 4 options | Provenance-based (see Step 6) |
 | `GIT_DIR != GIT_COMMON`, detached HEAD | Reduced 3 options (no merge) | No cleanup (externally managed) |
 
-### Step 3: Determine Base Branch
+### Step 3: Determine and Freeze Merge Identity
+
+For a normal checkout or named-branch worktree, determine the base branch before presenting Completion options. Prefer the local `main` branch; if it does not exist, use local `master`. If neither exists, stop and ask the user for the base branch. The merge-base result is ancestry evidence only; it must not replace the base branch name.
 
 ```bash
-# Try common base branches
-git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
+if git show-ref --verify --quiet refs/heads/main; then
+  BASE_BRANCH=main
+elif git show-ref --verify --quiet refs/heads/master; then
+  BASE_BRANCH=master
+else
+  printf 'Base branch not found; stop and ask the user.\n' >&2
+  exit 1
+fi
+
+git merge-base HEAD "$BASE_BRANCH" >/dev/null
+FEATURE_BRANCH=$(git branch --show-current)
+test -n "$FEATURE_BRANCH"
+EXPECTED_FEATURE_SHA=$(git rev-parse "$FEATURE_BRANCH")
+EXPECTED_BASE_SHA=$(git rev-parse "$BASE_BRANCH")
 ```
 
-Or ask: "This branch split from main - is that correct?"
+Record the snapshot in the current Completion context:
+
+```text
+Base branch: <BASE_BRANCH>
+Base SHA: <EXPECTED_BASE_SHA>
+Feature branch: <FEATURE_BRANCH>
+Feature SHA: <EXPECTED_FEATURE_SHA>
+```
+
+If base selection, ancestry verification, branch identity, or SHA capture fails, stop before presenting or executing a local Merge. Any failure stops the flow before cleanup and completion reporting. The branch is preserved on identity mismatch.
 
 ### Step 4: Present Options
 
@@ -101,13 +124,33 @@ Which option?
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 
-# Merge first — verify success before removing anything
-git checkout <base-branch>
-git pull
-git merge <feature-branch>
+# Revalidate the immutable Merge snapshot before changing checkout state.
+test "$(git rev-parse "$FEATURE_BRANCH")" = "$EXPECTED_FEATURE_SHA"
+test "$(git rev-parse "$BASE_BRANCH")" = "$EXPECTED_BASE_SHA"
+test -z "$(git status --short --untracked-files=all)"
+
+git checkout "$BASE_BRANCH"
+test -z "$(git status --short --untracked-files=all)"
+
+# This is a local-only Merge. Do not call git pull or git fetch here.
+if git merge-base --is-ancestor "$EXPECTED_FEATURE_SHA" "$BASE_BRANCH"; then
+  MERGE_RESULT=already-integrated
+else
+  git merge "$EXPECTED_FEATURE_SHA"
+  MERGE_RESULT=merged
+fi
+
+# Verify the exact approved commit is in the target before cleanup.
+git merge-base --is-ancestor "$EXPECTED_FEATURE_SHA" "$BASE_BRANCH"
+FINAL_BASE_SHA=$(git rev-parse "$BASE_BRANCH")
+test -z "$(git status --short --untracked-files=all)"
 
 # Verify tests on merged result
 <test command>
+
+# A failed command, conflict, or verification check stops here and preserves
+# the branch/worktree. Recheck identity before any branch deletion.
+test "$(git rev-parse "$FEATURE_BRANCH")" = "$EXPECTED_FEATURE_SHA"
 
 # Only after merge succeeds: cleanup worktree (Step 6), then delete branch
 ```
@@ -115,7 +158,7 @@ git merge <feature-branch>
 Then: Cleanup worktree (Step 6), then delete branch:
 
 ```bash
-git branch -d <feature-branch>
+git branch -d "$FEATURE_BRANCH"
 ```
 
 #### Option 2: Push and Create PR
