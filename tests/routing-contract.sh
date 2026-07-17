@@ -45,6 +45,7 @@ for category in \
   'Incremental Discovery' \
   'Work Item Portfolio Planning' \
   'Direct Work Item Intake' \
+  'Work Item Analysis' \
   'Discovery Boundary' \
   'Feature' \
   'Bug Fix' \
@@ -65,6 +66,9 @@ assert_match "incremental route requires intent and candidate" 'intent.*(credibl
 assert_match "incremental representative route" 'Incremental Discovery.*Select `discovery`.*credible.*candidate|credible.*candidate.*Select `discovery`'
 assert_match "work item planning route" 'Work Item Portfolio Planning.*Select `work-item-planning`|Select `work-item-planning`.*Work Item Portfolio Planning'
 assert_match "direct work item intake route" 'Direct Work Item Intake.*Select `work-item-planning`|Select `work-item-planning`.*Direct Work Item Intake'
+assert_match "work item analysis route" 'Work Item Analysis.*Select `work-item-analysis`|Select `work-item-analysis`.*Work Item Analysis'
+assert_match "work item analysis batch route" 'selected batch of Story, Task, or Bug definitions|Story, Task, or Bug definition.*batch'
+assert_match "work item analysis boundary" 'detailed work-item definition analysis rather than portfolio planning or delivery execution|does not replace downstream delivery workflows'
 assert_match "work item planning asset boundary" 'work-item-planning.*Asset Workflow.*must not create Delivery run records|must not create Delivery run records.*work-item-planning'
 assert_match "work item discovery boundary" 'Discovery Boundary.*must not define or reinterpret|must not define or reinterpret.*Discovery Boundary'
 assert_match "work item repository state boundary" 'Do not auto-start `work-item-planning` merely because the repository already contains Story cards, Task cards, Bug cards, Backlog entries, or a Story Map; repository state alone does not trigger the workflow\.'
@@ -84,7 +88,7 @@ assert_match "one routing clarification question" 'one.*routing clarification qu
 assert_match "examples are not keyword matching" 'not.*keyword|keywords.*not'
 assert_match "new workflow review rule" 'new workflow.*review|review.*new workflow'
 
-for skill in discovery feature-dev bug-fix refactor work-item-planning; do
+for skill in discovery feature-dev bug-fix refactor work-item-planning work-item-analysis; do
   assert_not_match \
     "duplicated routing matrix in $skill" \
     '^## Representative Routing Examples$' \

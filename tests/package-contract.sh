@@ -55,6 +55,7 @@ required_files=(
   "dist/.dev-cadence/skills/architecture-design/SKILL.md"
   "dist/.dev-cadence/skills/discovery/SKILL.md"
   "dist/.dev-cadence/skills/work-item-planning/SKILL.md"
+  "dist/.dev-cadence/skills/work-item-analysis/SKILL.md"
   "dist/.dev-cadence/skills/feature-dev/SKILL.md"
   "dist/.dev-cadence/skills/bug-fix/SKILL.md"
   "dist/.dev-cadence/skills/refactor/SKILL.md"
@@ -102,6 +103,9 @@ assert_match "docs/product-planning/story-map.md" "src/skills/work-item-planning
 assert_match "docs/backlog.md" "src/skills/work-item-planning/SKILL.md"
 assert_match 'Story must reach `Ready` before entering `feature-dev`' "src/skills/work-item-planning/SKILL.md"
 assert_match 'Bug may enter `bug-fix` without a `Ready` precondition' "src/skills/work-item-planning/SKILL.md"
+assert_match 'Work Item Analysis must not investigate or confirm technical root cause' "src/skills/work-item-analysis/SKILL.md"
+assert_match 'Task does not need to reach `Ready` before a Delivery Workflow starts' "src/skills/work-item-analysis/SKILL.md"
+assert_match 'Ready Story -> `feature-dev`' "src/skills/work-item-analysis/SKILL.md"
 
 if find "$DIST_DIR" -path '*/build/dev-cadence/*' -print -quit | grep -q .; then
   fail "dist package contains old Dev Cadence run records"
