@@ -8,7 +8,7 @@
 - Branch: `codex/s-040-open-question-registry-contract`
 - Workspace: `.worktrees/s-040-open-question-registry-contract`
 - Started At: `2026-07-17T12:12:14+08:00`
-- Current Stage: Implementation Plan
+- Current Stage: Development Implementation
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -17,8 +17,8 @@
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-040 需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/01-requirements.md`) | `confirmed: user explicitly requested implementation of the first backlog card on 2026-07-17` | `78e1365` | S-040 Version 1 is Ready with no Open Questions; the same instruction explicitly authorizes the repository collaboration-rule update. |
 | Technical Solution | ✅ `confirmed` | [S-040 技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/02-technical-solution.md`) | `confirmed: user replied “确认” on 2026-07-17` | `35b3270` | Shared contract + entry coordination + targeted conflict cleanup selected. |
-| Implementation Plan | 🔄 `in_progress` | [S-040 实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/03-implementation-plan.md`) | ⏳ `pending` | ⏳ `pending` | Four TDD tasks prepared for subagent-driven implementation. |
-| Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/04-implementation-record.md` | N/A | ⏳ `pending` | Subagent-driven development selected by the user. |
+| Implementation Plan | ✅ `confirmed` | [S-040 实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/03-implementation-plan.md`) | `confirmed: user replied “确认” on 2026-07-17` | `4627bd5` | Four TDD tasks confirmed for subagent-driven implementation. |
+| Development Implementation | 🔄 `in_progress` | [S-040 实施记录](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/04-implementation-record.md`) | N/A | ⏳ `pending` | Design freshness passed; Task 1 is next. |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/05-system-test-report.md` | N/A | ⏳ `pending` | Fresh verification required after implementation review. |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | Requires one fixed business acceptance decision. |
 
@@ -26,6 +26,17 @@
 
 - Baseline: `bash scripts/check-all.sh` passed on commit `6ef7c6f77cd2ad55c06317e307451fceaed9ed4f` before task changes.
 - Final verification: ⏳ `pending`.
+
+## Pre-Implementation Design Freshness
+
+- Work item: `docs/stories/S-040-open-question-registry-index-and-reference-contract.md`, Version `1`, Status `Ready`.
+- Confirmed requirements: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/01-requirements.md`, checkpoint `78e1365`.
+- Confirmed Technical Solution: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/02-technical-solution.md`, checkpoint `35b3270`.
+- Confirmed Implementation Plan: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/03-implementation-plan.md`, checkpoint `4627bd5`.
+- Current branch and commit: `codex/s-040-open-question-registry-contract` at `4627bd5b31836d695a8f1fbb97e1117d57519919`.
+- Dependencies: S-005 Version `3` and S-010 Version `5` remain `Done`.
+- Material repository changes since confirmation: None outside confirmed workflow records.
+- Conclusion: ✅ `passed`; confirmed requirements, solution, plan, dependencies, and code state remain aligned.
 
 ## Residual Risks
 
