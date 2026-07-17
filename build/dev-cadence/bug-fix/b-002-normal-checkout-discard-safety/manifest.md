@@ -8,7 +8,7 @@
 - Origin: `git@github.com:raymond-liao/dev-cadence.git`
 - Started at: `2026-07-17T18:00:08+0800`
 - Current branch: `codex/b-002-normal-checkout-discard-safety`
-- Current commit: `a3e3e1d1c441b9cfb415dbe58783c25f713e971f`
+- Current commit: `e5d228bc0ae165e6c2465fb36fa425c4ab82b30f`
 - Workspace: `.worktrees/b-002-normal-checkout-discard-safety`
 - Overall status: 🔄 `in_progress`
 
@@ -18,8 +18,8 @@
 |---|---|---|---|---|---|
 | Problem Diagnosis | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/01-problem-diagnosis-record.md` | `confirmed` | `7dc377d37343ae6d12715b2b8cb044620694ddea` | Version 2 diagnosis confirmed at `2026-07-17T20:26:34+0800`. |
 | Repair Solution | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/02-repair-solution.md` | `confirmed` | `853bc6eeba7664f2ae59f05eadba330e3c666835` | Whole-run deletion solution confirmed at `2026-07-17T20:36:40+0800`. |
-| Repair Plan | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/03-repair-plan.md` | `confirmed` | `pending` | TDD Repair Plan confirmed by the user's `同意，继续` instruction on `2026-07-17`. |
-| Repair Implementation | ⏳ `pending` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/04-repair-record.md` | `pending` | `pending` | Not started. |
+| Repair Plan | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/03-repair-plan.md` | `confirmed` | `e5d228bc0ae165e6c2465fb36fa425c4ab82b30f` | TDD Repair Plan confirmed by the user's `同意，继续` instruction on `2026-07-17`. |
+| Repair Implementation | 🔄 `in_progress` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/04-repair-record.md` | `pending` | `pending` | Pre-implementation design freshness gate passed; implementation is starting. |
 | Regression Verification | ⏳ `pending` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/05-regression-test-report.md` | `pending` | `pending` | Not started. |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/06-business-acceptance-record.md` | `pending` | `pending` | Not started. |
 
@@ -31,6 +31,15 @@
 - Problem Diagnosis Version 1 was confirmed at `2026-07-17T18:11:38+0800` and superseded by the Version 2 scope expansion at `2026-07-17T18:42:34+0800`.
 - Problem Diagnosis Version 2 was confirmed at `2026-07-17T20:26:34+0800`.
 - Repair Solution was confirmed at `2026-07-17T20:36:40+0800`.
+
+## Pre-Implementation Design Freshness
+
+- Conclusion: ✅ `confirmed`; the confirmed diagnosis, Repair Solution, and Repair Plan remain valid.
+- Work item: `docs/bugs/B-002-normal-checkout-discard-safety.md`, Version `2`.
+- Confirmed inputs: `01-problem-diagnosis-record.md`, `02-repair-solution.md`, and `03-repair-plan.md` in this run directory.
+- Code identity: branch `codex/b-002-normal-checkout-discard-safety` at `e5d228bc0ae165e6c2465fb36fa425c4ab82b30f` after the Repair Plan checkpoint.
+- Dependency state: no mandatory external dependency; Dev Cadence package version is `0.21.0` before the planned release update.
+- Material change check: the branch contains the confirmed Version 2 card and stage checkpoints; the affected finishing skill, three Delivery Workflow skills, tests, and package version have not changed since plan confirmation.
 
 ## Verification Summary
 
