@@ -1,0 +1,37 @@
+# Dev Cadence Bug Fix Run Manifest
+
+- Workflow: `bug-fix`
+- Bug Slug: `b-001-normal-checkout-local-merge-safety`
+- Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
+- Branch: `codex/b-001-normal-checkout-local-merge-safety`
+- Workspace: `.worktrees/b-001-normal-checkout-local-merge-safety`
+- Started At: `2026-07-17T18:02:04+08:00`
+- Current Stage: Problem Diagnosis
+- Overall Status: 🔄 `in_progress`
+
+## Stage Table
+
+| Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
+|---|---|---|---|---|---|
+| Problem Diagnosis | 🔄 `in_progress` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ⏳ `pending` | ⏳ `pending` | Reproduced the mutable feature-tip and offline-pull risks in an isolated temporary Git repository. |
+| Repair Solution | ⏳ `pending` | `02-repair-solution.md` | ⏳ `pending` | ⏳ `pending` | Must wait for Problem Diagnosis confirmation. |
+| Repair Plan | ⏳ `pending` | `03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | Must wait for Repair Solution confirmation. |
+| Repair Implementation | ⏳ `pending` | `04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | No implementation started. |
+| Regression Verification | ⏳ `pending` | `05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | No verification started. |
+| Business Acceptance | ⏳ `pending` | `06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | No acceptance decision requested. |
+
+## Repository Identity
+
+- Initial repair context: `9d5324475e3399624df461ce793395f230c24e86`
+- Root version: `0.21.0`
+- Configuration: `output_language: zh-CN`, `worktree.enabled: true`, `worktree.directory: .worktrees`
+
+## Verification Summary
+
+- Baseline `bash scripts/check-all.sh`: ✅ `passed`
+- Problem diagnosis: 🔄 `in_progress`; user confirmation pending.
+- Repair solution, plan, implementation, review, regression verification, and acceptance: ⏳ `pending`.
+
+## Residual Risks
+
+- No repair has been applied. The current installed and vendored finishing rules remain unchanged until the later workflow stages are confirmed and implemented.
