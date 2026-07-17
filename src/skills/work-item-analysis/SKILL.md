@@ -38,6 +38,8 @@ Work Item Analysis may create or update only these durable work-item assets:
 
 When an authoritative Story, Task, or Bug card already exists, Work Item Analysis must reuse it instead of creating a parallel card.
 When no authoritative card exists and the user wants Work Item Analysis rather than planning-only intake, it may create a lightweight card and complete it in the same confirmed analysis.
+When Work Item Analysis creates a card that is not yet registered in `docs/backlog.md`, it must hand the card to `work-item-planning` for Backlog registration before downstream delivery.
+Work Item Analysis must not add, remove, or reorder Backlog rows while creating or analyzing a missing card.
 
 ## Analysis Modes
 
@@ -79,7 +81,7 @@ For `batch analysis`, also inspect the selected set for duplicate scope, overlap
 Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged.
 Present the proposed card path, current Version, proposed Version, type, goal, scope, status change, open questions, dependencies, and next workflow for each selected item.
 The user may confirm only part of the proposal; unconfirmed cards must keep their current authoritative content.
-After confirmation, atomically write only the confirmed card updates after confirmation.
+After confirmation, atomically write only the confirmed card updates.
 
 ## Story Analysis
 

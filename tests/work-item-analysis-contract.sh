@@ -84,6 +84,8 @@ assert_literal "bug direct handoff" 'Bug may enter `bug-fix` without a `Ready` p
 
 assert_literal "card reuse" 'When an authoritative Story, Task, or Bug card already exists, Work Item Analysis must reuse it instead of creating a parallel card.' "$SKILL"
 assert_match "lightweight card creation" 'create a lightweight card and complete it in the same confirmed analysis|lightweight card.*same confirmed analysis' "$SKILL"
+assert_literal "missing-card backlog handoff" 'When Work Item Analysis creates a card that is not yet registered in `docs/backlog.md`, it must hand the card to `work-item-planning` for Backlog registration before downstream delivery.' "$SKILL"
+assert_literal "missing-card no order write" 'Work Item Analysis must not add, remove, or reorder Backlog rows while creating or analyzing a missing card.' "$SKILL"
 assert_literal "shared card conflict stop" 'When Work Item Analysis finds a Version or visible-fact conflict, it must stop and require a user decision before continuing.' "$SKILL"
 assert_literal "change log schema" "Version | Recorded At | Recorded By | Change | Reason" "$SKILL"
 assert_match "substantive version increments" 'Increment the Version when confirmed changes alter the card'\''s goal, scope, expected behavior, acceptance or completion conditions, key dependencies, or requirement decisions' "$SKILL"
@@ -97,7 +99,7 @@ assert_match "delivery boundary" 'must not design technical solutions, modify co
 assert_match "bug-fix boundary" 'does not replace `bug-fix`|`bug-fix`.*root cause.*repair boundary' "$SKILL"
 
 assert_match "proposal before confirmation" 'Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged' "$SKILL"
-assert_match "atomic confirmed write" 'atomically write only the confirmed card updates after confirmation|atomically write only confirmed Story, Task, and Bug updates' "$SKILL"
+assert_match "atomic confirmed write" 'atomically write only the confirmed card updates\.|atomically write only confirmed Story, Task, and Bug updates' "$SKILL"
 assert_match "partial confirmation" 'The user may confirm only part of the proposal|unconfirmed cards must keep their current authoritative content' "$SKILL"
 assert_match "downstream handoff" 'Ready Story -> `feature-dev`|Task -> `feature-dev` / `bug-fix` / `refactor`|Bug -> `bug-fix`' "$SKILL"
 assert_not_match "delivery build records" '04-code-review-report\.md|01-requirements\.md|02-technical-solution\.md|03-implementation-plan\.md|Business Acceptance' "$SKILL"
