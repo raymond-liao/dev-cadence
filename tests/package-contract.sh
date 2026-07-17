@@ -50,6 +50,7 @@ required_files=(
   "dist/.dev-cadence/.dev-cadence.example.yaml"
   "dist/.dev-cadence/AGENTS-snippet.md"
   "dist/.dev-cadence/skills/using-dev-cadence/SKILL.md"
+  "dist/.dev-cadence/skills/git-commit/SKILL.md"
   "dist/.dev-cadence/skills/document-conventions/SKILL.md"
   "dist/.dev-cadence/skills/open-question-registry/SKILL.md"
   "dist/.dev-cadence/skills/architecture-design/SKILL.md"
@@ -74,6 +75,9 @@ assert_same_file "LICENSE" "dist/.dev-cadence/LICENSE"
 assert_same_file "src/.dev-cadence.example.yaml" "dist/.dev-cadence/.dev-cadence.example.yaml"
 assert_same_file "src/AGENTS-snippet.md" "dist/.dev-cadence/AGENTS-snippet.md"
 assert_same_tree "src/vendor" "dist/.dev-cadence/vendor"
+
+assert_match ".dev-cadence/skills/git-commit/SKILL.md" "src/skills/using-dev-cadence/SKILL.md"
+assert_match "Use when using-dev-cadence delegates a Dev Cadence-managed commit" "src/skills/git-commit/SKILL.md"
 
 while IFS= read -r -d '' source_file; do
   rel_path="${source_file#"$ROOT_DIR/src/skills/"}"
