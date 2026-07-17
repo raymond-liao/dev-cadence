@@ -22,9 +22,13 @@ Before creating or updating cards, read and follow:
 
 Before producing workflow guidance, in-conversation analysis proposals, user-facing analysis summaries, or durable work-item updates, read `.dev-cadence.yaml` from the target repository root.
 
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before producing any listed analysis output. In a linked worktree, verify that the propagated configuration is present before continuing.
+
 - `output_language: en` uses English.
 - `output_language: zh-CN` uses Simplified Chinese.
 - If the file or value is missing or unsupported, use English.
+
+Use the selected language for workflow guidance, in-conversation analysis proposals, user-facing analysis summaries, and durable work-item updates.
 
 Do not read user configuration from the replaceable `.dev-cadence/` package.
 

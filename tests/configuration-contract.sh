@@ -34,4 +34,14 @@ for workflow in feature-dev bug-fix refactor; do
     "src/skills/$workflow/SKILL.md"
 done
 
+for workflow in discovery architecture-design work-item-planning work-item-analysis; do
+  assert_match "$workflow shared config reference" \
+    'Configuration Identity And Worktree Continuation|configuration propagation' \
+    "src/skills/$workflow/SKILL.md"
+done
+
+assert_match "work-item-analysis selected language" \
+  'Use the selected language' \
+  "src/skills/work-item-analysis/SKILL.md"
+
 printf 'Configuration contract checks passed.\n'
