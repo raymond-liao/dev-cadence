@@ -1,10 +1,16 @@
 # B-006 修复方案
 
-- Status: `in_progress`
+- Status: `confirmed`
 - Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/bugs/B-006-delivery-record-evidence-completeness.md)
 - Diagnosis Source: `build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`
 - Workflow: `bug-fix`
 - Repair Branch: `codex/b-006-delivery-record-evidence-completeness`
+
+## 用户确认
+
+- Decision: `confirmed`
+- User Feedback: `那可以，就按你的方案来`
+- Confirmed At: `2026-07-17T18:17:23+0800`
 
 ## 修复目标
 
@@ -97,4 +103,3 @@
 - 记录验证器需要解析当前 Markdown 记录契约；实施时必须优先复用现有文档和状态约定，避免引入第二套状态模型。
 - 历史运行记录可能无法满足新契约；本次只阻止新的不完整终态，不回写 S-014。
 - 需要用户确认本方案后，才能进入 Repair Plan 并开始测试和代码修改。
-

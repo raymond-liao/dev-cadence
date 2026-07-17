@@ -8,7 +8,7 @@
 - Workspace: `.worktrees/b-006-delivery-record-evidence-completeness`
 - Branch: `codex/b-006-delivery-record-evidence-completeness`
 - Started At: `2026-07-17 Asia/Shanghai`
-- Current Stage: Repair Solution
+- Current Stage: Repair Plan
 - Overall Status: `in_progress`
 
 ## 阶段表
@@ -16,8 +16,8 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Problem Diagnosis | `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`) | `confirmed: user said "看起来就是这个问题，继续" at 2026-07-17T18:10:57+0800` | `9d53244` | 四个根因已由用户确认。 |
-| Repair Solution | `in_progress` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/02-repair-solution.md`) | pending | `c1cc9e0` | 方案覆盖三套 Delivery Workflow、终态证据、checkpoint 绑定和运行记录验证。 |
-| Repair Plan | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
+| Repair Solution | `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/02-repair-solution.md`) | `confirmed: user said "那可以，就按你的方案来" at 2026-07-17T18:17:23+0800` | `c1cc9e0` | 用户确认按方案修复。 |
+| Repair Plan | `in_progress` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/03-repair-plan.md`) | pending | `pending` | 已在隔离 worktree；计划采用测试先行并保持三套 Workflow 对称。 |
 | Repair Implementation | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
 | Regression Verification | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
 | Business Acceptance | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
@@ -39,7 +39,8 @@
 
 ## 修复状态
 
-- Repair Solution: in_progress
+- Repair Solution: confirmed
+- Repair Plan: in_progress
 - Repair Plan: pending
 - Regression Verification: pending
 - Business Acceptance: pending
