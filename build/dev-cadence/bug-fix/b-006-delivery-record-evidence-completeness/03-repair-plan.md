@@ -237,7 +237,7 @@
   Run `git diff --check`, inspect `git diff --stat`, and confirm only the version, package/install contracts, generated dist, and in-scope source/test files changed. Commit with:
 
   ```bash
-  git add version tests/package-contract.sh tests/install-contract.sh src/skills
+  git add version tests/package-contract.sh tests/install-contract.sh
   git commit -m "chore(release): ship delivery record validator"
   ```
 
