@@ -184,7 +184,8 @@ The manifest must include:
 - a stage table with stage name, status, artifact path, user confirmation, checkpoint commit, and notes;
 - verification summary and residual risks once available;
 - business acceptance decision once available;
-- final integration decision after Completion.
+- final integration decision after Completion only when run records remain.
+- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Base branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
 
 Repository and path fields must be portable:
 
@@ -207,7 +208,7 @@ Update the manifest:
 - whenever a stage record is created or updated;
 - after each checkpoint commit, adding the commit hash;
 - before entering Business Acceptance;
-- after the finishing flow records merge, PR, keep-branch, or discard decisions.
+- Only when run records remain after the finishing flow returns merge, PR, or keep: record the final integration decision.
 
 If run records under `build/dev-cadence/` are ignored by the target repository, keep the manifest updated on disk and do not force-add ignored files unless the user or project policy requires it.
 
@@ -702,7 +703,7 @@ The business acceptance record must use this structure:
 - `Accepted Residual Risks`: residual risks accepted by the user, if any.
 - `Final Follow-Up Actions`: final follow-up actions, if any.
 
-After Completion, update `Final Follow-Up Actions` with the actual final result. Record whether the branch was merged, a PR was created, the branch was kept, or the work was discarded; also record whether any worktree was removed and whether the task branch was deleted or preserved. Do not leave final follow-up actions as future-tense TODOs when the manifest is in a terminal status.
+When the run records remain after Completion, update `Final Follow-Up Actions` with the actual final result. Record whether the branch was merged, a PR was created, or the branch was kept; also record whether any worktree was removed and whether the task branch was deleted or preserved. Do not require or attempt this update after `whole_run_discarded`. Do not leave final follow-up actions as future-tense TODOs when the manifest is in a terminal status.
 
 ## Completion
 
@@ -718,8 +719,16 @@ Pass this Dev Cadence context into the finishing flow:
 - The business acceptance record has been written or updated.
 - Ignored Dev Cadence run records under `build/dev-cadence/` may remain on disk after merge.
 - Do not push unless the user explicitly asks.
+- Current-run Discard context: Workflow, Task slug, Run directory, Task branch, Expected HEAD SHA, Base branch, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
+- Successful whole-run Discard intentionally deletes the current run records and leaves no persistent terminal record.
 
-After the finishing flow completes, update the manifest and business acceptance record with the final integration result. The manifest must include the merge, PR, keep-branch, or discard decision; worktree cleanup result; branch deletion or preservation result; final overall status; and non-`pending` checkpoint values for terminal stages.
+Derive the current-run Discard context from the confirmed manifest and stage records, then revalidate every value against current Git and filesystem state immediately before invoking the finishing flow.
+
+Handle the normalized finishing result:
+
+- `whole_run_discarded`: the current run directory no longer exists; do not update the manifest, Business Acceptance record, checkpoint fields, or any other run record. Do not run the terminal-record readiness checklist. Report the verified deletion result in the current conversation and stop this workflow.
+- `discard_cancelled` or `discard_blocked`: retain the current run and its records, report the reason, and remain in Completion without claiming a terminal result.
+- merge, pull request, or keep: update the manifest and Business Acceptance record with the final integration result, then complete the existing terminal-record readiness checklist.
 
 Before marking the run terminal, complete this readiness checklist:
 
