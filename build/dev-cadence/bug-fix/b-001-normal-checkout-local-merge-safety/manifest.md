@@ -13,7 +13,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 |---|---|---|---|---|---|
-| Problem Diagnosis | 🔄 `in_progress` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ⏳ `pending` | ⏳ `pending` | Reproduced the mutable feature-tip and offline-pull risks in an isolated temporary Git repository. |
+| Problem Diagnosis | 🔄 `in_progress` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ⏳ `pending` | `c117bce` | Reproduced the mutable feature-tip and offline-pull risks in an isolated temporary Git repository. |
 | Repair Solution | ⏳ `pending` | `02-repair-solution.md` | ⏳ `pending` | ⏳ `pending` | Must wait for Problem Diagnosis confirmation. |
 | Repair Plan | ⏳ `pending` | `03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | Must wait for Repair Solution confirmation. |
 | Repair Implementation | ⏳ `pending` | `04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | No implementation started. |
