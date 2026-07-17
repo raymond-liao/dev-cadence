@@ -18,9 +18,9 @@
 
 | Stage | Status | Artifact | User confirmation | Checkpoint commit | Notes |
 |---|---|---|---|---|---|
-| Problem Diagnosis | ✅ `confirmed` | `01-problem-diagnosis-record.md` | confirmed by user | skipped: no tracked changes | Configuration loss at the worktree boundary is accepted as the diagnosis. |
-| Repair Solution | ✅ `confirmed` | `02-repair-solution.md` | confirmed by user | skipped: no tracked changes | Use worktree config propagation plus a minimal language identity snapshot. |
-| Repair Plan | 🔄 `in_progress` | `03-repair-plan.md` | pending | pending | Plan covers rule propagation and executable contract checks. |
+| Problem Diagnosis | ✅ `confirmed` | `01-problem-diagnosis-record.md` | confirmed by user | `7fa0975` | Configuration loss at the worktree boundary is accepted as the diagnosis. |
+| Repair Solution | ✅ `confirmed` | `02-repair-solution.md` | confirmed by user | `7fa0975` | Use worktree config propagation plus a minimal language identity snapshot. |
+| Repair Plan | 🔄 `in_progress` | `03-repair-plan.md` | pending | `7fa0975` | Plan covers rule propagation and executable contract checks. |
 | Repair Implementation | ⏳ `pending` | `04-repair-record.md` | pending | pending | Not started. |
 | Code Review | ⏳ `pending` | `04-code-review-report.md` | pending | pending | Not started. |
 | Regression Verification | ⏳ `pending` | `05-regression-test-report.md` | pending | pending | Not started. |
