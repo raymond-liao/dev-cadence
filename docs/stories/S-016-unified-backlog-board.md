@@ -4,7 +4,7 @@
 
 - ID：`S-016`
 - Version：`4`
-- Status：`Ready`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -97,3 +97,4 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 | 2 | 2026-07-14 | 将 Work Item Planning 和 Story Map 的文本前置条件统一绑定到 S-015。 | S-015 已同时负责 workflow、工作项契约和 Story Map，S-016 应使用稳定工作项 ID 表达单一依赖。 |
 | 3 | 2026-07-15 | 扩展统一状态、规划关系和 Backlog 职责，并将状态更新为 Blocked。 | 工作项规划与分析方案已经确认不同工作项的成熟度和启动规则，Backlog 必须作为统一投影视图而不是机械状态看板。 |
 | 4 | 2026-07-17 | 确认生命周期区块使用五列表格，并以行顺序表达待处理项的建议顺序。 | 降低 Backlog 展示字段和重复状态来源，保留卡片与关系规划结构的职责边界。 |
+| 4 | 2026-07-17 | 记录实施、系统测试和 Business Acceptance，并将状态更新为 Done。 | 用户选择 `1. Accept`，S-016 交付结果已验收。 |

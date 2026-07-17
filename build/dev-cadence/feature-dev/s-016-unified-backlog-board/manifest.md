@@ -6,8 +6,8 @@
 - Branch: `codex/s-016-unified-backlog-board`
 - Workspace: `.worktrees/s-016-unified-backlog-board`
 - Started At: `2026-07-17`
-- Current Stage: `Business Acceptance`
-- Overall Status: 🔄 `in_progress`
+- Current Stage: `Completion`
+- Overall Status: ✅ `integrated`
 
 ## Stage Table
 
@@ -18,7 +18,7 @@
 | Implementation Plan | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-016-unified-backlog-board/03-implementation-plan.md` | delegated continuous execution from user start instruction | `skipped: no separate stage checkpoint` | Four implementation tasks with focused contract checks. |
 | Development Implementation | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-016-unified-backlog-board/04-implementation-record.md` | delegated continuous execution | `8366683`, integrated at `193acca` | Implementation and task review completed. |
 | System Testing | ✅ `confirmed` | `build/dev-cadence/feature-dev/s-016-unified-backlog-board/05-system-test-report.md` | delegated continuous execution | `58ceaea` | Clean verification worktree passed build, whitespace and full checks. |
-| Business Acceptance | ⏳ `pending` | `build/dev-cadence/feature-dev/s-016-unified-backlog-board/06-business-acceptance-record.md` | pending | pending | |
+| Business Acceptance | ✅ `accepted` | `build/dev-cadence/feature-dev/s-016-unified-backlog-board/06-business-acceptance-record.md` | `1. Accept` by `Raymond Liao <raymond-liao@outlook.com>` at `2026-07-17T17:33:39+0800` | `e638468` | Accepted with the documented non-blocking Minor observation. |
 
 ## Freshness Gate
 
@@ -29,3 +29,14 @@
 ## Verification Summary
 
 ✅ `passed`; clean worktree verification at `58ceaea` reported `bash scripts/build.sh`, `bash scripts/check-whitespace.sh`, and `bash scripts/check-all.sh` passed. Final whole-branch review found no Critical or Important findings.
+
+## Business Acceptance Decision
+
+- Decision: ✅ `accepted` (`1. Accept`).
+- Record: `build/dev-cadence/feature-dev/s-016-unified-backlog-board/06-business-acceptance-record.md`.
+
+## Final Integration Decision
+
+- Integration action: merged locally into `main` at `e638468`.
+- Worktree `.worktrees/s-016-unified-backlog-board` was removed after acceptance, and branch `codex/s-016-unified-backlog-board` was deleted.
+- No push or pull request was performed.
