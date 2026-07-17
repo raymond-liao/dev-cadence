@@ -24,7 +24,7 @@
 | Repair Implementation | ✅ `confirmed` | `04-repair-record.md` | plan gate satisfied | `4cf27b4` | Implementation and final-review fix complete. |
 | Code Review | ✅ `confirmed` | `04-code-review-report.md` | review passed | `e717c53` | I-1 and I-2 fixed; I-3 evidence closure recorded; no unresolved Critical or Important findings. |
 | Regression Verification | ⚠️ `confirmed` | `05-regression-test-report.md` | verification passed with risk | `e717c53` | `ready_with_risk`; external host generation remains for Business Acceptance. |
-| Business Acceptance | ✅ `accepted` | `06-business-acceptance-record.md` | accepted by user | pending | User selected `1. Accept` and accepted the documented external-host residual risk. |
+| Business Acceptance | ✅ `accepted` | `06-business-acceptance-record.md` | accepted by user | `88f1c45` | User selected `1. Accept` and accepted the documented external-host residual risk. |
 
 ## Completion
 
