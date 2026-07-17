@@ -1,0 +1,36 @@
+# B-007 Bug Fix 运行清单
+
+- Workflow: `bug-fix`
+- Task Slug: `b-007-parallel-work-table-qualification`
+- Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/bugs/B-007-parallel-work-table-entry-qualification.md)
+- Work Item Version: `1`
+- Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
+- Workspace: `.worktrees/b-007-parallel-work-table-qualification`
+- Branch: `codex/b-007-parallel-work-table-qualification`
+- Started At: `2026-07-18T07:19:45+0800`
+- Current Stage: Problem Diagnosis
+- Overall Status: `in_progress`
+
+## 阶段表
+
+| Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | pending | `pending` | 已完成 Backlog 视图与入口规则对照，待用户确认诊断。 |
+| Repair Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md` | pending | `pending` | 等待 Problem Diagnosis 确认。 |
+| Repair Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
+| Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
+| Regression Verification | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
+| Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
+
+## 诊断摘要
+
+- `docs/backlog.md` 的“当前可并行实施表”只有一个 `状态` 字段，没有单独表达卡片状态、依赖阻塞和下游 Workflow 入口门禁。
+- 该表的 `Draft` 说明会让用户理解为完全不能启动，而 `work-item-planning` 又明确允许 Bug 在非 `Ready` 状态进入 `bug-fix` 诊断。
+- 现有工作项规划契约测试验证了状态枚举和 Bug 入口规则，但未验证并行视图的字段语义闭环。
+
+## 验证摘要
+
+- Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`
+- Baseline checks: `bash scripts/build.sh`; `bash tests/run-all.sh` -> passed
+- Previously confirmed in conversation: B-007 is a real documentation and planning-view contract defect
+
