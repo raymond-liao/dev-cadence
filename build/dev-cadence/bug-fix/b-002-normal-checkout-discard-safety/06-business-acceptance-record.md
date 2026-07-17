@@ -31,4 +31,6 @@ Raymond Liao <raymond-liao@outlook.com>
 
 ## Final Follow-Up Actions
 
-- ⏳ `pending` Completion integration decision.
+- The accepted B-002 branch was merged locally to `main` in `5b61e3e33eaa5ff44ed13898eb64143c7adf3e15`.
+- The B-002 owned worktree was removed and branch `codex/b-002-normal-checkout-discard-safety` was deleted after merge.
+- No push or pull request was created.

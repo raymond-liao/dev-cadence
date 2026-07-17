@@ -7,10 +7,10 @@
 - Repository: `dev-cadence`
 - Origin: `git@github.com:raymond-liao/dev-cadence.git`
 - Started at: `2026-07-17T18:00:08+0800`
-- Current branch: `codex/b-002-normal-checkout-discard-safety`
-- Current commit: `bfd6502e6fb9a5a3510acb4e68f406bdac44afc4`
-- Workspace: `.worktrees/b-002-normal-checkout-discard-safety`
-- Overall status: 🔄 `in_progress`
+- Current branch: `main`
+- Current commit: `5b61e3e33eaa5ff44ed13898eb64143c7adf3e15`
+- Workspace: `target repository root`
+- Overall status: ✅ `integrated`
 
 ## Stage Table
 
@@ -21,7 +21,7 @@
 | Repair Plan | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/03-repair-plan.md` | `confirmed` | `e5d228bc0ae165e6c2465fb36fa425c4ab82b30f` | TDD Repair Plan confirmed by the user's `同意，继续` instruction on `2026-07-17`. |
 | Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/04-repair-record.md` | `confirmed` | `98c87bb` | Seven validated review findings were remediated and the refreshed whole-repair review approved `969fba1..98c87bb`. |
 | Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/05-regression-test-report.md` | `not required` | `6d33d920660ee7b7b2969c51fe5bfc0d5a6944a0` | Fresh focused, package, build, whitespace, full-contract, source/dist, and review evidence supports 🟢 `ready`. |
-| Business Acceptance | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/06-business-acceptance-record.md` | `accepted` | `bfd6502e6fb9a5a3510acb4e68f406bdac44afc4` | User selected `Accept` at `2026-07-18T06:46:29+0800`; Completion integration decision is pending. |
+| Business Acceptance | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/06-business-acceptance-record.md` | `accepted` | `bfd6502e6fb9a5a3510acb4e68f406bdac44afc4` | User selected `Accept` at `2026-07-18T06:46:29+0800`; local merge completed. |
 
 ## Repository State At Start
 
@@ -51,8 +51,7 @@
 
 ## Residual Risks
 
-- The Repair Plan requires user confirmation before implementation.
-- The exact Git command sequence for preserving unselected external changes must be verified in the Repair Plan.
+- Live destructive Discard was intentionally not executed; it remains guarded by a future Completion decision and exact typed confirmation.
 
 ## Business Acceptance
 
@@ -60,4 +59,8 @@
 
 ## Final Integration
 
-- Decision: `pending`
+- Decision: local merge to `main`.
+- Merge commit: `5b61e3e33eaa5ff44ed13898eb64143c7adf3e15`.
+- Worktree cleanup: the B-002 owned worktree was removed.
+- Branch cleanup: `codex/b-002-normal-checkout-discard-safety` was deleted after the successful merge.
+- Push: not performed.

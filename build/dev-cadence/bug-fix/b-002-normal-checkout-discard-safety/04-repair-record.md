@@ -88,10 +88,10 @@
 ## Skipped Checks
 
 - No required Task 3 checks were skipped.
-- Independent final repair review and separate Regression Verification remain ⏳ `pending`; they are subsequent gates, not skipped checks.
+- Live destructive Discard was not executed because Completion authorization was not present during Regression Verification.
 
 ## Repair Notes And Residual Risks
 
 - ✅ `completed` Task 3 self-review: the complete B-002 repair diff from `969fba1` through `631b286`, plus the local release changes, was reviewed. It contains only the confirmed B-002 workflow/test changes, package version update, current-run records, and ignored generated distribution output; no local absolute paths, temporary files, unrelated cards, or unrelated workflow changes were found.
 - ℹ️ The generated distribution is deliberately ignored and was not force-added. The package can be regenerated reproducibly with `bash scripts/build.sh`.
-- ⏳ `pending` Independent final repair review and separate regression verification remain required before later Completion decisions.
+- The refreshed independent whole-repair review approved `969fba1..98c87bb`, and Regression Verification recorded 🟢 `ready` before Business Acceptance.
