@@ -45,7 +45,7 @@
 - Consumes: optional current-run context supplied by a Dev Cadence Delivery Workflow.
 - Produces: normalized finishing results `whole_run_discarded`, `discard_cancelled`, or `discard_blocked`; ordinary finishing behavior remains available when no current-run context is supplied.
 
-- [ ] **Step 1: Write the failing finishing contract test**
+- [x] **Step 1: Write the failing finishing contract test**
 
 Create `tests/finishing-discard-contract.sh` with this contract:
 
@@ -100,7 +100,7 @@ Append this exact invocation to `tests/run-all.sh` after the existing skill cont
 bash "$ROOT_DIR/tests/finishing-discard-contract.sh"
 ```
 
-- [ ] **Step 2: Run the focused test to verify RED**
+- [x] **Step 2: Run the focused test to verify RED**
 
 Run:
 
@@ -110,7 +110,7 @@ bash tests/finishing-discard-contract.sh
 
 Expected: FAIL at `missing whole-run mode` because the vendored finishing skill has no `Dev Cadence Whole-Run Discard` contract.
 
-- [ ] **Step 3: Add the whole-run Discard mode to the finishing skill**
+- [x] **Step 3: Add the whole-run Discard mode to the finishing skill**
 
 Preserve Steps 1-4 and ordinary non-Dev-Cadence behavior. Before the existing Option 4 implementation, add a `Dev Cadence Whole-Run Discard` subsection with this exact context contract:
 
@@ -173,7 +173,7 @@ Return exactly one normalized result:
 
 Keep existing ordinary Option 4 behavior for callers that do not supply Dev Cadence current-run context, except retain the already-required typed `discard` confirmation.
 
-- [ ] **Step 4: Run focused GREEN verification**
+- [x] **Step 4: Run focused GREEN verification**
 
 Run:
 
@@ -183,7 +183,7 @@ bash tests/finishing-discard-contract.sh
 
 Expected: `Finishing Discard contract checks passed.`
 
-- [ ] **Step 5: Build and run required pre-commit checks**
+- [x] **Step 5: Build and run required pre-commit checks**
 
 Run:
 
@@ -196,7 +196,7 @@ bash scripts/check-all.sh
 
 Expected: all checks pass after the build synchronizes the vendored source into `dist/.dev-cadence/vendor/`. Do not edit `dist/` manually and do not force-add ignored distribution output.
 
-- [ ] **Step 6: Commit Task 1**
+- [x] **Step 6: Commit Task 1**
 
 Stage only the Task 1 source and test files:
 
@@ -219,7 +219,7 @@ git commit -m "fix(flow): define whole-run discard contract"
 - Consumes: confirmed current-run records and ownership identity from each Delivery Workflow.
 - Produces: symmetric caller context for Task 1 and conditional Completion behavior keyed by `whole_run_discarded`, `discard_cancelled`, and `discard_blocked`.
 
-- [ ] **Step 1: Add failing symmetry assertions**
+- [x] **Step 1: Add failing symmetry assertions**
 
 Add these assertions after the existing `completion finishing flow` assertion in `tests/workflow-symmetry.sh`:
 
@@ -245,7 +245,7 @@ assert_workflows "cancelled or blocked discard retains run" \
   'discard_cancelled.*discard_blocked.*retain|discard_blocked.*discard_cancelled.*retain'
 ```
 
-- [ ] **Step 2: Run the symmetry test to verify RED**
+- [x] **Step 2: Run the symmetry test to verify RED**
 
 Run:
 
@@ -255,7 +255,7 @@ bash tests/workflow-symmetry.sh
 
 Expected: FAIL at `whole-run discard context` because none of the three Completion sections provides the required context.
 
-- [ ] **Step 3: Update each Delivery Workflow Completion context**
+- [x] **Step 3: Update each Delivery Workflow Completion context**
 
 In each of `feature-dev`, `bug-fix`, and `refactor`, extend `Pass this Dev Cadence context into the finishing flow` with the same required fields:
 
@@ -266,7 +266,7 @@ In each of `feature-dev`, `bug-fix`, and `refactor`, extend `Pass this Dev Caden
 
 Require each workflow to derive these values from its confirmed manifest and stage records, then revalidate them against current Git/filesystem state immediately before invoking finishing.
 
-- [ ] **Step 4: Add symmetric Completion result routing**
+- [x] **Step 4: Add symmetric Completion result routing**
 
 Replace the unconditional post-finishing update paragraph in all three workflows with this semantic block, adapting only workflow-specific record names:
 
@@ -280,7 +280,7 @@ Handle the normalized finishing result:
 
 Update the earlier `Final Follow-Up Actions` rule so it applies only when the run records remain. It must not require a post-deletion update after `whole_run_discarded`.
 
-- [ ] **Step 5: Run symmetry GREEN verification**
+- [x] **Step 5: Run symmetry GREEN verification**
 
 Run:
 
@@ -290,7 +290,7 @@ bash tests/workflow-symmetry.sh
 
 Expected: `Workflow symmetry checks passed.`
 
-- [ ] **Step 6: Run focused finishing contract regression**
+- [x] **Step 6: Run focused finishing contract regression**
 
 Run:
 
@@ -300,7 +300,7 @@ bash tests/finishing-discard-contract.sh
 
 Expected: `Finishing Discard contract checks passed.`
 
-- [ ] **Step 7: Build and run required pre-commit checks**
+- [x] **Step 7: Build and run required pre-commit checks**
 
 Run:
 
@@ -312,7 +312,7 @@ bash scripts/check-all.sh
 
 Expected: all checks pass with source and distribution copies synchronized.
 
-- [ ] **Step 8: Commit Task 2**
+- [x] **Step 8: Commit Task 2**
 
 ```bash
 git add tests/workflow-symmetry.sh src/skills/feature-dev/SKILL.md src/skills/bug-fix/SKILL.md src/skills/refactor/SKILL.md
@@ -332,7 +332,7 @@ git commit -m "fix(flow): route whole-run discard completion"
 - Consumes: green Task 1 and Task 2 contracts.
 - Produces: installable Dev Cadence `0.22.0` with synchronized source and distribution rules.
 
-- [ ] **Step 1: Update the package version**
+- [x] **Step 1: Update the package version**
 
 Change `version` from:
 
@@ -346,7 +346,7 @@ to:
 0.22.0
 ```
 
-- [ ] **Step 2: Build the distribution package**
+- [x] **Step 2: Build the distribution package**
 
 Run:
 
@@ -356,7 +356,7 @@ bash scripts/build.sh
 
 Expected: exit code `0`; `dist/.dev-cadence/version` contains `0.22.0`, source workflow skills are copied to `dist/.dev-cadence/skills/`, and the vendored finishing skill is copied to `dist/.dev-cadence/vendor/`.
 
-- [ ] **Step 3: Verify source and distribution contain the key contracts**
+- [x] **Step 3: Verify source and distribution contain the key contracts**
 
 Run:
 
@@ -366,7 +366,7 @@ rg --no-ignore -n "whole_run_discarded|no persistent run record will remain|Disc
 
 Expected: matching rules in both `src/` and `dist/.dev-cadence/` for the finishing skill and all three Delivery Workflow Completion contracts.
 
-- [ ] **Step 4: Run focused contracts**
+- [x] **Step 4: Run focused contracts**
 
 Run:
 
@@ -378,7 +378,7 @@ bash tests/package-contract.sh
 
 Expected: all three scripts pass.
 
-- [ ] **Step 5: Run required repository verification**
+- [x] **Step 5: Run required repository verification**
 
 Run:
 
@@ -389,7 +389,7 @@ bash scripts/check-all.sh
 
 Expected: all contract, install, and whitespace checks pass with no failures.
 
-- [ ] **Step 6: Review the complete repair diff**
+- [x] **Step 6: Review the complete repair diff**
 
 Run:
 
@@ -412,12 +412,12 @@ git commit -m "chore(release): prepare Dev Cadence 0.22.0"
 
 ## Repair Implementation Completion Conditions
 
-- [ ] Every new contract test was observed failing for the expected missing-behavior reason before implementation.
-- [ ] `tests/finishing-discard-contract.sh` passes.
-- [ ] `tests/workflow-symmetry.sh` passes with all three Delivery Workflows using the same Completion result routing.
-- [ ] `tests/package-contract.sh` passes after the build.
-- [ ] `bash scripts/check-whitespace.sh` passes.
-- [ ] `bash scripts/check-all.sh` passes.
-- [ ] `rg --no-ignore` confirms source/dist synchronization for whole-run Discard rules.
-- [ ] The B-002 repair record identifies changed files, implementation commits, RED/GREEN evidence, and skipped checks.
-- [ ] No executable workflow rule is changed before this Repair Plan is confirmed.
+- [x] Every new contract test was observed failing for the expected missing-behavior reason before implementation.
+- [x] `tests/finishing-discard-contract.sh` passes.
+- [x] `tests/workflow-symmetry.sh` passes with all three Delivery Workflows using the same Completion result routing.
+- [x] `tests/package-contract.sh` passes after the build.
+- [x] `bash scripts/check-whitespace.sh` passes.
+- [x] `bash scripts/check-all.sh` passes.
+- [x] `rg --no-ignore` confirms source/dist synchronization for whole-run Discard rules.
+- [x] The B-002 repair record identifies changed files, implementation commits, RED/GREEN evidence, and skipped checks.
+- [x] No executable workflow rule is changed before this Repair Plan is confirmed.
