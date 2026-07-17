@@ -4,7 +4,7 @@
 
 - ID：`B-004`
 - Version：`1`
-- Status：`Draft`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Bug
 
@@ -73,3 +73,4 @@ output_language: zh-CN
 | Version | Date | Change | Reason |
 |---:|---|---|---|
 | 1 | 2026-07-16 | 创建 `output_language` 配置未稳定生效 Bug。 | 记录中文配置在 workflow 输出中经常未生效的问题，等待诊断。 |
+| 1 | 2026-07-17 | 交付完成，状态更新为 `Done`。 | B-004 已完成实现、回归验证、Business Acceptance 并合并到 `main`。 |

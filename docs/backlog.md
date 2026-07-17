@@ -14,7 +14,6 @@
 | `S-019` | [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `1` | `Draft` | `P2` |
 | `S-020` | [S-020 实施与 Review 风险传递到验证阶段](stories/S-020-implementation-review-risk-to-verification.md) | `1` | `Draft` | `P2` |
 | `S-021` | [S-021 验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) | `1` | `Draft` | `P2` |
-| `B-004` | [B-004 `output_language` 中文配置未稳定生效](bugs/B-004-output-language-configuration-not-consistently-applied.md) | `1` | `Draft` | `P1` |
 | `B-005` | [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](bugs/B-005-refactor-confirmation-options-missing.md) | `3` | `Draft` | `P1` |
 | `B-007` | [B-007 当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) | `1` | `Draft` | `P1` |
 | `S-024` | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `1` | `Draft` | `P2` |
@@ -38,6 +37,7 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Done` | `P0` |
+| `B-004` | [B-004 `output_language` 中文配置未稳定生效](bugs/B-004-output-language-configuration-not-consistently-applied.md) | `1` | `Done` | `P1` |
 | `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `4` | `Done` | `P1` |
 | `S-037` | [S-037 工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md) | `1` | `Done` | `P1` |
 | `S-016` | [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `4` | `Done` | `P1` |
@@ -140,7 +140,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 3 | B-002；B-004；B-005；B-006；B-007 | - | Draft |
+| 3 | B-002；B-005；B-006；B-007 | - | Draft |
 | 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
 | 7 | S-029 | S-017 | ⚠️ Blocked |
 | 8 | S-018；S-019；S-020；S-021 | - | Draft |
