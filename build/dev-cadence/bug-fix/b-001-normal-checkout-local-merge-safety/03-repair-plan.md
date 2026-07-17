@@ -59,7 +59,7 @@
 - Consumes: current Finishing environment detection, base branch selection, four-option Completion menu, and existing cleanup ownership rules.
 - Produces: a documented `EXPECTED_FEATURE_SHA`/base identity contract that later Task 2 packages unchanged.
 
-- [ ] **Step 1: Write the failing contract test**
+- [x] **Step 1: Write the failing contract test**
 
 Create `tests/finishing-a-development-branch-contract.sh` with `set -euo pipefail`, a `ROOT_DIR` calculation, and assertion helpers that fail with the missing contract name. Point `FINISHING_SKILL` at `src/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md`.
 
@@ -86,7 +86,7 @@ assert_not_match "local merge does not merge mutable branch" '^[[:space:]]*git m
 
 Append `bash "$ROOT_DIR/tests/finishing-a-development-branch-contract.sh"` to `tests/run-all.sh` immediately after the package contract. Keep the test focused on the vendored Finishing source; do not assert unrelated workflow prose.
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
 Run:
 
@@ -96,7 +96,7 @@ bash tests/finishing-a-development-branch-contract.sh
 
 Expected: `FAIL` because the current skill has no frozen `EXPECTED_FEATURE_SHA`, still contains `git pull`, and still merges `<feature-branch>`. This failure proves the test detects the reported bug before any production rule change.
 
-- [ ] **Step 3: Implement the minimal source-rule repair**
+- [x] **Step 3: Implement the minimal source-rule repair**
 
 Update only the base-selection and Option 1 sections of `src/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md`.
 
@@ -121,7 +121,7 @@ Replace the current Option 1 command block with a local-only sequence that moves
 
 State explicitly that every failed command, conflict, identity mismatch, or post-merge verification failure stops the flow, preserves the branch/worktree, and must not report completion. Keep the existing cleanup ordering: remove an owned worktree only after verified Merge/test success, then delete the branch. Add a final feature identity check before branch deletion so a branch that moved after Merge is retained rather than deleted.
 
-- [ ] **Step 4: Run the focused test and verify GREEN**
+- [x] **Step 4: Run the focused test and verify GREEN**
 
 Run:
 
@@ -133,7 +133,7 @@ bash scripts/check-whitespace.sh
 
 Expected: all focused contract assertions pass; every command exits `0` with no whitespace or patch errors.
 
-- [ ] **Step 5: Review Task 1 scope and create its implementation commit**
+- [x] **Step 5: Review Task 1 scope and create its implementation commit**
 
 Stage only `src/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md`, `tests/finishing-a-development-branch-contract.sh`, and `tests/run-all.sh`. Use the executing-plans commit identity gate with unit `plan-task-1`, then commit:
 
