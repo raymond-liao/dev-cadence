@@ -2,6 +2,12 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:executing-plans` to implement this plan task-by-task.
 
+## 状态
+
+✅ `confirmed`
+
+用户确认：“好，可以，继续”。该确认包括固定 SHA、local-only Merge、分支移动即停止，以及 base branch 的确定性选择规则。
+
 **Goal:** 修复 Finishing 的本地 Merge 路径，使它只合入完成门禁时确认的提交，并在离线、已集成、分支移动和合并失败场景下给出可验证且不破坏现场的结果。
 
 **Architecture:** 将 Merge 身份作为 Completion 选择前的不可变快照保存到规则上下文，在执行前重新验证 base branch 和 feature branch 仍指向快照。local-only 路径只使用本地提交对象，以固定 SHA 执行 Merge；成功后用祖先关系、最终 HEAD 和工作区状态验证结果，再沿用已有清理顺序。
@@ -50,6 +56,8 @@ The test must assert these exact source obligations:
 ```bash
 assert_literal "feature branch snapshot" 'FEATURE_BRANCH=$(git branch --show-current)' "$FINISHING_SKILL"
 assert_literal "expected feature SHA snapshot" 'EXPECTED_FEATURE_SHA=$(git rev-parse "$FEATURE_BRANCH")' "$FINISHING_SKILL"
+assert_literal "base branch selection" 'BASE_BRANCH=main' "$FINISHING_SKILL"
+assert_literal "base branch existence check" 'git show-ref --verify --quiet refs/heads/main' "$FINISHING_SKILL"
 assert_literal "expected base SHA snapshot" 'EXPECTED_BASE_SHA=$(git rev-parse "$BASE_BRANCH")' "$FINISHING_SKILL"
 assert_literal "feature identity recheck" 'test "$(git rev-parse "$FEATURE_BRANCH")" = "$EXPECTED_FEATURE_SHA"' "$FINISHING_SKILL"
 assert_literal "base identity recheck" 'test "$(git rev-parse "$BASE_BRANCH")" = "$EXPECTED_BASE_SHA"' "$FINISHING_SKILL"
@@ -87,6 +95,8 @@ FEATURE_BRANCH=$(git branch --show-current)
 EXPECTED_FEATURE_SHA=$(git rev-parse "$FEATURE_BRANCH")
 EXPECTED_BASE_SHA=$(git rev-parse "$BASE_BRANCH")
 ```
+
+Determine the base branch before taking the snapshot with this deterministic rule: use local `main` when `refs/heads/main` exists; otherwise use local `master` when `refs/heads/master` exists; if neither exists, stop and ask for the base branch. Run `git merge-base HEAD "$BASE_BRANCH"` as an ancestry check; if it fails, stop and ask for an explicit base decision. The merge-base output is evidence only and must not replace the branch name.
 
 Document that any failed identity command, detached state, dirty tracked/untracked state, or ambiguous base stops the flow before presenting or executing local Merge. Immediately before switching to base, require:
 
