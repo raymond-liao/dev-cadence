@@ -5,7 +5,7 @@
 - Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/bugs/B-006-delivery-record-evidence-completeness.md)
 - Work Item Version: `1`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
-- Workspace: `.`
+- Workspace: `.worktrees/b-006-delivery-record-evidence-completeness`
 - Branch: `codex/b-006-delivery-record-evidence-completeness`
 - Started At: `2026-07-17 Asia/Shanghai`
 - Current Stage: Problem Diagnosis
