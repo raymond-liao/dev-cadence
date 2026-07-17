@@ -69,7 +69,7 @@ esac
 
 valid_status() {
   case "$1" in
-    pending|in_progress|confirmed|blocked|skipped|accepted|accepted_with_risk|rejected|integrated)
+    pending|in_progress|confirmed|blocked|skipped)
       return 0
       ;;
     *)
@@ -105,7 +105,7 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
     checkpoint_value="$(trim "$checkpoint_cell")"
   fi
 
-  if [[ "$status" == "confirmed" || "$status" == "accepted" ]]; then
+  if [[ "$status" == "confirmed" ]]; then
     [[ "$checkpoint_value" != "pending" ]] || fail "stage '$stage' has terminal status '$status' but pending checkpoint"
     checkpoint_is_allowed "$checkpoint_value" || fail "stage '$stage' has invalid checkpoint value '$checkpoint_value'"
   fi
@@ -156,7 +156,34 @@ fi
 
 [[ "$final_sha_value" != "pending" ]] || fail "implementation record has pending final implementation SHA"
 
-if [[ "$final_sha_value" != "skipped: no tracked changes" ]]; then
+base_sha_line="$(rg -n 'Implementation Base SHA:' "$implementation_record_path" | head -n 1 || true)"
+
+if [[ "$final_sha_value" == "skipped: no tracked changes" ]]; then
+  [[ -n "$base_sha_line" ]] || fail "skipped no-tracked-changes record is missing Implementation Base SHA"
+  if [[ "$base_sha_line" == *\`* ]]; then
+    base_sha_value="$(extract_backtick_value "$base_sha_line")"
+  else
+    base_sha_value="$(trim "${base_sha_line#*:}")"
+  fi
+  [[ "$base_sha_value" =~ ^[0-9a-f]{7,40}$ ]] || fail "skipped no-tracked-changes record has invalid Implementation Base SHA '$base_sha_value'"
+  git -C "$repo_root_abs" rev-parse --verify "$base_sha_value^{commit}" >/dev/null 2>&1 ||
+    fail "skipped no-tracked-changes record references unknown Implementation Base SHA '$base_sha_value'"
+
+  run_dir_rel="${run_dir_abs#"$repo_root_abs/"}"
+  changed_paths="$(git -C "$repo_root_abs" diff --name-only "$base_sha_value..HEAD")"
+  if [[ -n "$changed_paths" ]]; then
+    while IFS= read -r changed_path; do
+      [[ -z "$changed_path" ]] && continue
+      case "$changed_path" in
+        "$run_dir_rel"/*)
+          ;;
+        *)
+          fail "skipped no-tracked-changes proof found non-record changes: $changed_path"
+          ;;
+      esac
+    done <<<"$changed_paths"
+  fi
+else
   [[ "$final_sha_value" =~ ^[0-9a-f]{7,40}$ ]] || fail "implementation record has invalid final implementation SHA '$final_sha_value'"
   changed_files_section="$(awk '
     /^## Changed Files/ { in_section=1; next }

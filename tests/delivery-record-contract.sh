@@ -70,7 +70,7 @@ create_fixture() {
   local acceptance_path="$run_dir_rel/06-business-acceptance-record.md"
   local source_path="src/example.sh"
   local diag_sha solution_sha plan_sha implementation_sha implementation_record_sha verification_sha acceptance_sha
-  local implementation_record_text verification_text artifact_for_manifest checkpoint_for_manifest
+  local implementation_record_text verification_text artifact_for_manifest checkpoint_for_manifest base_sha base_line
 
   write_file "$repo" "$diag_path" "# Problem Diagnosis
 
@@ -134,6 +134,41 @@ pending"
       ;;
   esac
 
+  base_sha="$implementation_sha"
+
+  if [[ "$scenario" == "valid-no-tracked-changes" || "$scenario" == "invalid-no-tracked-changes" || "$scenario" == "invalid-sdd-scratch" ]]; then
+    base_sha="$(git -C "$repo" rev-parse --short HEAD)"
+
+    if [[ "$scenario" == "invalid-no-tracked-changes" ]]; then
+      write_file "$repo" "$source_path" "#!/usr/bin/env bash
+echo changed after skipped"
+      commit_paths "$repo" "unexpected implementation change" "$source_path" >/dev/null
+    fi
+
+    implementation_record_text="# Repair Record
+
+- Implementation Base SHA: \`$base_sha\`
+- Final Implementation SHA: \`skipped: no tracked changes\`
+- Final Review: \`approved\`
+
+## Changed Files
+
+- \`skipped: no tracked changes\`"
+
+    if [[ "$scenario" == "invalid-sdd-scratch" ]]; then
+      implementation_record_text="# Repair Record
+
+- Implementation Base SHA: \`$base_sha\`
+- Final Implementation SHA: \`skipped: no tracked changes\`
+- Final Review: \`approved\`
+- Terminal Evidence: \`sdd/progress.md\`
+
+## Changed Files
+
+- \`skipped: no tracked changes\`"
+    fi
+  fi
+
   write_file "$repo" "$implementation_path" "$implementation_record_text"
   implementation_record_sha="$(commit_paths "$repo" "implementation record" "$implementation_path")"
 
@@ -178,8 +213,8 @@ pending"
 | Repair Solution | \`confirmed\` | \`$solution_path\` | \`confirmed\` | \`$solution_sha\` | solution captured |
 | Repair Plan | \`confirmed\` | \`$plan_path\` | \`confirmed\` | \`$plan_sha\` | plan captured |
 | Repair Implementation | \`confirmed\` | \`$artifact_for_manifest\` | \`confirmed\` | \`$checkpoint_for_manifest\` | implementation captured |
-| Regression Verification | \`accepted\` | \`$verification_path\` | \`confirmed\` | \`$verification_sha\` | test report captured |
-| Business Acceptance | \`accepted\` | \`$acceptance_path\` | \`confirmed\` | \`$acceptance_sha\` | acceptance captured |"
+| Regression Verification | \`confirmed\` | \`$verification_path\` | \`confirmed\` | \`$verification_sha\` | test report captured |
+| Business Acceptance | \`confirmed\` | \`$acceptance_path\` | \`confirmed\` | \`$acceptance_sha\` | acceptance captured |"
 
   printf '%s\n' "$run_dir"
 }
@@ -210,6 +245,9 @@ run_expect_failure() {
 valid_run="$(create_fixture "valid-run")"
 run_expect_success "$valid_run"
 
+valid_no_tracked_changes_run="$(create_fixture "valid-no-tracked-changes")"
+run_expect_success "$valid_no_tracked_changes_run"
+
 placeholder_run="$(create_fixture "invalid-placeholder")"
 run_expect_failure "$placeholder_run" "FAIL: implementation record has pending Changed Files"
 
@@ -221,5 +259,11 @@ run_expect_failure "$tree_mismatch_run" "FAIL: checkpoint tree is missing stage 
 
 pending_review_run="$(create_fixture "invalid-review")"
 run_expect_failure "$pending_review_run" "FAIL: terminal implementation record retains pending final review"
+
+sdd_scratch_run="$(create_fixture "invalid-sdd-scratch")"
+run_expect_failure "$sdd_scratch_run" "FAIL: terminal implementation record depends on ignored SDD scratch evidence"
+
+invalid_no_tracked_changes_run="$(create_fixture "invalid-no-tracked-changes")"
+run_expect_failure "$invalid_no_tracked_changes_run" "FAIL: skipped no-tracked-changes proof found non-record changes"
 
 printf 'Delivery record contract checks passed.\n'
