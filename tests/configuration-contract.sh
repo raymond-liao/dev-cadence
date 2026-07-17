@@ -21,11 +21,23 @@ assert_match "stable git common directory resolution" \
 assert_match "worktree config propagation" \
   'copy.*\.dev-cadence\.yaml|\.dev-cadence\.yaml.*copy' \
   "src/skills/using-dev-cadence/SKILL.md"
+assert_match "deterministic config comparison" \
+  'cmp -s' \
+  "src/skills/using-dev-cadence/SKILL.md"
+assert_match "deterministic config overwrite" \
+  'cp -f' \
+  "src/skills/using-dev-cadence/SKILL.md"
 assert_match "configuration snapshot" \
   'configuration snapshot|resolved language identity|output_language.*manifest' \
   "src/skills/using-dev-cadence/SKILL.md"
+assert_match "snapshot precedence" \
+  'snapshot.*first|snapshot.*before' \
+  "src/skills/using-dev-cadence/SKILL.md"
 assert_match "visible fallback" \
   'fallback.*visible|explain.*fallback|missing.*unsupported.*English' \
+  "src/skills/using-dev-cadence/SKILL.md"
+assert_match "propagation failure handling" \
+  'propagation failure.*stop|stop workflow output|environment failure' \
   "src/skills/using-dev-cadence/SKILL.md"
 
 for workflow in feature-dev bug-fix refactor; do
@@ -65,5 +77,14 @@ test ! -e "$WORKTREE/.dev-cadence.yaml" || fail "fixture worktree unexpectedly i
 COMMON_GIT_DIR="$(git -C "$WORKTREE" rev-parse --path-format=absolute --git-common-dir)"
 test "$(dirname "$COMMON_GIT_DIR")/.dev-cadence.yaml" = "$PRIMARY_ROOT/.dev-cadence.yaml" \
   || fail "fixture common-directory config source mismatch"
+CONFIG_SOURCE="$PRIMARY_ROOT/.dev-cadence.yaml"
+CONFIG_TARGET="$WORKTREE/.dev-cadence.yaml"
+printf '%s\n' 'output_language: en' > "$CONFIG_TARGET"
+if ! cmp -s "$CONFIG_SOURCE" "$CONFIG_TARGET"; then
+  cp -f "$CONFIG_SOURCE" "$CONFIG_TARGET"
+fi
+test -f "$CONFIG_TARGET" || fail "fixture propagated config missing"
+cmp -s "$CONFIG_SOURCE" "$CONFIG_TARGET" || fail "fixture propagated config differs"
+rg -q '^output_language: zh-CN$' "$CONFIG_TARGET" || fail "fixture propagated language mismatch"
 
 printf 'Configuration contract checks passed.\n'

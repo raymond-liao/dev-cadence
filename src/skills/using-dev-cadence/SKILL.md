@@ -41,9 +41,11 @@ PRIMARY_ROOT="$(dirname "$COMMON_GIT_DIR")"
 CONFIG_SOURCE="$PRIMARY_ROOT/.dev-cadence.yaml"
 ```
 
-Use the primary checkout configuration as the stable source when the current worktree does not contain `.dev-cadence.yaml`. When that source exists and the current workspace is a different worktree, copy the ignored local config into the current worktree before generating workflow output. Do not copy it into `.dev-cadence/` or commit it.
+Use the following configuration precedence for a Delivery Workflow: the active run snapshot first, then the primary checkout configuration, then the current checkout configuration when it is the primary checkout, and finally the documented fallback.
 
-For an active Delivery Workflow, record the resolved `output_language`, configuration source identity as `target repository root/.dev-cadence.yaml`, and whether worktree propagation occurred in the manifest. A resumed run must use this snapshot before applying fallback rules.
+When the primary checkout configuration exists and the current workspace is a different worktree, set `CONFIG_TARGET="$PWD/.dev-cadence.yaml"`. If `CONFIG_TARGET` is absent or differs from `CONFIG_SOURCE`, run `cp -f "$CONFIG_SOURCE" "$CONFIG_TARGET"`, then verify the result with `test -f "$CONFIG_TARGET" && cmp -s "$CONFIG_SOURCE" "$CONFIG_TARGET"`. A propagation failure must stop workflow output; use the active run snapshot if one exists, otherwise report the environment failure instead of silently selecting English. Do not copy the config into `.dev-cadence/` or commit it.
+
+For an active Delivery Workflow, record the resolved `output_language`, configuration source identity as `target repository root/.dev-cadence.yaml`, and whether worktree propagation occurred in the manifest. A resumed run must use this snapshot before applying any other source or fallback rule.
 
 If no valid config is available and no active snapshot exists, use English and make the fallback visible in the first user-visible summary by stating that the config was missing or unsupported and the default `en` was selected.
 
