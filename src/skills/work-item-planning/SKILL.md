@@ -273,6 +273,18 @@ Bug may enter `bug-fix` without a `Ready` precondition and without a confirmed r
 
 If Task analysis reveals that the work actually needs new product behavior, stop treating it as a Task-only delivery item and create or associate the correct Story instead.
 
+## Parallel Work View Contract
+
+The Backlog's parallel work table is a candidate view for coordinating authorized parallel work. It is not a second status model, a workflow-run log, or a direct code-implementation board.
+
+- `Status` is the status field and expresses only the card lifecycle; it must use the canonical work-item status contract. The status field must not be used to infer a workflow stage or to combine card maturity with entry qualification.
+- `Next Workflow / Entry Gate` is an independent view field. It states the next eligible workflow and its entry qualification; it is not another work-item status.
+- A Story must have status `Ready` before it can enter `feature-dev`.
+- A Task may route to `feature-dev`, `bug-fix`, or `refactor` according to its confirmed goal, but the corresponding workflow must confirm its own scope before delivery work may modify code.
+- A Bug may be `Draft` when it enters `bug-fix` diagnosis (Problem Diagnosis). Diagnosis does not mean repair implementation; Repair Solution and Repair Plan confirmation remain required before code changes.
+- `Blocked` means that an explicit dependency blocks the work item. It does not mean that the card has a different lifecycle or that its maturity has been reclassified.
+- The view must not automatically start a workflow or directly modify code. Parallel execution still requires the user's authorization and the selected workflow's gates.
+
 ## Versioning, Reuse, And Concurrency
 
 Every Story, Task, and Bug card must use an independent integer Version starting at `1`.

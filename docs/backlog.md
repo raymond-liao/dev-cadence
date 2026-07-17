@@ -145,24 +145,24 @@
 
 本表只展示尚未完成的工作项。相同序号的工作项可以并行实施；进入下一序号前，必须满足该序号中相关前置条件。某项完成并进入“已完成”后，必须从本表删除；随后根据 Dependency Table 重新计算其直接后继项的 `Ready` 或 `Blocked` 状态。
 
-| 序号 | 可并行工作项 | 前置条件 | 状态 |
-|---:|---|---|---|
-| 3 | B-005；B-007；B-008 | - | Draft |
-| 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
-| 7 | S-029 | S-017 | ⚠️ Blocked |
-| 8 | S-018；S-019；S-020；S-021 | - | Draft |
-| 9 | S-024 | - | Draft |
-| 10 | S-022；S-025 | - | Draft |
-| 11 | S-026；S-027 | - | Draft |
-| 12 | S-028 | S-027 | ⚠️ Blocked |
-| 13 | S-023 | - | Draft |
-| 14 | S-038 | S-015 | ✅ Ready |
-| 15 | S-039 | S-016、S-038 | ⚠️ Blocked |
-| 16 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
-| 17 | S-030 | - | Draft |
-| 18 | S-031 | S-030 | ⚠️ Blocked |
-| 19 | S-032 | - | Draft |
-| 20 | S-033 | S-030、S-031 | ⚠️ Blocked |
-| 21 | S-034 | - | Draft |
+| 序号 | 可并行工作项 | 前置条件 | 状态 | 下一步 Workflow / 入口门禁 |
+|---:|---|---|---|---|
+| 3 | B-005；B-007；B-008 | - | Draft | Bug 可进入 bug-fix Problem Diagnosis；诊断不等于修复实施，不得因此直接修改代码。 |
+| 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked | feature-dev 仅在 Story 状态为 `Ready` 后进入；当前受依赖阻塞。 |
+| 7 | S-029 | S-017 | ⚠️ Blocked | feature-dev 仅在 Story 状态为 `Ready` 后进入；当前受 S-017 依赖阻塞。 |
+| 8 | S-018；S-019；S-020；S-021 | - | Draft | feature-dev 仅在各 Story 完成分析并达到 `Ready` 后进入；不得自动启动。 |
+| 9 | S-024 | - | Draft | feature-dev 仅在 Story 达到 `Ready` 后进入；当前 Draft 仍需分析和确认。 |
+| 10 | S-022；S-025 | - | Draft | feature-dev 仅在各 Story 达到 `Ready` 后进入；当前 Draft 仍需分析和确认。 |
+| 11 | S-026；S-027 | - | Draft | feature-dev 仅在各 Story 达到 `Ready` 后进入；当前 Draft 仍需分析和确认。 |
+| 12 | S-028 | S-027 | ⚠️ Blocked | feature-dev 仅在 Story 达到 `Ready` 且满足 S-027 依赖后进入；当前受依赖阻塞。 |
+| 13 | S-023 | - | Draft | feature-dev 仅在 Story 达到 `Ready` 后进入；当前 Draft 仍需分析和确认。 |
+| 14 | S-038 | S-015 | ✅ Ready | feature-dev 可在用户授权且 Story 状态为 `Ready` 后进入；状态不等于自动启动。 |
+| 15 | S-039 | S-016、S-038 | ⚠️ Blocked | feature-dev 仅在 Story 达到 `Ready` 且依赖满足后进入；当前受依赖阻塞。 |
+| 16 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked | Task 按已确认目标进入 feature-dev / bug-fix / refactor；对应 Workflow 确认范围后才可修改代码，当前受依赖阻塞。 |
+| 17 | S-030 | - | Draft | Story 达到 `Ready` 后进入 feature-dev；当前 Draft 仍需分析和确认。 |
+| 18 | S-031 | S-030 | ⚠️ Blocked | Story 达到 `Ready` 且满足 S-030 依赖后进入 feature-dev；当前受依赖阻塞。 |
+| 19 | S-032 | - | Draft | Story 达到 `Ready` 后进入 feature-dev；当前 Draft 仍需分析和确认。 |
+| 20 | S-033 | S-030、S-031 | ⚠️ Blocked | Story 达到 `Ready` 且满足 S-030、S-031 依赖后进入 feature-dev；当前受依赖阻塞。 |
+| 21 | S-034 | - | Draft | Story 达到 `Ready` 后进入 feature-dev；当前 Draft 仍需分析和确认。 |
 
 用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。
