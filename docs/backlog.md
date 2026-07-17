@@ -11,7 +11,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `1` | `Draft` | `P1` |
+| `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `3` | `Draft` | `P1` |
 | `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Draft` | `P0` |
 | `B-002` | [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md) | `1` | `Draft` | `P0` |
 | `B-006` | [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Draft` | `P2` |
@@ -22,7 +22,7 @@
 | `S-020` | [S-020 实施与 Review 风险传递到验证阶段](stories/S-020-implementation-review-risk-to-verification.md) | `1` | `Draft` | `P2` |
 | `S-021` | [S-021 验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) | `1` | `Draft` | `P2` |
 | `B-004` | [B-004 `output_language` 中文配置未稳定生效](bugs/B-004-output-language-configuration-not-consistently-applied.md) | `1` | `Draft` | `P1` |
-| `B-005` | [B-005 Refactor 确认阶段未提供用户选项](bugs/B-005-refactor-confirmation-options-missing.md) | `1` | `Draft` | `P1` |
+| `B-005` | [B-005 已安装 Workflow 用户确认门选项与结果语义不完整](bugs/B-005-refactor-confirmation-options-missing.md) | `2` | `Draft` | `P1` |
 | `S-024` | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `1` | `Draft` | `P2` |
 | `S-022` | [S-022 Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) | `1` | `Draft` | `P1` |
 | `S-025` | [S-025 Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `1` | `Draft` | `P2` |
