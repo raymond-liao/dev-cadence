@@ -8,6 +8,7 @@
 
 ## 待处理
 
+- [ ] [P1] [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md)
 - [ ] [P0] [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md)
 - [ ] [P0] [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md)
 - [ ] [P2] [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md)
@@ -127,6 +128,7 @@
 | [S-039](stories/S-039-iteration-plan-capacity-calibration.md) | S-016, S-038 | T-002 |
 | [S-040](stories/S-040-open-question-registry-index-and-reference-contract.md) | S-005, S-010 | - |
 | [B-003](bugs/B-003-refactor-public-contract-compatibility.md) | - | - |
+| [T-004](tasks/T-004-git-commit-skill-workflow-integration.md) | - | - |
 
 ## 当前可并行实施表
 
@@ -134,7 +136,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 3 | B-001；B-002；B-004；B-005；B-006 | - | Draft |
+| 3 | T-004；B-001；B-002；B-004；B-005；B-006 | - | Draft |
 | 4 | S-037 | S-015 | ✅ Ready |
 | 5 | S-016 | S-015 | ✅ Ready |
 | 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
