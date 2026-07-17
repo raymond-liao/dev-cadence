@@ -358,7 +358,13 @@ Derive the PRD and Business Architecture from the confirmed User Journey, curren
 
 In incremental mode, classify each new input as an addition, business-architecture change, correction, replacement, rejection, Open Question, or Future Scope change, then identify whether it affects the PRD, Business Architecture, or both. Apply the Product And Technical Content Boundary and form a complete proposed revised baseline plus change summary in the conversation. In incremental mode, the proposal must not modify the authoritative PRD, Business Architecture, or supporting assets before confirmation; they remain byte-for-byte unchanged.
 
-In the proposal, show confirmed questions removed from the relevant `Open Questions` and their conclusions placed in the correct body. Propose confirmed technical conclusions for their technical authority, not the product-design baseline. When a repository-level Registry entry represents the same resolved question, include the authoritative conclusion and the atomic Registry status update in the supporting asset maintenance proposal. Remove the question from the local `Open Questions` section after its conclusion is placed in the owning body, but retain its Registry entry in the applicable terminal status; the Registry terminal entry is retained.
+In the proposal, show confirmed questions and their conclusions placed in the relevant body.
+Confirmed questions are removed from local `Open Questions` only after that conclusion is placed. Propose confirmed technical conclusions for their technical authority, not the product-design baseline.
+When a repository-level Registry entry represents the same resolved question, include the authoritative conclusion in the owning body.
+Remove the question from the local `Open Questions` section only after its conclusion is placed in the owning body.
+Atomically update the Registry status to the applicable terminal status and retain its Registry entry in that terminal status.
+
+Include these confirmed changes in the supporting asset maintenance proposal.
 
 Do not add a Registry Change Log.
 
