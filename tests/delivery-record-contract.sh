@@ -216,6 +216,25 @@ echo changed after skipped"
 | Regression Verification | \`confirmed\` | \`$verification_path\` | \`confirmed\` | \`$verification_sha\` | test report captured |
 | Business Acceptance | \`confirmed\` | \`$acceptance_path\` | \`confirmed\` | \`$acceptance_sha\` | acceptance captured |"
 
+  case "$scenario" in
+    invalid-terminal-stage)
+      sed -i.bak 's/| Business Acceptance | `confirmed`/| Business Acceptance | `pending`/' "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-final-sha)
+      sed -i.bak 's/Final Implementation SHA: `[^`]*`/Final Implementation SHA: `deadbeef`/' "$repo/$implementation_path"
+      rm "$repo/$implementation_path.bak"
+      ;;
+    invalid-changed-files)
+      sed -i.bak 's/`src\/example.sh`/`README.md`/' "$repo/$implementation_path"
+      rm "$repo/$implementation_path.bak"
+      ;;
+    invalid-missing-verification)
+      sed -i.bak '/| Regression Verification |/d' "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+  esac
+
   printf '%s\n' "$run_dir"
 }
 
@@ -265,5 +284,17 @@ run_expect_failure "$sdd_scratch_run" "FAIL: terminal implementation record depe
 
 invalid_no_tracked_changes_run="$(create_fixture "invalid-no-tracked-changes")"
 run_expect_failure "$invalid_no_tracked_changes_run" "FAIL: skipped no-tracked-changes proof found non-record changes"
+
+invalid_terminal_stage_run="$(create_fixture "invalid-terminal-stage")"
+run_expect_failure "$invalid_terminal_stage_run" "FAIL: terminal manifest has non-terminal stage"
+
+invalid_final_sha_run="$(create_fixture "invalid-final-sha")"
+run_expect_failure "$invalid_final_sha_run" "FAIL: implementation record references unknown final implementation SHA"
+
+invalid_changed_files_run="$(create_fixture "invalid-changed-files")"
+run_expect_failure "$invalid_changed_files_run" "FAIL: Changed Files do not match final implementation commit range"
+
+invalid_missing_verification_run="$(create_fixture "invalid-missing-verification")"
+run_expect_failure "$invalid_missing_verification_run" "FAIL: terminal manifest is missing verification record artifact"
 
 printf 'Delivery record contract checks passed.\n'

@@ -38,6 +38,7 @@ artifact_exists_in_stage_table=0
 implementation_record_path=""
 verification_record_path=""
 terminal_mode=0
+terminal_stage_gap=""
 
 if [[ $# -lt 1 || $# -gt 2 ]]; then
   fail "usage: validate-delivery-record.sh RUN_DIR [--terminal]"
@@ -54,6 +55,16 @@ fi
 
 manifest_path="$run_dir/manifest.md"
 [[ -f "$manifest_path" ]] || fail "missing manifest.md in run directory"
+
+overall_status_line="$(rg -n '^- Overall Status:' "$manifest_path" | head -n 1 || true)"
+overall_status=""
+if [[ -n "$overall_status_line" ]]; then
+  if [[ "$overall_status_line" == *\`* ]]; then
+    overall_status="$(extract_backtick_value "$overall_status_line")"
+  else
+    overall_status="$(trim "${overall_status_line#*:}")"
+  fi
+fi
 
 repo_root="$(git -C "$run_dir" rev-parse --show-toplevel 2>/dev/null)" || fail "run directory is not inside a Git repository"
 run_dir_abs="$(cd "$run_dir" && pwd -P)"
@@ -90,6 +101,10 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
   checkpoint_cell="$(trim "$raw_checkpoint")"
 
   valid_status "$status" || fail "unknown stage status '$status' for stage '$stage'"
+
+  if [[ "$terminal_mode" -eq 1 && "$status" != "confirmed" ]]; then
+    terminal_stage_gap="$stage ($status)"
+  fi
 
   artifact_path="pending"
   if [[ "$artifact_cell" == *\`* ]]; then
@@ -144,6 +159,19 @@ done < <(
 [[ -n "$implementation_record_path" ]] || fail "implementation record artifact not found in manifest"
 [[ -f "$implementation_record_path" ]] || fail "implementation record does not exist: ${implementation_record_path#"$repo_root_abs/"}"
 
+if [[ "$terminal_mode" -eq 1 ]]; then
+  case "$overall_status" in
+    accepted|rejected|accepted_with_risk|integrated)
+      ;;
+    *)
+      fail "terminal manifest has non-terminal overall status '$overall_status'"
+      ;;
+  esac
+  [[ -z "$terminal_stage_gap" ]] || fail "terminal manifest has non-terminal stage: $terminal_stage_gap"
+  [[ -n "$verification_record_path" ]] || fail "terminal manifest is missing verification record artifact"
+  [[ -f "$verification_record_path" ]] || fail "terminal verification record does not exist"
+fi
+
 final_sha_line="$(rg -n 'Final (Implementation|Repair|Refactor) SHA:' "$implementation_record_path" | head -n 1 || true)"
 [[ -n "$final_sha_line" ]] || fail "implementation record is missing final implementation SHA"
 
@@ -185,6 +213,8 @@ if [[ "$final_sha_value" == "skipped: no tracked changes" ]]; then
   fi
 else
   [[ "$final_sha_value" =~ ^[0-9a-f]{7,40}$ ]] || fail "implementation record has invalid final implementation SHA '$final_sha_value'"
+  git -C "$repo_root_abs" rev-parse --verify "$final_sha_value^{commit}" >/dev/null 2>&1 ||
+    fail "implementation record references unknown final implementation SHA '$final_sha_value'"
   changed_files_section="$(awk '
     /^## Changed Files/ { in_section=1; next }
     in_section && /^## / { exit }
@@ -194,6 +224,26 @@ else
   if printf '%s' "$changed_files_section" | rg -n '^pending$|`pending`|pending' >/dev/null; then
     fail "implementation record has pending Changed Files"
   fi
+
+  declared_changed_paths="$(printf '%s\n' "$changed_files_section" | sed -n 's/^[[:space:]]*-[[:space:]]*`\([^`]*\)`[[:space:]]*$/\1/p' | LC_ALL=C sort -u)"
+  [[ -n "$declared_changed_paths" ]] || fail "implementation record has no concrete Changed Files paths"
+
+  run_dir_rel="${run_dir_abs#"$repo_root_abs/"}"
+  if [[ -n "$base_sha_line" ]]; then
+    if [[ "$base_sha_line" == *\`* ]]; then
+      base_sha_value="$(extract_backtick_value "$base_sha_line")"
+    else
+      base_sha_value="$(trim "${base_sha_line#*:}")"
+    fi
+    git -C "$repo_root_abs" rev-parse --verify "$base_sha_value^{commit}" >/dev/null 2>&1 ||
+      fail "implementation record references unknown Implementation Base SHA '$base_sha_value'"
+    actual_changed_paths="$(git -C "$repo_root_abs" diff --name-only "$base_sha_value..$final_sha_value")"
+  else
+    actual_changed_paths="$(git -C "$repo_root_abs" diff-tree --root --no-commit-id --name-only -r "$final_sha_value")"
+  fi
+  actual_changed_paths="$(printf '%s\n' "$actual_changed_paths" | awk -v run_dir="$run_dir_rel/" 'index($0, run_dir) != 1 && NF' | LC_ALL=C sort -u)"
+  [[ "$declared_changed_paths" == "$actual_changed_paths" ]] ||
+    fail "Changed Files do not match final implementation commit range"
 fi
 
 if rg -n 'sdd/progress\.md|sdd/[^[:space:])`]*' "$implementation_record_path" >/dev/null; then
