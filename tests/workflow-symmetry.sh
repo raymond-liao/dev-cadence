@@ -673,6 +673,25 @@ assert_workflows "decision timestamp" "Decision At" "Decision At" "Decision At"
 assert_workflows "final follow-up actions" "Final Follow-Up Actions" "Final Follow-Up Actions" "Final Follow-Up Actions"
 
 assert_workflows "completion finishing flow" "finishing-a-development-branch/SKILL\\.md" "finishing-a-development-branch/SKILL\\.md" "finishing-a-development-branch/SKILL\\.md"
+assert_workflows "whole-run discard context" \
+  "Run directory.*Task branch.*Expected HEAD SHA|Expected HEAD SHA.*Run directory" \
+  "Run directory.*Task branch.*Expected HEAD SHA|Expected HEAD SHA.*Run directory" \
+  "Run directory.*Task branch.*Expected HEAD SHA|Expected HEAD SHA.*Run directory"
+
+assert_workflows "whole-run discard result" \
+  'whole_run_discarded' \
+  'whole_run_discarded' \
+  'whole_run_discarded'
+
+assert_workflows "whole-run no record update" \
+  'do not update.*manifest.*Business Acceptance|do not update.*Business Acceptance.*manifest' \
+  'do not update.*manifest.*Business Acceptance|do not update.*Business Acceptance.*manifest' \
+  'do not update.*manifest.*Business Acceptance|do not update.*Business Acceptance.*manifest'
+
+assert_workflows "cancelled or blocked discard retains run" \
+  'discard_cancelled.*discard_blocked.*retain|discard_blocked.*discard_cancelled.*retain' \
+  'discard_cancelled.*discard_blocked.*retain|discard_blocked.*discard_cancelled.*retain' \
+  'discard_cancelled.*discard_blocked.*retain|discard_blocked.*discard_cancelled.*retain'
 assert_workflows "terminal readiness checklist" "Before marking the run terminal" "Before marking the run terminal" "Before marking the run terminal"
 assert_workflows "terminal manifest readiness" "Manifest has a terminal overall status" "Manifest has a terminal overall status" "Manifest has a terminal overall status"
 assert_workflows "no stale future-tense records" "No stage record contains stale future-tense" "No stage record contains stale future-tense" "No stage record contains stale future-tense"
