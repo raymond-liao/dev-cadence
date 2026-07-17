@@ -8,7 +8,7 @@
 - Origin: `git@github.com:raymond-liao/dev-cadence.git`
 - Started at: `2026-07-17T18:00:08+0800`
 - Current branch: `codex/b-002-normal-checkout-discard-safety`
-- Current commit: `e5d228bc0ae165e6c2465fb36fa425c4ab82b30f`
+- Current commit: `6d33d920660ee7b7b2969c51fe5bfc0d5a6944a0`
 - Workspace: `.worktrees/b-002-normal-checkout-discard-safety`
 - Overall status: 🔄 `in_progress`
 
@@ -20,7 +20,7 @@
 | Repair Solution | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/02-repair-solution.md` | `confirmed` | `853bc6eeba7664f2ae59f05eadba330e3c666835` | Whole-run deletion solution confirmed at `2026-07-17T20:36:40+0800`. |
 | Repair Plan | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/03-repair-plan.md` | `confirmed` | `e5d228bc0ae165e6c2465fb36fa425c4ab82b30f` | TDD Repair Plan confirmed by the user's `同意，继续` instruction on `2026-07-17`. |
 | Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/04-repair-record.md` | `confirmed` | `98c87bb` | Seven validated review findings were remediated and the refreshed whole-repair review approved `969fba1..98c87bb`. |
-| Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/05-regression-test-report.md` | `not required` | `pending` | Fresh focused, package, build, whitespace, full-contract, source/dist, and review evidence supports 🟢 `ready`. |
+| Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/05-regression-test-report.md` | `not required` | `6d33d920660ee7b7b2969c51fe5bfc0d5a6944a0` | Fresh focused, package, build, whitespace, full-contract, source/dist, and review evidence supports 🟢 `ready`. |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/06-business-acceptance-record.md` | `pending` | `pending` | Not started. |
 
 ## Repository State At Start
