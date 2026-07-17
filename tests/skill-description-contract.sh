@@ -55,6 +55,10 @@ assert_description \
   "Use when a user asks to create, update, or review Story Map, milestone, or work-item planning assets in a target project."
 
 assert_description \
+  "src/skills/work-item-analysis/SKILL.md" \
+  "Use when a user asks to analyze, clarify, or confirm Story, Task, or Bug definitions before downstream delivery work in a target project."
+
+assert_description \
   "src/skills/architecture-design/SKILL.md" \
   "Use when a user explicitly asks for architecture design, an architecture proposal, or an architecture review for a stated goal."
 
@@ -75,6 +79,7 @@ assert_no_process_summary "src/skills/document-conventions/SKILL.md"
 assert_no_process_summary "src/skills/open-question-registry/SKILL.md"
 assert_no_process_summary "src/skills/discovery/SKILL.md"
 assert_no_process_summary "src/skills/work-item-planning/SKILL.md"
+assert_no_process_summary "src/skills/work-item-analysis/SKILL.md"
 assert_no_process_summary "src/skills/architecture-design/SKILL.md"
 assert_no_process_summary "src/skills/feature-dev/SKILL.md"
 assert_no_process_summary "src/skills/bug-fix/SKILL.md"

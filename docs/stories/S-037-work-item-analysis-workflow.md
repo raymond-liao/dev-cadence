@@ -4,7 +4,7 @@
 
 - ID：`S-037`
 - Version：`1`
-- Status：`Blocked`
+- Status：`Ready`
 - Priority：`P1`
 - Change Type：Feature
 
