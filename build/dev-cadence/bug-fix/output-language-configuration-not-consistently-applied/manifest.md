@@ -28,13 +28,15 @@
 
 ## Completion
 
-- Integration decision: Keep the task branch for main-thread integration.
-- Branch: `codex/b-004-output-language-configuration-not-consistently-applied` preserved.
-- Worktree: `.worktrees/codex-b-004-output-language-configuration-not-consistently-applied` preserved.
+- Integration decision: ✅ `integrated` by local merge into `main`.
+- Merge commit: `b1280cac705b5e1ded28cea2036b5592d072239d`.
+- Verified feature commit: `8cc4e3e46d64c8a5b627970b084657cab2e13923`.
+- Merge conflict resolution: `version` retained `0.22.0`, which supersedes the `0.21.1` patch version already on `main` while including both repair sets.
+- Post-merge verification: `bash scripts/check-all.sh` passed on `main`.
+- Worktree: `.worktrees/codex-b-004-output-language-configuration-not-consistently-applied` removed after successful verification.
+- Branch: `codex/b-004-output-language-configuration-not-consistently-applied` deleted after its verified SHA was confirmed as an ancestor of `main`.
 - Push: not performed.
 - Pull request: not created.
-- Local merge: not performed.
-- Branch deletion: not performed.
 
 ## Verification Summary
 
@@ -47,4 +49,4 @@
 ## Residual Risks
 
 - The worktree boundary now has direct evidence, but the exact generated artifact and stage transition that first falls back to English still need verification.
-- The source repository cannot execute an external AI host session; Business Acceptance must decide whether the remaining host-level verification risk is acceptable.
+- The source repository cannot execute an external AI host session; the user accepted this remaining host-level verification risk during Business Acceptance.

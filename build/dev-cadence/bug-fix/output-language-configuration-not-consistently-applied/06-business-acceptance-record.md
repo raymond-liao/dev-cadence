@@ -39,7 +39,9 @@ The user accepted the B-004 repair that preserves the configured output language
 
 ## Final Follow-Up Actions
 
-- The task branch `codex/b-004-output-language-configuration-not-consistently-applied` was kept for main-thread integration.
-- The worktree `.worktrees/codex-b-004-output-language-configuration-not-consistently-applied` was preserved.
-- No local merge, push, or pull request was performed.
-- The task branch was preserved and was not deleted.
+- Verified feature commit `8cc4e3e46d64c8a5b627970b084657cab2e13923` was locally merged into `main` by merge commit `b1280cac705b5e1ded28cea2036b5592d072239d`.
+- The `version` conflict was resolved to `0.22.0`, preserving the B-004 minor release over the `0.21.1` patch already on `main`.
+- `bash scripts/check-all.sh` passed on the merged `main` result.
+- The worktree `.worktrees/codex-b-004-output-language-configuration-not-consistently-applied` was removed after successful verification.
+- The task branch `codex/b-004-output-language-configuration-not-consistently-applied` was deleted after its verified commit was confirmed as an ancestor of `main`.
+- No push or pull request was performed.
