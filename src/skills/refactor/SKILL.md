@@ -565,6 +565,8 @@ DEV_CADENCE_TASK_DIR=build/dev-cadence/refactor/<refactor-slug>
 
 All SDD task briefs, implementer reports, review packages, and progress ledgers must stay under that task directory.
 
+Ignored SDD scratch such as `sdd/progress.md` is useful during implementation, but `sdd/progress.md` and other ignored SDD scratch files are not required terminal evidence.
+
 #### Common Implementation Rules
 
 These common rules apply to both `executing-plans` and `subagent-driven-development`.
@@ -583,9 +585,15 @@ At the end of this stage, write or update:
 build/dev-cadence/refactor/<refactor-slug>/04-refactor-record.md
 ```
 
+For committed tracked changes, terminal evidence must include the Implementation Base SHA, final implementation commit hash, and final changed-files state derived from that implementation range. If a terminal or stage checkpoint has no tracked changes, record `skipped: no tracked changes` instead of substituting alternative evidence.
+
+After writing or updating the stage record, follow this sequence exactly: Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator.
+
+Verify the checkpoint tree contains the stage record with `git cat-file -e "<checkpoint-commit>:build/dev-cadence/refactor/<refactor-slug>/04-refactor-record.md"`, then record the verified checkpoint SHA in the manifest and run `bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/refactor/<refactor-slug>`.
+
 The refactor record must include:
 
-- implementation commit hash or changed files;
+- final implementation commit hash and Changed Files for committed tracked changes, or `skipped: no tracked changes` when applicable;
 - completed plan tasks;
 - Behavior Baseline evidence used before structural changes;
 - structural changes actually made;
@@ -799,7 +807,7 @@ Before marking the run terminal, complete this readiness checklist:
 
 - [ ] Manifest has a terminal overall status and no `pending` checkpoint commit values.
 - [ ] Business acceptance record has `Final Follow-Up Actions` updated with actual past-tense results.
-- [ ] Refactor record has the final implementation commit hash or final changed-files state.
+- [ ] Refactor record has the final implementation commit hash and final changed-files state for committed changes, or `skipped: no tracked changes` when the terminal stage has no tracked changes.
 - [ ] Refactor record links to `04-code-review-report.md`.
 - [ ] Code review report exists and all checklist items are checked or have an explicit reason.
 - [ ] Regression test report records Behavior Baseline coverage, skipped checks, and residual risks honestly.
@@ -807,5 +815,11 @@ Before marking the run terminal, complete this readiness checklist:
 - [ ] Artifact paths are repository-relative; no local absolute paths are persisted unless explicitly requested by the user.
 
 If any checklist item is not satisfied, update the affected record before reporting Completion.
+
+Before marking the run terminal, run:
+
+```bash
+bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/refactor/<refactor-slug> --terminal
+```
 
 Then follow the vendored finishing skill.

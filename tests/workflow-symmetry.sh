@@ -42,6 +42,17 @@ assert_workflows() {
   assert_match "refactor $label" "$refactor_pattern" "$REFACTOR_SKILL"
 }
 
+assert_workflows_not_match() {
+  local label="$1"
+  local feature_pattern="$2"
+  local bug_pattern="$3"
+  local refactor_pattern="$4"
+
+  assert_not_match "feature $label" "$feature_pattern" "$FEATURE_SKILL"
+  assert_not_match "bug-fix $label" "$bug_pattern" "$BUG_FIX_SKILL"
+  assert_not_match "refactor $label" "$refactor_pattern" "$REFACTOR_SKILL"
+}
+
 assert_workflow_delivery_contract() {
   local label="$1"
   local path="$2"
@@ -519,6 +530,13 @@ assert_workflows "manifest creation rule" "Create and maintain a run manifest" "
 assert_workflows "manifest status values" "Use stage status values" "Use stage status values" "Use stage status values"
 assert_workflows "terminal checkpoint rule" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values"
 assert_workflows "no tracked changes checkpoint rule" "skipped: no tracked changes" "skipped: no tracked changes" "skipped: no tracked changes"
+assert_workflows "committed changes evidence pairing" "final implementation commit hash and final changed-files state" "final implementation commit hash and final changed-files state" "final implementation commit hash and final changed-files state"
+assert_workflows "implementation range identity" "Implementation Base SHA.*derived from that implementation range" "Implementation Base SHA.*derived from that implementation range" "Implementation Base SHA.*derived from that implementation range"
+assert_workflows_not_match "stale alternative evidence wording" "implementation commit hash or changed files" "implementation commit hash or changed files" "implementation commit hash or changed files"
+assert_workflows "checkpoint tree validation sequence" "Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator" "Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator" "Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator"
+assert_workflows "checkpoint tree validation command" 'git cat-file -e' 'git cat-file -e' 'git cat-file -e'
+assert_workflows "installed validator path" "\\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh" "\\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh" "\\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh"
+assert_workflows "sdd scratch not terminal evidence" "sdd/progress\\.md.*not required terminal evidence" "sdd/progress\\.md.*not required terminal evidence" "sdd/progress\\.md.*not required terminal evidence"
 assert_workflows "portable path rule" "do not persist local absolute paths" "do not persist local absolute paths" "do not persist local absolute paths"
 assert_workflows "manifest update cadence" "whenever a stage record is created or updated" "whenever a stage record is created or updated" "whenever a stage record is created or updated"
 
@@ -675,6 +693,7 @@ assert_workflows "final follow-up actions" "Final Follow-Up Actions" "Final Foll
 assert_workflows "completion finishing flow" "finishing-a-development-branch/SKILL\\.md" "finishing-a-development-branch/SKILL\\.md" "finishing-a-development-branch/SKILL\\.md"
 assert_workflows "terminal readiness checklist" "Before marking the run terminal" "Before marking the run terminal" "Before marking the run terminal"
 assert_workflows "terminal manifest readiness" "Manifest has a terminal overall status" "Manifest has a terminal overall status" "Manifest has a terminal overall status"
+assert_workflows "terminal validator invocation" "bash \\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh[[:space:]]+build/dev-cadence/feature-dev/<feature-slug> --terminal" "bash \\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh[[:space:]]+build/dev-cadence/bug-fix/<bug-slug> --terminal" "bash \\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh[[:space:]]+build/dev-cadence/refactor/<refactor-slug> --terminal"
 assert_workflows "no stale future-tense records" "No stage record contains stale future-tense" "No stage record contains stale future-tense" "No stage record contains stale future-tense"
 
 assert_match "refactor principles" "## Refactoring Principles" "$REFACTOR_SKILL"

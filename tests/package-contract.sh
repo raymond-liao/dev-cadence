@@ -51,6 +51,7 @@ required_files=(
   "dist/.dev-cadence/AGENTS-snippet.md"
   "dist/.dev-cadence/skills/using-dev-cadence/SKILL.md"
   "dist/.dev-cadence/skills/git-commit/SKILL.md"
+  "dist/.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh"
   "dist/.dev-cadence/skills/document-conventions/SKILL.md"
   "dist/.dev-cadence/skills/open-question-registry/SKILL.md"
   "dist/.dev-cadence/skills/architecture-design/SKILL.md"
@@ -83,6 +84,10 @@ while IFS= read -r -d '' source_file; do
   rel_path="${source_file#"$ROOT_DIR/src/skills/"}"
   assert_same_file "src/skills/$rel_path" "dist/.dev-cadence/skills/$rel_path"
 done < <(find "$ROOT_DIR/src/skills" -type f -print0)
+
+assert_same_file \
+  "src/skills/using-dev-cadence/scripts/validate-delivery-record.sh" \
+  "dist/.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh"
 
 assert_match "04-code-review-report.md" "src/skills/feature-dev/SKILL.md"
 assert_match "04-code-review-report.md" "src/skills/bug-fix/SKILL.md"
