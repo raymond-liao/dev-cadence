@@ -3,7 +3,7 @@
 ## Run Manifest
 
 - Workflow: `bug-fix`
-- Task slug: `output-language-configuration-not-consistently-applied`
+- Task slug: `b-004-output-language-configuration-not-consistently-applied`
 - Repository: `dev-cadence` (`origin`: `git@github.com:raymond-liao/dev-cadence.git`)
 - Branch: `codex/b-004-output-language-configuration-not-consistently-applied`
 - Started at: `2026-07-17`
