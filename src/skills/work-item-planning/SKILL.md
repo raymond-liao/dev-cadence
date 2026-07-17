@@ -155,6 +155,25 @@ Planning Inputs And Scope Confirmation -> Planning Structure Proposal -> Plannin
 
 Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged. After confirmation, atomically write only the affected assets. The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content.
 
+## Confirmation Gate Presentation
+
+Before each real Work Item Planning decision gate, present the decision in this order in the conversation:
+
+1. `current conclusion`: the current planning conclusion, proposed structure, or card result.
+2. `included scope`: the input versions, Features, Story Map cells, milestones, cards, and Backlog references included in the proposal.
+3. `excluded scope`: planning assets, unrelated cards, product-design facts, or delivery work that remain unchanged or out of scope.
+4. `risks or open questions`: version conflicts, missing product-design inputs, duplicate identities, dependency concerns, or unresolved planning questions.
+5. `evidence link`: a repository-relative link to the complete proposal or source assets. The link is supporting evidence and does not replace the conversation summary.
+
+Then present the actual planning choices and their effects:
+
+- At `Planning Inputs And Scope Confirmation`, confirm the named authoritative inputs and scope to advance to the structure proposal, or request changes and remain at the current stage with authoritative planning assets unchanged. If an input is missing or conflicted, keep the planning proposal blocked and return to `discovery` or request a user decision rather than guessing.
+- At `Planning Result Confirmation`, `confirm the full proposed result` atomically writes the affected Story Map, milestones, cards, and Backlog references. The user may also `confirm only the named subset`; only that subset is written and every unconfirmed asset keeps its current authoritative content. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the gate.
+- When the proposal includes a milestone or MVP slice, show the explicit included work-item IDs and let the user confirm or change that slice. MVP becomes authoritative only when the user confirms it; it is not inferred from the proposal.
+- Every choice must state its effect on the next stage, asset writes, records, status, and whether re-confirmation is required.
+
+Do not import the Delivery Workflow advance/revise menu as a replacement for these planning choices. Preserve Feature ownership, candidate or input selection, partial confirmation, MVP slicing, version-conflict handling, and handoff to a downstream delivery workflow. Do not apply this section to downstream terminal menus; Work Item Planning does not own those menus.
+
 ## Story Map Contract
 
 The Story Map path is:
