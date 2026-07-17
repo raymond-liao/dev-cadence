@@ -20,6 +20,14 @@
 | Regression Verification | ⏳ `pending` | `05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | No verification started. |
 | Business Acceptance | ⏳ `pending` | `06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | No acceptance decision requested. |
 
+## Pre-Implementation Design Freshness Gate
+
+- Checked At: `2026-07-17T18:14:00+08:00`
+- Inputs: Bug card Version `1`; confirmed diagnosis; confirmed Repair Solution with version `0.21.1`; confirmed Repair Plan with deterministic `main`/`master` base selection.
+- Current branch and code context: `codex/b-001-normal-checkout-local-merge-safety` at `0982a80`.
+- Material repository changes: only workflow records and plan documents; no source rule, test, version, or generated package changes.
+- Conclusion: ✅ `valid`; proceed to Repair Implementation using the confirmed plan.
+
 ## Repository Identity
 
 - Initial repair context: `9d5324475e3399624df461ce793395f230c24e86`

@@ -23,6 +23,18 @@
 - 每个实现提交前执行精确暂存和提交身份检查；stage checkpoint 不进入 implementation ledger。
 - 生产规则修改必须遵循 TDD：先让 focused contract test 在当前版本失败，再修改规则使其通过。
 
+## Pre-Implementation Design Freshness Gate
+
+- Checked At: `2026-07-17T18:14:00+08:00`
+- Work item: `docs/bugs/B-001-normal-checkout-local-merge-safety.md`, Version `1`
+- Problem Diagnosis: `build/dev-cadence/bug-fix/b-001-normal-checkout-local-merge-safety/01-problem-diagnosis-record.md`, confirmed
+- Repair Solution: `build/dev-cadence/bug-fix/b-001-normal-checkout-local-merge-safety/02-repair-solution.md`, confirmed; version `0.21.1`
+- Repair Plan: this record, confirmed after deterministic `main`/`master` base selection was added
+- Current branch: `codex/b-001-normal-checkout-local-merge-safety`
+- Current code context: `0982a80`
+- Material changes since confirmation: only Bug Fix records and plan documents; no source rule, test, version, or generated package change
+- Conclusion: ✅ `valid`; the confirmed diagnosis, repair boundary, acceptance criteria, and task split still match the current code state.
+
 ---
 
 ## Task Overview
