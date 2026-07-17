@@ -4,7 +4,7 @@
 
 - ID：`B-001`
 - Version：`1`
-- Status：`Draft`
+- Status：`Done`
 - Priority：`P0`
 - Change Type：Bug
 

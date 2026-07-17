@@ -6,7 +6,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Draft` | `P0` |
 | `B-002` | [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md) | `1` | `Draft` | `P0` |
 | `B-006` | [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Draft` | `P2` |
 | `S-017` | [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `2` | `Blocked` | `P1` |
@@ -38,6 +37,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Done` | `P0` |
 | `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `4` | `Done` | `P1` |
 | `S-037` | [S-037 工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md) | `1` | `Done` | `P1` |
 | `S-016` | [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `4` | `Done` | `P1` |
@@ -140,7 +140,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 3 | B-001；B-002；B-004；B-005；B-006；B-007 | - | Draft |
+| 3 | B-002；B-004；B-005；B-006；B-007 | - | Draft |
 | 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
 | 7 | S-029 | S-017 | ⚠️ Blocked |
 | 8 | S-018；S-019；S-020；S-021 | - | Draft |
