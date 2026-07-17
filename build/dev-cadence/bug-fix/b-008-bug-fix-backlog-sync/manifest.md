@@ -15,7 +15,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/01-problem-diagnosis-record.md`) | pending | `pending` | 已完成 Completion 规则与 Backlog 责任对照，待用户确认诊断。 |
+| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/01-problem-diagnosis-record.md`) | pending | `df91a5b` | 已完成 Completion 规则与 Backlog 责任对照，待用户确认诊断。 |
 | Repair Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/02-repair-solution.md` | pending | `pending` | 等待 Problem Diagnosis 确认。 |
 | Repair Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
 | Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
@@ -33,4 +33,3 @@
 - Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`
 - Baseline checks: `bash scripts/build.sh`; `bash tests/run-all.sh` -> passed
 - Scope: `src/skills/bug-fix/SKILL.md`, `src/skills/work-item-planning/SKILL.md`, `docs/backlog.md`, B-002 completion evidence and workflow contract tests
-
