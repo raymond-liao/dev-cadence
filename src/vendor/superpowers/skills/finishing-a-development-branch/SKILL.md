@@ -171,6 +171,8 @@ The first destructive confirmation must state the exact run directory, task bran
 Successful Discard deletes the run directory and every independently deletable current-run object; an owned branch or worktree retained to preserve external or unknown changes remains outside the deletion, and no persistent run record will remain.
 ```
 
+For the first destructive confirmation, require the user to type the exact literal `discard`. A missing or invalid response returns `discard_cancelled` or `discard_blocked` without changing Git or filesystem state.
+
 For choice 2, list every additional external or unknown path and require a second exact confirmation that names the expanded deletion scope. Choice 3 returns `discard_cancelled` without changing Git or filesystem state.
 
 Immediately after final user confirmation and before any destructive command, repeat the complete identity snapshot and compare it with the confirmed snapshot. Any mismatch returns `discard_blocked` without changing Git or filesystem state.
@@ -181,6 +183,7 @@ Immediately after final user confirmation and before any destructive command, re
 
 - The workflow-only choice must preserve external and unknown paths byte-for-byte and path-for-path.
 - If deleting the task branch or owned worktree would affect external or unknown changes, retain that branch or worktree and delete only independently deletable current-run objects. Return `discard_blocked` when preservation cannot be proven.
+- When an owned worktree is retained to preserve external or unknown paths, verify all branch and path postconditions, preserve those paths byte-for-byte, and delete the run directory last from outside the retained workspace. Return `whole_run_discarded` only after verifying that the run directory is absent.
 - Move a normal checkout or owned worktree off the task branch before deleting that exact branch.
 - B-002 whole-run Discard must not proceed from or move into detached HEAD; detached HEAD remains outside B-002 whole-run Discard.
 - Before returning success, successful postconditions require an attached, verified non-task branch.
