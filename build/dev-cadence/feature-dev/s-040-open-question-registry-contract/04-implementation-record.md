@@ -51,17 +51,17 @@
 
 ## Code Review Evidence
 
-- Report: ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/04-code-review-report.md`
+- Report: [S-040 Code Review Report](04-code-review-report.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/04-code-review-report.md`)
 - Task review decision: ✅ `passed`; all four tasks are spec compliant and approved after required remediation.
-- Final whole-implementation review: ⏳ `pending`.
+- Final whole-implementation review: ✅ `passed`; main-agent review covered `d71223d..a5ce344` and closed the optional-indexing finding in `a5ce344`.
 - Critical findings: `0` in task reviews.
 - Important findings: `0` unresolved in task reviews.
-- Unresolved findings: ⏳ `pending` final review.
+- Unresolved findings: None.
 
 ## Implementation Result
 
-- Final implementation SHA: `f659df58f9f39559107f43e78523c118b7761f41`.
-- Implementation commits: `fdc9d89`, `02d87c8`, `d0e22d9`, `166fefe`, `7fdf512`, `f659df5`.
+- Final implementation SHA: `a5ce34482b3afc0aad9b57ff200ac702d56db13c`.
+- Implementation commits: `fdc9d89`, `02d87c8`, `d0e22d9`, `166fefe`, `7fdf512`, `f659df5`, `a5ce344`.
 - Changed files: `AGENTS.md`, `version`, `src/skills/open-question-registry/SKILL.md`, `src/skills/using-dev-cadence/SKILL.md`, `src/skills/document-conventions/SKILL.md`, `src/skills/discovery/SKILL.md`, `tests/open-question-registry-contract.sh`, `tests/asset-delivery-record-contract.sh`, `tests/skill-description-contract.sh`, `tests/document-conventions-contract.sh`, and `tests/discovery-contract.sh`.
 - Implementation notes: Registry lifecycle and synchronization remain centralized; only Discovery's explicit conflict was changed. Generated `dist/.dev-cadence/**` remains ignored and was not forced into Git.
 - Known residual risks: None from task reviews; final whole-implementation review and fresh System Testing remain pending.

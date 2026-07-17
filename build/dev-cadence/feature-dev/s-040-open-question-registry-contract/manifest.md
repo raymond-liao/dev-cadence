@@ -8,7 +8,7 @@
 - Branch: `codex/s-040-open-question-registry-contract`
 - Workspace: `.worktrees/s-040-open-question-registry-contract`
 - Started At: `2026-07-17T12:12:14+08:00`
-- Current Stage: Development Implementation
+- Current Stage: System Testing
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -18,8 +18,8 @@
 | Requirements Confirmation | ✅ `confirmed` | [S-040 需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/01-requirements.md`) | `confirmed: user explicitly requested implementation of the first backlog card on 2026-07-17` | `78e1365` | S-040 Version 1 is Ready with no Open Questions; the same instruction explicitly authorizes the repository collaboration-rule update. |
 | Technical Solution | ✅ `confirmed` | [S-040 技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/02-technical-solution.md`) | `confirmed: user replied “确认” on 2026-07-17` | `35b3270` | Shared contract + entry coordination + targeted conflict cleanup selected. |
 | Implementation Plan | ✅ `confirmed` | [S-040 实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/03-implementation-plan.md`) | `confirmed: user replied “确认” on 2026-07-17` | `4627bd5` | Four TDD tasks confirmed for subagent-driven implementation. |
-| Development Implementation | 🔄 `in_progress` | [S-040 实施记录](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/04-implementation-record.md`) | N/A | ⏳ `pending` | Design freshness passed; Task 1 is next. |
-| System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/05-system-test-report.md` | N/A | ⏳ `pending` | Fresh verification required after implementation review. |
+| Development Implementation | ✅ `confirmed` | [S-040 实施记录](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/04-implementation-record.md`) | N/A | `a5ce344` | All four tasks and final implementation review are complete; implementation is ready for fresh System Testing. |
+| System Testing | 🔄 `in_progress` | [S-040 系统测试报告](05-system-test-report.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/05-system-test-report.md`) | N/A | ⏳ `pending` | Fresh build, contract, whitespace, source/dist, and scope checks passed; report is being recorded. |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | Requires one fixed business acceptance decision. |
 
 ## Verification Summary
