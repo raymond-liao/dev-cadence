@@ -20,7 +20,7 @@
 
 ## 方案比较
 
-### 在六个 Workflow 中分别接入
+### 在各 Workflow 中分别接入
 
 每个 Workflow 分别引用 `git-commit`。规则直观，但会重复适用边界、固定路径和子代理传递要求，后续容易漂移。
 
@@ -36,9 +36,9 @@
 
 ### `using-dev-cadence`
 
-- 先选择或恢复业务 Workflow，再处理 commit/checkpoint 请求。
-- 只有当前提交属于已选择或恢复的 Dev Cadence Workflow 时，才要求读取 `.dev-cadence/skills/git-commit/SKILL.md`。
-- 明确没有活动 Dev Cadence Workflow 时按目标仓库普通 Git 规则处理，不调用该 shared skill。
+- 先选择或恢复业务 Workflow，或直接路由 Dev Cadence shared capability，再处理其管理范围内的 commit 请求。
+- 只有当前提交属于 Dev Cadence Workflow 或入口直接路由的 shared capability 时，才要求读取 `.dev-cadence/skills/git-commit/SKILL.md`。
+- 明确不属于任何 Dev Cadence Workflow 或 shared capability 的普通提交按目标仓库普通 Git 规则处理，不调用该 shared skill。
 - 要求允许提交的子代理 task brief 携带固定 skill 路径、调用上下文和禁止重新暂存的约束。
 
 ### `git-commit`
@@ -59,20 +59,20 @@
 ## 调用数据流
 
 ```text
-用户请求或 Workflow checkpoint
--> using-dev-cadence 选择或恢复 Workflow
--> Workflow 确定提交时机、范围和检查
--> Workflow 精确暂存一个提交单元
+用户请求、Workflow checkpoint 或 shared capability 资产提交
+-> using-dev-cadence 确认 Dev Cadence 管理上下文
+-> 调用方确定提交时机、范围和检查
+-> 调用方精确暂存一个提交单元
 -> 必要时冻结并复核 parent/tree
 -> 读取 .dev-cadence/skills/git-commit/SKILL.md
 -> staged-only 检查、敏感文件阻断、message 生成、一次 commit
--> 控制权返回 Workflow
--> Workflow 捕获 hash、验证身份、更新证据并继续原阶段
+-> 控制权返回调用方
+-> 调用方捕获 hash、验证适用身份并继续原上下文
 ```
 
 ## 错误处理
 
-- 没有活动 Dev Cadence Workflow：不调用 shared skill，返回普通仓库 Git 处理。
+- 不属于任何 Dev Cadence Workflow 或 shared capability：不调用 shared skill，返回普通仓库 Git 处理。
 - 无已暂存内容：不创建 commit，返回 Workflow 记录适用的 skipped 结果。
 - 敏感文件或范围混杂：阻断提交，Workflow 重新确定范围或请求必要用户决定。
 - parent/tree 在提交前变化：`executing-plans` 重跑完整身份门禁，不得继续提交。
@@ -88,8 +88,8 @@
 
 ## 风险与约束
 
-- 入口规则必须表达“只有已选择或恢复的 Workflow”而不是“只要仓库安装了 Dev Cadence”，否则普通提交仍可能误触发。
+- 入口规则必须表达“当前 commit 由 Dev Cadence Workflow 或 shared capability 管理”而不是“只要仓库安装了 Dev Cadence”，否则普通提交仍可能误触发。
 - 单纯依赖 skill 名称可能命中个人全局旧版本，因此必须使用安装包内固定路径。
 - SDD 子代理不经过入口是唯一的上下文传播例外，必须由 dispatch contract 明确覆盖。
 - 本变更影响安装包行为，必须更新根 `version` 并构建同步 `dist`。
-- 主 checkout 存在未提交的 T-004 和其他规划文档修改；Completion 不得覆盖或丢弃这些变更。
+- 主 checkout 可能由其他任务占用；T-004 必须继续只在专用 worktree 中修改，Completion 不得覆盖或丢弃其他任务状态。

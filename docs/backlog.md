@@ -11,7 +11,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `3` | `Draft` | `P1` |
+| `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `4` | `In Progress` | `P1` |
 | `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Draft` | `P0` |
 | `B-002` | [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md) | `1` | `Draft` | `P0` |
 | `B-006` | [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Draft` | `P2` |
