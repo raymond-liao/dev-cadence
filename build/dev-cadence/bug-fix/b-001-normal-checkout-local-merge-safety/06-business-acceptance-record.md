@@ -28,8 +28,12 @@
 
 ## Accepted Residual Risks
 
-- 用户选择 `Accept`，未接受额外残余风险。回归报告中记录的真实代理驱动 Finishing 会话未执行风险将在 Completion 中通过实际集成流程关闭或更新。
+- 用户选择 `Accept`，未接受额外残余风险。回归报告中记录的真实代理驱动 Finishing 会话未执行风险已在 Completion 的实际集成和集成后全量验证中关闭。
 
 ## Final Follow-Up Actions
 
-- 🔄 `in_progress`：Completion 尚在执行；最终 Git 集成、worktree 清理和任务分支处理结果将在完成后回写。
+- B-001 自身提交已选择性集成到本地 `main`，截至验收 checkpoint 为 `79503be`。
+- 集成后的 `main` 已通过 `bash scripts/check-all.sh` 和 `bash scripts/check-whitespace.sh`。
+- B-006 祖先提交 `9d53244` 及其运行记录未被集成；未合并任何并行任务分支。
+- 未执行 push。
+- `.worktrees/b-001-normal-checkout-local-merge-safety` 和 `codex/b-001-normal-checkout-local-merge-safety` 已保留用于审计；由于选择性集成重写了提交身份，未进行强制删除。
