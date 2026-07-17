@@ -227,7 +227,8 @@ The manifest must include:
 - a stage table with stage name, status, artifact path, user confirmation, checkpoint commit, and notes;
 - verification summary and residual risks once available;
 - business acceptance decision once available;
-- final integration decision after Completion.
+- final integration decision after Completion only when run records remain.
+- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
 
 Repository and path fields must be portable:
 
@@ -250,7 +251,7 @@ Update the manifest:
 - whenever a stage record is created or updated;
 - after each checkpoint commit, adding the commit hash;
 - before entering Business Acceptance;
-- after the finishing flow records merge, PR, keep-branch, or discard decisions.
+- Only when run records remain after the finishing flow returns merge, PR, or keep: record the final integration decision.
 
 If run records under `build/dev-cadence/` are ignored by the target repository, keep the manifest updated on disk and do not force-add ignored files unless the user or project policy requires it.
 

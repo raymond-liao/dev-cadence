@@ -692,6 +692,19 @@ assert_workflows "cancelled or blocked discard retains run" \
   'discard_cancelled.*discard_blocked.*retain|discard_blocked.*discard_cancelled.*retain' \
   'discard_cancelled.*discard_blocked.*retain|discard_blocked.*discard_cancelled.*retain' \
   'discard_cancelled.*discard_blocked.*retain|discard_blocked.*discard_cancelled.*retain'
+
+assert_workflows "whole-run discard evidence captured during run" \
+  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run' \
+  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run' \
+  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run'
+
+assert_workflows "post-finishing manifest update retains records" \
+  'Only when run records remain after the finishing flow returns merge, PR, or keep' \
+  'Only when run records remain after the finishing flow returns merge, PR, or keep' \
+  'Only when run records remain after the finishing flow returns merge, PR, or keep'
+assert_not_match "feature unconditional post-finishing discard manifest update" "after the finishing flow records merge, PR, keep-branch, or discard decisions" "$FEATURE_SKILL"
+assert_not_match "bug-fix unconditional post-finishing discard manifest update" "after the finishing flow records merge, PR, keep-branch, or discard decisions" "$BUG_FIX_SKILL"
+assert_not_match "refactor unconditional post-finishing discard manifest update" "after the finishing flow records merge, PR, keep-branch, or discard decisions" "$REFACTOR_SKILL"
 assert_workflows "terminal readiness checklist" "Before marking the run terminal" "Before marking the run terminal" "Before marking the run terminal"
 assert_workflows "terminal manifest readiness" "Manifest has a terminal overall status" "Manifest has a terminal overall status" "Manifest has a terminal overall status"
 assert_workflows "no stale future-tense records" "No stage record contains stale future-tense" "No stage record contains stale future-tense" "No stage record contains stale future-tense"

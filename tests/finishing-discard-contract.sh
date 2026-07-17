@@ -38,6 +38,10 @@ assert_literal "owned worktree only" "must not remove an external or unknown wor
 assert_literal "postcondition verification" "Verify the exact branch, worktree, path, and run-directory postconditions"
 assert_literal "detached HEAD exclusion" "must not proceed from or move into detached HEAD"
 assert_literal "attached branch postcondition" "successful postconditions require an attached, verified non-task branch"
+assert_literal "exhaustive path classification before choices" "Before presenting the three choices, exhaustively enumerate every changed path and classify it as current-run, external, or unknown. Treat unknown as external."
+assert_literal "post-confirmation identity comparison" 'Immediately after final user confirmation and before any destructive command, repeat the complete identity snapshot and compare it with the confirmed snapshot. Any mismatch returns `discard_blocked` without changing Git or filesystem state.'
+assert_literal "current-run-only branch and worktree preservation" 'If deleting the task branch or owned worktree would affect external or unknown changes, retain that branch or worktree and delete only independently deletable current-run objects. Return `discard_blocked` when preservation cannot be proven.'
+assert_literal "preservation-aware discard success" "the run directory was deleted, every independently deletable current-run object was deleted, and all unselected external or unknown changes were preserved"
 assert_no_match "unscoped hard reset" '^[[:space:]]*git reset --hard([[:space:]]|$)'
 assert_no_match "unscoped clean" '^[[:space:]]*git clean -fd([[:space:]]|$)'
 

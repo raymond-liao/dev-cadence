@@ -155,7 +155,9 @@ Before any destructive confirmation, take a complete identity snapshot for the s
 
 Current-run creation evidence and `git worktree list --porcelain` must agree on path, branch, and Git identity. Directory naming is not ownership evidence.
 
-When external or unknown changes exist, present exactly these choices:
+Before presenting the three choices, exhaustively enumerate every changed path and classify it as current-run, external, or unknown. Treat unknown as external.
+
+When the classification contains external or unknown changes, present exactly these choices:
 
 ```
 1. Discard the current run only
@@ -166,14 +168,17 @@ When external or unknown changes exist, present exactly these choices:
 The first destructive confirmation must state the exact run directory, task branch and SHA, owned commit range, owned paths, and owned worktree. It must include this warning:
 
 ```
-Successful Discard deletes the complete current run; no persistent run record will remain.
+Successful Discard deletes the run directory and every independently deletable current-run object; an owned branch or worktree retained to preserve external or unknown changes remains outside the deletion, and no persistent run record will remain.
 ```
 
 For choice 2, list every additional external or unknown path and require a second exact confirmation that names the expanded deletion scope. Choice 3 returns `discard_cancelled` without changing Git or filesystem state.
 
+Immediately after final user confirmation and before any destructive command, repeat the complete identity snapshot and compare it with the confirmed snapshot. Any mismatch returns `discard_blocked` without changing Git or filesystem state.
+
 #### Ownership and execution
 
 - The workflow-only choice must preserve external and unknown paths byte-for-byte and path-for-path.
+- If deleting the task branch or owned worktree would affect external or unknown changes, retain that branch or worktree and delete only independently deletable current-run objects. Return `discard_blocked` when preservation cannot be proven.
 - Move a normal checkout or owned worktree off the task branch before deleting that exact branch.
 - B-002 whole-run Discard must not proceed from or move into detached HEAD; detached HEAD remains outside B-002 whole-run Discard.
 - Before returning success, successful postconditions require an attached, verified non-task branch.
@@ -184,7 +189,7 @@ For choice 2, list every additional external or unknown path and require a secon
 
 Return exactly one normalized result:
 
-- `whole_run_discarded`: every confirmed current-run object was deleted and all unselected external/unknown changes were preserved.
+- `whole_run_discarded`: the run directory was deleted, every independently deletable current-run object was deleted, and all unselected external or unknown changes were preserved.
 - `discard_cancelled`: the user cancelled before destructive execution.
 - `discard_blocked`: identity changed, preservation could not be proven, or any destructive/postcondition step failed.
 
