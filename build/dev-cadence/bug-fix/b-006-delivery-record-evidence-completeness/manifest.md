@@ -15,7 +15,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`) | pending | `pending` | 已用 S-014 运行记录复现；待用户确认诊断。 |
+| Problem Diagnosis | `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`) | pending | `9d53244` | 已用 S-014 运行记录复现；待用户确认诊断。 |
 | Repair Solution | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/02-repair-solution.md` | pending | `pending` | 等待 Problem Diagnosis 确认。 |
 | Repair Plan | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
 | Repair Implementation | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
@@ -34,6 +34,7 @@
 - 诊断基线：`9834d2ee4c3536196e7844bfc697ed724088a7ea`
 - 诊断分支：`codex/b-006-delivery-record-evidence-completeness`
 - 诊断样本：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/`
+- Problem Diagnosis checkpoint：`9d53244`
 
 ## 修复状态
 
@@ -41,4 +42,3 @@
 - Repair Plan: pending
 - Regression Verification: pending
 - Business Acceptance: pending
-
