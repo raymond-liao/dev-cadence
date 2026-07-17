@@ -1,6 +1,6 @@
 ---
 name: open-question-registry
-description: Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or remove repository-level unresolved questions.
+description: Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or update the status of repository-level unresolved questions.
 ---
 
 # Open Question Registry
@@ -50,82 +50,66 @@ When creating the Registry, include these sections:
 ```markdown
 # Open Question Registry
 
-## Current Open Questions
+## Questions
 
-| ID | Type | Status | Owner | Summary | Authoritative Source | Impact | Suggested Resolution Stage |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-
-## Unassigned Question Details
-
-## Change Log
-
-| Date | ID | Change | Final Location |
+| ID | Status | Question | Authoritative Source |
 | --- | --- | --- | --- |
+| [Q-001](#q-001) | Open | Which durable asset should own this question? | Registry temporary body |
+
+## Question Details
+
+### Q-001
 ```
 
-Do not add placeholder question rows. Add the first real entry in the same change that creates the document.
+The example row represents the first real question registered in the same operation that creates the Registry. Do not create an empty Registry or add placeholder question rows.
 
 ## Entry Contract
 
-Every current entry must expose:
+Before assigning an ID, scan the complete Registry, including terminal entries, to determine the existing maximum `Q-nnn` ID. New IDs start at `Q-001` when no ID exists and increment from the existing maximum. IDs are global and terminal IDs must not be reused.
 
-- a stable `ID` that is not renumbered when entries move or are removed;
-- `Type`;
-- current `Status`;
-- `Owner`, using an explicit `Unassigned` value when no owner is known;
-- a concise `Summary`;
-- `Authoritative Source`, using a verified repository Markdown link when one exists, or explicit `Registry temporary body` when it does not;
-- `Impact`;
-- `Suggested Resolution Stage`.
+Every entry must contain exactly `ID`, `Status`, `Question`, and `Authoritative Source`. Valid statuses are `Open`, `Resolved`, `Rejected`, `Invalid`, and `Superseded`.
 
-The current index lists only questions that still need attention. Do not use it as a decision log, completed-work archive, or substitute backlog.
+The Open group appears first in ascending ID order. The non-Open group appears after the Open group in ascending ID order. Question Details cover every question and are ordered by ascending ID.
+
+Question Details must include a `### Q-nnn` heading for every ID. When a durable authoritative asset owns a question, the Registry keeps only its title and a verified Markdown link to that asset; its Question Details entry contains no full body. Its `Authoritative Source` is the durable asset link. When no durable authority exists, the Registry temporarily owns the full body in Question Details and its `Authoritative Source` is `Registry temporary body`.
+
+The Registry must not contain a Change Log.
 
 ## Single Body Source
 
-When an authoritative PRD, Business Architecture, Feature, Story, Bug, Technical Task, technical solution, Decision, or other durable document already owns the question, keep the full body and complete context only in that authoritative source. The Registry stores a concise summary, current metadata, and a link; it must not duplicate the complete question body.
+There must be one full-body source. Do not keep two full bodies that require synchronization.
 
-When no authoritative source exists, the Registry may temporarily own the full body under `Unassigned Question Details`. Identify the entry by its stable ID and include the context, impact, known constraints, and suggested next step needed to prevent information loss.
-
-There must be one body source. Do not keep two full bodies that require synchronization.
-
-PRD and Business Architecture documents continue to maintain their own in-scope `Open Questions`. The Registry indexes them when repository-level visibility is useful; it does not replace or empty those sections.
+PRD, Business Architecture, User Journey, and other authoritative documents continue to maintain their own in-scope `Open Questions`. Every local question must also be indexed in the Registry under the same stable `Q-nnn` ID; the Registry does not replace or empty those local sections.
 
 ## Migration
 
-When an unassigned question gains a clear authoritative owner:
+When a Registry-temporary question gains a durable authoritative owner:
 
 1. Add the full body and relevant context to the authoritative document.
 2. Verify the authoritative document contains the complete migrated material.
-3. Replace the Registry temporary body with a concise index entry and verified link to the authoritative source.
-4. Record the migration and final location in the Registry `Change Log`.
-5. Verify no second full body remains.
+3. Replace the Registry temporary body with the question title and a verified link to the authoritative source.
+4. Verify no second full body remains.
 
 Do not delete the temporary body before the authoritative source has been written and verified.
 
 ## Terminal Outcomes
 
-When a question is resolved, rejected, invalid, or superseded:
+When a question becomes `Resolved`, `Rejected`, `Invalid`, or `Superseded`:
 
 1. Write the applicable conclusion or history to its authoritative source. If the Registry temporarily owns the question, first choose a durable final location for the conclusion.
-2. Remove the entry from the current index, `Current Open Questions`, and remove any Registry temporary body.
-3. Record the removal, terminal outcome, and final location in the Registry `Change Log`.
+2. After the conclusion is written, change the Registry entry to the terminal status.
+3. A terminal entry remains in Questions, and its Registry-owned detail remains only when no durable authority owns the body.
 
-Do not leave a terminal item in the current index with a closed-looking status. Current Open Questions must remain a truthful unresolved-work view.
-
-## Change Log
-
-The `Change Log` records index addition, migration, and removal events with the stable question ID and final location when applicable.
-
-Use it to preserve Registry history without copying the full body, complete context, or complete resolution text. Durable conclusions belong in the authoritative source.
+Do not remove terminal entries from Questions. The status and authoritative source must preserve their final location and outcome.
 
 ## Updating Existing Registries
 
 Before every write:
 
 - re-read the Registry and referenced authoritative source;
-- preserve stable IDs and existing unrelated entries;
+- preserve global IDs and existing unrelated entries;
 - verify local Markdown links according to `document-conventions`;
-- make only the requested registration, metadata update, migration, or removal;
+- make only the requested registration, metadata update, migration, or status change;
 - do not infer that a question is resolved from code changes, workflow progress, or missing discussion alone.
 
 If the requested change conflicts with the authoritative source, stop and surface the conflict instead of silently choosing one version.
@@ -135,9 +119,9 @@ If the requested change conflicts with the authoritative source, stop and surfac
 After a Registry operation, report:
 
 - whether the Registry was created or an existing candidate was used;
-- affected stable IDs;
+- affected global IDs;
 - whether each affected question is indexed or temporarily Registry-owned;
-- authoritative source and final location changes;
+- authoritative source, status, and final location changes;
 - validation performed, including duplicate-body and local-link checks.
 
 ### ⚠️ Red Flags
@@ -146,6 +130,6 @@ After a Registry operation, report:
 | --- | --- |
 | "Create the standard file now so it is ready later." | Creation is on demand. No real question means no Registry file. |
 | "Copy the whole question into the index for convenience." | An assigned question has one full body in its authoritative source. |
-| "Keep resolved questions in the table for history." | Remove terminal questions from the current index and use the Change Log plus authoritative source for history. |
+| "Remove resolved questions from the table for clarity." | Retain terminal questions in the Registry; Open-first ordering keeps active work visible. |
 | "This filename looks close enough; replace it." | Candidate ownership must be inspected. Ambiguity blocks writes. |
 | "Registering the question means I should create a work item." | Registry maintenance does not create delivery work items automatically. |

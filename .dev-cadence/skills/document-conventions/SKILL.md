@@ -84,6 +84,9 @@ Use a Markdown link for a repository document only when all three conditions hol
 For a navigational reference:
 
 - use meaningful link text that describes the target document's responsibility or content instead of repeating its full path;
+- an explicit ID field may use ID-only link text when the field itself supplies the navigation context;
+- outside an explicit ID field, when the target has both a stable ID and title, the link text must include `ID + title`; it must not use ID-only link text there;
+- when the target has no stable ID, use a meaningful title that describes the target's content or responsibility.
 - resolve the link path relative to the source document so it remains portable across checkouts;
 - when target paths contain spaces and special characters, use valid, verifiable Markdown link syntax; do not replace portable escaping with a machine-specific URI;
 - link to a heading anchor only when the anchor is stable and can be confirmed from the target document; otherwise link to the document itself;

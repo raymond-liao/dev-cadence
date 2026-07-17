@@ -43,13 +43,14 @@ For repository-level unresolved-question maintenance, read and follow:
 .dev-cadence/skills/open-question-registry/SKILL.md
 ```
 
-That shared capability owns Registry discovery, on-demand creation, entry fields, single-body ownership, migration, terminal removal, and Change Log rules. Do not duplicate its complete lifecycle contract in this entry skill or individual business workflows.
+That shared capability owns Registry discovery, on-demand creation, entry fields, single-body ownership, migration, terminal retention, and no-Change-Log rules. Do not duplicate its complete lifecycle contract in this entry skill or individual business workflows.
 
 ## Available Flows
 
 | User request | Flow |
 | --- | --- |
-| Explore a product idea, create the first PRD or Business Architecture, or update an existing product-design baseline | `.dev-cadence/skills/discovery/SKILL.md` |
+| Explore a product idea, create the first PRD or Business Architecture, update an existing product-design baseline, or create or maintain a product-level User Journey and its Feature Definitions through Discovery | `.dev-cadence/skills/discovery/SKILL.md` |
+| Plan a portfolio from confirmed User Journey, PRD, and Business Architecture assets, maintain a Story Map, or register a single clear Story, Task, or Bug work item | `.dev-cadence/skills/work-item-planning/SKILL.md` |
 | Explicitly design, propose, or review architecture for a stated goal | `.dev-cadence/skills/architecture-design/SKILL.md` |
 | Add a new user-visible or system-visible feature | `.dev-cadence/skills/feature-dev/SKILL.md` |
 | Change existing user-visible or system-visible feature behavior | `.dev-cadence/skills/feature-dev/SKILL.md` |
@@ -78,6 +79,9 @@ Open Question Registry maintenance is a shared asset capability, not a six-stage
 - When the user directly asks to view or maintain repository-level Open Questions, read `.dev-cadence/skills/open-question-registry/SKILL.md` and perform that bounded asset operation without starting feature-dev, bug-fix, refactor, or discovery solely for the maintenance request.
 - When an active workflow finds a question that the current artifact cannot reasonably hold, reuse the Registry skill and then return to the active workflow.
 - If the request also asks to change product behavior, fix a defect, refactor code, or create the first product-design baseline, select the matching business workflow first; Registry maintenance remains a supporting operation within that workflow.
+- The Registry and authoritative asset must be updated in the same operation when any active workflow performs a create, modify, migrate, or status change for an Open Question in a confirmed asset update. It must not advance the current confirmation gate with only one side updated.
+- A Delivery Workflow record under `build/` must not become the Registry's long-lived authoritative source. When no durable authority exists, the Registry temporarily owns the full body and the delivery record keeps the same `Q-nnn` plus a Registry link.
+- Do not promote an assumption, risk, or review finding to an Open Question unless the workflow explicitly identifies it as a question that must be tracked.
 - Do not infer a Registry operation merely because unresolved questions exist in repository documents. Repository state alone does not authorize asset changes.
 
 ## Two-Stage Routing Decision
@@ -97,10 +101,15 @@ These examples are representative intent decisions, not a keyword-matching list.
 | --- | --- | --- |
 | Initial Discovery | "I have an incomplete product idea; help me explore it and create our first PRD." | ✅ Select `discovery` because the user wants product exploration and the first product-design baseline. |
 | Incremental Discovery | "Update our existing PRD with the newly confirmed pricing model." | ✅ Select `discovery` when repository discovery also finds a credible product-design candidate; the skill then confirms the authoritative source before editing. If no credible candidate exists, do not silently switch to initial Discovery. |
+| Product Journey | "Define the checkout journey and the product capabilities it requires." | ✅ Select `discovery` to create or maintain the product-level User Journey and its Feature Definitions because Discovery owns that product-design baseline. |
+| Work Item Portfolio Planning | "Use our confirmed User Journey, PRD, and Business Architecture to plan the Story Map, Milestones, and next batch of Stories." | ✅ Select `work-item-planning` because the user wants portfolio planning based on confirmed product-design assets. `work-item-planning` is an Asset Workflow and must not create Delivery run records. |
+| Direct Work Item Intake | "Register a clear Bug card and attach it to the existing Backlog." | ✅ Select `work-item-planning` when the requested outcome is creating or maintaining a single clear Story, Task, or Bug card rather than implementing the change. |
+| Discovery Boundary | "The business meaning of this Feature is still unclear; define the Feature first, then split the Stories." | ✅ Select `discovery` because Discovery owns product-design baselines, User Journey, and Feature identity. `work-item-planning` only references confirmed Features and must not define or reinterpret them. |
 | Architecture Design | "Design the target architecture for our payment-event ingestion goal." | ✅ Select `architecture-design` because the user explicitly requests architecture for a stated goal. |
 | Architecture Repository State | "This repository has no architecture document." | ❌ Do not start `architecture-design` because repository state does not establish an architecture-design goal. |
+| Delivery Handoff | "These Stories are confirmed; start implementing the export command." | ✅ Select `feature-dev`, `bug-fix`, or `refactor` after the work item is confirmed and the user now wants delivery. `work-item-planning` prepares and hands off work items; it does not replace delivery workflows' implementation, diagnosis, or refactor records. |
 | Delivery Solution | "Add payment-event ingestion and design its implementation." | ✅ Select `feature-dev`; `architecture-design` does not replace the delivery workflow's task-scoped Technical Solution. |
-| Feature | "Add an export command that produces a JSON report." | ✅ Select `feature-dev` because the user wants new system-visible behavior. |
+| Feature | "Please implement a Feature that adds an export command producing a JSON report." | ✅ Select `feature-dev` because the user wants new system-visible behavior. |
 | Bug Fix | "The export command is documented to include timestamps, but they are missing." | ✅ Select `bug-fix` because already expected behavior is not working. If the user instead asks to intentionally change expected behavior, select `feature-dev`. |
 | Refactor | "Extract the parser into smaller modules without intentionally changing expected behavior." | ✅ Select `refactor` because the requested outcome is behavior-preserving structural improvement. If the request also adds behavior, route that behavior change through `feature-dev` or clarify the primary outcome. |
 | Ordinary Request | "Explain what this configuration field means." | ❌ Handle normally because explanation alone does not request product discovery or a software change. |
@@ -117,14 +126,21 @@ When adding a new workflow, review whether a representative request or adjacent 
 When multiple flows might apply, choose the process flow before any implementation or domain skill.
 
 Use `discovery` for broad product ideas, business problems, first-time product definition, first-time PRD or Business Architecture creation, or an explicit intent to update an existing product-design baseline when repository discovery finds a credible candidate. Incremental Discovery requires both update intent and a credible or trusted candidate; repository state alone does not trigger it. If update intent exists but no candidate is found, do not silently switch to initial Discovery.
+Creating or maintaining a product-level User Journey and its Feature Definitions selects `discovery`; Discovery owns that product-design baseline.
 Do not force a clear Feature, Bug, or Refactor request through Discovery. Direct development requests continue to their matching delivery workflow.
 Discovery owns both initial creation and confirmed incremental product-design updates. Read its skill before selecting a mode; do not infer authority from a file name alone.
+If the user wants to change Feature meaning, User Journey order, PRD conclusions, or Business Architecture content before planning work items, return to `discovery` instead of patching product-design facts inside `work-item-planning`.
 
 Use `architecture-design` only when the user explicitly asks for architecture design, an architecture proposal, or an architecture review for a stated goal. Do not infer it from repository state, technical content, Discovery activity, or a delivery workflow's need for a local solution. The standalone asset may inform delivery work, but `architecture-design` does not replace Feature Dev's Technical Solution, Bug Fix's Repair Solution, or Refactor's Refactor Solution.
 
+Use `work-item-planning` when the user wants an Asset Workflow that turns confirmed product-design assets into planning assets, such as Story Map, Milestone, or Story/Task/Bug cards, or when the user wants to register one clear work item without starting delivery. Do not auto-start `work-item-planning` merely because the repository already contains Story cards, Task cards, Bug cards, Backlog entries, or a Story Map; repository state alone does not trigger the workflow.
+`work-item-planning` owns planning assets and work-item registration, not Feature definition or delivery execution. Keep the full cross-workflow routing matrix only in this entry skill; do not copy the complete matrix into `.dev-cadence/skills/work-item-planning/SKILL.md`.
+After a work item is confirmed and the user asks to implement, repair, or refactor it, hand off to `feature-dev`, `bug-fix`, or `refactor` according to the requested delivery outcome.
+
 Use `bug-fix` when the existing expected behavior should already work and the user reports that it does not.
-Use `feature-dev` when the user asks to add behavior or intentionally change expected behavior.
+Use `feature-dev` when the user asks to implement a Feature, add behavior, or intentionally change expected behavior.
 Use `refactor` when the user asks to improve internal structure without intentionally changing expected behavior.
+For Feature requests, intent determines the route: route by the requested outcome, not by the isolated word "Feature".
 If a request mixes two or more of a defect report, requested behavior change, and structural cleanup, ask which outcome is primary before choosing among `bug-fix`, `feature-dev`, and `refactor`. Do not require all three request types to be present before clarifying the flow.
 
 ## Active Workflow Continuation
