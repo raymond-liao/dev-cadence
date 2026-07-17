@@ -8,7 +8,6 @@
 
 ## 待处理
 
-- [ ] [P1] [S-040 Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md)
 - [ ] [P0] [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md)
 - [ ] [P0] [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md)
 - [ ] [P2] [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md)
@@ -40,6 +39,7 @@
 
 ## 已完成
 
+- [x] [P1] [S-040 Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md)
 - [x] [P1] [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md)
 - [x] [P1] [S-014 Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md)
 - [x] [P1] [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)
@@ -134,7 +134,6 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 2 | S-040 | S-005、S-010 | ✅ Ready |
 | 3 | B-001；B-002；B-004；B-005；B-006 | - | Draft |
 | 4 | S-037 | S-015 | ✅ Ready |
 | 5 | S-016 | S-015 | ✅ Ready |
