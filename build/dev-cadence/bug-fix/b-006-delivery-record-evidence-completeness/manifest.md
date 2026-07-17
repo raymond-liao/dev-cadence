@@ -16,7 +16,7 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Problem Diagnosis | `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`) | `confirmed: user said "看起来就是这个问题，继续" at 2026-07-17T18:10:57+0800` | `9d53244` | 四个根因已由用户确认。 |
-| Repair Solution | `in_progress` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/02-repair-solution.md`) | pending | `pending` | 方案覆盖三套 Delivery Workflow、终态证据、checkpoint 绑定和运行记录验证。 |
+| Repair Solution | `in_progress` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/02-repair-solution.md`) | pending | `c1cc9e0` | 方案覆盖三套 Delivery Workflow、终态证据、checkpoint 绑定和运行记录验证。 |
 | Repair Plan | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
 | Repair Implementation | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
 | Regression Verification | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
@@ -35,6 +35,7 @@
 - 诊断分支：`codex/b-006-delivery-record-evidence-completeness`
 - 诊断样本：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/`
 - Problem Diagnosis checkpoint：`9d53244`
+- Repair Solution checkpoint：`c1cc9e0`
 
 ## 修复状态
 
