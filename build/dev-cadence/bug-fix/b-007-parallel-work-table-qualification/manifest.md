@@ -8,16 +8,16 @@
 - Workspace: `.worktrees/b-007-parallel-work-table-qualification`
 - Branch: `codex/b-007-parallel-work-table-qualification`
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Problem Diagnosis
+- Current Stage: Repair Plan
 - Overall Status: `in_progress`
 
 ## 阶段表
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | pending | `1fd1c87` | 已完成 Backlog 视图与入口规则对照，待用户确认诊断。 |
-| Repair Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md` | pending | `pending` | 等待 Problem Diagnosis 确认。 |
-| Repair Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
+| Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | `confirmed: user said "确认三项诊断，后面不要找我确认"` | `1fd1c87` | 三项诊断已确认。 |
+| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md`) | `delegated: user authorized continuation without intermediate confirmations` | `pending` | 保留原表名，新增独立入口资格列。 |
+| Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md`) | `delegated: user authorized continuation without intermediate confirmations` | `pending` | 计划覆盖源规则、Backlog 表和契约测试。 |
 | Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
 | Regression Verification | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
@@ -33,3 +33,8 @@
 - Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`
 - Baseline checks: `bash scripts/build.sh`; `bash tests/run-all.sh` -> passed
 - Previously confirmed in conversation: B-007 is a real documentation and planning-view contract defect
+
+## 方案与计划状态
+
+- Repair Solution: ✅ `confirmed` by delegated continuation authority.
+- Repair Plan: ✅ `confirmed` by delegated continuation authority.
