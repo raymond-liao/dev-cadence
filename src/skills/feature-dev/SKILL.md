@@ -529,6 +529,8 @@ DEV_CADENCE_TASK_DIR=build/dev-cadence/feature-dev/<feature-slug>
 
 All SDD task briefs, implementer reports, review packages, and progress ledgers must stay under that task directory.
 
+Ignored SDD scratch such as `sdd/progress.md` is useful during implementation, but `sdd/progress.md` and other ignored SDD scratch files are not required terminal evidence.
+
 #### Common Implementation Rules
 
 These common rules apply to both `executing-plans` and `subagent-driven-development`.
@@ -544,6 +546,12 @@ At the end of this stage, write or update:
 ```text
 build/dev-cadence/feature-dev/<feature-slug>/04-implementation-record.md
 ```
+
+For committed tracked changes, terminal evidence must include the final implementation commit hash and final changed-files state. If a terminal or stage checkpoint has no tracked changes, record `skipped: no tracked changes` instead of substituting alternative evidence.
+
+After writing or updating the stage record, follow this sequence exactly: Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator.
+
+Verify the checkpoint tree contains the stage record with `git cat-file -e "<checkpoint-commit>:build/dev-cadence/feature-dev/<feature-slug>/04-implementation-record.md"`, then record the verified checkpoint SHA in the manifest and run `bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/feature-dev/<feature-slug>`.
 
 The implementation record must include:
 
@@ -756,7 +764,7 @@ Before marking the run terminal, complete this readiness checklist:
 
 - [ ] Manifest has a terminal overall status and no `pending` checkpoint commit values.
 - [ ] Business acceptance record has `Final Follow-Up Actions` updated with actual past-tense results.
-- [ ] Implementation record has the final implementation commit hash or final changed-files state.
+- [ ] Implementation record has the final implementation commit hash and final changed-files state for committed changes, or `skipped: no tracked changes` when the terminal stage has no tracked changes.
 - [ ] Implementation record links to `04-code-review-report.md`.
 - [ ] Code review report exists and all checklist items are checked or have an explicit reason.
 - [ ] System test report records skipped checks and residual risks honestly.
@@ -764,5 +772,11 @@ Before marking the run terminal, complete this readiness checklist:
 - [ ] Artifact paths are repository-relative; no local absolute paths are persisted unless explicitly requested by the user.
 
 If any checklist item is not satisfied, update the affected record before reporting Completion.
+
+Before marking the run terminal, run:
+
+```bash
+bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/feature-dev/<feature-slug> --terminal
+```
 
 Then follow the vendored finishing skill.
