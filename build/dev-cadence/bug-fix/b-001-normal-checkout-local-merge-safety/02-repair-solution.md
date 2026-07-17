@@ -2,9 +2,9 @@
 
 ## 状态
 
-🔄 `in_progress`
+✅ `confirmed`
 
-用户已确认 Problem Diagnosis；本 Repair Solution 尚未确认。确认前不进入 Repair Plan 或实现。
+用户确认：“可以，继续”。该确认同时确认方案 A 和版本 `0.21.1`，允许进入 Repair Plan；实现仍需后续确认 Repair Plan。
 
 ## 方案来源
 
@@ -17,11 +17,9 @@
 
 本地 Merge 在用户选择完成方式时没有绑定不可变的交付提交身份。执行阶段重新解析可变的 feature branch 名称，因此可能合入完成门禁之后产生的提交；同时 local-only Merge 路径依赖 `git pull`，并且把测试通过当作主要结果证据，没有验证目标分支包含预期提交。
 
-## ❓ 方案决策待确认
+## 方案决策
 
-### 方案 A：在 Finishing 的本地 Merge 路径建立提交身份闭环
-
-推荐方案，但需要用户确认后才能标记为选定。
+### ✅ Selected：方案 A：在 Finishing 的本地 Merge 路径建立提交身份闭环
 
 1. 在展示 Completion 选项前固定 base branch、feature branch 和 `EXPECTED_FEATURE_SHA`。
 2. 执行 Merge 前确认当前 feature branch 仍指向 `EXPECTED_FEATURE_SHA`；如果分支已移动，停止本次 Merge，保留分支和工作区，要求重新经过完成门禁。
@@ -106,11 +104,11 @@
 - checkout、Merge 冲突、身份验证失败时的保留现场路径。
 - Keep As-Is、PR、Discard 和 detached HEAD 菜单及清理边界未被改变。
 
-## 需要用户确认的事项
+## 已确认事项
 
-- 是否采用方案 A 的“固定 SHA + 分支移动即停止 + local-only Merge + 合并后身份验证”完整闭环。
-- 是否接受 `0.21.1` 作为本次安装包行为修复版本。
+- 采用方案 A 的“固定 SHA + 分支移动即停止 + local-only Merge + 合并后身份验证”完整闭环。
+- 版本从 `0.21.0` 更新为 `0.21.1`。
 
 ## 结论
 
-当前 Repair Solution 已完成，推荐方案 A。用户确认后进入 Repair Plan；在确认前不创建详细 TDD 计划或修改实现文件。
+当前 Repair Solution 已完成并确认，进入 Repair Plan；在计划确认前不修改实现文件。

@@ -6,7 +6,7 @@
 - Branch: `codex/b-001-normal-checkout-local-merge-safety`
 - Workspace: `.worktrees/b-001-normal-checkout-local-merge-safety`
 - Started At: `2026-07-17T18:02:04+08:00`
-- Current Stage: Repair Solution
+- Current Stage: Repair Plan
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -14,8 +14,8 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 |---|---|---|---|---|---|
 | Problem Diagnosis | ✅ `confirmed` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ✅ `confirmed` | `c117bce` | Confirmed by the user after source inspection and the isolated Git reproduction. |
-| Repair Solution | 🔄 `in_progress` | [Repair Solution](02-repair-solution.md) | ⏳ `pending` | `c4d2809` | Define the minimal local-merge identity and verification contract; user confirmation pending. |
-| Repair Plan | ⏳ `pending` | `03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | Must wait for Repair Solution confirmation. |
+| Repair Solution | ✅ `confirmed` | [Repair Solution](02-repair-solution.md) | ✅ `confirmed` | `c4d2809` | User confirmed the fixed-SHA local-only Merge solution and version `0.21.1`. |
+| Repair Plan | 🔄 `in_progress` | [Repair Plan](03-repair-plan.md) | ⏳ `pending` | ⏳ `pending` | TDD plan for source rule, contract tests, package sync, and verification. |
 | Repair Implementation | ⏳ `pending` | `04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | No implementation started. |
 | Regression Verification | ⏳ `pending` | `05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | No verification started. |
 | Business Acceptance | ⏳ `pending` | `06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | No acceptance decision requested. |
