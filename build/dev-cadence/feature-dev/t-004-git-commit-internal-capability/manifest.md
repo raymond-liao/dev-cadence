@@ -7,7 +7,7 @@
 - Workspace: `.worktrees/t-004-git-commit-internal-capability`
 - Started At: `2026-07-17T17:34:30+08:00`
 - Current Stage: `Business Acceptance`
-- Overall Status: 🔄 `in_progress`
+- Overall Status: ✅ `accepted`
 
 ## Stage Table
 
@@ -18,7 +18,7 @@
 | Implementation Plan | ✅ `confirmed` | [T-004 实施计划](03-implementation-plan.md) | 用户选择“开始”并要求继续实施。 | `964ce00` | 两项 TDD 任务：shared capability 行为；package、install 与版本。 |
 | Development Implementation | ✅ `confirmed` | [T-004 实施记录](04-implementation-record.md) | delegated continuous execution | `ec57908` | 最终实现身份为 `1f02f53`；独立整分支审查无未解决 Critical 或 Important finding。 |
 | System Testing | ✅ `confirmed` | [T-004 系统测试报告](05-system-test-report.md) | fresh verification completed | `df0e58f` | Verification Decision: ✅ `ready`；九条验收标准均有执行证据。 |
-| Business Acceptance | 🔄 `in_progress` | `build/dev-cadence/feature-dev/t-004-git-commit-internal-capability/06-business-acceptance-record.md` | pending | ⏳ `pending` | 等待用户从固定 Business Acceptance 选项中作出决定。 |
+| Business Acceptance | ✅ `accepted` | [T-004 业务验收记录](06-business-acceptance-record.md) | 用户选择 `1. Accept`。 | ⏳ `pending` | `Raymond Liao <raymond-liao@outlook.com>` 于 `2026-07-17T22:59:45+08:00` 接受交付结果。 |
 
 ## Freshness Gate
 
@@ -40,3 +40,10 @@
 
 - The personal global `git-commit` skill outside the target repository is outside T-004 delivery scope.
 - Package 与 install contracts 共享生成目录，不应并行执行；本次使用串行验证取得有效证据。
+
+## Business Acceptance Decision
+
+- Decision: ✅ `accepted`
+- Decision By: `Raymond Liao <raymond-liao@outlook.com>`
+- Decision At: `2026-07-17T22:59:45+08:00`
+- Accepted Residual Risks: None.
