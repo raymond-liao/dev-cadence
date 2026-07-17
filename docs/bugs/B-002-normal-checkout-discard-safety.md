@@ -4,7 +4,7 @@
 
 - ID：`B-002`
 - Version：`2`
-- Status：`Draft`
+- Status：`Done`
 - Priority：`P0`
 - Change Type：Bug
 
@@ -71,3 +71,4 @@ Discard 前必须识别当前 run 的 branch、commit 范围、tracked/untracked
 |---:|---|---|---|
 | 1 | 2026-07-14 | 创建普通 Checkout Discard 安全性 Bug。 | 将可能造成不可逆 Git 状态的缺陷建立为独立卡片。 |
 | 2 | 2026-07-17 | 扩展为三个 Delivery Workflow 的整体 run 删除契约。 | 用户确认 Discard 应删除当前 run 的实现、owned branch/worktree 和完整运行记录；外部改动必须通过明确选项处理。 |
+| 2 | 2026-07-18 | Delivery Workflow 完成 Business Acceptance 和集成，状态更新为 `Done`。 | B-002 已完成交付、回归验证、业务验收并合并到 `main`。 |

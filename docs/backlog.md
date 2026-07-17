@@ -2,13 +2,15 @@
 
 按本文件顺序逐项处理。开始一个主任务前，先单独确认范围和实施计划；当前任务完成并验证后，再进入下一项。不要把多个待处理项合并为一次大范围修改。
 
+## 进行中
+
+| ID | Title | Version | Status | Priority |
+|---|---|---:|---|---|
+
 ## 待处理
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `3` | `Draft` | `P1` |
-| `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Draft` | `P0` |
-| `B-006` | [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Draft` | `P2` |
 | `S-017` | [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `2` | `Blocked` | `P1` |
 | `S-029` | [S-029 Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [S-018 Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
@@ -114,6 +116,7 @@
 | [B-004](bugs/B-004-output-language-configuration-not-consistently-applied.md) | - | - |
 | [B-005](bugs/B-005-refactor-confirmation-options-missing.md) | - | - |
 | [B-007](bugs/B-007-parallel-work-table-entry-qualification.md) | - | - |
+| [B-008](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | - | - |
 | [S-022](stories/S-022-bug-not-a-bug-terminal-state.md) | - | - |
 | [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
@@ -144,7 +147,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 3 | B-002；B-005；B-007 | - | Draft |
+| 3 | B-005；B-007；B-008 | - | Draft |
 | 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
 | 7 | S-029 | S-017 | ⚠️ Blocked |
 | 8 | S-018；S-019；S-020；S-021 | - | Draft |
