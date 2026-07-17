@@ -44,7 +44,7 @@ assert_description \
 
 assert_description \
   "src/skills/open-question-registry/SKILL.md" \
-  "Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or remove repository-level unresolved questions."
+  "Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or update the status of repository-level unresolved questions."
 
 assert_description \
   "src/skills/discovery/SKILL.md" \

@@ -1,6 +1,6 @@
 ---
 name: open-question-registry
-description: Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or remove repository-level unresolved questions.
+description: Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or update the status of repository-level unresolved questions.
 ---
 
 # Open Question Registry
@@ -65,13 +65,13 @@ The example row represents the first real question registered in the same operat
 
 ## Entry Contract
 
-Before assigning an ID, scan the complete Registry for every `Q-nnn` identifier. IDs are global, start at `Q-001`, increment monotonically, and must not be reused.
+Before assigning an ID, scan the complete Registry, including terminal entries, to determine the existing maximum `Q-nnn` ID. New IDs start at `Q-001` when no ID exists and increment from the existing maximum. IDs are global and terminal IDs must not be reused.
 
 Every entry must contain exactly `ID`, `Status`, `Question`, and `Authoritative Source`. Valid statuses are `Open`, `Resolved`, `Rejected`, `Invalid`, and `Superseded`.
 
-Open entries appear first and are ordered by ascending ID. All non-Open entries follow in ascending ID order. Question Details contain every Registry-owned full body and are ordered by ascending ID.
+The Open group appears first in ascending ID order. The non-Open group appears after the Open group in ascending ID order. Question Details cover every question and are ordered by ascending ID.
 
-When a durable authoritative asset owns a question, the Registry keeps only its title and a verified Markdown link to that asset. Its `Authoritative Source` is the durable asset link. When no durable authority exists, the Registry temporarily owns the full body in Question Details and its `Authoritative Source` is `Registry temporary body`.
+Question Details must include a `### Q-nnn` heading for every ID. When a durable authoritative asset owns a question, the Registry keeps only its title and a verified Markdown link to that asset; its Question Details entry contains no full body. Its `Authoritative Source` is the durable asset link. When no durable authority exists, the Registry temporarily owns the full body in Question Details and its `Authoritative Source` is `Registry temporary body`.
 
 The Registry must not contain a Change Log.
 
