@@ -81,6 +81,7 @@ assert_not_match "legacy current questions heading" '^## Current Open Questions$
 assert_not_match "legacy unassigned details heading" '^## Unassigned Question Details$' "$REGISTRY_SKILL"
 assert_not_match "terminal removal rule" 'Remove the entry from the current index|remove any Registry temporary body|current.*index.*remove' "$REGISTRY_SKILL"
 assert_not_match "registry change log structure" '^## Change Log$|^\| Date \| ID \| Change \| Final Location \|$' "$REGISTRY_SKILL"
+assert_not_match "optional Registry indexing semantics" 'Registry indexes them when repository-level visibility is useful|index.*when useful|optional.*index' "$REGISTRY_SKILL"
 
 assert_literal "entry registry skill path" '.dev-cadence/skills/open-question-registry/SKILL.md' "$ENTRY_SKILL"
 assert_match "direct registry route" 'view.*Open Questions|maintain.*Open Questions|repository-level.*Open Questions' "$ENTRY_SKILL"

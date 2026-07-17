@@ -79,7 +79,7 @@ The Registry must not contain a Change Log.
 
 There must be one full-body source. Do not keep two full bodies that require synchronization.
 
-PRD and Business Architecture documents continue to maintain their own in-scope `Open Questions`. The Registry indexes them when repository-level visibility is useful; it does not replace or empty those sections.
+PRD, Business Architecture, User Journey, and other authoritative documents continue to maintain their own in-scope `Open Questions`. Every local question must also be indexed in the Registry under the same stable `Q-nnn` ID; the Registry does not replace or empty those local sections.
 
 ## Migration
 
