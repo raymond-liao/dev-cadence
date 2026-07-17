@@ -43,7 +43,7 @@
 - Invocation: `bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh RUN_DIR --terminal`.
 - Produces: exit `0` for a valid run, exit `1` with a specific failure message for an invalid run.
 
-- [ ] **Step 1: Write the failing fixture contract**
+- [x] **Step 1: Write the failing fixture contract**
 
   Create a temporary Git repository in `tests/delivery-record-contract.sh`. Build one valid run and four invalid variants:
 
@@ -61,7 +61,7 @@
 
   Assert the valid fixture succeeds and each invalid fixture fails with a message identifying its violated contract.
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
   Run:
 
@@ -71,7 +71,7 @@
 
   Expected: FAIL because `src/skills/using-dev-cadence/scripts/validate-delivery-record.sh` does not exist yet. Do not implement the validator before observing this failure.
 
-- [ ] **Step 3: Implement the minimal validator**
+- [x] **Step 3: Implement the minimal validator**
 
   Implement `validate-delivery-record.sh` with `set -euo pipefail` and these checks, in this order:
 
@@ -87,7 +87,7 @@
 
   Print `Delivery record validation passed: <run-dir>` on success and one `FAIL: ...` line per first violated condition on failure.
 
-- [ ] **Step 4: Run the focused test and verify GREEN**
+- [x] **Step 4: Run the focused test and verify GREEN**
 
   Run:
 
@@ -97,7 +97,7 @@
 
   Expected: the valid fixture passes and all four invalid fixtures fail for the intended reason.
 
-- [ ] **Step 5: Add the focused test to the suite and commit**
+- [x] **Step 5: Add the focused test to the suite and commit**
 
   Add this command to `tests/run-all.sh` after the existing asset/delivery record contract:
 
@@ -126,7 +126,7 @@
 - Consumes: the validator interface from Task 1.
 - Produces: symmetric rules that generate and validate durable evidence before each workflow can reach its terminal state.
 
-- [ ] **Step 1: Add failing symmetry assertions**
+- [x] **Step 1: Add failing symmetry assertions**
 
   Add assertions to `tests/workflow-symmetry.sh` for all three skills requiring:
 
@@ -144,7 +144,7 @@
 
   Expected: FAIL because the three source skills do not yet contain the complete shared contract.
 
-- [ ] **Step 2: Update the three workflow rules symmetrically**
+- [x] **Step 2: Update the three workflow rules symmetrically**
 
   In each skill, replace the alternative evidence wording with the committed-change/no-tracked-change contract. Add the same checkpoint sequence after the existing “write or update the stage record” rule:
 
@@ -161,7 +161,7 @@
 
   State that `sdd/progress.md` and other ignored SDD scratch files are not required terminal evidence. Keep each workflow’s existing record names, status values, user gates, implementation ledger, and completion semantics unchanged.
 
-- [ ] **Step 3: Run focused rule tests and verify GREEN**
+- [x] **Step 3: Run focused rule tests and verify GREEN**
 
   Run:
 
@@ -173,7 +173,7 @@
 
   Expected: all focused tests pass, and the three source skills contain the same evidence contract with their workflow-specific record names preserved.
 
-- [ ] **Step 4: Commit the rule integration**
+- [x] **Step 4: Commit the rule integration**
 
   Run `git diff --check`, then commit only Task 2 files:
 
@@ -196,7 +196,7 @@
 - Consumes: Task 1 validator and Task 2 source rules.
 - Produces: an installable package with source/dist parity and complete regression evidence.
 
-- [ ] **Step 1: Add package/install assertions before the package change**
+- [x] **Step 1: Add package/install assertions before the package change**
 
   Add the validator path to the package required-files list and assert that installation copies it to `.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh`.
 
@@ -208,7 +208,7 @@
 
   Expected: `tests/package-contract.sh` FAIL because the generated dist package does not yet contain the new helper. `tests/install-contract.sh` is rerun after the build because its installation path may rebuild the package itself.
 
-- [ ] **Step 2: Bump the package version and rebuild**
+- [x] **Step 2: Bump the package version and rebuild**
 
   Set `version` to `0.22.0`, then run:
 
@@ -218,7 +218,7 @@
 
   Expected: `dist/.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh` exists and is byte-identical to the source helper.
 
-- [ ] **Step 3: Run package and full regression checks**
+- [x] **Step 3: Run package and full regression checks**
 
   Run:
 
@@ -232,7 +232,7 @@
 
   Expected: all checks pass; the installed package reports `0.22.0`; no absolute paths, temporary artifacts, stale SDD terminal references, or source/dist mismatches are reported.
 
-- [ ] **Step 4: Commit package changes and self-review**
+- [x] **Step 4: Commit package changes and self-review**
 
   Run `git diff --check`, inspect `git diff --stat`, and confirm only the version, package/install contracts, generated dist, and in-scope source/test files changed. Commit with:
 

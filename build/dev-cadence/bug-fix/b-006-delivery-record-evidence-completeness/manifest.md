@@ -8,7 +8,7 @@
 - Workspace: `.worktrees/b-006-delivery-record-evidence-completeness`
 - Branch: `codex/b-006-delivery-record-evidence-completeness`
 - Started At: `2026-07-17 Asia/Shanghai`
-- Current Stage: Repair Implementation
+- Current Stage: Regression Verification
 - Overall Status: `in_progress`
 
 ## 阶段表
@@ -18,8 +18,8 @@
 | Problem Diagnosis | `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`) | `confirmed: user said "看起来就是这个问题，继续" at 2026-07-17T18:10:57+0800` | `9d53244` | 四个根因已由用户确认。 |
 | Repair Solution | `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/02-repair-solution.md`) | `confirmed: user said "那可以，就按你的方案来" at 2026-07-17T18:17:23+0800` | `c1cc9e0` | 用户确认按方案修复。 |
 | Repair Plan | `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/03-repair-plan.md`) | `confirmed: user said "继续" at 2026-07-17T18:24:33+0800` | `b9e2804` | 计划采用测试先行并保持三套 Workflow 对称。 |
-| Repair Implementation | `in_progress` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/04-repair-record.md` | pending | `pending` | 已初始化 SDD workspace，Task 1 从验证器失败测试开始。 |
-| Regression Verification | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
+| Repair Implementation | `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/04-repair-record.md`) | `not required` | `pending` | Task 1-3 与 final-review fixes 已完成；whole-branch 独立复审无 Critical/Important finding。 |
+| Regression Verification | `in_progress` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/05-regression-test-report.md` | pending | `pending` | 正在执行新鲜回归验证。 |
 | Business Acceptance | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
 
 ## 诊断摘要
@@ -37,12 +37,14 @@
 - Problem Diagnosis checkpoint：`9d53244`
 - Repair Solution checkpoint：`c1cc9e0`
 - Repair Plan checkpoint：`b9e2804`
+- Implementation Base SHA：`9834d2ee4c3536196e7844bfc697ed724088a7ea`
+- Final Repair SHA：`b4ba512`
+- Whole-branch review：✅ `approved`；Critical `0`，Important `0` unresolved
 
 ## 修复状态
 
 - Repair Solution: confirmed
 - Repair Plan: confirmed
-- Repair Implementation: in_progress
-- Repair Plan: pending
-- Regression Verification: pending
+- Repair Implementation: confirmed
+- Regression Verification: in_progress
 - Business Acceptance: pending
