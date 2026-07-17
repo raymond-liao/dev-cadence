@@ -8,7 +8,7 @@
 - Branch: `codex/s-040-open-question-registry-contract`
 - Workspace: `.worktrees/s-040-open-question-registry-contract`
 - Started At: `2026-07-17T12:12:14+08:00`
-- Current Stage: Business Acceptance
+- Current Stage: Completion
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -20,7 +20,7 @@
 | Implementation Plan | ✅ `confirmed` | [S-040 实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/03-implementation-plan.md`) | `confirmed: user replied “确认” on 2026-07-17` | `4627bd5` | Four TDD tasks confirmed for subagent-driven implementation. |
 | Development Implementation | ✅ `confirmed` | [S-040 实施记录](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/04-implementation-record.md`) | N/A | `a5ce344` | All four tasks and final implementation review are complete; implementation is ready for fresh System Testing. |
 | System Testing | ✅ `confirmed` | [S-040 系统测试报告](05-system-test-report.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/05-system-test-report.md`) | N/A | `35ff903` | Verification Decision is `ready`; all confirmed requirements are covered by fresh evidence. |
-| Business Acceptance | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | Waiting for one fixed user decision. |
+| Business Acceptance | ✅ `confirmed` | [S-040 业务验收](06-business-acceptance-record.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/06-business-acceptance-record.md`) | `accepted: user selected option 1 (Accept) on 2026-07-17T13:50:47+08:00` | ⏳ `pending` | Accepted with no residual risk. |
 
 ## Verification Summary
 
