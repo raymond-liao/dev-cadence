@@ -8,6 +8,7 @@
 
 ## 待处理
 
+- [ ] [P1] [S-040 Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md)
 - [ ] [P0] [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md)
 - [ ] [P0] [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md)
 - [ ] [P2] [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md)
@@ -120,6 +121,7 @@
 | [S-037](stories/S-037-work-item-analysis-workflow.md) | S-015 | S-017, T-002 |
 | [S-038](stories/S-038-work-item-relative-size-estimation.md) | S-015 | S-039, T-002 |
 | [S-039](stories/S-039-iteration-plan-capacity-calibration.md) | S-016, S-038 | T-002 |
+| [S-040](stories/S-040-open-question-registry-index-and-reference-contract.md) | S-005, S-010 | - |
 | [B-003](bugs/B-003-refactor-public-contract-compatibility.md) | - | - |
 
 ## 当前可并行实施表
@@ -128,24 +130,25 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
-| 2 | B-001；B-002；B-006 | - | Draft |
-| 3 | S-037 | S-015 | ✅ Ready |
-| 4 | S-016 | S-015 | ✅ Ready |
-| 5 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
-| 6 | S-029 | S-017 | ⚠️ Blocked |
-| 7 | S-018；S-019；S-020；S-021 | - | Draft |
-| 8 | S-024 | - | Draft |
-| 9 | S-022；S-025 | - | Draft |
-| 10 | S-026；S-027 | - | Draft |
-| 11 | S-028 | S-027 | ⚠️ Blocked |
-| 12 | S-023 | - | Draft |
-| 13 | S-038 | S-015 | ✅ Ready |
-| 14 | S-039 | S-016、S-038 | ⚠️ Blocked |
-| 15 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
-| 16 | S-030 | - | Draft |
-| 17 | S-031 | S-030 | ⚠️ Blocked |
-| 18 | S-032 | - | Draft |
-| 19 | S-033 | S-030、S-031 | ⚠️ Blocked |
-| 20 | S-034 | - | Draft |
+| 2 | S-040 | S-005、S-010 | ✅ Ready |
+| 3 | B-001；B-002；B-006 | - | Draft |
+| 4 | S-037 | S-015 | ✅ Ready |
+| 5 | S-016 | S-015 | ✅ Ready |
+| 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
+| 7 | S-029 | S-017 | ⚠️ Blocked |
+| 8 | S-018；S-019；S-020；S-021 | - | Draft |
+| 9 | S-024 | - | Draft |
+| 10 | S-022；S-025 | - | Draft |
+| 11 | S-026；S-027 | - | Draft |
+| 12 | S-028 | S-027 | ⚠️ Blocked |
+| 13 | S-023 | - | Draft |
+| 14 | S-038 | S-015 | ✅ Ready |
+| 15 | S-039 | S-016、S-038 | ⚠️ Blocked |
+| 16 | T-002 | S-004、S-015、S-016、S-017、S-037、S-038、S-039 | ⚠️ Blocked |
+| 17 | S-030 | - | Draft |
+| 18 | S-031 | S-030 | ⚠️ Blocked |
+| 19 | S-032 | - | Draft |
+| 20 | S-033 | S-030、S-031 | ⚠️ Blocked |
+| 21 | S-034 | - | Draft |
 
 用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。
