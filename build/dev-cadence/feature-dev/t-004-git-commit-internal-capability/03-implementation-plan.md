@@ -20,6 +20,15 @@
 
 ---
 
+## Task Overview
+
+| Task | Goal | Files | Verification |
+| --- | --- | --- | --- |
+| Task 1: Shared commit capability contract and implementation | 集中路由并实现 staged-only 内部提交能力。 | `src/skills/using-dev-cadence/SKILL.md`, `src/skills/git-commit/SKILL.md`, focused contracts | `git-commit-contract`, routing, skill-description |
+| Task 2: Package, installation, version, and full verification | 将共享能力完整交付到 Version `0.22.0` 安装包。 | package/install contracts, `version`, generated `dist` | package, install, whitespace, `scripts/check-all.sh` |
+
+## Detailed Tasks
+
 ### Task 1: Shared commit capability contract and implementation
 
 **Files:**
@@ -33,7 +42,7 @@
 - Consumes: `using-dev-cadence` 的现有两阶段路由、活动 Workflow 恢复和 `<SUBAGENT-STOP>` 边界。
 - Produces: 固定路径 `.dev-cadence/skills/git-commit/SKILL.md`、Dev Cadence managed commit context、staged-only shared skill contract。
 
-- [ ] **Step 1: 写入失败契约测试**
+- [x] **Step 1: 写入失败契约测试**
 
 创建 `tests/git-commit-contract.sh`，使用现有 `rg` 契约模式验证入口与 shared skill：
 
@@ -110,13 +119,13 @@ assert_description \
 assert_no_process_summary "src/skills/git-commit/SKILL.md"
 ```
 
-- [ ] **Step 2: 运行 focused test 并确认 RED**
+- [x] **Step 2: 运行 focused test 并确认 RED**
 
 Run: `bash tests/git-commit-contract.sh`
 
 Expected: FAIL，首个失败为缺少 `## Shared Commit Capability`，证明现有入口尚未路由共享提交能力。
 
-- [ ] **Step 3: 在入口增加集中路由规则**
+- [x] **Step 3: 在入口增加集中路由规则**
 
 在 `src/skills/using-dev-cadence/SKILL.md` 的 Document Conventions 规则之后增加 `## Shared Commit Capability`，完整表达：
 
@@ -136,7 +145,7 @@ Do not invoke the installed `git-commit` for an ordinary repository commit that 
 When dispatching a subagent that may create a commit, include the installed skill path, the owning Dev Cadence context, and the staged-only constraint in the subagent task brief. The `<SUBAGENT-STOP>` routing boundary does not remove this dispatch responsibility.
 ````
 
-- [ ] **Step 4: 将 git-commit 重写为 staged-only 内部能力**
+- [x] **Step 4: 将 git-commit 重写为 staged-only 内部能力**
 
 修改 `src/skills/git-commit/SKILL.md`，至少包含以下精确契约：
 
@@ -184,7 +193,7 @@ Do not run `git add`. Inspect only the staged commit unit. If no staged changes 
 Return control immediately after the commit result. Do not suggest `push`, `amend`, `reset`, merge, branch cleanup, or any other follow-up Git operation.
 ```
 
-- [ ] **Step 5: 运行 focused 和相邻契约并确认 GREEN**
+- [x] **Step 5: 运行 focused 和相邻契约并确认 GREEN**
 
 Run: `bash tests/git-commit-contract.sh`
 
@@ -194,7 +203,7 @@ Run: `bash tests/routing-contract.sh && bash tests/skill-description-contract.sh
 
 Expected: routing 与 description checks 均通过。
 
-- [ ] **Step 6: 创建实施提交**
+- [x] **Step 6: 创建实施提交**
 
 ```bash
 git add tests/git-commit-contract.sh tests/run-all.sh tests/skill-description-contract.sh src/skills/using-dev-cadence/SKILL.md src/skills/git-commit/SKILL.md
@@ -213,7 +222,7 @@ git commit -m "feat(flow): route managed commits through shared capability"
 - Consumes: Task 1 的入口固定路径和 `git-commit` source contract。
 - Produces: Version `0.22.0` 的 source/dist/install 一致性和安装结果点验。
 
-- [ ] **Step 1: 增加 package 与 install 明确点验**
+- [x] **Step 1: 增加 package 与 install 明确点验**
 
 在 `tests/package-contract.sh` 的 `required_files` 中加入：
 
@@ -242,7 +251,7 @@ cmp -s \
   "$TARGET_REPO/.dev-cadence/skills/git-commit/SKILL.md" || fail "installed git-commit skill differs from source"
 ```
 
-- [ ] **Step 2: 更新版本并构建分发包**
+- [x] **Step 2: 更新版本并构建分发包**
 
 将根 `version` 精确更新为：
 
@@ -254,19 +263,19 @@ Run: `bash scripts/build.sh`
 
 Expected: `dist/.dev-cadence/version` 为 `0.22.0`，source 与 dist skills 内容一致。
 
-- [ ] **Step 3: 运行 package 和 install checks**
+- [x] **Step 3: 运行 package 和 install checks**
 
 Run: `bash tests/package-contract.sh && bash tests/install-contract.sh`
 
 Expected: `Package contract checks passed.` 和 `Install contract checks passed.`
 
-- [ ] **Step 4: 检查关键规则同步**
+- [x] **Step 4: 检查关键规则同步**
 
 Run: `rg --no-ignore -n 'Shared Commit Capability|Dev Cadence-managed commit|git diff --cached' src/skills dist/.dev-cadence/skills`
 
 Expected: `using-dev-cadence` 与 `git-commit` 的关键规则同时出现在 source 和 dist，不出现仅一侧匹配。
 
-- [ ] **Step 5: 运行完整验证**
+- [x] **Step 5: 运行完整验证**
 
 Run: `bash scripts/check-whitespace.sh`
 
@@ -276,7 +285,7 @@ Run: `bash scripts/check-all.sh`
 
 Expected: 所有 package、Asset/Delivery、workflow、routing、git-commit、install 和 whitespace contract checks 通过。
 
-- [ ] **Step 6: 创建 package 提交**
+- [x] **Step 6: 创建 package 提交**
 
 ```bash
 git add tests/package-contract.sh tests/install-contract.sh version

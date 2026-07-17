@@ -16,7 +16,7 @@
 | Requirements Confirmation | ✅ `confirmed` | [T-004 需求确认](01-requirements.md) | 用户明确要求直接修改，并将边界澄清为不得在 Dev Cadence 之外调用；随后确认 Version 4。 | `964ce00` | 覆盖所有已安装 Workflow 和入口直接路由的 shared capability。 |
 | Technical Solution | ✅ `confirmed` | [T-004 技术方案](02-technical-solution.md) | 用户选择由 `using-dev-cadence` 集中路由，方式与 Document Conventions 相同；随后确认 Version 4。 | `964ce00` | 入口拥有调用边界，shared skill 拥有完整提交规则，各调用方保留自己的提交语义。 |
 | Implementation Plan | ✅ `confirmed` | [T-004 实施计划](03-implementation-plan.md) | 用户选择“开始”并要求继续实施。 | `964ce00` | 两项 TDD 任务：shared capability 行为；package、install 与版本。 |
-| Development Implementation | 🔄 `in_progress` | [T-004 实施记录](04-implementation-record.md) | delegated continuous execution | ⏳ `pending` | 使用 Subagent-Driven Development 顺序执行并逐项审查。 |
+| Development Implementation | 🔄 `in_progress` | [T-004 实施记录](04-implementation-record.md) | delegated continuous execution | ⏳ `pending` | 已记录实施开始 checkpoint `29ecc13`；最终实现身份为 `1f02f53`；等待实施记录与代码审查报告 checkpoint。 |
 | System Testing | ⏳ `pending` | `build/dev-cadence/feature-dev/t-004-git-commit-internal-capability/05-system-test-report.md` | pending | ⏳ `pending` | |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/feature-dev/t-004-git-commit-internal-capability/06-business-acceptance-record.md` | pending | ⏳ `pending` | |
 
@@ -30,8 +30,11 @@
 ## Verification Summary
 
 - Baseline `bash scripts/check-all.sh` passed before task changes.
+- Task 1 focused contract checks passed after RED/GREEN implementation and mixed-scope review fix.
+- Task 2 package、install、whitespace、source/dist 与完整 `bash scripts/check-all.sh` 验证通过。
+- Final-review fix 的 focused contracts、build、routing、skill-description、whitespace、source/dist 与完整 `bash scripts/check-all.sh` 验证通过。
+- 独立整分支复审确认 executable rules 无 correctness 或 security 缺陷；剩余记录一致性问题已修正，等待阶段 checkpoint。
 
 ## Residual Risks
 
 - The personal global `git-commit` skill outside the target repository is outside T-004 delivery scope.
-- The implementation plan must prove that SDD implementers receive the shared capability contract even though dispatched subagents do not route through `using-dev-cadence`.
