@@ -36,6 +36,7 @@
 **Files:**
 - Modify: `tests/open-question-registry-contract.sh`
 - Modify: `tests/asset-delivery-record-contract.sh`
+- Modify: `tests/skill-description-contract.sh` during `S040-F-001` test-bug remediation
 - Modify: `src/skills/open-question-registry/SKILL.md`
 - Modify: `src/skills/using-dev-cadence/SKILL.md`
 
@@ -43,7 +44,7 @@
 - Consumes: [S-040 需求确认](01-requirements.md) 中的 Registry 结构、生命周期和原子同步契约。
 - Produces: 所有 workflow 共享的 Registry 唯一权威规则，以及资产和交付记录的同步边界。
 
-- [ ] **Step 1: 用新契约替换 Registry 测试中的旧正向断言**
+- [x] **Step 1: 用新契约替换 Registry 测试中的旧正向断言**
 
   在 `tests/open-question-registry-contract.sh` 增加 `assert_not_match`，并用以下断言覆盖四字段表、稳定编号、排序、锚点、详情、终态保留和无 Registry Change Log：
 
@@ -70,7 +71,7 @@
   assert_match "delivery records are not registry authority" 'Registry.*must not.*build/.*authoritative|build/.*must not.*authoritative.*Registry' "$ENTRY_SKILL"
   ```
 
-- [ ] **Step 2: 运行聚焦测试并确认 RED**
+- [x] **Step 2: 运行聚焦测试并确认 RED**
 
   Run:
 
@@ -81,7 +82,7 @@
 
   Expected: FAIL，首个失败指向新四字段表或原子同步规则缺失；不得因 Shell 语法错误失败。
 
-- [ ] **Step 3: 重写 Registry 核心契约**
+- [x] **Step 3: 重写 Registry 核心契约**
 
   在 `src/skills/open-question-registry/SKILL.md` 保留 Applicability、Registry Discovery 和按需创建边界，把旧八字段模板、终态删除和 Change Log 替换为以下核心结构：
 
@@ -99,7 +100,7 @@
 
   明确写入：`Q-nnn` 全局扫描、从 `Q-001` 递增、不复用；Open-first 与两组 ID 升序；详情全量 ID 升序；有权威资产时只保留标题与链接，无权威资产时 Registry 临时持有完整正文；终态先写结论后改状态并保留条目；Registry 不包含 Change Log。
 
-- [ ] **Step 4: 在入口建立 workflow 原子同步**
+- [x] **Step 4: 在入口建立 workflow 原子同步**
 
   在 `src/skills/using-dev-cadence/SKILL.md` 更新 Registry 责任描述，并在 `Shared Asset Capabilities` 写入以下语义：
 
@@ -109,7 +110,7 @@
   - Do not promote an assumption, risk, or review finding to an Open Question unless the workflow explicitly identifies it as a question that must be tracked.
   ```
 
-- [ ] **Step 5: 运行聚焦测试并确认 GREEN**
+- [x] **Step 5: 运行聚焦测试并确认 GREEN**
 
   Run:
 
@@ -120,7 +121,7 @@
 
   Expected: 两个脚本均输出 `contract checks passed.` 并以 `0` 退出。
 
-- [ ] **Step 6: 审查并提交 Task 1**
+- [x] **Step 6: 审查并提交 Task 1**
 
   审查旧契约是否被完整替换，且 `docs/open-questions.md` 未被修改。提交：
 
@@ -128,6 +129,8 @@
   git add tests/open-question-registry-contract.sh tests/asset-delivery-record-contract.sh src/skills/open-question-registry/SKILL.md src/skills/using-dev-cadence/SKILL.md
   git commit -m "feat(flow): 建立全量问题索引契约"
   ```
+
+  Execution note: implementation commit `fdc9d89`; review remediation commit `02d87c8`. Failure `S040-F-001` was classified as `test_bug` because `tests/skill-description-contract.sh` retained the obsolete exact description, then closed in remediation round 1 after the strict expected value was updated and all checks passed.
 
 ### Task 2: 文档链接文本契约
 
@@ -139,7 +142,7 @@
 - Consumes: Task 1 中 Registry 的 ID 字段、Authoritative Source 和 Question Details 链接。
 - Produces: 所有 Dev Cadence 文档共享的链接文本选择规则。
 
-- [ ] **Step 1: 增加链接文本 RED 契约**
+- [x] **Step 1: 增加链接文本 RED 契约**
 
   在 `tests/document-conventions-contract.sh` 的 Document References 断言后增加：
 
@@ -150,13 +153,13 @@
   assert_match "id-only forbidden outside id field" 'outside.*ID field.*must not.*ID-only|ID-only.*must not.*outside.*ID field' "$CONVENTIONS_SKILL"
   ```
 
-- [ ] **Step 2: 运行测试并确认 RED**
+- [x] **Step 2: 运行测试并确认 RED**
 
   Run: `bash tests/document-conventions-contract.sh`
 
   Expected: FAIL with `missing id-only explicit field exception` or another new link-text assertion.
 
-- [ ] **Step 3: 实施三分链接文本规则**
+- [x] **Step 3: 实施三分链接文本规则**
 
   在 `src/skills/document-conventions/SKILL.md` 的 `For a navigational reference` 列表中加入：
 
@@ -166,18 +169,20 @@
   - when the target has no stable ID, use a meaningful title that describes the target's content or responsibility.
   ```
 
-- [ ] **Step 4: 运行测试并确认 GREEN**
+- [x] **Step 4: 运行测试并确认 GREEN**
 
   Run: `bash tests/document-conventions-contract.sh`
 
   Expected: `Document conventions contract checks passed.`
 
-- [ ] **Step 5: 审查并提交 Task 2**
+- [x] **Step 5: 审查并提交 Task 2**
 
   ```bash
   git add tests/document-conventions-contract.sh src/skills/document-conventions/SKILL.md
   git commit -m "feat(docs): 规范资产链接文本"
   ```
+
+  Execution note: implementation commit `d0e22d9`; task review approved with no Critical, Important, or Minor findings.
 
 ### Task 3: Discovery 冲突清理
 
@@ -189,7 +194,7 @@
 - Consumes: Task 1 的终态保留和 workflow 原子同步契约。
 - Produces: 与 Registry 新契约一致的 Discovery 支持资产维护行为。
 
-- [ ] **Step 1: 将 Discovery 协作断言改为 RED**
+- [x] **Step 1: 将 Discovery 协作断言改为 RED**
 
   在 `tests/discovery-contract.sh` 保留 `resolved local questions removed`，把旧 `registry coordination` 断言替换为：
 
@@ -200,13 +205,13 @@
   assert_not_match "legacy registry removal and change log" 'removal and Registry `Change Log`|remove.*Registry.*Change Log' "$DISCOVERY_SKILL"
   ```
 
-- [ ] **Step 2: 运行测试并确认 RED**
+- [x] **Step 2: 运行测试并确认 RED**
 
   Run: `bash tests/discovery-contract.sh`
 
   Expected: FAIL because Discovery still says the Registry may index questions only when useful or removes terminal entries.
 
-- [ ] **Step 3: 定点替换 Discovery 旧语义**
+- [x] **Step 3: 定点替换 Discovery 旧语义**
 
   在 `src/skills/discovery/SKILL.md` 做两处最小修改：
 
@@ -220,18 +225,20 @@
   When a repository-level Registry entry represents the same resolved question, include the authoritative conclusion and the atomic Registry status update in the supporting asset maintenance proposal. Remove the question from the local `Open Questions` section after its conclusion is placed in the owning body, but retain its Registry entry in the applicable terminal status. Do not add a Registry Change Log.
   ```
 
-- [ ] **Step 4: 运行测试并确认 GREEN**
+- [x] **Step 4: 运行测试并确认 GREEN**
 
   Run: `bash tests/discovery-contract.sh`
 
   Expected: `Discovery contract checks passed.`
 
-- [ ] **Step 5: 审查并提交 Task 3**
+- [x] **Step 5: 审查并提交 Task 3**
 
   ```bash
   git add tests/discovery-contract.sh src/skills/discovery/SKILL.md
   git commit -m "fix(discovery): 保留终态问题索引"
   ```
+
+  Execution note: implementation commit `166fefe`; review remediation commit `7fdf512`; task review approved with no Critical, Important, or Minor findings.
 
 ### Task 4: 仓库协作、版本与整体验证
 
@@ -244,7 +251,7 @@
 - Consumes: Tasks 1-3 的已验证 source skill 和用户本轮确认的子代理协作偏好。
 - Produces: 本仓库子代理协作规则、可安装 `0.20.0` 分发包和完整开发阶段验证证据。
 
-- [ ] **Step 1: 增加根 AGENTS 子代理协作边界**
+- [x] **Step 1: 增加根 AGENTS 子代理协作边界**
 
   在“讨论与规则设计边界”和“构建与验证”之间加入：
 
@@ -256,7 +263,7 @@
   - 不因使用子代理自动创建用户可见的新任务；只有用户明确要求时才创建。
   ```
 
-- [ ] **Step 2: 更新安装包版本**
+- [x] **Step 2: 更新安装包版本**
 
   将 `version` 的唯一内容从 `0.19.0` 改为：
 
@@ -264,7 +271,7 @@
   0.20.0
   ```
 
-- [ ] **Step 3: 构建分发包并运行开发阶段验证**
+- [x] **Step 3: 构建分发包并运行开发阶段验证**
 
   Run:
 
@@ -276,7 +283,7 @@
 
   Expected: 所有契约检查通过，安装检查报告 `Installed Dev Cadence 0.20.0`。
 
-- [ ] **Step 4: 验证 source/dist 关键规则同步和非范围**
+- [x] **Step 4: 验证 source/dist 关键规则同步和非范围**
 
   Run:
 
@@ -288,7 +295,7 @@
 
   Expected: 前两个命令在 source 和 dist 均命中关键规则；最后一个命令无输出。
 
-- [ ] **Step 5: 审查并提交 Task 4**
+- [x] **Step 5: 审查并提交 Task 4**
 
   确认 `dist/` 仍由 `.gitignore` 忽略，不强制添加。提交：
 
@@ -296,6 +303,8 @@
   git add AGENTS.md version
   git commit -m "chore(release): 升级开放问题契约版本"
   ```
+
+  Execution note: implementation commit `f659df5`; task review approved with no Critical, Important, or Minor findings. The implementer encountered an external 502 only after the commit and complete report were written; commit scope and verification evidence were independently confirmed.
 
 ## Development Implementation Completion Conditions
 
