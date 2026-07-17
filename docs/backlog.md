@@ -8,7 +8,6 @@
 |---|---|---:|---|---|
 | `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `3` | `Draft` | `P1` |
 | `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Draft` | `P0` |
-| `B-002` | [B-002 Delivery Workflow Discard 整体运行删除安全性](bugs/B-002-normal-checkout-discard-safety.md) | `2` | `Draft` | `P0` |
 | `B-006` | [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Draft` | `P2` |
 | `S-017` | [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `2` | `Blocked` | `P1` |
 | `S-029` | [S-029 Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
@@ -18,6 +17,7 @@
 | `S-021` | [S-021 验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) | `1` | `Draft` | `P2` |
 | `B-005` | [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](bugs/B-005-refactor-confirmation-options-missing.md) | `3` | `Draft` | `P1` |
 | `B-007` | [B-007 当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) | `1` | `Draft` | `P1` |
+| `B-008` | [B-008 Bug Fix 完成后未更新 Backlog](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | `1` | `Draft` | `P1` |
 | `S-024` | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `1` | `Draft` | `P2` |
 | `S-022` | [S-022 Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) | `1` | `Draft` | `P1` |
 | `S-025` | [S-025 Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `1` | `Draft` | `P2` |
@@ -39,6 +39,7 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Done` | `P0` |
+| `B-002` | [B-002 Delivery Workflow Discard 整体运行删除安全性](bugs/B-002-normal-checkout-discard-safety.md) | `2` | `Done` | `P0` |
 | `B-004` | [B-004 `output_language` 中文配置未稳定生效](bugs/B-004-output-language-configuration-not-consistently-applied.md) | `1` | `Done` | `P1` |
 | `B-006` | [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Done` | `P2` |
 | `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `4` | `Done` | `P1` |
