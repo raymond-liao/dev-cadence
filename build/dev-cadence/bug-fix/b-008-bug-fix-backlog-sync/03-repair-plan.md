@@ -30,10 +30,10 @@
 **Files:**
 - Modify: `src/skills/bug-fix/SKILL.md` in Completion after normalized finishing results.
 
-- [ ] Add the post-Completion Backlog synchronization responsibility and exact success trigger `merge`.
-- [ ] Define Bug ID/Version lookup, conflict stop, atomic lifecycle move, parallel-row removal, and preservation of unrelated order.
-- [ ] Define non-write behavior for PR, keep, discard cancelled/blocked and whole-run discard.
-- [ ] Require manifest, Business Acceptance, and follow-up evidence to record the actual sync result.
+- [x] Add the post-Completion Backlog synchronization responsibility and exact success trigger `merge`.
+- [x] Define Bug ID/Version lookup, conflict stop, atomic lifecycle move, parallel-row removal, and preservation of unrelated order.
+- [x] Define non-write behavior for PR, keep, discard cancelled/blocked and whole-run discard.
+- [x] Require manifest, Business Acceptance, and follow-up evidence to record the actual sync result.
 - [ ] Run the new contract test before the rule edit and record the expected failure.
 
 ### Task 2: Backlog sync contract
@@ -42,20 +42,20 @@
 - Create: `tests/bug-fix-backlog-sync-contract.sh`.
 - Modify: `tests/run-all.sh`.
 
-- [ ] Assert the source defines `merge` as the only successful write trigger.
-- [ ] Assert the source explicitly excludes PR, keep, cancellation, blocking and whole-run discard from `Done` writeback.
-- [ ] Assert conflict, atomic move, unrelated-order preservation and parallel-row removal requirements.
-- [ ] Run the standalone script and `bash tests/run-all.sh`.
+- [x] Assert the source defines `merge` as the only successful write trigger.
+- [x] Assert the source explicitly excludes PR, keep, cancellation, blocking and whole-run discard from `Done` writeback.
+- [x] Assert conflict, atomic move, unrelated-order preservation and parallel-row removal requirements.
+- [x] Run the standalone script and `bash tests/run-all.sh`.
 
 ### Task 3: Package synchronization
 
 **Files:**
 - Generate: `dist/.dev-cadence/**` with `bash scripts/build.sh`.
 
-- [ ] Run `bash scripts/build.sh`.
-- [ ] Run `bash tests/check-all.sh`.
-- [ ] Run `bash scripts/check-whitespace.sh` and `git diff --check`.
-- [ ] Record final implementation and review evidence in `04-repair-record.md`.
+- [x] Run `bash scripts/build.sh`.
+- [x] Run `bash tests/check-all.sh`.
+- [x] Run `bash scripts/check-whitespace.sh` and `git diff --check`.
+- [x] Record final implementation and review evidence in `04-repair-record.md`.
 
 ## Completion Conditions
 
@@ -69,4 +69,3 @@
 - Scope coverage: trigger rule, negative branches, tests and package validation are represented.
 - Placeholder scan: all steps name concrete files and commands.
 - Boundary check: Backlog structure remains planning-owned; Bug Fix only performs the delivery-result writeback.
-
