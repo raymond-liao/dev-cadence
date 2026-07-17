@@ -15,8 +15,8 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | ✅ `confirmed` | [S-040 需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/01-requirements.md`) | `confirmed: user explicitly requested implementation of the first backlog card on 2026-07-17` | ⏳ `pending` | S-040 Version 1 is Ready with no Open Questions; the same instruction explicitly authorizes the repository collaboration-rule update. |
-| Technical Solution | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/02-technical-solution.md` | ⏳ `pending` | ⏳ `pending` | Enhanced codebase exploration is in progress. |
+| Requirements Confirmation | ✅ `confirmed` | [S-040 需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/01-requirements.md`) | `confirmed: user explicitly requested implementation of the first backlog card on 2026-07-17` | `78e1365` | S-040 Version 1 is Ready with no Open Questions; the same instruction explicitly authorizes the repository collaboration-rule update. |
+| Technical Solution | 🔄 `in_progress` | [S-040 技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-040-open-question-registry-contract/02-technical-solution.md`) | ⏳ `pending` | ⏳ `pending` | Recommended approach awaits user confirmation. |
 | Implementation Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/03-implementation-plan.md` | ⏳ `pending` | ⏳ `pending` | Isolated worktree is ready; plan waits for Technical Solution confirmation. |
 | Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/04-implementation-record.md` | N/A | ⏳ `pending` | Subagent-driven development selected by the user. |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-040-open-question-registry-contract/05-system-test-report.md` | N/A | ⏳ `pending` | Fresh verification required after implementation review. |
