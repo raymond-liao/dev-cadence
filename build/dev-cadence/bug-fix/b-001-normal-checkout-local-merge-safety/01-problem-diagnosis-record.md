@@ -2,9 +2,9 @@
 
 ## 状态
 
-🔄 `in_progress`
+✅ `confirmed`
 
-用户尚未确认本问题诊断；在确认前不进入 Repair Solution、Repair Plan 或实现。
+用户确认：“没问题，继续”。该确认允许进入 Repair Solution；Repair Plan 和实现仍需后续分别确认。
 
 ## 诊断来源
 

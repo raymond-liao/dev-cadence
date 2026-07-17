@@ -6,15 +6,15 @@
 - Branch: `codex/b-001-normal-checkout-local-merge-safety`
 - Workspace: `.worktrees/b-001-normal-checkout-local-merge-safety`
 - Started At: `2026-07-17T18:02:04+08:00`
-- Current Stage: Problem Diagnosis
+- Current Stage: Repair Solution
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 |---|---|---|---|---|---|
-| Problem Diagnosis | 🔄 `in_progress` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ⏳ `pending` | `c117bce` | Reproduced the mutable feature-tip and offline-pull risks in an isolated temporary Git repository. |
-| Repair Solution | ⏳ `pending` | `02-repair-solution.md` | ⏳ `pending` | ⏳ `pending` | Must wait for Problem Diagnosis confirmation. |
+| Problem Diagnosis | ✅ `confirmed` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ✅ `confirmed` | `c117bce` | Confirmed by the user after source inspection and the isolated Git reproduction. |
+| Repair Solution | 🔄 `in_progress` | [Repair Solution](02-repair-solution.md) | ⏳ `pending` | ⏳ `pending` | Define the minimal local-merge identity and verification contract. |
 | Repair Plan | ⏳ `pending` | `03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | Must wait for Repair Solution confirmation. |
 | Repair Implementation | ⏳ `pending` | `04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | No implementation started. |
 | Regression Verification | ⏳ `pending` | `05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | No verification started. |
