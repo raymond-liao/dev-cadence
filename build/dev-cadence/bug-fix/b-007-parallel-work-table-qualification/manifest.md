@@ -16,8 +16,8 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | `confirmed: user said "确认三项诊断，后面不要找我确认"` | `1fd1c87` | 三项诊断已确认。 |
-| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md`) | `delegated: user authorized continuation without intermediate confirmations` | `pending` | 保留原表名，新增独立入口资格列。 |
-| Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md`) | `delegated: user authorized continuation without intermediate confirmations` | `pending` | 计划覆盖源规则、Backlog 表和契约测试。 |
+| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md`) | `delegated: user authorized continuation without intermediate confirmations` | `d3d3856` | 保留原表名，新增独立入口资格列。 |
+| Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md`) | `delegated: user authorized continuation without intermediate confirmations` | `d3d3856` | 计划覆盖源规则、Backlog 表和契约测试。 |
 | Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
 | Regression Verification | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
