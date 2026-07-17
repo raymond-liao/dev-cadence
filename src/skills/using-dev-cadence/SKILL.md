@@ -43,7 +43,7 @@ For repository-level unresolved-question maintenance, read and follow:
 .dev-cadence/skills/open-question-registry/SKILL.md
 ```
 
-That shared capability owns Registry discovery, on-demand creation, entry fields, single-body ownership, migration, terminal removal, and Change Log rules. Do not duplicate its complete lifecycle contract in this entry skill or individual business workflows.
+That shared capability owns Registry discovery, on-demand creation, entry fields, single-body ownership, migration, terminal retention, and no-Change-Log rules. Do not duplicate its complete lifecycle contract in this entry skill or individual business workflows.
 
 ## Available Flows
 
@@ -79,6 +79,9 @@ Open Question Registry maintenance is a shared asset capability, not a six-stage
 - When the user directly asks to view or maintain repository-level Open Questions, read `.dev-cadence/skills/open-question-registry/SKILL.md` and perform that bounded asset operation without starting feature-dev, bug-fix, refactor, or discovery solely for the maintenance request.
 - When an active workflow finds a question that the current artifact cannot reasonably hold, reuse the Registry skill and then return to the active workflow.
 - If the request also asks to change product behavior, fix a defect, refactor code, or create the first product-design baseline, select the matching business workflow first; Registry maintenance remains a supporting operation within that workflow.
+- The Registry and authoritative asset must be updated in the same operation when any active workflow performs a create, modify, migrate, or status change for an Open Question in a confirmed asset update. It must not advance the current confirmation gate with only one side updated.
+- A Delivery Workflow record under `build/` must not become the Registry's long-lived authoritative source. When no durable authority exists, the Registry temporarily owns the full body and the delivery record keeps the same `Q-nnn` plus a Registry link.
+- Do not promote an assumption, risk, or review finding to an Open Question unless the workflow explicitly identifies it as a question that must be tracked.
 - Do not infer a Registry operation merely because unresolved questions exist in repository documents. Repository state alone does not authorize asset changes.
 
 ## Two-Stage Routing Decision
