@@ -41,7 +41,7 @@
 - Consumes: target repository `.dev-cadence.yaml`, current Git workspace, and active Delivery manifest when one exists.
 - Produces: a resolved language value, a stable configuration source identity, and a worktree-local config file when the primary checkout config exists.
 
-- [ ] **Step 1: Write the failing contract test.** Create `tests/configuration-contract.sh` with strict Bash mode and assertions for these exact behavioral contracts:
+- [x] **Step 1: Write the failing contract test.** Create `tests/configuration-contract.sh` with strict Bash mode and assertions for these exact behavioral contracts:
 
 ```bash
 #!/usr/bin/env bash
@@ -73,13 +73,13 @@ done
 printf 'Configuration contract checks passed.\n'
 ```
 
-- [ ] **Step 2: Run the new test to verify it fails.**
+- [x] **Step 2: Run the new test to verify it fails.**
 
 Run: `bash tests/configuration-contract.sh`
 
 Expected: FAIL because the current entry skill has no Git-common-directory propagation contract and the delivery workflows do not reference one.
 
-- [ ] **Step 3: Add the minimal shared rule.** In `src/skills/using-dev-cadence/SKILL.md`, add a configuration lifecycle section with these exact operational rules:
+- [x] **Step 3: Add the minimal shared rule.** In `src/skills/using-dev-cadence/SKILL.md`, add a configuration lifecycle section with these exact operational rules:
 
 ```text
 Before any workflow produces user-facing guidance, documents, records, or summaries, resolve `.dev-cadence.yaml` from the target repository configuration source.
@@ -93,15 +93,15 @@ For an active Delivery Workflow, record the resolved `output_language`, configur
 If no valid config is available and no active snapshot exists, use English and state in the first user-visible summary that the config was missing or unsupported and the default `en` was selected.
 ```
 
-- [ ] **Step 4: Reference the shared rule from each Delivery workflow.** In the Configuration and worktree-plan sections of `feature-dev`, `bug-fix`, and `refactor`, require the worker to apply the entry skill's configuration lifecycle before writing the plan or any later record. Keep their existing stage-specific names and record paths unchanged.
+- [x] **Step 4: Reference the shared rule from each Delivery workflow.** In the Configuration and worktree-plan sections of `feature-dev`, `bug-fix`, and `refactor`, require the worker to apply the entry skill's configuration lifecycle before writing the plan or any later record. Keep their existing stage-specific names and record paths unchanged.
 
-- [ ] **Step 5: Run the focused test.**
+- [x] **Step 5: Run the focused test.**
 
 Run: `bash tests/configuration-contract.sh`
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit the focused contract change.**
+- [x] **Step 6: Commit the focused contract change.**
 
 Run: `git add src/skills/using-dev-cadence/SKILL.md src/skills/feature-dev/SKILL.md src/skills/bug-fix/SKILL.md src/skills/refactor/SKILL.md tests/configuration-contract.sh && git commit -m "fix(flow): preserve config across worktrees"`
 
@@ -121,13 +121,13 @@ Expected: a commit on `codex/b-004-output-language-configuration-not-consistentl
 - Consumes: the resolved language and fallback result from Task 1.
 - Produces: consistent language rules for workflow guidance, proposals, durable assets, Delivery records, and user-facing summaries.
 
-- [ ] **Step 1: Extend the failing test with output-surface assertions.** Add assertions that `work-item-analysis` contains `Use the selected language` and that each Asset Workflow names its complete user-facing surface. Run `bash tests/configuration-contract.sh` and confirm FAIL before changing the skills.
+- [x] **Step 1: Extend the failing test with output-surface assertions.** Add assertions that `work-item-analysis` contains `Use the selected language` and that each Asset Workflow names its complete user-facing surface. Run `bash tests/configuration-contract.sh` and confirm FAIL before changing the skills.
 
-- [ ] **Step 2: Add explicit selected-language rules.** Update `work-item-analysis` to require the selected language for workflow guidance, in-conversation analysis proposals, user-facing analysis summaries, and durable work-item updates. Align Discovery, Architecture Design, and Work Item Planning with the same stable source, snapshot, and visible fallback contract without changing their Asset Workflow record boundary.
+- [x] **Step 2: Add explicit selected-language rules.** Update `work-item-analysis` to require the selected language for workflow guidance, in-conversation analysis proposals, user-facing analysis summaries, and durable work-item updates. Align Discovery, Architecture Design, and Work Item Planning with the same stable source, snapshot, and visible fallback contract without changing their Asset Workflow record boundary.
 
-- [ ] **Step 3: Preserve machine-readable exact values.** Add or retain an explicit rule that paths, commands, IDs, configuration values, and canonical statuses remain exact regardless of the selected human language.
+- [x] **Step 3: Preserve machine-readable exact values.** Add or retain an explicit rule that paths, commands, IDs, configuration values, and canonical statuses remain exact regardless of the selected human language.
 
-- [ ] **Step 4: Run focused workflow contracts.**
+- [x] **Step 4: Run focused workflow contracts.**
 
 Run: `bash tests/configuration-contract.sh`
 
@@ -137,7 +137,7 @@ Run: `bash tests/workflow-symmetry.sh && bash tests/work-item-planning-contract.
 
 Expected: PASS with all workflow language and symmetry assertions satisfied.
 
-- [ ] **Step 5: Commit the focused language-coverage change.**
+- [x] **Step 5: Commit the focused language-coverage change.**
 
 Run: `git add src/skills/discovery/SKILL.md src/skills/architecture-design/SKILL.md src/skills/work-item-planning/SKILL.md src/skills/work-item-analysis/SKILL.md src/skills/feature-dev/SKILL.md src/skills/bug-fix/SKILL.md src/skills/refactor/SKILL.md tests/configuration-contract.sh && git commit -m "fix(flow): align localized workflow output rules"`
 
@@ -153,7 +153,7 @@ Expected: a commit containing only Task 2 files and the updated contract test.
 - Consumes: the configuration lifecycle text from Tasks 1 and 2.
 - Produces: executable evidence that the ignored config is absent from a fresh linked worktree and that the prescribed common-directory lookup can find it.
 
-- [ ] **Step 1: Add a temporary Git fixture test.** Extend `tests/configuration-contract.sh` with a `mktemp -d` fixture, an initialized repository, an ignored `.dev-cadence.yaml`, a committed marker file, and a linked worktree. Assert:
+- [x] **Step 1: Add a temporary Git fixture test.** Extend `tests/configuration-contract.sh` with a `mktemp -d` fixture, an initialized repository, an ignored `.dev-cadence.yaml`, a committed marker file, and a linked worktree. Assert:
 
 ```bash
 test -f "$PRIMARY_ROOT/.dev-cadence.yaml"
@@ -164,21 +164,21 @@ test "$(dirname "$COMMON_GIT_DIR")/.dev-cadence.yaml" = "$PRIMARY_ROOT/.dev-cade
 
 The fixture must remove only its own temporary directory through a local trap and must not create a worktree inside the project repository.
 
-- [ ] **Step 2: Run the fixture before changing the propagation implementation.**
+- [x] **Step 2: Run the fixture before changing the propagation implementation.**
 
 Run: `bash tests/configuration-contract.sh`
 
 Expected: the fixture passes for Git mechanics, while the rule assertions fail until Tasks 1 and 2 are complete. After Tasks 1 and 2, the complete test must pass.
 
-- [ ] **Step 3: Register the test in the suite.** Add `bash "$ROOT_DIR/tests/configuration-contract.sh"` to `tests/run-all.sh` after `document-conventions-contract.sh` and before the workflow-specific contracts.
+- [x] **Step 3: Register the test in the suite.** Add `bash "$ROOT_DIR/tests/configuration-contract.sh"` to `tests/run-all.sh` after `document-conventions-contract.sh` and before the workflow-specific contracts.
 
-- [ ] **Step 4: Run the complete existing suite.**
+- [x] **Step 4: Run the complete existing suite.**
 
 Run: `bash tests/run-all.sh`
 
 Expected: PASS, including package source-to-distribution checks and installation checks.
 
-- [ ] **Step 5: Commit the regression test.**
+- [x] **Step 5: Commit the regression test.**
 
 Run: `git add tests/configuration-contract.sh tests/run-all.sh && git commit -m "test(flow): cover config propagation boundaries"`
 
@@ -194,27 +194,27 @@ Expected: a commit containing only the new regression coverage and suite registr
 - Consumes: all source rule and test changes from Tasks 1-3.
 - Produces: a package whose generated skills match `src/` and whose version identifies the behavior fix.
 
-- [ ] **Step 1: Update the version.** Change only the root `version` value to `0.22.0` and verify the change with `git diff -- version`.
+- [x] **Step 1: Update the version.** Change only the root `version` value to `0.22.0` and verify the change with `git diff -- version`.
 
-- [ ] **Step 2: Rebuild the package.**
+- [x] **Step 2: Rebuild the package.**
 
 Run: `bash scripts/build.sh`
 
 Expected: `dist/.dev-cadence/` is regenerated from the current `src/` tree, including all updated skills and tests' required package files.
 
-- [ ] **Step 3: Run final source/package checks.**
+- [x] **Step 3: Run final source/package checks.**
 
 Run: `bash scripts/check-whitespace.sh && bash tests/package-contract.sh && bash tests/configuration-contract.sh`
 
 Expected: all checks pass and no package contains local absolute paths, secrets, or stale run records.
 
-- [ ] **Step 4: Self-review the full diff.**
+- [x] **Step 4: Self-review the full diff.**
 
 Run: `git diff --check && git diff --stat && git status --short`
 
 Expected: only B-004 source rules, tests, version, and generated ignored distribution output are present; unrelated worktree or repository changes are absent.
 
-- [ ] **Step 5: Commit the package release update.**
+- [x] **Step 5: Commit the package release update.**
 
 Run: `git add version src/skills tests && git commit -m "fix(flow): stabilize output language configuration"`
 
