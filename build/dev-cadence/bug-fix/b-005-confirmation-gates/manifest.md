@@ -20,7 +20,7 @@
 | Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md`) | `delegated: user authorized continuation without intermediate confirmations` | `b343d5c` | 计划采用契约测试、构建同步和全量检查。 |
 | Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md`) | `not required` | `fd50efd` | 实现提交 `7aa1404`；实施记录和审查报告已进入 checkpoint tree。 |
 | Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md`) | `not required` | `fd50efd` | `check-all.sh`、专项契约和静态检查均通过；回归报告已进入 checkpoint tree。 |
-| Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md`) | `accepted: user selected "1. Accept" at 2026-07-18T07:58:51+0800` | `pending` | 用户已接受；完成集成后更新最终 follow-up。 |
 
 ## 诊断摘要
 
@@ -41,3 +41,4 @@
 - Repair Plan: ✅ `confirmed` by delegated continuation authority.
 - Repair Implementation: ✅ `confirmed`; final repair SHA `7aa1404`.
 - Regression Verification: ✅ `ready`; no failed or skipped checks.
+- Business Acceptance: ✅ `accepted`; user selected `1. Accept` at `2026-07-18T07:58:51+0800`.
