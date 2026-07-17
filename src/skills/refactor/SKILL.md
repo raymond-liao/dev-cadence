@@ -29,6 +29,8 @@ Before producing user-facing workflow documents or records, read:
 .dev-cadence.yaml
 ```
 
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before writing any solution, plan, record, or summary. In a linked worktree, verify that the propagated configuration is present and matches the active run snapshot before continuing.
+
 Use `output_language` from that file for all workflow documents and records, including Superpowers spec documents, Superpowers plan documents, Dev Cadence records, and user-facing stage summaries.
 
 Supported values:

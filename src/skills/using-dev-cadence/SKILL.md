@@ -29,6 +29,24 @@ If an installed flow applies, read that flow skill completely and follow it exac
 
 If no installed flow applies, handle the request normally.
 
+## Configuration Identity And Worktree Continuation
+
+Before any workflow produces user-facing guidance, documents, records, or summaries, resolve `.dev-cadence.yaml` from the target repository configuration source.
+
+When the current workspace is the primary checkout, use `.dev-cadence.yaml` at that checkout root. When the current workspace is a linked worktree, resolve the primary checkout's Git location with:
+
+```bash
+COMMON_GIT_DIR="$(cd "$(git rev-parse --git-common-dir)" && pwd -P)"
+PRIMARY_ROOT="$(dirname "$COMMON_GIT_DIR")"
+CONFIG_SOURCE="$PRIMARY_ROOT/.dev-cadence.yaml"
+```
+
+Use the primary checkout configuration as the stable source when the current worktree does not contain `.dev-cadence.yaml`. When that source exists and the current workspace is a different worktree, copy the ignored local config into the current worktree before generating workflow output. Do not copy it into `.dev-cadence/` or commit it.
+
+For an active Delivery Workflow, record the resolved `output_language`, configuration source identity as `target repository root/.dev-cadence.yaml`, and whether worktree propagation occurred in the manifest. A resumed run must use this snapshot before applying fallback rules.
+
+If no valid config is available and no active snapshot exists, use English and make the fallback visible in the first user-visible summary by stating that the config was missing or unsupported and the default `en` was selected.
+
 Before creating or updating Dev Cadence-managed Markdown documents, records, reports, examples, or summaries, read and follow:
 
 ```text
