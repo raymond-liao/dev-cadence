@@ -13,7 +13,7 @@
 |---|---|---:|---|---|
 | `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `3` | `Draft` | `P1` |
 | `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Draft` | `P0` |
-| `B-002` | [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md) | `1` | `Draft` | `P0` |
+| `B-002` | [B-002 Delivery Workflow Discard 整体运行删除安全性](bugs/B-002-normal-checkout-discard-safety.md) | `2` | `Draft` | `P0` |
 | `B-006` | [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Draft` | `P2` |
 | `S-017` | [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `2` | `Blocked` | `P1` |
 | `S-029` | [S-029 Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
