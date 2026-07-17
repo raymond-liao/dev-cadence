@@ -158,6 +158,7 @@ done < <(
 [[ "$artifact_exists_in_stage_table" -eq 1 ]] || fail "manifest does not contain any stage artifact rows"
 
 if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then
+  [[ -z "$terminal_stage_gap" ]] || fail "terminal manifest has non-terminal stage: $terminal_stage_gap"
   printf 'Delivery record validation passed: %s\n' "$run_dir"
   exit 0
 fi

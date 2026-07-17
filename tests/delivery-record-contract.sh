@@ -275,6 +275,12 @@ echo changed after skipped"
       sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/; s/| Business Acceptance | `confirmed` |/| Business Acceptance | `skipped` |/; s/| `confirmed` | `[^`]*` | acceptance captured |$/| `skipped` | `pending` | acceptance captured |/' "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$run_dir_rel/manifest.md.bak"
       ;;
+    invalid-abandoned-pending)
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/' "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      sed -i.bak 's/| Business Acceptance | `confirmed` |/| Business Acceptance | `pending` |/; s/| `confirmed` | `[^`]*` | acceptance captured |$/| pending | pending | acceptance captured |/' "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
   esac
 
   printf '%s\n' "$run_dir"
@@ -353,5 +359,8 @@ run_expect_failure "$invalid_missing_test_result_run" "FAIL: terminal verificati
 
 invalid_skipped_pending_run="$(create_fixture "invalid-skipped-pending")"
 run_expect_failure "$invalid_skipped_pending_run" "FAIL: stage 'Business Acceptance' has terminal status 'skipped' but pending checkpoint"
+
+invalid_abandoned_pending_run="$(create_fixture "invalid-abandoned-pending")"
+run_expect_failure "$invalid_abandoned_pending_run" "FAIL: terminal manifest has non-terminal stage: Business Acceptance (pending)"
 
 printf 'Delivery record contract checks passed.\n'
