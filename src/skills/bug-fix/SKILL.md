@@ -183,7 +183,7 @@ The manifest must include:
 - verification summary and residual risks once available;
 - business acceptance decision once available;
 - final integration decision after Completion only when run records remain.
-- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
+- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Base branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
 
 Repository and path fields must be portable:
 

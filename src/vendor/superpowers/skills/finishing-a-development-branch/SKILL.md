@@ -151,7 +151,7 @@ Use this mode only when the caller supplies all current-run fields:
 
 If any field is missing or conflicts with current Git or filesystem state, do not execute Discard. Return `discard_blocked` with the mismatched fields.
 
-Before any destructive confirmation, take a complete identity snapshot for the supplied run: the exact run directory, task branch and expected HEAD SHA, base branch and expected base SHA, owned commit range, owned tracked and untracked paths, workspace path, and worktree creation evidence.
+Before any destructive confirmation, take a complete identity snapshot for the supplied run: the exact run directory, task branch and expected HEAD SHA, base branch and expected base SHA, owned commit range, owned tracked and untracked paths, workspace path, worktree creation evidence, and complete classified path set.
 
 Current-run creation evidence and `git worktree list --porcelain` must agree on path, branch, and Git identity. Directory naming is not ownership evidence.
 
@@ -174,6 +174,8 @@ Successful Discard deletes the run directory and every independently deletable c
 For choice 2, list every additional external or unknown path and require a second exact confirmation that names the expanded deletion scope. Choice 3 returns `discard_cancelled` without changing Git or filesystem state.
 
 Immediately after final user confirmation and before any destructive command, repeat the complete identity snapshot and compare it with the confirmed snapshot. Any mismatch returns `discard_blocked` without changing Git or filesystem state.
+
+Immediately after final user confirmation and before any destructive command, re-enumerate and reclassify every changed path as current-run, external, or unknown and compare the complete classified path set with the confirmed snapshot. Any change, addition, deletion, or classification mismatch returns `discard_blocked` without changing Git or filesystem state.
 
 #### Ownership and execution
 

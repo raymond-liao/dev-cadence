@@ -694,9 +694,9 @@ assert_workflows "cancelled or blocked discard retains run" \
   'discard_cancelled.*discard_blocked.*retain|discard_blocked.*discard_cancelled.*retain'
 
 assert_workflows "whole-run discard evidence captured during run" \
-  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run' \
-  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run' \
-  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run'
+  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Base branch.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run' \
+  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Base branch.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run' \
+  'Current-run Discard context and ownership evidence.*captured during the run before Completion.*Base branch.*Expected HEAD SHA.*Expected base SHA.*Owned commit range.*Owned tracked and untracked paths.*Workspace path.*Worktree created by this run'
 
 assert_workflows "post-finishing manifest update retains records" \
   'Only when run records remain after the finishing flow returns merge, PR, or keep' \
