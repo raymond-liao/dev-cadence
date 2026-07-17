@@ -133,6 +133,61 @@ Report: "Keeping branch <name>. Worktree preserved at <path>."
 
 **Don't cleanup worktree.**
 
+### Dev Cadence Whole-Run Discard
+
+Use this mode only when the caller supplies all current-run fields:
+
+- Workflow
+- Task slug
+- Run directory
+- Task branch
+- Expected HEAD SHA
+- Base branch
+- Expected base SHA
+- Owned commit range
+- Owned tracked and untracked paths
+- Workspace path
+- Worktree created by this run
+
+If any field is missing or conflicts with current Git or filesystem state, do not execute Discard. Return `discard_blocked` with the mismatched fields.
+
+Before any destructive confirmation, take a complete identity snapshot for the supplied run: the exact run directory, task branch and expected HEAD SHA, base branch and expected base SHA, owned commit range, owned tracked and untracked paths, workspace path, and worktree creation evidence.
+
+Current-run creation evidence and `git worktree list --porcelain` must agree on path, branch, and Git identity. Directory naming is not ownership evidence.
+
+When external or unknown changes exist, present exactly these choices:
+
+```
+1. Discard the current run only
+2. Discard the entire owned workspace or branch
+3. Cancel
+```
+
+The first destructive confirmation must state the exact run directory, task branch and SHA, owned commit range, owned paths, and owned worktree. It must include this warning:
+
+```
+Successful Discard deletes the complete current run; no persistent run record will remain.
+```
+
+For choice 2, list every additional external or unknown path and require a second exact confirmation that names the expanded deletion scope. Choice 3 returns `discard_cancelled` without changing Git or filesystem state.
+
+#### Ownership and execution
+
+- The workflow-only choice must preserve external and unknown paths byte-for-byte and path-for-path.
+- Move a normal checkout or owned worktree off the task branch before deleting that exact branch.
+- Delete the run directory last in a normal checkout.
+- Remove a current-run-owned worktree last after branch and path postconditions pass.
+- The finishing flow must not remove an external or unknown worktree.
+- Verify the exact branch, worktree, path, and run-directory postconditions before returning success.
+
+Return exactly one normalized result:
+
+- `whole_run_discarded`: every confirmed current-run object was deleted and all unselected external/unknown changes were preserved.
+- `discard_cancelled`: the user cancelled before destructive execution.
+- `discard_blocked`: identity changed, preservation could not be proven, or any destructive/postcondition step failed.
+
+Keep existing ordinary Option 4 behavior for callers that do not supply Dev Cadence current-run context, except retain the already-required typed `discard` confirmation.
+
 #### Option 4: Discard
 
 **Confirm first:**
