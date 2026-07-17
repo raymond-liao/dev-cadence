@@ -299,6 +299,20 @@ docs/backlog.md
 
 Backlog is the summary view for work-item status, priority, relationships, blockers, and suggested order. Story Map keeps business structure and slicing; it does not replace the Backlog.
 
+Work Item Planning is the authoritative owner of Backlog structure, lifecycle sections, and planning-maintained ordering.
+
+Use exactly these Backlog lifecycle sections in this order: `进行中`, `待处理`, `已完成`, `已关闭`.
+
+Each Backlog lifecycle section must use exactly these columns: `ID | Title | Version | Status | Priority`.
+
+Backlog rows must summarize cards only. Do not duplicate card body details, acceptance conditions, change logs, workflow-run evidence, or other card-only fields in the Backlog table.
+
+When `已关闭` keeps a historical closure note without a surviving current card, keep the row as a compact summary and use `-` for fields that do not belong to a current card.
+
+Preserve the existing row order inside `待处理` unless the confirmed planning change explicitly updates that recommendation.
+
+Do not modify the sorting or row order of the `当前可并行实施表` when updating Backlog lifecycle sections.
+
 Work Item Planning may update only the necessary Backlog references that belong to the confirmed planning change. It must not mechanically reorder unrelated items.
 
 Task may relate to a Feature or a Story. A general Task without a clear product relationship may exist only in the Backlog. Bug relates to the affected Feature or Story and stays outside the Story Map.
