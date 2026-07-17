@@ -1,10 +1,16 @@
 # B-006 问题诊断记录
 
-- Status: `in_progress`
+- Status: `confirmed`
 - Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/bugs/B-006-delivery-record-evidence-completeness.md)
 - Workflow: `bug-fix`
 - Diagnosis Branch: `codex/b-006-delivery-record-evidence-completeness`
 - Diagnosis Baseline: `9834d2ee4c3536196e7844bfc697ed724088a7ea`
+
+## 用户确认
+
+- Decision: `confirmed`
+- User Feedback: `看起来就是这个问题，继续`
+- Confirmed At: `2026-07-17T18:10:57+0800`
 
 ## 报告症状
 
@@ -109,4 +115,3 @@ S-014 实施记录引用 `sdd/progress.md`，但该文件当前不存在。Vendo
 - Repair Solution 需要定义三套 Delivery Workflow 的公共规则放置位置，保持对称且不重复完整规则。
 
 以上问题属于下一阶段 Repair Solution；本诊断记录不预先替代用户确认的修复方案。
-

@@ -8,15 +8,15 @@
 - Workspace: `.worktrees/b-006-delivery-record-evidence-completeness`
 - Branch: `codex/b-006-delivery-record-evidence-completeness`
 - Started At: `2026-07-17 Asia/Shanghai`
-- Current Stage: Problem Diagnosis
+- Current Stage: Repair Solution
 - Overall Status: `in_progress`
 
 ## 阶段表
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`) | pending | `9d53244` | 已用 S-014 运行记录复现；待用户确认诊断。 |
-| Repair Solution | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/02-repair-solution.md` | pending | `pending` | 等待 Problem Diagnosis 确认。 |
+| Problem Diagnosis | `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`) | `confirmed: user said "看起来就是这个问题，继续" at 2026-07-17T18:10:57+0800` | `9d53244` | 四个根因已由用户确认。 |
+| Repair Solution | `in_progress` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/02-repair-solution.md`) | pending | `pending` | 方案覆盖三套 Delivery Workflow、终态证据、checkpoint 绑定和运行记录验证。 |
 | Repair Plan | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
 | Repair Implementation | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
 | Regression Verification | `pending` | `pending`：`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
@@ -38,7 +38,7 @@
 
 ## 修复状态
 
-- Repair Solution: pending
+- Repair Solution: in_progress
 - Repair Plan: pending
 - Regression Verification: pending
 - Business Acceptance: pending
