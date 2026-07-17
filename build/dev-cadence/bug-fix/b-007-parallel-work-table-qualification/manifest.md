@@ -15,7 +15,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | pending | `pending` | 已完成 Backlog 视图与入口规则对照，待用户确认诊断。 |
+| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | pending | `1fd1c87` | 已完成 Backlog 视图与入口规则对照，待用户确认诊断。 |
 | Repair Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md` | pending | `pending` | 等待 Problem Diagnosis 确认。 |
 | Repair Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
 | Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
@@ -33,4 +33,3 @@
 - Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`
 - Baseline checks: `bash scripts/build.sh`; `bash tests/run-all.sh` -> passed
 - Previously confirmed in conversation: B-007 is a real documentation and planning-view contract defect
-
