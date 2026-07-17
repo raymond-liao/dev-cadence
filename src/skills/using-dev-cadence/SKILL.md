@@ -37,6 +37,20 @@ Before creating or updating Dev Cadence-managed Markdown documents, records, rep
 
 That shared skill owns common document presentation rules. Do not duplicate its complete semantic mapping in this entry skill or individual business workflow skills.
 
+## Shared Commit Capability
+
+After selecting or restoring a Dev Cadence workflow, or directly routing a Dev Cadence shared capability, use the installed shared commit capability for every commit managed by that context:
+
+```text
+.dev-cadence/skills/git-commit/SKILL.md
+```
+
+The owning Workflow or shared capability must determine commit timing and scope, run applicable checks, and stage exactly one commit unit before invoking `git-commit`. The shared capability must not select a workflow, stage files, run tests, or replace workflow records and evidence.
+
+Do not invoke the installed `git-commit` for an ordinary repository commit that is not managed by a Dev Cadence workflow or shared capability. Handle that request through the target repository's ordinary Git rules.
+
+When dispatching a subagent that may create a commit, include `.dev-cadence/skills/git-commit/SKILL.md`, the owning Dev Cadence context, and the staged-only constraint in the subagent task brief. The `<SUBAGENT-STOP>` routing boundary does not remove this dispatch responsibility.
+
 For repository-level unresolved-question maintenance, read and follow:
 
 ```text

@@ -74,6 +74,10 @@ assert_description \
   "src/skills/refactor/SKILL.md" \
   "Use when a user asks to improve internal code structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior in a target project."
 
+assert_description \
+  "src/skills/git-commit/SKILL.md" \
+  "Use when using-dev-cadence delegates a Dev Cadence-managed commit."
+
 assert_no_process_summary "src/skills/using-dev-cadence/SKILL.md"
 assert_no_process_summary "src/skills/document-conventions/SKILL.md"
 assert_no_process_summary "src/skills/open-question-registry/SKILL.md"
@@ -84,5 +88,6 @@ assert_no_process_summary "src/skills/architecture-design/SKILL.md"
 assert_no_process_summary "src/skills/feature-dev/SKILL.md"
 assert_no_process_summary "src/skills/bug-fix/SKILL.md"
 assert_no_process_summary "src/skills/refactor/SKILL.md"
+assert_no_process_summary "src/skills/git-commit/SKILL.md"
 
 printf 'Skill description contract checks passed.\n'
