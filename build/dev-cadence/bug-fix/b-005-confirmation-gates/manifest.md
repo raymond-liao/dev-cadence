@@ -8,16 +8,16 @@
 - Workspace: `.worktrees/b-005-confirmation-gates`
 - Branch: `codex/b-005-confirmation-gates`
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Problem Diagnosis
+- Current Stage: Repair Plan
 - Overall Status: `in_progress`
 
 ## 阶段表
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/01-problem-diagnosis-record.md`) | pending | `d2da3a4` | 已完成六个 Workflow 的确认门规则对照，待用户确认诊断。 |
-| Repair Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/02-repair-solution.md` | pending | `pending` | 等待 Problem Diagnosis 确认。 |
-| Repair Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
+| Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/01-problem-diagnosis-record.md`) | `confirmed: user said "确认三项诊断，后面不要找我确认"` | `d2da3a4` | 三项诊断已确认。 |
+| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/02-repair-solution.md`) | `delegated: user authorized continuation without intermediate confirmations` | `pending` | 按卡片范围采用分 Workflow 契约、保留专用语义。 |
+| Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md`) | `delegated: user authorized continuation without intermediate confirmations` | `pending` | 计划采用契约测试、构建同步和全量检查。 |
 | Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
 | Regression Verification | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
@@ -34,3 +34,8 @@
 - Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`
 - Baseline checks: `bash scripts/build.sh`; `bash tests/run-all.sh` -> passed
 - Scope: `src/skills/discovery/SKILL.md`, `src/skills/work-item-planning/SKILL.md`, `src/skills/architecture-design/SKILL.md`, `src/skills/feature-dev/SKILL.md`, `src/skills/bug-fix/SKILL.md`, `src/skills/refactor/SKILL.md` and related contract tests
+
+## 方案与计划状态
+
+- Repair Solution: ✅ `confirmed` by delegated continuation authority.
+- Repair Plan: ✅ `confirmed` by delegated continuation authority.
