@@ -34,7 +34,7 @@ All configuration-constrained workflow documents and user-visible stage summarie
 
 ## Reproduction Evidence
 
-The configuration-loss portion is reproducible: create a worktree from `main`, observe that `.dev-cadence.yaml` is absent, then provide the local config explicitly. The generated-document reproduction across a newly created worktree and a resumed session remains pending and belongs in the next diagnosis iteration or regression plan.
+The configuration-loss portion is reproducible: create a worktree from `main`, observe that `.dev-cadence.yaml` is absent, then provide the local config explicitly. Regression Verification later covered the Git worktree propagation mechanics and rule contracts; real external-host generated-document and resumed-session execution was unavailable and was accepted by the user as a residual risk.
 
 ## Impact Scope
 
