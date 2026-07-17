@@ -8,7 +8,7 @@
 - Workspace: `.worktrees/b-005-confirmation-gates`
 - Branch: `codex/b-005-confirmation-gates`
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Repair Plan
+- Current Stage: Business Acceptance
 - Overall Status: `in_progress`
 
 ## 阶段表
@@ -18,8 +18,8 @@
 | Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/01-problem-diagnosis-record.md`) | `confirmed: user said "确认三项诊断，后面不要找我确认"` | `d2da3a4` | 三项诊断已确认。 |
 | Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/02-repair-solution.md`) | `delegated: user authorized continuation without intermediate confirmations` | `b343d5c` | 按卡片范围采用分 Workflow 契约、保留专用语义。 |
 | Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md`) | `delegated: user authorized continuation without intermediate confirmations` | `b343d5c` | 计划采用契约测试、构建同步和全量检查。 |
-| Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
-| Regression Verification | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md` | pending | `pending` | 尚未开始。 |
+| Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md`) | `not required` | `pending` | 实现提交 `7aa1404`；记录提交后绑定。 |
+| Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md`) | `not required` | `pending` | `check-all.sh`、专项契约和静态检查均通过；记录提交后绑定。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md` | pending | `pending` | 必须由用户选择固定验收选项。 |
 
 ## 诊断摘要
@@ -39,3 +39,5 @@
 
 - Repair Solution: ✅ `confirmed` by delegated continuation authority.
 - Repair Plan: ✅ `confirmed` by delegated continuation authority.
+- Repair Implementation: ✅ `confirmed`; final repair SHA `7aa1404`.
+- Regression Verification: ✅ `ready`; no failed or skipped checks.

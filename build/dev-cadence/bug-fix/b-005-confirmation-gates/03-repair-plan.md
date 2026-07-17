@@ -36,11 +36,11 @@
 - Modify: `src/skills/bug-fix/SKILL.md` near Problem Diagnosis, Repair Solution, and Repair Plan.
 - Modify: `src/skills/refactor/SKILL.md` near Requirements Confirmation, Refactor Solution, and Refactor Plan.
 
-- [ ] Add the shared minimum: stage conclusion, included/excluded scope, risks/open questions before evidence links; actual choices; effects on next stage, writes, records, status, and re-confirmation.
-- [ ] Keep Delivery choices symmetric without replacing stage-specific content.
-- [ ] Keep Asset-specific partial confirmation, candidate selection, migration/split, and Decision Pending semantics explicit.
-- [ ] Run `bash tests/confirmation-gates-contract.sh` before the rule edits and record the expected missing-contract failure.
-- [ ] Run it again after edits and require exit code 0.
+- [x] Add the shared minimum: stage conclusion, included/excluded scope, risks/open questions before evidence links; actual choices; effects on next stage, writes, records, status, and re-confirmation.
+- [x] Keep Delivery choices symmetric without replacing stage-specific content.
+- [x] Keep Asset-specific partial confirmation, candidate selection, migration/split, and Decision Pending semantics explicit.
+- [x] Run `bash tests/confirmation-gates-contract.sh` before the rule edits and record the expected missing-contract failure.
+- [x] Run it again after edits and require exit code 0.
 
 ### Task 2: Semantic contract coverage
 
@@ -48,11 +48,11 @@
 - Create: `tests/confirmation-gates-contract.sh`.
 - Modify: `tests/run-all.sh` to invoke the new script once.
 
-- [ ] Assert each of the six source skills contains a confirmation-gate contract and an evidence-link boundary.
-- [ ] Assert Delivery skills contain both advance and revise/stay semantics without testing exact prose.
-- [ ] Assert Asset skills retain their specialized confirmation terms and do not acquire Delivery-only menus.
-- [ ] Assert Business Acceptance and Completion are excluded from the new generic pre-stage contract.
-- [ ] Run `bash tests/confirmation-gates-contract.sh` and `bash tests/run-all.sh`.
+- [x] Assert each of the six source skills contains a confirmation-gate contract and an evidence-link boundary.
+- [x] Assert Delivery skills contain both advance and revise/stay semantics without testing exact prose.
+- [x] Assert Asset skills retain their specialized confirmation terms and do not acquire Delivery-only menus.
+- [x] Assert Business Acceptance and Completion are excluded from the new generic pre-stage contract.
+- [x] Run `bash tests/confirmation-gates-contract.sh` and `bash tests/run-all.sh`.
 
 ### Task 3: Package/version synchronization
 
@@ -60,10 +60,10 @@
 - Modify: `version` from `0.22.0` to `0.23.0`.
 - Generate: `dist/.dev-cadence/**` with `bash scripts/build.sh`; do not hand-edit generated output.
 
-- [ ] Run `bash scripts/build.sh`.
-- [ ] Run `bash tests/package-contract.sh` and verify source/dist parity.
-- [ ] Run `bash scripts/check-whitespace.sh` and `git diff --check`.
-- [ ] Record the final changed-file set and implementation commit in `04-repair-record.md`.
+- [x] Run `bash scripts/build.sh`.
+- [x] Run `bash tests/package-contract.sh` and verify source/dist parity.
+- [x] Run `bash scripts/check-whitespace.sh` and `git diff --check`.
+- [x] Record the final changed-file set and implementation commit in `04-repair-record.md`.
 
 ## Completion Conditions
 
