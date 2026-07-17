@@ -15,8 +15,6 @@
 | `B-001` | [B-001 普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Draft` | `P0` |
 | `B-002` | [B-002 普通 Checkout Discard 安全性](bugs/B-002-normal-checkout-discard-safety.md) | `1` | `Draft` | `P0` |
 | `B-006` | [B-006 Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Draft` | `P2` |
-| `S-037` | [S-037 工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md) | `1` | `Ready` | `P1` |
-| `S-016` | [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `4` | `Ready` | `P1` |
 | `S-017` | [S-017 工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `2` | `Blocked` | `P1` |
 | `S-029` | [S-029 Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [S-018 Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
@@ -45,6 +43,8 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-037` | [S-037 工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md) | `1` | `Done` | `P1` |
+| `S-016` | [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `4` | `Done` | `P1` |
 | `S-040` | [S-040 Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md) | `1` | `Done` | `P1` |
 | `S-015` | [S-015 工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md) | `7` | `Done` | `P1` |
 | `S-014` | [S-014 Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md) | `5` | `Done` | `P1` |
@@ -144,8 +144,6 @@
 | 序号 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
 | 3 | T-004；B-001；B-002；B-004；B-005；B-006 | - | Draft |
-| 4 | S-037 | S-015 | ✅ Ready |
-| 5 | S-016 | S-015 | ✅ Ready |
 | 6 | S-017 | S-015、S-016、S-037 | ⚠️ Blocked |
 | 7 | S-029 | S-017 | ⚠️ Blocked |
 | 8 | S-018；S-019；S-020；S-021 | - | Draft |
