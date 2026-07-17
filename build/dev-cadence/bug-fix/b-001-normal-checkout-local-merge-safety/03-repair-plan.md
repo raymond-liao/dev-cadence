@@ -155,11 +155,11 @@ Expected: the commit contains only Task 1 changes and its parent/tree identity m
 - Consumes: the verified Task 1 source-rule commit and focused contract result.
 - Produces: version `0.21.1` and a distribution tree exactly synchronized with `src/`.
 
-- [ ] **Step 1: Update the package version**
+- [x] **Step 1: Update the package version**
 
 Change the single line in `version` from `0.21.0` to `0.21.1`. Do not edit generated `dist/` files manually.
 
-- [ ] **Step 2: Build the distribution package**
+- [x] **Step 2: Build the distribution package**
 
 Run:
 
@@ -169,7 +169,7 @@ bash scripts/build.sh
 
 Expected: `dist/.dev-cadence` is regenerated, including the repaired vendored Finishing skill and version `0.21.1`.
 
-- [ ] **Step 3: Verify source, distribution, and install contracts**
+- [x] **Step 3: Verify source, distribution, and install contracts**
 
 Run:
 
@@ -183,7 +183,7 @@ bash tests/install-contract.sh
 
 Expected: every command exits `0`; the package contains the repaired source and version `0.21.1`.
 
-- [ ] **Step 4: Run the complete repository checks**
+- [x] **Step 4: Run the complete repository checks**
 
 Run:
 
@@ -194,7 +194,7 @@ bash scripts/check-all.sh
 
 Expected: all package, workflow, install, routing, symmetry, and whitespace contracts pass. Re-check the source/dist comparison after `scripts/check-all.sh` completes.
 
-- [ ] **Step 5: Review Task 2 scope and create its implementation commit**
+- [x] **Step 5: Review Task 2 scope and create its implementation commit**
 
 Stage only `version`. Generated `dist/` remains ignored and is verified on disk, not force-added. Use the executing-plans commit identity gate with unit `plan-task-2`, then commit:
 
