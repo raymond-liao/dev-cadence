@@ -36,7 +36,7 @@ Before any workflow produces user-facing guidance, documents, records, or summar
 When the current workspace is the primary checkout, use `.dev-cadence.yaml` at that checkout root. When the current workspace is a linked worktree, resolve the primary checkout's Git location with:
 
 ```bash
-COMMON_GIT_DIR="$(cd "$(git rev-parse --git-common-dir)" && pwd -P)"
+COMMON_GIT_DIR="$(git rev-parse --path-format=absolute --git-common-dir)"
 PRIMARY_ROOT="$(dirname "$COMMON_GIT_DIR")"
 CONFIG_SOURCE="$PRIMARY_ROOT/.dev-cadence.yaml"
 ```

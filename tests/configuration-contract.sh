@@ -16,7 +16,7 @@ assert_match() {
 }
 
 assert_match "stable git common directory resolution" \
-  'git rev-parse --git-common-dir' \
+  'git rev-parse .*--git-common-dir' \
   "src/skills/using-dev-cadence/SKILL.md"
 assert_match "worktree config propagation" \
   'copy.*\.dev-cadence\.yaml|\.dev-cadence\.yaml.*copy' \
@@ -43,5 +43,27 @@ done
 assert_match "work-item-analysis selected language" \
   'Use the selected language' \
   "src/skills/work-item-analysis/SKILL.md"
+
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TMP_DIR"' EXIT
+PRIMARY_ROOT="$TMP_DIR/primary"
+WORKTREE="$TMP_DIR/worktree"
+mkdir -p "$PRIMARY_ROOT"
+PRIMARY_ROOT="$(cd "$PRIMARY_ROOT" && pwd -P)"
+git -C "$PRIMARY_ROOT" init -q
+git -C "$PRIMARY_ROOT" config user.email "configuration-contract@example.invalid"
+git -C "$PRIMARY_ROOT" config user.name "Configuration Contract"
+printf '%s\n' '.dev-cadence.yaml' > "$PRIMARY_ROOT/.gitignore"
+printf '%s\n' 'output_language: zh-CN' > "$PRIMARY_ROOT/.dev-cadence.yaml"
+printf '%s\n' 'fixture' > "$PRIMARY_ROOT/marker.txt"
+git -C "$PRIMARY_ROOT" add .gitignore marker.txt
+git -C "$PRIMARY_ROOT" commit -q -m 'create configuration fixture'
+git -C "$PRIMARY_ROOT" worktree add -q "$WORKTREE" -b fixture-worktree HEAD
+
+test -f "$PRIMARY_ROOT/.dev-cadence.yaml" || fail "fixture primary config missing"
+test ! -e "$WORKTREE/.dev-cadence.yaml" || fail "fixture worktree unexpectedly inherited ignored config"
+COMMON_GIT_DIR="$(git -C "$WORKTREE" rev-parse --path-format=absolute --git-common-dir)"
+test "$(dirname "$COMMON_GIT_DIR")/.dev-cadence.yaml" = "$PRIMARY_ROOT/.dev-cadence.yaml" \
+  || fail "fixture common-directory config source mismatch"
 
 printf 'Configuration contract checks passed.\n'
