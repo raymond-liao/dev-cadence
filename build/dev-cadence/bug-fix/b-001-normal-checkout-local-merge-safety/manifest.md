@@ -16,7 +16,7 @@
 | Problem Diagnosis | ✅ `confirmed` | [Problem Diagnosis](01-problem-diagnosis-record.md) | ✅ `confirmed` | `c117bce` | Confirmed by the user after source inspection and the isolated Git reproduction. |
 | Repair Solution | ✅ `confirmed` | [Repair Solution](02-repair-solution.md) | ✅ `confirmed` | `c4d2809` | User confirmed the fixed-SHA local-only Merge solution and version `0.21.1`. |
 | Repair Plan | ✅ `confirmed` | [Repair Plan](03-repair-plan.md) | ✅ `confirmed` | `e92cd31` | Confirmed fixed-SHA plan, deterministic main/master selection, local-only Merge, and version `0.21.1`. |
-| Repair Implementation | 🔄 `in_progress` | `04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | Entering pre-implementation design freshness gate; no production code changed yet. |
+| Repair Implementation | 🔄 `in_progress` | [Repair Record](04-repair-record.md) | ⏳ `pending` | ⏳ `pending` | Task 1 implementation `941b726` verified; interim review record checkpoint `cc5bceb`; Task 2 package synchronization in progress. |
 | Regression Verification | ⏳ `pending` | `05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | No verification started. |
 | Business Acceptance | ⏳ `pending` | `06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | No acceptance decision requested. |
 
