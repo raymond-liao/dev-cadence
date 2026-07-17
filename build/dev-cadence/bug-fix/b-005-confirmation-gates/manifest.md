@@ -15,7 +15,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/01-problem-diagnosis-record.md`) | pending | `pending` | 已完成六个 Workflow 的确认门规则对照，待用户确认诊断。 |
+| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/01-problem-diagnosis-record.md`) | pending | `d2da3a4` | 已完成六个 Workflow 的确认门规则对照，待用户确认诊断。 |
 | Repair Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/02-repair-solution.md` | pending | `pending` | 等待 Problem Diagnosis 确认。 |
 | Repair Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md` | pending | `pending` | 等待 Repair Solution 确认。 |
 | Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md` | pending | `pending` | 等待 Repair Plan 确认。 |
@@ -34,4 +34,3 @@
 - Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`
 - Baseline checks: `bash scripts/build.sh`; `bash tests/run-all.sh` -> passed
 - Scope: `src/skills/discovery/SKILL.md`, `src/skills/work-item-planning/SKILL.md`, `src/skills/architecture-design/SKILL.md`, `src/skills/feature-dev/SKILL.md`, `src/skills/bug-fix/SKILL.md`, `src/skills/refactor/SKILL.md` and related contract tests
-
