@@ -7,7 +7,7 @@
 - Workspace: `.worktrees/b-001-normal-checkout-local-merge-safety`
 - Started At: `2026-07-17T18:02:04+08:00`
 - Current Stage: Business Acceptance
-- Overall Status: 🔄 `in_progress`
+- Overall Status: ✅ `accepted`
 
 ## Stage Table
 
@@ -18,7 +18,7 @@
 | Repair Plan | ✅ `confirmed` | [Repair Plan](03-repair-plan.md) | ✅ `confirmed` | `e92cd31` | Confirmed fixed-SHA plan, deterministic main/master selection, local-only Merge, and version `0.21.1`. |
 | Repair Implementation | ✅ `completed` | [Repair Record](04-repair-record.md) | not required | `64020b2` | Task 1 and Task 2 implementation commits exact; final whole-repair review found no Critical or Important findings. |
 | Regression Verification | ⚠️ `ready_with_risk` | [Regression Test Report](05-regression-test-report.md) | not required | `6801a97` | Verification Decision: `ready_with_risk`; live agent-driven Finishing interaction skipped. |
-| Business Acceptance | ⏳ `pending` | `06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | No acceptance decision requested. |
+| Business Acceptance | ✅ `accepted` | [Business Acceptance Record](06-business-acceptance-record.md) | ✅ `accepted` (`1. Accept`) | ⏳ `pending` | Accepted by Raymond Liao <raymond-liao@outlook.com> at `2026-07-17T22:51:50+08:00`; Completion is in progress. |
 
 ## Pre-Implementation Design Freshness Gate
 
@@ -41,7 +41,17 @@
 - Repair solution and plan: ✅ `confirmed`.
 - Repair implementation and review: ✅ `completed`.
 - Regression verification: ⚠️ `ready_with_risk`; eligible for Business Acceptance.
-- Business acceptance: ⏳ `pending`.
+- Business acceptance: ✅ `accepted` (`1. Accept`).
+
+## Business Acceptance Decision
+
+- Decision: ✅ `accepted`
+- Decision By: Raymond Liao <raymond-liao@outlook.com>
+- Decision At: `2026-07-17T22:51:50+08:00`
+
+## Final Integration Decision
+
+- 🔄 `in_progress`: integrate only B-001 commits into local `main`; do not push or merge parallel task branches.
 
 ## Residual Risks
 
