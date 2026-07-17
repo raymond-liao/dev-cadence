@@ -555,7 +555,7 @@ Verify the checkpoint tree contains the stage record with `git cat-file -e "<che
 
 The implementation record must include:
 
-- implementation commit hash or changed files;
+- final implementation commit hash and Changed Files for committed tracked changes, or `skipped: no tracked changes` when applicable;
 - completed plan tasks;
 - tests and checks run during development;
 - code review report path, summary, and unresolved review findings, if any;

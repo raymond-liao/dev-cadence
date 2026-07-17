@@ -42,6 +42,17 @@ assert_workflows() {
   assert_match "refactor $label" "$refactor_pattern" "$REFACTOR_SKILL"
 }
 
+assert_workflows_not_match() {
+  local label="$1"
+  local feature_pattern="$2"
+  local bug_pattern="$3"
+  local refactor_pattern="$4"
+
+  assert_not_match "feature $label" "$feature_pattern" "$FEATURE_SKILL"
+  assert_not_match "bug-fix $label" "$bug_pattern" "$BUG_FIX_SKILL"
+  assert_not_match "refactor $label" "$refactor_pattern" "$REFACTOR_SKILL"
+}
+
 assert_workflow_delivery_contract() {
   local label="$1"
   local path="$2"
@@ -520,6 +531,7 @@ assert_workflows "manifest status values" "Use stage status values" "Use stage s
 assert_workflows "terminal checkpoint rule" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values"
 assert_workflows "no tracked changes checkpoint rule" "skipped: no tracked changes" "skipped: no tracked changes" "skipped: no tracked changes"
 assert_workflows "committed changes evidence pairing" "final implementation commit hash and final changed-files state" "final implementation commit hash and final changed-files state" "final implementation commit hash and final changed-files state"
+assert_workflows_not_match "stale alternative evidence wording" "implementation commit hash or changed files" "implementation commit hash or changed files" "implementation commit hash or changed files"
 assert_workflows "checkpoint tree validation sequence" "Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator" "Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator" "Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator"
 assert_workflows "checkpoint tree validation command" 'git cat-file -e' 'git cat-file -e' 'git cat-file -e'
 assert_workflows "installed validator path" "\\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh" "\\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh" "\\.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record\\.sh"

@@ -591,7 +591,7 @@ Verify the checkpoint tree contains the stage record with `git cat-file -e "<che
 
 The refactor record must include:
 
-- implementation commit hash or changed files;
+- final implementation commit hash and Changed Files for committed tracked changes, or `skipped: no tracked changes` when applicable;
 - completed plan tasks;
 - Behavior Baseline evidence used before structural changes;
 - structural changes actually made;
