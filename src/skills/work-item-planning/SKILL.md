@@ -38,6 +38,8 @@ Do not start this workflow from repository state alone. A missing Story Map, mis
 
 Before producing workflow guidance, in-conversation proposals, user-facing planning summaries, or planning assets, read `.dev-cadence.yaml` from the target repository root.
 
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before producing any listed planning output. In a linked worktree, verify that the propagated configuration is present before continuing.
+
 - `output_language: en` uses English.
 - `output_language: zh-CN` uses Simplified Chinese.
 - If the file or value is missing or unsupported, use English.

@@ -55,6 +55,8 @@ Before producing user-facing product-design documents or summaries, read:
 .dev-cadence.yaml
 ```
 
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before producing product-design documents or summaries. In a linked worktree, verify that the propagated configuration is present before continuing.
+
 Use `output_language` for product-design documents and user-facing summaries:
 
 - `en`: English;

@@ -23,6 +23,8 @@ Before creating or updating the architecture document, read and follow:
 
 Before producing the architecture document or user-facing summaries, read `.dev-cadence.yaml` from the target repository root.
 
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before producing the architecture document or summaries. In a linked worktree, verify that the propagated configuration is present before continuing.
+
 - `output_language: en` uses English.
 - `output_language: zh-CN` uses Simplified Chinese.
 - If the file or value is missing or unsupported, use English.

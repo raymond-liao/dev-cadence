@@ -29,6 +29,26 @@ If an installed flow applies, read that flow skill completely and follow it exac
 
 If no installed flow applies, handle the request normally.
 
+## Configuration Identity And Worktree Continuation
+
+Before any workflow produces user-facing guidance, documents, records, or summaries, resolve `.dev-cadence.yaml` from the target repository configuration source.
+
+When the current workspace is the primary checkout, use `.dev-cadence.yaml` at that checkout root. When the current workspace is a linked worktree, resolve the primary checkout's Git location with:
+
+```bash
+COMMON_GIT_DIR="$(git rev-parse --path-format=absolute --git-common-dir)"
+PRIMARY_ROOT="$(dirname "$COMMON_GIT_DIR")"
+CONFIG_SOURCE="$PRIMARY_ROOT/.dev-cadence.yaml"
+```
+
+Use the following configuration precedence for a Delivery Workflow: the active run snapshot first, then the primary checkout configuration, then the current checkout configuration when it is the primary checkout, and finally the documented fallback.
+
+When the primary checkout configuration exists and the current workspace is a different worktree, set `CONFIG_TARGET="$PWD/.dev-cadence.yaml"`. If `CONFIG_TARGET` is absent or differs from `CONFIG_SOURCE`, run `cp -f "$CONFIG_SOURCE" "$CONFIG_TARGET"`, then verify the result with `test -f "$CONFIG_TARGET" && cmp -s "$CONFIG_SOURCE" "$CONFIG_TARGET"`. A propagation failure must stop workflow output; use the active run snapshot if one exists, otherwise report the environment failure instead of silently selecting English. Do not copy the config into `.dev-cadence/` or commit it.
+
+For an active Delivery Workflow, record the resolved `output_language`, configuration source identity as `target repository root/.dev-cadence.yaml`, and whether worktree propagation occurred in the manifest. A resumed run must use this snapshot before applying any other source or fallback rule.
+
+If no valid config is available and no active snapshot exists, use English and make the fallback visible in the first user-visible summary by stating that the config was missing or unsupported and the default `en` was selected.
+
 Before creating or updating Dev Cadence-managed Markdown documents, records, reports, examples, or summaries, read and follow:
 
 ```text
