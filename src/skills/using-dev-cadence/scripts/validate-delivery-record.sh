@@ -120,7 +120,7 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
     checkpoint_value="$(trim "$checkpoint_cell")"
   fi
 
-  if [[ "$status" == "confirmed" ]]; then
+  if [[ "$status" == "confirmed" || ( "$terminal_mode" -eq 1 && "$status" == "skipped" ) ]]; then
     [[ "$checkpoint_value" != "pending" ]] || fail "stage '$stage' has terminal status '$status' but pending checkpoint"
     checkpoint_is_allowed "$checkpoint_value" || fail "stage '$stage' has invalid checkpoint value '$checkpoint_value'"
   fi
@@ -156,6 +156,12 @@ done < <(
 )
 
 [[ "$artifact_exists_in_stage_table" -eq 1 ]] || fail "manifest does not contain any stage artifact rows"
+
+if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then
+  printf 'Delivery record validation passed: %s\n' "$run_dir"
+  exit 0
+fi
+
 [[ -n "$implementation_record_path" ]] || fail "implementation record artifact not found in manifest"
 [[ -f "$implementation_record_path" ]] || fail "implementation record does not exist: ${implementation_record_path#"$repo_root_abs/"}"
 
@@ -250,16 +256,20 @@ fi
 if [[ "$terminal_mode" -eq 1 ]]; then
   review_conclusion="$(rg -n '^(?:- )?(Final Review|Review Result):' "$implementation_record_path" | head -n 1 || true)"
   [[ -n "$review_conclusion" ]] || fail "terminal implementation record is missing final review conclusion"
-  if rg -n 'Final Review: `pending`|Review Result: `pending`' "$implementation_record_path" >/dev/null; then
-    fail "terminal implementation record retains pending final review"
+  review_value="$(trim "${review_conclusion##*:}")"
+  if [[ "$review_value" == *\`* ]]; then
+    review_value="$(extract_backtick_value "$review_value")"
   fi
+  [[ -n "$review_value" && "$review_value" != "pending" ]] || fail "terminal implementation record is missing final review conclusion"
 
   if [[ -n "$verification_record_path" && -f "$verification_record_path" ]]; then
     test_conclusion="$(rg -n '^(?:- )?(Test Result|Verification Result):' "$verification_record_path" | head -n 1 || true)"
     [[ -n "$test_conclusion" ]] || fail "terminal verification record is missing test conclusion"
-    if rg -n 'Test Result: `pending`|Verification Result: `pending`' "$verification_record_path" >/dev/null; then
-      fail "terminal verification record retains pending result"
+    test_value="$(trim "${test_conclusion##*:}")"
+    if [[ "$test_value" == *\`* ]]; then
+      test_value="$(extract_backtick_value "$test_value")"
     fi
+    [[ -n "$test_value" && "$test_value" != "pending" ]] || fail "terminal verification record is missing test conclusion"
   fi
 fi
 

@@ -149,6 +149,7 @@ pending"
 
 - Implementation Base SHA: \`$plan_sha\`
 - Final Implementation SHA: \`$implementation_sha\`
+- Final Review:
 
 ## Changed Files
 
@@ -201,6 +202,7 @@ echo changed after skipped"
   if [[ "$scenario" == "invalid-missing-test-result" ]]; then
     verification_text="# Regression Test Report
 
+- Test Result: pending
 - Command: \`bash tests/delivery-record-contract.sh\`"
   fi
   write_file "$repo" "$verification_path" "$verification_text"
@@ -261,7 +263,16 @@ echo changed after skipped"
       rm "$repo/$run_dir_rel/manifest.md.bak"
       ;;
     valid-abandoned)
-      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/; s/| Business Acceptance | `confirmed`/| Business Acceptance | `skipped`/' "$repo/$run_dir_rel/manifest.md"
+      sed -i.bak \
+        -e 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        -e "s#| Repair Implementation | .*#| Repair Implementation | \`skipped\` | pending | \`skipped\` | \`skipped: abandoned\` | abandoned before implementation |#" \
+        -e "s#| Regression Verification | .*#| Regression Verification | \`skipped\` | pending | \`skipped\` | \`skipped: abandoned\` | abandoned before verification |#" \
+        -e "s#| Business Acceptance | .*#| Business Acceptance | \`skipped\` | pending | \`skipped\` | \`skipped: abandoned\` | abandoned before acceptance |#" \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-skipped-pending)
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/; s/| Business Acceptance | `confirmed` |/| Business Acceptance | `skipped` |/; s/| `confirmed` | `[^`]*` | acceptance captured |$/| `skipped` | `pending` | acceptance captured |/' "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$run_dir_rel/manifest.md.bak"
       ;;
   esac
@@ -311,7 +322,7 @@ tree_mismatch_run="$(create_fixture "invalid-tree")"
 run_expect_failure "$tree_mismatch_run" "FAIL: checkpoint tree is missing stage artifact"
 
 pending_review_run="$(create_fixture "invalid-review")"
-run_expect_failure "$pending_review_run" "FAIL: terminal implementation record retains pending final review"
+run_expect_failure "$pending_review_run" "FAIL: terminal implementation record is missing final review conclusion"
 
 sdd_scratch_run="$(create_fixture "invalid-sdd-scratch")"
 run_expect_failure "$sdd_scratch_run" "FAIL: terminal implementation record depends on ignored SDD scratch evidence"
@@ -339,5 +350,8 @@ run_expect_failure "$invalid_missing_review_run" "FAIL: terminal implementation 
 
 invalid_missing_test_result_run="$(create_fixture "invalid-missing-test-result")"
 run_expect_failure "$invalid_missing_test_result_run" "FAIL: terminal verification record is missing test conclusion"
+
+invalid_skipped_pending_run="$(create_fixture "invalid-skipped-pending")"
+run_expect_failure "$invalid_skipped_pending_run" "FAIL: stage 'Business Acceptance' has terminal status 'skipped' but pending checkpoint"
 
 printf 'Delivery record contract checks passed.\n'
