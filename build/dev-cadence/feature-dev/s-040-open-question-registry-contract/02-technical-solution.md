@@ -35,14 +35,14 @@
 
 在 Discovery、Architecture Design、Work Item Planning、Feature Dev、Bug Fix 和 Refactor 分别写入编号、状态、排序和迁移规则。局部可见性强，但会形成多套权威契约，后续容易漂移，也违反现有共享 skill 责任边界。
 
-### ✅ Recommended：共享契约 + 入口协作 + 定点冲突清理
+### ✅ Selected：共享契约 + 入口协作 + 定点冲突清理
 
 - `open-question-registry` 作为 Registry 结构、编号、状态、排序、正文所有权、迁移和终态保留的唯一权威。
 - `document-conventions` 作为所有 Dev Cadence 文档链接文本的唯一权威。
 - `using-dev-cadence` 只定义 workflow 与共享能力的协作：局部权威资产与 Registry 必须原子同步，未同步不得越过当前确认门禁。
 - 只修改已存在直接冲突的 Discovery 规则；其他 workflow 通过必经入口获得同步契约，不复制完整规则。
 
-这一方案在满足 S-040 全量索引的同时，保持单一规则来源，改动边界也最清晰。当前只是推荐，需要用户确认后才成为选定方案。
+这一方案在满足 S-040 全量索引的同时，保持单一规则来源，改动边界也最清晰。用户于 `2026-07-17` 确认选定本方案。
 
 ## 详细设计
 
@@ -119,6 +119,6 @@
 
 ## 方案状态
 
-- 选定状态：❓ `Decision Pending`
-- 推荐方案：共享契约 + 入口协作 + 定点冲突清理
-- 待用户确认后，再进入 Implementation Plan。
+- 选定状态：✅ `confirmed`
+- 选定方案：共享契约 + 入口协作 + 定点冲突清理
+- 确认依据：用户于 `2026-07-17` 回复“确认”。
