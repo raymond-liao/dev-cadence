@@ -5,11 +5,11 @@
 - Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/bugs/B-006-delivery-record-evidence-completeness.md)
 - Work Item Version: `1`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
-- Workspace: `.worktrees/b-006-delivery-record-evidence-completeness`
-- Branch: `codex/b-006-delivery-record-evidence-completeness`
+- Workspace: `.worktrees/b-006-delivery-record-evidence-completeness` (`removed after local merge`)
+- Branch: `codex/b-006-delivery-record-evidence-completeness` (`deleted after local merge`)
 - Started At: `2026-07-17 Asia/Shanghai`
-- Current Stage: Business Acceptance
-- Overall Status: `accepted`
+- Current Stage: Completion
+- Overall Status: `integrated`
 
 ## 阶段表
 
@@ -20,7 +20,7 @@
 | Repair Plan | `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/03-repair-plan.md`) | `confirmed: user said "继续" at 2026-07-17T18:24:33+0800` | `b9e2804` | 计划采用测试先行并保持三套 Workflow 对称。 |
 | Repair Implementation | `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/04-repair-record.md`) | `not required` | `afe8623` | Task 1-3 与 final-review fixes 已完成；checkpoint tree 已验证包含修复记录和代码审查报告。 |
 | Regression Verification | `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/05-regression-test-report.md`) | `not required` | `d12359e` | Verification Decision: `ready`; checkpoint tree 已验证包含回归测试报告。 |
-| Business Acceptance | `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/06-business-acceptance-record.md`) | `accepted: user selected "1. Accept" at 2026-07-17T23:15:55+0800` | `ebe3c00` | 用户已接受；checkpoint tree 已验证包含业务验收记录，等待 finishing flow integration decision。 |
+| Business Acceptance | `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/06-business-acceptance-record.md`) | `accepted: user selected "1. Accept" at 2026-07-17T23:15:55+0800` | `ebe3c00` | 用户已接受；checkpoint tree 已验证包含业务验收记录。 |
 
 ## 诊断摘要
 
@@ -49,10 +49,21 @@
 - Decision At: `2026-07-17T23:15:55+0800`
 - Accepted Residual Risks: None
 
+## 最终集成
+
+- Decision: `merge locally to main`
+- Merge Commit: `dbeb274`
+- Base Branch: `main`
+- Push: `skipped: not requested`
+- Worktree Cleanup: `completed`; `.worktrees/b-006-delivery-record-evidence-completeness` 已移除
+- Task Branch Cleanup: `completed`; `codex/b-006-delivery-record-evidence-completeness` 已删除
+- Post-Merge Verification: ✅ `passed`; `bash scripts/check-all.sh`
+
 ## 修复状态
 
 - Repair Solution: confirmed
 - Repair Plan: confirmed
 - Repair Implementation: confirmed
 - Regression Verification: confirmed
-- Business Acceptance: pending
+- Business Acceptance: accepted
+- Completion: integrated

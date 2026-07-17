@@ -35,4 +35,9 @@ None.
 
 ## Final Follow-Up Actions
 
-⏳ `pending` finishing flow integration decision.
+- 用户选择本地合并到 `main`。
+- B-006 已通过 merge commit `dbeb274` 合并到 `main`。
+- 合并结果已运行 `bash scripts/check-all.sh`，结果 ✅ `passed`。
+- `.worktrees/b-006-delivery-record-evidence-completeness` 已移除。
+- `codex/b-006-delivery-record-evidence-completeness` 已删除。
+- 未 push，未创建 Pull Request。

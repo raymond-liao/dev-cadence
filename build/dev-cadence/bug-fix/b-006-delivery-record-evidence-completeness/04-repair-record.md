@@ -17,7 +17,7 @@
 
 - 历史 S-014 样本允许 `Changed Files: pending` 进入完成状态。
 - manifest checkpoint 可指向不包含阶段记录的 commit tree。
-- 最终记录可依赖会被清理的 `sdd/progress.md`。
+- 最终记录可依赖会被清理的 ignored SDD scratch ledger。
 - 原有测试未验证真实 run 目录与 Git 对象身份。
 
 ## Changed Files
