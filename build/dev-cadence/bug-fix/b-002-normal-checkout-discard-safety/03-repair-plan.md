@@ -421,3 +421,11 @@ git commit -m "chore(release): prepare Dev Cadence 0.22.0"
 - [x] `rg --no-ignore` confirms source/dist synchronization for whole-run Discard rules.
 - [x] The B-002 repair record identifies changed files, implementation commits, RED/GREEN evidence, and skipped checks.
 - [x] No executable workflow rule is changed before this Repair Plan is confirmed.
+
+## Final Review Remediation
+
+The independent final review reopened Task 2 because its Completion contract does not yet satisfy the confirmed whole-run Discard acceptance criteria. This remediation remains within the confirmed Repair Solution; it must add focused RED/GREEN evidence, re-run the relevant contract suite, and receive a new independent whole-repair review before Regression Verification.
+
+- [x] `final-review-fix-1`: require exhaustive path classification, confirmation-time identity revalidation, branch/worktree preservation for current-run-only Discard, durable ownership evidence in the three Delivery Workflow record contracts, and removal of every contradictory post-Discard record-write rule.
+- [x] `final-review-fix-2`: reclassify and compare the complete changed-path set after confirmation, and require `Base branch` alongside `Expected base SHA` in every Delivery Workflow manifest contract.
+- [x] `final-review-fix-3`: require typed `discard` confirmation for whole-run Discard and define records-last deletion order when an owned worktree is retained to preserve external changes.
