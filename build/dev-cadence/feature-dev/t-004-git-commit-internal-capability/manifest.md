@@ -7,7 +7,7 @@
 - Workspace: `.worktrees/t-004-git-commit-internal-capability`
 - Started At: `2026-07-17T17:34:30+08:00`
 - Current Stage: `Business Acceptance`
-- Overall Status: ✅ `accepted`
+- Overall Status: ✅ `integrated`
 
 ## Stage Table
 
@@ -18,14 +18,14 @@
 | Implementation Plan | ✅ `confirmed` | [T-004 实施计划](03-implementation-plan.md) | 用户选择“开始”并要求继续实施。 | `964ce00` | 两项 TDD 任务：shared capability 行为；package、install 与版本。 |
 | Development Implementation | ✅ `confirmed` | [T-004 实施记录](04-implementation-record.md) | delegated continuous execution | `ec57908` | 最终实现身份为 `1f02f53`；独立整分支审查无未解决 Critical 或 Important finding。 |
 | System Testing | ✅ `confirmed` | [T-004 系统测试报告](05-system-test-report.md) | fresh verification completed | `df0e58f` | Verification Decision: ✅ `ready`；九条验收标准均有执行证据。 |
-| Business Acceptance | ✅ `accepted` | [T-004 业务验收记录](06-business-acceptance-record.md) | 用户选择 `1. Accept`。 | ⏳ `pending` | `Raymond Liao <raymond-liao@outlook.com>` 于 `2026-07-17T22:59:45+08:00` 接受交付结果。 |
+| Business Acceptance | ✅ `accepted` | [T-004 业务验收记录](06-business-acceptance-record.md) | 用户选择 `1. Accept`。 | `9f55dfe` | `Raymond Liao <raymond-liao@outlook.com>` 于 `2026-07-17T22:59:45+08:00` 接受交付结果。 |
 
 ## Freshness Gate
 
 - Input identity: T-004 Version `4`, Status `In Progress`.
 - Base commit: `e638468744462bc0eff8c9763876bbfd4e1a4eb3`.
 - Scope is limited to the installed Dev Cadence entry route, shared `git-commit` capability, package contracts, versioning, and directly affected delivery dispatch rules when required.
-- The main checkout may be occupied by another task; T-004 remains isolated in the configured project-local worktree.
+- T-004 在交付期间使用专用 project-local worktree；Completion 后该 worktree 已安全移除。
 
 ## Verification Summary
 
@@ -47,3 +47,13 @@
 - Decision By: `Raymond Liao <raymond-liao@outlook.com>`
 - Decision At: `2026-07-17T22:59:45+08:00`
 - Accepted Residual Risks: None.
+
+## Final Integration Decision
+
+- Decision: ✅ `integrated` by local merge into `main`.
+- Merge Commit: `cf56af3`
+- Post-Merge Verification: ✅ `passed` with `bash scripts/check-all.sh`.
+- Worktree Cleanup: ✅ `completed`; `.worktrees/t-004-git-commit-internal-capability` removed and pruned.
+- Branch Cleanup: ✅ `completed`; `codex/t-004-git-commit-internal-capability` deleted.
+- Push / PR: ⏭️ `skipped`; user explicitly prohibited push and selected local merge.
+- Parallel Branches: preserved; no other task branch was merged or cleaned up by T-004 Completion.

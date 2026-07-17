@@ -2,12 +2,6 @@
 
 按本文件顺序逐项处理。开始一个主任务前，先单独确认范围和实施计划；当前任务完成并验证后，再进入下一项。不要把多个待处理项合并为一次大范围修改。
 
-## 进行中
-
-| ID | Title | Version | Status | Priority |
-|---|---|---:|---|---|
-| `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `4` | `In Progress` | `P1` |
-
 ## 待处理
 
 | ID | Title | Version | Status | Priority |
@@ -44,6 +38,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `T-004` | [T-004 Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `4` | `Done` | `P1` |
 | `S-037` | [S-037 工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md) | `1` | `Done` | `P1` |
 | `S-016` | [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `4` | `Done` | `P1` |
 | `S-040` | [S-040 Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md) | `1` | `Done` | `P1` |
