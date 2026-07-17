@@ -17,8 +17,8 @@
 | Stage | Status | Artifact | User confirmation | Checkpoint commit | Notes |
 |---|---|---|---|---|---|
 | Problem Diagnosis | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/01-problem-diagnosis-record.md` | `confirmed` | `7dc377d37343ae6d12715b2b8cb044620694ddea` | Version 2 diagnosis confirmed at `2026-07-17T20:26:34+0800`. |
-| Repair Solution | 🔄 `in_progress` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/02-repair-solution.md` | `pending` | `pending` | Revised whole-run deletion solution is ready for review. |
-| Repair Plan | ⏳ `pending` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/03-repair-plan.md` | `pending` | `pending` | Not started. |
+| Repair Solution | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/02-repair-solution.md` | `confirmed` | `pending` | Whole-run deletion solution confirmed at `2026-07-17T20:36:40+0800`. |
+| Repair Plan | 🔄 `in_progress` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/03-repair-plan.md` | `pending` | `pending` | TDD repair planning is in progress. |
 | Repair Implementation | ⏳ `pending` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/04-repair-record.md` | `pending` | `pending` | Not started. |
 | Regression Verification | ⏳ `pending` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/05-regression-test-report.md` | `pending` | `pending` | Not started. |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/06-business-acceptance-record.md` | `pending` | `pending` | Not started. |
@@ -30,6 +30,7 @@
 - Baseline `bash scripts/check-all.sh` passed in this worktree.
 - Problem Diagnosis Version 1 was confirmed at `2026-07-17T18:11:38+0800` and superseded by the Version 2 scope expansion at `2026-07-17T18:42:34+0800`.
 - Problem Diagnosis Version 2 was confirmed at `2026-07-17T20:26:34+0800`.
+- Repair Solution was confirmed at `2026-07-17T20:36:40+0800`.
 
 ## Verification Summary
 
@@ -40,7 +41,7 @@
 
 ## Residual Risks
 
-- The revised Repair Solution requires user confirmation before planning.
+- The Repair Plan requires user confirmation before implementation.
 - The exact Git command sequence for preserving unselected external changes must be verified in the Repair Plan.
 
 ## Business Acceptance
