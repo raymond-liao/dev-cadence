@@ -131,6 +131,10 @@ assert_match \
   "meaningful document link text" \
   'meaningful.*link text|link text.*responsibility|link text.*content' \
   "$CONVENTIONS_SKILL"
+assert_match "id-only explicit field exception" 'explicit ID field.*ID-only|ID-only.*explicit ID field' "$CONVENTIONS_SKILL"
+assert_match "stable id and title link text" 'stable ID.*title.*link text|link text.*ID.*title' "$CONVENTIONS_SKILL"
+assert_match "asset without id uses title" 'without.*stable ID.*title|no.*stable ID.*meaningful title' "$CONVENTIONS_SKILL"
+assert_match "id-only forbidden outside id field" 'outside.*ID field.*must not.*ID-only|ID-only.*must not.*outside.*ID field' "$CONVENTIONS_SKILL"
 assert_match \
   "source-relative repository links" \
   'relative to the source document|source document.*relative|relative.*current document' \

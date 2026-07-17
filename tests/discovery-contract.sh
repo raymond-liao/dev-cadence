@@ -126,7 +126,17 @@ assert_match "combined path reports two versions" 'same.*path.*(PRD|product).*[V
 assert_match "non-material change keeps version" 'spelling.*formatting.*path.*file name.*link.*must not.*version|must not.*version.*spelling.*formatting' "$DISCOVERY_SKILL"
 assert_match "historical mixed content confirmation" 'historical mixed.*explicit.*confirm|explicit.*confirm.*historical mixed' "$DISCOVERY_SKILL"
 assert_match "resolved local questions removed" 'confirmed.*remove.*Open Questions|remove.*Open Questions.*confirmed' "$DISCOVERY_SKILL"
-assert_match "registry coordination" 'Registry.*Change Log|Change Log.*Registry' "$DISCOVERY_SKILL"
+assert_match "all local questions indexed" 'all.*Open Questions.*Registry|Registry.*every.*Open Question' "$DISCOVERY_SKILL"
+assert_match "stable local and registry question IDs" 'retain.*Open Questions.*Every such question.*indexed.*Registry.*same stable `Q-nnn`' "$DISCOVERY_SKILL"
+assert_block \
+  "resolved question lifecycle order" \
+  $'include the authoritative conclusion in the owning body.\nRemove the question from the local `Open Questions` section only after its conclusion is placed in the owning body.\nAtomically update the Registry status to the applicable terminal status and retain its Registry entry in that terminal status.' \
+  "$DISCOVERY_SKILL"
+assert_match "terminal registry entry retained" 'Registry.*terminal.*retain|retain.*Registry.*resolved' "$DISCOVERY_SKILL"
+assert_match "registry status updated atomically" 'Registry.*status.*[Aa]tomic|[Aa]tomic.*Registry.*status' "$DISCOVERY_SKILL"
+assert_not_match "legacy registry removal and change log" 'removal and Registry `Change Log`|remove.*Registry.*Change Log' "$DISCOVERY_SKILL"
+assert_not_match "legacy terminal registry removal" 'remove.*Registry.*(terminal|entry)|Registry.*(terminal|entry).*remove' "$DISCOVERY_SKILL"
+assert_not_match "optional registry indexing" 'Registry.*may index.*when useful|index.*when useful|Registry.*optional.*index|optional.*index.*Registry' "$DISCOVERY_SKILL"
 assert_match "work item impact handoff" 'work-item-planning.*impact|impact.*work-item-planning' "$DISCOVERY_SKILL"
 assert_match "current draft remains editable" 'current.*Discovery.*(draft|working baseline).*(feedback|rejection|changes).*edit|edit.*current.*Discovery.*(draft|working baseline)' "$DISCOVERY_SKILL"
 assert_match "startup baseline snapshot" 'At.*workflow start.*record|workflow start.*whether.*document.*exist' "$DISCOVERY_SKILL"

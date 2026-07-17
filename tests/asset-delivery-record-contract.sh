@@ -71,6 +71,11 @@ assert_not_match \
   'Until S-013 is complete|legacy run-record and checkpoint instructions|Remove this exception when S-013 migrates Discovery' \
   "$ENTRY_SKILL"
 
+assert_match "atomic registry synchronization" 'create.*modify.*migrate.*status.*same operation.*Registry|Registry.*same operation.*create.*modify.*migrate.*status' "$ENTRY_SKILL"
+assert_match "unsynchronized workflow gate" 'must not.*advance.*confirmation gate|confirmation gate.*must not.*advance' "$ENTRY_SKILL"
+assert_match "delivery temporary ownership" 'build/.*Registry.*temporarily.*full body|Registry.*temporarily.*full body.*build/' "$ENTRY_SKILL"
+assert_match "delivery records are not registry authority" 'Registry.*must not.*build/.*authoritative|build/.*must not.*authoritative.*Registry' "$ENTRY_SKILL"
+
 assert_literal "Architecture Design Asset declaration" "This is an Asset Workflow." "$ROOT_DIR/src/skills/architecture-design/SKILL.md"
 assert_match "Architecture Design no run records" 'must not create.*run manifest|run manifest.*must not create' "$ROOT_DIR/src/skills/architecture-design/SKILL.md"
 assert_literal "Work Item Planning Asset declaration" "This is an Asset Workflow." "$ROOT_DIR/src/skills/work-item-planning/SKILL.md"

@@ -107,7 +107,7 @@ Product-level constraints belong in the PRD, not Business Architecture.
 
 Business Architecture may contain only the business operating model: business actors, business domains, business capabilities, value streams, processes, business objects, states, business rules, business events, exceptions, and external business boundaries.
 
-User Journey, PRD, and Business Architecture retain their own in-scope `Open Questions`. The repository-level Registry may index those questions when useful, but it must not replace or empty the local sections.
+User Journey, PRD, and Business Architecture retain their own in-scope `Open Questions`. Every such question must also be indexed in the repository-level Registry with the same stable `Q-nnn`; all Open Questions are therefore indexed in the Registry, and the Registry does not replace or empty the local sections.
 
 ### ❌ Implementation Content
 
@@ -358,7 +358,15 @@ Derive the PRD and Business Architecture from the confirmed User Journey, curren
 
 In incremental mode, classify each new input as an addition, business-architecture change, correction, replacement, rejection, Open Question, or Future Scope change, then identify whether it affects the PRD, Business Architecture, or both. Apply the Product And Technical Content Boundary and form a complete proposed revised baseline plus change summary in the conversation. In incremental mode, the proposal must not modify the authoritative PRD, Business Architecture, or supporting assets before confirmation; they remain byte-for-byte unchanged.
 
-In the proposal, show confirmed questions removed from the relevant `Open Questions` and their conclusions placed in the correct body. Propose confirmed technical conclusions for their technical authority, not the product-design baseline. When a repository-level Registry entry represents the same resolved question, include its removal and Registry `Change Log` entry in the supporting asset maintenance proposal; do not perform that maintenance before Product Design Confirmation.
+In the proposal, show confirmed questions and their conclusions placed in the relevant body.
+Confirmed questions are removed from local `Open Questions` only after that conclusion is placed. Propose confirmed technical conclusions for their technical authority, not the product-design baseline.
+When a repository-level Registry entry represents the same resolved question, include the authoritative conclusion in the owning body.
+Remove the question from the local `Open Questions` section only after its conclusion is placed in the owning body.
+Atomically update the Registry status to the applicable terminal status and retain its Registry entry in that terminal status.
+
+Include these confirmed changes in the supporting asset maintenance proposal.
+
+Do not add a Registry Change Log.
 
 Before Product Design Confirmation, keep the complete PRD and Business Architecture proposal in the conversation and leave their authoritative paths and supporting assets unchanged. Perform supporting asset maintenance only after the user confirms Product Design and as part of atomically applying the confirmed proposal.
 
