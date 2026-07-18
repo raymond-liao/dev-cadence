@@ -6,12 +6,12 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `B-009` | [待处理排序与并行视图职责不一致](bugs/B-009-pending-order-parallel-view-authority.md) | `1` | `In Progress` | `P1` |
 
 ## 待处理
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `B-009` | [待处理排序与并行视图职责不一致](bugs/B-009-pending-order-parallel-view-authority.md) | `1` | `Ready` | `P1` |
 | `S-041` | [Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) | `1` | `Draft` | `P1` |
 | `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `4` | `Blocked` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
@@ -92,7 +92,7 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 | 下一步 Workflow / 入口门禁 |
 |---:|---|---|---|---|
-| 2 | [B-009](bugs/B-009-pending-order-parallel-view-authority.md) | - | ✅ Ready | bug-fix 诊断；诊断不等于修复实施，不得因此直接修改代码。 |
+| 2 | [B-009](bugs/B-009-pending-order-parallel-view-authority.md) | - | 🔄 In Progress | bug-fix 诊断；诊断不等于修复实施，不得因此直接修改代码。 |
 | 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | Draft | Story 达到 `Ready` 后进入 feature-dev；当前 Draft 仍需分析和确认。 |
 | 3 | [B-005](bugs/B-005-refactor-confirmation-options-missing.md)；[B-007](bugs/B-007-parallel-work-table-entry-qualification.md)；[B-008](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | - | Draft | bug-fix 诊断；诊断不等于修复实施，不得因此直接修改代码。 |
 | 6 | [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md)、[S-016](stories/S-016-unified-backlog-board.md)、[S-037](stories/S-037-work-item-analysis-workflow.md)、[B-009](bugs/B-009-pending-order-parallel-view-authority.md) | ⚠️ Blocked | Story 需保持 `Ready` 且满足 B-009 依赖后进入 feature-dev。 |
