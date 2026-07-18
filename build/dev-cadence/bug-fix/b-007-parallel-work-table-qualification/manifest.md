@@ -9,18 +9,18 @@
 - Branch: `codex/b-005-b-007-b-008-contract-closure`
 - Started At: `2026-07-18T07:19:45+0800`
 - Current Stage: Completion
-- Overall Status: 🔄 `in_progress`
+- Overall Status: ✅ `accepted`
 
 ## 阶段表
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | `confirmed: user approved the analyzed repair and said "继续"` | ⏳ `pending` | B-009 已取代原先的逐行入口列方案。 |
-| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md`) | `confirmed: implement the approved approach` | ⏳ `pending` | 使用表级职责边界和中心路由所有权。 |
-| Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md`) | `confirmed: implement then build dist` | ⏳ `pending` | 只对齐卡片事实和 Backlog 版本。 |
-| Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md`) | `not required` | ⏳ `pending` | 当前实现 `8d1475b`；Registry 审查修复 `0e3c717`；exact identity 已验证。 |
-| Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/05-regression-test-report.md`) | `not required` | ⏳ `pending` | 当前 Verification Decision：`ready`。 |
-| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | ⏳ `pending` | 当前设计对齐已于 `2026-07-18T20:30:35+08:00` 验收，等待 Completion 选择。 |
+| Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | `confirmed: user approved the analyzed repair and said "继续"` | `7fc451d` | B-009 已取代原先的逐行入口列方案。 |
+| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md`) | `confirmed: implement the approved approach` | `7fc451d` | 使用表级职责边界和中心路由所有权。 |
+| Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md`) | `confirmed: implement then build dist` | `7fc451d` | 只对齐卡片事实和 Backlog 版本。 |
+| Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md`) | `not required` | `7fc451d` | 当前实现 `8d1475b`；Registry 审查修复 `0e3c717`；exact identity 已验证。 |
+| Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/05-regression-test-report.md`) | `not required` | `7fc451d` | 当前 Verification Decision：`ready`。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | `7fc451d` | 当前设计对齐已于 `2026-07-18T20:30:35+08:00` 验收，等待 Completion 选择。 |
 
 ## 诊断摘要
 

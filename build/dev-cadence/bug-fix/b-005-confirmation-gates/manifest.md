@@ -9,18 +9,18 @@
 - Branch: `codex/b-005-b-007-b-008-contract-closure`
 - Started At: `2026-07-18T07:19:45+0800`
 - Current Stage: Completion
-- Overall Status: 🔄 `in_progress`
+- Overall Status: ✅ `accepted`
 
 ## 阶段表
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/01-problem-diagnosis-record.md`) | `confirmed: user approved the analyzed repair and said "继续"` | ⏳ `pending` | S-017 复现终态提示缺少固定选项。 |
-| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/02-repair-solution.md`) | `confirmed: implement the approved approach` | ⏳ `pending` | 固定菜单必须同消息展示，委托继续不能替代终态决策。 |
-| Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md`) | `confirmed: implement then build dist` | ⏳ `pending` | 使用契约测试执行 RED/GREEN。 |
-| Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md`) | `not required` | ⏳ `pending` | 当前实现提交 `0f0857d`，exact identity 已验证。 |
-| Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md`) | `not required` | ⏳ `pending` | 当前 Verification Decision：`ready`。 |
-| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | ⏳ `pending` | 当前补强已于 `2026-07-18T20:30:35+08:00` 验收，等待 Completion 选择。 |
+| Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/01-problem-diagnosis-record.md`) | `confirmed: user approved the analyzed repair and said "继续"` | `7fc451d` | S-017 复现终态提示缺少固定选项。 |
+| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/02-repair-solution.md`) | `confirmed: implement the approved approach` | `7fc451d` | 固定菜单必须同消息展示，委托继续不能替代终态决策。 |
+| Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md`) | `confirmed: implement then build dist` | `7fc451d` | 使用契约测试执行 RED/GREEN。 |
+| Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md`) | `not required` | `7fc451d` | 当前实现提交 `0f0857d`，exact identity 已验证。 |
+| Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md`) | `not required` | `7fc451d` | 当前 Verification Decision：`ready`。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | `7fc451d` | 当前补强已于 `2026-07-18T20:30:35+08:00` 验收，等待 Completion 选择。 |
 
 ## 诊断摘要
 
