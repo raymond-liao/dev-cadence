@@ -231,6 +231,16 @@ If run records under `build/dev-cadence/` are ignored by the target repository, 
 Before moving to the next stage, ensure the current stage record exists and reflects the user's latest confirmed decision or the latest verification evidence.
 Also ensure the manifest points to the latest stage record and checkpoint commit before moving to the next stage.
 
+## Work Item Card Integration
+
+Every `feature-dev` run must reuse one authoritative Story or Task card and must not create a parallel card. The first stage record must capture the exact card path, work-item type, current card Version, visible Status, and the selected scope; it must reference the card rather than copy its body.
+
+`feature-dev` may enter from a `Ready Story` only after the Story definition is user-confirmed. A Task does not require `Ready`, but the first stage must confirm its goal, scope, and completion conditions before code changes. A Bug belongs to `bug-fix` and must not be silently converted into a Feature request.
+
+Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version and Change Log.
+
+At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, delivery result/reference, exact Backlog source and destination sections, and the derived parallel-view projection. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
+
 ## Active Task Change Handling
 
 Until Business Acceptance and Completion are finished, treat user requests about the same feature as changes to the current workflow run.
