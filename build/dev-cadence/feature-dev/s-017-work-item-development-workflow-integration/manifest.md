@@ -16,12 +16,12 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | ✅ `confirmed` | [S017 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/01-requirements.md` | delegated by user | `6ddcfc7` | S017 Version 5 and the execution-only status transition are confirmed. |
-| Technical Solution | ✅ `confirmed` | [S017 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/02-technical-solution.md` | delegated by user | `6ddcfc7` | Pragmatic-balance design selected under the user's no-intermediate-confirmation delegation. |
-| Implementation Plan | ✅ `confirmed` | [S017 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/03-implementation-plan.md` | delegated by user | `6ddcfc7` | TDD contract-first plan selected; implementation completed. |
-| Development Implementation | ✅ `confirmed` | [S017 实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/04-implementation-record.md` | delegated by user | `6ddcfc7` | Final implementation SHA `ed2a07e`; final review passed. |
-| System Testing | ✅ `confirmed` | [S017 系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/05-system-test-report.md` | delegated by user | `6ddcfc7` | `bash scripts/check-all.sh` passed; all nine criteria covered. |
-| Business Acceptance | ✅ `confirmed` | [S017 业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/06-business-acceptance-record.md` | delegated by user | `6ddcfc7` | Business Acceptance decision is `accepted`; explicit residual risk that Completion integration remains pending. |
+| Requirements Confirmation | ✅ `confirmed` | [S017 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/01-requirements.md` | delegated by user | `14e148e` | S017 Version 5 and the execution-only status transition are confirmed. |
+| Technical Solution | ✅ `confirmed` | [S017 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/02-technical-solution.md` | delegated by user | `14e148e` | Pragmatic-balance design selected under the user's no-intermediate-confirmation delegation. |
+| Implementation Plan | ✅ `confirmed` | [S017 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/03-implementation-plan.md` | delegated by user | `14e148e` | TDD contract-first plan selected; implementation completed. |
+| Development Implementation | ✅ `confirmed` | [S017 实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/04-implementation-record.md` | delegated by user | `14e148e` | Final implementation SHA `ed2a07e`; final review passed. |
+| System Testing | ✅ `confirmed` | [S017 系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/05-system-test-report.md` | delegated by user | `14e148e` | `bash scripts/check-all.sh` passed; all nine criteria covered. |
+| Business Acceptance | ✅ `confirmed` | [S017 业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-017-work-item-development-workflow-integration/06-business-acceptance-record.md` | delegated by user | `14e148e` | Business Acceptance decision is `accepted`; explicit residual risk that Completion integration remains pending. |
 
 ## Work Item Identity
 
