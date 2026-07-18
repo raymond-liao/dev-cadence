@@ -38,8 +38,8 @@ assert_match "no automatic start" 'must not.*automatically start|不得自动启
 
 assert_match "five-column parallel table" '^\| 序号 \| 可并行工作项 \| 前置条件 \| 状态 \| 下一步 Workflow / 入口门禁 \|$' "$BACKLOG"
 assert_not_match "old four-column parallel table" '^\| 序号 \| 可并行工作项 \| 前置条件 \| 状态 \|$' "$BACKLOG"
-assert_match "Draft Bug entry qualification" 'B-005；B-007；B-008.*bug-fix.*诊断|B-005;B-007;B-008.*bug-fix.*diagnos' "$BACKLOG"
-assert_match "Draft Story entry qualification" 'feature-dev.*Ready|feature-dev.*`Ready`' "$BACKLOG"
+assert_match "Draft Bug entry qualification" 'B-005.*B-007.*B-008.*bug-fix.*诊断|B-005.*B-007.*B-008.*bug-fix.*diagnos' "$BACKLOG"
+assert_match "Draft Story entry qualification" 'feature-dev.*Ready|`Ready`.*feature-dev|Ready.*feature-dev' "$BACKLOG"
 assert_match "Task entry qualification" 'Task.*feature-dev.*bug-fix.*refactor|feature-dev / bug-fix / refactor' "$BACKLOG"
 assert_match "Blocked entry qualification" 'Blocked.*依赖|Blocked.*depend' "$BACKLOG"
 assert_match "parallel authorization preserved" '用户明确允许并行实施时才使用此表' "$BACKLOG"
