@@ -54,14 +54,37 @@ This determines which menu to show and how cleanup works:
 | `GIT_DIR != GIT_COMMON`, named branch | Standard 4 options | Provenance-based (see Step 6) |
 | `GIT_DIR != GIT_COMMON`, detached HEAD | Reduced 3 options (no merge) | No cleanup (externally managed) |
 
-### Step 3: Determine Base Branch
+### Step 3: Determine and Freeze Merge Identity
+
+For a normal checkout or named-branch worktree, determine the base branch before presenting Completion options. Prefer the local `main` branch; if it does not exist, use local `master`. If neither exists, stop and ask the user for the base branch. The merge-base result is ancestry evidence only; it must not replace the base branch name.
 
 ```bash
-# Try common base branches
-git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
+if git show-ref --verify --quiet refs/heads/main; then
+  BASE_BRANCH=main
+elif git show-ref --verify --quiet refs/heads/master; then
+  BASE_BRANCH=master
+else
+  printf 'Base branch not found; stop and ask the user.\n' >&2
+  exit 1
+fi
+
+git merge-base HEAD "$BASE_BRANCH" >/dev/null
+FEATURE_BRANCH=$(git branch --show-current)
+test -n "$FEATURE_BRANCH"
+EXPECTED_FEATURE_SHA=$(git rev-parse "$FEATURE_BRANCH")
+EXPECTED_BASE_SHA=$(git rev-parse "$BASE_BRANCH")
 ```
 
-Or ask: "This branch split from main - is that correct?"
+Record the snapshot in the current Completion context:
+
+```text
+Base branch: <BASE_BRANCH>
+Base SHA: <EXPECTED_BASE_SHA>
+Feature branch: <FEATURE_BRANCH>
+Feature SHA: <EXPECTED_FEATURE_SHA>
+```
+
+If base selection, ancestry verification, branch identity, or SHA capture fails, stop before presenting or executing a local Merge. Any failure stops the flow before cleanup and completion reporting. The branch is preserved on identity mismatch.
 
 ### Step 4: Present Options
 
@@ -101,13 +124,33 @@ Which option?
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 
-# Merge first — verify success before removing anything
-git checkout <base-branch>
-git pull
-git merge <feature-branch>
+# Revalidate the immutable Merge snapshot before changing checkout state.
+test "$(git rev-parse "$FEATURE_BRANCH")" = "$EXPECTED_FEATURE_SHA"
+test "$(git rev-parse "$BASE_BRANCH")" = "$EXPECTED_BASE_SHA"
+test -z "$(git status --short --untracked-files=all)"
+
+git checkout "$BASE_BRANCH"
+test -z "$(git status --short --untracked-files=all)"
+
+# This is a local-only Merge. Do not call git pull or git fetch here.
+if git merge-base --is-ancestor "$EXPECTED_FEATURE_SHA" "$BASE_BRANCH"; then
+  MERGE_RESULT=already-integrated
+else
+  git merge "$EXPECTED_FEATURE_SHA"
+  MERGE_RESULT=merged
+fi
+
+# Verify the exact approved commit is in the target before cleanup.
+git merge-base --is-ancestor "$EXPECTED_FEATURE_SHA" "$BASE_BRANCH"
+FINAL_BASE_SHA=$(git rev-parse "$BASE_BRANCH")
+test -z "$(git status --short --untracked-files=all)"
 
 # Verify tests on merged result
 <test command>
+
+# A failed command, conflict, or verification check stops here and preserves
+# the branch/worktree. Recheck identity before any branch deletion.
+test "$(git rev-parse "$FEATURE_BRANCH")" = "$EXPECTED_FEATURE_SHA"
 
 # Only after merge succeeds: cleanup worktree (Step 6), then delete branch
 ```
@@ -115,7 +158,7 @@ git merge <feature-branch>
 Then: Cleanup worktree (Step 6), then delete branch:
 
 ```bash
-git branch -d <feature-branch>
+git branch -d "$FEATURE_BRANCH"
 ```
 
 #### Option 2: Push and Create PR
@@ -132,6 +175,74 @@ git push -u origin <feature-branch>
 Report: "Keeping branch <name>. Worktree preserved at <path>."
 
 **Don't cleanup worktree.**
+
+### Dev Cadence Whole-Run Discard
+
+Use this mode only when the caller supplies all current-run fields:
+
+- Workflow
+- Task slug
+- Run directory
+- Task branch
+- Expected HEAD SHA
+- Base branch
+- Expected base SHA
+- Owned commit range
+- Owned tracked and untracked paths
+- Workspace path
+- Worktree created by this run
+
+If any field is missing or conflicts with current Git or filesystem state, do not execute Discard. Return `discard_blocked` with the mismatched fields.
+
+Before any destructive confirmation, take a complete identity snapshot for the supplied run: the exact run directory, task branch and expected HEAD SHA, base branch and expected base SHA, owned commit range, owned tracked and untracked paths, workspace path, worktree creation evidence, and complete classified path set.
+
+Current-run creation evidence and `git worktree list --porcelain` must agree on path, branch, and Git identity. Directory naming is not ownership evidence.
+
+Before presenting the three choices, exhaustively enumerate every changed path and classify it as current-run, external, or unknown. Treat unknown as external.
+
+When the classification contains external or unknown changes, present exactly these choices:
+
+```
+1. Discard the current run only
+2. Discard the entire owned workspace or branch
+3. Cancel
+```
+
+The first destructive confirmation must state the exact run directory, task branch and SHA, owned commit range, owned paths, and owned worktree. It must include this warning:
+
+```
+Successful Discard deletes the run directory and every independently deletable current-run object; an owned branch or worktree retained to preserve external or unknown changes remains outside the deletion, and no persistent run record will remain.
+```
+
+For the first destructive confirmation, require the user to type the exact literal `discard`. A missing or invalid response returns `discard_cancelled` or `discard_blocked` without changing Git or filesystem state.
+
+For choice 2, list every additional external or unknown path and require a second exact confirmation that names the expanded deletion scope. Choice 3 returns `discard_cancelled` without changing Git or filesystem state.
+
+Immediately after final user confirmation and before any destructive command, repeat the complete identity snapshot and compare it with the confirmed snapshot. Any mismatch returns `discard_blocked` without changing Git or filesystem state.
+
+Immediately after final user confirmation and before any destructive command, re-enumerate and reclassify every changed path as current-run, external, or unknown and compare the complete classified path set with the confirmed snapshot. Any change, addition, deletion, or classification mismatch returns `discard_blocked` without changing Git or filesystem state.
+
+#### Ownership and execution
+
+- The workflow-only choice must preserve external and unknown paths byte-for-byte and path-for-path.
+- If deleting the task branch or owned worktree would affect external or unknown changes, retain that branch or worktree and delete only independently deletable current-run objects. Return `discard_blocked` when preservation cannot be proven.
+- When an owned worktree is retained to preserve external or unknown paths, verify all branch and path postconditions, preserve those paths byte-for-byte, and delete the run directory last from outside the retained workspace. Return `whole_run_discarded` only after verifying that the run directory is absent.
+- Move a normal checkout or owned worktree off the task branch before deleting that exact branch.
+- B-002 whole-run Discard must not proceed from or move into detached HEAD; detached HEAD remains outside B-002 whole-run Discard.
+- Before returning success, successful postconditions require an attached, verified non-task branch.
+- Delete the run directory last in a normal checkout.
+- Remove a current-run-owned worktree last after branch and path postconditions pass.
+- The finishing flow must not remove an external or unknown worktree.
+- Verify the exact branch, worktree, path, and run-directory postconditions before returning success.
+
+Return exactly one normalized result:
+
+- `whole_run_discarded`: the run directory was deleted, every independently deletable current-run object was deleted, and all unselected external or unknown changes were preserved.
+- `discard_cancelled`: the user cancelled before destructive execution.
+- `discard_blocked`: identity changed, preservation could not be proven, or any destructive/postcondition step failed.
+
+Keep existing ordinary Option 4 behavior for callers that do not supply Dev Cadence current-run context, except retain the already-required typed `discard` confirmation.
+The B-002 detached-HEAD restriction does not change ordinary non-Dev-Cadence behavior.
 
 #### Option 4: Discard
 

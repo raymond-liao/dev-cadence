@@ -38,6 +38,8 @@ Do not start this workflow from repository state alone. A missing Story Map, mis
 
 Before producing workflow guidance, in-conversation proposals, user-facing planning summaries, or planning assets, read `.dev-cadence.yaml` from the target repository root.
 
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before producing any listed planning output. In a linked worktree, verify that the propagated configuration is present before continuing.
+
 - `output_language: en` uses English.
 - `output_language: zh-CN` uses Simplified Chinese.
 - If the file or value is missing or unsupported, use English.
@@ -152,6 +154,25 @@ Planning Inputs And Scope Confirmation -> Planning Structure Proposal -> Plannin
 ```
 
 Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged. After confirmation, atomically write only the affected assets. The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content.
+
+## Confirmation Gate Presentation
+
+Before each real Work Item Planning decision gate, present the decision in this order in the conversation:
+
+1. `current conclusion`: the current planning conclusion, proposed structure, or card result.
+2. `included scope`: the input versions, Features, Story Map cells, milestones, cards, and Backlog references included in the proposal.
+3. `excluded scope`: planning assets, unrelated cards, product-design facts, or delivery work that remain unchanged or out of scope.
+4. `risks or open questions`: version conflicts, missing product-design inputs, duplicate identities, dependency concerns, or unresolved planning questions.
+5. `evidence link`: a repository-relative link to the complete proposal or source assets. The link is supporting evidence and does not replace the conversation summary.
+
+Then present the actual planning choices and their effects:
+
+- At `Planning Inputs And Scope Confirmation`, confirm the named authoritative inputs and scope to advance to the structure proposal, or request changes and remain at the current stage with authoritative planning assets unchanged. If an input is missing or conflicted, keep the planning proposal blocked and return to `discovery` or request a user decision rather than guessing.
+- At `Planning Result Confirmation`, `confirm the full proposed result` atomically writes the affected Story Map, milestones, cards, and Backlog references. The user may also `confirm only the named subset`; only that subset is written and every unconfirmed asset keeps its current authoritative content. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the gate.
+- When the proposal includes a milestone or MVP slice, show the explicit included work-item IDs and let the user confirm or change that slice. MVP becomes authoritative only when the user confirms it; it is not inferred from the proposal.
+- Every choice must state its effect on the next stage, asset writes, records, status, and whether re-confirmation is required.
+
+Do not import the Delivery Workflow advance/revise menu as a replacement for these planning choices. Preserve Feature ownership, candidate or input selection, partial confirmation, MVP slicing, version-conflict handling, and handoff to a downstream delivery workflow. Do not apply this section to downstream terminal menus; Work Item Planning does not own those menus.
 
 ## Story Map Contract
 
@@ -271,6 +292,21 @@ Bug may enter `bug-fix` without a `Ready` precondition and without a confirmed r
 
 If Task analysis reveals that the work actually needs new product behavior, stop treating it as a Task-only delivery item and create or associate the correct Story instead.
 
+## Parallel Work View Contract
+
+The Backlog's parallel work table is a candidate view for coordinating authorized parallel work. It is not a second status model, a workflow-run log, or a direct code-implementation board.
+
+- `Status` is the status field and expresses only the card lifecycle; it must use the canonical work-item status contract. The status field must not be used to infer a workflow stage or to combine card maturity with entry qualification.
+- The row order in `待处理` is the sole authoritative suggested implementation order.
+- The `当前可并行实施表` is a derived view of `待处理` order and dependency relationships; it must preserve the relative order from `待处理` and must not maintain an independent ordering.
+- If the first item in `待处理` cannot proceed, Work Item Planning must confirm and reorder the pending list before another item proceeds. It must not silently skip the first item.
+- Parallel view status expresses only lifecycle. Workflow routing is owned by `using-dev-cadence` and the corresponding workflow skill.
+- A Story must have status `Ready` before it can enter `feature-dev`.
+- A Task may route to `feature-dev`, `bug-fix`, or `refactor` according to its confirmed goal, but the corresponding workflow must confirm its own scope before delivery work may modify code.
+- A Bug may be `Draft` when it enters `bug-fix` diagnosis (Problem Diagnosis). Diagnosis does not mean repair implementation; Repair Solution and Repair Plan confirmation remain required before code changes.
+- `Blocked` means that an explicit dependency blocks the work item. It does not mean that the card has a different lifecycle or that its maturity has been reclassified.
+- The view must not automatically start a workflow or directly modify code. Parallel execution still requires the user's authorization and the selected workflow's gates.
+
 ## Versioning, Reuse, And Concurrency
 
 Every Story, Task, and Bug card must use an independent integer Version starting at `1`.
@@ -298,6 +334,18 @@ docs/backlog.md
 ```
 
 Backlog is the summary view for work-item status, priority, relationships, blockers, and suggested order. Story Map keeps business structure and slicing; it does not replace the Backlog.
+
+Work Item Planning is the authoritative owner of Backlog structure, lifecycle sections, and planning-maintained ordering.
+
+Use exactly these Backlog lifecycle sections in this order: `进行中`, `待处理`, `已完成`, `已关闭`.
+
+Each Backlog lifecycle section must use exactly these columns: `ID | Title | Version | Status | Priority`.
+
+Backlog rows must summarize cards only. Do not duplicate card body details, acceptance conditions, change logs, workflow-run evidence, or other card-only fields in the Backlog table.
+
+When `已关闭` keeps a historical closure note without a surviving current card, keep the row as a compact summary and use `-` for fields that do not belong to a current card.
+
+Preserve the existing row order inside `待处理` unless the confirmed planning change explicitly updates that recommendation.
 
 Work Item Planning may update only the necessary Backlog references that belong to the confirmed planning change. It must not mechanically reorder unrelated items.
 

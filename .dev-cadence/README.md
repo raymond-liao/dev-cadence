@@ -80,6 +80,14 @@ docs/architecture/<goal-slug>.md
 
 It investigates only the necessary current state, compares meaningful alternatives when they exist, and keeps diagrams inside the architecture document with Mermaid preferred. It is not triggered by repository state and does not replace a delivery workflow's task-scoped solution.
 
+**work-item-analysis** handles detailed Story, Task, and Bug definition analysis before downstream delivery.
+
+```text
+Analysis Scope Confirmation -> Work Item Definition Analysis -> Work Item Confirmation
+```
+
+It is an Asset Workflow. It supports one work item or a user-selected batch, reuses existing Story, Task, and Bug cards when they already exist, and only writes confirmed updates back to authoritative work-item cards under `docs/`. It does not change product-design baselines, Story Map or Backlog ordering, technical solutions, code, testing, or business acceptance. After analysis, confirmed work items hand off to the matching Delivery Workflow.
+
 **feature-dev** handles new user-visible or system-visible features and intentional changes to expected behavior.
 
 ```text

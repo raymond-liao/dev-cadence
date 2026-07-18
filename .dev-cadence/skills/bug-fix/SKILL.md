@@ -29,6 +29,8 @@ Before producing user-facing workflow documents or records, read:
 .dev-cadence.yaml
 ```
 
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before writing any diagnosis, solution, plan, record, or summary. In a linked worktree, verify that the propagated configuration is present and matches the active run snapshot before continuing.
+
 Use `output_language` from that file for all workflow documents and records, including Superpowers plan documents, Dev Cadence records, and user-facing stage summaries.
 
 Supported values:
@@ -182,7 +184,8 @@ The manifest must include:
 - a stage table with stage name, status, artifact path, user confirmation, checkpoint commit, and notes;
 - verification summary and residual risks once available;
 - business acceptance decision once available;
-- final integration decision after Completion.
+- final integration decision after Completion only when run records remain.
+- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Base branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
 
 Repository and path fields must be portable:
 
@@ -205,12 +208,22 @@ Update the manifest:
 - whenever a stage record is created or updated;
 - after each checkpoint commit, adding the commit hash;
 - before entering Business Acceptance;
-- after the finishing flow records merge, PR, keep-branch, or discard decisions.
+- Only when run records remain after the finishing flow returns merge, PR, or keep: record the final integration decision.
 
 If run records under `build/dev-cadence/` are ignored by the target repository, keep the manifest updated on disk and do not force-add ignored files unless the user or project policy requires it.
 
 Before moving to the next stage, ensure the current stage record exists and reflects the user's latest confirmed decision or the latest verification evidence.
 Also ensure the manifest points to the latest stage record and checkpoint commit before moving to the next stage.
+
+## Work Item Card Integration
+
+Every `bug-fix` run must reuse one authoritative Bug card when one exists; direct Bug investigation may create or complete the Bug card under this workflow when no card exists. The first diagnosis record must capture the exact card path, `Bug` type, current card Version, visible Status, and the selected scope; it must reference the card rather than copy its body.
+
+A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known root cause. Diagnosis owns reproduction, root-cause evidence, and the repair boundary. A Feature request or intentional behavior change must route to `feature-dev`, not be hidden inside a Bug Fix.
+
+Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version and Change Log.
+
+At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, exact Backlog source and destination sections, and the derived parallel-view projection. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
 ## Active Task Change Handling
 
@@ -233,6 +246,23 @@ If the requested change clearly exceeds the current confirmed repair boundary, a
 | "The user added details, so start a new diagnosis document." | Same-bug changes update the current workflow run and existing records. |
 | "The confirmed repair plan is old, but keep implementing anyway." | Return to the earliest affected stage and refresh records before moving forward. |
 | "This sounds bigger, so silently start a new task." | Ask whether to expand the current bug fix or start a separate task. |
+
+## Confirmation Gate Presentation
+
+Before each real pre-Business Acceptance confirmation gate in `Problem Diagnosis`, `Repair Solution`, and `Repair Plan`, present the decision in this order before any evidence link:
+
+1. `current conclusion`: the confirmed diagnosis, repair approach, or repair plan for the current stage.
+2. `included scope`: the symptom, root cause, repair boundary, files, regression checks, and records covered by this version.
+3. `excluded scope`: unrelated defects, intentional behavior changes, deferred work, and later workflow stages not covered by this decision.
+4. `risks or open questions`: diagnosis confidence, repair risks, unresolved assumptions, and regression gaps that affect the decision.
+5. `evidence link`: a repository-relative link to the stage record, repair plan, or other complete evidence. The link supports the summary and does not replace it.
+
+Then present the actual choices and their effects. The minimum delivery choices are:
+
+- `confirm current version and advance to the next stage`: record the user's confirmation for the current stage, preserve the confirmed repair scope and version, create the required checkpoint when applicable, and allow the next Dev Cadence stage to begin.
+- `request changes and remain at the current stage`: do not advance or start later-stage work, update the same diagnosis, solution, or plan record with the requested changes, and present the complete gate again for confirmation.
+
+Every choice must state its effect on the next stage, asset writes, workflow records, stage status, and whether re-confirmation is required. A diagnosis that remains ambiguous must stay in diagnosis; `not-a-bug`, scope expansion, and any intentional behavior change keep their existing routing rules. This contract does not replace the fixed Business Acceptance or Completion menus.
 
 ## Stage Rules
 
@@ -488,6 +518,8 @@ DEV_CADENCE_TASK_DIR=build/dev-cadence/bug-fix/<bug-slug>
 
 All SDD task briefs, implementer reports, review packages, and progress ledgers must stay under that task directory.
 
+Ignored SDD scratch such as `sdd/progress.md` is useful during implementation, but `sdd/progress.md` and other ignored SDD scratch files are not required terminal evidence.
+
 #### Common Implementation Rules
 
 These common rules apply to both `executing-plans` and `subagent-driven-development`.
@@ -504,9 +536,15 @@ At the end of this stage, write or update:
 build/dev-cadence/bug-fix/<bug-slug>/04-repair-record.md
 ```
 
+For committed tracked changes, terminal evidence must include the Implementation Base SHA, final implementation commit hash, and final changed-files state derived from that implementation range. If a terminal or stage checkpoint has no tracked changes, record `skipped: no tracked changes` instead of substituting alternative evidence.
+
+After writing or updating the stage record, follow this sequence exactly: Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator.
+
+Verify the checkpoint tree contains the stage record with `git cat-file -e "<checkpoint-commit>:build/dev-cadence/bug-fix/<bug-slug>/04-repair-record.md"`, then record the verified checkpoint SHA in the manifest and run `bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/bug-fix/<bug-slug>`.
+
 The repair record must include:
 
-- implementation commit hash or changed files;
+- final implementation commit hash and Changed Files for committed tracked changes, or `skipped: no tracked changes` when applicable;
 - completed plan tasks;
 - original bug reproduction evidence;
 - tests and checks run during repair implementation;
@@ -651,6 +689,10 @@ Coverage must be honest. If the original symptom, root cause, repair acceptance 
 
 Superpowers does not provide a dedicated business acceptance skill. Use this Dev Cadence gate:
 
+The same user-visible message must present the Business Acceptance summary, selection request, and all fixed numbered options. Do not split the menu across messages, replace it with a generic confirmation request, or rely on a record link to expose the choices.
+
+Delegated continuation must not create, imply, or select a Business Acceptance or Completion decision. It applies only to explicitly delegated intermediate confirmation gates. If the fixed menu was not presented, no terminal decision exists and no acceptance record may be written.
+
 - summarize the confirmed problem;
 - summarize the root cause and repair result;
 - summarize regression evidence and residual risks;
@@ -692,11 +734,13 @@ The business acceptance record must use this structure:
 - `Accepted Residual Risks`: residual risks accepted by the user, if any.
 - `Final Follow-Up Actions`: final follow-up actions, if any.
 
-After Completion, update `Final Follow-Up Actions` with the actual final result. Record whether the branch was merged, a PR was created, the branch was kept, or the work was discarded; also record whether any worktree was removed and whether the task branch was deleted or preserved. Do not leave final follow-up actions as future-tense TODOs when the manifest is in a terminal status.
+When the run records remain after Completion, update `Final Follow-Up Actions` with the actual final result. Record whether the branch was merged, a PR was created, or the branch was kept; also record whether any worktree was removed and whether the task branch was deleted or preserved. Do not require or attempt this update after `whole_run_discarded`. Do not leave final follow-up actions as future-tense TODOs when the manifest is in a terminal status.
 
 ## Completion
 
 After Business Acceptance is accepted, invoke:
+
+The Completion menu must be presented to the user with every option actually supported by the finishing flow and its result. Delegated continuation must not select a Completion action.
 
 ```text
 .dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md
@@ -708,14 +752,38 @@ Pass this Dev Cadence context into the finishing flow:
 - The business acceptance record has been written or updated.
 - Ignored Dev Cadence run records under `build/dev-cadence/` may remain on disk after merge.
 - Do not push unless the user explicitly asks.
+- Current-run Discard context: Workflow, Task slug, Run directory, Task branch, Expected HEAD SHA, Base branch, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
+- Successful whole-run Discard intentionally deletes the current run records and leaves no persistent terminal record.
 
-After the finishing flow completes, update the manifest and business acceptance record with the final integration result. The manifest must include the merge, PR, keep-branch, or discard decision; worktree cleanup result; branch deletion or preservation result; final overall status; and non-`pending` checkpoint values for terminal stages.
+Derive the current-run Discard context from the confirmed manifest and stage records, then revalidate every value against current Git and filesystem state immediately before invoking the finishing flow.
+
+Handle the normalized finishing result:
+
+- `whole_run_discarded`: the current run directory no longer exists; do not update the manifest, Business Acceptance record, checkpoint fields, or any other run record. Do not run the terminal-record readiness checklist. Report the verified deletion result in the current conversation and stop this workflow.
+- `discard_cancelled` or `discard_blocked`: retain the current run and its records, report the reason, and remain in Completion without claiming a terminal result.
+- merge, pull request, or keep: update the manifest and Business Acceptance record with the final integration result, then complete the existing terminal-record readiness checklist.
+
+## Backlog Synchronization After Completion
+
+Only a successful Completion whose normalized finishing result is exactly `merge` may synchronize the Bug Fix to the Backlog. Completion must have succeeded, including accepted Business Acceptance, before this synchronization starts. A `pull request`, `keep`, `discard_cancelled`, `discard_blocked`, or `whole_run_discarded` result must not mark the Bug `Done` and must not move it into the completed lifecycle section.
+
+For the `merge` path, locate the existing Bug card and its Backlog row by the card's Bug ID and Version. Re-read the current card and Backlog visible facts immediately before writing. If the Bug ID, Version, title, priority, status, link, or lifecycle location conflicts with the confirmed facts, stop on the conflict and require a user decision; do not partially write either the card or Backlog.
+
+After identity and visible-fact checks pass, perform one atomic card and Backlog write:
+
+1. Update the Bug card `Status` to `Done`.
+2. Record the repair result and integration reference on the Bug card, and append a Change Log entry for this execution. An execution-only status or delivery-reference write does not increment the confirmed requirement Version.
+3. Atomically update the Backlog: remove the matching row from the active or pending lifecycle section, add that same row to the completed lifecycle section with status `Done`, and in the current parallel table remove only the matching Bug entry.
+
+If any card or Backlog write cannot be completed against the re-read facts, perform zero partial writes and stop for a user decision. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; preserve the relative order of the remaining parallel entries and do not recalculate or reorder unrelated work items as part of this write.
+
+The manifest, Business Acceptance record, and follow-up evidence must record the actual sync result, including the matched Bug ID and Version, card status and repair/integration references, the source and destination lifecycle sections, parallel-table removal, or the conflict and no-write outcome. The `merge` write must be idempotent: a repeat after the same visible facts are already synchronized records the existing `Done` state without duplicating the card reference, execution Change Log entry, or Backlog row.
 
 Before marking the run terminal, complete this readiness checklist:
 
 - [ ] Manifest has a terminal overall status and no `pending` checkpoint commit values.
 - [ ] Business acceptance record has `Final Follow-Up Actions` updated with actual past-tense results.
-- [ ] Repair record has the final implementation commit hash or final changed-files state.
+- [ ] Repair record has the final implementation commit hash and final changed-files state for committed changes, or `skipped: no tracked changes` when the terminal stage has no tracked changes.
 - [ ] Repair record links to `04-code-review-report.md`.
 - [ ] Code review report exists and all checklist items are checked or have an explicit reason.
 - [ ] Regression test report records skipped checks and residual risks honestly.
@@ -723,5 +791,11 @@ Before marking the run terminal, complete this readiness checklist:
 - [ ] Artifact paths are repository-relative; no local absolute paths are persisted unless explicitly requested by the user.
 
 If any checklist item is not satisfied, update the affected record before reporting Completion.
+
+Before marking the run terminal, run:
+
+```bash
+bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/bug-fix/<bug-slug> --terminal
+```
 
 Then follow the vendored finishing skill.

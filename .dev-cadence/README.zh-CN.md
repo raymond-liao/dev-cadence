@@ -78,6 +78,14 @@ docs/architecture/<goal-slug>.md
 
 它按需调查现状，在存在实质差异时比较有意义的备选方案，并把架构图放在文档内且优先使用 Mermaid。它不会由仓库状态自动触发，也不替代交付 workflow 面向当前任务的 Solution。
 
+**work-item-analysis** 用于在进入下游交付 workflow 前，对 Story、Task 和 Bug 进行详细定义分析。
+
+```text
+Analysis Scope Confirmation -> Work Item Definition Analysis -> Work Item Confirmation
+```
+
+它是 Asset Workflow，既支持单个工作项，也支持用户明确选择的一组工作项；发现已有 Story、Task 或 Bug 卡片时必须复用，并且只在用户确认后把更新写回 `docs/` 下的权威工作项卡片。它不改产品设计基线、不改 Story Map 或 Backlog 顺序、不设计技术方案、不改代码，也不执行测试或业务验收。分析完成后，再把已确认工作项移交给匹配的 Delivery Workflow。
+
 **feature-dev** 用于新增用户可见或系统可见功能，以及对预期行为的主动变更。
 
 ```text

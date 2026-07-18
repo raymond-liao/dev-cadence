@@ -55,6 +55,8 @@ Before producing user-facing product-design documents or summaries, read:
 .dev-cadence.yaml
 ```
 
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before producing product-design documents or summaries. In a linked worktree, verify that the propagated configuration is present before continuing.
+
 Use `output_language` for product-design documents and user-facing summaries:
 
 - `en`: English;
@@ -157,6 +159,25 @@ Background And Problem Exploration -> User Journey Analysis -> User Journey Conf
 ```
 
 Stages 1 and 2 form one continuous exploration in the current conversation. Stage 3 is the first confirmation gate and freezes the Journey revision used for derivation. Stage 4 derives the complete PRD and Business Architecture proposal from that confirmed Journey. Stage 5 is the second confirmation gate. Ask a question outside the two confirmation gates only when the answer materially affects the remaining product design.
+
+## Confirmation Gate Presentation
+
+Before each real Discovery decision gate, present the decision in this order in the conversation:
+
+1. `current conclusion`: the proposed Journey or product-design conclusion at the current stage.
+2. `included scope`: the assets, identities, versions, and supporting changes included in this proposal.
+3. `excluded scope`: the assets, technical inputs, or later workflow decisions that remain unchanged or deferred.
+4. `risks or open questions`: unresolved product or business questions and the impact of each one.
+5. `evidence link`: a repository-relative link to the complete proposal or authoritative source. The link is supporting evidence and does not replace the conversation summary.
+
+Then present only choices that this workflow can execute, together with their effects:
+
+- At `User Journey Confirmation`, `confirm the current Journey revision` freezes the revision, atomically writes only the confirmed Journey, and allows PRD and Business Architecture derivation. `Request changes and keep the Journey proposal at the current stage` leaves the authoritative Journey unchanged, revises the in-conversation proposal, and repeats this gate.
+- At `Product Design Confirmation`, `confirm the current PRD and Business Architecture proposal` atomically writes only affected assets and confirmed supporting maintenance, then establishes the new planning baseline. `Request changes and keep the product-design proposal at the current stage` performs no authoritative write, revises the same proposal, and repeats this gate. If the Journey changes, return to User Journey Confirmation before deriving again.
+- When candidate authorities, non-standard paths, historical mixed content, or a combined document are in scope, present the actual applicable choices before the gate: keep the current authority/path, approve the proposed migration, keep the document combined, or approve the proposed split. Apply only the named choice; do not infer migration or splitting from a general confirmation.
+- Every choice must state its effect on the next stage, asset writes, records, status, and whether re-confirmation is required.
+
+Do not use the Delivery Workflow advance/revise menu for Discovery. Preserve Discovery's two-gate ordering, authoritative-path selection, migration and split decisions, supporting-asset handoff, and `Open Questions` semantics. Do not apply this section to Business Acceptance or Completion; those are outside Discovery and have no Discovery confirmation menu.
 
 ## Persistence And Continuation
 
