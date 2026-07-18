@@ -20,7 +20,7 @@
 | Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md`) | `delegated: user authorized continuation without intermediate confirmations` | `d3d3856` | 计划覆盖源规则、Backlog 表和契约测试。 |
 | Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md`) | `not required` | `2e95c32` | 实现提交 `89eb653`；实施记录和审查报告已进入 checkpoint tree。 |
 | Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/05-regression-test-report.md`) | `not required` | `2e95c32` | `check-all.sh`、专项契约和静态检查均通过；回归报告已进入 checkpoint tree。 |
-| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md`) | `accepted: user selected "1. Accept" at 2026-07-18T07:58:51+0800` | `pending` | 用户已接受；完成集成后更新最终 follow-up。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md`) | `accepted: user selected "1. Accept" at 2026-07-18T07:58:51+0800` | `e260eab` | 用户已接受；完成集成后更新最终 follow-up。 |
 
 ## 诊断摘要
 
