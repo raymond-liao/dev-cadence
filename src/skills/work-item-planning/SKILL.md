@@ -297,7 +297,6 @@ If Task analysis reveals that the work actually needs new product behavior, stop
 The Backlog's parallel work table is a candidate view for coordinating authorized parallel work. It is not a second status model, a workflow-run log, or a direct code-implementation board.
 
 - `Status` is the status field and expresses only the card lifecycle; it must use the canonical work-item status contract. The status field must not be used to infer a workflow stage or to combine card maturity with entry qualification.
-- `Next Workflow / Entry Gate` is an independent view field. It states the next eligible workflow and its entry qualification; it is not another work-item status.
 - The row order in `待处理` is the sole authoritative suggested implementation order.
 - The `当前可并行实施表` is a derived view of `待处理` order and dependency relationships; it must preserve the relative order from `待处理` and must not maintain an independent ordering.
 - If the first item in `待处理` cannot proceed, Work Item Planning must confirm and reorder the pending list before another item proceeds. It must not silently skip the first item.
