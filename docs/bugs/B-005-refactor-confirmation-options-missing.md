@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`B-005`
-- Version：`3`
+- Version：`4`
 - Status：`Draft`
 - Priority：`P1`
 - Change Type：Bug
@@ -23,7 +23,7 @@
 - 部分确认请求直接把阶段记录文件丢给用户，缺少对实际待确认内容的会话级总结。
 - Feature Dev、Bug Fix 和 Refactor 的前置阶段通常只要求用户确认，没有明确展示“确认并前进”与“修改并停留重提”的选择及结果。
 - Discovery、Work Item Planning 和 Architecture Design 也有未完整呈现选项的决策门，但包含权威来源、部分确认、MVP 切片、迁移、方案选择和 Decision Pending 等专用语义，不能机械套用 Delivery Workflow 的选项。
-- Business Acceptance 和 Completion 已有固定菜单；它们属于已有专用契约，不应被本卡重复定义或弱化。
+- 已有规则为 Business Acceptance 和 Completion 定义了固定菜单，但本次 S-017 用户验收时实际提示未展示可选项，用户无法按固定选项作出可归一化的验收决策；本卡记录该提示与既有契约不一致的现象，不重新定义终态语义。
 - 现有测试主要验证确认门存在，没有系统验证“门、选项、结果”三者一致。
 
 ## ✅ 范围
@@ -85,10 +85,16 @@
 - [Bug Fix 流程](../workflows/bug-fix.md)
 - [Refactor 流程](../workflows/refactor.md)
 
+## Relationships
+
+- Related Story: [S-017 工作项卡片与开发 Workflow 接入](../stories/S-017-work-item-development-workflow-integration.md)。
+- Related Story: [S-018 Business Acceptance 终态映射](../stories/S-018-business-acceptance-terminal-mapping.md)。
+
 ## Change Log
 
 | Version | Date | Change | Reason |
 |---:|---|---|---|
+| 4 | 2026-07-18 | 补充 S-017 用户验收提示未展示可选项的现象，并关联 S-017 与 S-018。 | 实际用户验收时无法看到已有固定菜单，说明用户可见提示与既有 Business Acceptance 契约不一致。 |
 | 3 | 2026-07-17 | 将确认门问题扩展为“先展示内容摘要，再提供选项和结果语义”，并明确文件只能作为证据链接。 | 用户指出每次确认时直接丢阶段文件，用户无法快速判断实际需要确认的内容。 |
 | 2 | 2026-07-17 | 将问题从 Refactor 扩展为六个已安装 Workflow 的确认门选项与结果语义缺口。 | 跨 Workflow 审计确认问题并非 Refactor 单点，同时不同门禁不能机械使用同一菜单。 |
 | 1 | 2026-07-16 | 创建 Refactor 确认阶段缺少用户选项 Bug。 | 记录确认门禁未提供可选择决策的问题，等待诊断。 |
