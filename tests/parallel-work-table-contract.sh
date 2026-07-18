@@ -47,18 +47,17 @@ assert_not_match "new global readiness status" '可启动|可实施' "$BACKLOG"
 
 parallel_line_for() {
   local item="$1"
-  awk -v item="$item" '
+  awk -F'|' -v item="$item" '
     /^## 当前可并行实施表$/ { in_view = 1 }
     /^## Dependency Table$/ { in_view = 0 }
-    in_view && index($0, item) { print NR; exit }
+    in_view && /^\|/ && index($3, item) { print NR; exit }
   ' "$BACKLOG"
 }
 
+test -z "$(parallel_line_for '[S-017](stories/S-017-work-item-development-workflow-integration.md)')" ||
+  fail "completed S-017 remains in the parallel view"
 test "$(parallel_line_for '[S-041](stories/S-041-change-log-contract-and-history-governance.md)')" -lt \
-  "$(parallel_line_for '[S-017](stories/S-017-work-item-development-workflow-integration.md)')" ||
-  fail "parallel view does not follow pending order for S-041 and S-017"
-test "$(parallel_line_for '[S-017](stories/S-017-work-item-development-workflow-integration.md)')" -lt \
   "$(parallel_line_for '[S-029](stories/S-029-feature-persistent-record-contract.md)')" ||
-  fail "parallel view does not follow pending order for S-017 and S-029"
+  fail "parallel view does not follow pending order for S-041 and S-029"
 
 printf 'Parallel work table contract checks passed.\n'
