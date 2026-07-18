@@ -769,9 +769,15 @@ Only a successful Completion whose normalized finishing result is exactly `merge
 
 For the `merge` path, locate the existing Bug card and its Backlog row by the card's Bug ID and Version. Re-read the current card and Backlog visible facts immediately before writing. If the Bug ID, Version, title, priority, status, link, or lifecycle location conflicts with the confirmed facts, stop on the conflict and require a user decision; do not partially write either the card or Backlog.
 
-After identity and visible-fact checks pass, atomically update the Backlog: remove the matching row from the active or pending lifecycle section, add that same row to the completed lifecycle section with status `Done`, and in the current parallel table remove only the matching Bug entry. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; preserve the relative order of the remaining parallel entries and do not recalculate or reorder unrelated work items as part of this write.
+After identity and visible-fact checks pass, perform one atomic card and Backlog write:
 
-The manifest, Business Acceptance record, and follow-up evidence must record the actual sync result, including the matched Bug ID and Version, the source and destination lifecycle sections, parallel-table removal, or the conflict and no-write outcome. The `merge` write must be idempotent: a repeat after the same visible facts are already synchronized records the existing `Done` state without creating duplicate rows.
+1. Update the Bug card `Status` to `Done`.
+2. Record the repair result and integration reference on the Bug card, and append a Change Log entry for this execution. An execution-only status or delivery-reference write does not increment the confirmed requirement Version.
+3. Atomically update the Backlog: remove the matching row from the active or pending lifecycle section, add that same row to the completed lifecycle section with status `Done`, and in the current parallel table remove only the matching Bug entry.
+
+If any card or Backlog write cannot be completed against the re-read facts, perform zero partial writes and stop for a user decision. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; preserve the relative order of the remaining parallel entries and do not recalculate or reorder unrelated work items as part of this write.
+
+The manifest, Business Acceptance record, and follow-up evidence must record the actual sync result, including the matched Bug ID and Version, card status and repair/integration references, the source and destination lifecycle sections, parallel-table removal, or the conflict and no-write outcome. The `merge` write must be idempotent: a repeat after the same visible facts are already synchronized records the existing `Done` state without duplicating the card reference, execution Change Log entry, or Backlog row.
 
 Before marking the run terminal, complete this readiness checklist:
 

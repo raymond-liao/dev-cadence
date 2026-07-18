@@ -20,7 +20,7 @@
 | `S-021` | [验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) | `1` | `Draft` | `P2` |
 | `B-005` | [已安装 Workflow 用户确认门摘要、选项与结果语义不完整](bugs/B-005-refactor-confirmation-options-missing.md) | `4` | `Draft` | `P1` |
 | `B-007` | [当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) | `2` | `Draft` | `P1` |
-| `B-008` | [Bug Fix 完成后未更新 Backlog](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | `1` | `Draft` | `P1` |
+| `B-008` | [Bug Fix 完成后未更新 Backlog](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | `2` | `Draft` | `P1` |
 | `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `1` | `Draft` | `P2` |
 | `S-022` | [Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) | `1` | `Draft` | `P1` |
 | `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `1` | `Draft` | `P2` |
