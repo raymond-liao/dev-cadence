@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`B-007`
-- Version：`1`
+- Version：`2`
 - Status：`Draft`
 - Priority：`P1`
 - Change Type：Bug
@@ -14,7 +14,7 @@
 
 ## 预期行为
 
-并行实施视图应保留工作项卡片的规范状态，同时单独表达当前可启动的下游 Workflow 和前置门禁。Bug 卡片为 `Draft` 时可以进入 `bug-fix` 的问题诊断，但不能因此跳过 Repair Solution、Repair Plan 或直接修改代码；Story、Task 和 Bug 继续使用各自的入口规则。
+并行实施视图应保留工作项卡片的规范状态，并在表级说明中明确 `状态` 只表达卡片生命周期，不表达下游 Workflow 入口资格。具体路由和门禁由 `using-dev-cadence` 与对应 workflow skill 负责；Bug 卡片为 `Draft` 时是否可以进入 `bug-fix` 诊断，必须由这些权威规则判断，不能从并行表状态直接推断。
 
 ## 已观察行为
 
@@ -24,8 +24,8 @@
 
 - 明确并行视图展示的是工作项候选、流程启动资格还是代码实施资格，并使标题、说明和字段语义一致。
 - 保留 `Draft`、`Ready`、`In Progress`、`Blocked`、`Done`、`Superseded` 和 `Dropped` 作为唯一工作项状态。
-- 将卡片状态与“下一步入口/门禁”分开表达，至少覆盖 Story、Task 和 Bug 的差异。
-- 明确 `Draft Bug -> bug-fix 诊断` 不等于可以直接进入修复实现。
+- 将卡片生命周期、依赖状态与 Workflow 路由的权威来源分开表达，不在并行表逐行复制入口门禁。
+- 明确并行表状态不能替代 Story、Task 和 Bug 各自的路由与入口规则。
 - 保留依赖表和并行序号的排序、依赖和用户授权边界。
 - 增加对应的源规则、Backlog 展示和契约验证。
 
@@ -36,13 +36,14 @@
 - 不把 Workflow 内部阶段投影为 Backlog 状态。
 - 不自动启动并行工作项，不改变用户授权要求。
 - 不机械重排无关的 Backlog 或并行序号。
+- 不恢复已由 B-009 移除的“下一步 Workflow / 入口门禁”列。
 
 ## 验收标准
 
-1. 并行视图不再用单一 `状态` 字段同时表达卡片生命周期和下游入口资格。
-2. `Draft` Bug 明确显示为可以启动 `bug-fix` 诊断，但不能直接修改代码。
-3. `Draft` Story、`Draft` Task 和 `Draft` Bug 的下一步入口及门禁差异可被用户直接识别。
-4. `Blocked` 明确表示依赖阻塞，不与工作项自身仍为 `Draft` 的成熟度混淆。
+1. 并行视图的 `状态` 字段只表达卡片生命周期，表级说明明确它不表达下游入口资格。
+2. Workflow 路由由 `using-dev-cadence` 和对应 workflow skill 负责，并行表不逐行复制路由结论。
+3. `Draft` Story、`Draft` Task 和 `Draft` Bug 的入口差异继续由各自权威规则判断。
+4. `Blocked` 只表达明确依赖阻塞，不被解释为 Workflow 阶段或新的成熟度状态。
 5. 规范工作项状态枚举保持不变，依赖表、并行序号和用户授权语义保持不变。
 6. source、dist、安装包和相关契约验证保持一致。
 
@@ -58,7 +59,7 @@
 
 ## Open Questions
 
-- Q-005：并行视图最终采用“当前可并行推进表”还是保留原名称，并将入口资格作为独立列展示？
+- 无。Q-005 已由 B-009 解决：保留“当前可并行实施表”名称和四列表结构，通过表级职责边界而不是逐行入口列分离语义。
 
 ## 相关文档
 
@@ -68,8 +69,13 @@
 - [工作项规划流程](../workflows/work-item-planning.md)
 - [工作项分析流程](../workflows/work-item-analysis.md)
 
+## Relationships
+
+- Superseding decision: [B-009 待处理排序与并行视图职责不一致](B-009-pending-order-parallel-view-authority.md)。
+
 ## Change Log
 
 | Version | Date | Change | Reason |
 |---:|---|---|---|
+| 2 | 2026-07-18 | 按 B-009 的已验收决定改用四列表级职责边界，移除逐行入口资格列要求并关闭 Q-005。 | B-009 已将路由所有权集中到 `using-dev-cadence` 和 owning workflow，原卡片要求已过期。 |
 | 1 | 2026-07-17 | 创建并行视图状态与 Workflow 入口资格混用 Bug。 | 用户指出 Draft Bug 仍可能进入 bug-fix，当前表的“状态”语义不足以表达该差异。 |
