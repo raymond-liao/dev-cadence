@@ -298,6 +298,10 @@ The Backlog's parallel work table is a candidate view for coordinating authorize
 
 - `Status` is the status field and expresses only the card lifecycle; it must use the canonical work-item status contract. The status field must not be used to infer a workflow stage or to combine card maturity with entry qualification.
 - `Next Workflow / Entry Gate` is an independent view field. It states the next eligible workflow and its entry qualification; it is not another work-item status.
+- The row order in `待处理` is the sole authoritative suggested implementation order.
+- The `当前可并行实施表` is a derived view of `待处理` order and dependency relationships; it must preserve the relative order from `待处理` and must not maintain an independent ordering.
+- If the first item in `待处理` cannot proceed, Work Item Planning must confirm and reorder the pending list before another item proceeds. It must not silently skip the first item.
+- Parallel view status expresses only lifecycle. Workflow routing is owned by `using-dev-cadence` and the corresponding workflow skill.
 - A Story must have status `Ready` before it can enter `feature-dev`.
 - A Task may route to `feature-dev`, `bug-fix`, or `refactor` according to its confirmed goal, but the corresponding workflow must confirm its own scope before delivery work may modify code.
 - A Bug may be `Draft` when it enters `bug-fix` diagnosis (Problem Diagnosis). Diagnosis does not mean repair implementation; Repair Solution and Repair Plan confirmation remain required before code changes.
@@ -343,8 +347,6 @@ Backlog rows must summarize cards only. Do not duplicate card body details, acce
 When `已关闭` keeps a historical closure note without a surviving current card, keep the row as a compact summary and use `-` for fields that do not belong to a current card.
 
 Preserve the existing row order inside `待处理` unless the confirmed planning change explicitly updates that recommendation.
-
-Do not modify the sorting or row order of the `当前可并行实施表` when updating Backlog lifecycle sections.
 
 Work Item Planning may update only the necessary Backlog references that belong to the confirmed planning change. It must not mechanically reorder unrelated items.
 
