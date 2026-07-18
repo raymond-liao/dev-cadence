@@ -48,9 +48,9 @@
 - Run directory: `build/dev-cadence/bug-fix/b-009-pending-order-parallel-view-authority/`
 - Task branch: `main`
 - Base branch: `main`
-- Expected HEAD SHA: `de438dd`
+- Expected HEAD SHA: `1e6a966`
 - Expected base SHA: `6e18954624df1df45f9afd9141191b002605b724`
-- Owned commit range: `6e18954624df1df45f9afd9141191b002605b724..de438dd`
+- Owned commit range: `6e18954624df1df45f9afd9141191b002605b724..1e6a966`
 - Owned tracked paths: `src/skills/work-item-planning/SKILL.md`, `src/skills/using-dev-cadence/SKILL.md`, `docs/backlog.md`, `docs/workflows/work-item-planning.md`, `docs/stories/S-017-work-item-development-workflow-integration.md`, `tests/work-item-planning-contract.sh`, `tests/parallel-work-table-contract.sh`, `tests/routing-contract.sh`, `version`, and this run directory
 - Owned untracked paths: `none at start`
 - Workspace path: `.`
