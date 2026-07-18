@@ -11,4 +11,3 @@ Regression Verification is ✅ `ready`. The repaired source rules, Backlog deriv
 ## Main-Thread Decision Required
 
 The main thread must choose the Bug Fix Business Acceptance result and then continue the workflow's Completion/Git integration handling. This subtask does not change the B-009 card or Backlog lifecycle again and does not push, merge, or delete the branch/worktree.
-

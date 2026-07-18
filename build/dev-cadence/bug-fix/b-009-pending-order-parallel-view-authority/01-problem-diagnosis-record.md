@@ -50,4 +50,3 @@ FAIL: missing derived pending order in src/skills/work-item-planning/SKILL.md
 
 - 无未决业务问题；用户委派已确认删除逐行 Workflow 列、保持状态为生命周期语义，并协调 S-017。
 - 本次只修正规则、示例、契约和分发版本，不实现完整工作项领取能力，也不改变 B-005/B-007/B-008 历史状态。
-

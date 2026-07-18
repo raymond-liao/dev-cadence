@@ -34,4 +34,3 @@ bash scripts/check-all.sh                       -> exit 0; all contract checks p
 ## Residual Risk
 
 This change governs Markdown rules and contract tests; it does not add a runtime automatic order calculator. Future planning edits still require Work Item Planning confirmation as stated by the repaired rule.
-

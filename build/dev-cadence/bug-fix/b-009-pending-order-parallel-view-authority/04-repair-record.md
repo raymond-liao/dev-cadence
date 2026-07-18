@@ -48,4 +48,3 @@ The baseline had a pending-order view beginning with `S-041` while the parallel 
 - No UI, API, or runtime integration test applies; the changed deliverable is rule/documentation text and shell contract tests.
 - Business Acceptance has not been recorded in this subtask; the main thread must make the final acceptance decision.
 - No push, merge, branch deletion, worktree deletion, or B-009 re-claim was performed.
-
