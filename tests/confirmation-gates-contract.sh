@@ -47,6 +47,9 @@ done
 for skill in "${delivery_skills[@]}"; do
   assert_match "advance choice" 'confirm.*advance|confirm.*next stage|advance to the next stage' "$skill"
   assert_match "revise and stay choice" 'request.*change.*remain|revise.*current stage|remain at the current stage' "$skill"
+  assert_match "Business Acceptance same-message menu" 'same user-visible message.*fixed numbered options|same message.*fixed numbered options' "$skill"
+  assert_match "Business Acceptance delegation boundary" '[Dd]elegated continuation.*must not.*Business Acceptance.*Completion|[Dd]elegated continuation.*cannot.*Business Acceptance.*Completion' "$skill"
+  assert_match "Completion menu presentation" 'Completion.*menu.*must.*present|finishing flow.*menu.*must.*present' "$skill"
 done
 
 assert_match "Discovery Journey confirmation" 'User Journey Confirmation' src/skills/discovery/SKILL.md

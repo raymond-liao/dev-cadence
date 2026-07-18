@@ -689,6 +689,10 @@ Coverage must be honest. If the original symptom, root cause, repair acceptance 
 
 Superpowers does not provide a dedicated business acceptance skill. Use this Dev Cadence gate:
 
+The same user-visible message must present the Business Acceptance summary, selection request, and all fixed numbered options. Do not split the menu across messages, replace it with a generic confirmation request, or rely on a record link to expose the choices.
+
+Delegated continuation must not create, imply, or select a Business Acceptance or Completion decision. It applies only to explicitly delegated intermediate confirmation gates. If the fixed menu was not presented, no terminal decision exists and no acceptance record may be written.
+
 - summarize the confirmed problem;
 - summarize the root cause and repair result;
 - summarize regression evidence and residual risks;
@@ -735,6 +739,8 @@ When the run records remain after Completion, update `Final Follow-Up Actions` w
 ## Completion
 
 After Business Acceptance is accepted, invoke:
+
+The Completion menu must be presented to the user with every option actually supported by the finishing flow and its result. Delegated continuation must not select a Completion action.
 
 ```text
 .dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md
