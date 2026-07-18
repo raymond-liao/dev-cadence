@@ -271,6 +271,23 @@ After required clarification and exploration, use this order:
 
 If the user's response changes the proposed stage output, update the same record and repeat this order before moving to the next stage.
 
+## Confirmation Gate Presentation
+
+Before each real pre-Business Acceptance confirmation gate in `Requirements Confirmation`, `Technical Solution`, and `Implementation Plan`, present the decision in this order before any evidence link:
+
+1. `current conclusion`: the complete conclusion for the current Dev Cadence stage.
+2. `included scope`: the requirements, modules, plan tasks, acceptance criteria, and records covered by this version.
+3. `excluded scope`: non-goals, deferred work, unrelated files, and later workflow stages not covered by this decision.
+4. `risks or open questions`: unresolved requirements, technical constraints, implementation risks, and assumptions that affect the decision.
+5. `evidence link`: a repository-relative link to the stage record, plan, or other complete evidence. The link supports the summary and does not replace it.
+
+Then present the actual choices and their effects. The minimum delivery choices are:
+
+- `confirm current version and advance to the next stage`: record the user's confirmation for the current stage, keep the confirmed scope and version, create the required checkpoint when applicable, and allow the next Dev Cadence stage to begin.
+- `request changes and remain at the current stage`: do not advance or start later-stage work, update the same stage record or plan with the requested changes, and present the complete gate again for confirmation.
+
+Every choice must state its effect on the next stage, asset writes, workflow records, stage status, and whether re-confirmation is required. List additional approach, implementation-mode, or worktree choices only when the vendored workflow can execute them, and keep those decision inputs separate from stage confirmation. This contract does not replace the fixed Business Acceptance or Completion menus.
+
 ## Stage Rules
 
 ### Enhanced Exploration Mode

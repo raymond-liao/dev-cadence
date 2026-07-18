@@ -105,6 +105,25 @@ Architecture diagrams are part of the architecture document, not a separate core
 
 Before confirmation, the document must not claim that the architecture is approved. Preserve unresolved decisions as `❓ Decision Pending` or in `Open Questions`, and keep viable unselected options neutral.
 
+## Confirmation Gate Presentation
+
+Before each real Architecture Design decision gate, present the decision in this order in the conversation:
+
+1. `current conclusion`: the confirmed design brief or the current architecture recommendation and decision state.
+2. `included scope`: the goal, design object, options, boundaries, constraints, and proposed document path included in the decision.
+3. `excluded scope`: product discovery, work-item planning, delivery implementation, deployment, or other decisions intentionally deferred.
+4. `risks or open questions`: quality-attribute risks, assumptions, unresolved interfaces, and any choice still marked `❓ Decision Pending`.
+5. `evidence link`: a repository-relative link to the complete architecture proposal or current authoritative document. The link is supporting evidence and does not replace the conversation summary.
+
+Then present the actual architecture choices and their effects:
+
+- At design-brief confirmation, `confirm the goal, scope, constraints, detail level, and proposed path` allows investigation and drafting. `Request changes and remain at the design-brief stage` leaves the architecture asset unchanged and revises the brief before investigation.
+- At architecture confirmation, `confirm the current selected architecture` writes or updates the single authoritative asset and marks only user-confirmed choices as `Selected`. `Keep a decision as Decision Pending` preserves viable neutral options and records the unresolved choice without claiming approval. `Request changes and remain at the architecture confirmation stage` leaves the authoritative asset unchanged and revises the same proposal.
+- For every option, state whether it is `Selected`, `Rejected`, `Decision Pending`, or still neutral. A recommendation is not a selection. Do not offer a generic stop, rollback, or delivery-stage choice that this Asset Workflow does not implement.
+- Every choice must state its effect on the next stage, asset writes, records, status, and whether re-confirmation is required.
+
+Preserve architecture-specific option selection, pending decisions, design-goal confirmation, and single-asset ownership. Do not apply this section to Business Acceptance or Completion; those are outside Architecture Design and keep their own terminal contracts.
+
 ## Confirmation And Changes
 
 Present one consolidated confirmation summary containing the output path, selected option or pending decision, key decisions, and open questions. When confirmation changes the design, update the same architecture document rather than creating a process record or parallel authority.

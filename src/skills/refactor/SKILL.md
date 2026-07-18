@@ -300,6 +300,23 @@ After required clarification and exploration, use this order:
 
 If the user's response changes the proposed stage output, update the same record and repeat this order before moving to the next stage.
 
+## Confirmation Gate Presentation
+
+Before each real pre-Business Acceptance confirmation gate in `Requirements Confirmation`, `Refactor Solution`, and `Refactor Plan`, present the decision in this order before any evidence link:
+
+1. `current conclusion`: the complete structural conclusion, refactor solution, or plan for the current stage.
+2. `included scope`: the structural boundary, affected files, protected contracts, Behavior Baseline, plan tasks, and records covered by this version.
+3. `excluded scope`: new behavior, unrelated bug fixes, unrelated files, deferred cleanup, and later workflow stages not covered by this decision.
+4. `risks or open questions`: behavior-preservation risks, baseline gaps, compatibility concerns, and assumptions that affect the decision.
+5. `evidence link`: a repository-relative link to the stage record, Behavior Baseline, refactor solution, or plan. The link supports the summary and does not replace it.
+
+Then present the actual choices and their effects. The minimum delivery choices are:
+
+- `confirm current version and advance to the next stage`: record the user's confirmation for the current stage, preserve the confirmed refactor boundary and version, create the required checkpoint when applicable, and allow the next Dev Cadence stage to begin.
+- `request changes and remain at the current stage`: do not advance or start later-stage work, update the same requirements, solution, or plan record with the requested changes, and present the complete gate again for confirmation.
+
+Every choice must state its effect on the next stage, asset writes, workflow records, stage status, and whether re-confirmation is required. Preserve the behavior-change route and the `Behavior Baseline` risk decision: a required baseline gap must be resolved or explicitly confirmed before Refactor Implementation. This contract does not replace the fixed Business Acceptance or Completion menus.
+
 ## Stage Rules
 
 ### Requirements Confirmation

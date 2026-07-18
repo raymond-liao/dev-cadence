@@ -237,6 +237,23 @@ If the requested change clearly exceeds the current confirmed repair boundary, a
 | "The confirmed repair plan is old, but keep implementing anyway." | Return to the earliest affected stage and refresh records before moving forward. |
 | "This sounds bigger, so silently start a new task." | Ask whether to expand the current bug fix or start a separate task. |
 
+## Confirmation Gate Presentation
+
+Before each real pre-Business Acceptance confirmation gate in `Problem Diagnosis`, `Repair Solution`, and `Repair Plan`, present the decision in this order before any evidence link:
+
+1. `current conclusion`: the confirmed diagnosis, repair approach, or repair plan for the current stage.
+2. `included scope`: the symptom, root cause, repair boundary, files, regression checks, and records covered by this version.
+3. `excluded scope`: unrelated defects, intentional behavior changes, deferred work, and later workflow stages not covered by this decision.
+4. `risks or open questions`: diagnosis confidence, repair risks, unresolved assumptions, and regression gaps that affect the decision.
+5. `evidence link`: a repository-relative link to the stage record, repair plan, or other complete evidence. The link supports the summary and does not replace it.
+
+Then present the actual choices and their effects. The minimum delivery choices are:
+
+- `confirm current version and advance to the next stage`: record the user's confirmation for the current stage, preserve the confirmed repair scope and version, create the required checkpoint when applicable, and allow the next Dev Cadence stage to begin.
+- `request changes and remain at the current stage`: do not advance or start later-stage work, update the same diagnosis, solution, or plan record with the requested changes, and present the complete gate again for confirmation.
+
+Every choice must state its effect on the next stage, asset writes, workflow records, stage status, and whether re-confirmation is required. A diagnosis that remains ambiguous must stay in diagnosis; `not-a-bug`, scope expansion, and any intentional behavior change keep their existing routing rules. This contract does not replace the fixed Business Acceptance or Completion menus.
+
 ## Stage Rules
 
 ### Problem Diagnosis
