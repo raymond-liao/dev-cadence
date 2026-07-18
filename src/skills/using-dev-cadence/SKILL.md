@@ -192,7 +192,7 @@ When a user explicitly asks to continue implementation from `docs/backlog.md`, t
 
 After the item is selected and before switching a task branch or creating a worktree, claim it by atomically synchronizing the authoritative card and its Backlog row to `In Progress`. Preserve the card Version and Change Log for an execution-status-only change. A card already in `In Progress` must not be claimed again in the same request. Only after the card and Backlog write succeeds may the entry prepare the dedicated branch or worktree and route to the downstream workflow.
 
-claim the item before switching the task branch. claim the item before creating the worktree. The card and Backlog must be updated atomically.
+Claim the item before switching the task branch. Claim the item before creating the worktree. The card and Backlog must be updated atomically.
 
 Use the default Story route `Draft Story -> work-item-analysis -> Ready Story -> feature-dev`. `feature-dev` accepts only a user-confirmed `Ready Story`. A Task does not need to reach `Ready`; its Delivery Workflow must confirm its goal, scope, and completion conditions in the first stage. A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known root cause because diagnosis owns those questions.
 
