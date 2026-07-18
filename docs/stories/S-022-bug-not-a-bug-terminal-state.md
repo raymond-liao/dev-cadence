@@ -41,7 +41,7 @@
 
 ## Open Questions
 
-- manifest 使用 `not_a_bug` 还是更通用的关闭状态？
+- Q-011：manifest 使用 `not_a_bug` 还是更通用的关闭状态？
 
 ## 相关文档
 

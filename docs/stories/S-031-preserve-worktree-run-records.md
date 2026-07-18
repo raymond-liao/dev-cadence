@@ -41,7 +41,7 @@
 
 ## Open Questions
 
-- 多 worktree 并行运行时，保存目录如何避免任务 slug 冲突？
+- Q-018：多 worktree 并行运行时，保存目录如何避免任务 slug 冲突？
 
 ## 相关文档
 

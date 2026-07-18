@@ -41,7 +41,7 @@
 
 ## Open Questions
 
-- tracked working-tree 差异使用 patch hash 还是其他稳定身份表达？
+- Q-009：tracked working-tree 差异使用 patch hash 还是其他稳定身份表达？
 
 ## 相关文档
 

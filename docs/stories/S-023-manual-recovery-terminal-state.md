@@ -42,7 +42,7 @@
 
 ## Open Questions
 
-- 哪些失败类别允许进入 manual recovery，哪些必须继续阻塞？
+- Q-012：哪些失败类别允许进入 manual recovery，哪些必须继续阻塞？
 
 ## 相关文档
 

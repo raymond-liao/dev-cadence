@@ -41,7 +41,7 @@
 
 ## Open Questions
 
-- 外部环境是否需要提供可持久化的 workspace identity？
+- Q-019：外部环境是否需要提供可持久化的 workspace identity？
 
 ## 相关文档
 
