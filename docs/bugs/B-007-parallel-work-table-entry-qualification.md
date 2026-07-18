@@ -4,7 +4,7 @@
 
 - ID：`B-007`
 - Version：`2`
-- Status：`Draft`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Bug
 
@@ -73,9 +73,16 @@
 
 - Superseding decision: [B-009 待处理排序与并行视图职责不一致](B-009-pending-order-parallel-view-authority.md)。
 
+## 交付结果
+
+- Repair Result：B-007 已与 B-009 的四列表级职责边界一致，Q-005 已同步为 `Resolved`，未恢复逐行入口门禁列。
+- Repair References：`8d1475b795a22696fe8b7246bf8a8ced22b8161e`、`0e3c717473ebecaccd29025bd228963b442a76a1`。
+- Integration Reference：任务分支已 fast-forward 合并到 `main` 的 `e11ae7854d60d984e0637c3aafbbf3614b5798ea`；合并后完整验证通过，任务 worktree 和分支已删除，未执行 push。
+
 ## Change Log
 
 | Version | Date | Change | Reason |
 |---:|---|---|---|
+| 2 | 2026-07-18 | 完成当前设计对齐交付并将状态更新为 `Done`。 | 当前对齐已完成回归验证、业务验收、本地集成和清理。 |
 | 2 | 2026-07-18 | 按 B-009 的已验收决定改用四列表级职责边界，移除逐行入口资格列要求并关闭 Q-005。 | B-009 已将路由所有权集中到 `using-dev-cadence` 和 owning workflow，原卡片要求已过期。 |
 | 1 | 2026-07-17 | 创建并行视图状态与 Workflow 入口资格混用 Bug。 | 用户指出 Draft Bug 仍可能进入 bug-fix，当前表的“状态”语义不足以表达该差异。 |

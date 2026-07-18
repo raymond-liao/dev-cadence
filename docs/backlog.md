@@ -18,9 +18,6 @@
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `1` | `Draft` | `P2` |
 | `S-020` | [实施与 Review 风险传递到验证阶段](stories/S-020-implementation-review-risk-to-verification.md) | `1` | `Draft` | `P2` |
 | `S-021` | [验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) | `1` | `Draft` | `P2` |
-| `B-005` | [已安装 Workflow 用户确认门摘要、选项与结果语义不完整](bugs/B-005-refactor-confirmation-options-missing.md) | `4` | `Draft` | `P1` |
-| `B-007` | [当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) | `2` | `Draft` | `P1` |
-| `B-008` | [Bug Fix 完成后未更新 Backlog](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | `2` | `Draft` | `P1` |
 | `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `Draft` | `P2` |
 | `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `1` | `Draft` | `P2` |
 | `S-022` | [Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) | `1` | `Draft` | `P1` |
@@ -42,6 +39,9 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `B-005` | [已安装 Workflow 用户确认门摘要、选项与结果语义不完整](bugs/B-005-refactor-confirmation-options-missing.md) | `4` | `Done` | `P1` |
+| `B-007` | [当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) | `2` | `Done` | `P1` |
+| `B-008` | [Bug Fix 完成后未更新 Backlog](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | `2` | `Done` | `P1` |
 | `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `5` | `Done` | `P1` |
 | `B-009` | [待处理排序与并行视图职责不一致](bugs/B-009-pending-order-parallel-view-authority.md) | `1` | `Done` | `P1` |
 | `B-001` | [普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Done` | `P0` |
@@ -97,7 +97,6 @@
 | 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | Draft |
 | 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | Draft |
 | 8 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md)；[S-019](stories/S-019-final-verification-revision-binding.md)；[S-020](stories/S-020-implementation-review-risk-to-verification.md)；[S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | Draft |
-| 3 | [B-005](bugs/B-005-refactor-confirmation-options-missing.md)；[B-007](bugs/B-007-parallel-work-table-entry-qualification.md)；[B-008](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | - | Draft |
 | 22 | [B-010](bugs/B-010-generated-record-document-links-not-enforced.md) | [S-010](stories/S-010-document-reference-links.md) | Draft |
 | 9 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | Draft |
 | 10 | [S-022](stories/S-022-bug-not-a-bug-terminal-state.md)；[S-025](stories/S-025-bug-red-green-evidence.md) | - | Draft |

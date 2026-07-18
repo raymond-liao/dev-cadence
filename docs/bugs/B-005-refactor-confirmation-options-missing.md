@@ -4,7 +4,7 @@
 
 - ID：`B-005`
 - Version：`4`
-- Status：`Draft`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Bug
 
@@ -90,10 +90,17 @@
 - Related Story: [S-017 工作项卡片与开发 Workflow 接入](../stories/S-017-work-item-development-workflow-integration.md)。
 - Related Story: [S-018 Business Acceptance 终态映射](../stories/S-018-business-acceptance-terminal-mapping.md)。
 
+## 交付结果
+
+- Repair Result：Delivery Workflow 的 Business Acceptance 与 Completion 菜单现在必须在同一用户可见消息中完整展示，delegated continuation 不得创建或选择终态决定。
+- Repair Reference：`0f0857ddedd8a1c09ae0c6c3b2648c9ab393315c`。
+- Integration Reference：任务分支已 fast-forward 合并到 `main` 的 `e11ae7854d60d984e0637c3aafbbf3614b5798ea`；合并后完整验证通过，任务 worktree 和分支已删除，未执行 push。
+
 ## Change Log
 
 | Version | Date | Change | Reason |
 |---:|---|---|---|
+| 4 | 2026-07-18 | 完成当前终态菜单补强交付并将状态更新为 `Done`。 | 当前补强已完成回归验证、业务验收、本地集成和清理。 |
 | 4 | 2026-07-18 | 补充 S-017 用户验收提示未展示可选项的现象，并关联 S-017 与 S-018。 | 实际用户验收时无法看到已有固定菜单，说明用户可见提示与既有 Business Acceptance 契约不一致。 |
 | 3 | 2026-07-17 | 将确认门问题扩展为“先展示内容摘要，再提供选项和结果语义”，并明确文件只能作为证据链接。 | 用户指出每次确认时直接丢阶段文件，用户无法快速判断实际需要确认的内容。 |
 | 2 | 2026-07-17 | 将问题从 Refactor 扩展为六个已安装 Workflow 的确认门选项与结果语义缺口。 | 跨 Workflow 审计确认问题并非 Refactor 单点，同时不同门禁不能机械使用同一菜单。 |

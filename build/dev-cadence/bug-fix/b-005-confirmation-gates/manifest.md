@@ -9,7 +9,7 @@
 - Branch: `codex/b-005-b-007-b-008-contract-closure`
 - Started At: `2026-07-18T07:19:45+0800`
 - Current Stage: Completion
-- Overall Status: ✅ `accepted`
+- Overall Status: ✅ `integrated`
 
 ## 阶段表
 
@@ -20,7 +20,7 @@
 | Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md`) | `confirmed: implement then build dist` | `7fc451d` | 使用契约测试执行 RED/GREEN。 |
 | Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md`) | `not required` | `7fc451d` | 当前实现提交 `0f0857d`，exact identity 已验证。 |
 | Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md`) | `not required` | `7fc451d` | 当前 Verification Decision：`ready`。 |
-| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | `7fc451d` | 当前补强已于 `2026-07-18T20:30:35+08:00` 验收，等待 Completion 选择。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | `7fc451d` | 当前补强已验收并完成本地集成。 |
 
 ## 诊断摘要
 
@@ -66,7 +66,7 @@
 
 - 触发证据：S-017 Business Acceptance 的实际用户提示未展示固定选项，且运行记录使用 delegated continuation 形成验收结论。
 - 当前根因：终态菜单只有内容定义，没有同消息呈现要求和 delegated continuation 禁止边界。
-- 当前计划：先扩展 `tests/confirmation-gates-contract.sh` 观察预期失败，再对称修改三个 Delivery workflow。
+- 执行结果：已通过 RED/GREEN 扩展 `tests/confirmation-gates-contract.sh`，并对称补强三个 Delivery workflow。
 
 ## 当前验证与审查
 
@@ -75,3 +75,14 @@
 - Review decision: safe to proceed; no unresolved Critical or Important findings.
 - Verification Decision: 🟢 `ready`
 - Current Business Acceptance: ✅ `accepted`; user selected `1. Accept` at `2026-07-18T20:30:35+08:00`.
+
+## 当前最终集成
+
+- Completion Decision: `merge locally to main`
+- Integration Result: ✅ `integrated`; fast-forward 到 `e11ae7854d60d984e0637c3aafbbf3614b5798ea`。
+- Base Branch: `main`
+- Post-Merge Verification: ✅ `passed`; `bash scripts/check-all.sh`。
+- Backlog Synchronization: B-005 Version `4` 卡片已记录修复与集成引用并更新为 `Done`；Backlog 已从“待处理”移动到“已完成”，并从当前并行视图移除。
+- Push: ⏭️ `skipped`; not requested。
+- Worktree Cleanup: ✅ `completed`; `.worktrees/b-005-b-007-b-008-contract-closure` 已删除。
+- Task Branch Cleanup: ✅ `completed`; `codex/b-005-b-007-b-008-contract-closure` 已删除。

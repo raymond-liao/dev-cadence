@@ -18,4 +18,4 @@
 - Decision At: `2026-07-18T20:30:35+08:00`
 - Accepted Result: Delivery Workflow 的 Business Acceptance 与 Completion 终态菜单必须在同一用户可见消息中完整展示，delegated continuation 不得创建、暗示或选择终态决定。
 - Accepted Residual Risks: 契约测试验证执行规则，不模拟真实代理会话。
-- Final Follow-Up Actions: Completion 尚未选择；当前任务分支和 worktree 保持不变，未执行 push。
+- Final Follow-Up Actions: 已选择本地 merge；任务分支 fast-forward 集成到 `main` 的 `e11ae7854d60d984e0637c3aafbbf3614b5798ea`，合并后完整验证通过；B-005 Version `4` 卡片和 Backlog 已原子同步为 `Done` 并移出并行视图；`.worktrees/b-005-b-007-b-008-contract-closure` 与任务分支已删除；未执行 push。
