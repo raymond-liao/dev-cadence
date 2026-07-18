@@ -62,3 +62,13 @@
 - 六个 skill 的规则文字较长，需通过契约测试保持对称但避免机械复制。
 - 版本只在 B-005 分支中递增一次，后续两项记录需明确继承该批次版本，避免合并时产生伪造的多次发布。
 
+## 2026-07-18 回归修复方案
+
+### ✅ Selected 终态提示契约
+
+- 在 `feature-dev`、`bug-fix`、`refactor` 中对称要求：Business Acceptance 摘要、完整固定编号菜单和选择请求必须在同一条用户可见消息中出现。
+- 菜单未展示或用户未选择时，不得写入 Business Acceptance 决策。
+- delegated continuation 只允许跳过已授权的中间确认，不构成 Business Acceptance 或 Completion 决策。
+- Completion 必须展示 finishing flow 实际支持的菜单，不得由 delegated continuation 自动选择。
+
+验收标准保持现有三项终态语义不变，并由 `tests/confirmation-gates-contract.sh` 验证上述执行边界。

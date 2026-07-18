@@ -75,3 +75,9 @@ Feature Dev、Bug Fix 和 Refactor 都要求用户确认需求、方案和计划
 - Repair Solution 需要为六个 Workflow 的确认门分别定义最小摘要字段、选项和结果影响，不能直接复制一套菜单。
 - Repair Solution 需要决定契约测试采用按语义断言的最小共享 helper，还是在各 Workflow 测试中保留独立断言；不得锁定整段自然语言。
 
+## 2026-07-18 回归复核
+
+- 新症状：S-017 的 Business Acceptance 用户提示未展示固定编号选项，运行记录却使用 delegated continuation 形成验收结论。
+- 新证据：三个 Delivery skill 虽列出固定菜单，但没有要求摘要与完整菜单必须在同一条消息中展示，也没有禁止 delegated continuation 代替 Business Acceptance 或 Completion 决策。
+- 根因补充：原契约测试只覆盖前置确认门，不能捕获终态菜单呈现和委托边界。
+- 结论：原实现的前置确认门修复仍有效，但终态提示契约不完整；原 Regression Verification 与 Business Acceptance 对当前回归不再有效。
