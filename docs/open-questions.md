@@ -8,7 +8,6 @@
 | [Q-002](#q-002) | Open | 哪些具体 workflow、阶段记录或用户可见摘要稳定复现语言回退？ | [B-004 输出语言配置一致性](bugs/B-004-output-language-configuration-not-consistently-applied.md) |
 | [Q-003](#q-003) | Open | 失效时实际读取的是目标仓库配置、源仓库配置还是默认值？ | [B-004 输出语言配置一致性](bugs/B-004-output-language-configuration-not-consistently-applied.md) |
 | [Q-004](#q-004) | Open | worktree 和会话恢复是否改变了配置查找根目录？ | [B-004 输出语言配置一致性](bugs/B-004-output-language-configuration-not-consistently-applied.md) |
-| [Q-005](#q-005) | Open | 并行视图最终采用“当前可并行推进表”还是保留原名称，并将入口资格作为独立列展示？ | [B-007 当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) |
 | [Q-006](#q-006) | Open | 是否需要在后续 Story 中为连续失败设置统一最大恢复轮次，还是由各 workflow 根据风险和失败类型决定？ | [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md) |
 | [Q-007](#q-007) | Open | 已关闭列表如何在保持五列表格的同时呈现历史合并事件的来源卡片、目标卡片和合并原因？ | [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md) |
 | [Q-008](#q-008) | Open | `rejected` 应返回返工阶段还是进入独立关闭终态，是否需要按原因区分？ | [S-018 Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) |
@@ -26,6 +25,7 @@
 | [Q-020](#q-020) | Open | 发布、部署、生产验证和事故处置应拆成几个 workflow？ | [S-034 发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) |
 | [Q-021](#q-021) | Open | 首个实施切片应优先覆盖哪类交付环境？ | [S-034 发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) |
 | [Q-022](#q-022) | Open | 哪些代表性路径足以覆盖升级兼容，而不会把测试固化为单一实现？ | [T-002 需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) |
+| [Q-005](#q-005) | Resolved | 并行视图最终采用“当前可并行推进表”还是保留原名称，并将入口资格作为独立列展示？ | [B-007 当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) |
 | [Q-023](#q-023) | Resolved | 历史 Change Log 缺少准确时间、时间精度或作者时应如何迁移？ | [S-041 Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) |
 
 ## Question Details
