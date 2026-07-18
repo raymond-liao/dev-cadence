@@ -182,6 +182,24 @@ Use `refactor` when the user asks to improve internal structure without intentio
 For Feature requests, intent determines the route: route by the requested outcome, not by the isolated word "Feature".
 If a request mixes two or more of a defect report, requested behavior change, and structural cleanup, ask which outcome is primary before choosing among `bug-fix`, `feature-dev`, and `refactor`. Do not require all three request types to be present before clarifying the flow.
 
+## Work Item Intake And Claiming
+
+Work-item claiming is an entry orchestration step owned by `using-dev-cadence`. It must reuse `work-item-planning`, `work-item-analysis`, and the existing Delivery Workflows; it must not create a new claiming workflow or shared claiming skill.
+
+Only an explicit implementation, repair, or refactor request may claim a work item. Discussion, evaluation, work-item planning, card maintenance, ordinary status queries, and work-item analysis must not claim or change a card to `In Progress`.
+
+When a user explicitly asks to continue implementation from `docs/backlog.md`, the row order in `待处理` is the sole authoritative selection order. The `当前可并行实施表` is a parallel view that is a derived view used only for dependency and concurrency context; it must not provide an independent claiming order. If the first pending item cannot proceed, complete a confirmed planning reorder before selecting a later item; do not silently skip it.
+
+After the item is selected and before switching a task branch or creating a worktree, claim it by atomically synchronizing the authoritative card and its Backlog row to `In Progress`. Preserve the card Version and Change Log for an execution-status-only change. A card already in `In Progress` must not be claimed again in the same request. Only after the card and Backlog write succeeds may the entry prepare the dedicated branch or worktree and route to the downstream workflow.
+
+claim the item before switching the task branch. claim the item before creating the worktree. The card and Backlog must be updated atomically.
+
+Use the default Story route `Draft Story -> work-item-analysis -> Ready Story -> feature-dev`. `feature-dev` accepts only a user-confirmed `Ready Story`. A Task does not need to reach `Ready`; its Delivery Workflow must confirm its goal, scope, and completion conditions in the first stage. A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known root cause because diagnosis owns those questions.
+
+When a requested implementation is missing a card, route by intent: planning or registration goes to `work-item-planning`, work-item definition analysis goes to `work-item-analysis`, and direct Bug investigation goes to `bug-fix` to create or complete its Bug card. Do not create a duplicate ID or parallel card when an authoritative card exists.
+
+The selected downstream Delivery Workflow must record the exact card path, work-item type, current Version, and selected scope in its first stage record. Card Version or visible-fact conflicts stop the run for a user decision; later substantive card revisions use Active Task Change Handling to return to the earliest affected stage. Delivery lifecycle writeback must preserve Backlog row order and the derived parallel view, remain idempotent, and never turn a Workflow's internal stage into a work-item status.
+
 ## Active Workflow Continuation
 
 Before choosing or starting a new Dev Cadence flow, identify its record model and check for an unfinished Dev Cadence workflow using the matching continuation source.
