@@ -6,7 +6,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `6` | `In Progress` | `P1` |
+| `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `5` | `In Progress` | `P1` |
 
 ## 待处理
 
