@@ -3,12 +3,12 @@
 - Workflow: `bug-fix`
 - Task Slug: `b-007-parallel-work-table-qualification`
 - Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/bugs/B-007-parallel-work-table-entry-qualification.md)
-- Work Item Version: `1`
+- Work Item Version: `2`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Workspace: `.worktrees/b-005-b-007-b-008-contract-closure`
 - Branch: `codex/b-005-b-007-b-008-contract-closure`
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Repair Implementation
+- Current Stage: Completion
 - Overall Status: 🔄 `in_progress`
 
 ## 阶段表
@@ -18,9 +18,9 @@
 | Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/01-problem-diagnosis-record.md`) | `confirmed: user approved the analyzed repair and said "继续"` | ⏳ `pending` | B-009 已取代原先的逐行入口列方案。 |
 | Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/02-repair-solution.md`) | `confirmed: implement the approved approach` | ⏳ `pending` | 使用表级职责边界和中心路由所有权。 |
 | Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/03-repair-plan.md`) | `confirmed: implement then build dist` | ⏳ `pending` | 只对齐卡片事实和 Backlog 版本。 |
-| Repair Implementation | 🔄 `in_progress` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md`) | `not required` | ⏳ `pending` | 原实现 `89eb653` 已被 B-009 的后续设计取代；当前对齐实施中。 |
-| Regression Verification | ⏳ `pending` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/05-regression-test-report.md`) | `not required` | ⏳ `pending` | 使用当前四列契约重新验证。 |
-| Business Acceptance | ⏳ `pending` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md`) | ⏳ `pending` | ⏳ `pending` | 原验收保留为历史证据；当前对齐待验收。 |
+| Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/04-repair-record.md`) | `not required` | ⏳ `pending` | 当前实现 `8d1475b`；Registry 审查修复 `0e3c717`；exact identity 已验证。 |
+| Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/05-regression-test-report.md`) | `not required` | ⏳ `pending` | 当前 Verification Decision：`ready`。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-007-parallel-work-table-qualification/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | ⏳ `pending` | 当前设计对齐已于 `2026-07-18T20:30:35+08:00` 验收，等待 Completion 选择。 |
 
 ## 诊断摘要
 
@@ -66,3 +66,11 @@
 - 触发证据：B-009 已验收并移除逐行 `下一步 Workflow / 入口门禁` 列，但 B-007 卡片仍要求该列。
 - 当前根因：后续权威决定未同步到 B-007 长期卡片。
 - 当前计划：保持 B-009 的四列架构，只更新 B-007 卡片 Version、验收口径和 Backlog 版本引用。
+
+## 当前验证与审查
+
+- Final implementation commits: `8d1475b795a22696fe8b7246bf8a8ced22b8161e`, `0e3c717473ebecaccd29025bd228963b442a76a1`
+- Finding: [FR-001 Q-005 Registry status was not synchronized](04-code-review-report.md#fr-001-q-005-registry-status-was-not-synchronized), `fixed`.
+- Review decision: safe to proceed; no unresolved Critical or Important findings.
+- Verification Decision: 🟢 `ready`
+- Current Business Acceptance: ✅ `accepted`; user selected `1. Accept` at `2026-07-18T20:30:35+08:00`.

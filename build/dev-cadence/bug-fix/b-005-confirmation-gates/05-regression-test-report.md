@@ -58,3 +58,55 @@ Executed evidence satisfies the confirmed repair goal and acceptance points.
 ## Recommendation
 
 ✅ Ready to enter Business Acceptance.
+
+## 2026-07-18 回归复验
+
+### Problem And Repair Sources
+
+- Diagnosis: [问题诊断记录](01-problem-diagnosis-record.md)
+- Solution: [修复方案](02-repair-solution.md)
+- Plan: [修复计划](03-repair-plan.md)
+- Repair: [修复实施记录](04-repair-record.md)
+
+### Test Environment
+
+- Repository: `dev-cadence`
+- Branch: `codex/b-005-b-007-b-008-contract-closure`
+- Package version: `0.25.1`
+
+### Test Cases
+
+| ID | Scenario | Type | Execution | Result | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| B005-R1 | 终态菜单同消息呈现缺口 | RED contract | `bash tests/confirmation-gates-contract.sh` before repair | ✅ `passed` as RED | Failed with missing same-message menu. |
+| B005-G1 | 三条 Delivery workflow 固定菜单与委托边界 | GREEN contract | `bash tests/confirmation-gates-contract.sh` | ✅ `passed` | Confirmation gates contract checks passed. |
+| B005-G2 | Delivery workflow 对称性 | Regression | `bash tests/workflow-symmetry.sh` | ✅ `passed` | Workflow symmetry checks passed. |
+| B005-G3 | 完整构建与安装契约 | Full suite | `bash scripts/check-all.sh` | ✅ `passed` | All repository checks passed at `0.25.1`. |
+
+### Bug Fix Coverage
+
+- 原症状：B005-R1、B005-G1，`covered`。
+- 根因：B005-G1、B005-G2，`covered`。
+- source/dist 同步：B005-G3 和关键规则 `rg --no-ignore` 检查，`covered`。
+
+### Impact Scope Coverage
+
+- Business Acceptance 菜单：`covered`。
+- delegated continuation 边界：`covered`。
+- Completion 菜单交接：`covered`。
+
+### Failed Or Skipped Checks
+
+None.
+
+### Residual Risks
+
+规则测试不启动真实代理会话；它验证未来代理必须读取的可执行契约。
+
+### Verification Decision
+
+🟢 `ready`
+
+### Recommendation
+
+可进入当前 Business Acceptance。

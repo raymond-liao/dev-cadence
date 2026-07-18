@@ -24,3 +24,20 @@
 
 - [x] ✅ Safe to proceed to Regression Verification.
 - [x] Residual review risks: the rule is procedural and requires the actual Completion operator to carry out the atomic write; the contract test protects the required decision matrix.
+
+## 2026-07-18 卡片写回补强审查
+
+### Review Inputs
+
+- [x] Changed files: Bug Fix skill, B-008 contract test, B-008 card, Backlog Version reference, and root version.
+- [x] Rules: root `AGENTS.md` and current B-008 diagnosis, solution, and plan.
+- [x] Reviewed commit: `dcc80eadb3c89d4c901fa30575104aa44f79a187`; whole-repair range `39dcb1e..0e3c717`.
+
+### Findings And Decision
+
+- [x] Rules compliance, merge-only trigger, atomicity, idempotence, conflict handling, test alignment, and version handling reviewed.
+- [x] Critical findings: None.
+- [x] Important findings: None.
+- [x] Unresolved findings: None.
+- [x] Decision: safe to proceed to Regression Verification.
+- [x] Residual review risks: the workflow remains procedural; source/dist parity and contract tests cover the required operator behavior.

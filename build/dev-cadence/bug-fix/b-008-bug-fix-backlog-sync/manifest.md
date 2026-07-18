@@ -3,12 +3,12 @@
 - Workflow: `bug-fix`
 - Task Slug: `b-008-bug-fix-backlog-sync`
 - Work Item: [B-008 Bug Fix 完成后未更新 Backlog](../../../../docs/bugs/B-008-bug-fix-completion-does-not-update-backlog.md)
-- Work Item Version: `1`
+- Work Item Version: `2`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Workspace: `.worktrees/b-005-b-007-b-008-contract-closure`
 - Branch: `codex/b-005-b-007-b-008-contract-closure`
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Repair Implementation
+- Current Stage: Completion
 - Overall Status: 🔄 `in_progress`
 
 ## 阶段表
@@ -18,9 +18,9 @@
 | Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/01-problem-diagnosis-record.md`) | `confirmed: user approved the analyzed repair and said "继续"` | ⏳ `pending` | Completion 专用段未明确卡片状态和修复引用写回。 |
 | Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/02-repair-solution.md`) | `confirmed: implement the approved approach` | ⏳ `pending` | 成功 merge 后原子更新 Bug 卡片和 Backlog。 |
 | Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/03-repair-plan.md`) | `confirmed: implement then build dist` | ⏳ `pending` | 使用专项契约执行 RED/GREEN。 |
-| Repair Implementation | 🔄 `in_progress` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/04-repair-record.md`) | `not required` | ⏳ `pending` | 原实现 `c886413` 保留为历史证据；当前补齐卡片写回。 |
-| Regression Verification | ⏳ `pending` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/05-regression-test-report.md`) | `not required` | ⏳ `pending` | 原专项测试未覆盖卡片写回，需重新验证。 |
-| Business Acceptance | ⏳ `pending` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/06-business-acceptance-record.md`) | ⏳ `pending` | ⏳ `pending` | 原验收保留为历史证据；当前补强待验收。 |
+| Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/04-repair-record.md`) | `not required` | ⏳ `pending` | 当前实现提交 `dcc80ea`，exact identity 已验证。 |
+| Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/05-regression-test-report.md`) | `not required` | ⏳ `pending` | 当前 Verification Decision：`ready`。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-008-bug-fix-backlog-sync/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | ⏳ `pending` | 当前卡片写回补强已于 `2026-07-18T20:30:35+08:00` 验收，等待 Completion 选择。 |
 
 ## 诊断摘要
 
@@ -66,3 +66,11 @@
 - 触发证据：旧运行已 `integrated`，但 Bug 卡片与 Backlog 仍是 `Draft`；当前 Completion 具体步骤只描述 Backlog 移动。
 - 当前根因：共享 lifecycle writeback 与 Completion 专用步骤、专项测试未形成卡片写回闭环。
 - 当前计划：先扩展 `tests/bug-fix-backlog-sync-contract.sh` 观察预期失败，再补齐卡片 `Done`、修复引用、Change Log 与 Backlog 的原子幂等写回。
+
+## 当前验证与审查
+
+- Final implementation commit: `dcc80eadb3c89d4c901fa30575104aa44f79a187`
+- Final review range: `39dcb1e..0e3c717`
+- Review decision: safe to proceed; no unresolved Critical or Important findings.
+- Verification Decision: 🟢 `ready`
+- Current Business Acceptance: ✅ `accepted`; user selected `1. Accept` at `2026-07-18T20:30:35+08:00`.

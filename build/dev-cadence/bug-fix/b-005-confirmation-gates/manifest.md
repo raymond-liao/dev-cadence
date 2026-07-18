@@ -8,7 +8,7 @@
 - Workspace: `.worktrees/b-005-b-007-b-008-contract-closure`
 - Branch: `codex/b-005-b-007-b-008-contract-closure`
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Repair Implementation
+- Current Stage: Completion
 - Overall Status: 🔄 `in_progress`
 
 ## 阶段表
@@ -18,9 +18,9 @@
 | Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/01-problem-diagnosis-record.md`) | `confirmed: user approved the analyzed repair and said "继续"` | ⏳ `pending` | S-017 复现终态提示缺少固定选项。 |
 | Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/02-repair-solution.md`) | `confirmed: implement the approved approach` | ⏳ `pending` | 固定菜单必须同消息展示，委托继续不能替代终态决策。 |
 | Repair Plan | ✅ `confirmed` | [修复计划](03-repair-plan.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/03-repair-plan.md`) | `confirmed: implement then build dist` | ⏳ `pending` | 使用契约测试执行 RED/GREEN。 |
-| Repair Implementation | 🔄 `in_progress` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md`) | `not required` | ⏳ `pending` | 原实现 `7aa1404` 保留为历史证据；当前回归修复实施中。 |
-| Regression Verification | ⏳ `pending` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md`) | `not required` | ⏳ `pending` | 原验证已被 S-017 回归证据 superseded。 |
-| Business Acceptance | ⏳ `pending` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md`) | ⏳ `pending` | ⏳ `pending` | 原验收只覆盖旧修复；当前修复必须重新展示固定选项。 |
+| Repair Implementation | ✅ `confirmed` | [修复实施记录](04-repair-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/04-repair-record.md`) | `not required` | ⏳ `pending` | 当前实现提交 `0f0857d`，exact identity 已验证。 |
+| Regression Verification | ✅ `confirmed` | [回归测试报告](05-regression-test-report.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/05-regression-test-report.md`) | `not required` | ⏳ `pending` | 当前 Verification Decision：`ready`。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md) (`build/dev-cadence/bug-fix/b-005-confirmation-gates/06-business-acceptance-record.md`) | `accepted: user selected 1. Accept after complete same-message summary` | ⏳ `pending` | 当前补强已于 `2026-07-18T20:30:35+08:00` 验收，等待 Completion 选择。 |
 
 ## 诊断摘要
 
@@ -67,3 +67,11 @@
 - 触发证据：S-017 Business Acceptance 的实际用户提示未展示固定选项，且运行记录使用 delegated continuation 形成验收结论。
 - 当前根因：终态菜单只有内容定义，没有同消息呈现要求和 delegated continuation 禁止边界。
 - 当前计划：先扩展 `tests/confirmation-gates-contract.sh` 观察预期失败，再对称修改三个 Delivery workflow。
+
+## 当前验证与审查
+
+- Final implementation commit: `0f0857ddedd8a1c09ae0c6c3b2648c9ab393315c`
+- Final review range: `39dcb1e..0e3c717`
+- Review decision: safe to proceed; no unresolved Critical or Important findings.
+- Verification Decision: 🟢 `ready`
+- Current Business Acceptance: ✅ `accepted`; user selected `1. Accept` at `2026-07-18T20:30:35+08:00`.

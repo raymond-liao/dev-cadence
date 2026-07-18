@@ -76,8 +76,8 @@
 | --- | --- | --- | --- |
 | Task 4: 卡片与 Backlog 原子写回 | 补齐 Completion 具体步骤和专项契约 | `tests/bug-fix-backlog-sync-contract.sh`、`src/skills/bug-fix/SKILL.md`、B-008 卡片、Backlog | `bash tests/bug-fix-backlog-sync-contract.sh` |
 
-- [ ] 在专项契约中断言卡片 `Done`、修复结果/集成引用、Change Log 与 Backlog 原子写入。
-- [ ] 运行专项契约并记录预期 RED。
-- [ ] 补齐 Bug Fix Completion 的具体写回与零部分写入规则。
-- [ ] 将 B-008 Version 提升到 `2`，修正 merge-only 范围并同步 Backlog Version。
-- [ ] 运行专项契约并记录 GREEN，再执行构建和全量验证。
+- [x] 在专项契约中断言卡片 `Done`、修复结果/集成引用、Change Log 与 Backlog 原子写入。
+- [x] 运行专项契约并记录预期 RED。
+- [x] 补齐 Bug Fix Completion 的具体写回与零部分写入规则。
+- [x] 将 B-008 Version 提升到 `2`，修正 merge-only 范围并同步 Backlog Version。
+- [x] 运行专项契约并记录 GREEN，再执行构建和全量验证。

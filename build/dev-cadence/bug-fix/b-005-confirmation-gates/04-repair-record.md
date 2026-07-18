@@ -1,5 +1,32 @@
 # B-005 修复实施记录
 
+## 2026-07-18 回归修复
+
+- IMPLEMENTATION_BASE_SHA: `39dcb1e668e0bb61ff9e07d75f22755e77a57e2d`
+- Current unit: `plan-task-4`
+- RED evidence: `bash tests/confirmation-gates-contract.sh` failed with `missing Business Acceptance same-message menu in src/skills/feature-dev/SKILL.md`.
+- Repair boundary: three Delivery workflow skills and `tests/confirmation-gates-contract.sh` only.
+- Implementation status: ✅ `completed`
+- Final current repair SHA: `0f0857ddedd8a1c09ae0c6c3b2648c9ab393315c`
+
+### Executing-Plans Commit Review Ledger
+
+- Review ID: `b005-plan-task-4`
+- Unit: `plan-task-4`
+- Commit type: implementation
+- State: `verified`
+- Expected parent: `39dcb1ef33d2570654f5b81a8d2c057441edaede`
+- Reviewed tree: `1dd9cc0b08e23e963354d30c1228423aa7b4a69e`
+- Staged files: `src/skills/feature-dev/SKILL.md`, `src/skills/bug-fix/SKILL.md`, `src/skills/refactor/SKILL.md`, `tests/confirmation-gates-contract.sh`
+- Checks: `bash tests/confirmation-gates-contract.sh` passed; `bash tests/workflow-symmetry.sh` passed; `git diff --check` passed.
+- Decision: approved for commit; fixed menu semantics remain unchanged and all three Delivery workflows are symmetric.
+- Commit: `0f0857ddedd8a1c09ae0c6c3b2648c9ab393315c`
+- Committed parent: `39dcb1ef33d2570654f5b81a8d2c057441edaede`
+- Committed tree: `1dd9cc0b08e23e963354d30c1228423aa7b4a69e`
+- Identity: `exact`
+- Findings: None.
+- Residual risks: None.
+
 - Status: ✅ `completed`
 - Implementation Base SHA: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`
 - Final Repair SHA: `7aa14044f329e8e970a92b3ea436b3ddb17b8a97`

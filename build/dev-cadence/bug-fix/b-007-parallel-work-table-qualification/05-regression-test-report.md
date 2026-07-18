@@ -58,3 +58,53 @@ Executed evidence satisfies the confirmed repair goal and acceptance points.
 ## Recommendation
 
 ✅ Ready to enter Business Acceptance.
+
+## 2026-07-18 设计对齐复验
+
+### Problem And Repair Sources
+
+- Diagnosis: [问题诊断记录](01-problem-diagnosis-record.md)
+- Solution: [修复方案](02-repair-solution.md)
+- Plan: [修复计划](03-repair-plan.md)
+- Repair: [修复实施记录](04-repair-record.md)
+
+### Test Environment
+
+- Repository: `dev-cadence`
+- Branch: `codex/b-005-b-007-b-008-contract-closure`
+- Package version: `0.25.1`
+
+### Test Cases
+
+| ID | Scenario | Type | Execution | Result | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| B007-1 | B-009 四列职责边界保持有效 | Contract | `bash tests/parallel-work-table-contract.sh` | ✅ `passed` | No fifth-column or row-routing regression. |
+| B007-2 | Q-005 Registry 状态与卡片同步 | Contract | `bash tests/open-question-registry-contract.sh` | ✅ `passed` | Q-005 retained as `Resolved` with B-007 authority. |
+| B007-3 | 完整构建与文档契约 | Full suite | `bash scripts/check-all.sh` | ✅ `passed` | All repository checks passed. |
+
+### Bug Fix Coverage
+
+- 过期第五列方案：B007-1，`covered`。
+- B-009 权威边界：B007-1，`covered`。
+- Q-005 终态同步：B007-2，`covered`。
+
+### Impact Scope Coverage
+
+- B-007 Version 与 Backlog 引用：source inspection，`covered`。
+- 并行顺序和运行时规则不变：B007-1 和 reviewed diff，`covered`。
+
+### Failed Or Skipped Checks
+
+None.
+
+### Residual Risks
+
+None.
+
+### Verification Decision
+
+🟢 `ready`
+
+### Recommendation
+
+可进入当前 Business Acceptance。

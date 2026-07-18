@@ -58,3 +58,55 @@ Executed evidence satisfies the confirmed repair goal and acceptance points.
 ## Recommendation
 
 ✅ Ready to enter Business Acceptance.
+
+## 2026-07-18 卡片写回复验
+
+### Problem And Repair Sources
+
+- Diagnosis: [问题诊断记录](01-problem-diagnosis-record.md)
+- Solution: [修复方案](02-repair-solution.md)
+- Plan: [修复计划](03-repair-plan.md)
+- Repair: [修复实施记录](04-repair-record.md)
+
+### Test Environment
+
+- Repository: `dev-cadence`
+- Branch: `codex/b-005-b-007-b-008-contract-closure`
+- Package version: `0.25.1`
+
+### Test Cases
+
+| ID | Scenario | Type | Execution | Result | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| B008-R1 | Completion 缺少卡片交付引用 | RED contract | `bash tests/bug-fix-backlog-sync-contract.sh` before repair | ✅ `passed` as RED | Failed with missing repair and integration references. |
+| B008-G1 | 卡片与 Backlog 原子幂等写回 | GREEN contract | `bash tests/bug-fix-backlog-sync-contract.sh` | ✅ `passed` | Backlog synchronization contract passed. |
+| B008-G2 | source/dist 关键规则一致 | Source inspection | `rg --no-ignore` across `src` and `dist/.dev-cadence` | ✅ `passed` | Required rules found in both trees. |
+| B008-G3 | 完整构建与安装契约 | Full suite | `bash scripts/check-all.sh` | ✅ `passed` | All repository checks passed at `0.25.1`. |
+
+### Bug Fix Coverage
+
+- 原症状：B008-R1、B008-G1，`covered`。
+- 卡片 `Done` 与交付引用：B008-G1，`covered`。
+- Backlog 移动、冲突、非 merge 和幂等：B008-G1，`covered`。
+
+### Impact Scope Coverage
+
+- Bug Fix Completion：`covered`。
+- B-008 card/Backlog Version：source inspection，`covered`。
+- package source/dist：B008-G2、B008-G3，`covered`。
+
+### Failed Or Skipped Checks
+
+None.
+
+### Residual Risks
+
+契约测试不执行真实 Completion 文件写回；执行规则要求运行时重新读取事实并在冲突时零部分写入。
+
+### Verification Decision
+
+🟢 `ready`
+
+### Recommendation
+
+可进入当前 Business Acceptance。

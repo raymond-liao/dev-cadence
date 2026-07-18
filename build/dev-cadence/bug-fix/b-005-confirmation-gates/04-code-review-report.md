@@ -24,3 +24,20 @@
 
 - [x] ✅ Safe to proceed to Regression Verification.
 - [x] Residual review risks: Markdown wording can drift in future edits; the six-skill contract test guards the required semantic markers.
+
+## 2026-07-18 回归修复审查
+
+### Review Inputs
+
+- [x] Changed files: three Delivery `SKILL.md` files and `tests/confirmation-gates-contract.sh`.
+- [x] Rules: root `AGENTS.md`; confirmed diagnosis, solution, and plan in this run.
+- [x] Reviewed commit: `0f0857ddedd8a1c09ae0c6c3b2648c9ab393315c`; whole-repair range `39dcb1e..0e3c717`.
+
+### Findings And Decision
+
+- [x] Rules compliance, correctness, terminal-menu semantics, test alignment, and package impact reviewed.
+- [x] Critical findings: None.
+- [x] Important findings: None.
+- [x] Unresolved findings: None.
+- [x] Decision: safe to proceed to Regression Verification.
+- [x] Residual review risks: None beyond the procedural agent-compliance risk covered by the contract test.

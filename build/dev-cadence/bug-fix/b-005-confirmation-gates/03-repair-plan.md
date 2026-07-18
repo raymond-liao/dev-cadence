@@ -84,8 +84,8 @@
 | --- | --- | --- | --- |
 | Task 4: 终态菜单与委托边界 | 防止省略菜单或自动推断终态决策 | `tests/confirmation-gates-contract.sh`、三个 Delivery `SKILL.md` | `bash tests/confirmation-gates-contract.sh` |
 
-- [ ] 在专项契约中增加“同一消息展示完整菜单”和“delegated continuation 不替代终态决策”的断言。
-- [ ] 运行专项契约并记录预期 RED。
-- [ ] 对称修改三个 Delivery skill，保持既有选项集合不变。
-- [ ] 运行专项契约并记录 GREEN。
-- [ ] 构建 `dist`，执行对称性与全量验证。
+- [x] 在专项契约中增加“同一消息展示完整菜单”和“delegated continuation 不替代终态决策”的断言。
+- [x] 运行专项契约并记录预期 RED。
+- [x] 对称修改三个 Delivery skill，保持既有选项集合不变。
+- [x] 运行专项契约并记录 GREEN。
+- [x] 构建 `dist`，执行对称性与全量验证。

@@ -89,7 +89,8 @@
 | --- | --- | --- | --- |
 | Task 5: B-009 决定对齐 | 清除 B-007 卡片中的过期第五列要求 | B-007 卡片、`docs/backlog.md` | `bash tests/parallel-work-table-contract.sh` |
 
-- [ ] 运行现有并行表契约，确认四列基线通过。
-- [ ] 将 B-007 Version 提升到 `2`，用表级职责边界替代逐行入口列要求，并关闭 Q-005。
-- [ ] 只同步 Backlog 中 B-007 的 Version，不改变状态和排序。
-- [ ] 重新运行并行表契约和 `git diff --check`。
+- [x] 运行现有并行表契约，确认四列基线通过。
+- [x] 将 B-007 Version 提升到 `2`，用表级职责边界替代逐行入口列要求，并关闭 Q-005。
+- [x] 只同步 Backlog 中 B-007 的 Version，不改变状态和排序。
+- [x] 同步 Open Question Registry 中 Q-005 的 `Resolved` 状态并保留权威来源链接。
+- [x] 重新运行并行表契约和 `git diff --check`。
