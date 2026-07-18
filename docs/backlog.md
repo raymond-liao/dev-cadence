@@ -6,14 +6,13 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| - | - | - | - | - |
+| `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `6` | `In Progress` | `P1` |
 
 ## 待处理
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `S-041` | [Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) | `1` | `Draft` | `P1` |
-| `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `5` | `Ready` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `1` | `Draft` | `P2` |
@@ -94,7 +93,7 @@
 | 并行组 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
 | 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | Draft |
-| 6 | [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md)、[S-016](stories/S-016-unified-backlog-board.md)、[S-037](stories/S-037-work-item-analysis-workflow.md) | ✅ Ready |
+| 6 | [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md)、[S-016](stories/S-016-unified-backlog-board.md)、[S-037](stories/S-037-work-item-analysis-workflow.md) | 🔄 In Progress |
 | 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | ⚠️ Blocked |
 | 8 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md)；[S-019](stories/S-019-final-verification-revision-binding.md)；[S-020](stories/S-020-implementation-review-risk-to-verification.md)；[S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | Draft |
 | 3 | [B-005](bugs/B-005-refactor-confirmation-options-missing.md)；[B-007](bugs/B-007-parallel-work-table-entry-qualification.md)；[B-008](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | - | Draft |

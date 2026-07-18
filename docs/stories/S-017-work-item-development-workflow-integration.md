@@ -3,8 +3,8 @@
 ## 基本信息
 
 - ID：`S-017`
-- Version：`5`
-- Status：`Ready`
+- Version：`6`
+- Status：`In Progress`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -90,3 +90,4 @@
 | 3 | 2026-07-18 | 增加按当前可并行实施表领取工作项、启动前同步卡片与 Backlog、入口编排所有权和 Skill 准入边界；删除“开发 run 进行中卡片升版时由哪个 workflow 阶段负责影响判断”和“领取工作项时如何处理 Git 落盘”两项 Open Question；将状态更新为 Ready。 | 卡片升版由选中的 Delivery Workflow 通过 Active Task Change Handling 处理，并在实施前方案新鲜度门禁或最早受影响阶段重新确认；领取动作由 `using-dev-cadence` 在分支或 worktree 准备前编排，具体 Git 落盘方式属于技术方案。两项问题均已闭环，不再阻塞工作项定义。 |
 | 4 | 2026-07-18 | 将工作项领取顺序改为以待处理行序为权威，增加 B-009 前置依赖，并将状态更新为 Blocked。 | 并行表只是待处理顺序的辅助视图；S-017 必须等待 B-009 统一排序权威和视图职责后再实施。 |
 | 5 | 2026-07-18 | B-009 已完成并合并，移除该前置依赖，将状态恢复为 Ready。 | 待处理顺序与并行视图职责已统一，S-017 的其他前置依赖均已满足。 |
+| 6 | 2026-07-18 | 开始实施，将状态更新为 In Progress。 | 已进入 feature-dev 交付流程，卡片与 Backlog 投影保持一致。 |
