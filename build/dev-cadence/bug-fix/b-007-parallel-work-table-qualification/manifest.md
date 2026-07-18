@@ -5,11 +5,11 @@
 - Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/bugs/B-007-parallel-work-table-entry-qualification.md)
 - Work Item Version: `1`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
-- Workspace: `.worktrees/b-007-parallel-work-table-qualification`
-- Branch: `codex/b-007-parallel-work-table-qualification`
+- Workspace: `.worktrees/b-007-parallel-work-table-qualification` (`removed after local merge`)
+- Branch: `codex/b-007-parallel-work-table-qualification` (`deleted after local merge`)
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Business Acceptance
-- Overall Status: `in_progress`
+- Current Stage: Completion
+- Overall Status: `integrated`
 
 ## 阶段表
 
@@ -41,3 +41,22 @@
 - Repair Implementation: ✅ `confirmed`; final repair SHA `89eb653`.
 - Regression Verification: ✅ `ready`; no failed or skipped checks.
 - Business Acceptance: ✅ `accepted`; user selected `1. Accept` at `2026-07-18T07:58:51+0800`.
+
+## 最终集成
+
+- Decision: `merge locally to main`
+- Merge Commit: `74c6287`
+- Base Branch: `main`
+- Push: `skipped: not requested`
+- Worktree Cleanup: `completed`; `.worktrees/b-007-parallel-work-table-qualification` 已移除
+- Task Branch Cleanup: `completed`; `codex/b-007-parallel-work-table-qualification` 已删除
+- Post-Merge Verification: ✅ `passed`; 主分支 `bash scripts/check-all.sh`
+
+## 修复状态
+
+- Repair Solution: confirmed
+- Repair Plan: confirmed
+- Repair Implementation: confirmed
+- Regression Verification: confirmed
+- Business Acceptance: accepted
+- Completion: integrated

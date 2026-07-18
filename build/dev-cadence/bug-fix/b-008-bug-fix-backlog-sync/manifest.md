@@ -5,11 +5,11 @@
 - Work Item: [B-008 Bug Fix 完成后未更新 Backlog](../../../../docs/bugs/B-008-bug-fix-completion-does-not-update-backlog.md)
 - Work Item Version: `1`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
-- Workspace: `.worktrees/b-008-bug-fix-backlog-sync`
-- Branch: `codex/b-008-bug-fix-backlog-sync`
+- Workspace: `.worktrees/b-008-bug-fix-backlog-sync` (`removed after local merge`)
+- Branch: `codex/b-008-bug-fix-backlog-sync` (`deleted after local merge`)
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Business Acceptance
-- Overall Status: `in_progress`
+- Current Stage: Completion
+- Overall Status: `integrated`
 
 ## 阶段表
 
@@ -41,3 +41,22 @@
 - Repair Implementation: ✅ `confirmed`; final repair SHA `c886413`.
 - Regression Verification: ✅ `ready`; no failed or skipped checks.
 - Business Acceptance: ✅ `accepted`; user selected `1. Accept` at `2026-07-18T07:58:51+0800`.
+
+## 最终集成
+
+- Decision: `merge locally to main`
+- Merge Commit: `4f2166b`
+- Base Branch: `main`
+- Push: `skipped: not requested`
+- Worktree Cleanup: `completed`; `.worktrees/b-008-bug-fix-backlog-sync` 已移除
+- Task Branch Cleanup: `completed`; `codex/b-008-bug-fix-backlog-sync` 已删除
+- Post-Merge Verification: ✅ `passed`; 主分支 `bash scripts/check-all.sh`
+
+## 修复状态
+
+- Repair Solution: confirmed
+- Repair Plan: confirmed
+- Repair Implementation: confirmed
+- Regression Verification: confirmed
+- Business Acceptance: accepted
+- Completion: integrated

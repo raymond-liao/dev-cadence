@@ -5,11 +5,11 @@
 - Work Item: [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](../../../../docs/bugs/B-005-refactor-confirmation-options-missing.md)
 - Work Item Version: `3`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
-- Workspace: `.worktrees/b-005-confirmation-gates`
-- Branch: `codex/b-005-confirmation-gates`
+- Workspace: `.worktrees/b-005-confirmation-gates` (`removed after local merge`)
+- Branch: `codex/b-005-confirmation-gates` (`deleted after local merge`)
 - Started At: `2026-07-18T07:19:45+0800`
-- Current Stage: Business Acceptance
-- Overall Status: `in_progress`
+- Current Stage: Completion
+- Overall Status: `integrated`
 
 ## 阶段表
 
@@ -42,3 +42,22 @@
 - Repair Implementation: ✅ `confirmed`; final repair SHA `7aa1404`.
 - Regression Verification: ✅ `ready`; no failed or skipped checks.
 - Business Acceptance: ✅ `accepted`; user selected `1. Accept` at `2026-07-18T07:58:51+0800`.
+
+## 最终集成
+
+- Decision: `merge locally to main`
+- Merge Commit: `bb23e93`
+- Base Branch: `main`
+- Push: `skipped: not requested`
+- Worktree Cleanup: `completed`; `.worktrees/b-005-confirmation-gates` 已移除
+- Task Branch Cleanup: `completed`; `codex/b-005-confirmation-gates` 已删除
+- Post-Merge Verification: ✅ `passed`; 主分支 `bash scripts/check-all.sh`
+
+## 修复状态
+
+- Repair Solution: confirmed
+- Repair Plan: confirmed
+- Repair Implementation: confirmed
+- Regression Verification: confirmed
+- Business Acceptance: accepted
+- Completion: integrated
