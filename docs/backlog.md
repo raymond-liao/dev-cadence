@@ -11,7 +11,8 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `3` | `Ready` | `P1` |
+| `B-009` | [待处理排序与并行视图职责不一致](bugs/B-009-pending-order-parallel-view-authority.md) | `1` | `Ready` | `P1` |
+| `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `4` | `Blocked` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `1` | `Draft` | `P2` |
@@ -90,8 +91,9 @@
 
 | 序号 | 可并行工作项 | 前置条件 | 状态 | 下一步 Workflow / 入口门禁 |
 |---:|---|---|---|---|
+| 2 | [B-009](bugs/B-009-pending-order-parallel-view-authority.md) | - | ✅ Ready | bug-fix 诊断；诊断不等于修复实施，不得因此直接修改代码。 |
 | 3 | [B-005](bugs/B-005-refactor-confirmation-options-missing.md)；[B-007](bugs/B-007-parallel-work-table-entry-qualification.md)；[B-008](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | - | Draft | bug-fix 诊断；诊断不等于修复实施，不得因此直接修改代码。 |
-| 6 | [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md)、[S-016](stories/S-016-unified-backlog-board.md)、[S-037](stories/S-037-work-item-analysis-workflow.md) | ✅ Ready | Story 需保持 `Ready` 后进入 feature-dev；仍需用户授权。 |
+| 6 | [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md)、[S-016](stories/S-016-unified-backlog-board.md)、[S-037](stories/S-037-work-item-analysis-workflow.md)、[B-009](bugs/B-009-pending-order-parallel-view-authority.md) | ⚠️ Blocked | Story 需保持 `Ready` 且满足 B-009 依赖后进入 feature-dev。 |
 | 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | ⚠️ Blocked | Story 需保持 `Ready` 且满足 S-017 依赖后进入 feature-dev。 |
 | 8 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md)；[S-019](stories/S-019-final-verification-revision-binding.md)；[S-020](stories/S-020-implementation-review-risk-to-verification.md)；[S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | Draft | Story 各自达到 `Ready` 后进入 feature-dev；不得自动启动。 |
 | 9 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | Draft | Story 达到 `Ready` 后进入 feature-dev；当前 Draft 仍需分析和确认。 |
@@ -131,7 +133,7 @@
 | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md), [S-014](stories/S-014-user-journey-analysis.md), [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md), [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
 | [S-016](stories/S-016-unified-backlog-board.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-039](stories/S-039-iteration-plan-capacity-calibration.md), [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
 | [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
-| [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-037](stories/S-037-work-item-analysis-workflow.md) | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md), [S-029](stories/S-029-feature-persistent-record-contract.md) |
+| [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [B-009](bugs/B-009-pending-order-parallel-view-authority.md) | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md), [S-029](stories/S-029-feature-persistent-record-contract.md) |
 | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) | [S-004](stories/S-004-failure-classification-stage-routing.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md), [S-039](stories/S-039-iteration-plan-capacity-calibration.md) | - |
 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md) | - | - |
 | [S-019](stories/S-019-final-verification-revision-binding.md) | - | - |
@@ -143,6 +145,7 @@
 | [B-005](bugs/B-005-refactor-confirmation-options-missing.md) | - | - |
 | [B-007](bugs/B-007-parallel-work-table-entry-qualification.md) | - | - |
 | [B-008](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | - | - |
+| [B-009](bugs/B-009-pending-order-parallel-view-authority.md) | - | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
 | [S-022](stories/S-022-bug-not-a-bug-terminal-state.md) | - | - |
 | [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
