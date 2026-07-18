@@ -14,12 +14,12 @@
 
 | Stage | Status | Artifact | User confirmation | Checkpoint commit | Notes |
 |---|---|---|---|---|---|
-| Problem Diagnosis | ✅ `confirmed` | `01-problem-diagnosis-record.md` | 已在本次委派范围中确认 | `skipped: no tracked changes` | 已完成根因调查与 RED 证据 |
-| Repair Solution | ✅ `confirmed` | `02-repair-solution.md` | 已在本次委派范围中确认 | `skipped: no tracked changes` | 已确认最小修复边界 |
-| Repair Plan | ✅ `confirmed` | `03-repair-plan.md` | 已在本次委派范围中确认 | `pending` | 实施前新鲜度检查通过 |
-| Repair Implementation | ✅ `confirmed` | `04-repair-record.md` | 已在本次委派范围中确认 | `pending` | 4 个实现提交，计划任务完成 |
-| Code Review | ✅ `confirmed` | `04-code-review-report.md` | 已完成独立审查 | `pending` | 无未解决 Critical/Important finding |
-| Regression Verification | ✅ `confirmed` | `05-regression-test-report.md` | 已完成回归验证 | `pending` | 全量检查通过，决策为 `ready` |
+| Problem Diagnosis | ✅ `confirmed` | `01-problem-diagnosis-record.md` | 已在本次委派范围中确认 | `4cc0f3c` | 已完成根因调查与 RED 证据 |
+| Repair Solution | ✅ `confirmed` | `02-repair-solution.md` | 已在本次委派范围中确认 | `4cc0f3c` | 已确认最小修复边界 |
+| Repair Plan | ✅ `confirmed` | `03-repair-plan.md` | 已在本次委派范围中确认 | `4cc0f3c` | 实施前新鲜度检查通过 |
+| Repair Implementation | ✅ `confirmed` | `04-repair-record.md` | 已在本次委派范围中确认 | `4cc0f3c` | 4 个实现提交，计划任务完成 |
+| Code Review | ✅ `confirmed` | `04-code-review-report.md` | 已完成独立审查 | `4cc0f3c` | 无未解决 Critical/Important finding |
+| Regression Verification | ✅ `confirmed` | `05-regression-test-report.md` | 已完成回归验证 | `4cc0f3c` | 全量检查通过，决策为 `ready` |
 | Business Acceptance | ⏳ `pending` | `06-business-acceptance-record.md` | pending | `pending` | 由主线程处理最终业务验收 |
 
 ## Confirmed Scope
