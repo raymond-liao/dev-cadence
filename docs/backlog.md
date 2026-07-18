@@ -6,7 +6,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `5` | `In Progress` | `P1` |
+
 
 ## 待处理
 
@@ -41,6 +41,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `5` | `Done` | `P1` |
 | `B-009` | [待处理排序与并行视图职责不一致](bugs/B-009-pending-order-parallel-view-authority.md) | `1` | `Done` | `P1` |
 | `B-001` | [普通 Checkout 本地 Merge 安全性](bugs/B-001-normal-checkout-local-merge-safety.md) | `1` | `Done` | `P0` |
 | `B-002` | [Delivery Workflow Discard 整体运行删除安全性](bugs/B-002-normal-checkout-discard-safety.md) | `2` | `Done` | `P0` |
@@ -93,8 +94,7 @@
 | 并行组 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
 | 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | Draft |
-| 6 | [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md)、[S-016](stories/S-016-unified-backlog-board.md)、[S-037](stories/S-037-work-item-analysis-workflow.md) | 🔄 In Progress |
-| 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | ⚠️ Blocked |
+| 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | Draft |
 | 8 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md)；[S-019](stories/S-019-final-verification-revision-binding.md)；[S-020](stories/S-020-implementation-review-risk-to-verification.md)；[S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | Draft |
 | 3 | [B-005](bugs/B-005-refactor-confirmation-options-missing.md)；[B-007](bugs/B-007-parallel-work-table-entry-qualification.md)；[B-008](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | - | Draft |
 | 9 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | Draft |
