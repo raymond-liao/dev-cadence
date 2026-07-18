@@ -25,7 +25,7 @@ assert_match "unrelated order preservation" 'unrelated.*order|无关.*排序|待
 assert_match "parallel row removal" 'parallel.*remove|并行表.*删除|并行.*移除'
 
 for outcome in 'pull request' 'keep' 'discard_cancelled' 'discard_blocked' 'whole_run_discarded'; do
-  assert_match "no Done for $outcome" "$outcome.*not.*Done|$outcome.*不.*Done|$outcome.*不.*回写" 
+  assert_match "no Done for $outcome" "$outcome.*not.*Done|$outcome.*不.*Done|$outcome.*不.*回写"
 done
 
 assert_match "completion evidence" 'manifest.*Business Acceptance.*follow-up|manifest.*验收.*回写|actual sync result'
