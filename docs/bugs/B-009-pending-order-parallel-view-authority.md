@@ -4,7 +4,7 @@
 
 - ID：`B-009`
 - Version：`1`
-- Status：`In Progress`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Bug
 
@@ -84,3 +84,4 @@
 |---:|---|---|---|---|
 | 1 | 2026-07-18T09:03:20+0800 | Raymond Liao <raymond-liao@outlook.com> | 创建待处理排序权威与并行视图职责 Bug，并将状态设为 Ready。 | 用户已确认待处理行顺序应作为唯一实施顺序，并行表只服务 AI 阅读且不应复制 Workflow 入口门禁；卡片没有未决问题。 |
 | 1 | 2026-07-18T13:40:19+0800 | Raymond Liao <raymond-liao@outlook.com> | 将状态更新为 In Progress。 | 用户明确要求开始实施 B-009，并使用子任务执行。 |
+| 1 | 2026-07-18T14:35:12+0800 | Raymond Liao <raymond-liao@outlook.com> | 完成实现、回归验证、业务验收，并将状态更新为 Done。 | 源规则、Backlog 派生视图、分发包和契约验证已一致，结果已合并到 `main` 的 `de438dd`。 |
