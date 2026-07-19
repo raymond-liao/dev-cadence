@@ -1,0 +1,13 @@
+# B-010 Business Acceptance Record
+
+- Accepted Problem Source: `01-problem-diagnosis-record.md`, `02-repair-solution.md`
+- Regression Test Report Source: [B-010 回归测试报告](05-regression-test-report.md)
+- User Decision: `accepted`
+- Decision By: `Raymond Liao <raymond-liao@outlook.com>`
+- Decision At: `2026-07-19T16:14:52+08:00`
+- Accepted Result: 三套 Delivery Workflow 的 Code Review Report 同时提供可导航链接和精确审计路径。
+- Accepted Residual Risks: None.
+- Card Status At Acceptance: `In Progress` (remains until Completion integration decision)
+- Backlog Source And Destination: `docs/backlog.md` `进行中` -> `进行中`
+- Repair Result/Reference: accepted; implementation `598cb9a`, regression `0fb3fe3`
+- Final Follow-Up Actions: Completion decision pending; task branch and worktree remain preserved until the user selects a Completion option.

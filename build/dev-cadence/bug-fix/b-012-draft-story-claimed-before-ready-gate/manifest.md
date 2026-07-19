@@ -5,8 +5,8 @@
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Branch: `codex/b012-draft-story-claimed`
 - Started at: `2026-07-19T15:03:31+08:00`
-- Current stage: 🔄 `in_progress` - Business Acceptance
-- Overall status: 🔄 `in_progress`
+- Current stage: 🔄 `in_progress` - Completion
+- Overall status: ✅ `accepted`
 - Run directory: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/`
 - Workspace: `.`
 - Output language: `zh-CN`
@@ -23,7 +23,7 @@
 | Repair Implementation | ✅ `confirmed` | [B-012 修复记录](04-repair-record.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/04-repair-record.md` | `implementation complete` | `b3addaa` | TDD RED/GREEN 与实施检查完成 |
 | Code Review | ✅ `confirmed` | [B-012 Code Review Report](04-code-review-report.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/04-code-review-report.md` | `passed` | `b3addaa` | 无 Critical/Important finding |
 | Regression Verification | ✅ `confirmed` | [B-012 回归测试报告](05-regression-test-report.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/05-regression-test-report.md` | `passed` | `0c3a390` | 全量构建、契约、安装和 source/dist 检查通过 |
-| Business Acceptance | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 等待用户业务验收 |
+| Business Acceptance | ✅ `accepted` | [B-012 Business Acceptance Record](06-business-acceptance-record.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/06-business-acceptance-record.md` | `2026-07-19T16:14:52+08:00`, option 1 | ⏳ `pending` | 用户接受，等待 Completion 决策 |
 
 ## Work Item Lifecycle Writeback
 
@@ -33,7 +33,7 @@
 - Backlog source: `docs/backlog.md` section `待处理`
 - Backlog destination: `docs/backlog.md` section `进行中`
 - Derived parallel-view projection: 当前 Backlog 不持久化独立并行视图；投影由待处理顺序和依赖关系派生。
-- Repair result/reference: ⏳ `pending`
+- Repair result/reference: accepted; implementation `b3addaa`, regression `0fb3fe3`
 
 ## Current-Run Discard Context And Ownership Evidence
 
