@@ -11,7 +11,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `B-013` | [Story Ready 错误依赖 Feature 关联](bugs/B-013-story-ready-feature-reference-required.md) | `1` | `Draft` | `P1` |
+| `B-013` | [Story Ready 错误依赖 Feature 关联](bugs/B-013-story-ready-feature-reference-required.md) | `2` | `Ready` | `P1` |
 | `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `Ready` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
