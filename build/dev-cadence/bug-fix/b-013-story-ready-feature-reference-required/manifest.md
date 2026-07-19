@@ -17,7 +17,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [B-013 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/01-problem-diagnosis-record.md` | ⏳ `pending` | ⏳ `pending` | 根因已定位，等待用户确认诊断范围。 |
+| Problem Diagnosis | 🔄 `in_progress` | [B-013 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/01-problem-diagnosis-record.md` | ⏳ `pending` | `ac2a9f39389f62339b17cb77edb8918752b0d18b` | 根因已定位，等待用户确认诊断范围。 |
 | Repair Solution | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/02-repair-solution.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 | Repair Plan | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 | Repair Implementation | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
