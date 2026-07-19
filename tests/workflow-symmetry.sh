@@ -53,6 +53,27 @@ assert_workflows_not_match() {
   assert_not_match "refactor $label" "$refactor_pattern" "$REFACTOR_SKILL"
 }
 
+assert_code_review_report_reference() {
+  local label="$1"
+  local path="$2"
+  local workflow_dir="$3"
+  local slug_placeholder="$4"
+  local expected_path="build/dev-cadence/$workflow_dir/<$slug_placeholder>/04-code-review-report.md"
+  local report_line
+
+  report_line="$(awk '
+    /^## Code Review Evidence$/ { capture = 1; next }
+    capture && /^## / { capture = 0 }
+    capture && /- Report:/ { print; exit }
+  ' "$path")"
+
+  [[ -n "$report_line" ]] || fail "missing $label code review Report line in ${path#"$ROOT_DIR/"}"
+  [[ "$report_line" == *"(04-code-review-report.md)"* ]] || \
+    fail "$label code review Report line must link to (04-code-review-report.md) in ${path#"$ROOT_DIR/"}"
+  [[ "$report_line" == *"\`$expected_path\`"* ]] || \
+    fail "$label code review Report line must retain exact path \`$expected_path\` in ${path#"$ROOT_DIR/"}"
+}
+
 assert_workflow_delivery_contract() {
   local label="$1"
   local path="$2"
@@ -643,6 +664,9 @@ assert_workflows "review inputs checklist" "## Review Inputs" "## Review Inputs"
 assert_workflows "review perspectives checklist" "## Review Perspectives" "## Review Perspectives" "## Review Perspectives"
 assert_workflows "review validation state" "validation state: .*validated.*not validated.*fixed.*accepted risk" "validation state: .*validated.*not validated.*fixed.*accepted risk" "validation state: .*validated.*not validated.*fixed.*accepted risk"
 assert_workflows "code review report path" "04-code-review-report\\.md" "04-code-review-report\\.md" "04-code-review-report\\.md"
+assert_code_review_report_reference "feature" "$FEATURE_SKILL" "feature-dev" "feature-slug"
+assert_code_review_report_reference "bug-fix" "$BUG_FIX_SKILL" "bug-fix" "bug-slug"
+assert_code_review_report_reference "refactor" "$REFACTOR_SKILL" "refactor" "refactor-slug"
 assert_workflows "implementation returns to cadence" "Return control to Dev Cadence after implementation and review" "Return control to Dev Cadence after implementation and review" "Return control to Dev Cadence after implementation and review"
 assert_workflows "implementation defers finishing" "Do not invoke .*finishing-a-development-branch.* during .*Implementation" "Do not invoke .*finishing-a-development-branch.* during .*Implementation" "Do not invoke .*finishing-a-development-branch.* during .*Implementation"
 assert_executing_plans_contract "feature" "$FEATURE_SKILL" "### Development Implementation"

@@ -589,7 +589,7 @@ Use this `Code Review Evidence` structure in the repair record:
 ```text
 ## Code Review Evidence
 
-- Report: build/dev-cadence/bug-fix/<bug-slug>/04-code-review-report.md
+- Report: [Code review report](04-code-review-report.md) (`build/dev-cadence/bug-fix/<bug-slug>/04-code-review-report.md`)
 - Review decision:
 - Critical findings:
 - Important findings:

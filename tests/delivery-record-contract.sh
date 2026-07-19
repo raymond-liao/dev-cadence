@@ -117,7 +117,11 @@ echo repaired"
 
 ## Changed Files
 
-- \`src/example.sh\`"
+- \`src/example.sh\`
+
+## Code Review Evidence
+
+- Report: [Code review report](04-code-review-report.md) (\`$run_dir_rel/04-code-review-report.md\`)"
 
   case "$scenario" in
     invalid-placeholder)
@@ -176,7 +180,11 @@ echo changed after skipped"
 
 ## Changed Files
 
-- \`skipped: no tracked changes\`"
+- \`skipped: no tracked changes\`
+
+## Code Review Evidence
+
+- Report: [Code review report](04-code-review-report.md) (\`$run_dir_rel/04-code-review-report.md\`)"
 
     if [[ "$scenario" == "invalid-sdd-scratch" ]]; then
       implementation_record_text="# Repair Record
