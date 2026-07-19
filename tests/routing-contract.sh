@@ -69,6 +69,12 @@ assert_match "direct work item intake route" 'Direct Work Item Intake.*Select `w
 assert_match "work item analysis route" 'Work Item Analysis.*Select `work-item-analysis`|Select `work-item-analysis`.*Work Item Analysis'
 assert_match "work item analysis batch route" 'selected batch of Story, Task, or Bug definitions|Story, Task, or Bug definition.*batch'
 assert_match "work item analysis boundary" 'detailed work-item definition analysis rather than portfolio planning or delivery execution|does not replace downstream delivery workflows'
+assert_literal \
+  "independent Story Feature boundary" \
+  'A missing Feature reference or product-design baseline alone does not select `discovery`; return to `discovery` only when the Story needs a new or changed product-level conclusion.'
+assert_literal \
+  "S-042 historical regression boundary" \
+  'S-042 remains a historical regression example of an independent Story and does not require a Feature reference to become `Ready`.'
 assert_match "work item planning asset boundary" 'work-item-planning.*Asset Workflow.*must not create Delivery run records|must not create Delivery run records.*work-item-planning'
 assert_match "work item discovery boundary" 'Discovery Boundary.*must not define or reinterpret|must not define or reinterpret.*Discovery Boundary'
 assert_match "work item repository state boundary" 'Do not auto-start `work-item-planning` merely because the repository already contains Story cards, Task cards, Bug cards, Backlog entries, or a Story Map; repository state alone does not trigger the workflow\.'
