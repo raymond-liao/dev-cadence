@@ -1,13 +1,11 @@
 # B-015 Business Acceptance Record
 
-- 状态：⏳ `pending`
-- 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
-- Regression Verification decision：`ready_with_risk`
-- Current implementation：`04a958e`
-- Current verification：`3733992`，报告见 [05-regression-test-report.md](05-regression-test-report.md)
-- Decision maker：待用户选择后填写
-- Decision time：待用户选择后填写
-- Decision：待用户从 Business Acceptance 固定选项中选择 `1 Accept`、`2 Reject` 或 `3 Accept with residual risk`
-- Accepted residual risks：当前未执行真实下游 Delivery Workflow live check；契约、动态 Git baseline、构建、安装和全量检查均已执行。
-
-本记录仅表示 Business Acceptance 门已准备，不代表用户已经接受或拒绝本修复。
+- 状态：✅ `accepted`
+- Accepted Problem Source：[01-problem-diagnosis-record.md](01-problem-diagnosis-record.md)；修复方案见 [02-repair-solution.md](02-repair-solution.md)
+- Regression Test Report Source：[05-regression-test-report.md](05-regression-test-report.md)
+- User Decision：`accepted`（Business Acceptance 选项 1：Accept）
+- Decision By：`Raymond Liao <raymond-liao@outlook.com>`
+- Decision At：`2026-07-19T21:08:52+0800`
+- Accepted Result：接受 B-015 修复；两种 `worktree.enabled` 配置都会先在 authoritative base ref 上持久化工作项领取，再创建对应 workspace，且契约、构建、安装与动态 Git baseline 验证均通过。
+- Accepted Residual Risks：接受当前报告中的非阻塞风险：未执行真实下游 Delivery Workflow live check；入口契约、动态 Git baseline、构建、安装和全量仓库检查均已执行。
+- Final Follow-Up Actions：待 Completion finishing flow 选择并完成本地 merge、保留分支或其他支持的集成结果后更新。
