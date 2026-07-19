@@ -17,7 +17,7 @@
 
 | Stage | Status | Artifact | User confirmation | Checkpoint commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [B-012 问题诊断记录](01-problem-diagnosis-record.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/01-problem-diagnosis-record.md` | ⏳ `pending` | ⏳ `pending` | 根因调查完成，等待用户确认 |
+| Problem Diagnosis | 🔄 `in_progress` | [B-012 问题诊断记录](01-problem-diagnosis-record.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/01-problem-diagnosis-record.md` | ⏳ `pending` | `92d454c` | 根因调查完成，等待用户确认 |
 | Repair Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/02-repair-solution.md` | ⏳ `pending` | ⏳ `pending` | 等待问题诊断确认 |
 | Repair Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | 等待修复方案确认 |
 | Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 等待修复计划确认 |
@@ -42,9 +42,9 @@
 - Run directory: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/`
 - Task branch: `codex/parallel-b012-b010-b014`
 - Base branch: `main`
-- Expected HEAD SHA: `74a19032d9409f8116ae9a7bc6ed12e9692977af`
+- Expected HEAD SHA: `92d454c`
 - Expected base SHA: `74a19032d9409f8116ae9a7bc6ed12e9692977af`
-- Owned commit range: ⏳ `pending`
+- Owned commit range: `74a19032d9409f8116ae9a7bc6ed12e9692977af..92d454c`
 - Owned tracked paths: `docs/bugs/B-012-draft-story-claimed-before-ready-gate.md`, shared lifecycle update in `docs/backlog.md`, and later confirmed repair paths
 - Owned untracked paths: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/` at start
 - Workspace path: `.`
