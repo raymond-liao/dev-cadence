@@ -2,8 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-- 状态：✅ `confirmed`
-- 最近确认：`2026-07-19T21:44:19+0800`，选项 1：确认计划并进入 Repair Implementation。
+- 状态：🔄 `in_progress`（Task 3 文件范围修订待确认）
+- 最近确认：`2026-07-19T21:44:19+0800`，选项 1：确认原计划并进入 Repair Implementation；该确认因 Task 3 的受跟踪安装包范围发现而 superseded。
+- Plan revision：`2026-07-19T21:47:00+0800`。`scripts/install.sh .` 证明当前 `.dev-cadence/` 是受跟踪且停留在 `0.25.2` 的安装包；完整同步会更新 12 个既有包文件并新增 `skills/contracts/`，因此将其明确纳入已确认“当前安装包同步”的实现范围。
 
 **Goal:** 修复 Story `Ready` 对主 System Feature 的错误强制依赖，使定义完整且不依赖产品级结论的独立 Story 可在用户确认后进入 `Ready`，同时保留已有 Feature 追踪和真实产品级结论缺口的 Discovery 路由。
 
@@ -13,7 +14,7 @@
 
 ## Global Constraints
 
-- 只修改 `src/skills/work-item-analysis/SKILL.md`、`src/skills/using-dev-cadence/SKILL.md`、`tests/work-item-analysis-contract.sh`、`tests/routing-contract.sh` 和 `version`；`dist/.dev-cadence/**` 必须仅由 `bash scripts/build.sh` 生成。
+- 修改 `src/skills/work-item-analysis/SKILL.md`、`src/skills/using-dev-cadence/SKILL.md`、`tests/work-item-analysis-contract.sh`、`tests/routing-contract.sh`、`version`，以及由 `bash scripts/install.sh .` 原子替换的当前受跟踪 `.dev-cadence/**`；`dist/.dev-cadence/**` 必须仅由 `bash scripts/build.sh` 生成，禁止直接编辑。
 - 独立 Story 缺少 Feature 引用或产品设计基线不得单独路由到 Discovery；确实需要新建或改变产品级结论时仍必须返回 Discovery。
 - 来自 Story Map 或已有 Feature 定义的 Story 必须保留其已确认的主 Feature 追踪关系。
 - 角色、目标、价值、范围、可观察行为、验收条件、依赖、阻塞性 Open Questions 和用户确认继续构成 Story `Ready` 门禁。
@@ -29,7 +30,7 @@
 | --- | --- | --- | --- |
 | 1. 建立 RED 契约 | 将无 Feature 独立 Story、保留追踪、Discovery 边界和 S-042 写成会在旧规则下失败的测试 | `tests/work-item-analysis-contract.sh`、`tests/routing-contract.sh` | 两个 focused contracts 在旧规则下失败，输出定位到新门禁 |
 | 2. 修正规则源 | 将 Feature 改为条件性追踪，并收窄 Discovery 路由 | `src/skills/work-item-analysis/SKILL.md`、`src/skills/using-dev-cadence/SKILL.md` | 两个 focused contracts 从 RED 变为 PASS |
-| 3. 同步版本与安装包 | 递增包版本并从源重新生成和安装规则包 | `version`、生成的 `dist/.dev-cadence/**`、当前 `.dev-cadence/**` | build、package/install、source/dist/install 比较通过 |
+| 3. 同步版本与安装包 | 递增包版本并从源重新生成和安装规则包 | `version`、生成的 `dist/.dev-cadence/**`、受跟踪的当前 `.dev-cadence/**` | build、package/install、source/dist/install 比较通过，安装替换范围经审查 |
 | 4. 全量回归与范围审查 | 验证完整分发、契约和变更范围 | 实现改动与后续 Repair Implementation 记录 | whitespace、check-all、diff 和关键词同步检查通过 |
 
 ## Detailed Tasks
@@ -44,7 +45,7 @@
 - Consumes: 当前 `src/skills/work-item-analysis/SKILL.md` 与 `src/skills/using-dev-cadence/SKILL.md`。
 - Produces: 四条精确文本契约，供 Task 2 的规则源满足。
 
-- [ ] **Step 1: 在工作项分析契约中替换旧的 Feature 必备断言，并添加四个场景断言。**
+- [x] **Step 1: 在工作项分析契约中替换旧的 Feature 必备断言，并添加四个场景断言。**
 
   将当前 `story fields` 和 `story ready conditions` 的泛匹配替换或补充为下列精确断言：
 
@@ -63,7 +64,7 @@
     "$SKILL"
   ```
 
-- [ ] **Step 2: 在入口路由契约中锁定 S-042 的历史回归和同一 Discovery 边界。**
+- [x] **Step 2: 在入口路由契约中锁定 S-042 的历史回归和同一 Discovery 边界。**
 
   在 `tests/routing-contract.sh` 的 Work Item Analysis 断言附近加入：
 
@@ -76,7 +77,7 @@
     "$ENTRY_SKILL"
   ```
 
-- [ ] **Step 3: 运行 RED 检查并记录失败证据。**
+- [x] **Step 3: 运行 RED 检查并记录失败证据。**
 
   Run:
 
@@ -87,7 +88,7 @@
 
   Expected: 两个命令均以非零状态失败，失败信息分别指向缺失的 `conditional Feature traceability` / `story ready without Feature` 与 `independent Story Feature boundary` / `S-042 historical regression boundary`；不得修改规则源来让失败消失后才记录 RED。
 
-- [ ] **Step 4: 检查测试脚本格式并提交 RED 单元。**
+- [x] **Step 4: 检查测试脚本格式并提交 RED 单元。**
 
   Run:
 
@@ -114,7 +115,7 @@
 - Consumes: Task 1 的精确文本契约与已确认 Repair Solution。
 - Produces: 无 Feature 的独立 Story 可进入 `Ready`，并保留已有 Feature 追踪和产品级结论 Discovery 路由。
 
-- [ ] **Step 1: 将 Story 字段和最小定义改为条件性 Feature 追踪。**
+- [x] **Step 1: 将 Story 字段和最小定义改为条件性 Feature 追踪。**
 
   在 `src/skills/work-item-analysis/SKILL.md` 以如下可验证文本替换包含 `primary System Feature` 的通用必备描述：
 
@@ -128,7 +129,7 @@
   - when present, the confirmed primary System Feature or Story Map traceability;
   ```
 
-- [ ] **Step 2: 替换 `Ready` 门禁与 Discovery 返回规则。**
+- [x] **Step 2: 替换 `Ready` 门禁与 Discovery 返回规则。**
 
   写入以下两条精确规则，同时保留现有的 `Story must reach Ready before entering feature-dev`、禁止重解释 Feature 与其余 Story 字段：
 
@@ -138,7 +139,7 @@
   A missing Feature reference or product-design baseline alone must not return Story analysis to `discovery`. Return to `discovery` only when the Story requires a new or changed product-level conclusion, including a User Journey, Feature, PRD, or Business Architecture conclusion. Work Item Analysis must not define or reinterpret Feature identity.
   ```
 
-- [ ] **Step 3: 在入口选择器添加相同的路由边界与 S-042 回归说明。**
+- [x] **Step 3: 在入口选择器添加相同的路由边界与 S-042 回归说明。**
 
   在 `src/skills/using-dev-cadence/SKILL.md` 的 Work Item Analysis 优先级说明后加入：
 
@@ -146,7 +147,7 @@
   A missing Feature reference or product-design baseline alone does not select `discovery`; return to `discovery` only when the Story needs a new or changed product-level conclusion. S-042 remains a historical regression example of an independent Story and does not require a Feature reference to become `Ready`.
   ```
 
-- [ ] **Step 4: 运行 GREEN 契约并检查旧门禁已消失。**
+- [x] **Step 4: 运行 GREEN 契约并检查旧门禁已消失。**
 
   Run:
 
@@ -159,7 +160,7 @@
 
   Expected: 两个测试返回 0；旧 `primary Feature` Ready 门禁不存在；空白检查返回 0。
 
-- [ ] **Step 5: 提交 GREEN 单元。**
+- [x] **Step 5: 提交 GREEN 单元。**
 
   ```bash
   git add src/skills/work-item-analysis/SKILL.md src/skills/using-dev-cadence/SKILL.md
@@ -171,7 +172,7 @@
 **Files:**
 - Modify: `version`
 - Generate: `dist/.dev-cadence/**` (ignored build output)
-- Replace locally: `.dev-cadence/**` (current installed package, untracked)
+- Replace locally: `.dev-cadence/**` (current installed package, tracked)
 
 **Interfaces:**
 - Consumes: Task 2 的 source 规则和 Task 1 的 GREEN 测试。
@@ -187,7 +188,7 @@
 
   确认 `docs/bugs/B-013-story-ready-feature-reference-required.md` 继续为 Version `2`。
 
-- [ ] **Step 2: 构建并安装到当前 task worktree。**
+- [x] **Step 2: 构建并安装到当前 task worktree。**
 
   Run:
 
@@ -196,9 +197,9 @@
   bash scripts/install.sh .
   ```
 
-  Expected: `dist/.dev-cadence/` 从 source 重建；当前 `.dev-cadence/` 报告安装的版本为 `0.26.5`；不直接编辑或暂存 `dist/`。
+  Actual: `dist/.dev-cadence/` 已从 source 重建，当前 `.dev-cadence/` 报告安装版本 `0.26.5`。安装同时发现当前 `.dev-cadence/` 是受跟踪的旧 `0.25.2` 包：将修改 12 个既有包文件并新增 `skills/contracts/`。此事实改变 Task 3 的受跟踪文件清单，必须在继续版本提交前重新确认本计划；不直接编辑或暂存 `dist/`。
 
-- [ ] **Step 3: 验证 source、dist 与安装包身份和契约。**
+- [x] **Step 3: 验证 source、dist 与安装包身份和契约。**
 
   Run:
 
@@ -213,12 +214,12 @@
   bash tests/install-contract.sh
   ```
 
-  Expected: 每条比较和两个契约测试都返回 0。
+  Actual: 每条比较和两个契约测试均返回 0；等待计划重确认后才可提交 `version` 和当前 `.dev-cadence/**` 同步结果。
 
-- [ ] **Step 4: 提交版本单元。**
+- [ ] **Step 4: 审查并提交版本与受跟踪安装包同步单元。**
 
   ```bash
-  git add version
+  git add version .dev-cadence
   git commit -m "chore(release): bump Dev Cadence to 0.26.5"
   ```
 
@@ -260,7 +261,7 @@
   git status --short
   ```
 
-  Expected: 三个规则关键词在 source、dist 和当前安装包均可定位；没有空白错误；受跟踪实现变更限于 Global Constraints 所列文件和本次运行记录；不出现 `.env`、`.dev-cadence.yaml`、临时日志、PID 或绝对本机路径。
+  Expected: 三个规则关键词在 source、dist 和当前安装包均可定位；没有空白错误；受跟踪实现变更限于 Global Constraints 所列 source、测试、版本、当前 `.dev-cadence/**` 和本次运行记录；不出现 `.env`、`.dev-cadence.yaml`、临时日志、PID 或绝对本机路径。
 
 - [ ] **Step 3: 在 Repair Implementation 阶段写入实际结果并提交验证单元。**
 
@@ -270,7 +271,7 @@
 
 ## Plan Self-Review
 
-- [x] 覆盖 B-013 验收标准 1-9：Task 1-2 覆盖规则与四场景，Task 3 覆盖版本和三处同步，Task 4 覆盖全量回归和范围。
+- [x] 覆盖 B-013 验收标准 1-9：Task 1-2 覆盖规则与四场景，Task 3 覆盖版本和三处同步（包括当前受跟踪安装包），Task 4 覆盖全量回归和范围。
 - [x] 每个任务都包含精确文件、命令、预期结果和独立提交单元；没有占位符。
 - [x] 测试先于规则变更，且 Feature 追踪、独立 Story、产品级结论缺口和 S-042 的用词在测试与规则中保持一致。
 
