@@ -11,6 +11,7 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Draft` | `P1` |
+| `B-015` | [工作项领取未在 main 持久化](bugs/B-015-work-item-claim-not-persisted-on-main.md) | `3` | `Draft` | `P1` |
 | `B-013` | [Story Ready 错误依赖 Feature 关联](bugs/B-013-story-ready-feature-reference-required.md) | `1` | `Draft` | `P1` |
 | `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `Ready` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
@@ -127,6 +128,7 @@
 | [B-009](bugs/B-009-pending-order-parallel-view-authority.md) | - | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
 | [B-010](bugs/B-010-generated-record-document-links-not-enforced.md) | [S-010](stories/S-010-document-reference-links.md) | - |
 | [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | - |
+| [B-015](bugs/B-015-work-item-claim-not-persisted-on-main.md) | - | - |
 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | - |
 | [B-013](bugs/B-013-story-ready-feature-reference-required.md) | - | - |
 | [B-014](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | - | - |
@@ -158,7 +160,7 @@
 
 ## Ordering Version
 
-`7`
+`8`
 
 ## Ordering Change Log
 
@@ -171,3 +173,4 @@
 | 5 | 2026-07-19T13:02:09+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-013` 插入 `B-010` 之后、`S-042` 之前，并记录 B-013 阻止 S-042 进入 Ready 的依赖关系。 | 用户确认 Story 不必须关联 Feature；当前错误门禁需要先修复，S-042 才能按定义完整性重新分析 Ready。 |
 | 6 | 2026-07-19T13:08:29+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-014` 插入 `B-013` 之后、`S-042` 之前，并保留其他待处理项的相对顺序。 | 用户确认单项建卡不应重复执行输入范围确认和完整结果确认，相关交互问题应在 S-042 之前进入待处理。 |
 | 7 | 2026-07-19T16:22:40+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `B-012`、`B-010`、`B-014` 从 `进行中` 移入 `已完成`，并保持本批次顺序。 | 三个 Bug 已完成业务验收和本地集成；对应卡片状态同步为 `Done`。 |
+| 8 | 2026-07-19T16:43:14+0800 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-015` 插入 `B-011` 之后、`B-013` 之前，并保留其他待处理项的相对顺序。 | 当前 B-011 的实施表明领取状态仅存在于任务分支；B-015 记录主分支领取持久化缺口，应紧随同一入口问题。 |
