@@ -23,7 +23,7 @@
 | Repair Implementation | ✅ `confirmed` | [B-012 修复记录](04-repair-record.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/04-repair-record.md` | `implementation complete` | `b3addaa` | TDD RED/GREEN 与实施检查完成 |
 | Code Review | ✅ `confirmed` | [B-012 Code Review Report](04-code-review-report.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/04-code-review-report.md` | `passed` | `b3addaa` | 无 Critical/Important finding |
 | Regression Verification | ✅ `confirmed` | [B-012 回归测试报告](05-regression-test-report.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/05-regression-test-report.md` | `passed` | `0c3a390` | 全量构建、契约、安装和 source/dist 检查通过 |
-| Business Acceptance | ✅ `accepted` | [B-012 Business Acceptance Record](06-business-acceptance-record.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/06-business-acceptance-record.md` | `2026-07-19T16:14:52+08:00`, option 1 | ⏳ `pending` | 用户接受，等待 Completion 决策 |
+| Business Acceptance | ✅ `accepted` | [B-012 Business Acceptance Record](06-business-acceptance-record.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/06-business-acceptance-record.md` | `2026-07-19T16:14:52+08:00`, option 1 | `9a93e20` | 用户接受，等待 Completion 决策 |
 
 ## Work Item Lifecycle Writeback
 
