@@ -1,7 +1,7 @@
 # B-013 修复实施记录
 
 - 状态：✅ `completed`
-- Implementation Base SHA：`20e515e3a88b3fac54647afd50bcf982c9772946`
+- Implementation Base SHA: `20e515e3a88b3fac54647afd50bcf982c9772946`
 - 前置输入：[问题诊断记录](01-problem-diagnosis-record.md)、[修复方案](02-repair-solution.md)、[Repair Plan](03-repair-plan.md)
 - 目标：执行已确认的 RED/GREEN 契约修复、版本与安装包同步和全量回归；不扩展到产品设计资产或其他工作项类型。
 
@@ -94,7 +94,7 @@
 
 ## Final Implementation Evidence
 
-- Final Implementation SHA：`3f6c8521d847829a3e86e5c86920bb8d8593f888`
+- Final Implementation SHA: `3f6c8521d847829a3e86e5c86920bb8d8593f888`
 - Final Review：`Safe to proceed to Regression Verification`
 - Completed plan tasks：Task 1、Task 2、Task 3、Task 4。
 - Tests and checks run during Repair Implementation：
