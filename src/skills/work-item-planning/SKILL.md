@@ -9,6 +9,12 @@ Use this skill to organize confirmed product-design facts into delivery-planning
 
 This is an Asset Workflow.
 
+Before reading, creating, or updating an owned asset Change Log, read and follow:
+
+```text
+.dev-cadence/skills/contracts/change-log.md
+```
+
 It creates or updates durable planning assets under `docs/`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or other persistent copies of the workflow process. It must not copy the Delivery Workflow record chain used by `feature-dev`, `bug-fix`, or `refactor`.
 
 Use only vendored Superpowers skills from:
@@ -315,13 +321,7 @@ Increment the Version when confirmed changes alter the card's goal, scope, expec
 
 Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes.
 
-Use this Change Log contract:
-
-```text
-Version | Recorded At | Recorded By | Change | Reason
-```
-
-Identity and timestamp rules must match the repository's other Asset Workflows.
+For every card Change Log, follow the shared Change Log contract.
 
 When an existing card matches the same business identity, reuse it instead of creating a duplicate. Before writing any card change, check the current Version and visible facts. If the card changed since the current planning proposal was formed, stop and show the conflict instead of silently overwriting it.
 

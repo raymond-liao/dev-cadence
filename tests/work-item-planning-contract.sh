@@ -142,8 +142,8 @@ assert_literal 'bug ready boundary' 'Bug may enter `bug-fix` without a `Ready` p
 assert_literal 'version starts at one' 'Every Story, Task, and Bug card must use an independent integer Version starting at `1`.' "$SKILL"
 assert_match "substantive version increments" 'Increment the Version when confirmed changes alter the card'\''s goal, scope, expected behavior, acceptance or completion conditions, key dependencies, or requirement decisions' "$SKILL"
 assert_match "non substantive no increment" 'Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes' "$SKILL"
-assert_literal "change log schema" "Version | Recorded At | Recorded By | Change | Reason" "$SKILL"
-assert_literal "identity timestamp parity" "Identity and timestamp rules must match the repository's other Asset Workflows." "$SKILL"
+assert_literal "shared Change Log contract read" '.dev-cadence/skills/contracts/change-log.md' "$SKILL"
+assert_literal "card Change Log follows shared contract" 'For every card Change Log, follow the shared Change Log contract.' "$SKILL"
 assert_match "version conflict stop" 'check the current Version and visible facts.*stop.*conflict|stop.*conflict.*current Version and visible facts' "$SKILL"
 
 assert_match "proposal before confirmation" 'keep proposal work in the conversation before confirmation' "$SKILL"

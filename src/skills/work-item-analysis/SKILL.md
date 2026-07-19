@@ -12,6 +12,12 @@ It must not create `build/dev-cadence/` run manifests, stage records, confirmati
 It must not copy the Delivery Workflow record chain used by `feature-dev`, `bug-fix`, or `refactor`.
 Do not copy Delivery Workflow evidence into work-item assets.
 
+Before reading, creating, or updating an owned asset Change Log, read and follow:
+
+```text
+.dev-cadence/skills/contracts/change-log.md
+```
+
 Before creating or updating cards, read and follow:
 
 ```text
@@ -156,11 +162,7 @@ Use stable IDs, the card's existing title when still correct, and the card's own
 Increment the Version when confirmed changes alter the card's goal, scope, expected behavior, acceptance or completion conditions, key dependencies, or requirement decisions.
 Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes.
 
-Keep the Change Log table in this format:
-
-```text
-Version | Recorded At | Recorded By | Change | Reason
-```
+For every card Change Log, follow the shared Change Log contract.
 
 When Work Item Analysis finds a Version or visible-fact conflict, it must stop and require a user decision before continuing.
 
