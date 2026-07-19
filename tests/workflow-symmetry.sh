@@ -536,6 +536,10 @@ assert_workflows "configuration section" "## Configuration" "## Configuration" "
 assert_workflows "target config source" "\\.dev-cadence\\.yaml" "\\.dev-cadence\\.yaml" "\\.dev-cadence\\.yaml"
 assert_workflows "output language rule" "output_language" "output_language" "output_language"
 assert_workflows "worktree preference rule" "worktree\\.enabled" "worktree\\.enabled" "worktree\\.enabled"
+assert_workflows "entry-prepared workspace boundary" \
+  "entry-prepared workspace.*must not.*first create" \
+  "entry-prepared workspace.*must not.*first create" \
+  "entry-prepared workspace.*must not.*first create"
 assert_workflows "git checkpoints section" "## Git Checkpoints" "## Git Checkpoints" "## Git Checkpoints"
 assert_workflows "commit without confirmation rule" "Commits do not require user confirmation" "Commits do not require user confirmation" "Commits do not require user confirmation"
 assert_workflows "commit is not stage confirmation" "A commit does not confirm the current stage" "A commit does not confirm the current stage" "A commit does not confirm the current stage"
