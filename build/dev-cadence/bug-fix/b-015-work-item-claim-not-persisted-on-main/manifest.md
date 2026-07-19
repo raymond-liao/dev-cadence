@@ -5,7 +5,7 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b015-work-item-claim-persisted`
 - Started at：`2026-07-19T19:12:59+0800`
-- Current stage：🔄 `in_progress` — Problem Diagnosis
+- Current stage：🔄 `in_progress` — Repair Solution
 - Overall Status：🔄 `in_progress`
 - Run directory：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/`
 - Workspace：`.worktrees/b015-work-item-claim-persisted`
@@ -17,8 +17,8 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [B-015 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md` | 待确认 | `22ecff8` | 已完成基线调查与复现证据，等待诊断门确认。 |
-| Repair Solution | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | 未开始 | `pending` | 诊断确认后开始。 |
+| Problem Diagnosis | ✅ `confirmed` | [B-015 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md` | `2026-07-19T19:19:20+0800`，选项 1 | `22ecff8` | 用户确认当前诊断，进入修复方案。 |
+| Repair Solution | 🔄 `in_progress` | [B-015 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | 未确认 | `pending` | 已形成推荐方案，等待修复方案门确认。 |
 | Repair Plan | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md` | 未开始 | `pending` | 方案确认后开始。 |
 | Repair Implementation | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md` | 未开始 | `pending` | 计划确认后开始。 |
 | Code Review | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md` | 未开始 | `pending` | 实施完成后开始。 |
