@@ -5,10 +5,10 @@
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Branch: `codex/fix-b011-worktree-preparation`
 - Started at: `2026-07-19T16:36:08+0800`
-- Current stage: 🔄 `in_progress` — Completion
-- Overall Status: 🔄 `in_progress`
+- Current stage: ✅ `integrated` — Completion
+- Overall Status: ✅ `integrated`
 - Run directory: `build/dev-cadence/bug-fix/b-011-worktree-preparation/`
-- Workspace: `.worktrees/b-011-worktree-preparation`
+- Workspace: `.worktrees/b-011-worktree-preparation`（已移除）
 - Output language: `zh-CN`
 - Configuration source: `target repository root/.dev-cadence.yaml`
 - Worktree propagation: 已完成；来源配置已复制并校验到当前 worktree。
@@ -18,9 +18,9 @@
 - 卡片：[B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/bugs/B-011-worktree-preparation-delayed-after-claim.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`1`
-- 可见状态：`In Progress`
+- 可见状态：`Done`
 - 选定范围：领取成功后，在进入下游 Delivery Workflow 前准备由配置选择的专用 branch 或 worktree，并将三个 Delivery Workflow 的 Plan 阶段改为验证既有工作区。
-- Backlog 同步：`待处理` 中的 B-011 已原子移至 `进行中`；无当前可并行实施表条目需要更新。
+- Backlog 同步：B-011 Version `1` 已从 `进行中` 原子移至 `已完成` 并更新为 `Done`；B-015 保持在 `待处理`，其他条目顺序未改变。
 
 ## Stage Table
 
@@ -31,22 +31,20 @@
 | Repair Plan | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/03-repair-plan.md` | `2026-07-19T16:56:28+0800`, 选项 1 | `a89aee8f8184833b696f5717a06fe1a48f707426` | TDD 实施计划已确认。 |
 | Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/04-repair-record.md` | `not required` | `0f93fc2e63baae88844bd84f29f8d5bf4338f28e` | 实施、独立任务审查和最终审查均通过；交付记录校验通过。 |
 | Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/05-regression-test-report.md` | `not required` | `3ec22e2f9e445d0243690c7dcd3057e077878ffb` | Verification Decision：`ready`；可进入业务验收。 |
-| Business Acceptance | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/06-business-acceptance-record.md` | `2026-07-19T18:13:53+0800`, Accept | `fa4ac458d54622da9639b3373eb461757c26d50f` | 用户已接受；等待 Completion 决定。 |
+| Business Acceptance | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/06-business-acceptance-record.md` | `2026-07-19T18:13:53+0800`, Accept | `fa4ac458d54622da9639b3373eb461757c26d50f` | 用户已接受；Completion 已本地集成。 |
 
-## 当前运行丢弃上下文
+## Completion 结果
 
-- Workflow：`bug-fix`
-- Task slug：`b-011-worktree-preparation`
-- 运行目录：`build/dev-cadence/bug-fix/b-011-worktree-preparation`
-- 任务分支：`codex/fix-b011-worktree-preparation`
+- Normalized result：`merge`
 - Base branch：`main`
-- Expected HEAD SHA：`a89aee8f8184833b696f5717a06fe1a48f707426`
-- Expected base SHA：`5e752fd68b1ace8c23af69d95cfd0cc15faad07f`
-- Owned commit range：`5e752fd68b1ace8c23af69d95cfd0cc15faad07f..a89aee8f8184833b696f5717a06fe1a48f707426`
-- Owned tracked paths：`docs/backlog.md`、`docs/bugs/B-011-worktree-preparation-delayed-after-claim.md`
-- Owned untracked paths：`build/dev-cadence/bug-fix/b-011-worktree-preparation/`
-- Workspace path：`.worktrees/b-011-worktree-preparation`
-- Worktree created by this run：`true`
+- Approved feature snapshot：`845fa066f915ba4ad3c4ace854c933f2aacbeaad`
+- Base snapshot before merge：`2eb6b88fee11e457d83ddeec0f6498b45e70bc4f`
+- Local merge commit：`52ce97ae0fd7197d2b5b730e116c78b3ca1014d3`
+- Post-merge contract correction：`4bd223f86dd0523c2c1bc62beb234d7d5d86270a`；B-015 登记后两个卡片总数断言从 `60` 同步为 `61`。
+- Push / PR：未执行。
+- Worktree：`.worktrees/b-011-worktree-preparation` 已移除。
+- Task branch：`codex/fix-b011-worktree-preparation` 已删除。
+- Backlog writeback：B-011 Version `1` 的卡片和 Backlog 已同步为 `Done` / `已完成`；B-015 保持 `Draft` / `待处理`。
 
 ## 当前验证摘要
 
@@ -66,4 +64,4 @@
 
 ## 残余风险
 
-- 在修复前，配置启用 worktree 的任务仍可能在主 checkout 开始下游阶段并创建早期 checkpoint。
+- None.

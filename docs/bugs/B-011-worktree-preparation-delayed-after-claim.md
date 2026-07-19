@@ -4,7 +4,7 @@
 
 - ID：`B-011`
 - Version：`1`
-- Status：`In Progress`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Bug
 
@@ -74,3 +74,4 @@
 | Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
 | 1 | 2026-07-19T11:15:39+0800 | Raymond Liao <raymond-liao@outlook.com> | 创建领卡后工作区准备时点 Bug 卡。 | S-041 启动过程证明，当前规则允许启用 worktree 时先在主 checkout 创建任务分支和早期 checkpoint，再把 worktree 延迟到 Plan 阶段。 |
+| 1 | 2026-07-19T18:57:45+0800 | Raymond Liao <raymond-liao@outlook.com> | 将状态更新为 `Done`。 | B-011 已完成业务验收、本地合并到 `main`，并通过合并后完整契约验证；本次只记录交付结果，Version 保持为 `1`。 |

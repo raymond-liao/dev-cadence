@@ -4,7 +4,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `In Progress` | `P1` |
 
 
 ## 待处理
@@ -39,6 +38,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Done` | `P1` |
 | `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Done` | `P1` |
 | `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `Done` | `P2` |
 | `B-014` | [单项建卡被错误套用双确认门](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | `1` | `Done` | `P3` |
@@ -174,3 +174,4 @@
 | 6 | 2026-07-19T13:08:29+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-014` 插入 `B-013` 之后、`S-042` 之前，并保留其他待处理项的相对顺序。 | 用户确认单项建卡不应重复执行输入范围确认和完整结果确认，相关交互问题应在 S-042 之前进入待处理。 |
 | 7 | 2026-07-19T16:22:40+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `B-012`、`B-010`、`B-014` 从 `进行中` 移入 `已完成`，并保持本批次顺序。 | 三个 Bug 已完成业务验收和本地集成；对应卡片状态同步为 `Done`。 |
 | 8 | 2026-07-19T16:43:14+0800 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-015` 插入 `B-011` 之后、`B-013` 之前，并保留其他待处理项的相对顺序。 | 当前 B-011 的实施表明领取状态仅存在于任务分支；B-015 记录主分支领取持久化缺口，应紧随同一入口问题。 |
+| 9 | 2026-07-19T18:57:45+0800 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `B-011` 从 `进行中` 移入 `已完成`，并保持待处理项的相对顺序。 | B-011 已完成业务验收、本地集成和合并后回归验证；对应卡片状态同步为 `Done`。 |

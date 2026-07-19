@@ -49,6 +49,7 @@
 
 - Report: [代码审查报告](04-code-review-report.md) (`build/dev-cadence/bug-fix/b-011-worktree-preparation/04-code-review-report.md`)
 - Review decision: ✅ `passed`
+- Final Review: ✅ `passed`
 - Critical findings: None.
 - Important findings: None.
 - Unresolved findings: None.
