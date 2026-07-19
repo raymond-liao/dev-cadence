@@ -8,7 +8,64 @@ PLANNING="$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
 ANALYSIS="$ROOT_DIR/src/skills/work-item-analysis/SKILL.md"
 BACKLOG="$ROOT_DIR/docs/backlog.md"
 REGISTRY="$ROOT_DIR/docs/open-questions.md"
-MIGRATION_RECORDED_AT='2026-07-19T13:07:24+0800'
+MIGRATION_CHANGE='Normalized legacy status and delivery events to reuse the active definition Version.'
+ORIGINAL_ROW_COUNTS='B-001:1
+B-002:3
+B-003:1
+B-004:2
+B-005:5
+B-006:2
+B-007:3
+B-008:3
+B-009:3
+B-010:1
+B-011:1
+B-012:1
+S-001:6
+S-002:11
+S-003:2
+S-004:3
+S-005:3
+S-006:4
+S-007:4
+S-008:6
+S-009:3
+S-010:5
+S-011:5
+S-012:5
+S-013:5
+S-014:5
+S-015:9
+S-016:5
+S-017:5
+S-018:1
+S-019:1
+S-020:1
+S-021:1
+S-022:1
+S-023:1
+S-024:1
+S-025:1
+S-026:1
+S-027:1
+S-028:1
+S-029:1
+S-030:1
+S-031:1
+S-032:1
+S-033:1
+S-034:1
+S-035:1
+S-036:2
+S-037:2
+S-038:1
+S-039:1
+S-040:2
+S-041:3
+T-001:3
+T-002:3
+T-003:1
+T-004:4'
 WORK_ITEM_DIRS=(
   "$ROOT_DIR/docs/stories"
   "$ROOT_DIR/docs/tasks"
@@ -96,6 +153,29 @@ history_versions() {
   ' FS='|' "$1"
 }
 
+history_signatures() {
+  awk '
+    function trim(value) {
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+      return value
+    }
+    /^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$/ {
+      in_change_log = 1
+      next
+    }
+    in_change_log && /^\|[-:| ]+\|$/ { next }
+    in_change_log && /^\| [0-9]+ \|/ {
+      recorded_at = trim($3)
+      change = trim($5)
+      if (change != "Normalized legacy status and delivery events to reuse the active definition Version.") {
+        print recorded_at " || " change
+      }
+      next
+    }
+    in_change_log { in_change_log = 0 }
+  ' FS='|' "$1"
+}
+
 assert_history_versions() {
   local id="$1"
   local expected="$2"
@@ -108,6 +188,20 @@ assert_history_versions() {
     fail "$id history versions are $actual, expected $expected"
 }
 
+assert_history_signatures() {
+  local id="$1"
+  shift
+  local path
+  local actual
+  local expected
+
+  path="$(card_path "$id")"
+  actual="$(history_signatures "$path")"
+  expected="$(printf '%s\n' "$@")"
+  test "$actual" = "$expected" ||
+    fail "$id history event order does not match the confirmed sequence"
+}
+
 assert_normalized_card() {
   local id="$1"
   local old_current="$2"
@@ -116,7 +210,7 @@ assert_normalized_card() {
   local new_rows="$5"
   local path
   local top_version
-  local migration_change='Normalized legacy status and delivery events to reuse the active definition Version.'
+  local migration_change="$MIGRATION_CHANGE"
   local migration_reason="Old current $old_current -> new current $new_current; original row versions $old_rows -> normalized row versions $new_rows."
 
   path="$(card_path "$id")"
@@ -126,6 +220,41 @@ assert_normalized_card() {
   assert_history_versions "$id" "$new_rows,$new_current"
   assert_literal "$id migration change" "$migration_change" "$path"
   assert_literal "$id migration reason" "$migration_reason" "$path"
+
+  awk -F'|' -v id="$id" -v old_csv="$old_rows" -v new_csv="$new_rows" '
+    function trim(value) {
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+      return value
+    }
+    BEGIN {
+      expected_rows = split(old_csv, old_versions, ",")
+      split(new_csv, new_versions, ",")
+    }
+    /^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$/ {
+      in_change_log = 1
+      next
+    }
+    in_change_log && /^\|[-:| ]+\|$/ { next }
+    in_change_log && /^\| [0-9]+ \|/ && row_count < expected_rows {
+      row_count++
+      reason = trim($6)
+      suffix = "Legacy migration: original Version " old_versions[row_count] "; normalized to Version " new_versions[row_count] "."
+      has_suffix = index(reason, suffix) > 0
+      if (old_versions[row_count] != new_versions[row_count] && !has_suffix) {
+        printf "%s row %d is missing exact migration suffix\n", id, row_count > "/dev/stderr"
+        invalid = 1
+      }
+      if (old_versions[row_count] == new_versions[row_count] && reason ~ /Legacy migration: original Version/) {
+        printf "%s row %d has an unexpected migration suffix\n", id, row_count > "/dev/stderr"
+        invalid = 1
+      }
+      next
+    }
+    END {
+      if (row_count != expected_rows) invalid = 1
+      exit invalid
+    }
+  ' "$path" || fail "$id normalized row migration suffixes do not match the explicit map"
 }
 
 assert_file "$CONTRACT"
@@ -217,7 +346,70 @@ awk '
   END { exit invalid }
 ' FS='|' "${WORK_ITEM_FILES[@]}" || fail "empty or placeholder Recorded By remains"
 
+ORIGINAL_METADATA="$(while IFS=: read -r id expected_rows; do
+  path="$(card_path "$id")"
+  awk -F'|' -v id="$id" -v limit="$expected_rows" '
+    function trim(value) {
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+      return value
+    }
+    /^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$/ {
+      in_change_log = 1
+      next
+    }
+    in_change_log && /^\|[-:| ]+\|$/ { next }
+    in_change_log && /^\| [0-9]+ \|/ && row_count < limit {
+      row_count++
+      print id "\t" trim($3) "\t" trim($4)
+      next
+    }
+    END {
+      if (row_count != limit) exit 1
+    }
+  ' "$path" || fail "$id has fewer than $expected_rows original rows"
+done <<< "$ORIGINAL_ROW_COUNTS")"
+
+test "$(printf '%s\n' "$ORIGINAL_METADATA" | wc -l | tr -d ' ')" = "152" ||
+  fail "explicit original-row cohort is not 152 rows"
+
+printf '%s\n' "$ORIGINAL_METADATA" | awk -F'\t' '
+  $2 ~ /^legacy: recorded-at/ {
+    if ($2 ~ /^legacy: recorded-at precision unknown; original [0-9]{4}-[0-9]{2}-[0-9]{2}$/) {
+      precision_unknown++
+    } else if ($2 == "legacy: recorded-at unknown") {
+      date_unknown++
+    } else {
+      printf "malformed legacy Recorded At for %s: %s\n", $1, $2 > "/dev/stderr"
+      invalid = 1
+    }
+  }
+  $3 ~ /^legacy: recorded-by/ {
+    if ($3 == "legacy: recorded-by unknown") {
+      author_unknown++
+    } else {
+      printf "malformed legacy Recorded By for %s: %s\n", $1, $3 > "/dev/stderr"
+      invalid = 1
+    }
+  }
+  END {
+    if (precision_unknown != 138) {
+      printf "legacy precision-unknown count is %d, expected 138\n", precision_unknown > "/dev/stderr"
+      invalid = 1
+    }
+    if (date_unknown != 0) {
+      printf "legacy recorded-at-unknown count is %d, expected 0\n", date_unknown > "/dev/stderr"
+      invalid = 1
+    }
+    if (author_unknown != 137) {
+      printf "legacy recorded-by-unknown count is %d, expected 137\n", author_unknown > "/dev/stderr"
+      invalid = 1
+    }
+    exit invalid
+  }
+' || fail "legacy sentinel values or counts do not match the migration baseline"
+
 assert_not_match "Registry Change Log" '^## Change Log$' "$REGISTRY"
+assert_not_match "Registry Change Log table" '^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$' "$REGISTRY"
 
 while IFS= read -r card; do
   id="$(sed -n 's/^- ID[：:][[:space:]]*`\([^`]*\)`.*/\1/p' "$card")"
@@ -256,12 +448,72 @@ assert_normalized_card S-014 5 2 '1,2,3,4,5' '1,2,2,2,2'
 assert_normalized_card S-015 7 4 '1,2,3,4,5,6,7,7,7' '1,2,2,3,4,4,4,4,4'
 assert_normalized_card T-001 3 2 '1,2,3' '1,2,2'
 
+MIGRATION_CARD_IDS="$(rg -l -F "$MIGRATION_CHANGE" "${WORK_ITEM_DIRS[@]}" |
+  sed -E 's#.*/((S|T|B)-[0-9]+)-[^/]+\.md#\1#' | LC_ALL=C sort)"
+EXPECTED_MIGRATION_CARD_IDS='S-001
+S-002
+S-003
+S-004
+S-005
+S-006
+S-007
+S-008
+S-009
+S-010
+S-011
+S-012
+S-013
+S-014
+S-015
+T-001'
+test "$(printf '%s\n' "$MIGRATION_CARD_IDS" | wc -l | tr -d ' ')" = "16" ||
+  fail "expected exactly 16 migration-event cards"
+test "$MIGRATION_CARD_IDS" = "$EXPECTED_MIGRATION_CARD_IDS" ||
+  fail "migration-event card set differs from the explicit normalization set"
+
+MIGRATION_SUFFIX_COUNT="$(rg -o 'Legacy migration: original Version [0-9]+; normalized to Version [0-9]+\.' \
+  "${WORK_ITEM_DIRS[@]}" | wc -l | tr -d ' ')"
+test "$MIGRATION_SUFFIX_COUNT" = "47" ||
+  fail "expected exactly 47 normalized-row migration suffixes, found $MIGRATION_SUFFIX_COUNT"
+
 assert_history_versions B-005 '1,2,3,4,4'
 assert_history_versions B-007 '1,2,2'
 assert_history_versions B-008 '1,2,2'
 assert_history_versions S-013 '1,1,2,3,3,3'
 assert_history_versions S-014 '1,2,2,2,2,2'
 assert_history_versions T-004 '1,2,3,4'
+
+assert_history_signatures B-005 \
+  'legacy: recorded-at precision unknown; original 2026-07-16 || 创建 Refactor 确认阶段缺少用户选项 Bug。' \
+  'legacy: recorded-at precision unknown; original 2026-07-17 || 将问题从 Refactor 扩展为六个已安装 Workflow 的确认门选项与结果语义缺口。' \
+  'legacy: recorded-at precision unknown; original 2026-07-17 || 将确认门问题扩展为“先展示内容摘要，再提供选项和结果语义”，并明确文件只能作为证据链接。' \
+  'legacy: recorded-at precision unknown; original 2026-07-18 || 补充 S-017 用户验收提示未展示可选项的现象，并关联 S-017 与 S-018。' \
+  'legacy: recorded-at precision unknown; original 2026-07-18 || 完成当前终态菜单补强交付并将状态更新为 `Done`。'
+assert_history_signatures B-007 \
+  'legacy: recorded-at precision unknown; original 2026-07-17 || 创建并行视图状态与 Workflow 入口资格混用 Bug。' \
+  'legacy: recorded-at precision unknown; original 2026-07-18 || 按 B-009 的已验收决定改用四列表级职责边界，移除逐行入口资格列要求并关闭 Q-005。' \
+  'legacy: recorded-at precision unknown; original 2026-07-18 || 完成当前设计对齐交付并将状态更新为 `Done`。'
+assert_history_signatures B-008 \
+  '2026-07-18T06:54:19+0800 || 创建 Bug 卡片。' \
+  '2026-07-18T19:29:42+0800 || 将完成同步明确为成功 merge 后的 Bug 卡片与 Backlog 原子写回，并补充交付引用、执行 Change Log、冲突和幂等要求。' \
+  '2026-07-18T20:43:37+0800 || 完成当前卡片与 Backlog 写回补强交付并将状态更新为 `Done`。'
+assert_history_signatures S-013 \
+  'legacy: recorded-at precision unknown; original 2026-07-14 || 创建 Discovery 过程记录简化 Story。' \
+  'legacy: recorded-at precision unknown; original 2026-07-14 || 完成 Discovery 过程记录简化并更新契约、说明与分发版本。' \
+  'legacy: recorded-at precision unknown; original 2026-07-14 || 修正首次基线启动门禁、技术输入支撑资产边界和 Business Acceptance 状态。' \
+  'legacy: recorded-at precision unknown; original 2026-07-15 || 澄清双主产出验收标准中的支撑性共享资产例外。' \
+  'legacy: recorded-at precision unknown; original 2026-07-15 || 记录 Business Acceptance 并将状态更新为 Done。'
+assert_history_signatures S-014 \
+  'legacy: recorded-at precision unknown; original 2026-07-14 || 创建 User Journey 分析卡片。' \
+  'legacy: recorded-at precision unknown; original 2026-07-15 || 将卡片重定义为 Discovery 内的 User Journey 与 Feature 基线增强，并更新优先级、依赖和验收范围。' \
+  'legacy: recorded-at precision unknown; original 2026-07-16 || 三资产两门契约已实现并验证，完成 User Journey 与 Feature 基线交付。' \
+  'legacy: recorded-at precision unknown; original 2026-07-16 || 实施与系统验证已完成，等待 Business Acceptance 后再进入 Done。' \
+  'legacy: recorded-at precision unknown; original 2026-07-16 || 记录 Business Acceptance 并将状态更新为 Done。'
+assert_history_signatures T-004 \
+  'legacy: recorded-at precision unknown; original 2026-07-17 || 创建 Git 提交 skill 接入任务。' \
+  'legacy: recorded-at precision unknown; original 2026-07-17 || 明确 Workflow 与 `git-commit` 的职责边界、pre-staged 调用顺序及适用提交类型。' \
+  'legacy: recorded-at precision unknown; original 2026-07-17 || 将 `git-commit` 收敛为由 `using-dev-cadence` 集中路由的内部共享能力。' \
+  'legacy: recorded-at precision unknown; original 2026-07-17 || 将调用边界扩展为所有已安装 Workflow 和入口路由的 shared capability，并固化提交信息规则。'
 
 for id in B-008 B-009 S-015 S-016 S-040; do
   path="$(card_path "$id")"
@@ -270,51 +522,37 @@ for id in B-008 B-009 S-015 S-016 S-040; do
   test -n "$duplicate" || fail "$id no longer retains a legal duplicate Version"
 done
 
-ORIGINAL_HISTORY_COUNT="$(awk -v cutoff="$MIGRATION_RECORDED_AT" '
-  function trim(value) {
-    gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
-    return value
-  }
-  /^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$/ {
-    in_change_log = 1
-    next
-  }
-  in_change_log && /^\|[-:| ]+\|$/ { next }
-  in_change_log && /^\| [0-9]+ \|/ {
-    recorded_at = trim($3)
-    if (recorded_at ~ /^legacy: / || recorded_at < cutoff) count++
-    next
-  }
-  in_change_log { in_change_log = 0 }
-  END { print count }
-' FS='|' "${WORK_ITEM_FILES[@]}")"
+ORIGINAL_HISTORY_COUNT="$(printf '%s\n' "$ORIGINAL_ROW_COUNTS" |
+  awk -F: '{ count += $2 } END { print count }')"
 test "$ORIGINAL_HISTORY_COUNT" = "152" ||
-  fail "expected 152 preserved original history rows, found $ORIGINAL_HISTORY_COUNT"
+  fail "explicit original-row cohort is $ORIGINAL_HISTORY_COUNT rows, expected 152"
 
-ORIGINAL_HISTORY_HASH="$(awk -v root="$ROOT_DIR/" -v cutoff="$MIGRATION_RECORDED_AT" '
-  function trim(value) {
-    gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
-    return value
-  }
-  FNR == 1 { in_change_log = 0 }
-  /^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$/ {
-    in_change_log = 1
-    next
-  }
-  in_change_log && /^\|[-:| ]+\|$/ { next }
-  in_change_log && /^\| [0-9]+ \|/ {
-    recorded_at = trim($3)
-    if (recorded_at !~ /^legacy: / && recorded_at >= cutoff) next
-    change = trim($5)
-    reason = trim($6)
-    sub(/ Legacy migration: original Version [0-9]+; normalized to Version [0-9]+\.$/, "", reason)
-    path = FILENAME
-    sub("^" root, "", path)
-    print path "\t" change "\t" reason
-    next
-  }
-  in_change_log { in_change_log = 0 }
-' FS='|' "${WORK_ITEM_FILES[@]}" | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
+ORIGINAL_HISTORY_HASH="$(while IFS=: read -r id expected_rows; do
+  path="$(card_path "$id")"
+  relative_path="${path#"$ROOT_DIR/"}"
+  awk -F'|' -v path="$relative_path" -v limit="$expected_rows" '
+    function trim(value) {
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+      return value
+    }
+    /^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$/ {
+      in_change_log = 1
+      next
+    }
+    in_change_log && /^\|[-:| ]+\|$/ { next }
+    in_change_log && /^\| [0-9]+ \|/ && row_count < limit {
+      row_count++
+      change = trim($5)
+      reason = trim($6)
+      sub(/ Legacy migration: original Version [0-9]+; normalized to Version [0-9]+\.$/, "", reason)
+      print path "\t" change "\t" reason
+      next
+    }
+    END {
+      if (row_count != limit) exit 1
+    }
+  ' "$path" || fail "$id original-row payload cohort is incomplete"
+done <<< "$ORIGINAL_ROW_COUNTS" | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
 test "$ORIGINAL_HISTORY_HASH" = "a5aa15c78a430862b65ab4857308cfeebac170db202f1649c05bcbc01bbb5630" ||
   fail "original Change/Reason history content changed"
 
