@@ -19,7 +19,7 @@
 | --- | --- | --- | --- | --- | --- |
 | Problem Diagnosis | ✅ `confirmed` | [B-012 问题诊断记录](01-problem-diagnosis-record.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/01-problem-diagnosis-record.md` | `2026-07-19T15:18:41+08:00`, option 1 | `92d454c` | 用户确认当前诊断并进入修复方案 |
 | Repair Solution | ✅ `confirmed` | [B-012 修复方案](02-repair-solution.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/02-repair-solution.md` | `2026-07-19T15:35:59+08:00`, option 1 | `786f155` | 用户确认方案 B |
-| Repair Plan | 🔄 `in_progress` | [B-012 修复计划](03-repair-plan.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | 计划已形成，等待用户确认 |
+| Repair Plan | 🔄 `in_progress` | [B-012 修复计划](03-repair-plan.md); path: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/03-repair-plan.md` | ⏳ `pending` | `da41433` | 计划已形成，等待用户确认 |
 | Repair Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 等待修复计划确认 |
 | Code Review | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/04-code-review-report.md` | ⏳ `pending` | ⏳ `pending` | 等待实施完成 |
 | Regression Verification | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | 等待实施与审查完成 |
@@ -42,9 +42,9 @@
 - Run directory: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/`
 - Task branch: `codex/parallel-b012-b010-b014`
 - Base branch: `main`
-- Expected HEAD SHA: `fbc31f8c822c6bf31c0e646fd83237243b9955c2`
+- Expected HEAD SHA: `da41433`
 - Expected base SHA: `74a19032d9409f8116ae9a7bc6ed12e9692977af`
-- Owned commit range: `74a19032d9409f8116ae9a7bc6ed12e9692977af..fbc31f8c822c6bf31c0e646fd83237243b9955c2`
+- Owned commit range: `74a19032d9409f8116ae9a7bc6ed12e9692977af..da41433`
 - Owned tracked paths: `docs/bugs/B-012-draft-story-claimed-before-ready-gate.md`, shared lifecycle update in `docs/backlog.md`, and later confirmed repair paths
 - Owned untracked paths: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/` at start
 - Workspace path: `.`
