@@ -5,7 +5,7 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b013-story-ready-feature`
 - Started at：`2026-07-19T21:30:32+0800`
-- Current stage：🔄 `in_progress` — Regression Verification
+- Current stage：🔄 `in_progress` — Business Acceptance
 - Overall Status：🔄 `in_progress`
 - Run directory：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/`
 - Workspace：`.worktrees/b013-story-ready-feature`
@@ -22,7 +22,7 @@
 | Repair Plan | ✅ `confirmed` | [B-013 Repair Plan](03-repair-plan.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/03-repair-plan.md` | `2026-07-19T21:52:34+0800`，选项 1：确认修订计划并继续 Repair Implementation | `8e69aec28d0df97f7889abdaab4914e7508f4a55` | 用户确认受跟踪当前安装包同步范围；确认后的检查点已验证。 |
 | Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | 不需要用户确认 | `3d20340b31541cf54badbfdf085aecc422e9d231` | Task 1-4、完整回归和实施证据已完成；检查点已验证包含 Repair Record。 |
 | Code Review | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-code-review-report.md` | 不需要用户确认 | `3d20340b31541cf54badbfdf085aecc422e9d231` | 完整实现范围审查通过；Critical/Important findings 均为 0。 |
-| Regression Verification | ⏳ `pending` | pending | ⏳ `pending` | ⏳ `pending` | 尚未开始；完成后写入 `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/05-regression-test-report.md`。 |
+| Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/05-regression-test-report.md` | 不需要用户确认 | `9a011b8439e1bc880d1d4190924ac7abd962a6c4` | Verification Decision 为 `ready`；所有已执行检查通过。 |
 | Business Acceptance | ⏳ `pending` | pending | ⏳ `pending` | ⏳ `pending` | 尚未开始；完成后写入 `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/06-business-acceptance-record.md`。 |
 
 ## Work Item Identity And Claim
