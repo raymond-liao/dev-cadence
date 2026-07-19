@@ -5,7 +5,7 @@
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Branch: `codex/fix-b011-worktree-preparation`
 - Started at: `2026-07-19T16:36:08+0800`
-- Current stage: 🔄 `in_progress` — Repair Plan
+- Current stage: 🔄 `in_progress` — Business Acceptance
 - Overall Status: 🔄 `in_progress`
 - Run directory: `build/dev-cadence/bug-fix/b-011-worktree-preparation/`
 - Workspace: `.worktrees/b-011-worktree-preparation`
@@ -24,14 +24,14 @@
 
 ## Stage Table
 
-| Stage | Status | Artifact | User confirmation | Checkpoint commit | Notes |
+| Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | ✅ `confirmed` | [问题诊断记录](01-problem-diagnosis-record.md); path: `build/dev-cadence/bug-fix/b-011-worktree-preparation/01-problem-diagnosis-record.md` | `2026-07-19T16:48:26+0800`, 用户确认继续 | `7fcc8fcc19f9ff3f033e97f4f2b36dbd74871cc0` | 已确认工作区准备时序缺口覆盖 worktree 与专用分支两条配置路径。 |
-| Repair Solution | ✅ `confirmed` | [修复方案](02-repair-solution.md); path: `build/dev-cadence/bug-fix/b-011-worktree-preparation/02-repair-solution.md` | `2026-07-19T16:52:23+0800`, 选项 1 | `00617096520017b7cf3cc8aece364b3a5acc6ded` | 入口拥有 workspace preparation 门的方案已确认。 |
-| Repair Plan | 🔄 `in_progress` | [修复计划](03-repair-plan.md); path: `build/dev-cadence/bug-fix/b-011-worktree-preparation/03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | 已形成待确认的 TDD 实施计划。 |
-| Repair Implementation | ⏳ `pending` | `pending` | ⏳ `pending` | ⏳ `pending` | 未开始；计划路径：`build/dev-cadence/bug-fix/b-011-worktree-preparation/04-repair-record.md` 与 `build/dev-cadence/bug-fix/b-011-worktree-preparation/04-code-review-report.md`。 |
-| Regression Verification | ⏳ `pending` | `pending` | ⏳ `pending` | ⏳ `pending` | 未开始；计划路径：`build/dev-cadence/bug-fix/b-011-worktree-preparation/05-regression-test-report.md`。 |
-| Business Acceptance | ⏳ `pending` | `pending` | ⏳ `pending` | ⏳ `pending` | 未开始；计划路径：`build/dev-cadence/bug-fix/b-011-worktree-preparation/06-business-acceptance-record.md`。 |
+| Problem Diagnosis | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/01-problem-diagnosis-record.md` | `2026-07-19T16:48:26+0800`, 用户确认继续 | `7fcc8fcc19f9ff3f033e97f4f2b36dbd74871cc0` | 已确认工作区准备时序缺口覆盖 worktree 与专用分支两条配置路径。 |
+| Repair Solution | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/02-repair-solution.md` | `2026-07-19T16:52:23+0800`, 选项 1 | `00617096520017b7cf3cc8aece364b3a5acc6ded` | 入口拥有 workspace preparation 门的方案已确认。 |
+| Repair Plan | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/03-repair-plan.md` | `2026-07-19T16:56:28+0800`, 选项 1 | `a89aee8f8184833b696f5717a06fe1a48f707426` | TDD 实施计划已确认。 |
+| Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/04-repair-record.md` | `not required` | `0f93fc2e63baae88844bd84f29f8d5bf4338f28e` | 实施、独立任务审查和最终审查均通过；交付记录校验通过。 |
+| Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/05-regression-test-report.md` | `not required` | `3ec22e2f9e445d0243690c7dcd3057e077878ffb` | Verification Decision：`ready`；可进入业务验收。 |
+| Business Acceptance | 🔄 `in_progress` | `pending` | `pending` | `pending` | 等待用户从固定业务验收菜单中选择；记录路径：`build/dev-cadence/bug-fix/b-011-worktree-preparation/06-business-acceptance-record.md`。 |
 
 ## 当前运行丢弃上下文
 
@@ -40,9 +40,9 @@
 - 运行目录：`build/dev-cadence/bug-fix/b-011-worktree-preparation`
 - 任务分支：`codex/fix-b011-worktree-preparation`
 - Base branch：`main`
-- Expected HEAD SHA：`00617096520017b7cf3cc8aece364b3a5acc6ded`
+- Expected HEAD SHA：`a89aee8f8184833b696f5717a06fe1a48f707426`
 - Expected base SHA：`5e752fd68b1ace8c23af69d95cfd0cc15faad07f`
-- Owned commit range：`5e752fd68b1ace8c23af69d95cfd0cc15faad07f..00617096520017b7cf3cc8aece364b3a5acc6ded`
+- Owned commit range：`5e752fd68b1ace8c23af69d95cfd0cc15faad07f..a89aee8f8184833b696f5717a06fe1a48f707426`
 - Owned tracked paths：`docs/backlog.md`、`docs/bugs/B-011-worktree-preparation-delayed-after-claim.md`
 - Owned untracked paths：`build/dev-cadence/bug-fix/b-011-worktree-preparation/`
 - Workspace path：`.worktrees/b-011-worktree-preparation`
@@ -50,9 +50,19 @@
 
 ## 当前验证摘要
 
-- 已执行：`bash tests/work-item-development-workflow-contract.sh` — 通过。
-- 已执行：`bash tests/workflow-symmetry.sh` — 通过。
-- 结论：现有契约测试没有覆盖「claim → workspace preparation → downstream workflow」的严格顺序；该缺口是当前诊断的核心证据。
+- 已执行：`bash scripts/check-all.sh` 与 `bash scripts/check-whitespace.sh` — 通过。
+- 已执行：入口时序、workflow 对称性、package/install 及交付记录校验 — 通过。
+- Verification Decision：`ready`；详情见 `05-regression-test-report.md`。
+
+## 实施前方案新鲜度
+
+- 检查时间：`2026-07-19T16:56:28+0800`
+- 卡片身份：`docs/bugs/B-011-worktree-preparation-delayed-after-claim.md`，Version `1`，Status `In Progress`。
+- Backlog 身份：`docs/backlog.md` 的 `进行中` 行为 B-011，Version `1`，Status `In Progress`。
+- 已确认输入：问题诊断 `7fcc8fcc19f9ff3f033e97f4f2b36dbd74871cc0`、修复方案 `00617096520017b7cf3cc8aece364b3a5acc6ded`、修复计划 `a89aee8f8184833b696f5717a06fe1a48f707426`。
+- 代码身份：branch `codex/fix-b011-worktree-preparation`，HEAD `a89aee8f8184833b696f5717a06fe1a48f707426`，base `main` 为 `5e752fd68b1ace8c23af69d95cfd0cc15faad07f`。
+- 配置与依赖：`target repository root/.dev-cadence.yaml` 已同步到 worktree；`worktree.enabled: true`、`worktree.directory: .worktrees`；无新增外部依赖。
+- 结论：✅ `confirmed` 输入、卡片和代码状态仍匹配；除该运行清单的阶段推进外，没有影响修复边界的改动，可进入 Repair Implementation。
 
 ## 残余风险
 
