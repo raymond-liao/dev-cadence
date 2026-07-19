@@ -7,9 +7,12 @@
 - Card Version: `1`
 - Visible Status: `In Progress`
 - Selected scope: 修正 `direct intake` 对共享双确认门的错误继承，保留 `portfolio planning` 双确认门
-- Status: 🔄 `in_progress`
+- Status: ✅ `confirmed`
 - Branch: `codex/parallel-b012-b010-b014`
 - Diagnosis date: `2026-07-19`
+- User confirmation: `confirm current version and advance to the next stage`
+- Confirmed by: `Raymond Liao <raymond-liao@outlook.com>`
+- Confirmed at: `2026-07-19T15:18:41+08:00`
 
 ## 报告症状
 

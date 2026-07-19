@@ -7,9 +7,12 @@
 - Card Version: `1`
 - Visible Status: `In Progress`
 - Selected scope: 修正 Feature Dev、Bug Fix、Refactor 生成记录模板中的裸路径导航示例，并补充确定性契约验证
-- Status: 🔄 `in_progress`
+- Status: ✅ `confirmed`
 - Branch: `codex/parallel-b012-b010-b014`
 - Diagnosis date: `2026-07-19`
+- User confirmation: `confirm current version and advance to the next stage`
+- Confirmed by: `Raymond Liao <raymond-liao@outlook.com>`
+- Confirmed at: `2026-07-19T15:18:41+08:00`
 
 ## 报告症状
 

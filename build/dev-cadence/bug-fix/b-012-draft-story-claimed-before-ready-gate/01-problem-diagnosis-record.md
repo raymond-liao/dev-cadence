@@ -7,9 +7,12 @@
 - Card Version: `1`
 - Visible Status: `In Progress`
 - Selected scope: 确保工作项类型、状态和成熟度路由先于任何 claim 写入，并保留 Story、Task、Bug 的非统一门禁
-- Status: 🔄 `in_progress`
+- Status: ✅ `confirmed`
 - Branch: `codex/parallel-b012-b010-b014`
 - Diagnosis date: `2026-07-19`
+- User confirmation: `confirm current version and advance to the next stage`
+- Confirmed by: `Raymond Liao <raymond-liao@outlook.com>`
+- Confirmed at: `2026-07-19T15:18:41+08:00`
 
 ## 报告症状
 
