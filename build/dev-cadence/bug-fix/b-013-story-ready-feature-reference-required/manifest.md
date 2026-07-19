@@ -5,7 +5,7 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b013-story-ready-feature`
 - Started at：`2026-07-19T21:30:32+0800`
-- Current stage：🔄 `in_progress` — Repair Implementation
+- Current stage：🔄 `in_progress` — Regression Verification
 - Overall Status：🔄 `in_progress`
 - Run directory：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/`
 - Workspace：`.worktrees/b013-story-ready-feature`
@@ -20,8 +20,8 @@
 | Problem Diagnosis | ✅ `confirmed` | [B-013 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/01-problem-diagnosis-record.md` | `2026-07-19T21:34:40+0800`，选项 1：确认诊断并进入 Repair Solution | `e256de2b79b32a91cf0dee45ef42d19e559b4b67` | 用户确认诊断范围；确认后的检查点已验证。 |
 | Repair Solution | ✅ `confirmed` | [B-013 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/02-repair-solution.md` | `2026-07-19T21:40:58+0800`，选项 1：确认方案并进入 Repair Plan | `03cd9c5e4054111b5656e8ac719e351516790880` | 用户确认最小修复边界；确认后的检查点已验证。 |
 | Repair Plan | ✅ `confirmed` | [B-013 Repair Plan](03-repair-plan.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/03-repair-plan.md` | `2026-07-19T21:52:34+0800`，选项 1：确认修订计划并继续 Repair Implementation | `8e69aec28d0df97f7889abdaab4914e7508f4a55` | 用户确认受跟踪当前安装包同步范围；确认后的检查点已验证。 |
-| Repair Implementation | 🔄 `in_progress` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 正在重新执行实施前新鲜度复核，然后恢复 Task 3。 |
-| Code Review | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-code-review-report.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
+| Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | 不需要用户确认 | `6d8e368686fcad4e3627bc16bf77419df3ddafca` | Task 1-4、完整回归和实施证据已完成；检查点已验证包含 Repair Record。 |
+| Code Review | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-code-review-report.md` | 不需要用户确认 | `6d8e368686fcad4e3627bc16bf77419df3ddafca` | 完整实现范围审查通过；Critical/Important findings 均为 0。 |
 | Regression Verification | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 
@@ -40,6 +40,12 @@
 - Inputs：B-013 卡片 Version `2`、Status `In Progress`；已确认的 `01-problem-diagnosis-record.md`、`02-repair-solution.md`、`03-repair-plan.md`；branch `codex/b013-story-ready-feature` at `7ce8775a6e5e2a4f9b273f3b4bafd200007d5f51`；base `main` at `5cb09c6e1423add910c63b25470f8aa6beff5c70`。
 - Dependency state：S-042 历史回归卡存在；没有 `docs/product-design/` 基线，符合独立 Story 无 Feature 场景。
 - Conclusion：✅ `confirmed` inputs remain valid；差异仅为当前运行记录，没有需要回退或重新确认的设计变化。
+
+### Revalidation After Plan Revision
+
+- Checked at：`2026-07-19T21:53:31+0800`
+- Inputs：B-013 卡片 Version `2`、Status `In Progress`；已确认的诊断、修复方案与修订 Repair Plan；branch `codex/b013-story-ready-feature` at `be9b2e6ec9fbbdb96736a3ac657f3701a98815a9`；base `main` at `5cb09c6e1423add910c63b25470f8aa6beff5c70`。
+- Conclusion：✅ 用户确认将完整受跟踪当前安装包同步纳入 Task 3，随后恢复实现；没有改变诊断、方案或验收边界。
 
 ## Current-Run Discard Context And Ownership Evidence
 
