@@ -22,7 +22,7 @@
 - RED 2: `bash tests/workflow-symmetry.sh` failed after the new symmetry assertion was added because the three Plan stages could still first create the workspace.
 - GREEN 2: the same symmetry contract passed after all three Plan stages were changed to verify and reuse the entry-prepared workspace.
 
-## Final Changed Files
+## Changed Files
 
 - `README.md`
 - `README.zh-CN.md`
@@ -52,6 +52,10 @@
 - Critical findings: None.
 - Important findings: None.
 - Unresolved findings: None.
+
+## Failure Lifecycle
+
+- `F-001` — evidence: 首次运行交付记录校验器时失败，提示 `manifest does not contain any stage artifact rows`；修正表头后，该校验继续提示 `implementation record is missing Changed Files content`。classification: `implementation_bug`（运行清单 Stage Table 使用了与当前校验器不匹配的表头和 artifact 格式，且实施记录使用了不被校验器识别的 `Final Changed Files` 标题）。remediation round: 2；return target: Repair Implementation；remediation: 将 Stage Table 规范为校验器契约的表头及直接仓库相对 artifact 路径，并将 changed-files 标题规范为 `Changed Files`；result: `closed`，修正后重新运行校验器。
 
 ## Repair Notes And Residual Risks
 
