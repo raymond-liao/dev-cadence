@@ -36,12 +36,12 @@
 
 **Files:** `tests/work-item-development-workflow-contract.sh`
 
-- [ ] 在现有入口规则读取和时序断言旁增加静态 RED 断言，要求规则同时出现以下可执行约束：primary/main checkout 是领取写入目标；领取状态必须先创建并持久化提交；worktree 与 dedicated branch 都从该提交创建；领取或持久化失败时不得创建 workspace/路由。断言应定位到具体缺失条件，失败输出不得只写 `contract failed`。
-- [ ] 将静态断言分别绑定到 `worktree.enabled: true` 和 `worktree.enabled: false` 的分支文本，确保修复只补 true 路径时测试仍失败。
-- [ ] 在同一脚本中加入隔离的临时 Git fixture：创建带有 `Draft` 卡片和 pending Backlog 行的 `main`，用未提交领取变更切出专用 branch 并提交，断言 `main` 仍为 `Draft`，作为错误实现的 RED 证据；随后在 primary checkout 提交领取变更，再从该提交创建 task branch，断言 `main` 与 task branch 都为 `In Progress` 且内容相同。
-- [ ] fixture 使用 `mktemp -d`、显式 `git -C` 和 `trap` 清理；断言 branch 指针和文件内容，不能只检查工作树未提交差异。
-- [ ] 运行 `bash tests/work-item-development-workflow-contract.sh`，在尚未修改 `src/skills/using-dev-cadence/SKILL.md` 时必须以非零状态失败，并在输出中同时显示静态缺口或动态 baseline 缺口；记录实际失败输出供后续 Repair Implementation 使用。
-- [ ] 运行 `git diff --check -- tests/work-item-development-workflow-contract.sh`，确认测试脚本无空白错误。
+- [x] 在现有入口规则读取和时序断言旁增加静态 RED 断言，要求规则同时出现以下可执行约束：primary/main checkout 是领取写入目标；领取状态必须先创建并持久化提交；worktree 与 dedicated branch 都从该提交创建；领取或持久化失败时不得创建 workspace/路由。断言应定位到具体缺失条件，失败输出不得只写 `contract failed`。
+- [x] 将静态断言分别绑定到 `worktree.enabled: true` 和 `worktree.enabled: false` 的分支文本，确保修复只补 true 路径时测试仍失败。
+- [x] 在同一脚本中加入隔离的临时 Git fixture：创建带有 `Draft` 卡片和 pending Backlog 行的 `main`，用未提交领取变更切出专用 branch 并提交，断言 `main` 仍为 `Draft`，作为错误实现的 RED 证据；随后在 primary checkout 提交领取变更，从该提交创建真实 task worktree 和 dedicated task branch，断言两种 workspace 与 `main` 都为 `In Progress` 且内容相同。
+- [x] fixture 使用 `mktemp -d`、显式 `git -C` 和可靠的 `EXIT` trap 清理；移除 linked worktree 后再清理临时目录，断言 branch/worktree 指针和文件内容，不能只检查工作树未提交差异。
+- [x] 运行 `bash tests/work-item-development-workflow-contract.sh`，在尚未修改 `src/skills/using-dev-cadence/SKILL.md` 时必须以非零状态失败，并在输出中同时显示静态缺口或动态 baseline 缺口；记录实际失败输出供后续 Repair Implementation 使用。
+- [x] 运行 `git diff --check -- tests/work-item-development-workflow-contract.sh`，确认测试脚本无空白错误。
 
 **Expected result:** 测试在当前规则下稳定 RED；动态 fixture 明确显示“只在 task branch 提交领取”不会改变 `main`，而“先在 main 提交领取”才能成为两条 workspace 的共同基线。
 
@@ -51,14 +51,14 @@
 
 **Files:** `src/skills/using-dev-cadence/SKILL.md`
 
-- [ ] 在现有“卡片与 Backlog 原子同步、先于 branch/worktree”规则之后加入明确身份不变量：无论配置值，领取事务必须在 primary checkout（本仓库基线为 `main`）执行。
-- [ ] 明确该事务必须先把权威卡片和 `docs/backlog.md` 原子同步为 `In Progress`，再创建并记录一个可验证的 main claim commit；只有提交成功并取得提交身份后，才允许创建任务 worktree 或 dedicated task branch。
-- [ ] 明确 `worktree.enabled: true` 的 workspace 从该 main claim commit 创建/验证 worktree；`worktree.enabled: false` 的 workspace 从该 main claim commit 创建/验证 dedicated task branch，且不得创建 worktree。
-- [ ] 明确任何 main checkout 写入、claim commit、workspace baseline 或卡片 Version/状态/Backlog 验证失败都必须停止，不得路由下游 workflow；保留“workspace preparation 先于下游路由”。
-- [ ] 明确 claim commit 是生命周期交接记录，不是 Repair Implementation 提交或阶段 checkpoint；不得因此改变现有 checkpoint 提交门。
-- [ ] 明确创建后在选定 workspace 检查卡片 Version `4`、`In Progress`、匹配 Backlog 行，并保持领取资格、原子性、幂等性和 Change Log 规则不变。
-- [ ] 运行 `bash tests/work-item-development-workflow-contract.sh`，预期从 RED 变为 PASS；运行 `bash tests/configuration-contract.sh`，预期 PASS。
-- [ ] 运行 `git diff --check -- src/skills/using-dev-cadence/SKILL.md`，确认规则文本无空白错误，并用 `rg -n` 检查新增关键词在 source 中可定位。
+- [x] 在现有“卡片与 Backlog 原子同步、先于 branch/worktree”规则之后加入明确身份不变量：无论配置值，领取事务必须在已解析并验证的 authoritative base ref primary checkout（本仓库基线为 `main`）执行。
+- [x] 明确该事务必须先把权威卡片和 `docs/backlog.md` 原子同步为 `In Progress`，再创建并记录一个可验证的 claim commit；只有提交成功、推进精确 authoritative base ref 并取得提交身份后，才允许创建任务 worktree 或 dedicated task branch。
+- [x] 明确 `worktree.enabled: true` 的 workspace 从该 claim commit 创建/验证 worktree；`worktree.enabled: false` 的 workspace 从该 claim commit 创建/验证 dedicated task branch，且不得创建 worktree。
+- [x] 明确任何 primary checkout 写入、claim persistence/commit、base-ref advancement、workspace baseline 或卡片 Version/状态/Backlog 验证失败都必须停止，不得路由下游 workflow；保留“workspace preparation 先于下游路由”。
+- [x] 明确 claim commit 是生命周期交接记录，不是 Repair Implementation 提交或阶段 checkpoint；不得因此改变现有 checkpoint 提交门。
+- [x] 明确创建后在选定 workspace 检查卡片 Version 与 authoritative card 一致、`In Progress`、匹配 Backlog 行，并保持领取资格、原子性、幂等性和 Change Log 规则不变。
+- [x] 运行 `bash tests/work-item-development-workflow-contract.sh`，预期从 RED 变为 PASS；运行 `bash tests/configuration-contract.sh`，预期 PASS。
+- [x] 运行 `git diff --check -- src/skills/using-dev-cadence/SKILL.md`，确认规则文本无空白错误，并用 `rg -n` 检查新增关键词在 source 中可定位。
 
 **Expected result:** focused contract 能同时证明 true/false 路径的 main 持久化与基线顺序，入口规则不会允许只在隔离 workspace 写入领取状态。
 
@@ -68,11 +68,11 @@
 
 **Files:** `version`、由构建生成的 `dist/.dev-cadence/**`
 
-- [ ] 将根目录 `version` 从 `0.26.3` 更新为 `0.26.4`；不得修改 B-015 卡片 Version `4`。
-- [ ] 执行 `bash scripts/build.sh`，使 `dist/.dev-cadence/skills/using-dev-cadence/SKILL.md` 从 source 自动同步；不得直接编辑或强制添加被忽略的 dist 文件。
-- [ ] 执行 `bash tests/package-contract.sh` 和 `bash tests/install-contract.sh`，确认生成包包含 main claim 规则、版本元数据和安装流程；若脚本需要构建，使用脚本自身生成结果，不手工复制。
-- [ ] 用 `cmp -s src/skills/using-dev-cadence/SKILL.md dist/.dev-cadence/skills/using-dev-cadence/SKILL.md` 验证 source/dist 内容一致，并用 `rg --no-ignore -n` 在两处检查 primary checkout、claim commit、true/false workspace 顺序关键词。
-- [ ] 检查 `git status --short`，确保没有 `.dev-cadence.yaml`、`.env`、临时日志、PID 或本机绝对路径产物进入变更集。
+- [x] 将根目录 `version` 从 `0.26.3` 更新为 `0.26.4`；不得修改 B-015 卡片 Version `4`。
+- [x] 执行 `bash scripts/build.sh`，使 `dist/.dev-cadence/skills/using-dev-cadence/SKILL.md` 从 source 自动同步；不得直接编辑或强制添加被忽略的 dist 文件。
+- [x] 执行 `bash tests/package-contract.sh` 和 `bash tests/install-contract.sh`，确认生成包包含 main claim 规则、版本元数据和安装流程；若脚本需要构建，使用脚本自身生成结果，不手工复制。
+- [x] 用 `cmp -s src/skills/using-dev-cadence/SKILL.md dist/.dev-cadence/skills/using-dev-cadence/SKILL.md` 验证 source/dist 内容一致，并用 `rg --no-ignore -n` 在两处检查 primary checkout、claim commit、true/false workspace 顺序关键词。
+- [x] 检查 `git status --short`，确保没有 `.dev-cadence.yaml`、`.env`、临时日志、PID 或本机绝对路径产物进入变更集。
 
 **Expected result:** 根版本为 `0.26.4`，构建成功，package/install contract 和 source/dist 同步检查全部通过。
 
@@ -82,13 +82,13 @@
 
 **Files:** 实现改动及后续 `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md`
 
-- [ ] 执行 `bash scripts/check-whitespace.sh`，预期 PASS。
-- [ ] 执行 `bash scripts/check-all.sh`，预期完成构建、空白检查和全部仓库契约测试且返回 0。
-- [ ] 重新执行 `bash tests/work-item-development-workflow-contract.sh`、`bash tests/configuration-contract.sh`、`bash tests/package-contract.sh`、`bash tests/install-contract.sh`，保留每个命令的返回状态和关键输出。
-- [ ] 执行 `git diff --check`，并用 `git diff --name-status main...HEAD` 审查变更只包含 `src/skills/using-dev-cadence/SKILL.md`、`tests/work-item-development-workflow-contract.sh`、`version` 和本次 B-015 运行记录；`dist` 只作为构建验证产物，不直接编辑。
-- [ ] 用 `rg --no-ignore -n` 对照 source 与 dist，确认规则没有被构建截断；检查新增 Markdown 链接目标存在，且没有绝对本机路径。
-- [ ] 在实现阶段创建 `04-repair-record.md`，记录 RED/GREEN、main claim commit、true/false baseline 验证、构建与回归命令；本计划阶段不提前伪造实现结果。
-- [ ] 完成集成前自检：`git status --short` 只剩计划允许的已跟踪文件，确认不 push、不 amend，等待 Code Review 和 Regression Verification 门禁。
+- [x] 执行 `bash scripts/check-whitespace.sh`，预期 PASS。
+- [x] 执行 `bash scripts/check-all.sh`，预期完成构建、空白检查和全部仓库契约测试且返回 0。
+- [x] 重新执行 `bash tests/work-item-development-workflow-contract.sh`、`bash tests/configuration-contract.sh`、`bash tests/package-contract.sh`、`bash tests/install-contract.sh`，保留每个命令的返回状态和关键输出。
+- [x] 执行 `git diff --check`，并用 `git diff --name-status main...HEAD` 审查变更只包含 `src/skills/using-dev-cadence/SKILL.md`、`tests/work-item-development-workflow-contract.sh`、`version` 和本次 B-015 运行记录；`dist` 只作为构建验证产物，不直接编辑。
+- [x] 用 `rg --no-ignore -n` 对照 source 与 dist，确认规则没有被构建截断；检查新增 Markdown 链接目标存在，且没有绝对本机路径。
+- [x] 在实现阶段创建 `04-repair-record.md`，记录 RED/GREEN、main claim commit、true/false baseline 验证、构建与回归命令；本计划阶段不提前伪造实现结果。
+- [x] 完成集成前自检：`git status --short` 只剩计划允许的已跟踪文件，确认不 push、不 amend，等待 Code Review 和 Regression Verification 门禁。
 
 **Expected result:** 全量检查通过，变更范围闭合，主 checkout 与两种 task workspace 的持久化基线证据可在后续 review/验收记录中追溯。
 

@@ -1,5 +1,12 @@
 # B-015 Repair Implementation Record
 
+## Implementation Identity
+
+- Implementation Base SHA：`0e5d69e73f6bf760ff954ba15119ad9c429571be`
+- Final Implementation SHA：`04a958e07ccdb6a3a4ba20a1d3c053b1104d750e`
+- Reviewed implementation range：`0e5d69e73f6bf760ff954ba15119ad9c429571be..04a958e07ccdb6a3a4ba20a1d3c053b1104d750e`
+- Changed Files：`src/skills/using-dev-cadence/SKILL.md`、`tests/work-item-development-workflow-contract.sh`、`version`、`docs/bugs/B-015-work-item-claim-not-persisted-on-main.md`、`docs/backlog.md`、本运行目录下的 B-015 records。
+
 ## Scope And Entry Gates
 
 - 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
@@ -11,7 +18,7 @@
 
 ### RED
 
-Task 1 在 source 规则变更前运行 `bash tests/work-item-development-workflow-contract.sh` 返回 `1`。临时 Git fixture 已证明错误基线：未提交领取变更后创建 `task-from-uncommitted-claim` 并提交，`main` 的卡片仍为 `Draft`、Backlog 行仍为 pending，且两分支指针不同。随后 fixture 证明正确基线：先在 `main` 提交领取，再创建 `task-from-primary-claim`，两分支指针相同，卡片和 Backlog 均为 `In Progress` 且内容一致。预期失败输出为：
+Task 1 在 source 规则变更前运行 `bash tests/work-item-development-workflow-contract.sh` 返回 `1`。临时 Git fixture 已证明错误基线：未提交领取变更后创建 `task-from-uncommitted-claim` 并提交，`main` 的卡片仍为 `Draft`、Backlog 行仍为 pending，且两分支指针不同。随后 fixture 证明正确基线：先在 `main` 提交领取，再创建真实 `task-worktree` 和 `task-from-primary-claim`，两种 workspace 的指针、卡片和 Backlog 均与 `main` 的 `In Progress` 领取状态一致。预期失败输出为：
 
 ```text
 B-015 primary-checkout claim baseline fixture passed.
@@ -20,7 +27,7 @@ FAIL: missing enabled worktree path primary checkout claim write target in src/s
 
 ### GREEN
 
-入口规则现在要求无论 `worktree.enabled` 配置为何，都必须先解析并验证权威 base ref，且在 primary checkout 原子同步卡片与 `docs/backlog.md`、记录 claim commit 并验证该提交推进该精确 ref 后，才可创建任务 workspace。`true` 路径从该提交创建或验证 worktree；`false` 路径从该提交准备 dedicated branch 且不得创建 worktree。任何 primary 写入、claim persistence/commit、base-ref advancement、基线、Version、状态或 Backlog 验证的失败均阻止对应 workspace 创建和下游路由；成功的写入或提交不构成停止条件。
+入口规则现在要求无论 `worktree.enabled` 配置为何，都必须先解析并验证权威 base ref，在 primary checkout 原子同步卡片与 `docs/backlog.md`，记录 claim commit 并确认其推进该精确 ref 后，才可创建任务 workspace。`true` 路径从该提交创建或验证 worktree；`false` 路径从该提交准备 dedicated branch 且不得创建 worktree。任何 primary 写入、claim persistence/commit、base-ref advancement、基线、Version、状态或 Backlog 验证的失败均阻止对应 workspace 创建和下游路由；成功的写入或提交不构成停止条件。B-015 运行记录核对卡片 Version `4`，通用入口规则只要求与 authoritative card Version 一致。
 
 动态 fixture 在 GREEN 回归中再次覆盖两条基线：
 
@@ -46,6 +53,14 @@ FAIL: missing enabled worktree path primary checkout claim write target in src/s
 | `git diff --check` | ✅ 返回 `0` | 无空白错误。 |
 
 ## 范围、自检与风险
+
+## Code Review Evidence
+
+- Report: [Code review report](04-code-review-report.md) (`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md`)
+- Review decision：✅ `ready to proceed to Regression Verification`；最终 whole-branch review 覆盖 `0e5d69e..04a958e`。
+- Critical findings：`0`，无 Critical finding。
+- Important findings：首轮 `4` 个，均已在 `04a958e` 修复并由复审验证 `fixed`；当前 `0` 个未解决。
+- Unresolved findings：`None`。
 
 `git diff --name-status main...HEAD` 显示的实现路径为：
 
