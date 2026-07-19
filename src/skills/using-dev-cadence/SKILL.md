@@ -175,6 +175,8 @@ After a work item is confirmed and the user asks to implement, repair, or refact
 
 Use `work-item-analysis` when the user wants an Asset Workflow that analyzes, clarifies, or confirms one Story, Task, or Bug definition, or a selected batch of Story, Task, or Bug definitions, before downstream delivery. `work-item-analysis` owns detailed work-item definition analysis, Story `Ready` decisions, Task maturity clarification, and Bug intake clarification without technical root cause analysis. It does not replace `work-item-planning` portfolio structure, Story Map or Backlog ordering, `discovery` product-level Feature definition, or downstream `feature-dev`, `bug-fix`, and `refactor` execution. After analysis, hand confirmed work items to `feature-dev`, `bug-fix`, or `refactor` according to the requested delivery outcome.
 
+A missing Feature reference or product-design baseline alone does not select `discovery`; return to `discovery` only when the Story needs a new or changed product-level conclusion. S-042 remains a historical regression example of an independent Story and does not require a Feature reference to become `Ready`.
+
 Use `bug-fix` when the existing expected behavior should already work and the user reports that it does not.
 Use `feature-dev` when the user asks to implement a Feature, add behavior, or intentionally change expected behavior.
 Use `refactor` when the user asks to improve internal structure without intentionally changing expected behavior.

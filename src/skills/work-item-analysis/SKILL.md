@@ -95,13 +95,13 @@ After confirmation, atomically write only the confirmed card updates.
 
 ## Story Analysis
 
-Story analysis must cover role, goal, value, primary System Feature, included scope, excluded scope, observable behavior, business rules, dependencies, open questions, and acceptance conditions.
+Story analysis must cover role, goal, value, included scope, excluded scope, observable behavior, business rules, dependencies, open questions, and acceptance conditions. When a Story has a confirmed primary System Feature or Story Map placement, analysis must retain that traceability; an independent Story without a Feature reference may still become `Ready`.
 
 Story analysis must define, at minimum:
 
 - the user or business role;
 - the goal, scenario, and expected business value;
-- the primary System Feature and required product traceability;
+- when present, the confirmed primary System Feature or Story Map traceability;
 - included scope and excluded scope;
 - observable product behavior;
 - applicable business rules and constraints;
@@ -111,9 +111,9 @@ Story analysis must define, at minimum:
 Story must use the shared included-scope and excluded-scope heading semantics from `document-conventions`.
 
 Story must reach `Ready` before entering `feature-dev`.
-Story may become `Ready` only when the goal, scope, primary Feature, acceptance conditions, and development-blocking open questions are explicit and the user has confirmed the work-item definition.
+Story may become `Ready` only when the role, goal, value, scope, observable behavior, acceptance conditions, direct dependencies, and development-blocking open questions are explicit and the user has confirmed the work-item definition.
 
-If Story analysis reveals that the repository still lacks the necessary Feature identity, User Journey meaning, PRD conclusion, or Business Architecture conclusion, return to `discovery`. Work Item Analysis must not define or reinterpret Feature identity.
+A missing Feature reference or product-design baseline alone must not return Story analysis to `discovery`. Return to `discovery` only when the Story requires a new or changed product-level conclusion, including a User Journey, Feature, PRD, or Business Architecture conclusion. Work Item Analysis must not define or reinterpret Feature identity.
 
 ## Task Analysis
 
