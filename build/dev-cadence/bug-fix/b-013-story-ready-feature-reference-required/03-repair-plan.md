@@ -277,3 +277,12 @@
 ## Execution Method
 
 按 `executing-plans` 在当前隔离 worktree 内串行执行。任务彼此依赖（RED 测试 -> GREEN 规则 -> 版本/安装 -> 全量验证），不拆分为独立子代理任务。
+
+## Pre-Implementation Design Freshness Gate
+
+- Checked at：`2026-07-19T21:45:40+0800`
+- Work item input：`docs/bugs/B-013-story-ready-feature-reference-required.md`，Version `2`、Status `In Progress`；任务分支与 `main` 的可见事实一致。
+- Confirmed inputs：[问题诊断记录](01-problem-diagnosis-record.md)、[修复方案](02-repair-solution.md) 和本计划；三者均已确认。
+- Code identity：branch `codex/b013-story-ready-feature` at `7ce8775a6e5e2a4f9b273f3b4bafd200007d5f51`；base `main` at `5cb09c6e1423add910c63b25470f8aa6beff5c70`；两者差异仅为本运行的诊断、方案、计划和 manifest 记录。
+- Dependency state：`docs/stories/S-042-dev-cadence-primary-subagent-delegation.md` 存在；没有 `docs/product-design/` 基线，这正是本修复必须允许的独立 Story 场景，不构成新依赖。
+- Conclusion：✅ `confirmed` inputs remain valid；无诊断、方案、计划、架构、依赖或工作项可见事实变更，允许进入 Repair Implementation，无需重新确认。

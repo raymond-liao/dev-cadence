@@ -20,7 +20,7 @@
 | Problem Diagnosis | ✅ `confirmed` | [B-013 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/01-problem-diagnosis-record.md` | `2026-07-19T21:34:40+0800`，选项 1：确认诊断并进入 Repair Solution | `e256de2b79b32a91cf0dee45ef42d19e559b4b67` | 用户确认诊断范围；确认后的检查点已验证。 |
 | Repair Solution | ✅ `confirmed` | [B-013 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/02-repair-solution.md` | `2026-07-19T21:40:58+0800`，选项 1：确认方案并进入 Repair Plan | `03cd9c5e4054111b5656e8ac719e351516790880` | 用户确认最小修复边界；确认后的检查点已验证。 |
 | Repair Plan | ✅ `confirmed` | [B-013 Repair Plan](03-repair-plan.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/03-repair-plan.md` | `2026-07-19T21:44:19+0800`，选项 1：确认计划并进入 Repair Implementation | `6d72aef373d6dd6361d1d1e81a59c80a5fb58d56` | 用户确认测试优先计划；确认后的检查点已验证。 |
-| Repair Implementation | 🔄 `in_progress` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 正在进行实施前新鲜度复核。 |
+| Repair Implementation | 🔄 `in_progress` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 实施前新鲜度复核已通过；正在执行 Task 1 RED 契约。 |
 | Code Review | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-code-review-report.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 | Regression Verification | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
@@ -33,6 +33,13 @@
 - Visible Status：`In Progress`
 - Selected scope：移除 Story `Ready` 的强制主 System Feature 条件，同时保留已有 Feature 的追踪关系与真正产品级结论变化时的 Discovery 路由；不改变 Task、Bug 或 Delivery Workflow 的入口边界。
 - Claim persistence：主 checkout 已在提交 `5cb09c6e1423add910c63b25470f8aa6beff5c70` 原子同步 B-013 卡片与 Backlog 为 `In Progress`；任务 worktree 从该提交创建。
+
+## Pre-Implementation Design Freshness
+
+- Checked at：`2026-07-19T21:45:40+0800`
+- Inputs：B-013 卡片 Version `2`、Status `In Progress`；已确认的 `01-problem-diagnosis-record.md`、`02-repair-solution.md`、`03-repair-plan.md`；branch `codex/b013-story-ready-feature` at `7ce8775a6e5e2a4f9b273f3b4bafd200007d5f51`；base `main` at `5cb09c6e1423add910c63b25470f8aa6beff5c70`。
+- Dependency state：S-042 历史回归卡存在；没有 `docs/product-design/` 基线，符合独立 Story 无 Feature 场景。
+- Conclusion：✅ `confirmed` inputs remain valid；差异仅为当前运行记录，没有需要回退或重新确认的设计变化。
 
 ## Current-Run Discard Context And Ownership Evidence
 
