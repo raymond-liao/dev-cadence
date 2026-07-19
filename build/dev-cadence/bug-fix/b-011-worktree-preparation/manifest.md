@@ -5,7 +5,7 @@
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Branch: `codex/fix-b011-worktree-preparation`
 - Started at: `2026-07-19T16:36:08+0800`
-- Current stage: 🔄 `in_progress` — Business Acceptance
+- Current stage: 🔄 `in_progress` — Completion
 - Overall Status: 🔄 `in_progress`
 - Run directory: `build/dev-cadence/bug-fix/b-011-worktree-preparation/`
 - Workspace: `.worktrees/b-011-worktree-preparation`
@@ -31,7 +31,7 @@
 | Repair Plan | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/03-repair-plan.md` | `2026-07-19T16:56:28+0800`, 选项 1 | `a89aee8f8184833b696f5717a06fe1a48f707426` | TDD 实施计划已确认。 |
 | Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/04-repair-record.md` | `not required` | `0f93fc2e63baae88844bd84f29f8d5bf4338f28e` | 实施、独立任务审查和最终审查均通过；交付记录校验通过。 |
 | Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/05-regression-test-report.md` | `not required` | `3ec22e2f9e445d0243690c7dcd3057e077878ffb` | Verification Decision：`ready`；可进入业务验收。 |
-| Business Acceptance | 🔄 `in_progress` | `pending` | `pending` | `pending` | 等待用户从固定业务验收菜单中选择；记录路径：`build/dev-cadence/bug-fix/b-011-worktree-preparation/06-business-acceptance-record.md`。 |
+| Business Acceptance | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-011-worktree-preparation/06-business-acceptance-record.md` | `2026-07-19T18:13:53+0800`, Accept | `fa4ac458d54622da9639b3373eb461757c26d50f` | 用户已接受；等待 Completion 决定。 |
 
 ## 当前运行丢弃上下文
 
