@@ -44,6 +44,7 @@ Do not treat documented rule names, obvious placeholders, examples, or test fixt
 ## Message Rules
 
 - Use `<type>[optional scope]: <description>`; scope is optional.
+- Merge commits created for a Dev Cadence-managed integration must also use this Conventional Commit format with an explicit message; do not accept Git's default `Merge ...` message.
 - Use `feat`, `fix`, `perf`, `refactor`, `style`, `docs`, `test`, `build`, `ci`, or `chore` according to the staged intent.
 - `style` means formatting-only changes that do not change behavior; user-interface behavior or appearance changes use the type matching their actual intent.
 - Describe the change's intent and impact accurately. Use technical terms when they are necessary for accuracy.
