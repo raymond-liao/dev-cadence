@@ -18,7 +18,7 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Problem Diagnosis | ✅ `confirmed` | [B-013 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/01-problem-diagnosis-record.md` | `2026-07-19T21:34:40+0800`，选项 1：确认诊断并进入 Repair Solution | `e256de2b79b32a91cf0dee45ef42d19e559b4b67` | 用户确认诊断范围；确认后的检查点已验证。 |
-| Repair Solution | ✅ `confirmed` | [B-013 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/02-repair-solution.md` | `2026-07-19T21:40:58+0800`，选项 1：确认方案并进入 Repair Plan | ⏳ `pending` | 用户确认最小修复边界；正在绑定确认后的检查点。 |
+| Repair Solution | ✅ `confirmed` | [B-013 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/02-repair-solution.md` | `2026-07-19T21:40:58+0800`，选项 1：确认方案并进入 Repair Plan | `03cd9c5e4054111b5656e8ac719e351516790880` | 用户确认最小修复边界；确认后的检查点已验证。 |
 | Repair Plan | 🔄 `in_progress` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/03-repair-plan.md` | ⏳ `pending` | ⏳ `pending` | 正在编制测试优先实施计划。 |
 | Repair Implementation | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 | Code Review | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-code-review-report.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
