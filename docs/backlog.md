@@ -12,6 +12,8 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Draft` | `P1` |
+| `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Draft` | `P1` |
 | `S-041` | [Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) | `3` | `Draft` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
@@ -34,8 +36,6 @@
 | `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `1` | `Draft` | `P1` |
 | `S-033` | [Worktree 清理结果记录](stories/S-033-worktree-cleanup-result-recording.md) | `1` | `Draft` | `P1` |
 | `S-034` | [发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) | `1` | `Draft` | `P3` |
-| `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Draft` | `P1` |
-| `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Draft` | `P1` |
 
 ## 已完成
 
@@ -96,6 +96,8 @@
 
 | 并行组 | 可并行工作项 | 前置条件 | 状态 |
 |---:|---|---|---|
+| 24 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | Draft |
+| 23 | [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | Draft |
 | 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | Draft |
 | 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | Draft |
 | 8 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md)；[S-019](stories/S-019-final-verification-revision-binding.md)；[S-020](stories/S-020-implementation-review-risk-to-verification.md)；[S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | Draft |
@@ -113,8 +115,6 @@
 | 19 | [S-032](stories/S-032-detached-head-finishing.md) | - | Draft |
 | 20 | [S-033](stories/S-033-worktree-cleanup-result-recording.md) | [S-030](stories/S-030-worktree-ownership-detection.md)、[S-031](stories/S-031-preserve-worktree-run-records.md) | ⚠️ Blocked |
 | 21 | [S-034](stories/S-034-release-and-production-delivery-capability.md) | - | Draft |
-| 23 | [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | Draft |
-| 24 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | Draft |
 
 用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。上述状态不替代 Workflow 入口门禁。
 
@@ -182,10 +182,11 @@
 
 ## Ordering Version
 
-`1`
+`2`
 
 ## Ordering Change Log
 
 | Ordering Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
 | 1 | 2026-07-19T09:18:15+08:00 | Raymond Liao <raymond-liao@outlook.com> | 确认 worktree 相关工作项 `S-030`、`S-031`、`S-032` 和 `S-033` 保持在 `T-002` 之后。 | 用户明确要求 worktree 相关工作后置；通用 `P0` 风险排序不得自动覆盖该顺序。 |
+| 2 | 2026-07-19T11:28:36+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将 `B-012` 调整为待处理首项，将 `B-011` 调整为第二项，二者均位于 `S-041` 之前。 | 用户明确要求把新发现的 workflow 启动 Bug 排到前面；按执行顺序先处理 Ready/claim 门禁，再处理领取后的 worktree 准备。 |
