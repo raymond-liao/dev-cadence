@@ -20,9 +20,9 @@
 | Problem Diagnosis | ✅ `confirmed` | [B-010 问题诊断记录](01-problem-diagnosis-record.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/01-problem-diagnosis-record.md` | `2026-07-19T15:18:41+08:00`, option 1 | `92d454c` | 用户确认当前诊断并进入修复方案 |
 | Repair Solution | ✅ `confirmed` | [B-010 修复方案](02-repair-solution.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/02-repair-solution.md` | `2026-07-19T15:35:59+08:00`, option 1 | `786f155` | 用户确认方案 A |
 | Repair Plan | ✅ `confirmed` | [B-010 修复计划](03-repair-plan.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/03-repair-plan.md` | `2026-07-19T15:50:00+08:00`, option 1 | `89e430a` | 用户确认计划并通过新鲜度门禁 |
-| Repair Implementation | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 并行 TDD 实施中 |
-| Code Review | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/04-code-review-report.md` | ⏳ `pending` | ⏳ `pending` | 等待实施完成 |
-| Regression Verification | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | 等待实施与审查完成 |
+| Repair Implementation | ✅ `confirmed` | [B-010 修复记录](04-repair-record.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/04-repair-record.md` | `implementation complete` | `598cb9a` | TDD RED/GREEN 与实施检查完成 |
+| Code Review | ✅ `confirmed` | [B-010 Code Review Report](04-code-review-report.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/04-code-review-report.md` | `passed` | `598cb9a` | 无 Critical/Important finding |
+| Regression Verification | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | 合并后回归验证中 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 等待回归验证 |
 
 ## Work Item Lifecycle Writeback
