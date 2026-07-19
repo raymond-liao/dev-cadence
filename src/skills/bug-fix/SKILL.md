@@ -223,7 +223,7 @@ A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known roo
 
 Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version.
 
-At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, exact Backlog source and destination sections, and the derived parallel-view projection. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or repair result qualifies under `.dev-cadence/skills/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
+At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, and exact Backlog source and destination sections. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or repair result qualifies under `.dev-cadence/skills/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
 ## Active Task Change Handling
 
@@ -773,11 +773,11 @@ After identity and visible-fact checks pass, perform one atomic card and Backlog
 
 1. Update the Bug card `Status` to `Done`.
 2. Record the repair result and integration reference on the Bug card. When this execution is an important event, append its Change Log event using the current Version; an execution-only status or delivery-reference write does not increment the confirmed requirement Version, and the same execution event must not duplicate the Change Log entry.
-3. Atomically update the Backlog: remove the matching row from the active or pending lifecycle section, add that same row to the completed lifecycle section with status `Done`, and in the current parallel table remove only the matching Bug entry.
+3. Atomically update the Backlog: remove the matching row from the active or pending lifecycle section and add that same row to the completed lifecycle section with status `Done`.
 
-If any card or Backlog write cannot be completed against the re-read facts, perform zero partial writes and stop for a user decision. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; preserve the relative order of the remaining parallel entries and do not recalculate or reorder unrelated work items as part of this write.
+If any card or Backlog write cannot be completed against the re-read facts, perform zero partial writes and stop for a user decision. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; do not recalculate or reorder unrelated work items as part of this write.
 
-The manifest, Business Acceptance record, and follow-up evidence must record the actual sync result, including the matched Bug ID and Version, card status and repair/integration references, the source and destination lifecycle sections, parallel-table removal, or the conflict and no-write outcome. The `merge` write must be idempotent: a repeat after the same visible facts are already synchronized records the existing `Done` state without duplicating the card reference, execution Change Log entry, or Backlog row.
+The manifest, Business Acceptance record, and follow-up evidence must record the actual sync result, including the matched Bug ID and Version, card status and repair/integration references, the source and destination lifecycle sections, or the conflict and no-write outcome. The `merge` write must be idempotent: a repeat after the same visible facts are already synchronized records the existing `Done` state without duplicating the card reference, execution Change Log entry, or Backlog row.
 
 Before marking the run terminal, complete this readiness checklist:
 

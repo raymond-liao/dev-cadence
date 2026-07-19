@@ -129,10 +129,10 @@
 
 ## Dev Cadence
 
-When the user asks for product discovery, product ideas, requirements work, development work, active-task follow-up, testing, verification, or commit/checkpoint operations, check Dev Cadence before any repository exploration, product-design changes, implementation, Git mutation, or clarifying question:
+Before responding to or acting on requests involving product discovery, product ideas, architecture design, requirements or work-item management, development, active-task follow-up, testing, verification, Dev Cadence-managed assets, or commit/checkpoint operations, read and follow:
 
 `.dev-cadence/skills/using-dev-cadence/SKILL.md`
 
-If an installed Dev Cadence flow applies, use it. If no installed flow applies, handle the request normally.
+Do this before any repository exploration, clarification question, user-facing guidance, document or code change, test execution, verification claim, or Git mutation.
 
-Root-level `*.md` files and all files under `docs/` do not require new or updated automated tests. Do not add or modify tests solely because those documentation files changed. If the same task changes executable behavior, test that executable behavior.
+Let `using-dev-cadence` determine whether an installed workflow, shared capability, or ordinary handling applies.

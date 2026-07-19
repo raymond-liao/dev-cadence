@@ -19,7 +19,7 @@
 - 不从 Git 历史或当前 Git identity 推断旧作者，不把 date-only 补成午夜或伪造时区。
 - `Ordering Version` 只表示用户确认的排序决策，不是 Backlog 全局版本。
 - 排序写入前必须同时比较 `Ordering Version` 与可见 `待处理` ID 顺序。
-- 排序确认必须原子同步 `待处理`、派生并行表、`Ordering Version` 和 `Ordering Change Log`。
+- 排序确认必须原子同步 `待处理`、`Ordering Version` 和 `Ordering Change Log`；Backlog 不再维护并行实施表。
 - 历史迁移不得删除任何原始重要事件；只改版本治理元数据、表格字段、顺序和迁移说明，不改工作项目标、范围、验收、关系或产品事实。
 - 可安装包版本从 `0.25.1` 升为 `0.26.0`；运行 `bash scripts/build.sh`，但不强制提交被忽略的 `dist/`。
 - 所有实现提交只包含当前任务文件，使用 `.dev-cadence/skills/git-commit/SKILL.md` 的 staged-only 提交门禁。
@@ -155,7 +155,6 @@ git commit -m "feat(flow): centralize Change Log contract"
 - Modify: `src/skills/bug-fix/SKILL.md`
 - Modify: `src/skills/refactor/SKILL.md`
 - Modify: `tests/work-item-planning-contract.sh`
-- Modify: `tests/parallel-work-table-contract.sh`
 - Modify: `tests/work-item-development-workflow-contract.sh`
 - Modify: `tests/bug-fix-backlog-sync-contract.sh`
 - Modify: `tests/workflow-symmetry.sh`
@@ -172,7 +171,7 @@ git commit -m "feat(flow): centralize Change Log contract"
 assert_literal "ordering version identity" '`Ordering Version` is the identity of the latest user-confirmed ordering decision, not a global Backlog version.' "$SKILL"
 assert_match "proposal binds version and pending facts" 'proposal.*`Ordering Version`.*`待处理`.*ID.*order' "$SKILL"
 assert_match "write revalidates both identities" 're-read.*`Ordering Version`.*`待处理`.*stop.*conflict|stop.*conflict.*re-read' "$SKILL"
-assert_match "atomic ordering unit" '`待处理`.*`当前可并行实施表`.*`Ordering Version`.*`Ordering Change Log`' "$SKILL"
+assert_match "atomic ordering unit" 'three-part atomic ordering unit.*`待处理`.*`Ordering Version`.*`Ordering Change Log`' "$SKILL"
 ```
 
 增加正向触发、新工作项明确插入、排序例外新增/修改/取消，以及生命周期、完成移出、机械同步、派生刷新、格式/链接不触发的断言。
@@ -214,13 +213,12 @@ Run:
 
 ```bash
 bash tests/work-item-planning-contract.sh
-bash tests/parallel-work-table-contract.sh
 bash tests/work-item-development-workflow-contract.sh
 bash tests/bug-fix-backlog-sync-contract.sh
 bash tests/workflow-symmetry.sh
 ```
 
-Expected: 全部 PASS；feature、bug-fix、refactor 的 lifecycle 规则保持对称，Bug 特有 repair event 语义保留。
+Expected: 全部 PASS；feature、bug-fix、refactor 的 lifecycle 规则保持对称，Bug 特有 repair event 语义保留，且不再引用并行实施表。
 
 - [x] **Step 6: 自审与提交**
 
@@ -318,11 +316,10 @@ Run:
 
 ```bash
 bash tests/change-log-contract.sh
-bash tests/parallel-work-table-contract.sh
 git diff --check
 ```
 
-Expected: 全部 PASS；57 张卡均为五列；旧表头为 0；Registry 无 Change Log；六个倒序块已修复；Backlog Version 投影一致；所有原始 Change/Reason 文本仍存在，新增 16 条迁移事件。
+Expected: 全部 PASS；原始 57 张卡迁移完成且当前 60 张卡均为五列；旧表头为 0；Registry 无 Change Log；六个倒序块已修复；Backlog Version 投影一致；所有原始 Change/Reason 文本仍存在，新增 16 条迁移事件。
 
 - [x] **Step 7: 自审与提交**
 
