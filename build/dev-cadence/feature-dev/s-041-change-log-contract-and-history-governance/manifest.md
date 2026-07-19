@@ -27,7 +27,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [需求确认](01-requirements.md) | `pending` | `pending` | Requirements are reviewable; awaiting the stage gate. |
+| Requirements Confirmation | 🔄 `in_progress` | [需求确认](01-requirements.md) | `pending` | `ae6a932f18f452ec6e14f70170807700d50b1369` | Requirements are reviewable; awaiting the stage gate. |
 | Technical Solution | ⏳ `pending` | `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/02-technical-solution.md` | `pending` | `pending` | Enhanced exploration required. |
 | Implementation Plan | ⏳ `pending` | `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/03-implementation-plan.md` | `pending` | `pending` | Not started. |
 | Development Implementation | ⏳ `pending` | `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/04-implementation-record.md` | `not applicable` | `pending` | Not started. |
@@ -58,7 +58,7 @@
 - Run directory: `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance`
 - Task branch: `codex/s-041-change-log-governance-v2`
 - Base branch: `main`
-- Expected HEAD SHA: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8`
+- Expected HEAD SHA: `ae6a932f18f452ec6e14f70170807700d50b1369`
 - Expected base SHA: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8`
 - Owned commit range: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8..HEAD`
 - Owned tracked paths: `docs/backlog.md`, `docs/stories/S-041-change-log-contract-and-history-governance.md`, `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/`
@@ -69,4 +69,3 @@
 ## Design Freshness
 
 - Status: `not evaluated; required immediately before Development Implementation`
-
