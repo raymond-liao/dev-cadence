@@ -8,7 +8,7 @@
 - Task branch: `codex/s-041-change-log-governance-v2`
 - Base branch: `main`
 - Started at: `2026-07-19T11:54:43+08:00`
-- Current stage: `Business Acceptance`
+- Current stage: `Completion`
 - Overall status: 🔄 `in_progress`
 - Output language: `zh-CN`
 - Configuration source: `target repository root/.dev-cadence.yaml`
@@ -32,7 +32,7 @@
 | Implementation Plan | ✅ `confirmed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/03-implementation-plan.md`) | `confirmed: delegated by user on 2026-07-19T12:02:17+08:00` | `127cc6c543923ef31d5794094484a60346510186` | Four TDD tasks selected for Subagent-Driven Development. |
 | Development Implementation | ✅ `completed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/03-implementation-plan.md`) | `delegated continuation confirmed on 2026-07-19T12:02:17+08:00` | `2500a5cfc1f5658b927c80b5e140bbdf8c3ee0a7` | Tasks 1-4 completed with per-task RED/GREEN evidence and independent task reviews. Main sync was then merged as `6b6c2d7`; final system tests run on that merge commit. |
 | System Testing | ✅ `completed` | [系统测试报告](04-system-test-report.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/04-system-test-report.md`) | `not applicable` | `d47bbc62d102f1fe39d7b483fb1444c99e7e751e` | All focused and full contract checks passed after main synchronization; final whole-branch review found no findings. |
-| Business Acceptance | ⏳ `pending` | ⏳ pending | `pending` | `pending` | Not started. |
+| Business Acceptance | ✅ `accepted` | [业务验收](05-business-acceptance.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/05-business-acceptance.md`) | `Accept: user confirmed on 2026-07-19T14:32:19+0800` | `ccc3b65c56af9bdfc98c929d671e2a9fe5cb65e3` | Accepted with no residual risk identified. Final Git integration decision remains pending. |
 
 ## Lifecycle Writeback
 
@@ -48,7 +48,7 @@
 - Baseline verification: `bash scripts/check-all.sh` passed at `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8`.
 - Verification decision: `passed`
 - Residual risks: Business Acceptance and final Git integration remain pending; three newer main cards are outside the frozen 57-card migration cohort and are covered by current-card schema/projection checks.
-- Business acceptance decision: `pending`
+- Business acceptance decision: `Accept`
 - Final integration decision: `pending`
 
 ## Current-Run Discard Context
