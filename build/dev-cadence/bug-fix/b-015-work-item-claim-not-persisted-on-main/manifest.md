@@ -40,6 +40,7 @@
 - `bash tests/work-item-development-workflow-contract.sh`：通过；真实 `git worktree add` 与 dedicated branch baseline 均验证。
 - `bash tests/configuration-contract.sh`、`bash tests/package-contract.sh`、`bash tests/install-contract.sh`：均通过。
 - source/dist `cmp`、authoritative base-ref/claim-advancement 关键词检查和 `git diff --check`：均通过。
+- Completion revalidation：用户确认后重新读取当前 `main` 为 `3fb5f8b`，任务分支为 `8b21133`，merge-base 仍为原始任务基线 `0e5d69e`；worktree clean，`bash scripts/check-all.sh` 再次通过。
 
 ## Residual Risks
 
@@ -54,7 +55,8 @@
 - Task branch：`codex/b015-work-item-claim-persisted`
 - Base branch：`main`
 - Expected HEAD SHA：`9243e68`
-- Expected base SHA：`0e5d69e73f6bf760ff954ba15119ad9c429571be`
+- Expected base SHA：`3fb5f8b60ec4b52fe63c6937131e4224b38df6b1`
+- Original implementation base / merge-base：`0e5d69e73f6bf760ff954ba15119ad9c429571be`
 - Owned commit range：`0e5d69e73f6bf760ff954ba15119ad9c429571be..9243e68`
 - Owned tracked paths：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/manifest.md`
 - Owned untracked paths：`none at start`
