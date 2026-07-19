@@ -488,6 +488,10 @@ test "$(printf '%s\n' "$MIGRATION_CARD_IDS" | wc -l | tr -d ' ')" = "16" ||
   fail "expected exactly 16 migration-event cards"
 test "$MIGRATION_CARD_IDS" = "$EXPECTED_MIGRATION_CARD_IDS" ||
   fail "migration-event card set differs from the explicit normalization set"
+MIGRATION_EVENT_COUNT="$(rg -o -F "$MIGRATION_CHANGE" "${WORK_ITEM_DIRS[@]}" |
+  wc -l | tr -d ' ')"
+test "$MIGRATION_EVENT_COUNT" = "16" ||
+  fail "expected exactly 16 migration events, found $MIGRATION_EVENT_COUNT"
 
 MIGRATION_SUFFIX_COUNT="$(rg -o 'Legacy migration: original Version [0-9]+; normalized to Version [0-9]+\.' \
   "${WORK_ITEM_DIRS[@]}" | wc -l | tr -d ' ')"
