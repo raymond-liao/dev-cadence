@@ -4,7 +4,7 @@
 
 - ID：`S-023`
 - Version：`1`
-- Status：`Draft`
+- Status：`Superseded`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -40,9 +40,17 @@
 
 - 无强制前置依赖。
 
+## Story Relationships
+
+- Superseded By：[S-018 Delivery 终态映射与 Manual Recovery](S-018-business-acceptance-terminal-mapping.md)。
+
+## 处置
+
+本卡的 manual recovery 与 `abandoned` 终态已并入 S-018 的 Delivery 终态映射，不再作为独立交付项实施。
+
 ## Open Questions
 
-- Q-012：哪些失败类别允许进入 manual recovery，哪些必须继续阻塞？
+- [Q-012 Manual Recovery 的允许条件](../open-questions.md#q-012) 已迁移至 S-018。
 
 ## 相关文档
 
@@ -53,3 +61,4 @@
 | Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Manual Recovery 终态 Story。 | 为无法正常完成的 run 提供明确、可审计的退出路径。 |
+| 1 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Superseded，并将职责迁移至 S-018。 | manual recovery 与正常验收结果共同定义 Completion 状态机和 manifest 终态。 |

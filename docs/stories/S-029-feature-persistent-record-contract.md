@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-029`
-- Version：`1`
+- Version：`2`
 - Status：`Draft`
 - Priority：`P3`
 - Change Type：Feature
@@ -14,7 +14,7 @@
 
 ## 背景
 
-如果关键确认只存在于对话中，恢复运行时可能无法判断用户确认了什么，进而错误扩大范围或采用过期方案。持久化记录需要保存足够的业务和技术决策语义。
+现有 feature-dev 已经使用独立的 requirements、technical solution 和 manifest 记录，但最小恢复字段与中断恢复验证尚未形成明确、可检验的契约。恢复运行时仍可能无法判断用户确认了什么，进而错误扩大范围或采用过期方案。
 
 ## ✅ 范围
 
@@ -22,6 +22,7 @@
 - 定义 technical solution 记录恢复已确认方案和约束所需的最小字段。
 - 验证中断后可仅依赖仓库记录继续 workflow。
 - 保持记录职责与工作项卡片、manifest 分离。
+- 复用现有 stage record 路径，不重新设计 Delivery 记录模型。
 
 ## ❌ 非范围
 
@@ -53,3 +54,4 @@
 | Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Feature 持久化记录契约 Story。 | 提升会话中断后的可靠恢复和审计质量。 |
+| 2 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 收敛为现有 Feature 持久化记录的字段契约与恢复验证。 | 当前 workflow 已具备独立记录模型，剩余缺口是可恢复字段和契约测试，而不是重建记录体系。 |

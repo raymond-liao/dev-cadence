@@ -4,7 +4,7 @@
 
 - ID：`S-031`
 - Version：`1`
-- Status：`Draft`
+- Status：`Superseded`
 - Priority：`P0`
 - Change Type：Feature
 
@@ -37,15 +37,23 @@
 
 ## 依赖
 
-- `S-030` Worktree 所有权识别。
+- `S-030` Worktree 清理安全与证据。
+
+## Story Relationships
+
+- Superseded By：[S-030 Worktree 清理安全与证据](S-030-worktree-ownership-detection.md)。
+
+## 处置
+
+本卡的记录保存与可访问性验证已并入 S-030 的 worktree 清理安全链，不再作为独立交付项实施。
 
 ## Open Questions
 
-- Q-018：多 worktree 并行运行时，保存目录如何避免任务 slug 冲突？
+- [Q-018 并行 worktree 的记录保存路径](../open-questions.md#q-018) 已迁移至 S-030。
 
 ## 相关文档
 
-- [S-030 Worktree 所有权识别](S-030-worktree-ownership-detection.md)
+- [S-030 Worktree 清理安全与证据](S-030-worktree-ownership-detection.md)
 - [Backlog](../backlog.md)
 
 ## Change Log
@@ -53,3 +61,4 @@
 | Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建保存 Worktree 运行记录 Story。 | 防止工作区清理造成不可恢复的交付记录丢失。 |
+| 1 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Superseded，并将职责迁移至 S-030。 | 记录保存是同一次清理操作的前置安全条件，应与所有权和清理结果统一维护。 |

@@ -4,7 +4,7 @@
 
 - ID：`S-033`
 - Version：`1`
-- Status：`Draft`
+- Status：`Superseded`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -37,8 +37,16 @@
 
 ## 依赖
 
-- `S-030` Worktree 所有权识别。
+- `S-030` Worktree 清理安全与证据。
 - `S-031` 保存 Worktree 运行记录。
+
+## Story Relationships
+
+- Superseded By：[S-030 Worktree 清理安全与证据](S-030-worktree-ownership-detection.md)。
+
+## 处置
+
+本卡的 Completion 清理结果记录已并入 S-030 的 worktree 清理安全链，不再作为独立交付项实施。
 
 ## Open Questions
 
@@ -46,7 +54,7 @@
 
 ## 相关文档
 
-- [S-030 Worktree 所有权识别](S-030-worktree-ownership-detection.md)
+- [S-030 Worktree 清理安全与证据](S-030-worktree-ownership-detection.md)
 - [S-031 保存 Worktree 运行记录](S-031-preserve-worktree-run-records.md)
 - [Backlog](../backlog.md)
 
@@ -55,3 +63,4 @@
 | Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Worktree 清理结果记录 Story。 | 将 Completion 后的实际资源状态纳入持久化交付证据。 |
+| 1 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Superseded，并将职责迁移至 S-030。 | 清理结果依赖同一所有权证据和记录保存前置条件，独立卡片会割裂一次 Completion 操作。 |

@@ -13,26 +13,19 @@
 |---|---|---:|---|---|
 | `B-013` | [Story Ready 错误依赖 Feature 关联](bugs/B-013-story-ready-feature-reference-required.md) | `2` | `Ready` | `P1` |
 | `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `Ready` | `P1` |
-| `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
-| `S-018` | [Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
-| `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `1` | `Draft` | `P2` |
-| `S-020` | [实施与 Review 风险传递到验证阶段](stories/S-020-implementation-review-risk-to-verification.md) | `1` | `Draft` | `P2` |
-| `S-021` | [验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) | `1` | `Draft` | `P2` |
-| `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `1` | `Draft` | `P2` |
-| `S-022` | [Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) | `1` | `Draft` | `P1` |
+| `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `2` | `Draft` | `P3` |
+| `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `3` | `Draft` | `P1` |
+| `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `2` | `Draft` | `P2` |
+| `S-020` | [实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) | `3` | `Draft` | `P2` |
+| `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `3` | `Draft` | `P2` |
 | `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `1` | `Draft` | `P2` |
 | `S-026` | [Refactor 基线身份](stories/S-026-refactor-baseline-identity.md) | `1` | `Draft` | `P2` |
-| `S-027` | [Refactor 迁移开始契约](stories/S-027-refactor-migration-start-contract.md) | `1` | `Draft` | `P2` |
-| `S-028` | [Refactor 旧路径删除门禁](stories/S-028-refactor-legacy-path-removal-gate.md) | `1` | `Draft` | `P2` |
-| `S-023` | [Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md) | `1` | `Draft` | `P1` |
-| `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Blocked` | `P1` |
+| `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `3` | `Draft` | `P2` |
+| `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Draft` | `P1` |
 | `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) | `1` | `Blocked` | `P1` |
-| `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `3` | `Blocked` | `P2` |
-| `S-030` | [Worktree 所有权识别](stories/S-030-worktree-ownership-detection.md) | `1` | `Draft` | `P0` |
-| `S-031` | [保存 Worktree 运行记录](stories/S-031-preserve-worktree-run-records.md) | `1` | `Draft` | `P0` |
-| `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `1` | `Draft` | `P1` |
-| `S-033` | [Worktree 清理结果记录](stories/S-033-worktree-cleanup-result-recording.md) | `1` | `Draft` | `P1` |
-| `S-034` | [发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) | `1` | `Draft` | `P3` |
+| `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
+| `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `3` | `Draft` | `P0` |
+| `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `2` | `Draft` | `P1` |
 
 ## 已完成
 
@@ -54,7 +47,7 @@
 | `B-006` | [Delivery 记录证据完整性](bugs/B-006-delivery-record-evidence-completeness.md) | `1` | `Done` | `P2` |
 | `T-004` | [Git 提交阶段接入 git-commit Skill](tasks/T-004-git-commit-skill-workflow-integration.md) | `4` | `Done` | `P1` |
 | `S-037` | [工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md) | `1` | `Done` | `P1` |
-| `S-016` | [统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `4` | `Done` | `P1` |
+| `S-016` | [统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `5` | `Done` | `P1` |
 | `S-040` | [Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md) | `1` | `Done` | `P1` |
 | `S-015` | [工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md) | `4` | `Done` | `P1` |
 | `S-014` | [Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md) | `2` | `Done` | `P1` |
@@ -82,6 +75,13 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `-` | 实现 Discovery workflow 和 PRD 契约：原任务已拆分为 [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md) 和 [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)。该条目的 Superseded 状态只说明任务被拆分；S-001 的实际完成状态以 Story 和运行记录为准。 | `-` | `Superseded` | `-` |
+| `S-021` | [验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) — 已并入 [S-020 实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md)；两卡属于同一端到端风险证据链。 | `1` | `Superseded` | `P2` |
+| `S-022` | [Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) — 已并入 [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md)；`not-a-bug` 是 Bug 诊断门禁的一种结果。 | `1` | `Superseded` | `P1` |
+| `S-023` | [Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md) — 已并入 [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md)；manual recovery 与正常验收共同定义 Delivery 终态。 | `1` | `Superseded` | `P1` |
+| `S-028` | [Refactor 旧路径删除门禁](stories/S-028-refactor-legacy-path-removal-gate.md) — 已并入 [S-027 Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md)；删除门禁依赖同一迁移清单和迁移状态。 | `1` | `Superseded` | `P2` |
+| `S-031` | [保存 Worktree 运行记录](stories/S-031-preserve-worktree-run-records.md) — 已并入 [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md)；记录保存是 worktree 清理的前置安全条件。 | `1` | `Superseded` | `P0` |
+| `S-033` | [Worktree 清理结果记录](stories/S-033-worktree-cleanup-result-recording.md) — 已并入 [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md)；清理结果与所有权、记录保存属于同一 Completion 操作。 | `1` | `Superseded` | `P1` |
+| `S-034` | [发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) — 当前没有已确认的发布、部署或生产交付目标，缺少可独立交付的当前用户结果。 | `1` | `Dropped` | `P3` |
 
 ## 评级说明
 
@@ -118,7 +118,6 @@
 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md) | - | - |
 | [S-019](stories/S-019-final-verification-revision-binding.md) | - | - |
 | [S-020](stories/S-020-implementation-review-risk-to-verification.md) | - | - |
-| [S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | - |
 | [B-001](bugs/B-001-normal-checkout-local-merge-safety.md) | - | - |
 | [B-002](bugs/B-002-normal-checkout-discard-safety.md) | - | - |
 | [B-004](bugs/B-004-output-language-configuration-not-consistently-applied.md) | - | - |
@@ -132,20 +131,14 @@
 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | - |
 | [B-013](bugs/B-013-story-ready-feature-reference-required.md) | - | - |
 | [B-014](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | - | - |
-| [S-022](stories/S-022-bug-not-a-bug-terminal-state.md) | - | - |
-| [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
 | [S-025](stories/S-025-bug-red-green-evidence.md) | - | - |
 | [B-006](bugs/B-006-delivery-record-evidence-completeness.md) | - | - |
 | [S-026](stories/S-026-refactor-baseline-identity.md) | - | - |
-| [S-027](stories/S-027-refactor-migration-start-contract.md) | - | [S-028](stories/S-028-refactor-legacy-path-removal-gate.md) |
-| [S-028](stories/S-028-refactor-legacy-path-removal-gate.md) | [S-027](stories/S-027-refactor-migration-start-contract.md) | - |
+| [S-027](stories/S-027-refactor-migration-start-contract.md) | - | - |
 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | - |
-| [S-030](stories/S-030-worktree-ownership-detection.md) | - | [S-031](stories/S-031-preserve-worktree-run-records.md), [S-033](stories/S-033-worktree-cleanup-result-recording.md) |
-| [S-031](stories/S-031-preserve-worktree-run-records.md) | [S-030](stories/S-030-worktree-ownership-detection.md) | [S-033](stories/S-033-worktree-cleanup-result-recording.md) |
+| [S-030](stories/S-030-worktree-ownership-detection.md) | - | - |
 | [S-032](stories/S-032-detached-head-finishing.md) | - | - |
-| [S-033](stories/S-033-worktree-cleanup-result-recording.md) | [S-030](stories/S-030-worktree-ownership-detection.md), [S-031](stories/S-031-preserve-worktree-run-records.md) | - |
-| [S-034](stories/S-034-release-and-production-delivery-capability.md) | - | - |
 | [T-003](tasks/T-003-executing-plans-pre-commit-review.md) | - | - |
 | [S-035](stories/S-035-refactor-test-sensitivity-check.md) | - | - |
 | [S-036](stories/S-036-minimal-verification-stage-gate.md) | - | - |

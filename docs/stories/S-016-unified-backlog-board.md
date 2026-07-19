@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-016`
-- Version：`4`
+- Version：`5`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：Feature
@@ -38,6 +38,7 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 - Backlog 的创建、结构、排序和规划使用方式由 Work Item Planning 定义。
 - `进行中`、`待处理`、`已完成` 和 `已关闭` 使用统一 Markdown Table 展示工作项。
 - 生命周期表只展示 `ID`、`Title`、`Version`、`Status` 和 `Priority`；`Title` 链接到权威工作项卡片。
+- `已关闭` 行在 `Title` 单元格中追加简短关闭摘要：`Superseded` 记录目标卡片和合并原因，`Dropped` 记录放弃原因；详细依据仍由权威卡片持有。
 - `待处理` 表的行顺序就是建议实施顺序，不增加单独的 `Order` 列。
 - `Change Type`、`Size`、依赖和阻塞不重复放入生命周期表，继续由卡片或关系规划结构承载。
 
@@ -62,6 +63,12 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 8. Backlog 只在工作项级事实变化时更新，不作为高频运行日志。
 9. 四个生命周期区块都使用统一的五列表格，并保持现有工作项顺序。
 10. 生命周期表不重复复制卡片的 `Change Type`、`Size`、依赖或阻塞字段。
+11. `已关闭` 在不增加新列的前提下，能直接看到 `Superseded` 的目标卡片与合并原因，或 `Dropped` 的放弃原因。
+
+## 已确认需求决策
+
+- [Q-007 已关闭历史合并事件展示](../open-questions.md#q-007) 已解决：保留 `ID | Title | Version | Status | Priority` 五列结构，在 `Title` 单元格中追加简短关闭摘要。
+- `Superseded` 摘要必须链接目标卡片并说明合并原因；`Dropped` 摘要必须说明放弃原因。详细处置和历史仍由权威卡片持有，Backlog 不复制卡片正文。
 
 ## Story Relationships
 
@@ -77,7 +84,7 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 
 ## Open Questions
 
-- Q-007：已关闭列表如何在保持五列表格的同时呈现历史合并事件的来源卡片、目标卡片和合并原因？
+- 无。
 
 ## 相关文档
 
@@ -98,3 +105,4 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 | 3 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 扩展统一状态、规划关系和 Backlog 职责，并将状态更新为 Blocked。 | 工作项规划与分析方案已经确认不同工作项的成熟度和启动规则，Backlog 必须作为统一投影视图而不是机械状态看板。 |
 | 4 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 确认生命周期区块使用五列表格，并以行顺序表达待处理项的建议顺序。 | 降低 Backlog 展示字段和重复状态来源，保留卡片与关系规划结构的职责边界。 |
 | 4 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 记录实施、系统测试和 Business Acceptance，并将状态更新为 Done。 | 用户选择 `1. Accept`，S-016 交付结果已验收。 |
+| 5 | 2026-07-19T20:32:11+0800 | Raymond Liao <raymond-liao@outlook.com> | 确认 `已关闭` 在 `Title` 单元格中展示简短关闭摘要，并解决 Q-007。 | 保持五列表格的同时，让用户无需逐张打开卡片即可理解工作项为何被合并或放弃。 |

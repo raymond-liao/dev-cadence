@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-019`
-- Version：`1`
+- Version：`2`
 - Status：`Draft`
 - Priority：`P2`
 - Change Type：Feature
@@ -22,6 +22,7 @@
 - 记录 tracked working-tree 是否干净及相关差异身份。
 - 在进入 Business Acceptance 和 Completion 前检查版本是否仍一致。
 - 版本变化时使旧结论失效并返回最早受影响阶段。
+- 复用既有 Implementation Base SHA、Final Implementation SHA 和 changed-files 范围，不重新定义实施提交审查身份。
 
 ## ❌ 非范围
 
@@ -52,3 +53,4 @@
 | Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建最终验证版本绑定 Story。 | 防止实现变化后继续沿用过期验证结论。 |
+| 2 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 收敛为最终验证身份与失效检查。 | 实施提交范围已有身份契约；剩余缺口是验证执行版本、tracked 差异和进入验收前的一致性判断。 |

@@ -3,14 +3,14 @@
 ## 基本信息
 
 - ID：`S-024`
-- Version：`1`
+- Version：`3`
 - Status：`Draft`
 - Priority：`P2`
 - Change Type：Feature
 
 ## 目标
 
-阻止根因未验证或问题仍有歧义的 bug-fix run 进入 Repair Solution。
+在 bug-fix 的 Problem Diagnosis 阶段明确三类结果：确认缺陷后进入 Repair Solution、确认非缺陷后正常关闭、证据不足时继续诊断或阻塞。
 
 ## 背景
 
@@ -22,18 +22,25 @@
 - 要求已验证根因或足以支持修复边界的因果证据。
 - 对问题歧义、需求冲突和证据不足给出返回或阻塞路径。
 - 在诊断记录和 manifest 中保存门禁决策。
+- 定义 `not-a-bug` 判断所需证据、用户确认、终态记录和需求变更的后续路由。
 
 ## ❌ 非范围
 
 - 不要求建卡时确认根因。
 - 不在本 Story 中定义 RED/GREEN proof 格式。
-- 不把需求变更继续作为 Bug 修复处理。
+- 不在该路径实施行为变更。
+- 不把用户取消修复等同于 `not-a-bug`。
 
 ## 验收标准
 
 1. 根因未验证且缺少替代因果证据时不能进入 Repair Solution。
-2. 歧义问题会返回澄清或保持阻塞，不会伪装为已诊断。
-3. 门禁决策和依据可在持久化记录中恢复。
+2. 已确认非缺陷的问题能够以 `not-a-bug` 终态结束，并保存依据和用户确认；需求变更会路由到正确流程。
+3. 歧义或证据不足的问题会返回澄清或保持阻塞，不会伪装为已诊断或非缺陷。
+4. 门禁决策和依据可在持久化记录中恢复。
+
+## Story Relationships
+
+- Supersedes：[S-022 Bug `not-a-bug` 终态](S-022-bug-not-a-bug-terminal-state.md)。
 
 ## 依赖
 
@@ -41,7 +48,8 @@
 
 ## Open Questions
 
-- Q-013：哪些替代因果证据足以在无法完全复现时通过门禁？
+- [Q-011 Bug 非缺陷终态命名](../open-questions.md#q-011)：manifest 使用 `not_a_bug` 还是更通用的关闭状态？
+- [Q-013 替代因果证据门槛](../open-questions.md#q-013)：哪些替代因果证据足以在无法完全复现时通过门禁？
 
 ## 相关文档
 
@@ -52,3 +60,5 @@
 | Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Bug 诊断门禁 Story。 | 防止在问题和根因仍不明确时过早设计修复。 |
+| 2 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 吸收 S-022，明确诊断阶段的缺陷、非缺陷和未决三类结果。 | `not-a-bug` 是诊断门禁的另一种结果，必须与进入 Repair Solution 的条件共同维护。 |
+| 3 | 2026-07-19T20:23:56+0800 | Raymond Liao <raymond-liao@outlook.com> | 补全用户取消修复不等于 `not-a-bug` 的边界。 | 防止将处理意愿与缺陷性质混淆。 |

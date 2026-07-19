@@ -88,7 +88,7 @@
 ## Relationships
 
 - Related Story: [S-017 工作项卡片与开发 Workflow 接入](../stories/S-017-work-item-development-workflow-integration.md)。
-- Related Story: [S-018 Business Acceptance 终态映射](../stories/S-018-business-acceptance-terminal-mapping.md)。
+- Related Story: [S-018 Delivery 终态映射与 Manual Recovery](../stories/S-018-business-acceptance-terminal-mapping.md)。
 
 ## 交付结果
 
