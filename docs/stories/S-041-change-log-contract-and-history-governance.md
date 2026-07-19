@@ -3,18 +3,20 @@
 ## 基本信息
 
 - ID：`S-041`
-- Version：`2`
+- Version：`3`
 - Status：`Draft`
 - Priority：`P1`
 - Change Type：Enhancement
 
 ## 目标
 
-将 Change Log 公共规则集中到 `src/skills/contracts/change-log.md`，让各 workflow 复用同一契约，并按明确的迁移边界治理现有记录，避免表头、版本、身份和时间规则继续漂移。
+将 Change Log 公共规则集中到 `src/skills/contracts/change-log.md`，让各 workflow 复用同一契约，并按明确的迁移边界治理现有记录；同时让 Backlog 排序使用独立、可并发校验的 `Ordering Version` 和 `Ordering Change Log`，避免表头、版本、身份、时间和排序决策继续漂移。
 
 ## 背景
 
 当前 Change Log 规则重复出现在多个 workflow skill 和说明文档中，实际 Story、Task、Bug 记录又存在旧四列表头、重复版本、倒序历史和不完整身份时间等问题。现有规则还没有明确区分“需要升版的定义变化”和“需要留痕但不升版的重要事件”，导致重复 Version 既可能是合法的状态或交付记录，也可能是错误的版本治理。规则没有单一共享契约时，后续新增或更新记录容易再次产生不一致。
+
+Backlog 当前只保存排序结果和通用评级维度，没有要求 Work Item Planning 持久化用户确认的排序原因，也没有排序提案的新鲜度身份。会话恢复后，代理可能按通用风险重新解释顺序并覆盖用户已确认的排序例外。Backlog 已建立首个 `Ordering Version` 和 `Ordering Change Log`，后续规则必须保证每次确认的排序变化都同步更新这两项记录。
 
 ## User Story
 
@@ -25,11 +27,18 @@
 - 新增 `src/skills/contracts/change-log.md` 作为 Change Log 公共契约。
 - 将 Change Log 定义为重要变更历史，覆盖需要升版的定义变化，以及状态转换、交付结果等需要审计但不升版的重要事件。
 - 统一定义表头、字段语义、时间和身份来源、版本递增条件、非升版事件、重复 Version、追加顺序、禁止元数据以及历史迁移规则。
+- 共享契约必须支持标准 `Version` 和由资产所有者定义的命名版本维度；Backlog 排序使用 `Ordering Version`，并复用统一的 `Recorded At`、`Recorded By`、`Change` 和 `Reason` 语义。
 - 定义变化必须先递增资产 Version，再使用新 Version 追加记录；非升版重要事件必须沿用事件发生时的当前 Version，因此同一 Version 可以出现多条具有不同事件语义的记录。
 - 让 `discovery`、`work-item-planning` 和 `work-item-analysis` 读取共享契约。
 - 各 workflow 只保留自身资产的实质变化和版本升版条件，不复制完整公共规则。
+- 让 Work Item Planning 维护 Backlog 文档末尾的 `Ordering Version` 和 `Ordering Change Log`，并将排序版本定义为用户确认的排序决策身份，而不是 Backlog 全局版本。
+- 形成排序提案时记录当前 `Ordering Version` 和可见的 `待处理` 顺序；写入前重新读取并核对版本和可见事实，版本或事实冲突时停止覆盖并重新形成提案。
+- 用户确认重新排列现有待办、将新工作项插入具体位置，或新增、修改、取消排序例外时，递增 `Ordering Version` 并追加一条排序记录。
+- 工作项状态变化、完成项移出、卡片标题或 Version 同步、Priority 的机械同步、仅更新派生并行表，以及格式或链接调整不得递增 `Ordering Version` 或追加排序记录。
+- 确认排序后，必须原子更新 `待处理` 顺序、派生并行表、`Ordering Version` 和 `Ordering Change Log`；排序记录必须包含受影响工作项、确认后的相对位置和用户确认的原因。
 - 保持 Open Question Registry 不包含 Change Log。
 - 审查并治理现有 Story、Task、Bug 的 Change Log，包括重复 Version 的语义、倒序记录、旧表头和纯状态升版问题。
+- 保留现有 Backlog `Ordering Version 1` 及其排序历史，不把卡片生命周期同步迁移为排序历史。
 - 历史迁移必须保留原有重要事件；不得仅为使 Version 唯一而删除状态或交付记录。
 - 历史记录缺少准确时间、时间精度或作者时，必须在对应字段使用共享契约规定的明确 legacy 未知标识，并保留能够确认的原始信息，不得静默推断或伪造。
 - 同步 source、dist、安装包和契约验证。
@@ -40,6 +49,8 @@
 - 不把所有资产的 Change Log 合并到一个文件。
 - 不修改产品设计、业务事实或既有工作项的非 Change Log 内容。
 - 不创建全局 release `CHANGELOG.md`。
+- 不为 Backlog 引入覆盖状态、卡片版本或其他内容变化的全局 Version。
+- 不把工作项状态同步、完成项移动或派生视图刷新记录成排序变化。
 - 不在缺少历史作者或精确时间时伪造记录。
 - 不要求 Change Log 的 Version 值全局唯一，也不把合法的非升版事件改写成新的资产版本。
 - 不把纯拼写、格式或不改变责任关系的链接修正当作必须记录的重要事件。
@@ -56,12 +67,19 @@
 7. 现有 Story、Task、Bug Change Log 的重复 Version 语义、倒序记录、旧表头和纯执行状态升版得到治理；历史重要事件不因格式迁移或 Version 重复而被删除。
 8. 缺少历史作者、准确时间或时间精度的记录不会被静默推断；标准五列表格使用统一 legacy 未知标识，并明确区分可确认的原始事实和迁移信息。
 9. source、dist、安装包和契约验证保持同步，并覆盖共享契约读取、升版与非升版事件、legacy 迁移和其他关键 Change Log 不变量。
+10. 共享契约允许资产所有者定义命名版本维度；Backlog 使用 `Ordering Version | Recorded At | Recorded By | Change | Reason`，普通资产继续使用标准 `Version`。
+11. Work Item Planning 明确区分需要递增 `Ordering Version` 的排序决策和不得递增的生命周期、机械同步、派生视图、格式及链接变化。
+12. 排序提案绑定读取到的 `Ordering Version` 和 `待处理` 可见事实；写入前的版本或事实冲突会停止覆盖并要求重新形成提案。
+13. 用户确认排序后，`待处理`、派生并行表、`Ordering Version` 和 `Ordering Change Log` 原子同步，记录受影响工作项、相对位置和确认原因。
+14. 现有 Backlog `Ordering Version 1` 和首条排序历史得到保留，契约测试覆盖正常重排、无变化、非排序同步、旧版本冲突和派生视图同步。
 
 ## 已确认需求决策
 
 - [Q-023 历史 Change Log 缺失元数据迁移](../open-questions.md#q-023) 已解决：采用“完整的重要变更历史”模型，不将 Change Log 限制为唯一 Version 列表。
 - 需要审计但不改变资产定义的状态转换和交付结果必须追加记录并沿用当前 Version；同一 Version 的多条不同事件记录是合法历史。
 - 历史迁移必须保留重要事件。缺失作者、准确时间或时间精度时使用共享契约定义的明确 legacy 未知标识，不要求用户补造历史元数据，也不得从弱证据静默推断。
+- Backlog 只为用户确认的排序决策维护独立 `Ordering Version` 和 `Ordering Change Log`，不建立覆盖全部 Backlog 内容的全局 Version。
+- 排序变化与排序提案的新鲜度门禁纳入 S-041，不创建独立 Story；公共元数据由共享契约拥有，排序递增条件和原子写入由 Work Item Planning 拥有。
 
 ## Story Relationships
 
@@ -89,3 +107,4 @@
 |---:|---|---|---|---|
 | 1 | 2026-07-18T09:15:19+08:00 | Raymond Liao <raymond-liao@outlook.com> | 创建 Change Log 共享契约与历史记录治理 Story。 | 用户确认将公共规则集中到 `src/skills/contracts/change-log.md`，并治理现有 Change Log 的格式、版本和元数据一致性。 |
 | 2 | 2026-07-18T15:00:09+08:00 | Raymond Liao <raymond-liao@outlook.com> | 确认 Change Log 保存完整的重要变更历史，补充非升版事件、重复 Version 和 legacy 元数据迁移规则，并解决 Q-023。 | 用户选择方案 2，要求状态和交付等重要事件保留历史、沿用当前 Version，且不得通过删除历史或伪造元数据完成迁移。 |
+| 3 | 2026-07-19T09:34:33+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将 Backlog `Ordering Version`、排序历史、新鲜度门禁和原子同步纳入共享契约与 Work Item Planning 范围。 | 用户确认只追踪排序决策，并选择把该能力纳入 S-041，而不是建立 Backlog 全局 Version 或独立 Story。 |
