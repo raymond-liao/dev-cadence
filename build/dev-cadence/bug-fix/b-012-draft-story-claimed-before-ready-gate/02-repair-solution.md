@@ -4,7 +4,9 @@
 - Work Item: [B-012 Draft Story 在 Ready 门禁前被提前领取](../../../../docs/bugs/B-012-draft-story-claimed-before-ready-gate.md)
 - Card Version: `1`
 - Diagnosis source: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/01-problem-diagnosis-record.md`
-- Decision: ❓ `pending`
+- Decision: ✅ `confirmed` - 方案 B：入口内建立有序领取资格矩阵
+- Confirmed by: `Raymond Liao <raymond-liao@outlook.com>`
+- Confirmed at: `2026-07-19T15:35:59+08:00`
 
 ## 根因与修复边界
 

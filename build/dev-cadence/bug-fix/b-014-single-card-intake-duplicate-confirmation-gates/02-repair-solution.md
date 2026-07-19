@@ -4,7 +4,9 @@
 - Work Item: [B-014 单项建卡被错误套用双确认门](../../../../docs/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md)
 - Card Version: `1`
 - Diagnosis source: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/01-problem-diagnosis-record.md`
-- Decision: ❓ `pending`
+- Decision: ✅ `confirmed` - 方案一：显式双分支与 Direct Intake 专属门名
+- Confirmed by: `Raymond Liao <raymond-liao@outlook.com>`
+- Confirmed at: `2026-07-19T15:35:59+08:00`
 
 ## 根因与修复边界
 

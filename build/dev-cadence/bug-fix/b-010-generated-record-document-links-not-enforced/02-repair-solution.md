@@ -4,7 +4,9 @@
 - Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/bugs/B-010-generated-record-document-links-not-enforced.md)
 - Card Version: `1`
 - Diagnosis source: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/01-problem-diagnosis-record.md`
-- Decision: ❓ `pending`
+- Decision: ✅ `confirmed` - 方案 A：模板修正、对称性契约与双表示 fixture
+- Confirmed by: `Raymond Liao <raymond-liao@outlook.com>`
+- Confirmed at: `2026-07-19T15:35:59+08:00`
 
 ## 根因与修复边界
 
