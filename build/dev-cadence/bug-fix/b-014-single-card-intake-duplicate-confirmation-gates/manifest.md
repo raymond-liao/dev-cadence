@@ -5,7 +5,7 @@
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Branch: `codex/b014-single-card-intake`
 - Started at: `2026-07-19T15:03:31+08:00`
-- Current stage: 🔄 `in_progress` - Repair Implementation
+- Current stage: 🔄 `in_progress` - Business Acceptance
 - Overall status: 🔄 `in_progress`
 - Run directory: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/`
 - Workspace: `.`
@@ -22,8 +22,8 @@
 | Repair Plan | ✅ `confirmed` | [B-014 修复计划](03-repair-plan.md); path: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/03-repair-plan.md` | `2026-07-19T15:50:00+08:00`, option 1 | `f5c3e86` | 用户确认计划并通过新鲜度门禁 |
 | Repair Implementation | ✅ `confirmed` | [B-014 修复记录](04-repair-record.md); path: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/04-repair-record.md` | `implementation complete` | `be61691` | TDD RED/GREEN 与实施检查完成 |
 | Code Review | ✅ `confirmed` | [B-014 Code Review Report](04-code-review-report.md); path: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/04-code-review-report.md` | `passed` | `be61691` | 无 Critical/Important finding |
-| Regression Verification | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | 合并后回归验证中 |
-| Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 等待回归验证 |
+| Regression Verification | ✅ `confirmed` | [B-014 回归测试报告](05-regression-test-report.md); path: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/05-regression-test-report.md` | `passed` | `0c3a390` | 全量构建、契约、安装和 source/dist 检查通过 |
+| Business Acceptance | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 等待用户业务验收 |
 
 ## Work Item Lifecycle Writeback
 

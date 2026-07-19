@@ -5,7 +5,7 @@
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Branch: `codex/b010-generated-record-links`
 - Started at: `2026-07-19T15:03:31+08:00`
-- Current stage: 🔄 `in_progress` - Repair Implementation
+- Current stage: 🔄 `in_progress` - Business Acceptance
 - Overall status: 🔄 `in_progress`
 - Run directory: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/`
 - Workspace: `.`
@@ -22,8 +22,8 @@
 | Repair Plan | ✅ `confirmed` | [B-010 修复计划](03-repair-plan.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/03-repair-plan.md` | `2026-07-19T15:50:00+08:00`, option 1 | `89e430a` | 用户确认计划并通过新鲜度门禁 |
 | Repair Implementation | ✅ `confirmed` | [B-010 修复记录](04-repair-record.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/04-repair-record.md` | `implementation complete` | `598cb9a` | TDD RED/GREEN 与实施检查完成 |
 | Code Review | ✅ `confirmed` | [B-010 Code Review Report](04-code-review-report.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/04-code-review-report.md` | `passed` | `598cb9a` | 无 Critical/Important finding |
-| Regression Verification | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | 合并后回归验证中 |
-| Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 等待回归验证 |
+| Regression Verification | ✅ `confirmed` | [B-010 回归测试报告](05-regression-test-report.md); path: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/05-regression-test-report.md` | `passed` | `0c3a390` | 全量构建、契约、安装和 source/dist 检查通过 |
+| Business Acceptance | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 等待用户业务验收 |
 
 ## Work Item Lifecycle Writeback
 
