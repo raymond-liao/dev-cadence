@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-006`
-- Version：`4`
+- Version：`1`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
@@ -93,9 +93,10 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Discovery 产品与技术内容边界 Story。 | 防止技术方案混入产品设计基线，同时保留用户在需求讨论中提供的有价值技术输入。 |
-| 2 | 2026-07-14 | 完成 Discovery 内容分类、产品约束例外、技术输入移交、基线检查与契约验证。 | S-006 的 11 项验收标准已实现，S-012 可进入实施。 |
-| 3 | 2026-07-15 | 将状态从 Done 修正为 In Progress。 | 实现与系统测试已完成，但批量执行授权不构成 Business Acceptance。 |
-| 4 | 2026-07-15 | 记录 Business Acceptance 并将状态更新为 Done。 | 用户选择 `1. Accept`，S-006 交付结果已验收。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Discovery 产品与技术内容边界 Story。 | 防止技术方案混入产品设计基线，同时保留用户在需求讨论中提供的有价值技术输入。 |
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 完成 Discovery 内容分类、产品约束例外、技术输入移交、基线检查与契约验证。 | S-006 的 11 项验收标准已实现，S-012 可进入实施。 Legacy migration: original Version 2; normalized to Version 1. |
+| 1 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 将状态从 Done 修正为 In Progress。 | 实现与系统测试已完成，但批量执行授权不构成 Business Acceptance。 Legacy migration: original Version 3; normalized to Version 1. |
+| 1 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 记录 Business Acceptance 并将状态更新为 Done。 | 用户选择 `1. Accept`，S-006 交付结果已验收。 Legacy migration: original Version 4; normalized to Version 1. |
+| 1 | 2026-07-19T13:07:24+0800 | Raymond Liao <raymond-liao@outlook.com> | Normalized legacy status and delivery events to reuse the active definition Version. | Old current 4 -> new current 1; original row versions 1,2,3,4 -> normalized row versions 1,1,1,1. |

@@ -49,6 +49,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Bug 诊断门禁 Story。 | 防止在问题和根因仍不明确时过早设计修复。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Bug 诊断门禁 Story。 | 防止在问题和根因仍不明确时过早设计修复。 |

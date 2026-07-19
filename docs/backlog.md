@@ -55,22 +55,22 @@
 | `S-037` | [工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md) | `1` | `Done` | `P1` |
 | `S-016` | [统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `4` | `Done` | `P1` |
 | `S-040` | [Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md) | `1` | `Done` | `P1` |
-| `S-015` | [工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md) | `7` | `Done` | `P1` |
-| `S-014` | [Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md) | `5` | `Done` | `P1` |
-| `S-002` | [产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md) | `11` | `Done` | `P1` |
-| `S-013` | [Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md) | `5` | `Done` | `P1` |
-| `S-011` | [目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md) | `5` | `Done` | `P1` |
-| `S-012` | [Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md) | `5` | `Done` | `P1` |
-| `S-006` | [Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md) | `4` | `Done` | `P1` |
-| `S-005` | [全局 Open Question Registry](stories/S-005-open-question-registry.md) | `3` | `Done` | `P1` |
-| `S-004` | [实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md) | `3` | `Done` | `P2` |
-| `S-010` | [文档引用快捷链接](stories/S-010-document-reference-links.md) | `5` | `Done` | `P1` |
-| `S-003` | [实施前方案新鲜度门禁](stories/S-003-implementation-design-freshness-gate.md) | `2` | `Done` | `P1` |
-| `S-007` | [Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md) | `4` | `Done` | `P1` |
-| `S-009` | [生成文档状态呈现](stories/S-009-generated-status-presentation.md) | `3` | `Done` | `P1` |
-| `T-001` | [工作项范围章节语义标识](tasks/T-001-work-item-scope-semantic-markers.md) | `3` | `Done` | `P2` |
-| `S-008` | [Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md) | `6` | `Done` | `P1` |
-| `S-001` | [首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md) | `6` | `Done` | `P1` |
+| `S-015` | [工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md) | `4` | `Done` | `P1` |
+| `S-014` | [Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md) | `2` | `Done` | `P1` |
+| `S-002` | [产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md) | `8` | `Done` | `P1` |
+| `S-013` | [Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md) | `3` | `Done` | `P1` |
+| `S-011` | [目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md) | `2` | `Done` | `P1` |
+| `S-012` | [Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md) | `2` | `Done` | `P1` |
+| `S-006` | [Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md) | `1` | `Done` | `P1` |
+| `S-005` | [全局 Open Question Registry](stories/S-005-open-question-registry.md) | `2` | `Done` | `P1` |
+| `S-004` | [实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md) | `1` | `Done` | `P2` |
+| `S-010` | [文档引用快捷链接](stories/S-010-document-reference-links.md) | `3` | `Done` | `P1` |
+| `S-003` | [实施前方案新鲜度门禁](stories/S-003-implementation-design-freshness-gate.md) | `1` | `Done` | `P1` |
+| `S-007` | [Workflow 入口路由示例](stories/S-007-workflow-routing-examples.md) | `3` | `Done` | `P1` |
+| `S-009` | [生成文档状态呈现](stories/S-009-generated-status-presentation.md) | `2` | `Done` | `P1` |
+| `T-001` | [工作项范围章节语义标识](tasks/T-001-work-item-scope-semantic-markers.md) | `2` | `Done` | `P2` |
+| `S-008` | [Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md) | `3` | `Done` | `P1` |
+| `S-001` | [首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md) | `4` | `Done` | `P1` |
 | `T-003` | [Executing-Plans 实施提交前审查](tasks/T-003-executing-plans-pre-commit-review.md) | `1` | `Done` | `P1` |
 | `S-035` | [Refactor 测试敏感性检查](stories/S-035-refactor-test-sensitivity-check.md) | `1` | `Done` | `P2` |
 | `S-036` | [最小验证阶段门禁](stories/S-036-minimal-verification-stage-gate.md) | `2` | `Done` | `P2` |

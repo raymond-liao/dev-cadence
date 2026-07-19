@@ -43,6 +43,8 @@ assert_match "missing card intent routing" 'missing.*card.*work-item-planning.*w
 assert_match "no claim for analysis" 'analysis.*must not.*claim|分析.*不得.*领取' "$ENTRY_SKILL"
 assert_match "no duplicate claim" 'already.*`In Progress`.*must not.*claim|已经.*`In Progress`.*不得.*领取' "$ENTRY_SKILL"
 assert_match "no new claiming skill" 'must not create.*claim.*skill|不得新增.*领取.*skill' "$ENTRY_SKILL"
+assert_match "claim keeps current version and records event" 'claim.*current.*Version.*Change Log.*important event|current.*Version.*Change Log.*important event.*claim' "$ENTRY_SKILL"
+assert_match "claim writeback idempotence" 'claim.*idempotent.*Change Log|idempotent.*Change Log.*claim' "$ENTRY_SKILL"
 
 for status in 'card path' 'Version' 'selected scope'; do
   assert_match "Delivery $status" "$status" "$FEATURE_SKILL"
@@ -60,6 +62,9 @@ for path in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
   assert_match "visible fact conflict" 'visible-fact.*conflict|可见事实.*冲突' "$path"
   assert_match "idempotent lifecycle writeback" 'idempotent|幂等' "$path"
   assert_match "no false Done" 'must not.*`Done`|不得.*`Done`|not.*mark.*Done' "$path"
+  assert_match "lifecycle keeps current version" 'lifecycle.*current.*Version.*does not increment|current.*Version.*does not increment.*lifecycle' "$path"
+  assert_match "lifecycle Change Log important event" 'lifecycle.*Change Log.*important event|Change Log.*important event.*lifecycle' "$path"
+  assert_match "lifecycle Change Log duplicate prevention" 'same.*lifecycle.*event.*must not.*duplicate.*Change Log|must not.*duplicate.*Change Log.*same.*lifecycle.*event' "$path"
 done
 
 assert_not_match "new lifecycle skill" 'src/skills/work-item-lifecycle|work-item-lifecycle' "$ENTRY_SKILL"

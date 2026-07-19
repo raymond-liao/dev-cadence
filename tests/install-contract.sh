@@ -20,6 +20,7 @@ mkdir -p "$TARGET_REPO"
 bash "$INSTALL_SCRIPT" "$TARGET_REPO"
 
 test -f "$TARGET_REPO/.dev-cadence/version" || fail "first install did not create package"
+test -f "$TARGET_REPO/.dev-cadence/skills/contracts/change-log.md" || fail "first install did not create Change Log contract"
 test -f "$TARGET_REPO/.dev-cadence/skills/git-commit/SKILL.md" || fail "first install did not create git-commit skill"
 test -f "$TARGET_REPO/.dev-cadence/skills/document-conventions/SKILL.md" || fail "first install did not create document-conventions skill"
 test -f "$TARGET_REPO/.dev-cadence/skills/open-question-registry/SKILL.md" || fail "first install did not create open-question-registry skill"
@@ -27,6 +28,9 @@ test -f "$TARGET_REPO/.dev-cadence/skills/work-item-analysis/SKILL.md" || fail "
 test -f "$TARGET_REPO/.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh" || fail "first install did not create delivery-record validator"
 test ! -e "$TARGET_REPO/docs/open-questions.md" || fail "install created an empty target-repository Open Question Registry"
 cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "installed version differs from source"
+cmp -s \
+  "$ROOT_DIR/src/skills/contracts/change-log.md" \
+  "$TARGET_REPO/.dev-cadence/skills/contracts/change-log.md" || fail "installed Change Log contract differs from source"
 
 printf 'stale\n' > "$TARGET_REPO/.dev-cadence/stale-file"
 bash "$INSTALL_SCRIPT" "$TARGET_REPO"

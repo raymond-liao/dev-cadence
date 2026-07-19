@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-010`
-- Version：`5`
+- Version：`3`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
@@ -104,10 +104,11 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建文档引用快捷链接 Story。 | 让跨文档来源和结果引用可以直接导航，同时保留路径数据的精确性和可移植性。 |
-| 2 | 2026-07-14 | 增加选择性链接、路径身份、文档生命周期和链接完整性规则。 | 只有真实存在且适合导航的目标才应使用快捷链接，长期文档不能依赖临时记录，审计路径也不能被链接替代。 |
-| 3 | 2026-07-14 | 明确链接规则扩展共享 `document-conventions` skill，并依赖 S-009。 | 文档公共规则需要集中维护，入口和各 workflow 只负责读取与遵守，不能复制多套链接契约。 |
-| 4 | 2026-07-14 | 开始实施并进入业务验收前状态。 | 技术方案、实现、review 和系统测试已完成，等待用户业务验收。 |
-| 5 | 2026-07-14 | 完成业务验收。 | 用户选择 `Accept with residual risk`；交付结果已接受，已披露并接受链接与锚点仍依赖代理验证的残余风险。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建文档引用快捷链接 Story。 | 让跨文档来源和结果引用可以直接导航，同时保留路径数据的精确性和可移植性。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 增加选择性链接、路径身份、文档生命周期和链接完整性规则。 | 只有真实存在且适合导航的目标才应使用快捷链接，长期文档不能依赖临时记录，审计路径也不能被链接替代。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 明确链接规则扩展共享 `document-conventions` skill，并依赖 S-009。 | 文档公共规则需要集中维护，入口和各 workflow 只负责读取与遵守，不能复制多套链接契约。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 开始实施并进入业务验收前状态。 | 技术方案、实现、review 和系统测试已完成，等待用户业务验收。 Legacy migration: original Version 4; normalized to Version 3. |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 完成业务验收。 | 用户选择 `Accept with residual risk`；交付结果已接受，已披露并接受链接与锚点仍依赖代理验证的残余风险。 Legacy migration: original Version 5; normalized to Version 3. |
+| 3 | 2026-07-19T13:07:24+0800 | Raymond Liao <raymond-liao@outlook.com> | Normalized legacy status and delivery events to reuse the active definition Version. | Old current 5 -> new current 3; original row versions 1,2,3,4,5 -> normalized row versions 1,2,3,3,3. |

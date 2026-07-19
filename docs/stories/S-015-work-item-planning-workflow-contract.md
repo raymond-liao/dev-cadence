@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-015`
-- Version：`7`
+- Version：`4`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：Feature
@@ -109,14 +109,15 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Work Item Planning Story Map 卡片。 | 为整体产品开发计划增加用户活动、任务、Story 和交付切片结构。 |
-| 2 | 2026-07-14 | 合并 Work Item Planning workflow、工作项契约与 Story Map 范围。 | Story Map 是 Work Item Planning 的核心规划能力，不应作为独立交付项。 |
-| 3 | 2026-07-15 | 将状态更新为 Ready。 | S-002、S-012 和 T-001 均已完成，S-015 的全部前置依赖已满足。 |
-| 4 | 2026-07-15 | 将 User Journey 和 Feature 改为必需的上游产品设计输入，并将状态更新为 Blocked。 | S-014 已重新定义 Discovery 对 Journey 和 Feature 的权威职责；Work Item Planning 必须等待该职责实现后再创建 Story Map 和工作项。 |
-| 5 | 2026-07-15 | 补全 Story Map、Path、Milestone、轻量卡片和共享修改契约，并将 Size、Iteration Plan 和 Work Item Analysis 拆分为后继工作项。 | 工作项规划流程设计已经明确核心资产边界和后续能力，需要让实施卡完整承接已确认方案而不覆盖 Journey-led 上游关系。 |
-| 6 | 2026-07-16 | S-014 已完成，User Journey 与 Feature 基线依赖全部满足，状态更新为 Ready。 | Work Item Planning 现在可以基于已确认的三资产产品设计基线进入实施。 |
-| 7 | 2026-07-16 | S-014 实施与验证已完成但仍等待 Business Acceptance，状态回到 Blocked。 | Work Item Planning 依赖的产品设计交付尚未完成业务验收。 |
-| 7 | 2026-07-16 | 用户要求继续执行并行实施表的下一个工作项，S-015 进入 In Progress。 | S-014 已通过 Business Acceptance；本次只改变执行状态，不改变已确认的工作项定义。 |
-| 7 | 2026-07-16 | 实施、系统测试和 Business Acceptance 已完成，S-015 状态更新为 Done。 | 用户选择 `1. Accept`；无新增剩余风险。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Work Item Planning Story Map 卡片。 | 为整体产品开发计划增加用户活动、任务、Story 和交付切片结构。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 合并 Work Item Planning workflow、工作项契约与 Story Map 范围。 | Story Map 是 Work Item Planning 的核心规划能力，不应作为独立交付项。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 将状态更新为 Ready。 | S-002、S-012 和 T-001 均已完成，S-015 的全部前置依赖已满足。 Legacy migration: original Version 3; normalized to Version 2. |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 将 User Journey 和 Feature 改为必需的上游产品设计输入，并将状态更新为 Blocked。 | S-014 已重新定义 Discovery 对 Journey 和 Feature 的权威职责；Work Item Planning 必须等待该职责实现后再创建 Story Map 和工作项。 Legacy migration: original Version 4; normalized to Version 3. |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 补全 Story Map、Path、Milestone、轻量卡片和共享修改契约，并将 Size、Iteration Plan 和 Work Item Analysis 拆分为后继工作项。 | 工作项规划流程设计已经明确核心资产边界和后续能力，需要让实施卡完整承接已确认方案而不覆盖 Journey-led 上游关系。 Legacy migration: original Version 5; normalized to Version 4. |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-16 | legacy: recorded-by unknown | S-014 已完成，User Journey 与 Feature 基线依赖全部满足，状态更新为 Ready。 | Work Item Planning 现在可以基于已确认的三资产产品设计基线进入实施。 Legacy migration: original Version 6; normalized to Version 4. |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-16 | legacy: recorded-by unknown | S-014 实施与验证已完成但仍等待 Business Acceptance，状态回到 Blocked。 | Work Item Planning 依赖的产品设计交付尚未完成业务验收。 Legacy migration: original Version 7; normalized to Version 4. |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-16 | legacy: recorded-by unknown | 用户要求继续执行并行实施表的下一个工作项，S-015 进入 In Progress。 | S-014 已通过 Business Acceptance；本次只改变执行状态，不改变已确认的工作项定义。 Legacy migration: original Version 7; normalized to Version 4. |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-16 | legacy: recorded-by unknown | 实施、系统测试和 Business Acceptance 已完成，S-015 状态更新为 Done。 | 用户选择 `1. Accept`；无新增剩余风险。 Legacy migration: original Version 7; normalized to Version 4. |
+| 4 | 2026-07-19T13:07:24+0800 | Raymond Liao <raymond-liao@outlook.com> | Normalized legacy status and delivery events to reuse the active definition Version. | Old current 7 -> new current 4; original row versions 1,2,3,4,5,6,7,7,7 -> normalized row versions 1,2,2,3,4,4,4,4,4. |

@@ -49,6 +49,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Detached HEAD Finishing Story。 | 为外部管理隔离环境补齐可验证的完成路径。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Detached HEAD Finishing Story。 | 为外部管理隔离环境补齐可验证的完成路径。 |

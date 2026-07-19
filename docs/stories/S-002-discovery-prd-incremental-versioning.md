@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-002`
-- Version：`11`
+- Version：`8`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
@@ -112,16 +112,17 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-13 | 创建 PRD 增量更新与版本治理 Story。 | 将增量需求治理从首次 Discovery 能力中拆出，形成可独立实施和验证的后续 Story。 |
-| 2 | 2026-07-13 | 将状态改为 Blocked，并补充 User Story、Story Relationships 和 Open Questions。 | S-002 依赖尚未实现的 S-001，不能标记为可进入开发。 |
-| 3 | 2026-07-13 | 重写 User Story，移除 Dev Cadence、PRD 和 workflow 实现表述。 | User Story 应表达用户目标和价值，而不是内部实现方式或交付物。 |
-| 4 | 2026-07-13 | 将增量治理范围对齐到 PRD 与 Business Architecture 两文档基线。 | S-001 已确定两份文档共同构成产品设计基线，后续增量流程不能继续使用单一 PRD 模型。 |
-| 5 | 2026-07-14 | 将状态更新为 Ready。 | S-001 已通过 Business Acceptance，前置依赖满足。 |
-| 6 | 2026-07-14 | 补充增量模式触发、仓库文档发现、迁移选择和独立版本治理规则。 | S-002 必须适配目标仓库已有产品文档，不能只识别 Dev Cadence 默认路径，也不能在缺少现有基线时错误启动更新流程。 |
-| 7 | 2026-07-14 | 增加产品与技术内容边界、历史混合内容处理及 Registry 移交规则，并将状态改为 Blocked。 | 增量更新必须避免技术方案进入产品设计基线，同时不能静默删除历史内容或丢失尚无承载位置的技术问题；S-005 和 S-006 尚未完成。 |
-| 8 | 2026-07-14 | 补充对 S-013 Discovery 过程记录简化的明确依赖。 | 增量更新应建立在简化后的 PRD 与 Business Architecture 双资产模型上，不能继续依赖将被移除的 Discovery 过程记录。 |
-| 9 | 2026-07-14 | 实现增量 Discovery、候选发现、权威来源协调、独立版本治理和工作项影响移交，并将状态更新为 In Progress。 | 实现与系统测试进入执行阶段；Business Acceptance 尚未完成。 |
-| 10 | 2026-07-15 | 增加确认前会话 proposal 与确认后原子写入门禁，并定义综合单文件的双职责独立版本治理。 | 防止未确认增量内容提前污染权威资产，并确保综合文档不会丢失 PRD 与 Business Architecture 的独立版本语义。 |
-| 11 | 2026-07-15 | 记录 Business Acceptance 并将状态更新为 Done。 | 用户选择 `1. Accept`，S-002 交付结果已验收。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 创建 PRD 增量更新与版本治理 Story。 | 将增量需求治理从首次 Discovery 能力中拆出，形成可独立实施和验证的后续 Story。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 将状态改为 Blocked，并补充 User Story、Story Relationships 和 Open Questions。 | S-002 依赖尚未实现的 S-001，不能标记为可进入开发。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 重写 User Story，移除 Dev Cadence、PRD 和 workflow 实现表述。 | User Story 应表达用户目标和价值，而不是内部实现方式或交付物。 |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 将增量治理范围对齐到 PRD 与 Business Architecture 两文档基线。 | S-001 已确定两份文档共同构成产品设计基线，后续增量流程不能继续使用单一 PRD 模型。 |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 将状态更新为 Ready。 | S-001 已通过 Business Acceptance，前置依赖满足。 Legacy migration: original Version 5; normalized to Version 4. |
+| 5 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 补充增量模式触发、仓库文档发现、迁移选择和独立版本治理规则。 | S-002 必须适配目标仓库已有产品文档，不能只识别 Dev Cadence 默认路径，也不能在缺少现有基线时错误启动更新流程。 Legacy migration: original Version 6; normalized to Version 5. |
+| 6 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 增加产品与技术内容边界、历史混合内容处理及 Registry 移交规则，并将状态改为 Blocked。 | 增量更新必须避免技术方案进入产品设计基线，同时不能静默删除历史内容或丢失尚无承载位置的技术问题；S-005 和 S-006 尚未完成。 Legacy migration: original Version 7; normalized to Version 6. |
+| 7 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 补充对 S-013 Discovery 过程记录简化的明确依赖。 | 增量更新应建立在简化后的 PRD 与 Business Architecture 双资产模型上，不能继续依赖将被移除的 Discovery 过程记录。 Legacy migration: original Version 8; normalized to Version 7. |
+| 7 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 实现增量 Discovery、候选发现、权威来源协调、独立版本治理和工作项影响移交，并将状态更新为 In Progress。 | 实现与系统测试进入执行阶段；Business Acceptance 尚未完成。 Legacy migration: original Version 9; normalized to Version 7. |
+| 8 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 增加确认前会话 proposal 与确认后原子写入门禁，并定义综合单文件的双职责独立版本治理。 | 防止未确认增量内容提前污染权威资产，并确保综合文档不会丢失 PRD 与 Business Architecture 的独立版本语义。 Legacy migration: original Version 10; normalized to Version 8. |
+| 8 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 记录 Business Acceptance 并将状态更新为 Done。 | 用户选择 `1. Accept`，S-002 交付结果已验收。 Legacy migration: original Version 11; normalized to Version 8. |
+| 8 | 2026-07-19T13:07:24+0800 | Raymond Liao <raymond-liao@outlook.com> | Normalized legacy status and delivery events to reuse the active definition Version. | Old current 11 -> new current 8; original row versions 1,2,3,4,5,6,7,8,9,10,11 -> normalized row versions 1,2,3,4,4,5,6,7,7,8,8. |

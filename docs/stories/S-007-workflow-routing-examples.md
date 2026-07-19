@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-007`
-- Version：`4`
+- Version：`3`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
@@ -86,9 +86,10 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Workflow 入口路由示例 Story。 | 用集中、有限的代表性示例补足抽象路由规则，同时保留 1% 候选检查与正式 workflow 选择的两阶段语义。 |
-| 2 | 2026-07-14 | 增加正例、反例和歧义例的 emoji 标识规则。 | 路由示例需要便于快速扫描，同时保留文字原因以避免只依赖视觉符号表达语义。 |
-| 3 | 2026-07-14 | 增加对统一 Skill 语义视觉规范的依赖。 | 路由示例应复用共享 emoji 语义，而不是在 S-007 中独立定义视觉语言。 |
-| 4 | 2026-07-14 | 将状态更新为 Done，并在 Backlog 中移入已完成。 | S-007 已完成实现、代码评审和系统验证，并通过用户 Business Acceptance。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Workflow 入口路由示例 Story。 | 用集中、有限的代表性示例补足抽象路由规则，同时保留 1% 候选检查与正式 workflow 选择的两阶段语义。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 增加正例、反例和歧义例的 emoji 标识规则。 | 路由示例需要便于快速扫描，同时保留文字原因以避免只依赖视觉符号表达语义。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 增加对统一 Skill 语义视觉规范的依赖。 | 路由示例应复用共享 emoji 语义，而不是在 S-007 中独立定义视觉语言。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 将状态更新为 Done，并在 Backlog 中移入已完成。 | S-007 已完成实现、代码评审和系统验证，并通过用户 Business Acceptance。 Legacy migration: original Version 4; normalized to Version 3. |
+| 3 | 2026-07-19T13:07:24+0800 | Raymond Liao <raymond-liao@outlook.com> | Normalized legacy status and delivery events to reuse the active definition Version. | Old current 4 -> new current 3; original row versions 1,2,3,4 -> normalized row versions 1,2,3,3. |

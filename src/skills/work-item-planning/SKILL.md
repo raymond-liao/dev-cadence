@@ -9,6 +9,12 @@ Use this skill to organize confirmed product-design facts into delivery-planning
 
 This is an Asset Workflow.
 
+Before reading, creating, or updating an owned asset Change Log, read and follow:
+
+```text
+.dev-cadence/skills/contracts/change-log.md
+```
+
 It creates or updates durable planning assets under `docs/`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or other persistent copies of the workflow process. It must not copy the Delivery Workflow record chain used by `feature-dev`, `bug-fix`, or `refactor`.
 
 Use only vendored Superpowers skills from:
@@ -300,13 +306,7 @@ Increment the Version when confirmed changes alter the card's goal, scope, expec
 
 Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes.
 
-Use this Change Log contract:
-
-```text
-Version | Recorded At | Recorded By | Change | Reason
-```
-
-Identity and timestamp rules must match the repository's other Asset Workflows.
+For every card Change Log, follow the shared Change Log contract.
 
 When an existing card matches the same business identity, reuse it instead of creating a duplicate. Before writing any card change, check the current Version and visible facts. If the card changed since the current planning proposal was formed, stop and show the conflict instead of silently overwriting it.
 
@@ -337,6 +337,24 @@ Preserve the existing row order inside `待处理` unless the confirmed planning
 Work Item Planning may update only the necessary Backlog references that belong to the confirmed planning change. It must not mechanically reorder unrelated items.
 
 Task may relate to a Feature or a Story. A general Task without a clear product relationship may exist only in the Backlog. Bug relates to the affected Feature or Story and stays outside the Story Map.
+
+## Backlog Ordering Version And History
+
+`Ordering Version` is the identity of the latest user-confirmed ordering decision, not a global Backlog version.
+
+Form every ordering proposal by snapshotting the current `Ordering Version`, the complete `待处理` ID order, the proposed changes, affected IDs, confirmed relative positions, and the user's reason. Immediately before writing, re-read `Ordering Version` and the visible `待处理` ID order. If either identity changed, stop on the conflict and form a new proposal; do not overwrite the newer state.
+
+After user confirmation, write and then re-read one three-part atomic ordering unit: `待处理`, `Ordering Version`, and `Ordering Change Log`. `Ordering Change Log` must record the affected IDs, their confirmed relative positions, and the user's reason. A partial confirmation must not split the three-part atomic ordering unit.
+
+Increment `Ordering Version` and append an `Ordering Change Log` event only when the confirmed planning decision changes ordering by:
+
+- reordering existing `待处理` items;
+- inserting a new work item at an explicitly confirmed `待处理` position; or
+- adding, modifying, or cancelling an ordering exception.
+
+A lifecycle synchronization must not increment `Ordering Version`. A completed-item move must not increment `Ordering Version`. A mechanical synchronization of title, card Version, or Priority must not increment `Ordering Version`. A derived planning-view refresh must not increment `Ordering Version`. A formatting-only or link-only change must not increment `Ordering Version`.
+
+When no actual ordering change exists, do not increment `Ordering Version` or append an `Ordering Change Log` event.
 
 ## Product-Design Change Coordination
 

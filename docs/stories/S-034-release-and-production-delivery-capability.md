@@ -50,6 +50,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建发布与生产交付能力规划 Story。 | 将长期方向转成可追踪工作项，同时保持当前只规划、不实施的边界。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建发布与生产交付能力规划 Story。 | 将长期方向转成可追踪工作项，同时保持当前只规划、不实施的边界。 |

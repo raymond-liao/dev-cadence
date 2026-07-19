@@ -50,6 +50,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Manual Recovery 终态 Story。 | 为无法正常完成的 run 提供明确、可审计的退出路径。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Manual Recovery 终态 Story。 | 为无法正常完成的 run 提供明确、可审计的退出路径。 |

@@ -189,7 +189,7 @@ Only an explicit implementation, repair, or refactor request may claim a work it
 
 When a user explicitly asks to continue implementation from `docs/backlog.md`, the row order in `待处理` is the sole authoritative selection order. If the first pending item cannot proceed, complete a confirmed planning reorder before selecting a later item; do not silently skip it.
 
-After the item is selected and before switching a task branch or creating a worktree, claim it by atomically synchronizing the authoritative card and its Backlog row to `In Progress`. Preserve the card Version and Change Log for an execution-status-only change. A card already in `In Progress` must not be claimed again in the same request. Only after the card and Backlog write succeeds may the entry prepare the dedicated branch or worktree and route to the downstream workflow.
+After the item is selected and before switching a task branch or creating a worktree, claim it by atomically synchronizing the authoritative card and its Backlog row to `In Progress`. A claim uses the current card Version for its Change Log important event and does not increment the card Version for an execution-status-only change. When the status transition is important, append that event according to `.dev-cadence/skills/contracts/change-log.md`; a claim must be idempotent and must not append a duplicate Change Log event. A card already in `In Progress` must not be claimed again in the same request. Only after the card and Backlog write succeeds may the entry prepare the dedicated branch or worktree and route to the downstream workflow.
 
 Claim the item before switching the task branch. Claim the item before creating the worktree. The card and Backlog must be updated atomically.
 

@@ -50,6 +50,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Refactor 旧路径删除门禁 Story。 | 防止未完成迁移时提前删除兼容路径。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Refactor 旧路径删除门禁 Story。 | 防止未完成迁移时提前删除兼容路径。 |
