@@ -26,7 +26,7 @@
 
 | Stage | Status | Artifact | User confirmation | Checkpoint commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md); path: `build/dev-cadence/bug-fix/b-011-worktree-preparation/01-problem-diagnosis-record.md` | ⏳ `pending` | ⏳ `pending` | 已完成证据收集，等待用户确认当前诊断。 |
+| Problem Diagnosis | 🔄 `in_progress` | [问题诊断记录](01-problem-diagnosis-record.md); path: `build/dev-cadence/bug-fix/b-011-worktree-preparation/01-problem-diagnosis-record.md` | ⏳ `pending` | `c0cfaf7982bf1b2758ae51d443a40c7dbf36cec4` | 已完成证据收集，等待用户确认当前诊断。 |
 | Repair Solution | ⏳ `pending` | `pending` | ⏳ `pending` | ⏳ `pending` | 未开始；计划路径：`build/dev-cadence/bug-fix/b-011-worktree-preparation/02-repair-solution.md`。 |
 | Repair Plan | ⏳ `pending` | `pending` | ⏳ `pending` | ⏳ `pending` | 未开始；计划路径：`build/dev-cadence/bug-fix/b-011-worktree-preparation/03-repair-plan.md`。 |
 | Repair Implementation | ⏳ `pending` | `pending` | ⏳ `pending` | ⏳ `pending` | 未开始；计划路径：`build/dev-cadence/bug-fix/b-011-worktree-preparation/04-repair-record.md` 与 `build/dev-cadence/bug-fix/b-011-worktree-preparation/04-code-review-report.md`。 |
@@ -40,9 +40,9 @@
 - 运行目录：`build/dev-cadence/bug-fix/b-011-worktree-preparation`
 - 任务分支：`codex/fix-b011-worktree-preparation`
 - Base branch：`main`
-- Expected HEAD SHA：`9d81005960127d0df0098959b341024e5ff85000`
+- Expected HEAD SHA：`c0cfaf7982bf1b2758ae51d443a40c7dbf36cec4`
 - Expected base SHA：`5e752fd68b1ace8c23af69d95cfd0cc15faad07f`
-- Owned commit range：`5e752fd68b1ace8c23af69d95cfd0cc15faad07f..9d81005960127d0df0098959b341024e5ff85000`
+- Owned commit range：`5e752fd68b1ace8c23af69d95cfd0cc15faad07f..c0cfaf7982bf1b2758ae51d443a40c7dbf36cec4`
 - Owned tracked paths：`docs/backlog.md`、`docs/bugs/B-011-worktree-preparation-delayed-after-claim.md`
 - Owned untracked paths：`build/dev-cadence/bug-fix/b-011-worktree-preparation/`
 - Workspace path：`.worktrees/b-011-worktree-preparation`

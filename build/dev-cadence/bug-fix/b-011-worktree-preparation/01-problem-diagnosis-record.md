@@ -2,6 +2,7 @@
 
 - 状态：🔄 `in_progress`
 - 记录时间：`2026-07-19T16:36:08+0800`
+- 最近更新：`2026-07-19T16:45:01+0800`
 - 工作项：[B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/bugs/B-011-worktree-preparation-delayed-after-claim.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`1`
@@ -11,6 +12,8 @@
 ## 报告的症状
 
 当 `worktree.enabled: true`，显式实施请求可在主 checkout 完成领取后立即进入下游 Delivery Workflow 的早期阶段；专用 worktree 直到各 Workflow 的 Plan 阶段才被要求创建或验证。因此 Requirements、Solution、早期 checkpoint 或相等阶段可能发生在主 checkout。
+
+当 `worktree.enabled: false`，不创建 worktree 是正确行为；但入口同样没有要求在路由下游前立即准备专用任务分支。各 Delivery Workflow 的早期 checkpoint 虽会要求专用分支，却不能保证下游早期阶段从任务分支开始运行。
 
 ## 期望行为
 
@@ -22,6 +25,12 @@
 2. `src/skills/feature-dev/SKILL.md`、`src/skills/bug-fix/SKILL.md` 与 `src/skills/refactor/SKILL.md` 都将 `using-git-worktrees` 的创建或验证职责放在各自的 Plan 阶段。
 3. `tests/work-item-development-workflow-contract.sh` 当前仅验证 claim 相对 branch/worktree 的先后关系；它不验证 workspace preparation 必须位于下游 Workflow 之前。
 4. 在未修改源码的基线执行中，`bash tests/work-item-development-workflow-contract.sh` 与 `bash tests/workflow-symmetry.sh` 均通过，证明现有测试允许上述契约缺口继续存在。
+
+## 配置分支澄清
+
+- `worktree.enabled: true`：这是已观察到的主要隔离问题。入口未立即创建或验证 worktree，早期下游阶段可能在主 checkout 运行。
+- `worktree.enabled: false`：不应创建 worktree；问题改为专用任务分支准备得过晚。入口必须在进入下游 Workflow 前准备该分支，确保早期阶段和 checkpoint 从任务分支开始。
+- 两条路径的共同不变量：领取成功后必须完成配置选定的 workspace preparation，之后才能 route downstream。
 
 ## 影响范围
 
@@ -52,4 +61,4 @@
 
 ## 诊断结论
 
-✅ 已确认这是规则契约与测试覆盖缺口导致的 Bug，不是已知运行时环境问题。当前阶段仅完成诊断；尚未提出修复方案、编写计划或修改规则源码。
+✅ 已确认这是规则契约与测试覆盖缺口导致的 Bug，不是已知运行时环境问题。`worktree.enabled: true` 与 `false` 都受影响，但前者缺少隔离 worktree，后者缺少及时准备的专用任务分支。当前阶段仅完成诊断；尚未提出修复方案、编写计划或修改规则源码。
