@@ -74,7 +74,9 @@ assert_primary_checkout_claim_baseline_fixture() {
   primary_dir="$fixture_dir/primary"
   card_path="docs/cards/T-001.md"
   backlog_path="docs/backlog.md"
-  trap 'rm -rf "$fixture_dir"' RETURN
+  # RETURN traps can be bypassed by fail's exit or errexit. Capture this
+  # fixture's resolved path in an EXIT trap so every shell termination cleans it.
+  trap "rm -rf -- $(printf '%q' "$fixture_dir")" EXIT
 
   git -C "$fixture_dir" init --initial-branch=main primary >/dev/null
   git -C "$primary_dir" config user.email 'contract@example.test'
@@ -121,7 +123,7 @@ assert_primary_checkout_claim_baseline_fixture() {
   assert_fixture_match "persisted main Backlog must be In Progress" 'In Progress.*claimed' "$main_card"
   assert_equal "persisted claim Backlog content must match on main and task branch" "$main_card" "$task_card"
 
-  trap - RETURN
+  trap - EXIT
   rm -rf "$fixture_dir"
   printf 'B-015 primary-checkout claim baseline fixture passed.\n'
 }
