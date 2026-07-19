@@ -71,6 +71,8 @@
 
 `ready_with_risk`
 
+Verification Result: `ready_with_risk`
+
 执行证据覆盖原始状态分叉、authoritative base ref、true worktree、false dedicated branch、source/dist/install 和全量仓库契约；唯一跳过的是非阻塞的真实下游 live workflow 执行。
 
 ## Recommendation

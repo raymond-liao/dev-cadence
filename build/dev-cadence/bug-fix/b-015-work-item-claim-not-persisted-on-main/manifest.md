@@ -5,8 +5,8 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b015-work-item-claim-persisted`
 - Started at：`2026-07-19T19:12:59+0800`
-- Current stage：🔄 `in_progress` — Completion
-- Overall Status：🔄 `in_progress`
+- Current stage：✅ `integrated` — Completion
+- Overall Status: ✅ `integrated`
 - Run directory：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/`
 - Workspace：`.worktrees/b015-work-item-claim-persisted`
 - Output language：`zh-CN`
@@ -23,7 +23,7 @@
 | Repair Implementation | ✅ `confirmed` | [B-015 修复实施记录](04-repair-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md` | 已完成实施与代码复核 | `3043646` | 计划 Task 1-4 已完成；最终实现提交 `04a958e`，记录字段已完成 validator 收敛。 |
 | Code Review | ✅ `confirmed` | [B-015 Code Review 报告](04-code-review-report.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md` | `2026-07-19T20:59:20+0800`，最终 whole-branch review 通过 | `3733992` | 首轮四个 Important findings 已修复并复审通过，允许进入 Regression Verification。 |
 | Regression Verification | ✅ `confirmed` | [B-015 回归测试报告](05-regression-test-report.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/05-regression-test-report.md` | `2026-07-19T21:05:06+0800`，Verification Decision：`ready_with_risk` | `4717f28` | 必要契约、动态 Git baseline、构建、安装和全量检查均通过；真实下游 live workflow 未执行，作为非阻塞残余风险进入 Business Acceptance。 |
-| Business Acceptance | ✅ `confirmed` | [B-015 Business Acceptance 记录](06-business-acceptance-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/06-business-acceptance-record.md` | `2026-07-19T21:08:52+0800`，选项 1：Accept | `9243e68` | 用户接受修复及已列明的非阻塞 live workflow 风险，进入 Completion finishing flow。 |
+| Business Acceptance | ✅ `confirmed` | [B-015 Business Acceptance 记录](06-business-acceptance-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/06-business-acceptance-record.md` | `2026-07-19T21:08:52+0800`，选项 1：Accept | `9243e68` | 用户接受修复及已列明的非阻塞 live workflow 风险；Completion 已本地 merge 并完成清理。 |
 
 ## Work Item Identity And Claim
 
@@ -46,6 +46,16 @@
 
 - `worktree.enabled: false` 没有独立历史生产运行记录，但已由临时 Git dedicated-branch fixture 执行验证；真实下游 live workflow 仍未执行，已由用户在 Business Acceptance 选项 1 中接受该非阻塞风险。
 - Repair Solution 已于 `2026-07-19T19:41:25+0800` 由用户选项 1 确认；Repair Plan 已于 `2026-07-19T20:14:56+0800` 由用户选项 1 确认；Business Acceptance 已于 `2026-07-19T21:08:52+0800` 选项 1 接受，当前进入 Completion。
+
+## Final Integration Decision
+
+- Result：`merge`
+- Merge commit：`11944fa2086c8e254f1728577b05364fd7424a88`
+- Card/Backlog synchronization commit：`2471b5b6a2c8c267f77baeabdfa2101b4170b308`
+- Final main SHA：`2471b5b`
+- Worktree cleanup：已移除 `.worktrees/b015-work-item-claim-persisted`
+- Task branch cleanup：已删除 `codex/b015-work-item-claim-persisted`
+- Push / Pull Request：未执行
 
 ## Current-Run Discard Context And Ownership Evidence
 
