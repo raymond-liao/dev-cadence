@@ -29,9 +29,34 @@ assert_not_match() {
   fi
 }
 
+line_number() {
+  local pattern="$1"
+  local path="$2"
+  rg --no-ignore -n "$pattern" "$path" | head -n 1 | cut -d: -f1
+}
+
+assert_order() {
+  local label="$1"
+  local before_pattern="$2"
+  local after_pattern="$3"
+  local path="$4"
+  local before_line after_line
+
+  before_line="$(line_number "$before_pattern" "$path")"
+  after_line="$(line_number "$after_pattern" "$path")"
+  [[ -n "$before_line" && -n "$after_line" && "$before_line" -lt "$after_line" ]] ||
+    fail "expected $label in order in ${path#"$ROOT_DIR/"} (before=${before_line:-missing}, after=${after_line:-missing})"
+}
+
 assert_match "entry work-item claiming section" '^## Work Item Intake And Claiming$' "$ENTRY_SKILL"
 assert_match "implementation-only claim trigger" 'claim.*only.*explicit.*implementation|explicit.*implementation.*claim' "$ENTRY_SKILL"
 assert_match "pending order authority" '`待处理`.*sole authoritative|sole authoritative.*`待处理`' "$ENTRY_SKILL"
+assert_match "ordered intake matrix" 'selection.*type.*status.*maturity.*eligibility.*claim|选择.*类型.*状态.*成熟度.*资格.*领取' "$ENTRY_SKILL"
+assert_order "intake resolves eligibility before first claim" 'type.*status.*maturity.*eligibility|类型.*状态.*成熟度.*资格' 'claim it by atomically|原子.*领取' "$ENTRY_SKILL"
+assert_match "draft story blocked before ready" 'Draft Story.*must not.*claim|Draft Story.*不得.*领取' "$ENTRY_SKILL"
+assert_match "ready story claim qualification" 'Ready Story.*user-confirmed.*claim|Ready Story.*用户确认.*领取' "$ENTRY_SKILL"
+assert_match "task claim qualification" 'Task.*eligible.*without.*Ready|Task.*可领取.*无需.*Ready' "$ENTRY_SKILL"
+assert_match "bug claim qualification" 'Bug.*eligible.*without.*Ready|Bug.*可领取.*无需.*Ready' "$ENTRY_SKILL"
 assert_match "claim before branch" '(?i)claim.*before.*branch|branch.*after.*claim|分支.*领取.*之后' "$ENTRY_SKILL"
 assert_match "claim before worktree" '(?i)claim.*before.*worktree|worktree.*after.*claim|worktree.*领取.*之后' "$ENTRY_SKILL"
 assert_match "card backlog atomic sync" 'card.*Backlog.*atomically|Backlog.*card.*原子|原子.*卡片.*Backlog' "$ENTRY_SKILL"
