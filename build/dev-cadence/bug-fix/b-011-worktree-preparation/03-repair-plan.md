@@ -40,7 +40,7 @@
 - Consumes: the existing `assert_match` and `assert_order` helpers in the work-item development contract.
 - Produces: an entry contract requiring `claim -> workspace preparation -> route downstream` and both configuration branches.
 
-- [ ] **Step 1: Add the failing entry assertions.**
+- [x] **Step 1: Add the failing entry assertions.**
 
   Add these checks after the existing claim-before-worktree assertion:
 
@@ -57,13 +57,13 @@
     "$ENTRY_SKILL"
   ```
 
-- [ ] **Step 2: Run the focused contract to verify RED.**
+- [x] **Step 2: Run the focused contract to verify RED.**
 
   Run: `bash tests/work-item-development-workflow-contract.sh`
 
   Expected: `FAIL` because the current entry lacks the workspace-preparation-before-routing invariant and both explicit configuration branches.
 
-- [ ] **Step 3: Add the minimal entry-owned handoff rule.**
+- [x] **Step 3: Add the minimal entry-owned handoff rule.**
 
   Immediately after the atomic claim rule in `src/skills/using-dev-cadence/SKILL.md`, add a dedicated paragraph whose normative content is:
 
@@ -73,13 +73,13 @@
 
   Keep the existing claim-before-branch/worktree wording and add an explicit prohibition on Requirements, Solution, Plan, checkpoint, or implementation work before this handoff completes.
 
-- [ ] **Step 4: Run the focused contract to verify GREEN.**
+- [x] **Step 4: Run the focused contract to verify GREEN.**
 
   Run: `bash tests/work-item-development-workflow-contract.sh`
 
   Expected: `S-017 work-item development workflow contract checks passed.`
 
-- [ ] **Step 5: Commit the atomic entry unit.**
+- [x] **Step 5: Commit the atomic entry unit.**
 
   Stage only `tests/work-item-development-workflow-contract.sh` and `src/skills/using-dev-cadence/SKILL.md`, review the staged diff, then create one Conventional Commit: `fix(flow): prepare workspace before delivery routing`.
 
@@ -97,7 +97,7 @@
 - Consumes: the entry-prepared workspace invariant from Task 1 and the `assert_workflows` helper.
 - Produces: three matching Plan-stage contracts that verify/reuse an existing workspace without first creating it.
 
-- [ ] **Step 1: Add the failing symmetry assertion.**
+- [x] **Step 1: Add the failing symmetry assertion.**
 
   Add this invocation near the existing configuration assertions:
 
@@ -108,13 +108,13 @@
     "entry-prepared workspace.*must not.*first create"
   ```
 
-- [ ] **Step 2: Run the symmetry contract to verify RED.**
+- [x] **Step 2: Run the symmetry contract to verify RED.**
 
   Run: `bash tests/workflow-symmetry.sh`
 
   Expected: `FAIL` because all three skills currently permit the Plan stage to create or verify the workspace for the first time.
 
-- [ ] **Step 3: Replace the three duplicated first-creation contracts.**
+- [x] **Step 3: Replace the three duplicated first-creation contracts.**
 
   In each Delivery Workflow:
 
@@ -124,13 +124,13 @@
 
   Update each configuration branch so `true` describes an entry-created or verified worktree and `false` describes an entry-prepared dedicated branch with no worktree. Change the Superpowers mapping output from `isolated workspace readiness` to `entry-prepared workspace verification`. Retain each workflow's existing plan-writing and implementation rules.
 
-- [ ] **Step 4: Run the symmetry contract to verify GREEN.**
+- [x] **Step 4: Run the symmetry contract to verify GREEN.**
 
   Run: `bash tests/workflow-symmetry.sh`
 
   Expected: `Workflow symmetry checks passed.`
 
-- [ ] **Step 5: Commit the symmetric workflow unit.**
+- [x] **Step 5: Commit the symmetric workflow unit.**
 
   Stage only the symmetry test and three Delivery `SKILL.md` files, review the staged diff, then create one Conventional Commit: `fix(flow): reuse entry-prepared workspaces`.
 
@@ -149,7 +149,7 @@
 - Consumes: the confirmed false-path behavior from Tasks 1 and 2.
 - Produces: installation guidance and a generated package whose text exactly matches source assets.
 
-- [ ] **Step 1: Update user-facing configuration wording.**
+- [x] **Step 1: Update user-facing configuration wording.**
 
   Replace each `worktree.enabled: false` description with wording equivalent to:
 
@@ -159,7 +159,7 @@
 
   Keep the `true` and directory descriptions unchanged except where they must say the entry performs the preparation.
 
-- [ ] **Step 2: Update the package version.**
+- [x] **Step 2: Update the package version.**
 
   Replace the complete content of `version` with:
 
@@ -167,19 +167,19 @@
   0.26.3
   ```
 
-- [ ] **Step 3: Build the installed package.**
+- [x] **Step 3: Build the installed package.**
 
   Run: `bash scripts/build.sh`
 
   Expected: `dist/.dev-cadence/` is regenerated from source; do not stage ignored `dist/` files.
 
-- [ ] **Step 4: Verify package and install behavior.**
+- [x] **Step 4: Verify package and install behavior.**
 
   Run: `bash tests/package-contract.sh && bash tests/install-contract.sh`
 
   Expected: both package source/dist comparisons and temporary-target installation replacement checks pass.
 
-- [ ] **Step 5: Commit the guidance and release unit.**
+- [x] **Step 5: Commit the guidance and release unit.**
 
   Stage only `src/AGENTS-snippet.md`, `README.md`, `README.zh-CN.md`, and `version`, review the staged diff, then create one Conventional Commit: `fix(flow): document prepared delivery workspaces`.
 
@@ -194,19 +194,19 @@
 - Consumes: the completed source, test, documentation, version, and generated-package changes from Tasks 1-3.
 - Produces: fresh evidence that the complete installed workflow remains internally consistent.
 
-- [ ] **Step 1: Run whitespace validation.**
+- [x] **Step 1: Run whitespace validation.**
 
   Run: `bash scripts/check-whitespace.sh`
 
   Expected: exit code `0` with no whitespace failure.
 
-- [ ] **Step 2: Run the full repository check.**
+- [x] **Step 2: Run the full repository check.**
 
   Run: `bash scripts/check-all.sh`
 
   Expected: build, all contract tests, package synchronization, and install contract checks pass.
 
-- [ ] **Step 3: Verify source and generated package contain the key invariant.**
+- [x] **Step 3: Verify source and generated package contain the key invariant.**
 
   Run:
 
@@ -225,7 +225,7 @@
 
   Expected: every named source and generated skill reports the expected rule.
 
-- [ ] **Step 4: Commit any in-scope verification-record update only.**
+- [x] **Step 4: Commit any in-scope verification-record update only.**
 
   Stage no source files unless a Task 1-3 correction is required. Record the commands and results in `04-repair-record.md` during Repair Implementation rather than creating an empty commit.
 
@@ -236,3 +236,11 @@
 - The Plan neither adds a workflow/skill nor changes the excluded lifecycle and Completion behavior.
 - `dist/` is generated, source remains authoritative, and the version change is explicit.
 - No task relies on undefined paths, tests, or commands.
+
+## Pre-Implementation Design Freshness
+
+- Checked at: `2026-07-19T16:56:28+0800`
+- Confirmed inputs: B-011 Version `1`, Problem Diagnosis checkpoint `7fcc8fcc19f9ff3f033e97f4f2b36dbd74871cc0`, Repair Solution checkpoint `00617096520017b7cf3cc8aece364b3a5acc6ded`, and this confirmed Repair Plan checkpoint `a89aee8f8184833b696f5717a06fe1a48f707426`.
+- Current code identity: branch `codex/fix-b011-worktree-preparation` at `a89aee8f8184833b696f5717a06fe1a48f707426`; base `main` at `5e752fd68b1ace8c23af69d95cfd0cc15faad07f`.
+- Configuration: the worktree copy matches `target repository root/.dev-cadence.yaml`; `worktree.enabled: true` and `.worktrees` remain applicable.
+- Conclusion: ✅ `confirmed`; no design, dependency, card, or code-state change invalidates the plan.
