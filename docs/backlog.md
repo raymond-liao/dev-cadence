@@ -173,3 +173,13 @@
 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | - |
 | [B-003](bugs/B-003-refactor-public-contract-compatibility.md) | - | - |
 | [T-004](tasks/T-004-git-commit-skill-workflow-integration.md) | - | - |
+
+## Ordering Version
+
+`1`
+
+## Ordering Change Log
+
+| Ordering Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | 2026-07-19T09:18:15+08:00 | Raymond Liao <raymond-liao@outlook.com> | 确认 worktree 相关工作项 `S-030`、`S-031`、`S-032` 和 `S-033` 保持在 `T-002` 之后。 | 用户明确要求 worktree 相关工作后置；通用 `P0` 风险排序不得自动覆盖该顺序。 |
