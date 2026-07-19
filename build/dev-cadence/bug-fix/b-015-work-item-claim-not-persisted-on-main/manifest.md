@@ -18,7 +18,7 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Problem Diagnosis | ✅ `confirmed` | [B-015 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md` | `2026-07-19T19:19:20+0800`，选项 1 | `22ecff8` | 用户确认当前诊断，进入修复方案。 |
-| Repair Solution | 🔄 `in_progress` | [B-015 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | 未确认 | `pending` | 已形成推荐方案，等待修复方案门确认。 |
+| Repair Solution | 🔄 `in_progress` | [B-015 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | 未确认 | `4966009` | 已形成推荐方案，等待修复方案门确认。 |
 | Repair Plan | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md` | 未开始 | `pending` | 方案确认后开始。 |
 | Repair Implementation | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md` | 未开始 | `pending` | 计划确认后开始。 |
 | Code Review | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md` | 未开始 | `pending` | 实施完成后开始。 |
@@ -53,10 +53,10 @@
 - Run directory：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/`
 - Task branch：`codex/b015-work-item-claim-persisted`
 - Base branch：`main`
-- Expected HEAD SHA：`22ecff8`
+- Expected HEAD SHA：`4966009`
 - Expected base SHA：`0e5d69e73f6bf760ff954ba15119ad9c429571be`
-- Owned commit range：`0e5d69e73f6bf760ff954ba15119ad9c429571be..22ecff8`
-- Owned tracked paths：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/manifest.md`
+- Owned commit range：`0e5d69e73f6bf760ff954ba15119ad9c429571be..4966009`
+- Owned tracked paths：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/manifest.md`
 - Owned untracked paths：`none at start`
 - Workspace path：`.worktrees/b015-work-item-claim-persisted`
 - Worktree created by this run：`yes`
