@@ -4,7 +4,7 @@
 
 - ID：`S-041`
 - Version：`3`
-- Status：`Draft`
+- Status：`Ready`
 - Priority：`P1`
 - Change Type：Enhancement
 
