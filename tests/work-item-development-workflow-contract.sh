@@ -67,11 +67,12 @@ assert_fixture_match() {
 }
 
 assert_primary_checkout_claim_baseline_fixture() {
-  local fixture_dir primary_dir card_path backlog_path main_card task_card
-  local main_commit task_commit
+  local fixture_dir primary_dir worktree_dir card_path backlog_path main_card task_card
+  local main_commit task_commit worktree_head worktree_card
 
   fixture_dir="$(mktemp -d)"
   primary_dir="$fixture_dir/primary"
+  worktree_dir="$fixture_dir/task-worktree"
   card_path="docs/cards/T-001.md"
   backlog_path="docs/backlog.md"
   # RETURN traps can be bypassed by fail's exit or errexit. Capture this
@@ -110,6 +111,21 @@ assert_primary_checkout_claim_baseline_fixture() {
   printf '| T-001 | In Progress | claimed |\n' >"$primary_dir/$backlog_path"
   git -C "$primary_dir" add "$card_path" "$backlog_path"
   git -C "$primary_dir" commit -m 'test: persist claim on primary checkout' >/dev/null
+  main_commit="$(git -C "$primary_dir" rev-parse main)"
+
+  # The enabled path must create a real linked worktree directly from the
+  # persisted main claim commit, not merely a dedicated branch.
+  git -C "$primary_dir" worktree add -b task-worktree "$worktree_dir" "$main_commit" >/dev/null
+  worktree_head="$(git -C "$worktree_dir" rev-parse HEAD)"
+  assert_equal "persisted claim worktree must share main's branch pointer" "$main_commit" "$worktree_head"
+  worktree_card="$(git -C "$worktree_dir" show "HEAD:$card_path")"
+  main_card="$(git -C "$primary_dir" show "main:$card_path")"
+  assert_equal "persisted claim card content must match on main and worktree" "$main_card" "$worktree_card"
+  worktree_card="$(git -C "$worktree_dir" show "HEAD:$backlog_path")"
+  main_card="$(git -C "$primary_dir" show "main:$backlog_path")"
+  assert_equal "persisted claim Backlog content must match on main and worktree" "$main_card" "$worktree_card"
+
+  # The disabled path keeps its dedicated branch baseline assertion.
   git -C "$primary_dir" switch -c task-from-primary-claim >/dev/null
   main_commit="$(git -C "$primary_dir" rev-parse main)"
   task_commit="$(git -C "$primary_dir" rev-parse task-from-primary-claim)"
@@ -123,6 +139,7 @@ assert_primary_checkout_claim_baseline_fixture() {
   assert_fixture_match "persisted main Backlog must be In Progress" 'In Progress.*claimed' "$main_card"
   assert_equal "persisted claim Backlog content must match on main and task branch" "$main_card" "$task_card"
 
+  git -C "$primary_dir" worktree remove --force "$worktree_dir"
   trap - EXIT
   rm -rf "$fixture_dir"
   printf 'B-015 primary-checkout claim baseline fixture passed.\n'
@@ -145,6 +162,12 @@ assert_match "enabled worktree handoff" \
   'worktree\.enabled: true.*immediately.*create or verify.*worktree' "$ENTRY_SKILL"
 assert_match "disabled branch handoff" \
   'worktree\.enabled: false.*immediately.*prepare.*dedicated.*branch.*must not.*create.*worktree' "$ENTRY_SKILL"
+assert_match "authoritative base ref resolved before claim" \
+  'resolve and verify.*authoritative base branch/ref.*do not infer.*primary checkout directory' "$ENTRY_SKILL"
+assert_match "claim commit advances authoritative base ref before workspace" \
+  '(?i)before either task workspace.*claim commit.*advances.*authoritative base ref' "$ENTRY_SKILL"
+assert_not_match "work-item-specific Version 4 policy" \
+  'For B-015.*Version `4`|B-015.*Version `4`' "$ENTRY_SKILL"
 
 assert_primary_checkout_claim_baseline_fixture
 
@@ -158,7 +181,7 @@ assert_match "enabled worktree path claim persists before worktree creation" \
 assert_match "enabled worktree path worktree starts from persisted claim commit" \
   'worktree\.enabled: true.*worktree.*from.*claim.*commit' "$ENTRY_SKILL"
 assert_match "enabled worktree path failure blocks workspace and routing" \
-  'worktree\.enabled: true.*claim.*persist.*fail.*must not.*worktree.*route' "$ENTRY_SKILL"
+  'worktree\.enabled: true.*failure of.*claim persistence.*do not.*worktree.*do not route' "$ENTRY_SKILL"
 assert_match "disabled branch path primary checkout claim write target" \
   'worktree\.enabled: false.*primary.*checkout.*claim.*write' "$ENTRY_SKILL"
 assert_match "disabled branch path claim persists before branch creation" \
@@ -166,7 +189,7 @@ assert_match "disabled branch path claim persists before branch creation" \
 assert_match "disabled branch path branch starts from persisted claim commit" \
   'worktree\.enabled: false.*dedicated.*branch.*from.*claim.*commit' "$ENTRY_SKILL"
 assert_match "disabled branch path failure blocks workspace and routing" \
-  'worktree\.enabled: false.*claim.*persist.*fail.*must not.*branch.*route' "$ENTRY_SKILL"
+  'worktree\.enabled: false.*failure of.*claim persistence.*do not.*branch.*do not route' "$ENTRY_SKILL"
 assert_order "claim -> workspace preparation -> downstream routing" \
   'claim it by atomically' \
   'workspace preparation.*complete.*before.*route.*downstream' \

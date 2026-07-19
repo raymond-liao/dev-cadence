@@ -3,7 +3,7 @@
 ## Scope And Entry Gates
 
 - 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
-- 修复范围：使 `worktree.enabled: true` 与 `worktree.enabled: false` 都从 primary checkout（本仓库基线为 `main`）已持久化的领取提交创建任务 workspace。
+- 修复范围：使 `worktree.enabled: true` 与 `worktree.enabled: false` 都从已解析并验证的权威 base ref（本仓库为 `main`）上的持久化领取提交创建任务 workspace。
 - 主 checkout 领取提交：`0e5d69e73f6bf760ff954ba15119ad9c429571be`。该提交原子地将 B-015 卡片和 `docs/backlog.md` 行同步为 `In Progress`；任务 worktree 从该提交创建。
 - 实施前门禁：领取写入、主 checkout 领取提交和 workspace 基线验证均先完成；Repair Plan 已确认并形成 checkpoint `e6c7361` 后才开始 Task 1--4 的实现。未在上述门禁完成前开始实现、需求、方案、计划或 checkpoint 工作。
 
@@ -20,12 +20,13 @@ FAIL: missing enabled worktree path primary checkout claim write target in src/s
 
 ### GREEN
 
-入口规则现在要求无论 `worktree.enabled` 配置为何，都必须在 primary checkout 原子同步卡片与 `docs/backlog.md`，记录可验证的 main claim commit 后，才可创建任务 workspace。`true` 路径从该提交创建或验证 worktree；`false` 路径从该提交准备 dedicated branch 且不得创建 worktree。primary 写入、claim persist、基线、Version、状态或 Backlog 验证失败均阻止 workspace 创建和下游路由。B-015 继续验证卡片 Version `4`。
+入口规则现在要求无论 `worktree.enabled` 配置为何，都必须先解析并验证权威 base ref，且在 primary checkout 原子同步卡片与 `docs/backlog.md`、记录 claim commit 并验证该提交推进该精确 ref 后，才可创建任务 workspace。`true` 路径从该提交创建或验证 worktree；`false` 路径从该提交准备 dedicated branch 且不得创建 worktree。任何 primary 写入、claim persistence/commit、base-ref advancement、基线、Version、状态或 Backlog 验证的失败均阻止对应 workspace 创建和下游路由；成功的写入或提交不构成停止条件。
 
 动态 fixture 在 GREEN 回归中再次覆盖两条基线：
 
 - `task-from-uncommitted-claim`：保留错误基线，确认只在 task branch 提交不能更新 `main`。
-- `task-from-primary-claim`：确认先在 `main` 持久化领取时，task branch 与 `main` 共享提交指针、`In Progress` 卡片和匹配 Backlog 行。
+- `task-worktree`：使用 `git worktree add` 从已持久化的 `main` 领取提交创建真实 linked worktree，确认其 `HEAD` 等于 `main`，并确认卡片与 Backlog 内容匹配；fixture 在移除临时目录前移除此 worktree。
+- `task-from-primary-claim`：确认先在 `main` 持久化领取时，dedicated task branch 与 `main` 共享提交指针、`In Progress` 卡片和匹配 Backlog 行。
 
 ## 版本、构建与验证
 
