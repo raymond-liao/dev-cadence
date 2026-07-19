@@ -4,17 +4,17 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `In Progress` | `P1` |
+| `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `In Progress` | `P2` |
+| `B-014` | [单项建卡被错误套用双确认门](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | `1` | `In Progress` | `P3` |
 
 
 ## 待处理
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Draft` | `P1` |
 | `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Draft` | `P1` |
-| `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `Draft` | `P2` |
 | `B-013` | [Story Ready 错误依赖 Feature 关联](bugs/B-013-story-ready-feature-reference-required.md) | `1` | `Draft` | `P1` |
-| `B-014` | [单项建卡被错误套用双确认门](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | `1` | `Draft` | `P3` |
 | `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `Ready` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |

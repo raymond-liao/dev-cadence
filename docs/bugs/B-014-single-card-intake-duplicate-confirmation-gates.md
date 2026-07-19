@@ -4,7 +4,7 @@
 
 - ID：`B-014`
 - Version：`1`
-- Status：`Draft`
+- Status：`In Progress`
 - Priority：`P3`
 - Change Type：Bug
 
@@ -88,3 +88,4 @@ Planning Inputs And Scope Confirmation
 | Version | Recorded At | Recorded By | Change | Reason |
 | ---: | --- | --- | --- | --- |
 | 1 | 2026-07-19T13:08:29+08:00 | Raymond Liao <raymond-liao@outlook.com> | 创建单项建卡双确认门 Bug 卡。 | 用户确认明确的单项建卡请求只需要一次完整结果确认，当前两道正式门禁产生了重复交互。 |
+| 1 | 2026-07-19T15:03:31+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将状态更新为 `In Progress`。 | 用户明确要求同时并行修复 B-012、B-010 和 B-014；本次只改变执行状态，不改变卡片定义。 |
