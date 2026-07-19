@@ -6,7 +6,7 @@
 - Branch：`codex/b015-work-item-claim-persisted`
 - Started at：`2026-07-19T19:12:59+0800`
 - Current stage：🔄 `in_progress` — Problem Diagnosis
-- Overall status：🔄 `in_progress`
+- Overall Status：🔄 `in_progress`
 - Run directory：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/`
 - Workspace：`.worktrees/b015-work-item-claim-persisted`
 - Output language：`zh-CN`
@@ -15,15 +15,15 @@
 
 ## Stage Table
 
-| Stage | Status | Artifact | User confirmation | Checkpoint commit | Notes |
-|---|---|---|---|---|---|
-| Problem Diagnosis | 🔄 `in_progress` | [B-015 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md` | 待确认 | `pending` | 已完成基线调查与复现证据，等待诊断门确认。 |
-| Repair Solution | ⏳ `pending` | `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | 未开始 | `pending` | 诊断确认后开始。 |
-| Repair Plan | ⏳ `pending` | `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md` | 未开始 | `pending` | 方案确认后开始。 |
-| Repair Implementation | ⏳ `pending` | `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md` | 未开始 | `pending` | 计划确认后开始。 |
-| Code Review | ⏳ `pending` | `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md` | 未开始 | `pending` | 实施完成后开始。 |
-| Regression Verification | ⏳ `pending` | `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/05-regression-test-report.md` | 未开始 | `pending` | Review 通过后开始。 |
-| Business Acceptance | ⏳ `pending` | `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/06-business-acceptance-record.md` | 未开始 | `pending` | 仅允许 `ready` 或 `ready_with_risk` 进入。 |
+| Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Problem Diagnosis | 🔄 `in_progress` | [B-015 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md` | 待确认 | `22ecff8` | 已完成基线调查与复现证据，等待诊断门确认。 |
+| Repair Solution | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | 未开始 | `pending` | 诊断确认后开始。 |
+| Repair Plan | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md` | 未开始 | `pending` | 方案确认后开始。 |
+| Repair Implementation | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md` | 未开始 | `pending` | 计划确认后开始。 |
+| Code Review | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md` | 未开始 | `pending` | 实施完成后开始。 |
+| Regression Verification | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/05-regression-test-report.md` | 未开始 | `pending` | Review 通过后开始。 |
+| Business Acceptance | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/06-business-acceptance-record.md` | 未开始 | `pending` | 仅允许 `ready` 或 `ready_with_risk` 进入。 |
 
 ## Work Item Identity And Claim
 
@@ -53,10 +53,10 @@
 - Run directory：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/`
 - Task branch：`codex/b015-work-item-claim-persisted`
 - Base branch：`main`
-- Expected HEAD SHA：`0e5d69e73f6bf760ff954ba15119ad9c429571be`
+- Expected HEAD SHA：`22ecff8`
 - Expected base SHA：`0e5d69e73f6bf760ff954ba15119ad9c429571be`
-- Owned commit range：`none at start`
-- Owned tracked paths：`none at start`
+- Owned commit range：`0e5d69e73f6bf760ff954ba15119ad9c429571be..22ecff8`
+- Owned tracked paths：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/manifest.md`
 - Owned untracked paths：`none at start`
 - Workspace path：`.worktrees/b015-work-item-claim-persisted`
 - Worktree created by this run：`yes`
