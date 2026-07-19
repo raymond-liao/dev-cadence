@@ -10,6 +10,15 @@
 - Implementation branch: `codex/b012-draft-story-claimed`
 - Implementation base: `e96d344`
 
+## Pre-Implementation Design Freshness Gate
+
+- Card identity: `docs/bugs/B-012-draft-story-claimed-before-ready-gate.md`, Version `1`, Status `In Progress`
+- Confirmed inputs: `01-problem-diagnosis-record.md`, `02-repair-solution.md`, this plan
+- Current branch and commit: `codex/b012-draft-story-claimed` at `ead5d96`
+- Dependency/config state: `.dev-cadence.yaml` propagated and verified; baseline `bash scripts/check-all.sh` passed
+- Conclusion: ✅ `confirmed`; diagnosis, solution, scope, acceptance criteria and task split remain valid
+- Evidence summary: no material repository changes since plan confirmation; worktree is clean before implementation
+
 ## Task Overview
 
 | Task | Goal | Files | Verification |
