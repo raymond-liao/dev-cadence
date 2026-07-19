@@ -24,3 +24,59 @@
 ## Decision
 
 ✅ `passed`. Draft Story cannot be claimed before explicit Ready confirmation; Ready Story, Task, and Bug qualification behavior remains covered. No residual regression risk was found within the confirmed scope.
+
+## Problem And Repair Sources
+
+- Diagnosis: `01-problem-diagnosis-record.md`
+- Repair Solution: `02-repair-solution.md`
+- Repair Plan: `03-repair-plan.md`
+- Repair Record: `04-repair-record.md`
+
+## Test Environment
+
+- Repository: `dev-cadence`
+- Branch: `codex/parallel-b012-b010-b014`
+- Configuration: `output_language: zh-CN`, worktree-enabled source configuration
+- Tooling: repository Bash contracts and `scripts/build.sh`; no server required
+
+## Test Cases
+
+| ID | Scenario | Type | Execution | Result | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| B012-T1 | Draft/Ready/Task/Bug ordered claim matrix | contract | `bash tests/work-item-development-workflow-contract.sh` | passed | ordered matrix and four eligibility assertions |
+| B012-T2 | Work Item Analysis Story readiness | contract | `bash tests/work-item-analysis-contract.sh` | passed | Analysis owns Ready decision |
+| B012-T3 | Routing and planning regression | contract | `bash tests/routing-contract.sh` and `bash tests/work-item-planning-contract.sh` | passed | existing route/ordering contracts |
+| B012-T4 | Source/dist/build/install | build/install | `bash scripts/build.sh`, `bash tests/package-contract.sh`, `bash tests/install-contract.sh` | passed | source/dist matrix and installed package |
+| B012-T5 | Full repository regression | full suite | `bash scripts/check-all.sh` | passed | all repository contracts |
+
+## Bug Fix Coverage
+
+| Point | Tests | Status |
+| --- | --- | --- |
+| Draft Story is not claimed before confirmed Ready | B012-T1 | covered |
+| Root cause ordering is enforced before claim write | B012-T1 | covered |
+| Ready Story, Task, and Bug non-unified gates remain | B012-T1, B012-T2, B012-T3 | covered |
+
+## Impact Scope Coverage
+
+| Area | Tests | Status |
+| --- | --- | --- |
+| Entry routing source and dist | B012-T1, B012-T4 | covered |
+| Work Item Analysis handoff | B012-T2 | covered |
+| Package/install behavior | B012-T4, B012-T5 | covered |
+
+## Failed Or Skipped Checks
+
+None.
+
+## Residual Risks
+
+None within the confirmed scope.
+
+## Verification Decision
+
+`ready`
+
+## Recommendation
+
+The fix may enter Business Acceptance.
