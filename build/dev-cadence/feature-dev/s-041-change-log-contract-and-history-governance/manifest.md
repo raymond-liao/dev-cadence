@@ -27,12 +27,12 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [需求确认](01-requirements.md) | `pending` | `ae6a932f18f452ec6e14f70170807700d50b1369` | Requirements are reviewable; awaiting the stage gate. |
-| Technical Solution | ⏳ `pending` | `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/02-technical-solution.md` | `pending` | `pending` | Enhanced exploration required. |
-| Implementation Plan | ⏳ `pending` | `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/03-implementation-plan.md` | `pending` | `pending` | Not started. |
-| Development Implementation | ⏳ `pending` | `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/04-implementation-record.md` | `not applicable` | `pending` | Not started. |
-| System Testing | ⏳ `pending` | `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/05-system-test-report.md` | `not applicable` | `pending` | Not started. |
-| Business Acceptance | ⏳ `pending` | `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/06-business-acceptance-record.md` | `pending` | `pending` | Not started. |
+| Requirements Confirmation | 🔄 `in_progress` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/01-requirements.md`) | `pending` | `ae6a932f18f452ec6e14f70170807700d50b1369` | Requirements are reviewable; awaiting the stage gate. |
+| Technical Solution | ⏳ `pending` | ⏳ pending | `pending` | `pending` | Enhanced exploration required. |
+| Implementation Plan | ⏳ `pending` | ⏳ pending | `pending` | `pending` | Not started. |
+| Development Implementation | ⏳ `pending` | ⏳ pending | `not applicable` | `pending` | Not started. |
+| System Testing | ⏳ `pending` | ⏳ pending | `not applicable` | `pending` | Not started. |
+| Business Acceptance | ⏳ `pending` | ⏳ pending | `pending` | `pending` | Not started. |
 
 ## Lifecycle Writeback
 
