@@ -10,6 +10,15 @@
 - Implementation branch: `codex/b010-generated-record-links`
 - Implementation base: `e96d344`
 
+## Pre-Implementation Design Freshness Gate
+
+- Card identity: `docs/bugs/B-010-generated-record-document-links-not-enforced.md`, Version `1`, Status `In Progress`
+- Confirmed inputs: `01-problem-diagnosis-record.md`, `02-repair-solution.md`, this plan
+- Current branch and commit: `codex/b010-generated-record-links` at `f03895b`
+- Dependency/config state: `.dev-cadence.yaml` propagated and verified; baseline `bash scripts/check-all.sh` passed
+- Conclusion: ✅ `confirmed`; diagnosis, solution, scope, acceptance criteria and task split remain valid
+- Evidence summary: no material repository changes since plan confirmation; worktree is clean before implementation
+
 ## Task Overview
 
 | Task | Goal | Files | Verification |
