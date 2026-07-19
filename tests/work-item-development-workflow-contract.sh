@@ -59,6 +59,16 @@ assert_match "task claim qualification" 'Task.*eligible.*without.*Ready|Task.*�
 assert_match "bug claim qualification" 'Bug.*eligible.*without.*Ready|Bug.*可领取.*无需.*Ready' "$ENTRY_SKILL"
 assert_match "claim before branch" '(?i)claim.*before.*branch|branch.*after.*claim|分支.*领取.*之后' "$ENTRY_SKILL"
 assert_match "claim before worktree" '(?i)claim.*before.*worktree|worktree.*after.*claim|worktree.*领取.*之后' "$ENTRY_SKILL"
+assert_match "workspace preparation gate" \
+  'workspace preparation.*complete.*before.*route.*downstream' "$ENTRY_SKILL"
+assert_match "enabled worktree handoff" \
+  'worktree\.enabled: true.*immediately.*create or verify.*worktree' "$ENTRY_SKILL"
+assert_match "disabled branch handoff" \
+  'worktree\.enabled: false.*immediately.*prepare.*dedicated.*branch.*must not.*create.*worktree' "$ENTRY_SKILL"
+assert_order "claim -> workspace preparation -> downstream routing" \
+  'claim it by atomically' \
+  'workspace preparation.*complete.*before.*route.*downstream' \
+  "$ENTRY_SKILL"
 assert_match "card backlog atomic sync" 'card.*Backlog.*atomically|Backlog.*card.*原子|原子.*卡片.*Backlog' "$ENTRY_SKILL"
 assert_match "story analysis readiness route" 'Draft Story.*work-item-analysis.*Ready Story.*feature-dev' "$ENTRY_SKILL"
 assert_match "feature ready story gate" 'feature-dev.*confirmed.*Ready Story|Ready Story.*feature-dev.*confirmed' "$ENTRY_SKILL"

@@ -38,10 +38,10 @@ Supported values:
 - `en`: write documents and records in English.
 - `zh-CN`: write documents and records in Simplified Chinese.
 
-Use `worktree.enabled` to set the worktree preference before invoking the vendored `using-git-worktrees` skill:
+Use `worktree.enabled` to select the entry-prepared workspace:
 
-- `true`: create or verify an isolated worktree without asking.
-- `false`: work in the current checkout unless the user explicitly asks for a worktree.
+- `true`: the entry immediately creates or verifies the configured isolated task worktree before routing downstream; Plan verifies and reuses it.
+- `false`: the entry immediately prepares a dedicated task branch without a worktree before routing downstream; Plan verifies and reuses it.
 
 Use `worktree.directory` as the preferred project-local worktree directory when `worktree.enabled` is `true`.
 
@@ -180,7 +180,7 @@ Map it to Dev Cadence like this:
 | --- | --- | --- |
 | Requirements Confirmation | `brainstorming` refactor requirement clarification | Confirmed refactor requirements |
 | Refactor Solution | `brainstorming` structural design/spec work | Refactor technical solution |
-| Refactor Plan | `using-git-worktrees` and `writing-plans` | isolated workspace readiness, refactor implementation plan |
+| Refactor Plan | `using-git-worktrees` and `writing-plans` | entry-prepared workspace verification, refactor implementation plan |
 | Refactor Implementation | `test-driven-development` for new behavior-protection code, sensitivity-checked characterization tests for existing behavior, otherwise the green `REFACTOR` phase; then `subagent-driven-development`, `executing-plans`, and `requesting-code-review` | Working deliverable, supporting test assets, refactor record, code review report |
 | Regression Verification | `verification-before-completion` | Regression test report |
 | Business Acceptance | Dev Cadence user decision gate | Business acceptance record |
@@ -397,7 +397,7 @@ Use:
 .dev-cadence/vendor/superpowers/skills/writing-plans/SKILL.md
 ```
 
-Before writing the plan, apply the configured `worktree.enabled` and `worktree.directory`, then use `using-git-worktrees` to create or verify the isolated refactor workspace according to the vendored Superpowers rules. When `worktree.enabled` is `true`, treat it as a predeclared user preference to create an isolated worktree and do not ask for worktree consent. When `worktree.enabled` is `false`, skip worktree creation unless the user explicitly asks for it.
+The entry-prepared workspace must be verified and reused at Plan stage; this stage must not first create a task branch or worktree. When `worktree.enabled` is `true`, verify the entry created or verified the configured isolated refactor worktree. When `worktree.enabled` is `false`, verify the entry prepared the dedicated refactor branch with no worktree.
 
 The plan is only for the next stage, Refactor Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, behavior-protection cycles, commands, expected results, and self-review. Use test-first RED-GREEN cycles for new behavior-protection code, sensitivity-checked characterization tests for existing behavior, and green-REFACTOR-green cycles for behavior already covered by the baseline.
 

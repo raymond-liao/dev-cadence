@@ -162,8 +162,8 @@ Supported values:
 
 Worktree options:
 
-- `worktree.enabled: false` - work in the current checkout unless explicitly requested.
-- `worktree.enabled: true` - create or verify an isolated worktree without asking.
+- `worktree.enabled: false` - use an entry-prepared dedicated task branch and do not create a worktree.
+- `worktree.enabled: true` - the entry creates or verifies an isolated worktree without asking.
 - `worktree.directory` - preferred project-local worktree directory.
 
 Keep user configuration outside `.dev-cadence`. The `.dev-cadence` directory is replaced during Dev Cadence updates.

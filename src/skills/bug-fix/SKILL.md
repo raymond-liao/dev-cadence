@@ -38,10 +38,10 @@ Supported values:
 - `en`: write documents and records in English.
 - `zh-CN`: write documents and records in Simplified Chinese.
 
-Use `worktree.enabled` to set the worktree preference before invoking the vendored `using-git-worktrees` skill:
+Use `worktree.enabled` to select the entry-prepared workspace:
 
-- `true`: create or verify an isolated worktree without asking.
-- `false`: work in the current checkout unless the user explicitly asks for a worktree.
+- `true`: the entry immediately creates or verifies the configured isolated task worktree before routing downstream; Plan verifies and reuses it.
+- `false`: the entry immediately prepares a dedicated task branch without a worktree before routing downstream; Plan verifies and reuses it.
 
 Use `worktree.directory` as the preferred project-local worktree directory when `worktree.enabled` is `true`.
 
@@ -135,7 +135,7 @@ Map it to Dev Cadence like this:
 | --- | --- | --- |
 | Problem Diagnosis | `systematic-debugging` root cause investigation | Problem diagnosis record |
 | Repair Solution | `systematic-debugging` hypothesis and fix boundary | Repair solution and impact scope |
-| Repair Plan | `using-git-worktrees` and `writing-plans` | isolated workspace readiness, TDD repair plan |
+| Repair Plan | `using-git-worktrees` and `writing-plans` | entry-prepared workspace verification, TDD repair plan |
 | Repair Implementation | `test-driven-development`, `subagent-driven-development`, `executing-plans`, and `requesting-code-review` | Working deliverable, supporting test assets, repair notes, code review evidence |
 | Regression Verification | `verification-before-completion` | Regression test report |
 | Business Acceptance | Dev Cadence user decision gate | Business acceptance record |
@@ -332,7 +332,7 @@ Use:
 .dev-cadence/vendor/superpowers/skills/writing-plans/SKILL.md
 ```
 
-Before writing the plan, apply the configured `worktree.enabled` and `worktree.directory`, then use `using-git-worktrees` to create or verify the isolated repair workspace according to the vendored Superpowers rules. When `worktree.enabled` is `true`, treat it as a predeclared user preference to create an isolated worktree and do not ask for worktree consent. When `worktree.enabled` is `false`, skip worktree creation unless the user explicitly asks for it.
+The entry-prepared workspace must be verified and reused at Plan stage; this stage must not first create a task branch or worktree. When `worktree.enabled` is `true`, verify the entry created or verified the configured isolated repair worktree. When `worktree.enabled` is `false`, verify the entry prepared the dedicated repair branch with no worktree.
 
 The plan is only for the next stage, Repair Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
 
