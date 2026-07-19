@@ -34,6 +34,8 @@
 | `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `1` | `Draft` | `P1` |
 | `S-033` | [Worktree 清理结果记录](stories/S-033-worktree-cleanup-result-recording.md) | `1` | `Draft` | `P1` |
 | `S-034` | [发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) | `1` | `Draft` | `P3` |
+| `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Draft` | `P1` |
+| `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Draft` | `P1` |
 
 ## 已完成
 
@@ -111,6 +113,8 @@
 | 19 | [S-032](stories/S-032-detached-head-finishing.md) | - | Draft |
 | 20 | [S-033](stories/S-033-worktree-cleanup-result-recording.md) | [S-030](stories/S-030-worktree-ownership-detection.md)、[S-031](stories/S-031-preserve-worktree-run-records.md) | ⚠️ Blocked |
 | 21 | [S-034](stories/S-034-release-and-production-delivery-capability.md) | - | Draft |
+| 23 | [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | Draft |
+| 24 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | Draft |
 
 用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。上述状态不替代 Workflow 入口门禁。
 
@@ -149,6 +153,8 @@
 | [B-008](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | - | - |
 | [B-009](bugs/B-009-pending-order-parallel-view-authority.md) | - | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
 | [B-010](bugs/B-010-generated-record-document-links-not-enforced.md) | [S-010](stories/S-010-document-reference-links.md) | - |
+| [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | - |
+| [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | - |
 | [S-022](stories/S-022-bug-not-a-bug-terminal-state.md) | - | - |
 | [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
