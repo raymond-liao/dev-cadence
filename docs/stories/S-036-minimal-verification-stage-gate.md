@@ -58,7 +58,7 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 根据既有实现、计划和 Git 历史补录已完成 Story。 | 原能力已在 `4dbbb6a` 完成交付，但 Backlog 仅保留纯文本完成项。 |
-| 2 | 2026-07-16 | 删除已移除的历史 Superpowers 实施计划引用。 | `docs/superpowers/` 已删除，保留 Implementation Commit 作为交付证据。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 根据既有实现、计划和 Git 历史补录已完成 Story。 | 原能力已在 `4dbbb6a` 完成交付，但 Backlog 仅保留纯文本完成项。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-16 | legacy: recorded-by unknown | 删除已移除的历史 Superpowers 实施计划引用。 | `docs/superpowers/` 已删除，保留 Implementation Commit 作为交付证据。 |

@@ -49,6 +49,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建最终验证版本绑定 Story。 | 防止实现变化后继续沿用过期验证结论。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建最终验证版本绑定 Story。 | 防止实现变化后继续沿用过期验证结论。 |

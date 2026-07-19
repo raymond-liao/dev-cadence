@@ -49,6 +49,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Bug `not-a-bug` 终态 Story。 | 避免非缺陷调查停留在 `pending` 或伪装为已修复。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Bug `not-a-bug` 终态 Story。 | 避免非缺陷调查停留在 `pending` 或伪装为已修复。 |

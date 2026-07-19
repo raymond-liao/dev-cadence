@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-004`
-- Version：`3`
+- Version：`1`
 - Status：`Done`
 - Priority：`P2`
 - Change Type：Enhancement
@@ -84,8 +84,9 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建实施与测试失败分类和阶段返回 Story。 | 让返工根据失败根因返回正确阶段，并阻止无差别重试或削弱有效测试。 |
-| 2 | 2026-07-14 | 将状态更新为 In Progress。 | S-004 已完成实施、review 和系统测试，正在等待 Business Acceptance。 |
-| 3 | 2026-07-14 | 将状态更新为 Done。 | 用户选择 Accept with residual risk；系统测试未识别残余风险，验收记录保持 Accepted Residual Risks 为 None identified。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建实施与测试失败分类和阶段返回 Story。 | 让返工根据失败根因返回正确阶段，并阻止无差别重试或削弱有效测试。 |
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 将状态更新为 In Progress。 | S-004 已完成实施、review 和系统测试，正在等待 Business Acceptance。 Legacy migration: original Version 2; normalized to Version 1. |
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 将状态更新为 Done。 | 用户选择 Accept with residual risk；系统测试未识别残余风险，验收记录保持 Accepted Residual Risks 为 None identified。 Legacy migration: original Version 3; normalized to Version 1. |
+| 1 | 2026-07-19T13:07:24+0800 | Raymond Liao <raymond-liao@outlook.com> | Normalized legacy status and delivery events to reuse the active definition Version. | Old current 3 -> new current 1; original row versions 1,2,3 -> normalized row versions 1,1,1. |

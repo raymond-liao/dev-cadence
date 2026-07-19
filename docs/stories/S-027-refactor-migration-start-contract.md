@@ -49,6 +49,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Refactor 迁移开始契约 Story。 | 为高风险渐进迁移提供最小、条件化的治理记录。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Refactor 迁移开始契约 Story。 | 为高风险渐进迁移提供最小、条件化的治理记录。 |

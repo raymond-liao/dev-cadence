@@ -49,6 +49,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建验证风险传递 Story。 | 保证业务验收基于完整、可追溯的最终验证风险。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建验证风险传递 Story。 | 保证业务验收基于完整、可追溯的最终验证风险。 |

@@ -58,6 +58,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 根据既有实现和 Git 历史补录已完成 Story。 | 原能力已在 `c743f8c` 交付，但 Backlog 仅保留纯文本完成项。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 根据既有实现和 Git 历史补录已完成 Story。 | 原能力已在 `c743f8c` 交付，但 Backlog 仅保留纯文本完成项。 |

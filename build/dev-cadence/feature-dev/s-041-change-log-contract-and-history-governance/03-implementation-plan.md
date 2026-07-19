@@ -243,7 +243,7 @@ git commit -m "feat(planning): govern ordering history"
 - Consumes: Task 1 schema/sentinel and Task 2 lifecycle semantics.
 - Produces: 57 张标准五列卡片、升序历史、显式版本迁移事件和与 Backlog 一致的当前 Version 投影。
 
-- [ ] **Step 1: 增加历史迁移 RED 测试**
+- [x] **Step 1: 增加历史迁移 RED 测试**
 
 扩展 `tests/change-log-contract.sh`，使用 `rg` 和 `awk` 断言：
 
@@ -263,7 +263,7 @@ test "$STANDARD_HEADER_COUNT" = "57" || fail "not every work-item card uses the 
 
 再加入：禁止空作者/`-` 作者；date-only 必须变为精确 legacy sentinel；六个已知倒序块按事件顺序排列；Registry 无 Change Log；Backlog 中每个现存卡片 Version 与卡片顶层 Version 相同；16 张归一化卡含迁移事件；合法重复 Version 仍至少覆盖 B-008、B-009、S-015、S-016 和 S-040。
 
-- [ ] **Step 2: 运行 RED 并记录基线**
+- [x] **Step 2: 运行 RED 并记录基线**
 
 Run: `bash tests/change-log-contract.sh`
 
@@ -271,7 +271,7 @@ Expected: FAIL，报告 49 张旧四列表头或标准表头数不是 57。
 
 迁移前记录只读基线：57 张卡、152 条历史行、49 张旧表头、137 条缺作者、138 条缺时间精度、11 张重复 Version 卡、6 个倒序块。
 
-- [ ] **Step 3: 完成机械迁移**
+- [x] **Step 3: 完成机械迁移**
 
 对 49 张旧卡和 B-006 的不完整五列记录执行：
 
@@ -283,11 +283,11 @@ Expected: FAIL，报告 49 张旧四列表头或标准表头数不是 57。
 
 精确时间戳和已知作者原样保留。不要把 `+0800` 静默改写为 `+08:00`，因为两者都是可确认的原始时间表示。
 
-- [ ] **Step 4: 修复六个倒序块**
+- [x] **Step 4: 修复六个倒序块**
 
 按可确认的时间、Version 和因果关系把 B-005、B-007、B-008、S-013、S-014、T-004 调整为从早到晚。相同日期、相同语义 Version 且无进一步证据时稳定保留原相对顺序。
 
-- [ ] **Step 5: 应用显式版本映射**
+- [x] **Step 5: 应用显式版本映射**
 
 只对下表执行语义归一化；`row map` 按迁移后时间顺序列出每条原始事件的新 Version：
 
@@ -312,7 +312,7 @@ Expected: FAIL，报告 49 张旧四列表头或标准表头数不是 57。
 
 同步每张卡顶层 Version 和 `docs/backlog.md` 中所有对应 Version 投影。每条被改号记录的原 Reason 后追加 `Legacy migration: original Version X; normalized to Version Y.`，保留原 Reason 全文。每张归一化卡再追加一条当前 Version 的迁移事件，使用当前实时 Git identity/time，Change 记录 `Normalized legacy status and delivery events to reuse the active definition Version.`，Reason 精确记录 `Old current X -> new current Y; original row versions A -> normalized row versions B.`。该事件不再递增 Version。
 
-- [ ] **Step 6: 运行 GREEN 与迁移审计**
+- [x] **Step 6: 运行 GREEN 与迁移审计**
 
 Run:
 
@@ -324,7 +324,7 @@ git diff --check
 
 Expected: 全部 PASS；57 张卡均为五列；旧表头为 0；Registry 无 Change Log；六个倒序块已修复；Backlog Version 投影一致；所有原始 Change/Reason 文本仍存在，新增 16 条迁移事件。
 
-- [ ] **Step 7: 自审与提交**
+- [x] **Step 7: 自审与提交**
 
 抽查每类一张卡：旧四列、精确五列、合法重复 Version、倒序块、归一化 Version。暂存 docs 与 migration test，并提交：
 

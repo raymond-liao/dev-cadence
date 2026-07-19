@@ -98,10 +98,10 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 4 | 2026-07-18 | 完成当前终态菜单补强交付并将状态更新为 `Done`。 | 当前补强已完成回归验证、业务验收、本地集成和清理。 |
-| 4 | 2026-07-18 | 补充 S-017 用户验收提示未展示可选项的现象，并关联 S-017 与 S-018。 | 实际用户验收时无法看到已有固定菜单，说明用户可见提示与既有 Business Acceptance 契约不一致。 |
-| 3 | 2026-07-17 | 将确认门问题扩展为“先展示内容摘要，再提供选项和结果语义”，并明确文件只能作为证据链接。 | 用户指出每次确认时直接丢阶段文件，用户无法快速判断实际需要确认的内容。 |
-| 2 | 2026-07-17 | 将问题从 Refactor 扩展为六个已安装 Workflow 的确认门选项与结果语义缺口。 | 跨 Workflow 审计确认问题并非 Refactor 单点，同时不同门禁不能机械使用同一菜单。 |
-| 1 | 2026-07-16 | 创建 Refactor 确认阶段缺少用户选项 Bug。 | 记录确认门禁未提供可选择决策的问题，等待诊断。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-16 | legacy: recorded-by unknown | 创建 Refactor 确认阶段缺少用户选项 Bug。 | 记录确认门禁未提供可选择决策的问题，等待诊断。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 将问题从 Refactor 扩展为六个已安装 Workflow 的确认门选项与结果语义缺口。 | 跨 Workflow 审计确认问题并非 Refactor 单点，同时不同门禁不能机械使用同一菜单。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 将确认门问题扩展为“先展示内容摘要，再提供选项和结果语义”，并明确文件只能作为证据链接。 | 用户指出每次确认时直接丢阶段文件，用户无法快速判断实际需要确认的内容。 |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-18 | legacy: recorded-by unknown | 补充 S-017 用户验收提示未展示可选项的现象，并关联 S-017 与 S-018。 | 实际用户验收时无法看到已有固定菜单，说明用户可见提示与既有 Business Acceptance 契约不一致。 |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-18 | legacy: recorded-by unknown | 完成当前终态菜单补强交付并将状态更新为 `Done`。 | 当前补强已完成回归验证、业务验收、本地集成和清理。 |

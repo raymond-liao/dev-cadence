@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-012`
-- Version：`5`
+- Version：`2`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
@@ -92,10 +92,11 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Asset 与 Delivery Workflow 记录边界 Story。 | 让长期业务资产避免重复过程记录，同时保留软件交付所需的实施证据链。 |
-| 2 | 2026-07-14 | 完成 workflow 分类、记录模型、延续识别和 Delivery 证据保留契约。 | 为 S-013、S-011 和后续 Asset Workflow 提供统一持久化边界，同时保持现有软件交付证据链。 |
-| 3 | 2026-07-14 | 明确 Discovery legacy 记录在 S-013 完成前的临时优先级和唯一例外边界。 | 避免目标 Asset 记录模型与现有 Discovery 指令互相冲突，同时不提前实施 S-013。 |
-| 4 | 2026-07-15 | 将状态从 Done 修正为 In Progress。 | 实现与系统测试已完成，但批量执行授权不构成 Business Acceptance。 |
-| 5 | 2026-07-15 | 记录 Business Acceptance 并将状态更新为 Done。 | 用户选择 `1. Accept`，S-012 交付结果已验收。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Asset 与 Delivery Workflow 记录边界 Story。 | 让长期业务资产避免重复过程记录，同时保留软件交付所需的实施证据链。 |
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 完成 workflow 分类、记录模型、延续识别和 Delivery 证据保留契约。 | 为 S-013、S-011 和后续 Asset Workflow 提供统一持久化边界，同时保持现有软件交付证据链。 Legacy migration: original Version 2; normalized to Version 1. |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 明确 Discovery legacy 记录在 S-013 完成前的临时优先级和唯一例外边界。 | 避免目标 Asset 记录模型与现有 Discovery 指令互相冲突，同时不提前实施 S-013。 Legacy migration: original Version 3; normalized to Version 2. |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 将状态从 Done 修正为 In Progress。 | 实现与系统测试已完成，但批量执行授权不构成 Business Acceptance。 Legacy migration: original Version 4; normalized to Version 2. |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 记录 Business Acceptance 并将状态更新为 Done。 | 用户选择 `1. Accept`，S-012 交付结果已验收。 Legacy migration: original Version 5; normalized to Version 2. |
+| 2 | 2026-07-19T13:07:24+0800 | Raymond Liao <raymond-liao@outlook.com> | Normalized legacy status and delivery events to reuse the active definition Version. | Old current 5 -> new current 2; original row versions 1,2,3,4,5 -> normalized row versions 1,1,2,2,2. |

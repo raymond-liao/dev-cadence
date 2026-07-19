@@ -3,7 +3,7 @@
 ## 基本信息
 
 - ID：`S-001`
-- Version：`6`
+- Version：`4`
 - Status：`Done`
 - Priority：`P1`
 - Change Type：New
@@ -75,11 +75,12 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-13 | 创建首次 Discovery 与 PRD 基线 Story。 | 将原 Discovery workflow 大任务拆成可独立交付的首次建立和增量维护能力。 |
-| 2 | 2026-07-13 | 补充 User Story、Story Relationships 和 Open Questions。 | 明确用户价值、后续阻塞关系和当前问题状态。 |
-| 3 | 2026-07-13 | 重写 User Story，移除 Dev Cadence、PRD 和 workflow 实现表述。 | User Story 应表达用户目标和价值，而不是内部实现方式或交付物。 |
-| 4 | 2026-07-13 | 将状态更新为 In Progress。 | 已启动对应的 feature-dev workflow run。 |
-| 5 | 2026-07-13 | 将范围更新为 PRD 与 Business Architecture 两文档基线，并完成待验收实现。 | Discovery skill、入口路由、产品设计文档契约、构建安装契约和公开说明已实现，等待 Business Acceptance。 |
-| 6 | 2026-07-14 | 将状态更新为 Done，并解除 S-002 的前置阻塞。 | 用户选择 `1. Accept`，S-001 已通过 Business Acceptance。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 创建首次 Discovery 与 PRD 基线 Story。 | 将原 Discovery workflow 大任务拆成可独立交付的首次建立和增量维护能力。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 补充 User Story、Story Relationships 和 Open Questions。 | 明确用户价值、后续阻塞关系和当前问题状态。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 重写 User Story，移除 Dev Cadence、PRD 和 workflow 实现表述。 | User Story 应表达用户目标和价值，而不是内部实现方式或交付物。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 将状态更新为 In Progress。 | 已启动对应的 feature-dev workflow run。 Legacy migration: original Version 4; normalized to Version 3. |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-13 | legacy: recorded-by unknown | 将范围更新为 PRD 与 Business Architecture 两文档基线，并完成待验收实现。 | Discovery skill、入口路由、产品设计文档契约、构建安装契约和公开说明已实现，等待 Business Acceptance。 Legacy migration: original Version 5; normalized to Version 4. |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 将状态更新为 Done，并解除 S-002 的前置阻塞。 | 用户选择 `1. Accept`，S-001 已通过 Business Acceptance。 Legacy migration: original Version 6; normalized to Version 4. |
+| 4 | 2026-07-19T13:07:24+0800 | Raymond Liao <raymond-liao@outlook.com> | Normalized legacy status and delivery events to reuse the active definition Version. | Old current 6 -> new current 4; original row versions 1,2,3,4,5,6 -> normalized row versions 1,2,3,3,4,4. |

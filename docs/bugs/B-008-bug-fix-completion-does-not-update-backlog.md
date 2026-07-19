@@ -76,6 +76,6 @@ Bug Fix 流程可以完成实现、验证、业务验收和本地集成，但对
 
 | Version | Recorded At | Recorded By | Change | Reason |
 |---:|---|---|---|---|
-| 2 | 2026-07-18T20:43:37+0800 | Raymond Liao <raymond-liao@outlook.com> | 完成当前卡片与 Backlog 写回补强交付并将状态更新为 `Done`。 | 当前补强已完成回归验证、业务验收、本地集成、实际写回和清理。 |
-| 2 | 2026-07-18T19:29:42+0800 | Raymond Liao <raymond-liao@outlook.com> | 将完成同步明确为成功 merge 后的 Bug 卡片与 Backlog 原子写回，并补充交付引用、执行 Change Log、冲突和幂等要求。 | 原规则和专项测试只具体约束 Backlog，未阻止卡片保持 Draft。 |
 | 1 | 2026-07-18T06:54:19+0800 | Raymond Liao <raymond-liao@outlook.com> | 创建 Bug 卡片。 | 用户发现 Bug Fix 跑完后未更新 Backlog。 |
+| 2 | 2026-07-18T19:29:42+0800 | Raymond Liao <raymond-liao@outlook.com> | 将完成同步明确为成功 merge 后的 Bug 卡片与 Backlog 原子写回，并补充交付引用、执行 Change Log、冲突和幂等要求。 | 原规则和专项测试只具体约束 Backlog，未阻止卡片保持 Draft。 |
+| 2 | 2026-07-18T20:43:37+0800 | Raymond Liao <raymond-liao@outlook.com> | 完成当前卡片与 Backlog 写回补强交付并将状态更新为 `Done`。 | 当前补强已完成回归验证、业务验收、本地集成、实际写回和清理。 |

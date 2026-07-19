@@ -52,6 +52,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Worktree 清理结果记录 Story。 | 将 Completion 后的实际资源状态纳入持久化交付证据。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Worktree 清理结果记录 Story。 | 将 Completion 后的实际资源状态纳入持久化交付证据。 |

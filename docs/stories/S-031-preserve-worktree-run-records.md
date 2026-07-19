@@ -50,6 +50,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建保存 Worktree 运行记录 Story。 | 防止工作区清理造成不可恢复的交付记录丢失。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建保存 Worktree 运行记录 Story。 | 防止工作区清理造成不可恢复的交付记录丢失。 |

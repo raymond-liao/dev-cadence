@@ -49,6 +49,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Worktree 所有权识别 Story。 | 以创建来源替代不可靠的目录命名推断，降低误删风险。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Worktree 所有权识别 Story。 | 以创建来源替代不可靠的目录命名推断，降低误删风险。 |

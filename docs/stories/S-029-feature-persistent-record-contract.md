@@ -50,6 +50,6 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建 Feature 持久化记录契约 Story。 | 提升会话中断后的可靠恢复和审计质量。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Feature 持久化记录契约 Story。 | 提升会话中断后的可靠恢复和审计质量。 |

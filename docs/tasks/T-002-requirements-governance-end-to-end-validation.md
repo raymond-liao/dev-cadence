@@ -76,8 +76,8 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 1 | 2026-07-14 | 创建需求治理端到端验证任务。 | 用安装后的完整链路验证跨 workflow 契约和兼容性。 |
-| 2 | 2026-07-15 | 将 User Journey、Feature 和三资产产品设计基线纳入端到端验证范围。 | Discovery 已确认 Journey 和 Feature 的上游权威职责，完整治理链路必须验证其向规划与交付阶段的传递。 |
-| 3 | 2026-07-15 | 将工作项分析、相对 Size、Iteration Plan、类型化启动门禁和共享卡片回写纳入端到端验证，并将状态更新为 Blocked。 | Planning 和 Analysis 的完整方案已经形成，最终验证必须覆盖从产品基线到分批交付的全部权威资产与路由边界。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建需求治理端到端验证任务。 | 用安装后的完整链路验证跨 workflow 契约和兼容性。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 将 User Journey、Feature 和三资产产品设计基线纳入端到端验证范围。 | Discovery 已确认 Journey 和 Feature 的上游权威职责，完整治理链路必须验证其向规划与交付阶段的传递。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 将工作项分析、相对 Size、Iteration Plan、类型化启动门禁和共享卡片回写纳入端到端验证，并将状态更新为 Blocked。 | Planning 和 Analysis 的完整方案已经形成，最终验证必须覆盖从产品基线到分批交付的全部权威资产与路由边界。 |

@@ -81,8 +81,8 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 2 | 2026-07-18 | 完成当前设计对齐交付并将状态更新为 `Done`。 | 当前对齐已完成回归验证、业务验收、本地集成和清理。 |
-| 2 | 2026-07-18 | 按 B-009 的已验收决定改用四列表级职责边界，移除逐行入口资格列要求并关闭 Q-005。 | B-009 已将路由所有权集中到 `using-dev-cadence` 和 owning workflow，原卡片要求已过期。 |
-| 1 | 2026-07-17 | 创建并行视图状态与 Workflow 入口资格混用 Bug。 | 用户指出 Draft Bug 仍可能进入 bug-fix，当前表的“状态”语义不足以表达该差异。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 创建并行视图状态与 Workflow 入口资格混用 Bug。 | 用户指出 Draft Bug 仍可能进入 bug-fix，当前表的“状态”语义不足以表达该差异。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-18 | legacy: recorded-by unknown | 按 B-009 的已验收决定改用四列表级职责边界，移除逐行入口资格列要求并关闭 Q-005。 | B-009 已将路由所有权集中到 `using-dev-cadence` 和 owning workflow，原卡片要求已过期。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-18 | legacy: recorded-by unknown | 完成当前设计对齐交付并将状态更新为 `Done`。 | 当前对齐已完成回归验证、业务验收、本地集成和清理。 |

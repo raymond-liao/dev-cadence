@@ -80,9 +80,9 @@
 
 ## Change Log
 
-| Version | Date | Change | Reason |
-|---:|---|---|---|
-| 4 | 2026-07-17 | 将调用边界扩展为所有已安装 Workflow 和入口路由的 shared capability，并固化提交信息规则。 | 避免遗漏 Work Item Analysis 与无需启动业务 Workflow 的共享资产能力，同时防止确认决策只存在于临时技术记录。 |
-| 3 | 2026-07-17 | 将 `git-commit` 收敛为由 `using-dev-cadence` 集中路由的内部共享能力。 | 用户明确要求不得在 Dev Cadence 之外调用，并选择与 Document Conventions 相同的入口共享能力模式。 |
-| 2 | 2026-07-17 | 明确 Workflow 与 `git-commit` 的职责边界、pre-staged 调用顺序及适用提交类型。 | 防止 `git-commit` 重新暂存后改变已审查的实施 tree，并覆盖 SDD 与活动 Workflow 提交。 |
-| 1 | 2026-07-17 | 创建 Git 提交 skill 接入任务。 | 确保流程进入提交节点时真正使用统一的提交规则。 |
+| Version | Recorded At | Recorded By | Change | Reason |
+|---:|---|---|---|---|
+| 1 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 创建 Git 提交 skill 接入任务。 | 确保流程进入提交节点时真正使用统一的提交规则。 |
+| 2 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 明确 Workflow 与 `git-commit` 的职责边界、pre-staged 调用顺序及适用提交类型。 | 防止 `git-commit` 重新暂存后改变已审查的实施 tree，并覆盖 SDD 与活动 Workflow 提交。 |
+| 3 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 将 `git-commit` 收敛为由 `using-dev-cadence` 集中路由的内部共享能力。 | 用户明确要求不得在 Dev Cadence 之外调用，并选择与 Document Conventions 相同的入口共享能力模式。 |
+| 4 | legacy: recorded-at precision unknown; original 2026-07-17 | legacy: recorded-by unknown | 将调用边界扩展为所有已安装 Workflow 和入口路由的 shared capability，并固化提交信息规则。 | 避免遗漏 Work Item Analysis 与无需启动业务 Workflow 的共享资产能力，同时防止确认决策只存在于临时技术记录。 |
