@@ -41,7 +41,7 @@
 - Backlog destination: `docs/backlog.md` section `已完成`
 - Derived parallel-view projection: removed; `main` no longer maintains a Backlog parallel work table.
 - Ordering decision: user explicitly directed S-041 to move to `In Progress` without reordering the remaining pending rows; `Ordering Version` and `Ordering Change Log` were preserved.
-- Delivery result/reference: local merge commit `72fb704`
+- Delivery result/reference: local merge commit `952b4fa`
 
 ## Verification Summary
 
@@ -58,7 +58,7 @@
 - Run directory: `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance`
 - Task branch: `codex/s-041-change-log-governance-v2`
 - Base branch: `main`
-- Expected HEAD SHA: `72fb704`
+- Expected HEAD SHA: `952b4fa`
 - Expected base SHA: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8`
 - Owned commit range: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8..HEAD`
 - Owned tracked paths: `docs/backlog.md`, `docs/stories/S-041-change-log-contract-and-history-governance.md`, `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/`
