@@ -4,7 +4,7 @@
 
 - ID：`B-015`
 - Version：`4`
-- Status：`In Progress`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Bug
 
@@ -71,3 +71,4 @@
 | 3 | 2026-07-19T16:55:23+0800 | Raymond Liao <raymond-liao@outlook.com> | 将范围收窄到已验证的 worktree 配置。 | 当前证据仅覆盖 `worktree.enabled: true`；不把专用任务分支模式或其他 workflow 入口泛化为已确认事实。 |
 | 3 | 2026-07-19T19:09:45+0800 | Raymond Liao <raymond-liao@outlook.com> | 领取 B-015 并将卡片状态同步为 `In Progress`。 | 显式实施请求已选定该 Bug；领取状态必须在创建任务 worktree 前持久化到主 checkout。 |
 | 4 | 2026-07-19T19:32:28+0800 | Raymond Liao <raymond-liao@outlook.com> | 扩大修复范围，覆盖 `worktree.enabled: true` 与 `false` 两条 workspace 路径。 | 用户确认追加调查结论：两条路径都缺少 primary checkout 持久化不变量；`false` 路径虽无独立历史运行记录，但存在可构造的同类状态分叉。 |
+| 4 | 2026-07-19T21:18:30+0800 | Raymond Liao <raymond-liao@outlook.com> | 完成 B-015 修复并在本地合并到 `main`（merge commit `11944fa`）。 | Business Acceptance 已接受；回归验证为 `ready_with_risk`，修复结果和集成引用已写回，主 checkout 与任务 workspace 的领取基线契约已完成交付。 |

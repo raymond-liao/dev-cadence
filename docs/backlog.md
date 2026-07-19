@@ -4,7 +4,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `B-015` | [工作项领取未在 main 持久化](bugs/B-015-work-item-claim-not-persisted-on-main.md) | `4` | `In Progress` | `P1` |
 
 
 ## 待处理
@@ -31,6 +30,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `B-015` | [工作项领取未在 main 持久化](bugs/B-015-work-item-claim-not-persisted-on-main.md) | `4` | `Done` | `P1` |
 | `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Done` | `P1` |
 | `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Done` | `P1` |
 | `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `Done` | `P2` |
