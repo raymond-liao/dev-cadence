@@ -50,6 +50,7 @@ required_files=(
   "dist/.dev-cadence/.dev-cadence.example.yaml"
   "dist/.dev-cadence/AGENTS-snippet.md"
   "dist/.dev-cadence/skills/using-dev-cadence/SKILL.md"
+  "dist/.dev-cadence/skills/contracts/change-log.md"
   "dist/.dev-cadence/skills/git-commit/SKILL.md"
   "dist/.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh"
   "dist/.dev-cadence/skills/document-conventions/SKILL.md"

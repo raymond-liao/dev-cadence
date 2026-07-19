@@ -345,7 +345,7 @@ git commit -m "docs(planning): migrate work-item Change Logs"
 - Consumes: Tasks 1-3 source rules, tests and migrated assets.
 - Produces: installable Dev Cadence `0.26.0` with byte-identical shared contract and consumers.
 
-- [ ] **Step 1: 添加 package/install RED 断言**
+- [x] **Step 1: 添加 package/install RED 断言**
 
 在 `tests/package-contract.sh` required files 中加入：
 
@@ -362,13 +362,13 @@ cmp -s \
   "$TARGET_REPO/.dev-cadence/skills/contracts/change-log.md" || fail "installed Change Log contract differs from source"
 ```
 
-- [ ] **Step 2: 运行 release identity RED**
+- [x] **Step 2: 运行 release identity RED**
 
 Run: `test "$(cat version)" = "0.26.0"`
 
 Expected: exit 1，因为当前根版本仍是 `0.25.1`。package/install 新断言用于安装回归覆盖；新 contract 的行为 RED/GREEN 已由 Task 1 证明。
 
-- [ ] **Step 3: 更新版本并构建**
+- [x] **Step 3: 更新版本并构建**
 
 把根 `version` 精确改为：
 
@@ -380,7 +380,7 @@ Run: `bash scripts/build.sh`
 
 Expected: `dist/.dev-cadence/version` 为 `0.26.0`，且 `dist/.dev-cadence/skills/contracts/change-log.md` 存在并与 source 一致。
 
-- [ ] **Step 4: 运行发布 GREEN**
+- [x] **Step 4: 运行发布 GREEN**
 
 Run:
 
@@ -391,7 +391,7 @@ bash tests/install-contract.sh
 
 Expected: 两个命令 PASS，安装输出显示 Dev Cadence 0.26.0。
 
-- [ ] **Step 5: 运行完整验证**
+- [x] **Step 5: 运行完整验证**
 
 Run:
 
@@ -404,7 +404,7 @@ git diff --check
 
 Expected: 全部检查 PASS；关键规则在 source、dist 和 tests 中同步；没有工作区空白错误。
 
-- [ ] **Step 6: 自审与提交**
+- [x] **Step 6: 自审与提交**
 
 确认 `dist/` 仍被忽略且未强制暂存。暂存 package/install tests、`version` 和本计划的完成勾选，使用 staged-only 门禁提交：
 
