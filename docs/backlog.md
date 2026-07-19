@@ -6,6 +6,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-041` | [Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) | `3` | `In Progress` | `P1` |
 
 
 ## 待处理
@@ -15,7 +16,6 @@
 | `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Draft` | `P1` |
 | `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Draft` | `P1` |
 | `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `Draft` | `P2` |
-| `S-041` | [Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) | `3` | `Ready` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `1` | `Draft` | `P2` |
@@ -99,7 +99,7 @@
 | 24 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | Draft |
 | 23 | [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | Draft |
 | 22 | [B-010](bugs/B-010-generated-record-document-links-not-enforced.md) | [S-010](stories/S-010-document-reference-links.md) | Draft |
-| 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | Ready |
+| 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | In Progress |
 | 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | Draft |
 | 8 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md)；[S-019](stories/S-019-final-verification-revision-binding.md)；[S-020](stories/S-020-implementation-review-risk-to-verification.md)；[S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | Draft |
 | 9 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | Draft |
