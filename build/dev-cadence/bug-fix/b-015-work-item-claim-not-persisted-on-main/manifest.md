@@ -5,7 +5,7 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b015-work-item-claim-persisted`
 - Started at：`2026-07-19T19:12:59+0800`
-- Current stage：🔄 `in_progress` — Repair Plan
+- Current stage：🔄 `in_progress` — Repair Implementation
 - Overall Status：🔄 `in_progress`
 - Run directory：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/`
 - Workspace：`.worktrees/b015-work-item-claim-persisted`
@@ -19,8 +19,8 @@
 | --- | --- | --- | --- | --- | --- |
 | Problem Diagnosis | ✅ `confirmed` | [B-015 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md` | `2026-07-19T19:32:28+0800`，选项 1：扩大到两种配置 | `e13b99b` | 用户确认追加调查结论，诊断范围已扩大并重新确认。 |
 | Repair Solution | ✅ `confirmed` | [B-015 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | `2026-07-19T19:41:25+0800`，选项 1：确认方案并进入 Repair Plan | `9bcb49e` | 用户确认两种配置共用 primary checkout 持久化方案。 |
-| Repair Plan | 🔄 `in_progress` | [B-015 修复计划](03-repair-plan.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md` | 未确认 | `e580c0d` | 已写入 RED/GREEN、版本构建、全量回归和范围审查步骤，等待计划门确认。 |
-| Repair Implementation | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md` | 未开始 | `pending` | 计划确认后开始。 |
+| Repair Plan | ✅ `confirmed` | [B-015 修复计划](03-repair-plan.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md` | `2026-07-19T20:14:56+0800`，选项 1：确认计划并进入 Repair Implementation | `e6c7361` | 用户确认计划，开始按 Task 1-4 执行。 |
+| Repair Implementation | 🔄 `in_progress` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md` | 未开始 | `pending` | Task 1 RED/GREEN 与规则实现已完成；版本、构建和全量回归进行中。 |
 | Code Review | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md` | 未开始 | `pending` | 实施完成后开始。 |
 | Regression Verification | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/05-regression-test-report.md` | 未开始 | `pending` | Review 通过后开始。 |
 | Business Acceptance | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/06-business-acceptance-record.md` | 未开始 | `pending` | 仅允许 `ready` 或 `ready_with_risk` 进入。 |
@@ -46,7 +46,7 @@
 
 - `false` 路径尚无独立历史运行记录；Repair Plan 必须补充可执行的 branch-baseline 验证证据。
 - 现有契约只验证领取先于 branch/worktree 和下游路由，未验证领取更新的执行 checkout 身份。
-- Repair Solution 已于 `2026-07-19T19:41:25+0800` 由用户选项 1 确认；Repair Plan 已编写，尚未获得实施授权。
+- Repair Solution 已于 `2026-07-19T19:41:25+0800` 由用户选项 1 确认；Repair Plan 已于 `2026-07-19T20:14:56+0800` 由用户选项 1 确认，已进入 Repair Implementation。
 
 ## Current-Run Discard Context And Ownership Evidence
 
@@ -55,9 +55,9 @@
 - Run directory：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/`
 - Task branch：`codex/b015-work-item-claim-persisted`
 - Base branch：`main`
-- Expected HEAD SHA：`e580c0d`
+- Expected HEAD SHA：`e9713fc`
 - Expected base SHA：`0e5d69e73f6bf760ff954ba15119ad9c429571be`
-- Owned commit range：`0e5d69e73f6bf760ff954ba15119ad9c429571be..e580c0d`
+- Owned commit range：`0e5d69e73f6bf760ff954ba15119ad9c429571be..e9713fc`
 - Owned tracked paths：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md`, `build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/manifest.md`
 - Owned untracked paths：`none at start`
 - Workspace path：`.worktrees/b015-work-item-claim-persisted`
