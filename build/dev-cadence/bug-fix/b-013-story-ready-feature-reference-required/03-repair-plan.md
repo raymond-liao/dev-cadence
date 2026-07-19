@@ -2,8 +2,8 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-- 状态：🔄 `in_progress`（Task 3 文件范围修订待确认）
-- 最近确认：`2026-07-19T21:44:19+0800`，选项 1：确认原计划并进入 Repair Implementation；该确认因 Task 3 的受跟踪安装包范围发现而 superseded。
+- 状态：✅ `confirmed`
+- 最近确认：`2026-07-19T21:52:34+0800`，选项 1：确认修订计划并继续 Repair Implementation。
 - Plan revision：`2026-07-19T21:47:00+0800`。`scripts/install.sh .` 证明当前 `.dev-cadence/` 是受跟踪且停留在 `0.25.2` 的安装包；完整同步会更新 12 个既有包文件并新增 `skills/contracts/`，因此将其明确纳入已确认“当前安装包同步”的实现范围。
 
 **Goal:** 修复 Story `Ready` 对主 System Feature 的错误强制依赖，使定义完整且不依赖产品级结论的独立 Story 可在用户确认后进入 `Ready`，同时保留已有 Feature 追踪和真实产品级结论缺口的 Discovery 路由。

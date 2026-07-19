@@ -5,7 +5,7 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b013-story-ready-feature`
 - Started at：`2026-07-19T21:30:32+0800`
-- Current stage：🔄 `in_progress` — Repair Plan
+- Current stage：🔄 `in_progress` — Repair Implementation
 - Overall Status：🔄 `in_progress`
 - Run directory：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/`
 - Workspace：`.worktrees/b013-story-ready-feature`
@@ -19,8 +19,8 @@
 | --- | --- | --- | --- | --- | --- |
 | Problem Diagnosis | ✅ `confirmed` | [B-013 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/01-problem-diagnosis-record.md` | `2026-07-19T21:34:40+0800`，选项 1：确认诊断并进入 Repair Solution | `e256de2b79b32a91cf0dee45ef42d19e559b4b67` | 用户确认诊断范围；确认后的检查点已验证。 |
 | Repair Solution | ✅ `confirmed` | [B-013 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/02-repair-solution.md` | `2026-07-19T21:40:58+0800`，选项 1：确认方案并进入 Repair Plan | `03cd9c5e4054111b5656e8ac719e351516790880` | 用户确认最小修复边界；确认后的检查点已验证。 |
-| Repair Plan | 🔄 `in_progress` | [B-013 Repair Plan](03-repair-plan.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/03-repair-plan.md` | ⚠️ `superseded`：`2026-07-19T21:44:19+0800` 的确认未覆盖当前 `.dev-cadence/**` 受跟踪同步范围 | `e9daf28511df3c70d0b02db2f8147670b36f9b6b` | Task 3 发现当前安装包从 `0.25.2` 落后且受跟踪；修订计划检查点已验证，等待重新确认。 |
-| Repair Implementation | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | Task 1-2 证据保留；Task 3-4 在修订计划确认前暂停。 |
+| Repair Plan | ✅ `confirmed` | [B-013 Repair Plan](03-repair-plan.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/03-repair-plan.md` | `2026-07-19T21:52:34+0800`，选项 1：确认修订计划并继续 Repair Implementation | ⏳ `pending` | 用户确认受跟踪当前安装包同步范围；正在绑定确认后的检查点。 |
+| Repair Implementation | 🔄 `in_progress` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | ⏳ `pending` | ⏳ `pending` | 正在重新执行实施前新鲜度复核，然后恢复 Task 3。 |
 | Code Review | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-code-review-report.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 | Regression Verification | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/05-regression-test-report.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
 | Business Acceptance | ⏳ `pending` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/06-business-acceptance-record.md` | ⏳ `pending` | ⏳ `pending` | 尚未开始。 |
