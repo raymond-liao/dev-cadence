@@ -708,6 +708,15 @@ assert_workflows "whole-run discard result" \
   'whole_run_discarded' \
   'whole_run_discarded'
 
+assert_workflows "lifecycle Change Log current-version event" \
+  'lifecycle.*current.*Version.*Change Log.*important event' \
+  'lifecycle.*current.*Version.*Change Log.*important event' \
+  'lifecycle.*current.*Version.*Change Log.*important event'
+assert_workflows "lifecycle Change Log idempotence" \
+  'same.*lifecycle.*event.*must not.*duplicate.*Change Log' \
+  'same.*lifecycle.*event.*must not.*duplicate.*Change Log' \
+  'same.*lifecycle.*event.*must not.*duplicate.*Change Log'
+
 assert_workflows "whole-run no record update" \
   'do not update.*manifest.*Business Acceptance|do not update.*Business Acceptance.*manifest' \
   'do not update.*manifest.*Business Acceptance|do not update.*Business Acceptance.*manifest' \

@@ -26,6 +26,8 @@ assert_match "parallel row removal" 'parallel.*remove|并行表.*删除|并行.*
 assert_match "Bug card Done writeback" 'Bug card.*Status.*Done|card.*status.*Done|Bug 卡片.*Status.*Done'
 assert_match "repair and integration references" 'repair result.*integration reference|修复结果.*集成引用'
 assert_match "execution Change Log entry" 'Change Log.*execution|执行.*Change Log'
+assert_match "execution keeps current version" 'execution.*current.*Version.*does not increment|current.*Version.*does not increment.*execution'
+assert_match "execution Change Log idempotence" 'same.*execution.*event.*must not.*duplicate.*Change Log|must not.*duplicate.*Change Log.*same.*execution.*event'
 assert_match "atomic card and Backlog write" 'atomic.*card.*Backlog|card and Backlog.*atomic|atomically.*card.*Backlog|卡片.*Backlog.*原子'
 assert_match "zero partial writes" 'no partial.*card.*Backlog|zero partial write|不得部分写入'
 

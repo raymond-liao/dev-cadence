@@ -31,6 +31,8 @@ assert_match "candidate view boundary" 'candidate view|candidate.*not.*status mo
 assert_match "status-only dimension" 'status.*card lifecycle|状态.*生命周期' "$SKILL"
 assert_match "derived pending order" '待处理.*sole authoritative|待处理.*唯一权威|derived view.*待处理|派生视图.*待处理' "$SKILL"
 assert_match "no independent ordering" 'must not maintain an independent ordering|不得维护独立排序' "$SKILL"
+assert_match "ordering history ownership" 'Backlog Ordering Version And History' "$SKILL"
+assert_match "ordering updates refresh derived view" '`Ordering Version`.*`当前可并行实施表`|`当前可并行实施表`.*`Ordering Version`' "$SKILL"
 assert_match "blocked first item requires reorder" 'first.*cannot.*proceed.*reorder|首项.*不能推进.*调整排序|不得静默跳过' "$SKILL"
 assert_match "routing owner" 'using-dev-cadence.*workflow.*route|Workflow.*using-dev-cadence|路由.*using-dev-cadence' "$SKILL"
 assert_match "Story entry rule" 'Story.*`Ready`.*`feature-dev`|Story.*Ready.*feature-dev' "$SKILL"

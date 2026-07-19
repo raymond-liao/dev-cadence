@@ -164,7 +164,7 @@ git commit -m "feat(flow): centralize Change Log contract"
 - Consumes: Task 1 shared contract path and event semantics.
 - Produces: Ordering proposal snapshot `{ordering_version, pending_ids}` and lifecycle event rule `same current Version + idempotent Change Log append`.
 
-- [ ] **Step 1: 增加 Ordering RED 断言**
+- [x] **Step 1: 增加 Ordering RED 断言**
 
 在 `tests/work-item-planning-contract.sh` 增加精确断言：
 
@@ -179,7 +179,7 @@ assert_match "atomic ordering unit" '`待处理`.*`当前可并行实施表`.*`O
 
 在 lifecycle tests 中断言状态/交付结果保持 Version、追加当前 Version 事件并幂等去重。
 
-- [ ] **Step 2: 运行 RED**
+- [x] **Step 2: 运行 RED**
 
 Run:
 
@@ -191,7 +191,7 @@ bash tests/bug-fix-backlog-sync-contract.sh
 
 Expected: FAIL 于 Ordering 或 lifecycle Change Log 新断言，现有无关断言不失败。
 
-- [ ] **Step 3: 实现 Ordering 所有者规则**
+- [x] **Step 3: 实现 Ordering 所有者规则**
 
 在 Work Item Planning 新增独立 `Backlog Ordering Version And History` 章节，写入：
 
@@ -202,13 +202,13 @@ Expected: FAIL 于 Ordering 或 lifecycle Change Log 新断言，现有无关断
 - Ordering Change Log 必须记录受影响 ID、确认后相对位置和用户原因；
 - 无实际排序变化不递增、不追加；部分确认不能拆分四部分原子单元。
 
-- [ ] **Step 4: 对齐入口与 Delivery 生命周期事件**
+- [x] **Step 4: 对齐入口与 Delivery 生命周期事件**
 
 把 claiming 和三个 Delivery lifecycle writeback 的冲突句改为：执行状态变化不递增卡片 Version；当状态转换或交付结果属于重要事件时，按共享契约使用当前 Version 追加 Change Log；重复执行相同写回不得重复追加。
 
 不在这些文件复制完整 schema、identity、time 或 legacy 规则。
 
-- [ ] **Step 5: 运行 GREEN 与对称检查**
+- [x] **Step 5: 运行 GREEN 与对称检查**
 
 Run:
 
@@ -222,7 +222,7 @@ bash tests/workflow-symmetry.sh
 
 Expected: 全部 PASS；feature、bug-fix、refactor 的 lifecycle 规则保持对称，Bug 特有 repair event 语义保留。
 
-- [ ] **Step 6: 自审与提交**
+- [x] **Step 6: 自审与提交**
 
 确认 Ordering 没有变成 Backlog 全局版本，claim/完成同步没有递增 Ordering Version。暂存本 Task 文件并提交：
 

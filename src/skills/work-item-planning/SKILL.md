@@ -351,6 +351,24 @@ Work Item Planning may update only the necessary Backlog references that belong 
 
 Task may relate to a Feature or a Story. A general Task without a clear product relationship may exist only in the Backlog. Bug relates to the affected Feature or Story and stays outside the Story Map.
 
+## Backlog Ordering Version And History
+
+`Ordering Version` is the identity of the latest user-confirmed ordering decision, not a global Backlog version.
+
+Form every ordering proposal by snapshotting the current `Ordering Version`, the complete `待处理` ID order, the proposed changes, affected IDs, confirmed relative positions, and the user's reason. Immediately before writing, re-read `Ordering Version` and the visible `待处理` ID order. If either identity changed, stop on the conflict and form a new proposal; do not overwrite the newer state.
+
+After user confirmation, write and then re-read one four-part atomic ordering unit: `待处理`, `当前可并行实施表`, `Ordering Version`, and `Ordering Change Log`. `Ordering Change Log` must record the affected IDs, their confirmed relative positions, and the user's reason. A partial confirmation must not split the four-part atomic ordering unit.
+
+Increment `Ordering Version` and append an `Ordering Change Log` event only when the confirmed planning decision changes ordering by:
+
+- reordering existing `待处理` items;
+- inserting a new work item at an explicitly confirmed `待处理` position; or
+- adding, modifying, or cancelling an ordering exception.
+
+A lifecycle synchronization must not increment `Ordering Version`. A completed-item move must not increment `Ordering Version`. A mechanical synchronization of title, card Version, or Priority must not increment `Ordering Version`. A derived parallel-view refresh must not increment `Ordering Version`. A formatting-only or link-only change must not increment `Ordering Version`.
+
+When no actual ordering change exists, do not increment `Ordering Version` or append an `Ordering Change Log` event.
+
 ## Product-Design Change Coordination
 
 When `discovery` reports that confirmed product-design changes may affect planning assets, Work Item Planning must:

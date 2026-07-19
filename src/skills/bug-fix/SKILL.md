@@ -221,9 +221,9 @@ Every `bug-fix` run must reuse one authoritative Bug card when one exists; direc
 
 A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known root cause. Diagnosis owns reproduction, root-cause evidence, and the repair boundary. A Feature request or intentional behavior change must route to `feature-dev`, not be hidden inside a Bug Fix.
 
-Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version and Change Log.
+Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version.
 
-At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, exact Backlog source and destination sections, and the derived parallel-view projection. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
+At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, exact Backlog source and destination sections, and the derived parallel-view projection. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or repair result qualifies under `.dev-cadence/skills/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
 ## Active Task Change Handling
 
@@ -772,7 +772,7 @@ For the `merge` path, locate the existing Bug card and its Backlog row by the ca
 After identity and visible-fact checks pass, perform one atomic card and Backlog write:
 
 1. Update the Bug card `Status` to `Done`.
-2. Record the repair result and integration reference on the Bug card, and append a Change Log entry for this execution. An execution-only status or delivery-reference write does not increment the confirmed requirement Version.
+2. Record the repair result and integration reference on the Bug card. When this execution is an important event, append its Change Log event using the current Version; an execution-only status or delivery-reference write does not increment the confirmed requirement Version, and the same execution event must not duplicate the Change Log entry.
 3. Atomically update the Backlog: remove the matching row from the active or pending lifecycle section, add that same row to the completed lifecycle section with status `Done`, and in the current parallel table remove only the matching Bug entry.
 
 If any card or Backlog write cannot be completed against the re-read facts, perform zero partial writes and stop for a user decision. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; preserve the relative order of the remaining parallel entries and do not recalculate or reorder unrelated work items as part of this write.
