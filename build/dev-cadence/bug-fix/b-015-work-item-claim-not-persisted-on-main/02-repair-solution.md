@@ -1,7 +1,8 @@
 # B-015 修复方案
 
-- 状态：🔄 `in_progress`
+- 状态：⏳ `pending`
 - 记录时间：`2026-07-19T19:19:20+0800`
+- 当前状态：因追加调查 `worktree.enabled: false` 的同类契约缺口，原方案范围等待用户决定后再确认；本记录不作为当前已确认方案。
 - 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`3`

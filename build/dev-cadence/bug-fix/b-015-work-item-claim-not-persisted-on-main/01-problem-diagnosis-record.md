@@ -1,8 +1,9 @@
 # B-015 问题诊断记录
 
-- 状态：✅ `confirmed`
+- 状态：🔄 `in_progress`
 - 记录时间：`2026-07-19T19:12:59+0800`
 - 最近确认：`2026-07-19T19:19:20+0800`，选项 1：确认当前诊断并进入 Repair Solution。
+- 最近更新：`2026-07-19T19:29:26+0800`，用户要求核对 `worktree.enabled: false` 是否也存在同类 Bug；此前诊断确认被新范围调查暂时挂起。
 - 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`3`
@@ -31,6 +32,17 @@
 - 领取时序与身份的契约测试：`tests/work-item-development-workflow-contract.sh`，以及与 source/dist/安装包同步相关的既有检查。
 - 生成分发包：`dist/.dev-cadence/`；根目录 `version` 是否递增需在修复方案阶段按仓库规则评估。
 - 主 checkout 的 Backlog 可见性、后续工作项选择和任务 worktree 基线一致性。
+
+## 对 `worktree.enabled: false` 的追加调查
+
+当前没有一条独立的运行时复现证明 `false` 已经发生与 `true` 相同的状态分叉，但也没有证据证明它安全：
+
+1. 入口规则对两种配置都要求“领取先于 branch/worktree”，但没有明确领取写入目标必须是 primary checkout，也没有要求在创建专用 branch 前取得主 checkout 的持久化提交。
+2. `worktree.enabled: false` 只补充“立即准备专用任务 branch、不得创建 worktree”；`tests/work-item-development-workflow-contract.sh` 也只对这段文字做存在性断言。
+3. 如果执行者在主 checkout 修改卡片和 Backlog 后不提交就切换到专用 branch，后续在该 branch 提交领取状态，`main` 分支指针仍保留旧状态；再次检出 `main` 时仍可能看到 `Draft` / “待处理”。这是同一缺失不变量在无 worktree 路径上的可构造失败路径。
+4. 因此当前证据只能得出“`false` 尚未完成独立运行时复现”，不能得出“`false` 没有 Bug”。
+
+这项追加调查改变了已确认的修复边界：需要用户决定将 B-015 扩展为两种配置共同满足 primary checkout 持久化不变量，还是保持 B-015 只修复已复现的 `true` 路径并另行登记/验证 `false` 路径。
 
 ## 最近变更与模式对比
 
@@ -61,4 +73,4 @@
 
 ## 诊断结论
 
-✅ 已确认这是工作项领取持久化目标缺少入口身份契约导致的 Bug，不是卡片定义、Backlog 排序或 worktree 工具本身的故障。用户已确认当前诊断，允许进入 Repair Solution；尚未编写修复计划或修改规则源码。
+🔄 已确认 `true` 路径存在工作项领取持久化目标缺少入口身份契约的 Bug；对 `false` 路径的追加调查发现同一契约缺口，但尚无独立运行时复现。原 Repair Solution 确认因范围问题暂不继续，需先决定是否扩大 B-015 修复边界；尚未编写修复计划或修改规则源码。
