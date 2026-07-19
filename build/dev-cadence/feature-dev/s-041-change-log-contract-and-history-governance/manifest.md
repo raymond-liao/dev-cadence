@@ -8,7 +8,7 @@
 - Task branch: `codex/s-041-change-log-governance-v2`
 - Base branch: `main`
 - Started at: `2026-07-19T11:54:43+08:00`
-- Current stage: `System Testing`
+- Current stage: `Business Acceptance`
 - Overall status: 🔄 `in_progress`
 - Output language: `zh-CN`
 - Configuration source: `target repository root/.dev-cadence.yaml`
@@ -31,7 +31,7 @@
 | Technical Solution | ✅ `confirmed` | [技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/02-technical-solution.md`) | `confirmed: delegated by user on 2026-07-19T12:02:17+08:00` | `78a87b7219a4e5d5b6d5b0892c4133bc865d398d` | Supporting contract, owner-specific rules, explicit history migration, and dual freshness identity selected. |
 | Implementation Plan | ✅ `confirmed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/03-implementation-plan.md`) | `confirmed: delegated by user on 2026-07-19T12:02:17+08:00` | `127cc6c543923ef31d5794094484a60346510186` | Four TDD tasks selected for Subagent-Driven Development. |
 | Development Implementation | ✅ `completed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/03-implementation-plan.md`) | `delegated continuation confirmed on 2026-07-19T12:02:17+08:00` | `2500a5cfc1f5658b927c80b5e140bbdf8c3ee0a7` | Tasks 1-4 completed with per-task RED/GREEN evidence and independent task reviews. Main sync was then merged as `6b6c2d7`; final system tests run on that merge commit. |
-| System Testing | 🔄 `in_progress` | ⏳ pending | `not applicable` | `pending` | Main sync removed the Backlog parallel work table; system testing covers the updated three-part Ordering unit and 60 current cards. |
+| System Testing | ✅ `completed` | [系统测试报告](04-system-test-report.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/04-system-test-report.md`) | `not applicable` | `d47bbc62d102f1fe39d7b483fb1444c99e7e751e` | All focused and full contract checks passed after main synchronization; final whole-branch review found no findings. |
 | Business Acceptance | ⏳ `pending` | ⏳ pending | `pending` | `pending` | Not started. |
 
 ## Lifecycle Writeback
@@ -46,8 +46,8 @@
 ## Verification Summary
 
 - Baseline verification: `bash scripts/check-all.sh` passed at `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8`.
-- Verification decision: `pending`
-- Residual risks: `pending`
+- Verification decision: `passed`
+- Residual risks: Business Acceptance and final Git integration remain pending; three newer main cards are outside the frozen 57-card migration cohort and are covered by current-card schema/projection checks.
 - Business acceptance decision: `pending`
 - Final integration decision: `pending`
 
@@ -58,7 +58,7 @@
 - Run directory: `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance`
 - Task branch: `codex/s-041-change-log-governance-v2`
 - Base branch: `main`
-- Expected HEAD SHA: `6b6c2d7ca309a5d7fc73c97d1638c229023532ed`
+- Expected HEAD SHA: `d47bbc62d102f1fe39d7b483fb1444c99e7e751e`
 - Expected base SHA: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8`
 - Owned commit range: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8..HEAD`
 - Owned tracked paths: `docs/backlog.md`, `docs/stories/S-041-change-log-contract-and-history-governance.md`, `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/`
