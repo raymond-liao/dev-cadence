@@ -138,7 +138,7 @@ bash tests/work-item-analysis-contract.sh
 
 Expected: 四个命令全部 PASS，且输出对应 contract checks passed。
 
-- [ ] **Step 7: 自审与提交**
+- [x] **Step 7: 自审与提交**
 
 检查三个 consumer 不再复制完整公共契约，`document-conventions` 和 Registry 未被修改为公共所有者。暂存本 Task 文件，使用 staged-only 门禁提交：
 
