@@ -8,6 +8,7 @@ PLANNING="$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
 ANALYSIS="$ROOT_DIR/src/skills/work-item-analysis/SKILL.md"
 BACKLOG="$ROOT_DIR/docs/backlog.md"
 REGISTRY="$ROOT_DIR/docs/open-questions.md"
+MIGRATION_RECORDED_AT='2026-07-19T13:07:24+0800'
 WORK_ITEM_DIRS=(
   "$ROOT_DIR/docs/stories"
   "$ROOT_DIR/docs/tasks"
@@ -269,16 +270,19 @@ for id in B-008 B-009 S-015 S-016 S-040; do
   test -n "$duplicate" || fail "$id no longer retains a legal duplicate Version"
 done
 
-ORIGINAL_HISTORY_COUNT="$(awk '
+ORIGINAL_HISTORY_COUNT="$(awk -v cutoff="$MIGRATION_RECORDED_AT" '
+  function trim(value) {
+    gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+    return value
+  }
   /^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$/ {
     in_change_log = 1
     next
   }
   in_change_log && /^\|[-:| ]+\|$/ { next }
   in_change_log && /^\| [0-9]+ \|/ {
-    change = $5
-    gsub(/^[[:space:]]+|[[:space:]]+$/, "", change)
-    if (change != "Normalized legacy status and delivery events to reuse the active definition Version.") count++
+    recorded_at = trim($3)
+    if (recorded_at ~ /^legacy: / || recorded_at < cutoff) count++
     next
   }
   in_change_log { in_change_log = 0 }
@@ -287,7 +291,7 @@ ORIGINAL_HISTORY_COUNT="$(awk '
 test "$ORIGINAL_HISTORY_COUNT" = "152" ||
   fail "expected 152 preserved original history rows, found $ORIGINAL_HISTORY_COUNT"
 
-ORIGINAL_HISTORY_HASH="$(awk -v root="$ROOT_DIR/" '
+ORIGINAL_HISTORY_HASH="$(awk -v root="$ROOT_DIR/" -v cutoff="$MIGRATION_RECORDED_AT" '
   function trim(value) {
     gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
     return value
@@ -299,9 +303,10 @@ ORIGINAL_HISTORY_HASH="$(awk -v root="$ROOT_DIR/" '
   }
   in_change_log && /^\|[-:| ]+\|$/ { next }
   in_change_log && /^\| [0-9]+ \|/ {
+    recorded_at = trim($3)
+    if (recorded_at !~ /^legacy: / && recorded_at >= cutoff) next
     change = trim($5)
     reason = trim($6)
-    if (change == "Normalized legacy status and delivery events to reuse the active definition Version.") next
     sub(/ Legacy migration: original Version [0-9]+; normalized to Version [0-9]+\.$/, "", reason)
     path = FILENAME
     sub("^" root, "", path)
