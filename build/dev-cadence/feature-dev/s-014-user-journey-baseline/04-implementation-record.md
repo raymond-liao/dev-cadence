@@ -40,7 +40,7 @@
 
 ## Subagent-Driven Development Evidence
 
-- Progress Ledger: [SDD Progress](sdd/progress.md)
+- Progress Ledger：⏳ `pending`，计划路径：`build/dev-cadence/feature-dev/s-014-user-journey-baseline/sdd/progress.md`。
 - Task briefs、implementer reports 和 review packages 保存在 `build/dev-cadence/feature-dev/s-014-user-journey-baseline/sdd/`。
 
 ## Final Review Fixes
