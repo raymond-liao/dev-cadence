@@ -5,7 +5,7 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b015-work-item-claim-persisted`
 - Started at：`2026-07-19T19:12:59+0800`
-- Current stage：🔄 `in_progress` — Problem Diagnosis
+- Current stage：🔄 `in_progress` — Repair Solution
 - Overall Status：🔄 `in_progress`
 - Run directory：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/`
 - Workspace：`.worktrees/b015-work-item-claim-persisted`
@@ -17,8 +17,8 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Problem Diagnosis | 🔄 `in_progress` | [B-015 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md` | `2026-07-19T19:19:20+0800`，选项 1 已被追加范围调查挂起 | `22ecff8` | `false` 路径追加调查发现同类契约缺口，等待范围决定。 |
-| Repair Solution | ⏳ `pending` | [B-015 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | `superseded pending scope decision` | `4966009` | 原方案尚未确认；范围决定后需更新同一方案记录并重新确认。 |
+| Problem Diagnosis | ✅ `confirmed` | [B-015 问题诊断记录](01-problem-diagnosis-record.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/01-problem-diagnosis-record.md` | `2026-07-19T19:32:28+0800`，选项 1：扩大到两种配置 | `pending` | 用户确认追加调查结论，诊断范围已扩大并重新确认。 |
+| Repair Solution | 🔄 `in_progress` | [B-015 修复方案](02-repair-solution.md)；path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/02-repair-solution.md` | 未确认 | `pending` | 正在更新为同时覆盖 worktree 和专用 branch。 |
 | Repair Plan | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/03-repair-plan.md` | 未开始 | `pending` | 方案确认后开始。 |
 | Repair Implementation | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-repair-record.md` | 未开始 | `pending` | 计划确认后开始。 |
 | Code Review | ⏳ `pending` | ⏳ pending；planned path：`build/dev-cadence/bug-fix/b-015-work-item-claim-not-persisted-on-main/04-code-review-report.md` | 未开始 | `pending` | 实施完成后开始。 |
@@ -29,9 +29,9 @@
 
 - Card：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
 - Work-item type：`Bug`
-- Card Version：`3`
+- Card Version：`4`
 - Visible Status：`In Progress`
-- Selected scope：`worktree.enabled: true` 已复现；`worktree.enabled: false` 的同类契约缺口正在追加调查，尚未确认是否纳入；不扩展到生命周期终态回写或其他工作项行为。
+- Selected scope：同时修复 `worktree.enabled: true` 的已复现状态分叉和 `false` 的可构造同类契约缺口；不扩展到生命周期终态回写或其他工作项行为。
 - Claim persistence：主 checkout 已在提交 `0e5d69e` 原子同步 B-015 卡片与 Backlog 为 `In Progress`；任务 worktree 从该提交创建。
 
 ## Verification Summary
@@ -39,11 +39,12 @@
 - 基线 `bash tests/work-item-development-workflow-contract.sh`：通过，但未覆盖“领取写入必须发生在 main”这一不变量。
 - 基线 `bash tests/install-contract.sh`：通过。
 - 最小 RED 检查：入口规则没有 `main` checkout / 主分支领取不变量，证明契约缺口仍存在。
+- `worktree.enabled: false` 追加调查：现有规则和测试没有 primary checkout 持久化约束，可构造“未提交领取变更随专用 branch 走、main 分支指针保持旧状态”的失败路径。
 - `bash tests/package-contract.sh`：一次并行基线执行报告缺少 dist package；当前 worktree 已确认生成目录存在，待后续构建阶段重新执行完整检查。
 
 ## Residual Risks
 
-- `false` 路径尚无独立运行时复现，若纳入修复需补充对应验证证据。
+- `false` 路径尚无独立历史运行记录；Repair Plan 必须补充可执行的 branch-baseline 验证证据。
 - 现有契约只验证领取先于 branch/worktree 和下游路由，未验证领取更新的执行 checkout 身份。
 - 原 Repair Solution 在范围决定前不得视为已确认方案。
 

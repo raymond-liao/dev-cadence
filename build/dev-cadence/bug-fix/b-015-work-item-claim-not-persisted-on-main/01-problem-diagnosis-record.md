@@ -1,14 +1,14 @@
 # B-015 问题诊断记录
 
-- 状态：🔄 `in_progress`
+- 状态：✅ `confirmed`
 - 记录时间：`2026-07-19T19:12:59+0800`
 - 最近确认：`2026-07-19T19:19:20+0800`，选项 1：确认当前诊断并进入 Repair Solution。
-- 最近更新：`2026-07-19T19:29:26+0800`，用户要求核对 `worktree.enabled: false` 是否也存在同类 Bug；此前诊断确认被新范围调查暂时挂起。
+- 最近更新：`2026-07-19T19:32:28+0800`，用户选择扩大 B-015 范围，覆盖 `worktree.enabled: true` 和 `false` 两条路径。
 - 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
 - 工作项类型：`Bug`
-- 卡片 Version：`3`
+- 卡片 Version：`4`
 - 卡片可见状态：`In Progress`
-- 选定范围：仅诊断 `worktree.enabled: true` 时工作项领取状态未先在 `main` 持久化的问题；不诊断禁用 worktree 的专用分支行为，不修改工作项生命周期集合、Backlog 排序、Delivery 阶段或完成回写。
+- 选定范围：诊断 `worktree.enabled: true` 和 `false` 时工作项领取状态未先在 `main` 持久化的问题；不修改工作项生命周期集合、Backlog 排序、Delivery 阶段或完成回写。
 
 ## 报告的症状
 
@@ -16,7 +16,7 @@
 
 ## 期望行为
 
-显式实施或修复请求选定工作项后，入口必须先在 `main` 原子同步权威卡片和 `docs/backlog.md` 为 `In Progress`，并以该已持久化状态作为任务 worktree 的基线。创建 worktree 后，任务 worktree 与 `main` 必须看到相同的领取状态；主 checkout 不得继续显示该项为 `Draft` 或“待处理”。本诊断只覆盖 `worktree.enabled: true`，与 B-015 卡片的范围一致。
+显式实施或修复请求选定工作项后，无论 `worktree.enabled` 为 `true` 还是 `false`，入口都必须先在 `main` 原子同步权威卡片和 `docs/backlog.md` 为 `In Progress`，并以该已持久化状态作为任务 worktree 或专用任务 branch 的基线。创建隔离 workspace 后，任务 workspace 与 `main` 必须看到相同的领取状态；主 checkout 不得继续显示该项为 `Draft` 或“待处理”。
 
 ## 实际行为与复现证据
 
@@ -42,7 +42,7 @@
 3. 如果执行者在主 checkout 修改卡片和 Backlog 后不提交就切换到专用 branch，后续在该 branch 提交领取状态，`main` 分支指针仍保留旧状态；再次检出 `main` 时仍可能看到 `Draft` / “待处理”。这是同一缺失不变量在无 worktree 路径上的可构造失败路径。
 4. 因此当前证据只能得出“`false` 尚未完成独立运行时复现”，不能得出“`false` 没有 Bug”。
 
-这项追加调查改变了已确认的修复边界：需要用户决定将 B-015 扩展为两种配置共同满足 primary checkout 持久化不变量，还是保持 B-015 只修复已复现的 `true` 路径并另行登记/验证 `false` 路径。
+追加调查确认：`false` 路径虽缺少独立历史运行记录，但与 `true` 路径共享同一 primary checkout 持久化契约缺口；用户已选择将两种配置共同纳入 B-015。
 
 ## 最近变更与模式对比
 
@@ -52,7 +52,7 @@
 
 ## 根因假设与置信度
 
-**根因：** 工作项领取规则缺少“写入目标必须是 `main` checkout”的身份不变量。规则虽然规定领取早于 branch/worktree，并要求卡片与 Backlog 原子同步，但没有把主 checkout作为领取状态的唯一持久化源，也没有以主 checkout提交状态作为创建任务 worktree的基线验证。因此执行者可以在任务 worktree中完成表面上合规的原子写入，造成主 checkout仍为旧状态。
+**根因：** 工作项领取规则缺少“写入目标必须是 `main` checkout”的身份不变量。规则虽然规定领取早于 branch/worktree，并要求卡片与 Backlog 原子同步，但没有把主 checkout作为领取状态的唯一持久化源，也没有以主 checkout提交状态作为创建隔离 workspace（worktree 或专用 branch）的基线验证。因此执行者可以在任务 workspace 中完成表面上合规的原子写入，造成主 checkout仍为旧状态。
 
 **证据：** 当前入口规则与契约测试均缺少主 checkout约束；基线契约测试通过；最小 RED 检查明确找不到该不变量；历史 B-011 现场与卡片复现条件呈现相同的跨 worktree 状态分叉。
 
@@ -60,17 +60,17 @@
 
 ## 复现条件
 
-1. `.dev-cadence.yaml` 设置 `worktree.enabled: true`。
+1. `.dev-cadence.yaml` 设置 `worktree.enabled: true` 或 `false`。
 2. 用户发出明确的工作项实施或修复请求。
-3. 入口创建任务 worktree，或在任务 worktree上下文执行领取写入。
-4. 领取卡片和 Backlog 的原子更新只写入任务 worktree。
+3. `true` 路径中入口创建任务 worktree，或在任务 worktree 上下文执行领取写入；`false` 路径中入口切换到专用任务 branch。
+4. 领取卡片和 Backlog 的原子更新未在 `main` 取得可验证的持久化提交，而只存在于隔离 workspace 或新 branch。
 5. 返回 `main` 检查同一工作项，仍显示 `Draft` 并留在“待处理”。
 
 ## 开放问题与假设
 
 - 开放问题：无。
-- 假设：B-015 只要求 `worktree.enabled: true` 的主 checkout 持久化；`worktree.enabled: false` 的专用分支行为明确排除在外。
+- 假设：两种 `worktree.enabled` 配置都复用同一个入口领取契约；本次修复不扩展到生命周期终态回写、Backlog 排序或其他 workflow 行为。
 
 ## 诊断结论
 
-🔄 已确认 `true` 路径存在工作项领取持久化目标缺少入口身份契约的 Bug；对 `false` 路径的追加调查发现同一契约缺口，但尚无独立运行时复现。原 Repair Solution 确认因范围问题暂不继续，需先决定是否扩大 B-015 修复边界；尚未编写修复计划或修改规则源码。
+✅ 已确认 `true` 路径存在工作项领取持久化目标缺少入口身份契约的 Bug；`false` 路径虽无独立历史运行记录，但存在同一缺失不变量导致主分支状态分叉的可构造失败路径。用户已确认将两条配置路径纳入 B-015，诊断可进入 Repair Solution；尚未编写修复计划或修改规则源码。

@@ -4,7 +4,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `B-015` | [工作项领取未在 main 持久化](bugs/B-015-work-item-claim-not-persisted-on-main.md) | `3` | `In Progress` | `P1` |
+| `B-015` | [工作项领取未在 main 持久化](bugs/B-015-work-item-claim-not-persisted-on-main.md) | `4` | `In Progress` | `P1` |
 
 
 ## 待处理
