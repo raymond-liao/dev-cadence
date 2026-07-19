@@ -322,7 +322,7 @@ for consumer in "$DISCOVERY" "$PLANNING" "$ANALYSIS"; do
 done
 
 CARD_COUNT="$(find "${WORK_ITEM_DIRS[@]}" -maxdepth 1 -name '*.md' -print | wc -l | tr -d ' ')"
-test "$CARD_COUNT" = "60" || fail "expected 60 current work-item cards, found $CARD_COUNT"
+test "$CARD_COUNT" = "61" || fail "expected 61 current work-item cards, found $CARD_COUNT"
 
 if rg -n '^\| Version \| Date \| Change \| Reason \|' "${WORK_ITEM_DIRS[@]}"; then
   fail "legacy four-column Change Log remains"
@@ -330,7 +330,7 @@ fi
 
 STANDARD_HEADER_COUNT="$(rg -l '^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|' \
   "${WORK_ITEM_DIRS[@]}" | wc -l | tr -d ' ')"
-test "$STANDARD_HEADER_COUNT" = "60" ||
+test "$STANDARD_HEADER_COUNT" = "61" ||
   fail "not every current work-item card uses the standard schema"
 
 if rg -n '^\| [0-9]+ \| [0-9]{4}-[0-9]{2}-[0-9]{2} \|' "${WORK_ITEM_DIRS[@]}"; then
