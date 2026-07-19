@@ -9,6 +9,12 @@ Use this skill to organize confirmed product-design facts into delivery-planning
 
 This is an Asset Workflow.
 
+Before reading, creating, or updating an owned asset Change Log, read and follow:
+
+```text
+.dev-cadence/skills/contracts/change-log.md
+```
+
 It creates or updates durable planning assets under `docs/`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or other persistent copies of the workflow process. It must not copy the Delivery Workflow record chain used by `feature-dev`, `bug-fix`, or `refactor`.
 
 Use only vendored Superpowers skills from:
@@ -149,11 +155,26 @@ It may create or reuse a lightweight card and update only the necessary planning
 
 Keep the business workflow in the current conversation:
 
+### Portfolio Planning Stage Sequence
+
+Portfolio Planning uses the full planning sequence:
+
 ```text
 Planning Inputs And Scope Confirmation -> Planning Structure Proposal -> Planning Result Confirmation
 ```
 
-Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged. After confirmation, atomically write only the affected assets. The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content.
+### Direct Intake Stage Sequence
+
+Direct Intake uses a separate single-card sequence:
+
+```text
+Necessary Clarification (not a formal confirmation gate) -> Direct Intake Proposal -> Direct Intake Result Confirmation
+```
+
+Necessary clarification may ask only the questions needed to make the requested card and its necessary planning references unambiguous. It is not a formal confirmation gate, and it must not ask the user to reconfirm inputs and scope that are already clear. Before the applicable result confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged. After confirmation, atomically write only the affected assets.
+
+Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged for both modes.
+The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content.
 
 ## Confirmation Gate Presentation
 
@@ -165,12 +186,22 @@ Before each real Work Item Planning decision gate, present the decision in this 
 4. `risks or open questions`: version conflicts, missing product-design inputs, duplicate identities, dependency concerns, or unresolved planning questions.
 5. `evidence link`: a repository-relative link to the complete proposal or source assets. The link is supporting evidence and does not replace the conversation summary.
 
-Then present the actual planning choices and their effects:
+Then present the actual planning choices and their effects for the selected mode.
 
-- At `Planning Inputs And Scope Confirmation`, confirm the named authoritative inputs and scope to advance to the structure proposal, or request changes and remain at the current stage with authoritative planning assets unchanged. If an input is missing or conflicted, keep the planning proposal blocked and return to `discovery` or request a user decision rather than guessing.
-- At `Planning Result Confirmation`, `confirm the full proposed result` atomically writes the affected Story Map, milestones, cards, and Backlog references. The user may also `confirm only the named subset`; only that subset is written and every unconfirmed asset keeps its current authoritative content. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the gate.
+### Portfolio Planning Confirmation Gates
+
+- At `Planning Inputs And Scope Confirmation`, confirm the named authoritative inputs and scope to advance to the structure proposal, or request changes and remain at the current stage with authoritative planning assets unchanged. This is the first formal confirmation gate for Portfolio Planning. If an input is missing or conflicted, keep the planning proposal blocked and return to `discovery` or request a user decision rather than guessing.
+- At `Planning Result Confirmation`, `confirm the full proposed result` atomically writes the affected Story Map, milestones, cards, and Backlog references. This is the second formal confirmation gate for Portfolio Planning. The user may also `confirm only the named subset`; only that subset is written and every unconfirmed asset keeps its current authoritative content. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the gate.
 - When the proposal includes a milestone or MVP slice, show the explicit included work-item IDs and let the user confirm or change that slice. MVP becomes authoritative only when the user confirms it; it is not inferred from the proposal.
 - Every choice must state its effect on the next stage, asset writes, records, status, and whether re-confirmation is required.
+
+### Direct Intake Confirmation Gates
+
+Necessary Clarification is not a formal confirmation gate. It only resolves missing or contradictory facts and leaves authoritative assets unchanged.
+
+- At `Direct Intake Proposal`, present the complete requested card result in the conversation, including the card ID, repository-relative card path, Priority, Relationships, dependencies, and every necessary Backlog change. This proposal does not create a second input-and-scope confirmation gate.
+- At `Direct Intake Result Confirmation`, `confirm the full proposed result` atomically writes the card and its necessary Backlog references as one atomic unit. This is the only formal confirmation gate for Direct Intake. If the proposal changes Backlog ordering, the same atomic unit also includes `待处理`, `Ordering Version`, and `Ordering Change Log`.
+- At the same result gate, `confirm only the named subset` must not create an orphaned card or orphaned Backlog row. A named card and its necessary Backlog references are one indivisible confirmation unit; optional Story Map or Milestone references may remain unconfirmed. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the result gate.
 
 Do not import the Delivery Workflow advance/revise menu as a replacement for these planning choices. Preserve Feature ownership, candidate or input selection, partial confirmation, MVP slicing, version-conflict handling, and handoff to a downstream delivery workflow. Do not apply this section to downstream terminal menus; Work Item Planning does not own those menus.
 
@@ -292,21 +323,6 @@ Bug may enter `bug-fix` without a `Ready` precondition and without a confirmed r
 
 If Task analysis reveals that the work actually needs new product behavior, stop treating it as a Task-only delivery item and create or associate the correct Story instead.
 
-## Parallel Work View Contract
-
-The Backlog's parallel work table is a candidate view for coordinating authorized parallel work. It is not a second status model, a workflow-run log, or a direct code-implementation board.
-
-- `Status` is the status field and expresses only the card lifecycle; it must use the canonical work-item status contract. The status field must not be used to infer a workflow stage or to combine card maturity with entry qualification.
-- The row order in `待处理` is the sole authoritative suggested implementation order.
-- The `当前可并行实施表` is a derived view of `待处理` order and dependency relationships; it must preserve the relative order from `待处理` and must not maintain an independent ordering.
-- If the first item in `待处理` cannot proceed, Work Item Planning must confirm and reorder the pending list before another item proceeds. It must not silently skip the first item.
-- Parallel view status expresses only lifecycle. Workflow routing is owned by `using-dev-cadence` and the corresponding workflow skill.
-- A Story must have status `Ready` before it can enter `feature-dev`.
-- A Task may route to `feature-dev`, `bug-fix`, or `refactor` according to its confirmed goal, but the corresponding workflow must confirm its own scope before delivery work may modify code.
-- A Bug may be `Draft` when it enters `bug-fix` diagnosis (Problem Diagnosis). Diagnosis does not mean repair implementation; Repair Solution and Repair Plan confirmation remain required before code changes.
-- `Blocked` means that an explicit dependency blocks the work item. It does not mean that the card has a different lifecycle or that its maturity has been reclassified.
-- The view must not automatically start a workflow or directly modify code. Parallel execution still requires the user's authorization and the selected workflow's gates.
-
 ## Versioning, Reuse, And Concurrency
 
 Every Story, Task, and Bug card must use an independent integer Version starting at `1`.
@@ -315,13 +331,7 @@ Increment the Version when confirmed changes alter the card's goal, scope, expec
 
 Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes.
 
-Use this Change Log contract:
-
-```text
-Version | Recorded At | Recorded By | Change | Reason
-```
-
-Identity and timestamp rules must match the repository's other Asset Workflows.
+For every card Change Log, follow the shared Change Log contract.
 
 When an existing card matches the same business identity, reuse it instead of creating a duplicate. Before writing any card change, check the current Version and visible facts. If the card changed since the current planning proposal was formed, stop and show the conflict instead of silently overwriting it.
 
@@ -337,6 +347,8 @@ Backlog is the summary view for work-item status, priority, relationships, block
 
 Work Item Planning is the authoritative owner of Backlog structure, lifecycle sections, and planning-maintained ordering.
 
+The row order in `待处理` is the sole authoritative suggested implementation order.
+
 Use exactly these Backlog lifecycle sections in this order: `进行中`, `待处理`, `已完成`, `已关闭`.
 
 Each Backlog lifecycle section must use exactly these columns: `ID | Title | Version | Status | Priority`.
@@ -350,6 +362,24 @@ Preserve the existing row order inside `待处理` unless the confirmed planning
 Work Item Planning may update only the necessary Backlog references that belong to the confirmed planning change. It must not mechanically reorder unrelated items.
 
 Task may relate to a Feature or a Story. A general Task without a clear product relationship may exist only in the Backlog. Bug relates to the affected Feature or Story and stays outside the Story Map.
+
+## Backlog Ordering Version And History
+
+`Ordering Version` is the identity of the latest user-confirmed ordering decision, not a global Backlog version.
+
+Form every ordering proposal by snapshotting the current `Ordering Version`, the complete `待处理` ID order, the proposed changes, affected IDs, confirmed relative positions, and the user's reason. Immediately before writing, re-read `Ordering Version` and the visible `待处理` ID order. If either identity changed, stop on the conflict and form a new proposal; do not overwrite the newer state.
+
+After user confirmation, write and then re-read one three-part atomic ordering unit: `待处理`, `Ordering Version`, and `Ordering Change Log`. `Ordering Change Log` must record the affected IDs, their confirmed relative positions, and the user's reason. A partial confirmation must not split the three-part atomic ordering unit.
+
+Increment `Ordering Version` and append an `Ordering Change Log` event only when the confirmed planning decision changes ordering by:
+
+- reordering existing `待处理` items;
+- inserting a new work item at an explicitly confirmed `待处理` position; or
+- adding, modifying, or cancelling an ordering exception.
+
+A lifecycle synchronization must not increment `Ordering Version`. A completed-item move must not increment `Ordering Version`. A mechanical synchronization of title, card Version, or Priority must not increment `Ordering Version`. A derived planning-view refresh must not increment `Ordering Version`. A formatting-only or link-only change must not increment `Ordering Version`.
+
+When no actual ordering change exists, do not increment `Ordering Version` or append an `Ordering Change Log` event.
 
 ## Product-Design Change Coordination
 

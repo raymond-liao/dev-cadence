@@ -160,8 +160,8 @@ cp .dev-cadence/.dev-cadence.example.yaml .dev-cadence.yaml
 
 Worktree 配置：
 
-- `worktree.enabled: false` - 除非用户明确要求，否则在当前 checkout 中工作。
-- `worktree.enabled: true` - 不询问，自动创建或确认隔离 worktree。
+- `worktree.enabled: false` - 使用入口准备的专用任务分支，且不创建 worktree。
+- `worktree.enabled: true` - 不询问，由入口创建或确认隔离 worktree。
 - `worktree.directory` - 优先使用的项目内 worktree 目录。
 
 用户配置不要放在 `.dev-cadence` 里。Dev Cadence 更新时会替换 `.dev-cadence` 目录。
