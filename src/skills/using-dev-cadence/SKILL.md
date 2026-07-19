@@ -193,6 +193,8 @@ Before any claim write, use this ordered intake matrix: selection -> resolve its
 
 After the item is selected and before switching a task branch or creating a worktree, claim it by atomically synchronizing the authoritative card and its Backlog row to `In Progress`. A claim uses the current card Version for its Change Log important event and does not increment the card Version for an execution-status-only change. When the status transition is important, append that event according to `.dev-cadence/skills/contracts/change-log.md`; a claim must be idempotent and must not append a duplicate Change Log event. A card already in `In Progress` must not be claimed again in the same request. Only after the card and Backlog write succeeds may the entry prepare the dedicated branch or worktree and route to the downstream workflow.
 
+The workspace preparation must complete before the entry routes downstream. When `worktree.enabled: true`, immediately create or verify the configured task worktree; when `worktree.enabled: false`, immediately prepare a dedicated task branch and must not create a worktree. Verify the claimed card Version, `In Progress` status, and matching Backlog row in the selected workspace before routing any downstream Delivery Workflow. Do not begin Requirements, Solution, Plan, checkpoint, or implementation work before this handoff completes.
+
 Claim the item before switching the task branch. Claim the item before creating the worktree. The card and Backlog must be updated atomically.
 
 Use the default Story route `Draft Story -> work-item-analysis -> Ready Story -> feature-dev`; the matrix above governs when a claim may occur along that route.
