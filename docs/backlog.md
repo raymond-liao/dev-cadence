@@ -16,6 +16,9 @@
 | `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Draft` | `P1` |
 | `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Draft` | `P1` |
 | `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `Draft` | `P2` |
+| `B-013` | [Story Ready 错误依赖 Feature 关联](bugs/B-013-story-ready-feature-reference-required.md) | `1` | `Draft` | `P1` |
+| `B-014` | [单项建卡被错误套用双确认门](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | `1` | `Draft` | `P3` |
+| `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `Ready` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `1` | `Draft` | `P3` |
 | `S-018` | [Business Acceptance 终态映射](stories/S-018-business-acceptance-terminal-mapping.md) | `1` | `Draft` | `P1` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `1` | `Draft` | `P2` |
@@ -99,6 +102,9 @@
 | 24 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | Draft |
 | 23 | [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | Draft |
 | 22 | [B-010](bugs/B-010-generated-record-document-links-not-enforced.md) | [S-010](stories/S-010-document-reference-links.md) | Draft |
+| 26 | [B-013](bugs/B-013-story-ready-feature-reference-required.md) | - | Draft |
+| 27 | [B-014](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | - | Draft |
+| 25 | [S-042](stories/S-042-dev-cadence-primary-subagent-delegation.md) | - | Ready |
 | 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | In Progress |
 | 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | Draft |
 | 8 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md)；[S-019](stories/S-019-final-verification-revision-binding.md)；[S-020](stories/S-020-implementation-review-risk-to-verification.md)；[S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | Draft |
@@ -155,6 +161,8 @@
 | [B-010](bugs/B-010-generated-record-document-links-not-enforced.md) | [S-010](stories/S-010-document-reference-links.md) | - |
 | [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | - |
 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | - |
+| [B-013](bugs/B-013-story-ready-feature-reference-required.md) | - | - |
+| [B-014](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | - | - |
 | [S-022](stories/S-022-bug-not-a-bug-terminal-state.md) | - | - |
 | [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
@@ -177,12 +185,13 @@
 | [S-039](stories/S-039-iteration-plan-capacity-calibration.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-038](stories/S-038-work-item-relative-size-estimation.md) | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
 | [S-040](stories/S-040-open-question-registry-index-and-reference-contract.md) | [S-005](stories/S-005-open-question-registry.md), [S-010](stories/S-010-document-reference-links.md) | - |
 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | - |
+| [S-042](stories/S-042-dev-cadence-primary-subagent-delegation.md) | - | - |
 | [B-003](bugs/B-003-refactor-public-contract-compatibility.md) | - | - |
 | [T-004](tasks/T-004-git-commit-skill-workflow-integration.md) | - | - |
 
 ## Ordering Version
 
-`3`
+`6`
 
 ## Ordering Change Log
 
@@ -191,3 +200,6 @@
 | 1 | 2026-07-19T09:18:15+08:00 | Raymond Liao <raymond-liao@outlook.com> | 确认 worktree 相关工作项 `S-030`、`S-031`、`S-032` 和 `S-033` 保持在 `T-002` 之后。 | 用户明确要求 worktree 相关工作后置；通用 `P0` 风险排序不得自动覆盖该顺序。 |
 | 2 | 2026-07-19T11:28:36+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将 `B-012` 调整为待处理首项，将 `B-011` 调整为第二项，二者均位于 `S-041` 之前。 | 用户明确要求把新发现的 workflow 启动 Bug 排到前面；按执行顺序先处理 Ready/claim 门禁，再处理领取后的 worktree 准备。 |
 | 3 | 2026-07-19T11:31:41+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将 `B-010` 调整为待处理第三项，位于 `B-011` 之后、`S-041` 之前。 | 用户补充要求把 `B-010` 也排到前面，同时保留两个 workflow 启动 Bug 的既有先后顺序。 |
+| 4 | 2026-07-19T12:54:45+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `S-042` 插入 `B-010` 之后、`S-029` 之前，并保留 `B-012`、`B-011`、`B-010` 的既有前三项顺序。 | 用户确认优先登记能够缓解所有 workflow 主会话上下文压力的全流程子代理委派能力，同时不覆盖此前确认的三个前置工作项。 |
+| 5 | 2026-07-19T13:02:09+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-013` 插入 `B-010` 之后、`S-042` 之前，并记录 B-013 阻止 S-042 进入 Ready 的依赖关系。 | 用户确认 Story 不必须关联 Feature；当前错误门禁需要先修复，S-042 才能按定义完整性重新分析 Ready。 |
+| 6 | 2026-07-19T13:08:29+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-014` 插入 `B-013` 之后、`S-042` 之前，并保留其他待处理项的相对顺序。 | 用户确认单项建卡不应重复执行输入范围确认和完整结果确认，相关交互问题应在 S-042 之前进入待处理。 |
