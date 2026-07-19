@@ -2,6 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+- 状态：✅ `confirmed`
+- 最近确认：`2026-07-19T21:44:19+0800`，选项 1：确认计划并进入 Repair Implementation。
+
 **Goal:** 修复 Story `Ready` 对主 System Feature 的错误强制依赖，使定义完整且不依赖产品级结论的独立 Story 可在用户确认后进入 `Ready`，同时保留已有 Feature 追踪和真实产品级结论缺口的 Discovery 路由。
 
 **Architecture:** `src/skills/work-item-analysis/SKILL.md` 继续拥有 Story 定义与 `Ready` 门禁，但把 Feature 从通用必备字段改为已有关系的条件性追踪字段；入口选择器只重申路由边界，不承担 Story 定义。Bash 契约测试先锁定四种场景，再用现有构建和安装脚本传播规则，不直接编辑 `dist/`。
