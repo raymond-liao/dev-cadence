@@ -136,13 +136,18 @@ card_path() {
 }
 
 history_versions() {
-  awk '
+  local path="$1"
+  local limit="${2:-0}"
+
+  awk -v limit="$limit" '
     /^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|$/ {
       in_change_log = 1
       next
     }
     in_change_log && /^\|[-:| ]+\|$/ { next }
     in_change_log && /^\| [0-9]+ \|/ {
+      if (limit > 0 && row_count >= limit) next
+      row_count++
       version = $2
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", version)
       versions = versions (versions == "" ? "" : ",") version
@@ -150,11 +155,14 @@ history_versions() {
     }
     in_change_log { in_change_log = 0 }
     END { print versions }
-  ' FS='|' "$1"
+  ' FS='|' "$path"
 }
 
 history_signatures() {
-  awk '
+  local path="$1"
+  local limit="$2"
+
+  awk -v limit="$limit" '
     function trim(value) {
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
       return value
@@ -167,13 +175,14 @@ history_signatures() {
     in_change_log && /^\| [0-9]+ \|/ {
       recorded_at = trim($3)
       change = trim($5)
-      if (change != "Normalized legacy status and delivery events to reuse the active definition Version.") {
+      if (change != "Normalized legacy status and delivery events to reuse the active definition Version." && row_count < limit) {
+        row_count++
         print recorded_at " || " change
       }
       next
     }
     in_change_log { in_change_log = 0 }
-  ' FS='|' "$1"
+  ' FS='|' "$path"
 }
 
 assert_history_versions() {
@@ -181,9 +190,11 @@ assert_history_versions() {
   local expected="$2"
   local path
   local actual
+  local expected_rows
 
   path="$(card_path "$id")"
-  actual="$(history_versions "$path")"
+  expected_rows="$(printf '%s\n' "$expected" | awk -F, '{ print NF }')"
+  actual="$(history_versions "$path" "$expected_rows")"
   test "$actual" = "$expected" ||
     fail "$id history versions are $actual, expected $expected"
 }
@@ -194,9 +205,11 @@ assert_history_signatures() {
   local path
   local actual
   local expected
+  local expected_rows
 
   path="$(card_path "$id")"
-  actual="$(history_signatures "$path")"
+  expected_rows="$#"
+  actual="$(history_signatures "$path" "$expected_rows")"
   expected="$(printf '%s\n' "$@")"
   test "$actual" = "$expected" ||
     fail "$id history event order does not match the confirmed sequence"
@@ -371,6 +384,11 @@ done <<< "$ORIGINAL_ROW_COUNTS")"
 
 test "$(printf '%s\n' "$ORIGINAL_METADATA" | wc -l | tr -d ' ')" = "152" ||
   fail "explicit original-row cohort is not 152 rows"
+
+ORIGINAL_METADATA_HASH="$(printf '%s\n' "$ORIGINAL_METADATA" |
+  LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
+test "$ORIGINAL_METADATA_HASH" = "1cd36c3087dba7975258b5767983e7e1afa0ee81290922dccb8337195d43cc1e" ||
+  fail "original Recorded At/Recorded By migration metadata changed"
 
 printf '%s\n' "$ORIGINAL_METADATA" | awk -F'\t' '
   $2 ~ /^legacy: recorded-at/ {
