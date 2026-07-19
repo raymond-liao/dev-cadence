@@ -4,7 +4,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-041` | [Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) | `3` | `In Progress` | `P1` |
 
 
 ## 待处理
@@ -43,6 +42,7 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `B-005` | [已安装 Workflow 用户确认门摘要、选项与结果语义不完整](bugs/B-005-refactor-confirmation-options-missing.md) | `4` | `Done` | `P1` |
+| `S-041` | [Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) | `3` | `Done` | `P1` |
 | `B-007` | [当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) | `2` | `Done` | `P1` |
 | `B-008` | [Bug Fix 完成后未更新 Backlog](bugs/B-008-bug-fix-completion-does-not-update-backlog.md) | `2` | `Done` | `P1` |
 | `S-017` | [工作项卡片与开发 Workflow 接入](stories/S-017-work-item-development-workflow-integration.md) | `5` | `Done` | `P1` |

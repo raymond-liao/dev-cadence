@@ -4,7 +4,7 @@
 
 - ID：`S-041`
 - Version：`3`
-- Status：`In Progress`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Enhancement
 
@@ -108,3 +108,4 @@ Backlog 当前只保存排序结果和通用评级维度，没有要求 Work Ite
 | 1 | 2026-07-18T09:15:19+08:00 | Raymond Liao <raymond-liao@outlook.com> | 创建 Change Log 共享契约与历史记录治理 Story。 | 用户确认将公共规则集中到 `src/skills/contracts/change-log.md`，并治理现有 Change Log 的格式、版本和元数据一致性。 |
 | 2 | 2026-07-18T15:00:09+08:00 | Raymond Liao <raymond-liao@outlook.com> | 确认 Change Log 保存完整的重要变更历史，补充非升版事件、重复 Version 和 legacy 元数据迁移规则，并解决 Q-023。 | 用户选择方案 2，要求状态和交付等重要事件保留历史、沿用当前 Version，且不得通过删除历史或伪造元数据完成迁移。 |
 | 3 | 2026-07-19T09:34:33+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将 Backlog `Ordering Version`、排序历史、新鲜度门禁和原子同步纳入共享契约与 Work Item Planning 范围。 | 用户确认只追踪排序决策，并选择把该能力纳入 S-041，而不是建立 Backlog 全局 Version 或独立 Story。 |
+| 3 | 2026-07-19T14:36:16+0800 | Raymond Liao <raymond-liao@outlook.com> | 完成 S-041 实现、系统测试、业务验收和本地 main 集成。 | 用户接受实现结果；合并后的 main 验证通过，交付状态更新为 Done。 |
