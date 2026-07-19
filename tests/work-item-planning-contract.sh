@@ -4,6 +4,11 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL="$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
 ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+BACKLOG="$ROOT_DIR/docs/backlog.md"
+WORKFLOW_DOC="$ROOT_DIR/docs/workflows/work-item-planning.md"
+FEATURE_SKILL="$ROOT_DIR/src/skills/feature-dev/SKILL.md"
+BUG_FIX_SKILL="$ROOT_DIR/src/skills/bug-fix/SKILL.md"
+REFACTOR_SKILL="$ROOT_DIR/src/skills/refactor/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -89,7 +94,13 @@ assert_literal "backlog five columns" 'Each Backlog lifecycle section must use e
 assert_literal "backlog pending order preservation" 'Preserve the existing row order inside `待处理` unless the confirmed planning change explicitly updates that recommendation.' "$SKILL"
 assert_literal "backlog no duplicate card detail" 'Backlog rows must summarize cards only. Do not duplicate card body details, acceptance conditions, change logs, workflow-run evidence, or other card-only fields in the Backlog table.' "$SKILL"
 assert_literal "backlog pending order authority" 'The row order in `待处理` is the sole authoritative suggested implementation order.' "$SKILL"
-assert_literal "backlog derived parallel view" 'The `当前可并行实施表` is a derived view of `待处理` order and dependency relationships; it must preserve the relative order from `待处理` and must not maintain an independent ordering.' "$SKILL"
+assert_not_match "removed parallel table section" '^## 当前可并行实施表$|^\| 并行组 \|' "$BACKLOG"
+assert_not_match "removed parallel view contract" 'Parallel Work View Contract|当前可并行实施表|parallel work table' "$SKILL"
+assert_not_match "removed entry parallel view" 'parallel work view|当前可并行实施表|derived parallel view' "$ENTRY_SKILL"
+assert_not_match "removed workflow parallel view" '当前可并行实施表|并行表的' "$WORKFLOW_DOC"
+assert_not_match "removed feature parallel projection" 'parallel-view projection|current parallel table' "$FEATURE_SKILL"
+assert_not_match "removed bug-fix parallel projection" 'parallel-view projection|current parallel table|parallel-table removal' "$BUG_FIX_SKILL"
+assert_not_match "removed refactor parallel projection" 'parallel-view projection|current parallel table' "$REFACTOR_SKILL"
 assert_match "authoritative story card path" 'docs/stories/S-nnn-<slug>\.md' "$SKILL"
 assert_match "authoritative task card path" 'docs/tasks/T-nnn-<slug>\.md' "$SKILL"
 assert_match "authoritative bug card path" 'docs/bugs/B-nnn-<slug>\.md' "$SKILL"

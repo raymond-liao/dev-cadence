@@ -32,7 +32,6 @@ assert_not_match() {
 assert_match "entry work-item claiming section" '^## Work Item Intake And Claiming$' "$ENTRY_SKILL"
 assert_match "implementation-only claim trigger" 'claim.*only.*explicit.*implementation|explicit.*implementation.*claim' "$ENTRY_SKILL"
 assert_match "pending order authority" '`待处理`.*sole authoritative|sole authoritative.*`待处理`' "$ENTRY_SKILL"
-assert_match "parallel view derived only" 'parallel.*derived.*view|并行.*派生.*视图' "$ENTRY_SKILL"
 assert_match "claim before branch" '(?i)claim.*before.*branch|branch.*after.*claim|分支.*领取.*之后' "$ENTRY_SKILL"
 assert_match "claim before worktree" '(?i)claim.*before.*worktree|worktree.*after.*claim|worktree.*领取.*之后' "$ENTRY_SKILL"
 assert_match "card backlog atomic sync" 'card.*Backlog.*atomically|Backlog.*card.*原子|原子.*卡片.*Backlog' "$ENTRY_SKILL"

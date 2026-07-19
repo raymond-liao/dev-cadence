@@ -93,37 +93,6 @@
 - `P2`：会使验证、风险或行为保护证据失效、不完整或不可追溯的问题。
 - `P3`：改善会话恢复和长期审计质量，但不直接造成不安全交付的问题。
 
-## 当前可并行实施表
-
-本表只展示尚未完成的工作项，是由“待处理”行顺序和 Dependency Table 派生的 AI 阅读视图。相同并行组的工作项可以并行实施；并行组只表达派生的并行分组，不形成独立的领取顺序。除当前已在“进行中”的工作项外，本表必须保持“待处理”行顺序中的相对顺序。待处理首项不能推进时，必须先经 Work Item Planning 确认并调整“待处理”顺序，不得静默跳过后续工作项。某项完成并进入“已完成”后，必须从本表删除；随后根据 Dependency Table 重新计算其直接后继项的依赖状态。表中 `状态` 只表达工作项生命周期，不表达 Workflow 入口资格；具体路由由 `using-dev-cadence` 和对应 workflow skill 负责。
-
-| 并行组 | 可并行工作项 | 前置条件 | 状态 |
-|---:|---|---|---|
-| 24 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | Draft |
-| 23 | [B-011](bugs/B-011-worktree-preparation-delayed-after-claim.md) | - | Draft |
-| 22 | [B-010](bugs/B-010-generated-record-document-links-not-enforced.md) | [S-010](stories/S-010-document-reference-links.md) | Draft |
-| 26 | [B-013](bugs/B-013-story-ready-feature-reference-required.md) | - | Draft |
-| 27 | [B-014](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | - | Draft |
-| 25 | [S-042](stories/S-042-dev-cadence-primary-subagent-delegation.md) | - | Ready |
-| 2 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | In Progress |
-| 7 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | Draft |
-| 8 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md)；[S-019](stories/S-019-final-verification-revision-binding.md)；[S-020](stories/S-020-implementation-review-risk-to-verification.md)；[S-021](stories/S-021-verification-risk-to-business-acceptance.md) | - | Draft |
-| 9 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | Draft |
-| 10 | [S-022](stories/S-022-bug-not-a-bug-terminal-state.md)；[S-025](stories/S-025-bug-red-green-evidence.md) | - | Draft |
-| 11 | [S-026](stories/S-026-refactor-baseline-identity.md)；[S-027](stories/S-027-refactor-migration-start-contract.md) | - | Draft |
-| 12 | [S-028](stories/S-028-refactor-legacy-path-removal-gate.md) | [S-027](stories/S-027-refactor-migration-start-contract.md) | ⚠️ Blocked |
-| 13 | [S-023](stories/S-023-manual-recovery-terminal-state.md) | - | Draft |
-| 14 | [S-038](stories/S-038-work-item-relative-size-estimation.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | ✅ Ready |
-| 15 | [S-039](stories/S-039-iteration-plan-capacity-calibration.md) | [S-016](stories/S-016-unified-backlog-board.md)、[S-038](stories/S-038-work-item-relative-size-estimation.md) | ⚠️ Blocked |
-| 16 | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) | [S-004](stories/S-004-failure-classification-stage-routing.md)、[S-015](stories/S-015-work-item-planning-workflow-contract.md)、[S-016](stories/S-016-unified-backlog-board.md)、[S-017](stories/S-017-work-item-development-workflow-integration.md)、[S-037](stories/S-037-work-item-analysis-workflow.md)、[S-038](stories/S-038-work-item-relative-size-estimation.md)、[S-039](stories/S-039-iteration-plan-capacity-calibration.md) | ⚠️ Blocked |
-| 17 | [S-030](stories/S-030-worktree-ownership-detection.md) | - | Draft |
-| 18 | [S-031](stories/S-031-preserve-worktree-run-records.md) | [S-030](stories/S-030-worktree-ownership-detection.md) | ⚠️ Blocked |
-| 19 | [S-032](stories/S-032-detached-head-finishing.md) | - | Draft |
-| 20 | [S-033](stories/S-033-worktree-cleanup-result-recording.md) | [S-030](stories/S-030-worktree-ownership-detection.md)、[S-031](stories/S-031-preserve-worktree-run-records.md) | ⚠️ Blocked |
-| 21 | [S-034](stories/S-034-release-and-production-delivery-capability.md) | - | Draft |
-
-用户明确允许并行实施时才使用此表。`Draft` 表示卡片仍需完成分析和用户确认，不能仅因没有前置依赖就直接进入实施；`Blocked` 表示至少一个明确工作项依赖尚未完成。上述状态不替代 Workflow 入口门禁。
-
 ## Dependency Table
 
 | Work Item | Depends On | Blocks |

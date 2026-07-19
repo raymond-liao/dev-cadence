@@ -268,7 +268,7 @@ A Task does not require `Ready`, but the first stage must confirm its goal, scop
 
 Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version and Change Log.
 
-At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, refactor result/reference, exact Backlog source and destination sections, and the derived parallel-view projection. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
+At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, refactor result/reference, and exact Backlog source and destination sections. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
 ## Active Task Change Handling
 

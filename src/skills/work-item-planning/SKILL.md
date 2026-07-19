@@ -292,21 +292,6 @@ Bug may enter `bug-fix` without a `Ready` precondition and without a confirmed r
 
 If Task analysis reveals that the work actually needs new product behavior, stop treating it as a Task-only delivery item and create or associate the correct Story instead.
 
-## Parallel Work View Contract
-
-The Backlog's parallel work table is a candidate view for coordinating authorized parallel work. It is not a second status model, a workflow-run log, or a direct code-implementation board.
-
-- `Status` is the status field and expresses only the card lifecycle; it must use the canonical work-item status contract. The status field must not be used to infer a workflow stage or to combine card maturity with entry qualification.
-- The row order in `待处理` is the sole authoritative suggested implementation order.
-- The `当前可并行实施表` is a derived view of `待处理` order and dependency relationships; it must preserve the relative order from `待处理` and must not maintain an independent ordering.
-- If the first item in `待处理` cannot proceed, Work Item Planning must confirm and reorder the pending list before another item proceeds. It must not silently skip the first item.
-- Parallel view status expresses only lifecycle. Workflow routing is owned by `using-dev-cadence` and the corresponding workflow skill.
-- A Story must have status `Ready` before it can enter `feature-dev`.
-- A Task may route to `feature-dev`, `bug-fix`, or `refactor` according to its confirmed goal, but the corresponding workflow must confirm its own scope before delivery work may modify code.
-- A Bug may be `Draft` when it enters `bug-fix` diagnosis (Problem Diagnosis). Diagnosis does not mean repair implementation; Repair Solution and Repair Plan confirmation remain required before code changes.
-- `Blocked` means that an explicit dependency blocks the work item. It does not mean that the card has a different lifecycle or that its maturity has been reclassified.
-- The view must not automatically start a workflow or directly modify code. Parallel execution still requires the user's authorization and the selected workflow's gates.
-
 ## Versioning, Reuse, And Concurrency
 
 Every Story, Task, and Bug card must use an independent integer Version starting at `1`.
@@ -336,6 +321,8 @@ docs/backlog.md
 Backlog is the summary view for work-item status, priority, relationships, blockers, and suggested order. Story Map keeps business structure and slicing; it does not replace the Backlog.
 
 Work Item Planning is the authoritative owner of Backlog structure, lifecycle sections, and planning-maintained ordering.
+
+The row order in `待处理` is the sole authoritative suggested implementation order.
 
 Use exactly these Backlog lifecycle sections in this order: `进行中`, `待处理`, `已完成`, `已关闭`.
 

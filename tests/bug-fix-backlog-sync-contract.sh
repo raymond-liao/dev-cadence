@@ -22,7 +22,6 @@ assert_match "Bug identity lookup" 'Bug ID.*Version|Bug.*ID.*Version|卡片.*Ver
 assert_match "conflict stop" 'conflict.*stop|冲突.*停止|visible-fact conflict'
 assert_match "atomic lifecycle move" 'atomically.*待处理|原子.*已完成|atomic.*Backlog'
 assert_match "unrelated order preservation" 'unrelated.*order|无关.*排序|待处理.*排序'
-assert_match "parallel row removal" 'parallel.*remove|并行表.*删除|并行.*移除'
 assert_match "Bug card Done writeback" 'Bug card.*Status.*Done|card.*status.*Done|Bug 卡片.*Status.*Done'
 assert_match "repair and integration references" 'repair result.*integration reference|修复结果.*集成引用'
 assert_match "execution Change Log entry" 'Change Log.*execution|执行.*Change Log'
