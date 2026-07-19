@@ -29,7 +29,7 @@
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/01-requirements.md`) | `confirmed: user selected option 1 on 2026-07-19T12:02:17+08:00` | `ae6a932f18f452ec6e14f70170807700d50b1369` | Card Version 3 confirmed; user delegated uninterrupted continuation through System Testing. |
 | Technical Solution | ✅ `confirmed` | [技术方案](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/02-technical-solution.md`) | `confirmed: delegated by user on 2026-07-19T12:02:17+08:00` | `78a87b7219a4e5d5b6d5b0892c4133bc865d398d` | Supporting contract, owner-specific rules, explicit history migration, and dual freshness identity selected. |
-| Implementation Plan | ✅ `confirmed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/03-implementation-plan.md`) | `confirmed: delegated by user on 2026-07-19T12:02:17+08:00` | `pending` | Four TDD tasks selected for Subagent-Driven Development. |
+| Implementation Plan | ✅ `confirmed` | [实施计划](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/03-implementation-plan.md`) | `confirmed: delegated by user on 2026-07-19T12:02:17+08:00` | `127cc6c543923ef31d5794094484a60346510186` | Four TDD tasks selected for Subagent-Driven Development. |
 | Development Implementation | 🔄 `in_progress` | ⏳ pending | `not applicable` | `pending` | Pre-implementation design freshness validation required before Task 1. |
 | System Testing | ⏳ `pending` | ⏳ pending | `not applicable` | `pending` | Not started. |
 | Business Acceptance | ⏳ `pending` | ⏳ pending | `pending` | `pending` | Not started. |
@@ -58,7 +58,7 @@
 - Run directory: `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance`
 - Task branch: `codex/s-041-change-log-governance-v2`
 - Base branch: `main`
-- Expected HEAD SHA: `78a87b7219a4e5d5b6d5b0892c4133bc865d398d`
+- Expected HEAD SHA: `127cc6c543923ef31d5794094484a60346510186`
 - Expected base SHA: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8`
 - Owned commit range: `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8..HEAD`
 - Owned tracked paths: `docs/backlog.md`, `docs/stories/S-041-change-log-contract-and-history-governance.md`, `build/dev-cadence/feature-dev/s-041-change-log-contract-and-history-governance/`
@@ -68,4 +68,12 @@
 
 ## Design Freshness
 
-- Status: `not evaluated; required immediately before Development Implementation`
+- Evaluated at: `2026-07-19T12:26:02+0800`
+- Card snapshot: `docs/stories/S-041-change-log-contract-and-history-governance.md`, Version `3`, Status `In Progress`.
+- Requirements checkpoint: `ae6a932f18f452ec6e14f70170807700d50b1369`; confirmed scope and decisions remain current.
+- Technical Solution checkpoint: `78a87b7219a4e5d5b6d5b0892c4133bc865d398d`; selected architecture remains compatible with the repository.
+- Implementation Plan checkpoint: `127cc6c543923ef31d5794094484a60346510186`; the checkpoint tree contains `03-implementation-plan.md`.
+- Execution context: branch `codex/s-041-change-log-governance-v2` in `.worktrees/s-041-change-log-governance-v2`; base `63453f377e80cf9c58b8bd56b299df7b6d9a6ac8`.
+- Dependency state: no external dependency or unresolved design question blocks implementation.
+- Material changes since confirmation: only this run's scoped stage records and checkpoint bindings; no product or contract dependency changed.
+- Status: `passed`; Development Implementation may start from the confirmed plan.
