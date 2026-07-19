@@ -178,7 +178,7 @@
 - Consumes: Task 2 的 source 规则和 Task 1 的 GREEN 测试。
 - Produces: version `0.26.5` 的 source、dist 与当前安装包。
 
-- [ ] **Step 1: 递增包版本而不改变 Bug 卡 Version。**
+- [x] **Step 1: 递增包版本而不改变 Bug 卡 Version。**
 
   将 `version` 的唯一内容从 `0.26.4` 改为：
 
@@ -216,7 +216,7 @@
 
   Actual: 每条比较和两个契约测试均返回 0；等待计划重确认后才可提交 `version` 和当前 `.dev-cadence/**` 同步结果。
 
-- [ ] **Step 4: 审查并提交版本与受跟踪安装包同步单元。**
+- [x] **Step 4: 审查并提交版本与受跟踪安装包同步单元。**
 
   ```bash
   git add version .dev-cadence
@@ -237,7 +237,7 @@
 - Consumes: Tasks 1-3 的测试、规则和生成包。
 - Produces: 供 Repair Implementation review 与 Regression Verification 使用的完整命令证据。
 
-- [ ] **Step 1: 执行聚焦、格式与全量回归。**
+- [x] **Step 1: 执行聚焦、格式与全量回归。**
 
   Run:
 
@@ -250,7 +250,7 @@
 
   Expected: 所有命令返回 0；`check-all` 重新生成分发包并运行全部契约测试。
 
-- [ ] **Step 2: 审查同步、范围与可移植性。**
+- [x] **Step 2: 审查同步、范围与可移植性。**
 
   Run:
 
@@ -263,7 +263,7 @@
 
   Expected: 三个规则关键词在 source、dist 和当前安装包均可定位；没有空白错误；受跟踪实现变更限于 Global Constraints 所列 source、测试、版本、当前 `.dev-cadence/**` 和本次运行记录；不出现 `.env`、`.dev-cadence.yaml`、临时日志、PID 或绝对本机路径。
 
-- [ ] **Step 3: 在 Repair Implementation 阶段写入实际结果并提交验证单元。**
+- [x] **Step 3: 在 Repair Implementation 阶段写入实际结果并提交验证单元。**
 
   创建 `04-repair-record.md`，只记录实际 RED/GREEN 输出、实施提交、构建/安装身份、通过与跳过的检查及残余风险；不得在本计划阶段预填结果。随后按实施提交审查台账审核并提交该记录与测试验证相关变更。
 
@@ -287,3 +287,11 @@
 - Code identity：branch `codex/b013-story-ready-feature` at `7ce8775a6e5e2a4f9b273f3b4bafd200007d5f51`；base `main` at `5cb09c6e1423add910c63b25470f8aa6beff5c70`；两者差异仅为本运行的诊断、方案、计划和 manifest 记录。
 - Dependency state：`docs/stories/S-042-dev-cadence-primary-subagent-delegation.md` 存在；没有 `docs/product-design/` 基线，这正是本修复必须允许的独立 Story 场景，不构成新依赖。
 - Conclusion：✅ `confirmed` inputs remain valid；无诊断、方案、计划、架构、依赖或工作项可见事实变更，允许进入 Repair Implementation，无需重新确认。
+
+### Revalidation After Plan Revision
+
+- Checked at：`2026-07-19T21:53:31+0800`
+- Work item input：B-013 仍为 Version `2`、Status `In Progress`；`main` 与任务 workspace 的卡片可见事实一致。
+- Confirmed inputs：诊断、方案与修订 Repair Plan 均为当前确认版本；任务 1-2 的 RED/GREEN 提交是该计划已完成步骤。
+- Code identity：branch `codex/b013-story-ready-feature` at `be9b2e6ec9fbbdb96736a3ac657f3701a98815a9`；base `main` at `5cb09c6e1423add910c63b25470f8aa6beff5c70`。已提交差异仅为本运行记录、Task 1-2 的测试与规则；未提交差异仅为修订计划已确认的 `version` 和当前 `.dev-cadence/**` 安装同步。
+- Conclusion：✅ `confirmed` inputs remain valid；修订范围已获用户确认，允许恢复 Task 3，无需再次确认。
