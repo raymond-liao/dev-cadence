@@ -4,7 +4,7 @@
 
 - ID: `B-010`
 - Version: `1`
-- Status: `In Progress`
+- Status: `Done`
 - Priority: `P2`
 - Change Type: Bug
 
@@ -72,3 +72,4 @@ The shared `document-conventions` rule is present, but the Feature Dev, Bug Fix,
 |---:|---|---|---|---|
 | 1 | 2026-07-18T20:20:30+0800 | Raymond Liao <raymond-liao@outlook.com> | Created the Bug card with status `Draft`. | Generated records can still use plain-path-only navigational references after S-010 because templates and automated enforcement do not close the contract. |
 | 1 | 2026-07-19T15:03:31+08:00 | Raymond Liao <raymond-liao@outlook.com> | Updated the status to `In Progress`. | The user explicitly requested parallel repair of B-012, B-010, and B-014; this changes execution status only and does not revise the card definition. |
+| 1 | 2026-07-19T16:22:40+08:00 | Raymond Liao <raymond-liao@outlook.com> | Updated the status to `Done`. | B-010 completed business acceptance and was merged locally into `main`; Version remains `1`. |

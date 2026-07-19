@@ -4,7 +4,7 @@
 
 - ID：`B-012`
 - Version：`1`
-- Status：`In Progress`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Bug
 
@@ -77,3 +77,4 @@
 |---:|---|---|---|---|
 | 1 | 2026-07-19T11:15:39+0800 | Raymond Liao <raymond-liao@outlook.com> | 创建 Draft Story 提前领取 Bug 卡。 | S-041 启动过程证明，当前入口可以在 Story 经过 Work Item Analysis 并确认为 Ready 前把卡片与 Backlog 提前更新为 In Progress。 |
 | 1 | 2026-07-19T15:03:31+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将状态更新为 `In Progress`。 | 用户明确要求同时并行修复 B-012、B-010 和 B-014；本次只改变执行状态，不改变卡片定义。 |
+| 1 | 2026-07-19T16:22:40+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将状态更新为 `Done`。 | B-012 已完成业务验收并本地合并到 `main`；Version 保持为 `1`。 |

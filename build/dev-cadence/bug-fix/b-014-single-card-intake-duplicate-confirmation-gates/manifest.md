@@ -5,8 +5,8 @@
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Branch: `codex/b014-single-card-intake`
 - Started at: `2026-07-19T15:03:31+08:00`
-- Current stage: 🔄 `in_progress` - Completion
-- Overall status: ✅ `accepted`
+- Current stage: ✅ `completed` - Completion
+- Overall status: ✅ `integrated`
 - Run directory: `build/dev-cadence/bug-fix/b-014-single-card-intake-duplicate-confirmation-gates/`
 - Workspace: `.`
 - Output language: `zh-CN`
@@ -29,11 +29,21 @@
 
 - Card: [B-014 单项建卡被错误套用双确认门](../../../../docs/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md)
 - Card type and version: `Bug`, Version `1`
-- Card status: `Draft` -> `In Progress`
-- Backlog source: `docs/backlog.md` section `待处理`
-- Backlog destination: `docs/backlog.md` section `进行中`
+- Card status: `In Progress` -> `Done`
+- Backlog source: `docs/backlog.md` section `进行中`
+- Backlog destination: `docs/backlog.md` section `已完成`
 - Derived parallel-view projection: 当前 Backlog 不持久化独立并行视图；投影由待处理顺序和依赖关系派生。
 - Repair result/reference: accepted; implementation `be61691`, regression `0fb3fe3`
+
+## Final Integration Decision
+
+- Decision: `merged locally`
+- Base branch: `main`
+- Base SHA: `7655d0d68be33a009e4be5bb43995353a7ee0a84`
+- Feature SHA: `7655d0d68be33a009e4be5bb43995353a7ee0a84`
+- Worktrees: removed
+- Task branches: deleted
+- Push: not requested
 
 ## Current-Run Discard Context And Ownership Evidence
 

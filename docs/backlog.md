@@ -4,9 +4,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `In Progress` | `P1` |
-| `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `In Progress` | `P2` |
-| `B-014` | [单项建卡被错误套用双确认门](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | `1` | `In Progress` | `P3` |
 
 
 ## 待处理
@@ -41,6 +38,9 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `B-012` | [Draft Story 在 Ready 门禁前被提前领取](bugs/B-012-draft-story-claimed-before-ready-gate.md) | `1` | `Done` | `P1` |
+| `B-010` | [Generated Records Do Not Enforce Navigational Document Links](bugs/B-010-generated-record-document-links-not-enforced.md) | `1` | `Done` | `P2` |
+| `B-014` | [单项建卡被错误套用双确认门](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | `1` | `Done` | `P3` |
 | `B-005` | [已安装 Workflow 用户确认门摘要、选项与结果语义不完整](bugs/B-005-refactor-confirmation-options-missing.md) | `4` | `Done` | `P1` |
 | `S-041` | [Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) | `3` | `Done` | `P1` |
 | `B-007` | [当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) | `2` | `Done` | `P1` |
@@ -158,7 +158,7 @@
 
 ## Ordering Version
 
-`6`
+`7`
 
 ## Ordering Change Log
 
@@ -170,3 +170,4 @@
 | 4 | 2026-07-19T12:54:45+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `S-042` 插入 `B-010` 之后、`S-029` 之前，并保留 `B-012`、`B-011`、`B-010` 的既有前三项顺序。 | 用户确认优先登记能够缓解所有 workflow 主会话上下文压力的全流程子代理委派能力，同时不覆盖此前确认的三个前置工作项。 |
 | 5 | 2026-07-19T13:02:09+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-013` 插入 `B-010` 之后、`S-042` 之前，并记录 B-013 阻止 S-042 进入 Ready 的依赖关系。 | 用户确认 Story 不必须关联 Feature；当前错误门禁需要先修复，S-042 才能按定义完整性重新分析 Ready。 |
 | 6 | 2026-07-19T13:08:29+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-014` 插入 `B-013` 之后、`S-042` 之前，并保留其他待处理项的相对顺序。 | 用户确认单项建卡不应重复执行输入范围确认和完整结果确认，相关交互问题应在 S-042 之前进入待处理。 |
+| 7 | 2026-07-19T16:22:40+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `B-012`、`B-010`、`B-014` 从 `进行中` 移入 `已完成`，并保持本批次顺序。 | 三个 Bug 已完成业务验收和本地集成；对应卡片状态同步为 `Done`。 |

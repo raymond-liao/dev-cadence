@@ -7,7 +7,7 @@
 - Decision At: `2026-07-19T16:14:52+08:00`
 - Accepted Result: Direct Intake 只有一个正式结果确认门，Portfolio Planning 双门和必要 Backlog 原子一致性保持不变。
 - Accepted Residual Risks: None.
-- Card Status At Acceptance: `In Progress` (remains until Completion integration decision)
-- Backlog Source And Destination: `docs/backlog.md` `进行中` -> `进行中`
+- Card Status At Acceptance: `In Progress`; completion writeback: `Done`
+- Backlog Source And Destination: `docs/backlog.md` `进行中` -> `已完成`
 - Repair Result/Reference: accepted; implementation `be61691`, regression `0fb3fe3`
-- Final Follow-Up Actions: Completion decision pending; task branch and worktree remain preserved until the user selects a Completion option.
+- Final Follow-Up Actions: Merged locally into `main` at base SHA `7655d0d`; task worktree removed and task branch deleted after verification; no push performed.
