@@ -4,7 +4,7 @@
 
 - ID：`B-015`
 - Version：`3`
-- Status：`Draft`
+- Status：`In Progress`
 - Priority：`P1`
 - Change Type：Bug
 
@@ -70,3 +70,4 @@
 | 1 | 2026-07-19T16:43:14+0800 | Raymond Liao <raymond-liao@outlook.com> | 创建工作项领取未在 main 持久化 Bug 卡。 | 当前 B-011 的活跃任务分支显示已领取，而 main 仍显示同一工作项为 Draft 和待处理，暴露领取状态未先在主分支持久化。 |
 | 2 | 2026-07-19T16:49:04+0800 | Raymond Liao <raymond-liao@outlook.com> | 校正 B-011 在本卡中的定位。 | B-011 仅是发现本问题的实施现场；B-015 不与 B-011 构成因果、依赖、阻塞或范围关系。 |
 | 3 | 2026-07-19T16:55:23+0800 | Raymond Liao <raymond-liao@outlook.com> | 将范围收窄到已验证的 worktree 配置。 | 当前证据仅覆盖 `worktree.enabled: true`；不把专用任务分支模式或其他 workflow 入口泛化为已确认事实。 |
+| 3 | 2026-07-19T19:09:45+0800 | Raymond Liao <raymond-liao@outlook.com> | 领取 B-015 并将卡片状态同步为 `In Progress`。 | 显式实施请求已选定该 Bug；领取状态必须在创建任务 worktree 前持久化到主 checkout。 |
