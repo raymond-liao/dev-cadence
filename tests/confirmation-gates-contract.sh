@@ -24,6 +24,44 @@ assert_not_match() {
   fi
 }
 
+section_between_headings() {
+  local start_heading="$1"
+  local end_heading="$2"
+  local path="$3"
+
+  awk -v start="$start_heading" -v end="$end_heading" '
+    $0 == start { in_section = 1; next }
+    in_section && $0 == end { in_section = 0 }
+    in_section { print }
+  ' "$ROOT_DIR/$path"
+}
+
+assert_section_count() {
+  local label="$1"
+  local start_heading="$2"
+  local end_heading="$3"
+  local literal="$4"
+  local expected="$5"
+  local path="$6"
+  local section count
+
+  section="$(section_between_headings "$start_heading" "$end_heading" "$path")"
+  count="$(printf '%s\n' "$section" | (rg -o -F -- "$literal" || true) | wc -l | tr -d ' ')"
+  test "$count" -eq "$expected" || fail "expected $label count $expected, got $count in $path"
+}
+
+assert_section_literal() {
+  local label="$1"
+  local start_heading="$2"
+  local end_heading="$3"
+  local literal="$4"
+  local path="$5"
+  local section
+
+  section="$(section_between_headings "$start_heading" "$end_heading" "$path")"
+  [[ "$section" == *"$literal"* ]] || fail "missing $label between ${start_heading} and ${end_heading} in $path"
+}
+
 asset_skills=(
   src/skills/discovery/SKILL.md
   src/skills/work-item-planning/SKILL.md
@@ -56,6 +94,33 @@ assert_match "Discovery Journey confirmation" 'User Journey Confirmation' src/sk
 assert_match "Discovery product confirmation" 'Product Design Confirmation' src/skills/discovery/SKILL.md
 assert_match "Planning result confirmation" 'Planning Result Confirmation' src/skills/work-item-planning/SKILL.md
 assert_match "Architecture pending semantics" 'Decision Pending' src/skills/architecture-design/SKILL.md
+
+assert_section_count \
+  "Portfolio Planning formal confirmation gates" \
+  "### Portfolio Planning Confirmation Gates" \
+  "### Direct Intake Confirmation Gates" \
+  "formal confirmation gate for Portfolio Planning" \
+  2 \
+  src/skills/work-item-planning/SKILL.md
+assert_section_count \
+  "Direct Intake formal confirmation gates" \
+  "### Direct Intake Confirmation Gates" \
+  "## Story Map Contract" \
+  "formal confirmation gate for Direct Intake" \
+  1 \
+  src/skills/work-item-planning/SKILL.md
+assert_section_literal \
+  "Direct Intake clarification boundary" \
+  "### Direct Intake Confirmation Gates" \
+  "## Story Map Contract" \
+  "Necessary Clarification is not a formal confirmation gate" \
+  src/skills/work-item-planning/SKILL.md
+assert_section_literal \
+  "Direct Intake result confirmation name" \
+  "### Direct Intake Confirmation Gates" \
+  "## Story Map Contract" \
+  "Direct Intake Result Confirmation" \
+  src/skills/work-item-planning/SKILL.md
 
 for skill in "${asset_skills[@]}" "${delivery_skills[@]}"; do
   assert_not_match "generic confirmation menu replacing terminal menus" 'Business Acceptance.*Confirmation Gate Presentation|Completion.*Confirmation Gate Presentation' "$skill"

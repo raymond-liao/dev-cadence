@@ -155,11 +155,26 @@ It may create or reuse a lightweight card and update only the necessary planning
 
 Keep the business workflow in the current conversation:
 
+### Portfolio Planning Stage Sequence
+
+Portfolio Planning uses the full planning sequence:
+
 ```text
 Planning Inputs And Scope Confirmation -> Planning Structure Proposal -> Planning Result Confirmation
 ```
 
-Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged. After confirmation, atomically write only the affected assets. The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content.
+### Direct Intake Stage Sequence
+
+Direct Intake uses a separate single-card sequence:
+
+```text
+Necessary Clarification (not a formal confirmation gate) -> Direct Intake Proposal -> Direct Intake Result Confirmation
+```
+
+Necessary clarification may ask only the questions needed to make the requested card and its necessary planning references unambiguous. It is not a formal confirmation gate, and it must not ask the user to reconfirm inputs and scope that are already clear. Before the applicable result confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged. After confirmation, atomically write only the affected assets.
+
+Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged for both modes.
+The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content.
 
 ## Confirmation Gate Presentation
 
@@ -171,12 +186,22 @@ Before each real Work Item Planning decision gate, present the decision in this 
 4. `risks or open questions`: version conflicts, missing product-design inputs, duplicate identities, dependency concerns, or unresolved planning questions.
 5. `evidence link`: a repository-relative link to the complete proposal or source assets. The link is supporting evidence and does not replace the conversation summary.
 
-Then present the actual planning choices and their effects:
+Then present the actual planning choices and their effects for the selected mode.
 
-- At `Planning Inputs And Scope Confirmation`, confirm the named authoritative inputs and scope to advance to the structure proposal, or request changes and remain at the current stage with authoritative planning assets unchanged. If an input is missing or conflicted, keep the planning proposal blocked and return to `discovery` or request a user decision rather than guessing.
-- At `Planning Result Confirmation`, `confirm the full proposed result` atomically writes the affected Story Map, milestones, cards, and Backlog references. The user may also `confirm only the named subset`; only that subset is written and every unconfirmed asset keeps its current authoritative content. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the gate.
+### Portfolio Planning Confirmation Gates
+
+- At `Planning Inputs And Scope Confirmation`, confirm the named authoritative inputs and scope to advance to the structure proposal, or request changes and remain at the current stage with authoritative planning assets unchanged. This is the first formal confirmation gate for Portfolio Planning. If an input is missing or conflicted, keep the planning proposal blocked and return to `discovery` or request a user decision rather than guessing.
+- At `Planning Result Confirmation`, `confirm the full proposed result` atomically writes the affected Story Map, milestones, cards, and Backlog references. This is the second formal confirmation gate for Portfolio Planning. The user may also `confirm only the named subset`; only that subset is written and every unconfirmed asset keeps its current authoritative content. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the gate.
 - When the proposal includes a milestone or MVP slice, show the explicit included work-item IDs and let the user confirm or change that slice. MVP becomes authoritative only when the user confirms it; it is not inferred from the proposal.
 - Every choice must state its effect on the next stage, asset writes, records, status, and whether re-confirmation is required.
+
+### Direct Intake Confirmation Gates
+
+Necessary Clarification is not a formal confirmation gate. It only resolves missing or contradictory facts and leaves authoritative assets unchanged.
+
+- At `Direct Intake Proposal`, present the complete requested card result in the conversation, including the card ID, repository-relative card path, Priority, Relationships, dependencies, and every necessary Backlog change. This proposal does not create a second input-and-scope confirmation gate.
+- At `Direct Intake Result Confirmation`, `confirm the full proposed result` atomically writes the card and its necessary Backlog references as one atomic unit. This is the only formal confirmation gate for Direct Intake. If the proposal changes Backlog ordering, the same atomic unit also includes `待处理`, `Ordering Version`, and `Ordering Change Log`.
+- At the same result gate, `confirm only the named subset` must not create an orphaned card or orphaned Backlog row. A named card and its necessary Backlog references are one indivisible confirmation unit; optional Story Map or Milestone references may remain unconfirmed. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the result gate.
 
 Do not import the Delivery Workflow advance/revise menu as a replacement for these planning choices. Preserve Feature ownership, candidate or input selection, partial confirmation, MVP slicing, version-conflict handling, and handoff to a downstream delivery workflow. Do not apply this section to downstream terminal menus; Work Item Planning does not own those menus.
 

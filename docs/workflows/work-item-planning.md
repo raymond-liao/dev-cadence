@@ -76,13 +76,29 @@ Path、Milestone、Iteration Plan、Size 和 Backlog
 
 ## 流程阶段
 
-| 阶段 | 目标 | 主要产出 |
-| --- | --- | --- |
-| 1. 规划输入与范围确认 | 确认组合规划或单项登记模式，读取当前权威资产和版本，明确本次规划范围及不受影响的资产。 | 规划模式；输入基线；规划范围 |
-| 2. 规划结构形成 | 组合规划时形成或更新 Story Map、轻量工作项、Milestone 候选、Size 估算、Iteration Plan 和 Backlog；单项登记时只创建或复用当前卡片并更新必要 Backlog 引用。 | 完整规划提案或单项登记提案 |
-| 3. 规划结果确认 | 展示所有拟议资产变化、Milestone 范围、估算结果、Iteration Plan、未决项和不更新理由；用户确认后原子写入受影响资产。 | 已确认的 Story Map、Milestone、Iteration Plan、工作项卡片和 Backlog 更新 |
+Work Item Planning 按模式使用不同的阶段和正式确认门。
 
-所有阶段都只作为会话内工作方法，不创建 manifest、阶段记录或 checkpoint。用户确认前不得把提案写入正式资产。用户可以只确认提案的一部分；未确认部分保持现有权威内容不变。
+### 组合规划模式阶段
+
+```text
+Planning Inputs And Scope Confirmation
+    -> Planning Structure Proposal
+    -> Planning Result Confirmation
+```
+
+组合规划保留两道正式确认门：先确认权威输入与范围，再确认完整规划结果。用户可以只确认结果提案中的命名子集；未确认部分保持现有权威内容不变。
+
+### 单项登记模式阶段
+
+```text
+Necessary Clarification (not a formal confirmation gate)
+    -> Direct Intake Proposal
+    -> Direct Intake Result Confirmation
+```
+
+必要澄清只补齐创建或复用单张卡片所需的缺失事实，不把已经明确的输入和范围重新包装成确认门。`Direct Intake Result Confirmation` 是单项登记唯一正式确认门，一次展示完整卡片、ID、仓库相对路径、Priority、Relationships、依赖和全部必要 Backlog 变化。用户确认后，卡片与必要 Backlog 引用作为一个原子单元写入；如果确认改变 `待处理` 顺序，同一原子单元还包括 `Ordering Version` 和 `Ordering Change Log`。
+
+在两种模式中，阶段都只作为会话内工作方法，不创建 manifest、阶段记录或 checkpoint。用户确认前不得把提案写入正式资产。单项登记的 `confirm only the named subset` 不能拆出孤立卡片或孤立 Backlog 行；可独立保持有效的 Story Map、Milestone 等可选引用才允许单独确认。
 
 规划确认不表示 Story Map 中的所有卡片已经达到 `Ready`。组合规划允许创建只有稳定 ID、标题、所属 Feature、Path、Milestone 候选和初步 Size 的轻量 `Draft` 卡片。
 

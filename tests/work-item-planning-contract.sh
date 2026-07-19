@@ -56,6 +56,42 @@ assert_not_match() {
   fi
 }
 
+section_between_headings() {
+  local start_heading="$1"
+  local end_heading="$2"
+  local path="$3"
+
+  awk -v start="$start_heading" -v end="$end_heading" '
+    $0 == start { in_section = 1; next }
+    in_section && $0 == end { in_section = 0 }
+    in_section { print }
+  ' "$path"
+}
+
+assert_section_literal() {
+  local label="$1"
+  local start_heading="$2"
+  local end_heading="$3"
+  local literal="$4"
+  local path="$5"
+  local section
+
+  section="$(section_between_headings "$start_heading" "$end_heading" "$path")"
+  [[ "$section" == *"$literal"* ]] || fail "missing $label between ${start_heading} and ${end_heading} in ${path#"$ROOT_DIR/"}"
+}
+
+assert_section_not_literal() {
+  local label="$1"
+  local start_heading="$2"
+  local end_heading="$3"
+  local literal="$4"
+  local path="$5"
+  local section
+
+  section="$(section_between_headings "$start_heading" "$end_heading" "$path")"
+  [[ "$section" != *"$literal"* ]] || fail "unexpected $label between ${start_heading} and ${end_heading} in ${path#"$ROOT_DIR/"}"
+}
+
 assert_file "$SKILL"
 assert_literal \
   "description" \
@@ -72,6 +108,36 @@ assert_match "mode boundary" 'support both `portfolio planning` and `direct inta
 assert_match "planning scope confirmation stage" 'Planning Inputs And Scope Confirmation' "$SKILL"
 assert_match "planning proposal stage" 'Planning Structure Proposal' "$SKILL"
 assert_match "planning confirmation stage" 'Planning Result Confirmation' "$SKILL"
+assert_section_literal \
+  "portfolio planning stage branch" \
+  "### Portfolio Planning Stage Sequence" \
+  "### Direct Intake Stage Sequence" \
+  "Planning Inputs And Scope Confirmation -> Planning Structure Proposal -> Planning Result Confirmation" \
+  "$SKILL"
+assert_section_literal \
+  "direct intake stage branch" \
+  "### Direct Intake Stage Sequence" \
+  "## Confirmation Gate Presentation" \
+  "Necessary Clarification (not a formal confirmation gate) -> Direct Intake Proposal -> Direct Intake Result Confirmation" \
+  "$SKILL"
+assert_section_not_literal \
+  "direct intake inherited planning input gate" \
+  "### Direct Intake Stage Sequence" \
+  "## Confirmation Gate Presentation" \
+  "Planning Inputs And Scope Confirmation" \
+  "$SKILL"
+assert_section_literal \
+  "direct intake result atomic unit" \
+  "### Direct Intake Confirmation Gates" \
+  "## Story Map Contract" \
+  "card and its necessary Backlog references as one atomic unit" \
+  "$SKILL"
+assert_section_literal \
+  "direct intake named subset atomic unit" \
+  "### Direct Intake Confirmation Gates" \
+  "## Story Map Contract" \
+  '`confirm only the named subset` must not create an orphaned card or orphaned Backlog row' \
+  "$SKILL"
 
 assert_literal \
   "target repository output language config" \
