@@ -48,6 +48,103 @@ assert_order() {
     fail "expected $label in order in ${path#"$ROOT_DIR/"} (before=${before_line:-missing}, after=${after_line:-missing})"
 }
 
+assert_equal() {
+  local label="$1"
+  local expected="$2"
+  local actual="$3"
+
+  [[ "$expected" == "$actual" ]] ||
+    fail "$label (expected=$expected, actual=$actual)"
+}
+
+assert_fixture_match() {
+  local label="$1"
+  local pattern="$2"
+  local value="$3"
+
+  [[ "$value" =~ $pattern ]] ||
+    fail "$label (pattern=$pattern, actual=$value)"
+}
+
+assert_primary_checkout_claim_baseline_fixture() {
+  local fixture_dir primary_dir worktree_dir card_path backlog_path main_card task_card
+  local main_commit task_commit worktree_head worktree_card
+
+  fixture_dir="$(mktemp -d)"
+  primary_dir="$fixture_dir/primary"
+  worktree_dir="$fixture_dir/task-worktree"
+  card_path="docs/cards/T-001.md"
+  backlog_path="docs/backlog.md"
+  # RETURN traps can be bypassed by fail's exit or errexit. Capture this
+  # fixture's resolved path in an EXIT trap so every shell termination cleans it.
+  trap "rm -rf -- $(printf '%q' "$fixture_dir")" EXIT
+
+  git -C "$fixture_dir" init --initial-branch=main primary >/dev/null
+  git -C "$primary_dir" config user.email 'contract@example.test'
+  git -C "$primary_dir" config user.name 'Workflow Contract'
+  mkdir -p "$primary_dir/docs/cards"
+  printf 'Status: Draft\n' >"$primary_dir/$card_path"
+  printf '| T-001 | Draft | pending |\n' >"$primary_dir/$backlog_path"
+  git -C "$primary_dir" add "$card_path" "$backlog_path"
+  git -C "$primary_dir" commit -m 'test: seed pending work item' >/dev/null
+
+  # This reproduces the rejected baseline: the claim is still uncommitted when
+  # the task branch is created, so committing it there leaves main unchanged.
+  printf 'Status: In Progress\n' >"$primary_dir/$card_path"
+  printf '| T-001 | In Progress | claimed |\n' >"$primary_dir/$backlog_path"
+  git -C "$primary_dir" switch -c task-from-uncommitted-claim >/dev/null
+  git -C "$primary_dir" add "$card_path" "$backlog_path"
+  git -C "$primary_dir" commit -m 'test: claim only on task branch' >/dev/null
+  main_card="$(git -C "$primary_dir" show "main:$card_path")"
+  assert_fixture_match "uncommitted claim must leave main card Draft" 'Status: Draft' "$main_card"
+  main_card="$(git -C "$primary_dir" show "main:$backlog_path")"
+  assert_fixture_match "uncommitted claim must leave main Backlog pending" 'Draft.*pending' "$main_card"
+  main_commit="$(git -C "$primary_dir" rev-parse main)"
+  task_commit="$(git -C "$primary_dir" rev-parse task-from-uncommitted-claim)"
+  [[ "$main_commit" != "$task_commit" ]] ||
+    fail "uncommitted claim task branch must not share main's branch pointer"
+
+  # The accepted baseline persists the atomic claim on the primary checkout
+  # before creating the task branch, making both branches share that commit.
+  git -C "$primary_dir" switch main >/dev/null
+  printf 'Status: In Progress\n' >"$primary_dir/$card_path"
+  printf '| T-001 | In Progress | claimed |\n' >"$primary_dir/$backlog_path"
+  git -C "$primary_dir" add "$card_path" "$backlog_path"
+  git -C "$primary_dir" commit -m 'test: persist claim on primary checkout' >/dev/null
+  main_commit="$(git -C "$primary_dir" rev-parse main)"
+
+  # The enabled path must create a real linked worktree directly from the
+  # persisted main claim commit, not merely a dedicated branch.
+  git -C "$primary_dir" worktree add -b task-worktree "$worktree_dir" "$main_commit" >/dev/null
+  worktree_head="$(git -C "$worktree_dir" rev-parse HEAD)"
+  assert_equal "persisted claim worktree must share main's branch pointer" "$main_commit" "$worktree_head"
+  worktree_card="$(git -C "$worktree_dir" show "HEAD:$card_path")"
+  main_card="$(git -C "$primary_dir" show "main:$card_path")"
+  assert_equal "persisted claim card content must match on main and worktree" "$main_card" "$worktree_card"
+  worktree_card="$(git -C "$worktree_dir" show "HEAD:$backlog_path")"
+  main_card="$(git -C "$primary_dir" show "main:$backlog_path")"
+  assert_equal "persisted claim Backlog content must match on main and worktree" "$main_card" "$worktree_card"
+
+  # The disabled path keeps its dedicated branch baseline assertion.
+  git -C "$primary_dir" switch -c task-from-primary-claim >/dev/null
+  main_commit="$(git -C "$primary_dir" rev-parse main)"
+  task_commit="$(git -C "$primary_dir" rev-parse task-from-primary-claim)"
+  assert_equal "persisted claim task branch must share main's branch pointer" "$main_commit" "$task_commit"
+  main_card="$(git -C "$primary_dir" show "main:$card_path")"
+  task_card="$(git -C "$primary_dir" show "task-from-primary-claim:$card_path")"
+  assert_fixture_match "persisted main card must be In Progress" 'Status: In Progress' "$main_card"
+  assert_equal "persisted claim card content must match on main and task branch" "$main_card" "$task_card"
+  main_card="$(git -C "$primary_dir" show "main:$backlog_path")"
+  task_card="$(git -C "$primary_dir" show "task-from-primary-claim:$backlog_path")"
+  assert_fixture_match "persisted main Backlog must be In Progress" 'In Progress.*claimed' "$main_card"
+  assert_equal "persisted claim Backlog content must match on main and task branch" "$main_card" "$task_card"
+
+  git -C "$primary_dir" worktree remove --force "$worktree_dir"
+  trap - EXIT
+  rm -rf "$fixture_dir"
+  printf 'B-015 primary-checkout claim baseline fixture passed.\n'
+}
+
 assert_match "entry work-item claiming section" '^## Work Item Intake And Claiming$' "$ENTRY_SKILL"
 assert_match "implementation-only claim trigger" 'claim.*only.*explicit.*implementation|explicit.*implementation.*claim' "$ENTRY_SKILL"
 assert_match "pending order authority" '`待处理`.*sole authoritative|sole authoritative.*`待处理`' "$ENTRY_SKILL"
@@ -65,6 +162,34 @@ assert_match "enabled worktree handoff" \
   'worktree\.enabled: true.*immediately.*create or verify.*worktree' "$ENTRY_SKILL"
 assert_match "disabled branch handoff" \
   'worktree\.enabled: false.*immediately.*prepare.*dedicated.*branch.*must not.*create.*worktree' "$ENTRY_SKILL"
+assert_match "authoritative base ref resolved before claim" \
+  'resolve and verify.*authoritative base branch/ref.*do not infer.*primary checkout directory' "$ENTRY_SKILL"
+assert_match "claim commit advances authoritative base ref before workspace" \
+  '(?i)before either task workspace.*claim commit.*advances.*authoritative base ref' "$ENTRY_SKILL"
+assert_not_match "work-item-specific Version 4 policy" \
+  'For B-015.*Version `4`|B-015.*Version `4`' "$ENTRY_SKILL"
+
+assert_primary_checkout_claim_baseline_fixture
+
+# Both workspace configuration paths must name the same persisted primary-checkout
+# claim baseline. Keeping these assertions branch-specific prevents a true-only
+# repair from accidentally satisfying the false path.
+assert_match "enabled worktree path primary checkout claim write target" \
+  'worktree\.enabled: true.*primary.*checkout.*claim.*write' "$ENTRY_SKILL"
+assert_match "enabled worktree path claim persists before worktree creation" \
+  'worktree\.enabled: true.*claim.*persist.*commit.*worktree' "$ENTRY_SKILL"
+assert_match "enabled worktree path worktree starts from persisted claim commit" \
+  'worktree\.enabled: true.*worktree.*from.*claim.*commit' "$ENTRY_SKILL"
+assert_match "enabled worktree path failure blocks workspace and routing" \
+  'worktree\.enabled: true.*failure of.*claim persistence.*do not.*worktree.*do not route' "$ENTRY_SKILL"
+assert_match "disabled branch path primary checkout claim write target" \
+  'worktree\.enabled: false.*primary.*checkout.*claim.*write' "$ENTRY_SKILL"
+assert_match "disabled branch path claim persists before branch creation" \
+  'worktree\.enabled: false.*claim.*persist.*commit.*dedicated.*branch' "$ENTRY_SKILL"
+assert_match "disabled branch path branch starts from persisted claim commit" \
+  'worktree\.enabled: false.*dedicated.*branch.*from.*claim.*commit' "$ENTRY_SKILL"
+assert_match "disabled branch path failure blocks workspace and routing" \
+  'worktree\.enabled: false.*failure of.*claim persistence.*do not.*branch.*do not route' "$ENTRY_SKILL"
 assert_order "claim -> workspace preparation -> downstream routing" \
   'claim it by atomically' \
   'workspace preparation.*complete.*before.*route.*downstream' \
