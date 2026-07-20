@@ -9,6 +9,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `3` | `Draft` | `P0` |
 | `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `4` | `Ready` | `P1` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Ready` | `P2` |
 | `S-020` | [实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) | `3` | `Draft` | `P2` |
@@ -19,7 +20,6 @@
 | `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Draft` | `P1` |
 | `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) | `1` | `Blocked` | `P1` |
 | `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
-| `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `3` | `Draft` | `P0` |
 | `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `2` | `Draft` | `P1` |
 
 ## 已完成
@@ -131,7 +131,7 @@
 | [B-013](bugs/B-013-story-ready-feature-reference-required.md) | - | - |
 | [B-014](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | - | - |
 | [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
-| [S-025](stories/S-025-bug-red-green-evidence.md) | - | - |
+| [S-025](stories/S-025-bug-red-green-evidence.md) | [S-024](stories/S-024-bug-diagnosis-gate.md) | - |
 | [B-006](bugs/B-006-delivery-record-evidence-completeness.md) | - | - |
 | [S-026](stories/S-026-refactor-baseline-identity.md) | - | - |
 | [S-027](stories/S-027-refactor-migration-start-contract.md) | - | - |
@@ -152,7 +152,7 @@
 
 ## Ordering Version
 
-`10`
+`8`
 
 ## Ordering Change Log
 
@@ -164,7 +164,5 @@
 | 4 | 2026-07-19T12:54:45+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `S-042` 插入 `B-010` 之后、`S-029` 之前，并保留 `B-012`、`B-011`、`B-010` 的既有前三项顺序。 | 用户确认优先登记能够缓解所有 workflow 主会话上下文压力的全流程子代理委派能力，同时不覆盖此前确认的三个前置工作项。 |
 | 5 | 2026-07-19T13:02:09+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-013` 插入 `B-010` 之后、`S-042` 之前，并记录 B-013 阻止 S-042 进入 Ready 的依赖关系。 | 用户确认 Story 不必须关联 Feature；当前错误门禁需要先修复，S-042 才能按定义完整性重新分析 Ready。 |
 | 6 | 2026-07-19T13:08:29+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-014` 插入 `B-013` 之后、`S-042` 之前，并保留其他待处理项的相对顺序。 | 用户确认单项建卡不应重复执行输入范围确认和完整结果确认，相关交互问题应在 S-042 之前进入待处理。 |
-| 7 | 2026-07-19T16:22:40+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `B-012`、`B-010`、`B-014` 从 `进行中` 移入 `已完成`，并保持本批次顺序。 | 三个 Bug 已完成业务验收和本地集成；对应卡片状态同步为 `Done`。 |
-| 8 | 2026-07-19T16:43:14+0800 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-015` 插入 `B-011` 之后、`B-013` 之前，并保留其他待处理项的相对顺序。 | 当前 B-011 的实施表明领取状态仅存在于任务分支；B-015 记录主分支领取持久化缺口，应紧随同一入口问题。 |
-| 9 | 2026-07-19T18:57:45+0800 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `B-011` 从 `进行中` 移入 `已完成`，并保持待处理项的相对顺序。 | B-011 已完成业务验收、本地集成和合并后回归验证；对应卡片状态同步为 `Done`。 |
-| 10 | 2026-07-20T17:52:10+0800 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `S-029` 从 `进行中` 移入 `已完成`。 | S-029 已完成 Business Acceptance、本地集成和合并后完整验证；对应卡片状态同步为 `Done`。 |
+| 7 | 2026-07-19T16:43:14+0800 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-015` 插入 `B-011` 之后、`B-013` 之前，并保留其他待处理项的相对顺序。 | 当前 B-011 的实施表明领取状态仅存在于任务分支；B-015 记录主分支领取持久化缺口，应紧随同一入口问题。 |
+| 8 | 2026-07-20T18:10:59+0800 | Raymond Liao <raymond-liao@outlook.com> | 取消 `S-030` 保持在 `T-002` 之后的排序例外，将 `S-030` 移至 `待处理` 首位，并保持其余待处理项相对顺序。 | 用户确认 worktree 目前使用频繁，需要优先处理其清理安全与证据风险。 |
