@@ -143,6 +143,7 @@
 
 ## 阶段决定
 
-- Status: 🔄 `in_progress`
-- Recommendation: 方案 D，feature-dev 专属恢复校验脚本与契约测试。
-- Decision: ❓ Decision Pending，等待用户确认；在确认前不写 Implementation Plan 或 workflow 代码。
+- Status: ✅ `confirmed`
+- Selected Solution: 方案 D，feature-dev 专属恢复校验脚本与契约测试。
+- User Confirmation: 用户于 `2026-07-20T17:18:43+0800` 选择“确认当前版本并进入 Implementation Plan”。
+- 下一阶段：Implementation Plan；在用户确认计划前不修改 workflow 源文件或测试。

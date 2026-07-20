@@ -9,7 +9,7 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Technical Solution
+- Current Stage: Implementation Plan
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -17,8 +17,8 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-029 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T17:08:18+0800` | `31fbd6c` | 用户确认当前范围与验收条件；Technical Solution 可以开始。 |
-| Technical Solution | 🔄 `in_progress` | [S-029 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/02-technical-solution.md` | `pending` | `9c5f565` | 已形成可审阅的技术方案，阶段 checkpoint 已验证，等待用户确认。 |
-| Implementation Plan | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Technical Solution 确认后开始。 |
+| Technical Solution | ✅ `confirmed` | [S-029 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/02-technical-solution.md` | `confirmed: user selected option 1 at 2026-07-20T17:18:43+0800` | `9c5f565` | 用户确认方案 D；Implementation Plan 可以开始。 |
+| Implementation Plan | 🔄 `in_progress` | pending | `pending` | `pending` | 正在编写可审阅的 TDD 实施计划。 |
 | Development Implementation | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Implementation Plan 确认后开始。 |
 | System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
 | Business Acceptance | ⏳ `pending` | pending | `pending` | `pending` | 仅在系统测试达到 `ready` 或 `ready_with_risk` 后开始。 |
