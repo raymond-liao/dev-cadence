@@ -18,7 +18,7 @@
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T21:04:26+0800` | `2aa3e65` | 用户确认的业务内容未变；checkpoint 包含符合恢复契约的直接输入身份，Technical Solution 可以继续。 |
 | Technical Solution | ✅ `confirmed` | [S-030 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/02-technical-solution.md` | `confirmed: user selected option 1 at 2026-07-20T21:37:43+0800` | `d8c3beb` | 用户确认方案 C，并授权限定的 vendored finishing 修改进入实施计划。 |
-| Implementation Plan | 🔄 `in_progress` | [S-030 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/03-implementation-plan.md` | `pending` | `pending` | TDD 计划已形成并等待用户确认；确认前不开始实现。 |
+| Implementation Plan | 🔄 `in_progress` | [S-030 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/03-implementation-plan.md` | `pending` | `8277589` | TDD 计划已形成并等待用户确认；确认前不开始实现。 |
 | Development Implementation | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Implementation Plan 确认后开始。 |
 | System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
 | Business Acceptance | ⏳ `pending` | pending | `pending` | `pending` | 仅在系统测试达到 `ready` 或 `ready_with_risk` 后开始。 |
@@ -61,7 +61,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety`
 - Task Branch: `codex/s-030-worktree-cleanup-safety`
 - Base Branch: `main`
-- Expected HEAD SHA: `d8c3beb96313d05d6aa8c76f323c9049430ff96d`
+- Expected HEAD SHA: `8277589ef3a9a85ebfcbb905147eb9003f4549dc`
 - Expected Base SHA: `c340758c5ffa6dd6673c0667e094c64e6155f774`
 - Owned Commit Range: `c340758c5ffa6dd6673c0667e094c64e6155f774..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/**`; implementation paths pending Technical Solution confirmation.
