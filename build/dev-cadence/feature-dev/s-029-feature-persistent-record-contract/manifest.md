@@ -9,7 +9,7 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Development Implementation
+- Current Stage: System Testing
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -19,8 +19,8 @@
 | Requirements Confirmation | ✅ `confirmed` | [S-029 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T17:08:18+0800` | `31fbd6c` | 用户确认当前范围与验收条件；Technical Solution 可以开始。 |
 | Technical Solution | ✅ `confirmed` | [S-029 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/02-technical-solution.md` | `confirmed: user selected option 1 at 2026-07-20T17:18:43+0800` | `9c5f565` | 用户确认方案 D；Implementation Plan 可以开始。 |
 | Implementation Plan | ✅ `confirmed` | [S-029 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/03-implementation-plan.md` | `confirmed: user selected option 1 at 2026-07-20T17:35:04+0800` | `ecbe344` | 用户确认 TDD 实施计划；Development Implementation 可以开始。 |
-| Development Implementation | 🔄 `in_progress` | pending | `not_required` | `pending` | 按已确认计划执行实现、测试和代码审查。 |
-| System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
+| Development Implementation | ✅ `confirmed` | [S-029 实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/04-implementation-record.md` | `not_required` | `24856fc` | 已完成 TDD、代码审查和实现范围记录；System Testing 可以开始。 |
+| System Testing | 🔄 `in_progress` | pending | `not_required` | `pending` | 正在依据已确认需求、方案和实现证据执行系统验证。 |
 | Business Acceptance | ⏳ `pending` | pending | `pending` | `pending` | 仅在系统测试达到 `ready` 或 `ready_with_risk` 后开始。 |
 
 ## Work Item Identity
@@ -46,18 +46,18 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract`
 - Task Branch: `codex/s029-feature-persistent-record-contract`
 - Base Branch: `main`
-- Expected HEAD SHA: `9c5f565`
+- Expected HEAD SHA: `24856fc`
 - Expected Base SHA: `e31db56b88aabdf6854bbc8454101d24e01a852a`
 - Owned Commit Range: `e31db56b88aabdf6854bbc8454101d24e01a852a..HEAD`
-- Owned Tracked Paths: `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/01-requirements.md`, `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/02-technical-solution.md`, `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/manifest.md`
+- Owned Tracked Paths: `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/**`, `src/workflows/feature-dev/SKILL.md`, `src/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh`, `tests/feature-persistent-record-recovery-contract.sh`, `tests/run-all.sh`, `tests/package-contract.sh`, `tests/install-contract.sh`, `version`
 - Owned Untracked Paths: `None`
 - Workspace Path: `.worktrees/codex/s029-feature-persistent-record-contract`
 - Worktree Created By This Run: `yes`
 
 ## Verification Summary
 
-- ⏳ `pending`: System Testing has not started.
+- 🔄 `in_progress`: Development Implementation is complete; System Testing is running.
 
 ## Residual Risks
 
-- ⚠️ Requirements are derived from S-029 Version 4 and await user confirmation; no implementation has started.
+- ⚠️ 无功能性残余风险；实现提交的事前审查身份未捕获，已在实施记录中透明记录为回溯审查。
