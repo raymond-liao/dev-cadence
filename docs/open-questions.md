@@ -9,7 +9,6 @@
 | [Q-003](#q-003) | Open | 失效时实际读取的是目标仓库配置、源仓库配置还是默认值？ | [B-004 输出语言配置一致性](bugs/B-004-output-language-configuration-not-consistently-applied.md) |
 | [Q-004](#q-004) | Open | worktree 和会话恢复是否改变了配置查找根目录？ | [B-004 输出语言配置一致性](bugs/B-004-output-language-configuration-not-consistently-applied.md) |
 | [Q-006](#q-006) | Open | 是否需要在后续 Story 中为连续失败设置统一最大恢复轮次，还是由各 workflow 根据风险和失败类型决定？ | [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md) |
-| [Q-009](#q-009) | Open | tracked working-tree 差异使用 patch hash 还是其他稳定身份表达？ | [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) |
 | [Q-010](#q-010) | Open | 不同阶段的风险 ID 是否共享统一命名空间？ | [S-020 实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) |
 | [Q-011](#q-011) | Open | manifest 使用 `not_a_bug` 还是更通用的关闭状态？ | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) |
 | [Q-013](#q-013) | Open | 哪些替代因果证据足以在无法完全复现时通过门禁？ | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) |
@@ -23,6 +22,7 @@
 | [Q-005](#q-005) | Resolved | 并行视图最终采用“当前可并行推进表”还是保留原名称，并将入口资格作为独立列展示？ | [B-007 当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) |
 | [Q-007](#q-007) | Resolved | 已关闭列表如何在保持五列表格的同时呈现历史合并事件的来源卡片、目标卡片和合并原因？ | [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md) |
 | [Q-008](#q-008) | Resolved | `rejected` 应返回返工阶段还是进入独立关闭终态，是否需要按原因区分？ | [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) |
+| [Q-009](#q-009) | Resolved | tracked working-tree 差异使用 patch hash 还是其他稳定身份表达？ | [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) |
 | [Q-012](#q-012) | Resolved | 哪些失败类别允许进入 manual recovery，哪些必须继续阻塞？ | [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) |
 | [Q-020](#q-020) | Superseded | 发布、部署、生产验证和事故处置应拆成几个 workflow？ | [S-034 发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) |
 | [Q-021](#q-021) | Superseded | 首个实施切片应优先覆盖哪类交付环境？ | [S-034 发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) |
