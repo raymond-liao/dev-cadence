@@ -17,6 +17,15 @@ assert_literal() {
     fail "missing $label in ${ENTRY_SKILL#"$ROOT_DIR/"}"
 }
 
+assert_literal_in() {
+  local label="$1"
+  local literal="$2"
+  local path="$3"
+
+  rg --no-ignore -F -n -- "$literal" "$path" >/dev/null ||
+    fail "missing $label in ${path#"$ROOT_DIR/"}"
+}
+
 assert_match() {
   local label="$1"
   local pattern="$2"
@@ -39,6 +48,25 @@ assert_literal "two-stage routing section" "## Two-Stage Routing Decision"
 assert_match "candidate discovery stage" 'Stage 1.*candidate|candidate.*read.*skill'
 assert_match "selection stage" 'Stage 2.*select|select.*clarify.*handle.*normally'
 assert_match "one-percent is not automatic selection" '1%.*does not.*automatically|does not.*automatically.*workflow'
+
+assert_literal "primary delegation heading" "## Primary Execution Delegation"
+assert_literal "dispatch before workflow loading" "Before reading a candidate workflow skill or exploring the repository, the user-facing main session must delegate the complete Dev Cadence request when the platform supports internal subagents."
+assert_literal "primary role" "A primary execution subagent is explicitly designated in the dispatch brief to execute the complete Dev Cadence request."
+assert_literal "ordinary role boundary" "An ordinary subtask agent must execute only its bounded brief; it must not select or restore a Dev Cadence workflow or recursively delegate the complete request."
+assert_literal "continuous coverage" "The primary execution subagent must continuously perform all non-interactive work for every installed Dev Cadence workflow."
+assert_literal "return conditions" "Return control to the main session only for a user decision, a blocker that requires user-provided information, or task completion."
+assert_literal "return shape" "Return only the current conclusion, complete user options, the effect of each option, risks, and repository-relative evidence paths."
+assert_literal "asset draft boundary" "An Asset Workflow may keep an unconfirmed draft only in a system temporary or cache location clearly marked non-authoritative; do not modify the authoritative asset before its existing user confirmation."
+assert_literal "Git authorization boundary" "Existing explicit user authorization remains required for merge, PR, push, discard, and branch deletion."
+assert_literal "response recovery" "Return a user response to the original primary execution subagent when it remains available; otherwise designate a new primary execution subagent and restore from the existing file evidence."
+assert_literal "capability fallback" "When the platform does not support internal subagents, the main session must execute the existing workflow directly."
+
+for skill in discovery architecture-design; do
+  assert_literal_in \
+    "ordinary-subtask guard in $skill" \
+    "If you are an ordinary subtask agent and are not explicitly designated as the primary execution subagent for the complete Dev Cadence request, do not execute this workflow." \
+    "$ROOT_DIR/src/skills/$skill/SKILL.md"
+done
 
 for category in \
   'Initial Discovery' \
