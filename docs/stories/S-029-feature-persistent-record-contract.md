@@ -4,7 +4,7 @@
 
 - ID：`S-029`
 - Version：`4`
-- Status：`Ready`
+- Status：`In Progress`
 - Priority：`P3`
 - Change Type：Feature
 
@@ -81,3 +81,4 @@
 | 2 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 收敛为现有 Feature 持久化记录的字段契约与恢复验证。 | 当前 workflow 已具备独立记录模型，剩余缺口是可恢复字段和契约测试，而不是重建记录体系。 |
 | 3 | 2026-07-20T15:29:02+0800 | Raymond Liao <raymond-liao@outlook.com> | 明确恢复角色、场景、最小字段、恢复顺序、缺失字段阻断和记录职责边界，并将 Story 标记为 `Ready`。 | 用户确认完成 S-029 的工作项分析；定义已满足进入 feature-dev 前的 Ready 门禁。 |
 | 4 | 2026-07-20T16:17:30+0800 | Raymond Liao <raymond-liao@outlook.com> | 明确已确认阶段的记录身份、连续阶段恢复、正常缺少后续记录与异常失效的边界，并补全新鲜度和 fixture 验收条件。 | 用户确认以 manifest 保存阶段记录路径与 SHA-256、requirements 和 solution 分别持有需求及方案内容的恢复契约；定义已满足进入 feature-dev 前的 Ready 门禁。 |
+| 4 | 2026-07-20T16:38:17+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 Story 状态更新为 `In Progress`。 | 用户明确请求开始实施；S-029 已是用户确认的 `Ready` Story。 |
