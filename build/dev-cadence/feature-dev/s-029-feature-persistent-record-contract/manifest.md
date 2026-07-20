@@ -21,7 +21,7 @@
 | Implementation Plan | ✅ `confirmed` | [S-029 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/03-implementation-plan.md` | `confirmed: user selected option 1 at 2026-07-20T17:35:04+0800` | `ecbe344` | 用户确认 TDD 实施计划；Development Implementation 可以开始。 |
 | Development Implementation | ✅ `confirmed` | [S-029 实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/04-implementation-record.md` | `not_required` | `24856fc` | 已完成 TDD、代码审查和实现范围记录；System Testing 可以开始。 |
 | System Testing | ✅ `confirmed` | [S-029 系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/05-system-test-report.md` | `not_required` | `f3a6759` | `Verification Decision: ready`；Business Acceptance 可以开始。 |
-| Business Acceptance | ✅ `confirmed` | [S-029 业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/06-business-acceptance-record.md` | `accepted: user selected option 1 (Accept) at 2026-07-20T17:52:10+0800` | `pending` | 用户接受系统测试结论；Completion 已获授权进行本地集成。 |
+| Business Acceptance | ✅ `confirmed` | [S-029 业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/06-business-acceptance-record.md` | `accepted: user selected option 1 (Accept) at 2026-07-20T17:52:10+0800` | `1f5028d` | 用户接受系统测试结论；验收 checkpoint 已验证，Completion 已获授权进行本地集成。 |
 
 ## Work Item Identity
 
@@ -46,7 +46,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract`
 - Task Branch: `codex/s029-feature-persistent-record-contract`
 - Base Branch: `main`
-- Expected HEAD SHA: `02fe41a`
+- Expected HEAD SHA: `1f5028d`
 - Expected Base SHA: `e31db56b88aabdf6854bbc8454101d24e01a852a`
 - Owned Commit Range: `e31db56b88aabdf6854bbc8454101d24e01a852a..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/**`, `src/workflows/feature-dev/SKILL.md`, `src/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh`, `tests/feature-persistent-record-recovery-contract.sh`, `tests/run-all.sh`, `tests/package-contract.sh`, `tests/install-contract.sh`, `version`
