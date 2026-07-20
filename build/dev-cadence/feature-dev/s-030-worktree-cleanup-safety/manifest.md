@@ -23,6 +23,12 @@
 | System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
 | Business Acceptance | ⏳ `pending` | pending | `pending` | `pending` | 仅在系统测试达到 `ready` 或 `ready_with_risk` 后开始。 |
 
+## Confirmed Stage Record Identities
+
+| Stage | Record Path | SHA-256 |
+| --- | --- | --- |
+| Requirements Confirmation | `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `da3c678f19569ed2fd2f5c489ad4e03d343cd625157afb1e5601794ae7874791` |
+
 ## Work Item Identity
 
 - Card: [S-030 Worktree 清理安全与证据](../../../../docs/stories/S-030-worktree-ownership-detection.md) (`docs/stories/S-030-worktree-ownership-detection.md`)
@@ -54,7 +60,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety`
 - Task Branch: `codex/s-030-worktree-cleanup-safety`
 - Base Branch: `main`
-- Expected HEAD SHA: `1dd0534635789e2f5b898ed2ae8ec623c5fbf9c8`
+- Expected HEAD SHA: `4b75a4e63eae7a2b386f6f9aa40373c6ff92b3ff`
 - Expected Base SHA: `c340758c5ffa6dd6673c0667e094c64e6155f774`
 - Owned Commit Range: `c340758c5ffa6dd6673c0667e094c64e6155f774..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/**`; implementation paths pending Technical Solution confirmation.
