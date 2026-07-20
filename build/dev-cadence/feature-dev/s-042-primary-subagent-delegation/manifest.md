@@ -5,7 +5,7 @@
 - Repository：`dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Branch：`codex/feature-s042-primary-subagent-delegation`
 - Started At：`2026-07-20T09:31:54+08:00`
-- Current Stage：🔄 `in_progress` - Development Implementation
+- Current Stage：🔄 `in_progress` - System Testing
 - Overall Status：🔄 `in_progress`
 - Output Language：`zh-CN`
 - Configuration Source：`target repository root/.dev-cadence.yaml`
@@ -26,17 +26,17 @@
 | Requirements Confirmation | ✅ `confirmed` | [Requirements record](01-requirements.md) (`build/dev-cadence/feature-dev/s-042-primary-subagent-delegation/01-requirements.md`) | `2026-07-20T09:41:17+08:00`，用户确认当前版本并进入 Technical Solution | `skipped: no tracked changes` | 用户确认 S-042 的范围、非范围、验收标准和风险。 |
 | Technical Solution | ✅ `confirmed` | [Technical solution](02-technical-solution.md) (`build/dev-cadence/feature-dev/s-042-primary-subagent-delegation/02-technical-solution.md`) | `2026-07-20T10:04:40+08:00`，用户确认方案 B 并进入 Implementation Plan | `skipped: no tracked changes` | 集中委派协议加角色特定 guard。 |
 | Implementation Plan | ✅ `confirmed` | [Implementation plan](03-implementation-plan.md) (`build/dev-cadence/feature-dev/s-042-primary-subagent-delegation/03-implementation-plan.md`) | `2026-07-20T11:40:05+08:00`，用户确认 dogfood 安装包同步修正 | `skipped: no tracked changes` | `.dev-cadence/` 是 tracked dogfood 包；Task 3 将独立提交和审查六个安装输出。 |
-| Development Implementation | 🔄 `in_progress` | [Implementation record](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-042-primary-subagent-delegation/04-implementation-record.md`) | `not applicable` | `pending` | Task 3 正在同步、审查 tracked dogfood 安装包并完成剩余验证。 |
-| System Testing | ⏳ `pending` | `pending` | `pending` | `pending` | - |
+| Development Implementation | ✅ `confirmed` | [Implementation record](04-implementation-record.md) (`build/dev-cadence/feature-dev/s-042-primary-subagent-delegation/04-implementation-record.md`) | `not applicable` | `110184cd15d1706bb0509afa4c2b19c8e232378e` | 实现、三项任务审查与最终复审完成；checkpoint 树已验证包含实施记录。 |
+| System Testing | 🔄 `in_progress` | [System test report](05-system-test-report.md) (`build/dev-cadence/feature-dev/s-042-primary-subagent-delegation/05-system-test-report.md`) | `not applicable` | `pending` | 已生成测试报告，等待系统测试 checkpoint。 |
 | Business Acceptance | ⏳ `pending` | `pending` | `pending` | `pending` | - |
 
 ## 运行身份与当前运行处置上下文
 
 - Task branch：`codex/feature-s042-primary-subagent-delegation`
 - Base branch：`main`
-- Expected HEAD SHA：`b0a409d34626923784ad3ceea74476f82b4e81f5`
+- Expected HEAD SHA：`110184cd15d1706bb0509afa4c2b19c8e232378e`
 - Expected base SHA：`bf650908ba2a5b60f137f5e2c6ca1b96b6152844`
-- Owned commit range：`bf650908ba2a5b60f137f5e2c6ca1b96b6152844..b0a409d34626923784ad3ceea74476f82b4e81f5`。
+- Owned commit range：`bf650908ba2a5b60f137f5e2c6ca1b96b6152844..110184cd15d1706bb0509afa4c2b19c8e232378e`。
 - Owned tracked and untracked paths：`src/skills/using-dev-cadence/SKILL.md`、`src/skills/discovery/SKILL.md`、`src/skills/architecture-design/SKILL.md`、`tests/routing-contract.sh`、`README.md`、`README.zh-CN.md`、`tests/install-contract.sh`、`version`、六个 tracked `.dev-cadence/` dogfood 安装输出，以及 `build/dev-cadence/feature-dev/s-042-primary-subagent-delegation/` 下的当前运行记录。
 - Workspace path：`.worktrees/s-042-primary-subagent-delegation`
 - Worktree created by this run：`true`
@@ -55,6 +55,7 @@
 - `2026-07-20T10:51:37+08:00`：Task 3 的 build 和当前 worktree 安装成功；发现 `.dev-cadence/` 是仓库跟踪的 dogfood 安装包，产生六项同步变更。原计划将其误列为 untracked，按 workflow 回到 Implementation Plan，待用户确认同步提交与复审步骤。
 - `2026-07-20T11:40:05+08:00`：用户确认 dogfood 安装包同步修正。恢复 Development Implementation；将对六个安装输出创建独立提交并进行 SDD 审查，随后完成同步检查和完整退出套件。
 - `2026-07-20T11:52:23+08:00`：Task 3 的 dogfood 同步提交 `b0a409d` 经独立审查通过。主执行环境完成入口协议 3/3 与普通子任务 guard 6/6 同步匹配；routing、install、whitespace 和 complete contract suite 均通过。最终审查的记录新鲜度 finding 正在复核。
+- `2026-07-20T11:56:00+08:00`：Development Implementation checkpoint `110184c` 已创建；其中包含实施记录与最终代码审查报告。进入 System Testing。
 
 ## 残余风险
 
