@@ -18,7 +18,7 @@
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T21:04:26+0800` | `2aa3e65` | 用户确认的业务内容未变；checkpoint 包含符合恢复契约的直接输入身份，Technical Solution 可以继续。 |
 | Technical Solution | ✅ `confirmed` | [S-030 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/02-technical-solution.md` | `confirmed: user selected option 1 at 2026-07-20T21:37:43+0800` | `d8c3beb` | 用户确认方案 C，并授权限定的 vendored finishing 修改进入实施计划。 |
-| Implementation Plan | ✅ `confirmed` | [S-030 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/03-implementation-plan.md` | `confirmed: user selected option 1 at 2026-07-20T21:50:36+0800` | `skipped: confirmation checkpoint pending binding` | 用户确认 Task 1-4，并选择 Subagent-Driven Development。 |
+| Implementation Plan | ✅ `confirmed` | [S-030 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/03-implementation-plan.md` | `confirmed: user selected option 1 at 2026-07-20T21:50:36+0800` | `0997c87` | 用户确认 Task 1-4，并选择 Subagent-Driven Development。 |
 | Development Implementation | 🔄 `in_progress` | pending | `not_required` | `pending` | Pre-Implementation Design Freshness Gate 已通过；等待任务实现与审查。 |
 | System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
 | Business Acceptance | ⏳ `pending` | pending | `pending` | `pending` | 仅在系统测试达到 `ready` 或 `ready_with_risk` 后开始。 |
@@ -62,7 +62,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety`
 - Task Branch: `codex/s-030-worktree-cleanup-safety`
 - Base Branch: `main`
-- Expected HEAD SHA: `a970e00c8f4a3d7e9d21dad7b255c5178dbb18b9`
+- Expected HEAD SHA: `0997c877dfbd1fcb68ce93416442a0e29791e4f3`
 - Expected Base SHA: `c340758c5ffa6dd6673c0667e094c64e6155f774`
 - Owned Commit Range: `c340758c5ffa6dd6673c0667e094c64e6155f774..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/**`; `src/workflows/using-dev-cadence/SKILL.md`; `src/workflows/feature-dev/SKILL.md`; `src/workflows/bug-fix/SKILL.md`; `src/workflows/refactor/SKILL.md`; `src/vendor/superpowers/skills/finishing-a-development-branch/**`; planned S-030 contract tests; `version`.
