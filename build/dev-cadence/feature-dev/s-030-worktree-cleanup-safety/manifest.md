@@ -16,7 +16,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `pending` | `pending` | 已形成可审阅的需求记录，等待用户确认。 |
+| Requirements Confirmation | 🔄 `in_progress` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `pending` | `396f924` | 已形成可审阅的需求记录，checkpoint tree 已验证包含该记录，等待用户确认。 |
 | Technical Solution | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Requirements Confirmation 确认后开始。 |
 | Implementation Plan | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Technical Solution 确认后开始。 |
 | Development Implementation | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Implementation Plan 确认后开始。 |
@@ -54,7 +54,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety`
 - Task Branch: `codex/s-030-worktree-cleanup-safety`
 - Base Branch: `main`
-- Expected HEAD SHA: `c340758c5ffa6dd6673c0667e094c64e6155f774`
+- Expected HEAD SHA: `396f924f1191634ee7fd99f14b34207e65545021`
 - Expected Base SHA: `c340758c5ffa6dd6673c0667e094c64e6155f774`
 - Owned Commit Range: `c340758c5ffa6dd6673c0667e094c64e6155f774..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/**`; implementation paths pending Technical Solution confirmation.
@@ -75,7 +75,7 @@
 
 ## Verification Summary
 
-- 🔄 `in_progress`: baseline checks passed; Requirements Confirmation is awaiting user decision.
+- 🔄 `in_progress`: baseline checks passed；Requirements checkpoint `396f924` 已验证包含 `01-requirements.md`，当前等待用户决定。
 
 ## Residual Risks
 
