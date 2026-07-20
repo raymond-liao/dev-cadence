@@ -38,10 +38,10 @@ Supported values:
 - `en`: write documents and records in English.
 - `zh-CN`: write documents and records in Simplified Chinese.
 
-Use `worktree.enabled` to set the worktree preference before invoking the vendored `using-git-worktrees` skill:
+Use `worktree.enabled` to select the entry-prepared workspace:
 
-- `true`: create or verify an isolated worktree without asking.
-- `false`: work in the current checkout unless the user explicitly asks for a worktree.
+- `true`: the entry immediately creates or verifies the configured isolated task worktree before routing downstream; Plan verifies and reuses it.
+- `false`: the entry immediately prepares a dedicated task branch without a worktree before routing downstream; Plan verifies and reuses it.
 
 Use `worktree.directory` as the preferred project-local worktree directory when `worktree.enabled` is `true`.
 
@@ -135,7 +135,7 @@ Map it to Dev Cadence like this:
 | --- | --- | --- |
 | Requirements Confirmation | `brainstorming` requirement clarification | Confirmed requirements |
 | Technical Solution | `brainstorming` design/spec work | Technical solution |
-| Implementation Plan | `using-git-worktrees` and `writing-plans` | isolated workspace readiness, TDD implementation plan |
+| Implementation Plan | `using-git-worktrees` and `writing-plans` | entry-prepared workspace verification, TDD implementation plan |
 | Development Implementation | `test-driven-development`, `subagent-driven-development`, `executing-plans`, and `requesting-code-review` | Working deliverable, test assets, implementation notes, code review evidence |
 | System Testing | `verification-before-completion` | System test report |
 | Business Acceptance | Dev Cadence user decision gate | Business acceptance record |
@@ -237,9 +237,9 @@ Every `feature-dev` run must reuse one authoritative Story or Task card and must
 
 `feature-dev` may enter from a `Ready Story` only after the Story definition is user-confirmed. A Task does not require `Ready`, but the first stage must confirm its goal, scope, and completion conditions before code changes. A Bug belongs to `bug-fix` and must not be silently converted into a Feature request.
 
-Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version and Change Log.
+Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version.
 
-At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, delivery result/reference, exact Backlog source and destination sections, and the derived parallel-view projection. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
+At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, delivery result/reference, and exact Backlog source and destination sections. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or delivery result qualifies under `.dev-cadence/skills/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
 ## Active Task Change Handling
 
@@ -373,7 +373,7 @@ Use:
 .dev-cadence/vendor/superpowers/skills/writing-plans/SKILL.md
 ```
 
-Before writing the plan, apply the configured `worktree.enabled` and `worktree.directory`, then use `using-git-worktrees` to create or verify the isolated feature workspace according to the vendored Superpowers rules. When `worktree.enabled` is `true`, treat it as a predeclared user preference to create an isolated worktree and do not ask for worktree consent. When `worktree.enabled` is `false`, skip worktree creation unless the user explicitly asks for it.
+The entry-prepared workspace must be verified and reused at Plan stage; this stage must not first create a task branch or worktree. When `worktree.enabled` is `true`, verify the entry created or verified the configured isolated feature worktree. When `worktree.enabled` is `false`, verify the entry prepared the dedicated feature branch with no worktree.
 
 The plan is only for the next stage, Development Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
 
@@ -629,7 +629,7 @@ Use this `Code Review Evidence` structure in the implementation record:
 ```text
 ## Code Review Evidence
 
-- Report: build/dev-cadence/feature-dev/<feature-slug>/04-code-review-report.md
+- Report: [Code review report](04-code-review-report.md) (`build/dev-cadence/feature-dev/<feature-slug>/04-code-review-report.md`)
 - Review decision:
 - Critical findings:
 - Important findings:

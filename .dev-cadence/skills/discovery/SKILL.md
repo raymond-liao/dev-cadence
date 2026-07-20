@@ -13,6 +13,12 @@ Use this skill to create the first durable product-design baseline or incrementa
 
 Discovery is a product workflow. It clarifies what product should exist and how it operates as a business system. It does not design the technical implementation or deliver application changes.
 
+Before reading, creating, or updating an owned asset Change Log, read and follow:
+
+```text
+.dev-cadence/skills/contracts/change-log.md
+```
+
 Use only vendored Superpowers skills from:
 
 ```text
@@ -205,15 +211,7 @@ docs/product-design/prd.md
 docs/product-design/business-architecture.md
 ```
 
-In initial mode, all three documents start with `Document Information` containing version `1` and `Last Updated`. In incremental mode, preserve each current version and history until a confirmed substantive change requires a new version. Each document contains its own `Change Log`; every row must use the exact `Version | Recorded At | Recorded By | Change | Reason` columns defined below. Do not put Git commit hashes in the product documents.
-
-User Journey, PRD, and Business Architecture must each use this Change Log contract. The columns are exactly:
-
-```text
-Version | Recorded At | Recorded By | Change | Reason
-```
-
-`Recorded At` must be a timezone-aware ISO 8601 timestamp. Read `user.name` and `user.email` from repository-level Git config first, then fall back to global Git config. When an email is available, record `Name <email>`; when only a name is available, record the name. When both the Git username and email are missing, ask the user before writing the Change Log and do not infer an identity. `Recorded By` and `Recorded At` are Change Log fields only; they are not approval metadata or approval time.
+In initial mode, all three documents start with `Document Information` containing version `1` and `Last Updated`. In incremental mode, preserve each current version and history until a confirmed substantive change requires a new version. Each document contains its own `Change Log` and must follow the shared Change Log contract.
 
 User Journey, PRD, and Business Architecture versions are independent. Increment the User Journey only when a confirmed revision changes its business line, boundary, Journey Map, or Feature Definitions. When an input does not affect the User Journey, do not reconfirm, rewrite, or increment the User Journey; derive and confirm only the affected PRD, Business Architecture, and supporting maintenance.
 

@@ -38,10 +38,10 @@ Supported values:
 - `en`: write documents and records in English.
 - `zh-CN`: write documents and records in Simplified Chinese.
 
-Use `worktree.enabled` to set the worktree preference before invoking the vendored `using-git-worktrees` skill:
+Use `worktree.enabled` to select the entry-prepared workspace:
 
-- `true`: create or verify an isolated worktree without asking.
-- `false`: work in the current checkout unless the user explicitly asks for a worktree.
+- `true`: the entry immediately creates or verifies the configured isolated task worktree before routing downstream; Plan verifies and reuses it.
+- `false`: the entry immediately prepares a dedicated task branch without a worktree before routing downstream; Plan verifies and reuses it.
 
 Use `worktree.directory` as the preferred project-local worktree directory when `worktree.enabled` is `true`.
 
@@ -135,7 +135,7 @@ Map it to Dev Cadence like this:
 | --- | --- | --- |
 | Problem Diagnosis | `systematic-debugging` root cause investigation | Problem diagnosis record |
 | Repair Solution | `systematic-debugging` hypothesis and fix boundary | Repair solution and impact scope |
-| Repair Plan | `using-git-worktrees` and `writing-plans` | isolated workspace readiness, TDD repair plan |
+| Repair Plan | `using-git-worktrees` and `writing-plans` | entry-prepared workspace verification, TDD repair plan |
 | Repair Implementation | `test-driven-development`, `subagent-driven-development`, `executing-plans`, and `requesting-code-review` | Working deliverable, supporting test assets, repair notes, code review evidence |
 | Regression Verification | `verification-before-completion` | Regression test report |
 | Business Acceptance | Dev Cadence user decision gate | Business acceptance record |
@@ -221,9 +221,9 @@ Every `bug-fix` run must reuse one authoritative Bug card when one exists; direc
 
 A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known root cause. Diagnosis owns reproduction, root-cause evidence, and the repair boundary. A Feature request or intentional behavior change must route to `feature-dev`, not be hidden inside a Bug Fix.
 
-Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version and Change Log.
+Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version.
 
-At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, exact Backlog source and destination sections, and the derived parallel-view projection. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
+At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, and exact Backlog source and destination sections. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or repair result qualifies under `.dev-cadence/skills/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
 ## Active Task Change Handling
 
@@ -332,7 +332,7 @@ Use:
 .dev-cadence/vendor/superpowers/skills/writing-plans/SKILL.md
 ```
 
-Before writing the plan, apply the configured `worktree.enabled` and `worktree.directory`, then use `using-git-worktrees` to create or verify the isolated repair workspace according to the vendored Superpowers rules. When `worktree.enabled` is `true`, treat it as a predeclared user preference to create an isolated worktree and do not ask for worktree consent. When `worktree.enabled` is `false`, skip worktree creation unless the user explicitly asks for it.
+The entry-prepared workspace must be verified and reused at Plan stage; this stage must not first create a task branch or worktree. When `worktree.enabled` is `true`, verify the entry created or verified the configured isolated repair worktree. When `worktree.enabled` is `false`, verify the entry prepared the dedicated repair branch with no worktree.
 
 The plan is only for the next stage, Repair Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
 
@@ -589,7 +589,7 @@ Use this `Code Review Evidence` structure in the repair record:
 ```text
 ## Code Review Evidence
 
-- Report: build/dev-cadence/bug-fix/<bug-slug>/04-code-review-report.md
+- Report: [Code review report](04-code-review-report.md) (`build/dev-cadence/bug-fix/<bug-slug>/04-code-review-report.md`)
 - Review decision:
 - Critical findings:
 - Important findings:
@@ -772,12 +772,12 @@ For the `merge` path, locate the existing Bug card and its Backlog row by the ca
 After identity and visible-fact checks pass, perform one atomic card and Backlog write:
 
 1. Update the Bug card `Status` to `Done`.
-2. Record the repair result and integration reference on the Bug card, and append a Change Log entry for this execution. An execution-only status or delivery-reference write does not increment the confirmed requirement Version.
-3. Atomically update the Backlog: remove the matching row from the active or pending lifecycle section, add that same row to the completed lifecycle section with status `Done`, and in the current parallel table remove only the matching Bug entry.
+2. Record the repair result and integration reference on the Bug card. When this execution is an important event, append its Change Log event using the current Version; an execution-only status or delivery-reference write does not increment the confirmed requirement Version, and the same execution event must not duplicate the Change Log entry.
+3. Atomically update the Backlog: remove the matching row from the active or pending lifecycle section and add that same row to the completed lifecycle section with status `Done`.
 
-If any card or Backlog write cannot be completed against the re-read facts, perform zero partial writes and stop for a user decision. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; preserve the relative order of the remaining parallel entries and do not recalculate or reorder unrelated work items as part of this write.
+If any card or Backlog write cannot be completed against the re-read facts, perform zero partial writes and stop for a user decision. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; do not recalculate or reorder unrelated work items as part of this write.
 
-The manifest, Business Acceptance record, and follow-up evidence must record the actual sync result, including the matched Bug ID and Version, card status and repair/integration references, the source and destination lifecycle sections, parallel-table removal, or the conflict and no-write outcome. The `merge` write must be idempotent: a repeat after the same visible facts are already synchronized records the existing `Done` state without duplicating the card reference, execution Change Log entry, or Backlog row.
+The manifest, Business Acceptance record, and follow-up evidence must record the actual sync result, including the matched Bug ID and Version, card status and repair/integration references, the source and destination lifecycle sections, or the conflict and no-write outcome. The `merge` write must be idempotent: a repeat after the same visible facts are already synchronized records the existing `Done` state without duplicating the card reference, execution Change Log entry, or Backlog row.
 
 Before marking the run terminal, complete this readiness checklist:
 

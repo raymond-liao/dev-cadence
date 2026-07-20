@@ -68,10 +68,24 @@ assert_match "analysis scope confirmation stage" 'Analysis Scope Confirmation' "
 assert_match "definition analysis stage" 'Work Item Definition Analysis' "$SKILL"
 assert_match "work item confirmation stage" 'Work Item Confirmation' "$SKILL"
 
-assert_match "story fields" 'Story.*role.*goal.*value.*System Feature.*acceptance' "$SKILL"
+assert_literal \
+  "conditional Feature traceability" \
+  'When a Story has a confirmed primary System Feature or Story Map placement, analysis must retain that traceability; an independent Story without a Feature reference may still become `Ready`.' \
+  "$SKILL"
 assert_match "story scope headings" 'included scope|excluded scope|in-scope|out-of-scope' "$SKILL"
 assert_literal "story ready gate" 'Story must reach `Ready` before entering `feature-dev`.' "$SKILL"
-assert_match "story ready conditions" 'goal.*scope.*Feature.*acceptance.*open questions|open questions.*goal.*scope.*Feature.*acceptance' "$SKILL"
+assert_literal \
+  "story ready without Feature" \
+  'Story may become `Ready` only when the role, goal, value, scope, observable behavior, acceptance conditions, direct dependencies, and development-blocking open questions are explicit and the user has confirmed the work-item definition.' \
+  "$SKILL"
+assert_literal \
+  "missing Feature alone does not route Discovery" \
+  'A missing Feature reference or product-design baseline alone must not return Story analysis to `discovery`.' \
+  "$SKILL"
+assert_literal \
+  "Discovery requires product conclusion" \
+  'Return to `discovery` only when the Story requires a new or changed product-level conclusion, including a User Journey, Feature, PRD, or Business Architecture conclusion.' \
+  "$SKILL"
 
 assert_match "task fields" 'Task.*goal.*necessity.*scope.*completion conditions.*impact' "$SKILL"
 assert_literal "task no ready hard gate" 'Task does not need to reach `Ready` before a Delivery Workflow starts.' "$SKILL"
