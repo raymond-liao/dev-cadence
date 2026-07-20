@@ -23,7 +23,7 @@
 | Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | 不需要用户确认 | `3d20340b31541cf54badbfdf085aecc422e9d231` | Task 1-4、完整回归和实施证据已完成；检查点已验证包含 Repair Record。 |
 | Code Review | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-code-review-report.md` | 不需要用户确认 | `3d20340b31541cf54badbfdf085aecc422e9d231` | 完整实现范围审查通过；Critical/Important findings 均为 0。 |
 | Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/05-regression-test-report.md` | 不需要用户确认 | `9a011b8439e1bc880d1d4190924ac7abd962a6c4` | Verification Decision 为 `ready`；所有已执行检查通过。 |
-| Business Acceptance | ⏳ `pending` | pending | ⏳ `pending` | ⏳ `pending` | 尚未开始；完成后写入 `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/06-business-acceptance-record.md`。 |
+| Business Acceptance | ✅ `confirmed` | [B-013 Business Acceptance 记录](06-business-acceptance-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/06-business-acceptance-record.md` | `2026-07-20T09:11:04+0800`，选项 1：Accept | ⏳ `pending` | 用户接受修复；等待验收记录检查点绑定后进入 Completion。 |
 
 ## Work Item Identity And Claim
 
