@@ -39,12 +39,15 @@ Platform support and primary-agent identity remain dispatch-context prerequisite
 
 ## Lifecycle Writeback
 
-- Card status: `In Progress`.
-- Delivery result/reference: `accepted`; [Business acceptance record](06-business-acceptance-record.md).
+- Card status: `Done`.
+- Delivery result/reference: `accepted` and locally integrated by merge commit `26cc1965afe8218af9877326419fca7f9830fa18`; [Business acceptance record](06-business-acceptance-record.md).
 - Backlog source section: `进行中`.
-- Backlog destination section: `进行中`.
-- No Backlog row move occurs until Completion determines an integrated result.
+- Backlog destination section: `已完成`.
+- The S-042 row was atomically moved to `已完成` when Completion recorded the integrated result.
 
 ## Final Follow-Up Actions
 
-Completion decision has not yet been selected.
+- The accepted task branch was locally merged into `main` by merge commit `26cc1965afe8218af9877326419fca7f9830fa18`.
+- Post-merge `bash scripts/check-all.sh` passed.
+- Worktree `.worktrees/s-042-primary-subagent-delegation` was removed and task branch `codex/feature-s042-primary-subagent-delegation` was deleted after the verified merge.
+- No push or pull request was performed.

@@ -4,7 +4,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `In Progress` | `P1` |
 
 ## 待处理
 
@@ -28,6 +27,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `Done` | `P1` |
 | `B-013` | [Story Ready 错误依赖 Feature 关联](bugs/B-013-story-ready-feature-reference-required.md) | `2` | `Done` | `P1` |
 | `B-015` | [工作项领取未在 main 持久化](bugs/B-015-work-item-claim-not-persisted-on-main.md) | `4` | `Done` | `P1` |
 | `B-011` | [领卡后未立即准备配置要求的 worktree](bugs/B-011-worktree-preparation-delayed-after-claim.md) | `1` | `Done` | `P1` |
