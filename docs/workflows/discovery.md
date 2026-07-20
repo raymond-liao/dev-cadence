@@ -2,7 +2,7 @@
 
 本文说明 Dev Cadence 的 `discovery` 业务流程，包括适用场景、阶段目标、主要产出以及与其他 workflow 的边界。本文面向 Dev Cadence 维护者、流程评审者和希望了解产品需求治理模型的使用者。
 
-目标仓库中的实际执行规则由 `src/skills/discovery/SKILL.md` 定义并生成安装内容。本文用于说明业务流程设计，不替代 workflow skill。
+目标仓库中的实际执行规则由 `src/workflows/discovery/SKILL.md` 定义并生成安装内容。本文用于说明业务流程设计，不替代 workflow skill。
 
 ## 目的
 

@@ -2,7 +2,7 @@
 
 本文说明 Dev Cadence 的 `work-item-analysis` 业务流程，包括 Story、Task 和 Bug 的单项或批量分析、用户确认、卡片更新，以及与 Discovery、Work Item Planning 和 Delivery Workflow 的边界。本文面向 Dev Cadence 维护者、流程评审者和希望了解工作项需求治理模型的使用者。
 
-目标仓库中的实际执行规则将由 `src/skills/work-item-analysis/SKILL.md` 定义并生成安装内容。本文用于说明业务流程设计，不替代 workflow skill。
+目标仓库中的实际执行规则将由 `src/workflows/work-item-analysis/SKILL.md` 定义并生成安装内容。本文用于说明业务流程设计，不替代 workflow skill。
 
 ## 目的
 
