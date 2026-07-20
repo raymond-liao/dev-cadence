@@ -4,7 +4,7 @@
 
 - ID：`S-030`
 - Version：`4`
-- Status：`Ready`
+- Status：`In Progress`
 - Priority：`P0`
 - Change Type：Feature
 
@@ -79,3 +79,4 @@
 | 2 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 吸收 S-031 和 S-033，形成 worktree 清理前、中、后的安全与证据闭环。 | 所有权、记录保存和结果记录属于同一次 Completion 清理操作，拆分会产生顺序依赖和重复所有者。 |
 | 3 | 2026-07-19T20:23:56+0800 | Raymond Liao <raymond-liao@outlook.com> | 补全记录集合、稳定位置、完整性验证、恢复信息、统一结果值和清理边界。 | 完整保留 S-031 和 S-033 的删除安全与交付证据契约。 |
 | 4 | 2026-07-20T20:21:54+0800 | Raymond Liao <raymond-liao@outlook.com> | 将范围收敛为删除前的 worktree 所有权验证，并将状态更新为 Ready。 | 用户确认不在任何 Completion 或 discard 路径归档运行记录或持久化清理结果；manifest 创建证据与 Git 身份比对足以界定交付范围。 |
+| 4 | 2026-07-20T20:52:40+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 Story 状态更新为 `In Progress`。 | 用户明确请求开始实施；S-030 已是用户确认的 `Ready` Story。 |
