@@ -30,7 +30,7 @@
 - Card：[B-013 Story Ready 错误依赖 Feature 关联](../../../../docs/bugs/B-013-story-ready-feature-reference-required.md)
 - Work-item type：`Bug`
 - Card Version：`2`
-- Visible Status：`In Progress`
+- Visible Status：`Done`
 - Selected scope：移除 Story `Ready` 的强制主 System Feature 条件，同时保留已有 Feature 的追踪关系与真正产品级结论变化时的 Discovery 路由；不改变 Task、Bug 或 Delivery Workflow 的入口边界。
 - Claim persistence：主 checkout 已在提交 `5cb09c6e1423add910c63b25470f8aa6beff5c70` 原子同步 B-013 卡片与 Backlog 为 `In Progress`；任务 worktree 从该提交创建。
 
@@ -46,6 +46,15 @@
 - Checked at：`2026-07-19T21:53:31+0800`
 - Inputs：B-013 卡片 Version `2`、Status `In Progress`；已确认的诊断、修复方案与修订 Repair Plan；branch `codex/b013-story-ready-feature` at `be9b2e6ec9fbbdb96736a3ac657f3701a98815a9`；base `main` at `5cb09c6e1423add910c63b25470f8aa6beff5c70`。
 - Conclusion：✅ 用户确认将完整受跟踪当前安装包同步纳入 Task 3，随后恢复实现；没有改变诊断、方案或验收边界。
+
+## Final Integration Decision
+
+- Result：`merge`
+- Merge commit：`7ace8023718f39fa26571d719e75f741495d7154`
+- Merge verification：`bash scripts/check-all.sh` 在本地 `main` 合并结果通过。
+- Card and Backlog synchronization：匹配 `B-013` Version `2`；卡片状态已写为 `Done`，Backlog 行已从 `进行中` 移入 `已完成`，未变更待处理项顺序；当前没有 B-013 的并行视图条目需要移除。
+- Push / Pull Request：未执行。
+- Worktree and task branch cleanup：🔄 `in_progress`；将在同步记录提交后完成。
 
 ## Current-Run Discard Context And Ownership Evidence
 
