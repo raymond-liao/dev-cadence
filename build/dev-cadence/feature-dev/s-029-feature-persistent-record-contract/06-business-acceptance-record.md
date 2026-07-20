@@ -36,6 +36,17 @@
 
 None.
 
+## Lifecycle Writeback
+
+- Card status: `Done`.
+- Delivery result/reference: `accepted` and locally integrated by merge commit `09b5ade414a9d7699d598c600b8a5a7f7f1eb649`; [业务验收记录](06-business-acceptance-record.md).
+- Backlog source section: `进行中`.
+- Backlog destination section: `已完成`.
+- S-029 row was atomically moved to `已完成` with the card status transition.
+
 ## Final Follow-Up Actions
 
-Completion 已获授权进行本地集成；本节将在合并和集成后验证完成后写入实际结果。
+- Accepted task branch was locally merged into `main` by merge commit `09b5ade414a9d7699d598c600b8a5a7f7f1eb649`.
+- Post-merge `bash scripts/check-all.sh` passed.
+- Task worktree `.worktrees/codex/s029-feature-persistent-record-contract` and branch `codex/s029-feature-persistent-record-contract` were preserved; no cleanup was performed.
+- No push or pull request was performed.

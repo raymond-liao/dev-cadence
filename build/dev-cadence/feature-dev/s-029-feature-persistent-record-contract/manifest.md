@@ -10,7 +10,7 @@
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
 - Current Stage: Completion
-- Overall Status: ✅ `accepted`
+- Overall Status: ✅ `integrated`
 
 ## Stage Table
 
@@ -28,9 +28,9 @@
 - Card: [S-029 Feature 持久化记录契约](../../../../docs/stories/S-029-feature-persistent-record-contract.md) (`docs/stories/S-029-feature-persistent-record-contract.md`)
 - Work-item Type: `Story`
 - Card Version At Claim: `4`
-- Card Status At Claim: `In Progress`
+- Card Status At Claim: `In Progress`; current status: `Done`
 - Selected Scope: 已确认 Requirements 和 Technical Solution 的最小可恢复字段、manifest 的记录路径与 SHA-256 身份、连续确认阶段恢复、失效回退和可执行契约测试。
-- Backlog Projection: [Backlog](../../../../docs/backlog.md) (`docs/backlog.md`), source `待处理`, destination `进行中`, Version `4`, Status `In Progress`
+- Backlog Projection: [Backlog](../../../../docs/backlog.md) (`docs/backlog.md`), initial source `待处理`, claim destination `进行中`, Completion destination `已完成`, Version `4`, Status `Done`
 - Claim Checkpoint: `e31db56b88aabdf6854bbc8454101d24e01a852a`
 
 ## Baseline
@@ -56,8 +56,18 @@
 
 ## Verification Summary
 
-- ✅ `ready`: 系统测试完成，用户已在 Business Acceptance 选择 `1. Accept`；等待本地集成和集成后验证。
+- ✅ `integrated`: 用户已验收；任务分支已合并到 `main`，合并后 `bash scripts/check-all.sh` 已通过。
 
 ## Residual Risks
 
-- ⚠️ 无功能性残余风险；实现提交的事前审查身份未捕获，已在实施记录中透明记录为回溯审查。Completion 的本地合并和集成后验证尚未完成。
+- ⚠️ 无功能性残余风险；实现提交的事前审查身份未捕获，已在实施记录中透明记录为回溯审查。任务分支和 worktree 按当前授权保留。
+
+## Final Integration Decision
+
+- Integration action: local merge to `main`.
+- Merge commit: `09b5ade414a9d7699d598c600b8a5a7f7f1eb649`.
+- Merged feature SHA: `e5a83235a3b584da83e70701d477ca2ac75d83ab`.
+- Post-merge verification: `bash scripts/check-all.sh` passed.
+- Worktree: `.worktrees/codex/s029-feature-persistent-record-contract` preserved.
+- Task branch: `codex/s029-feature-persistent-record-contract` preserved.
+- Push and Pull Request: not performed.

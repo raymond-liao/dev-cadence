@@ -4,7 +4,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `4` | `In Progress` | `P3` |
 
 ## 待处理
 
@@ -27,6 +26,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `4` | `Done` | `P3` |
 | `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `Done` | `P1` |
 | `B-013` | [Story Ready 错误依赖 Feature 关联](bugs/B-013-story-ready-feature-reference-required.md) | `2` | `Done` | `P1` |
 | `B-015` | [工作项领取未在 main 持久化](bugs/B-015-work-item-claim-not-persisted-on-main.md) | `4` | `Done` | `P1` |
@@ -152,7 +152,7 @@
 
 ## Ordering Version
 
-`8`
+`10`
 
 ## Ordering Change Log
 
@@ -167,3 +167,4 @@
 | 7 | 2026-07-19T16:22:40+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `B-012`、`B-010`、`B-014` 从 `进行中` 移入 `已完成`，并保持本批次顺序。 | 三个 Bug 已完成业务验收和本地集成；对应卡片状态同步为 `Done`。 |
 | 8 | 2026-07-19T16:43:14+0800 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-015` 插入 `B-011` 之后、`B-013` 之前，并保留其他待处理项的相对顺序。 | 当前 B-011 的实施表明领取状态仅存在于任务分支；B-015 记录主分支领取持久化缺口，应紧随同一入口问题。 |
 | 9 | 2026-07-19T18:57:45+0800 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `B-011` 从 `进行中` 移入 `已完成`，并保持待处理项的相对顺序。 | B-011 已完成业务验收、本地集成和合并后回归验证；对应卡片状态同步为 `Done`。 |
+| 10 | 2026-07-20T17:52:10+0800 | Raymond Liao <raymond-liao@outlook.com> | 将已验收并本地合并的 `S-029` 从 `进行中` 移入 `已完成`。 | S-029 已完成 Business Acceptance、本地集成和合并后完整验证；对应卡片状态同步为 `Done`。 |
