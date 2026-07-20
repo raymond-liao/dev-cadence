@@ -16,7 +16,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [S-029 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/01-requirements.md` | `pending` | `pending` | 已形成可审阅的需求记录，等待用户确认。 |
+| Requirements Confirmation | 🔄 `in_progress` | [S-029 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/01-requirements.md` | `pending` | `31fbd6c` | 已形成可审阅的需求记录，阶段 checkpoint 已验证，等待用户确认。 |
 | Technical Solution | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Requirements Confirmation 确认后开始。 |
 | Implementation Plan | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Technical Solution 确认后开始。 |
 | Development Implementation | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Implementation Plan 确认后开始。 |
@@ -46,10 +46,10 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract`
 - Task Branch: `codex/s029-feature-persistent-record-contract`
 - Base Branch: `main`
-- Expected HEAD SHA: `e31db56b88aabdf6854bbc8454101d24e01a852a`
+- Expected HEAD SHA: `31fbd6c`
 - Expected Base SHA: `e31db56b88aabdf6854bbc8454101d24e01a852a`
 - Owned Commit Range: `e31db56b88aabdf6854bbc8454101d24e01a852a..HEAD`
-- Owned Tracked Paths: `pending`
+- Owned Tracked Paths: `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/01-requirements.md`, `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/manifest.md`
 - Owned Untracked Paths: `None`
 - Workspace Path: `.worktrees/codex/s029-feature-persistent-record-contract`
 - Worktree Created By This Run: `yes`
