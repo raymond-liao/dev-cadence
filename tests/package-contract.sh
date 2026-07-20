@@ -60,6 +60,7 @@ required_files=(
   "dist/.dev-cadence/workflows/work-item-planning/SKILL.md"
   "dist/.dev-cadence/workflows/work-item-analysis/SKILL.md"
   "dist/.dev-cadence/workflows/feature-dev/SKILL.md"
+  "dist/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh"
   "dist/.dev-cadence/workflows/bug-fix/SKILL.md"
   "dist/.dev-cadence/workflows/refactor/SKILL.md"
   "dist/.dev-cadence/vendor/superpowers/LICENSE"
@@ -102,6 +103,9 @@ test ! -e "$DIST_DIR/skills/contracts" || fail "package retained legacy referenc
 assert_same_file \
   "src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh" \
   "dist/.dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh"
+assert_same_file \
+  "src/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" \
+  "dist/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh"
 
 assert_match "04-code-review-report.md" "src/workflows/feature-dev/SKILL.md"
 assert_match "04-code-review-report.md" "src/workflows/bug-fix/SKILL.md"

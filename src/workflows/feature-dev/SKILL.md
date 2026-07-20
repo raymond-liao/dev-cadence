@@ -194,6 +194,19 @@ build/dev-cadence/feature-dev/<feature-slug>/manifest.md
 
 The manifest is the run index. It does not replace the stage records.
 
+After the user confirms Requirements Confirmation or Technical Solution, add or update this manifest table. It is the compact identity index for confirmed source records; it must not copy record bodies. The Stage Table remains the sole owner of user-confirmation and checkpoint facts.
+
+```text
+## Confirmed Stage Record Identities
+
+| Stage | Record Path | SHA-256 |
+| --- | --- | --- |
+| Requirements Confirmation | build/dev-cadence/feature-dev/<feature-slug>/01-requirements.md | <lowercase SHA-256> |
+| Technical Solution | build/dev-cadence/feature-dev/<feature-slug>/02-technical-solution.md | <lowercase SHA-256> |
+```
+
+Only add an identity row after its stage is confirmed. Record paths must be repository-relative and SHA-256 values must be lowercase hashes of the current record content. Do not add a row for an unconfirmed stage.
+
 The manifest must include:
 
 - workflow, task slug, repository, branch, started at, current stage, and overall status;
@@ -336,6 +349,8 @@ At the end of this stage, write or update:
 build/dev-cadence/feature-dev/<feature-slug>/01-requirements.md
 ```
 
+The Requirements record must include the work item path, work-item type, work-item Version, current Status, selected scope, Goal, In Scope, Out of Scope, Acceptance Criteria, Business Rules, Assumptions, Open Questions, and Direct Input Identities. Direct Input Identities must list each direct work-item or dependency input as a repository-relative path with its lowercase SHA-256. Use the configured output language for prose and headings, but preserve these semantic fields.
+
 Ask the user to confirm this stage. Do not start implementation planning or code.
 
 ### Technical Solution
@@ -361,6 +376,8 @@ build/dev-cadence/feature-dev/<feature-slug>/02-technical-solution.md
 ```
 
 The Technical Solution record must link to `01-requirements.md` as the confirmed requirement source. This active workflow path overrides any generic feature-spec default in the vendored brainstorming skill.
+
+The Technical Solution record must include the confirmed Requirements source path, Requirements SHA-256, Selected Approach, Alternatives, Affected Boundaries, Key Constraints, Open Questions, and Acceptance Criteria to Verification Strategy Mapping. The confirmed Requirements source path and SHA-256 must exactly match the validated Requirements identity row.
 
 Ask the user to confirm this stage. Do not write the TDD implementation plan or code yet.
 
@@ -413,6 +430,15 @@ Ask the user to confirm the plan before implementation starts.
 #### Pre-Implementation Design Freshness Gate
 
 Immediately before entering Development Implementation, revalidate that the confirmed design and implementation plan still match the current delivery context.
+
+Before the existing freshness assessment, run the feature persistent-record recovery validator from the installed package:
+
+```bash
+bash .dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh \
+  build/dev-cadence/feature-dev/<feature-slug>
+```
+
+Read the manifest first. Confirmed stages must be continuous from Requirements Confirmation through Technical Solution. A valid Requirements-only run normally recovers at Technical Solution; valid Requirements and Technical Solution identities normally recover at Implementation Plan. When a record, checkpoint, mandatory field, direct input identity, or stage continuity is invalid, return to the earliest reported recovery stage, repair and reconfirm it, and refresh later affected evidence. This recovery validation is distinct from the Pre-Implementation Design Freshness Gate: it validates persisted evidence, while the freshness gate evaluates whether still-valid evidence matches the current delivery context.
 
 Compare the current work item card version, confirmed requirements record, confirmed Technical Solution record, Implementation Plan, and current code state. When present, also inspect authoritative product design, architecture, Decision, dependency state, and other sources referenced by the plan.
 
