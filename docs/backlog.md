@@ -9,7 +9,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `3` | `Draft` | `P0` |
+| `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `4` | `Ready` | `P0` |
 | `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `4` | `Ready` | `P1` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Ready` | `P2` |
 | `S-020` | [实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) | `3` | `Draft` | `P2` |
