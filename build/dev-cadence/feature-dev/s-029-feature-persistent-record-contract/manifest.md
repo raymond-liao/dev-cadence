@@ -9,15 +9,15 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Requirements Confirmation
+- Current Stage: Technical Solution
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [S-029 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/01-requirements.md` | `pending` | `31fbd6c` | 已形成可审阅的需求记录，阶段 checkpoint 已验证，等待用户确认。 |
-| Technical Solution | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Requirements Confirmation 确认后开始。 |
+| Requirements Confirmation | ✅ `confirmed` | [S-029 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-029-feature-persistent-record-contract/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T17:08:18+0800` | `31fbd6c` | 用户确认当前范围与验收条件；Technical Solution 可以开始。 |
+| Technical Solution | 🔄 `in_progress` | pending | `pending` | `pending` | 正在形成可审阅的技术方案。 |
 | Implementation Plan | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Technical Solution 确认后开始。 |
 | Development Implementation | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Implementation Plan 确认后开始。 |
 | System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
