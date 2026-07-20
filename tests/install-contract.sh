@@ -26,6 +26,7 @@ test -f "$TARGET_REPO/.dev-cadence/references/document-conventions/SKILL.md" || 
 test -f "$TARGET_REPO/.dev-cadence/skills/open-question-registry/SKILL.md" || fail "first install did not create open-question-registry skill"
 test -f "$TARGET_REPO/.dev-cadence/workflows/work-item-analysis/SKILL.md" || fail "first install did not create work-item-analysis skill"
 test -f "$TARGET_REPO/.dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh" || fail "first install did not create delivery-record validator"
+test -f "$TARGET_REPO/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" || fail "first install did not create feature recovery validator"
 test ! -e "$TARGET_REPO/docs/open-questions.md" || fail "install created an empty target-repository Open Question Registry"
 cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "installed version differs from source"
 cmp -s \
@@ -54,6 +55,9 @@ cmp -s \
 cmp -s \
   "$ROOT_DIR/src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh" \
   "$TARGET_REPO/.dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh" || fail "installed delivery-record validator differs from source"
+cmp -s \
+  "$ROOT_DIR/src/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" \
+  "$TARGET_REPO/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" || fail "installed feature recovery validator differs from source"
 cmp -s \
   "$ROOT_DIR/src/references/document-conventions/SKILL.md" \
   "$TARGET_REPO/.dev-cadence/references/document-conventions/SKILL.md" || fail "installed document-conventions skill differs from source"
