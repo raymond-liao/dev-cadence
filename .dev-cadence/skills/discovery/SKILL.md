@@ -5,9 +5,9 @@ description: Use when a user wants to explore a product idea or update an existi
 
 # Discovery
 
-<SUBAGENT-STOP>
-If you were dispatched as a subagent to execute a specific task, ignore this skill.
-</SUBAGENT-STOP>
+<ORDINARY-SUBAGENT-STOP>
+If you are an ordinary subtask agent and are not explicitly designated as the primary execution subagent for the complete Dev Cadence request, do not execute this workflow. Execute only the bounded task brief.
+</ORDINARY-SUBAGENT-STOP>
 
 Use this skill to create the first durable product-design baseline or incrementally update an existing confirmed baseline for a target repository.
 

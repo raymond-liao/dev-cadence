@@ -5,9 +5,9 @@ description: Use when a Dev Cadence-installed repository receives product discov
 
 # Using Dev Cadence
 
-<SUBAGENT-STOP>
-If you were dispatched as a subagent to execute a specific task, ignore this skill.
-</SUBAGENT-STOP>
+<ORDINARY-SUBAGENT-STOP>
+If you are an ordinary subtask agent and are not explicitly designated as the primary execution subagent for the complete Dev Cadence request, do not execute this entry skill. Execute only the bounded task brief.
+</ORDINARY-SUBAGENT-STOP>
 
 <EXTREMELY-IMPORTANT>
 If you think there is even a 1% chance an installed Dev Cadence flow applies to the user's development request, you ABSOLUTELY MUST read the matching flow skill.
@@ -20,6 +20,26 @@ This is not negotiable. You cannot rationalize your way out of this.
 Use this skill before any product discovery, requirements, or development response or action in a repository with Dev Cadence installed.
 
 Dev Cadence flows are explicit business workflows. Do not force a request into a flow just because the request is related to software.
+
+## Primary Execution Delegation
+
+Before reading a candidate workflow skill or exploring the repository, the user-facing main session must delegate the complete Dev Cadence request when the platform supports internal subagents.
+
+A primary execution subagent is explicitly designated in the dispatch brief to execute the complete Dev Cadence request. It must read this entry skill, select or restore the workflow, and may dispatch ordinary bounded subtasks with the role boundary and any applicable Dev Cadence commit constraints.
+
+An ordinary subtask agent must execute only its bounded brief; it must not select or restore a Dev Cadence workflow or recursively delegate the complete request.
+
+The primary execution subagent must continuously perform all non-interactive work for every installed Dev Cadence workflow. This includes investigation, draft preparation, repository changes, implementation, tests, review, verification, stage records, and Git operations already authorized by the active workflow.
+
+Return control to the main session only for a user decision, a blocker that requires user-provided information, or task completion. Return only the current conclusion, complete user options, the effect of each option, risks, and repository-relative evidence paths. Do not return process logs, diffs, or intermediate reasoning.
+
+An Asset Workflow may keep an unconfirmed draft only in a system temporary or cache location clearly marked non-authoritative; do not modify the authoritative asset before its existing user confirmation. Do not promise that this temporary or cache content survives cleanup, machine changes, or runtime loss.
+
+Existing user confirmation, Business Acceptance, Completion, and Git authorization rules remain in force. Existing explicit user authorization remains required for merge, PR, push, discard, and branch deletion.
+
+Return a user response to the original primary execution subagent when it remains available; otherwise designate a new primary execution subagent and restore from the existing file evidence.
+
+When the platform does not support internal subagents, the main session must execute the existing workflow directly.
 
 ## The Rule
 
@@ -69,7 +89,7 @@ The owning Workflow or shared capability must determine commit timing and scope,
 
 Do not invoke the installed `git-commit` for an ordinary repository commit that is not managed by a Dev Cadence workflow or shared capability. Handle that request through the target repository's ordinary Git rules.
 
-When dispatching a subagent that may create a commit, include `.dev-cadence/skills/git-commit/SKILL.md`, the owning Dev Cadence context, and the staged-only constraint in the subagent task brief. The `<SUBAGENT-STOP>` routing boundary does not remove this dispatch responsibility.
+When dispatching a subagent that may create a commit, include `.dev-cadence/skills/git-commit/SKILL.md`, the owning Dev Cadence context, and the staged-only constraint in the subagent task brief. The `<ORDINARY-SUBAGENT-STOP>` routing boundary does not remove this dispatch responsibility.
 
 For repository-level unresolved-question maintenance, read and follow:
 

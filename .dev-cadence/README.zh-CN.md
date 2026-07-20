@@ -28,6 +28,8 @@ bash scripts/install.sh /path/to/target-repo
 
 如果有适用的工作流，agent 会先执行该工作流，再进入实现。Asset Workflow 在会话中完成分析和确认门禁，只持久化权威资产；Delivery Workflow 记录阶段证据，并使用 vendored Superpowers 提供的工程方法：brainstorming、systematic debugging、planning、test-driven development、code review、verification 和 branch finishing。
 
+当平台支持内部子代理时，Dev Cadence 会在进入 workflow 专属调查前，把完整的非交互流程交给明确指定的主执行子代理。主会话只在用户决定、依赖用户输入的阻塞和任务完成时返回，并保留全部既有确认门和 Git 授权门禁；不支持内部子代理的平台仍由主会话直接执行同一 workflow。
+
 Dev Cadence 不替代 Superpowers。它是在 Superpowers 外层固定业务交付流程：
 
 - 哪个工作流适用；
