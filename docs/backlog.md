@@ -1,5 +1,11 @@
 # Backlog
 
+## 进行中
+
+| ID | Title | Version | Status | Priority |
+|---|---|---:|---|---|
+| `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `In Progress` | `P1` |
+
 ## 待处理
 
 | ID | Title | Version | Status | Priority |
@@ -17,12 +23,6 @@
 | `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
 | `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `3` | `Draft` | `P0` |
 | `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `2` | `Draft` | `P1` |
-
-## 进行中
-
-| ID | Title | Version | Status | Priority |
-|---|---|---:|---|---|
-| `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `In Progress` | `P1` |
 
 ## 已完成
 
