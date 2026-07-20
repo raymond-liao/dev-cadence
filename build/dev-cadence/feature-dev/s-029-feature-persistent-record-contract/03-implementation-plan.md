@@ -121,3 +121,9 @@ Run `git diff --check`, `bash scripts/check-whitespace.sh`, `bash scripts/check-
 - Placeholder scan: every action names exact files, commands, field names, target stages, and expected reasons.
 - Interface consistency: all tasks use the same target/reason output, identity table, SHA algorithm, canonical stage names, and `skipped` handling.
 - Completion condition: RED is recorded, focused and full checks are GREEN, and each implementation commit receives staged-only review evidence.
+
+## Stage Decision
+
+- Status: ✅ `confirmed`
+- User confirmation: `user selected option 1 at 2026-07-20T17:35:04+0800`
+- Decision: 按本计划开始 Development Implementation。
