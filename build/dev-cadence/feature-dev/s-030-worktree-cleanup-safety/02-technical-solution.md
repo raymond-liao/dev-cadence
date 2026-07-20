@@ -11,10 +11,10 @@
 
 ## 当前结论
 
-- Status: 🔄 `in_progress`
-- Decision: ❓ `pending`
+- Status: ✅ `confirmed`
+- Decision: ✅ `selected`
 - 推荐方案：方案 C，在既有职责边界内增加一个由 `finishing-a-development-branch` 所有的确定性 worktree ownership verifier；入口产生不可变创建证据，三个 Delivery workflow 对称持久化并传递，正常 Completion 和 `whole-run discard` 在删除前复用同一验证门禁。
-- 当前阶段只确认技术边界、证据模型和验证策略；未开始 Implementation Plan 或实现代码修改。
+- 技术边界、证据模型和验证策略已确认；允许开始 Implementation Plan，尚未进行实现代码修改。
 
 ## Codebase Exploration Findings
 
@@ -89,7 +89,7 @@
 
 主要风险：只增加文本断言无法证明 porcelain 解析和身份比较正确；直接编辑 `dist/.dev-cadence/**` 会绕过源文件；新增脚本若未验证 executable mode 或安装结果，会在目标仓库中不可用。
 
-## 方案比较
+## 备选方案与方案比较
 
 ### 方案 A：最小文字规则修改
 
@@ -107,7 +107,7 @@
 
 缺点：worktree 删除资格已有唯一自然所有者 `finishing-a-development-branch`；新增 skill 会增加路由、上下文加载和职责竞争，不满足本仓库 Skill 准入标准。当前只有一个清理消费者，不需要新的公共能力。
 
-### 方案 C：现有 finishing 所有者内的确定性 verifier（推荐，❓ Decision Pending）
+### 方案 C：现有 finishing 所有者内的确定性 verifier（✅ Selected）
 
 保留现有 workflow 和 finishing 职责，新增 `src/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh` 作为 supporting script。`using-dev-cadence` 生产创建证据，三个 Delivery workflow 对称持久化和传递，finishing 的普通 Dev Cadence Completion 与 `whole-run discard` 在删除前调用同一 verifier。
 
@@ -117,9 +117,10 @@
 
 ## 已选方案
 
-- Status: ❓ `pending`
-- Proposed Approach: 方案 C。
-- Selection Effect: 用户确认当前 Technical Solution 后，方案 C 才成为 ✅ `Selected`，并允许进入 Implementation Plan；确认前不创建 verifier、不修改 workflow 源规则或版本号。
+- Status: ✅ `selected`
+- Selected Approach: 方案 C。
+- Selection Evidence: 用户于 `2026-07-20T21:37:43+0800` 选择选项 1，确认当前 Technical Solution，并授权在 Implementation Plan 中纳入限定的 vendored finishing 修改。
+- Selection Effect: 允许进入 Implementation Plan；在 Implementation Plan 单独确认前仍不创建 verifier、不修改 workflow 源规则、测试或版本号。
 
 ## 推荐方案设计
 
@@ -257,6 +258,6 @@ Verifier 必须在每次 `git worktree remove` 紧前调用。`whole-run discard
 
 ## 阶段决定
 
-- Status: 🔄 `in_progress`
-- User Confirmation: `pending`
-- 下一阶段：等待用户确认方案 C。确认前不写 Implementation Plan，不创建 verifier，不修改 workflow 源规则、测试或版本号。
+- Status: ✅ `confirmed`
+- User Confirmation: `confirmed: user selected option 1 at 2026-07-20T21:37:43+0800`
+- 下一阶段：进入 Implementation Plan。计划确认前不创建 verifier，不修改 workflow 源规则、测试或版本号。

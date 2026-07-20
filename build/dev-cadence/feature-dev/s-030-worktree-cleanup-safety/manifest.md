@@ -9,7 +9,7 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Technical Solution
+- Current Stage: Implementation Plan
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -17,8 +17,8 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T21:04:26+0800` | `2aa3e65` | 用户确认的业务内容未变；checkpoint 包含符合恢复契约的直接输入身份，Technical Solution 可以继续。 |
-| Technical Solution | 🔄 `in_progress` | [S-030 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/02-technical-solution.md` | `pending` | `c36f0da` | 已完成增强代码库探索并形成可审阅方案，等待用户确认。 |
-| Implementation Plan | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Technical Solution 确认后开始。 |
+| Technical Solution | ✅ `confirmed` | [S-030 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/02-technical-solution.md` | `confirmed: user selected option 1 at 2026-07-20T21:37:43+0800` | `skipped: confirmation checkpoint pending binding` | 用户确认方案 C，并授权限定的 vendored finishing 修改进入实施计划。 |
+| Implementation Plan | 🔄 `in_progress` | pending | `pending` | `pending` | 正在形成 TDD 实施计划；确认前不开始实现。 |
 | Development Implementation | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Implementation Plan 确认后开始。 |
 | System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
 | Business Acceptance | ⏳ `pending` | pending | `pending` | `pending` | 仅在系统测试达到 `ready` 或 `ready_with_risk` 后开始。 |
@@ -28,6 +28,7 @@
 | Stage | Record Path | SHA-256 |
 | --- | --- | --- |
 | Requirements Confirmation | build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md | 0aa18011bb6845e285c1303adeb30284abc63520ec94aa9bce3a0ea093e1a5d3 |
+| Technical Solution | build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/02-technical-solution.md | 078b08139d4f93f60f992c17220fbd20f7b591fcd065dd361e671bfb9649f840 |
 
 ## Work Item Identity
 
@@ -60,7 +61,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety`
 - Task Branch: `codex/s-030-worktree-cleanup-safety`
 - Base Branch: `main`
-- Expected HEAD SHA: `c36f0da61b8c46978306fda3457b1a1d0271b1ee`
+- Expected HEAD SHA: `5997573c617c7fce65b8ac301d8d433b11dfafd7`
 - Expected Base SHA: `c340758c5ffa6dd6673c0667e094c64e6155f774`
 - Owned Commit Range: `c340758c5ffa6dd6673c0667e094c64e6155f774..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/**`; implementation paths pending Technical Solution confirmation.
@@ -81,8 +82,8 @@
 
 ## Verification Summary
 
-- 🔄 `in_progress`: Requirements Confirmation 已确认；Technical Solution 已形成并等待用户决定。
+- 🔄 `in_progress`: Requirements Confirmation 与 Technical Solution 已确认；Implementation Plan 正在形成。
 
 ## Residual Risks
 
-- ⚠️ Technical Solution 推荐对仓库内 vendored finishing 副本进行局部 Dev Cadence 适配；只有用户确认当前方案后才允许在 Implementation Plan 中纳入该修改。尚未开始实现。
+- ⚠️ 方案 C 已授权将仓库内 vendored finishing 副本的局部 Dev Cadence 适配纳入 Implementation Plan；计划仍待单独确认，尚未开始实现。
