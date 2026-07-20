@@ -16,8 +16,8 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | ✅ `confirmed` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T21:04:26+0800` | `396f924` | 用户确认当前需求边界与验收标准；Technical Solution 可以开始。 |
-| Technical Solution | 🔄 `in_progress` | pending | `pending` | `pending` | 正在执行增强代码库探索并形成技术方案。 |
+| Requirements Confirmation | ✅ `confirmed` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T21:04:26+0800` | `2aa3e65` | 用户确认的业务内容未变；checkpoint 包含符合恢复契约的直接输入身份，Technical Solution 可以继续。 |
+| Technical Solution | 🔄 `in_progress` | [S-030 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/02-technical-solution.md` | `pending` | `pending` | 已完成增强代码库探索并形成可审阅方案，等待用户确认。 |
 | Implementation Plan | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Technical Solution 确认后开始。 |
 | Development Implementation | ⏳ `pending` | pending | `pending` | `pending` | 仅在 Implementation Plan 确认后开始。 |
 | System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
@@ -27,7 +27,7 @@
 
 | Stage | Record Path | SHA-256 |
 | --- | --- | --- |
-| Requirements Confirmation | `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `da3c678f19569ed2fd2f5c489ad4e03d343cd625157afb1e5601794ae7874791` |
+| Requirements Confirmation | build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md | 0aa18011bb6845e285c1303adeb30284abc63520ec94aa9bce3a0ea093e1a5d3 |
 
 ## Work Item Identity
 
@@ -60,7 +60,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety`
 - Task Branch: `codex/s-030-worktree-cleanup-safety`
 - Base Branch: `main`
-- Expected HEAD SHA: `4b75a4e63eae7a2b386f6f9aa40373c6ff92b3ff`
+- Expected HEAD SHA: `2aa3e6516a2788f8b9830ca213a4c3d43272d007`
 - Expected Base SHA: `c340758c5ffa6dd6673c0667e094c64e6155f774`
 - Owned Commit Range: `c340758c5ffa6dd6673c0667e094c64e6155f774..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/**`; implementation paths pending Technical Solution confirmation.
@@ -81,8 +81,8 @@
 
 ## Verification Summary
 
-- 🔄 `in_progress`: Requirements Confirmation 已由用户确认；Technical Solution 正在形成。
+- 🔄 `in_progress`: Requirements Confirmation 已确认；Technical Solution 已形成并等待用户决定。
 
 ## Residual Risks
 
-- ⚠️ The exact implementation boundary and validation mechanism remain pending Technical Solution confirmation; no implementation work has started.
+- ⚠️ Technical Solution 推荐对仓库内 vendored finishing 副本进行局部 Dev Cadence 适配；只有用户确认当前方案后才允许在 Implementation Plan 中纳入该修改。尚未开始实现。
