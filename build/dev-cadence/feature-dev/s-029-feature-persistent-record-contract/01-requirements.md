@@ -2,12 +2,12 @@
 
 ## 工作项身份
 
-- 工作项：[S-029 Feature 持久化记录契约](../../../docs/stories/S-029-feature-persistent-record-contract.md) (`docs/stories/S-029-feature-persistent-record-contract.md`)
+- 工作项：[S-029 Feature 持久化记录契约](../../../../docs/stories/S-029-feature-persistent-record-contract.md) (`docs/stories/S-029-feature-persistent-record-contract.md`)
 - 工作项类型：`Story`
 - 工作项 Version：`4`
 - 当前 Status：`In Progress`
 - selected scope：为 `feature-dev` 的 Requirements Confirmation 和 Technical Solution 建立可恢复记录契约及其可执行验证。
-- Backlog 投影：[Backlog](../../../docs/backlog.md) (`docs/backlog.md`)，`进行中`，Version `4`，Status `In Progress`。
+- Backlog 投影：[Backlog](../../../../docs/backlog.md) (`docs/backlog.md`)，`进行中`，Version `4`，Status `In Progress`。
 
 ## 目标
 
@@ -52,9 +52,9 @@
 
 | 输入 | 身份 | 使用方式 |
 | --- | --- | --- |
-| [S-017 工作项卡片与开发 Workflow 接入](../../../docs/stories/S-017-work-item-development-workflow-integration.md) | Story Version `5`, Status `Done` | 提供现有卡片引用、阶段记录和生命周期边界。 |
-| [S-029 Feature 持久化记录契约](../../../docs/stories/S-029-feature-persistent-record-contract.md) | Story Version `4`, Status `In Progress` | 本次交付的权威需求来源。 |
-| [Backlog](../../../docs/backlog.md) | S-029 位于 `进行中`, Version `4`, Status `In Progress` | 验证工作项投影与领取状态。 |
+| [S-017 工作项卡片与开发 Workflow 接入](../../../../docs/stories/S-017-work-item-development-workflow-integration.md) | Story Version `5`, Status `Done` | 提供现有卡片引用、阶段记录和生命周期边界。 |
+| [S-029 Feature 持久化记录契约](../../../../docs/stories/S-029-feature-persistent-record-contract.md) | Story Version `4`, Status `In Progress` | 本次交付的权威需求来源。 |
+| [Backlog](../../../../docs/backlog.md) | S-029 位于 `进行中`, Version `4`, Status `In Progress` | 验证工作项投影与领取状态。 |
 
 ## 假设与 Open Questions
 
