@@ -5,8 +5,8 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b013-story-ready-feature`
 - Started at：`2026-07-19T21:30:32+0800`
-- Current stage：🔄 `in_progress` — Completion
-- Overall Status：✅ `accepted`
+- Current stage：✅ `integrated` — Completion
+- Overall Status: ✅ `integrated`
 - Run directory：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/`
 - Workspace：`.worktrees/b013-story-ready-feature`
 - Output language：`zh-CN`
@@ -54,7 +54,7 @@
 - Merge verification：`bash scripts/check-all.sh` 在本地 `main` 合并结果通过。
 - Card and Backlog synchronization：匹配 `B-013` Version `2`；卡片状态已写为 `Done`，Backlog 行已从 `进行中` 移入 `已完成`，未变更待处理项顺序；当前没有 B-013 的并行视图条目需要移除。
 - Push / Pull Request：未执行。
-- Worktree and task branch cleanup：🔄 `in_progress`；将在同步记录提交后完成。
+- Worktree and task branch cleanup：已移除 `.worktrees/b013-story-ready-feature`，已删除 `codex/b013-story-ready-feature`。
 
 ## Current-Run Discard Context And Ownership Evidence
 
