@@ -54,12 +54,19 @@
 
 ## 直接依赖输入身份
 
-| 输入 | Path | SHA-256 | 使用方式 |
-| --- | --- | --- | --- |
-| [S-030 Worktree 清理安全与证据](../../../../docs/stories/S-030-worktree-ownership-detection.md) | docs/stories/S-030-worktree-ownership-detection.md | 57a6d5d324a2f60c4ee2de35a678dc7fbcee47e25bebda32d2ae92cd0b36f079 | Story Version `4`、Status `In Progress`；本次交付的权威需求来源与范围边界。 |
-| [Backlog](../../../../docs/backlog.md) | docs/backlog.md | 3b881b8509bf70162528e1d0c7bc05cf8327041060843154eda598d584d6f632 | 验证 S-030 位于 `进行中`、Version `4`、Status `In Progress`。 |
-| 运行配置 | .dev-cadence.yaml | 9ba610320f36b3d0b18536daa896113584f7b6be679b1a6f118b8232516dc83b | 固定 `output_language: zh-CN`、`worktree.enabled: true` 和 `worktree.directory: .worktrees`。 |
-| 已安装 finishing 基线 | .dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md | de8e5398ea7bb2fbe586df322e9d13a486b780984a4fc6e9a0fa8c736a866b24 | baseline commit `c340758`；提供现有 Completion 与 `whole-run discard` 清理行为，具体源修改归 Technical Solution 决定。 |
+| Path | SHA-256 |
+| --- | --- |
+| docs/stories/S-030-worktree-ownership-detection.md | 57a6d5d324a2f60c4ee2de35a678dc7fbcee47e25bebda32d2ae92cd0b36f079 |
+| docs/backlog.md | 3b881b8509bf70162528e1d0c7bc05cf8327041060843154eda598d584d6f632 |
+| .dev-cadence.yaml | 9ba610320f36b3d0b18536daa896113584f7b6be679b1a6f118b8232516dc83b |
+| .dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md | de8e5398ea7bb2fbe586df322e9d13a486b780984a4fc6e9a0fa8c736a866b24 |
+
+### 输入用途
+
+- [S-030 Worktree 清理安全与证据](../../../../docs/stories/S-030-worktree-ownership-detection.md)：Story Version `4`、Status `In Progress`；本次交付的权威需求来源与范围边界。
+- [Backlog](../../../../docs/backlog.md)：验证 S-030 位于 `进行中`、Version `4`、Status `In Progress`。
+- `.dev-cadence.yaml`：固定 `output_language: zh-CN`、`worktree.enabled: true` 和 `worktree.directory: .worktrees`。
+- `.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md`：baseline commit `c340758`；提供现有 Completion 与 `whole-run discard` 清理行为，具体源修改归 Technical Solution 决定。
 
 ## 假设与 Open Questions
 
