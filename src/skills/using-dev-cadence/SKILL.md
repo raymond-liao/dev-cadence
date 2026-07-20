@@ -89,7 +89,7 @@ The owning Workflow or shared capability must determine commit timing and scope,
 
 Do not invoke the installed `git-commit` for an ordinary repository commit that is not managed by a Dev Cadence workflow or shared capability. Handle that request through the target repository's ordinary Git rules.
 
-When dispatching a subagent that may create a commit, include `.dev-cadence/skills/git-commit/SKILL.md`, the owning Dev Cadence context, and the staged-only constraint in the subagent task brief. The `<SUBAGENT-STOP>` routing boundary does not remove this dispatch responsibility.
+When dispatching a subagent that may create a commit, include `.dev-cadence/skills/git-commit/SKILL.md`, the owning Dev Cadence context, and the staged-only constraint in the subagent task brief. The `<ORDINARY-SUBAGENT-STOP>` routing boundary does not remove this dispatch responsibility.
 
 For repository-level unresolved-question maintenance, read and follow:
 
