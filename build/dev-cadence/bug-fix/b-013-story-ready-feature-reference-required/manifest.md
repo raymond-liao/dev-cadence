@@ -5,8 +5,8 @@
 - Repository：`dev-cadence`（`git@github.com:raymond-liao/dev-cadence.git`）
 - Branch：`codex/b013-story-ready-feature`
 - Started at：`2026-07-19T21:30:32+0800`
-- Current stage：🔄 `in_progress` — Business Acceptance
-- Overall Status：🔄 `in_progress`
+- Current stage：🔄 `in_progress` — Completion
+- Overall Status：✅ `accepted`
 - Run directory：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/`
 - Workspace：`.worktrees/b013-story-ready-feature`
 - Output language：`zh-CN`
@@ -23,7 +23,7 @@
 | Repair Implementation | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-repair-record.md` | 不需要用户确认 | `3d20340b31541cf54badbfdf085aecc422e9d231` | Task 1-4、完整回归和实施证据已完成；检查点已验证包含 Repair Record。 |
 | Code Review | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/04-code-review-report.md` | 不需要用户确认 | `3d20340b31541cf54badbfdf085aecc422e9d231` | 完整实现范围审查通过；Critical/Important findings 均为 0。 |
 | Regression Verification | ✅ `confirmed` | `build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/05-regression-test-report.md` | 不需要用户确认 | `9a011b8439e1bc880d1d4190924ac7abd962a6c4` | Verification Decision 为 `ready`；所有已执行检查通过。 |
-| Business Acceptance | ✅ `confirmed` | [B-013 Business Acceptance 记录](06-business-acceptance-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/06-business-acceptance-record.md` | `2026-07-20T09:11:04+0800`，选项 1：Accept | ⏳ `pending` | 用户接受修复；等待验收记录检查点绑定后进入 Completion。 |
+| Business Acceptance | ✅ `confirmed` | [B-013 Business Acceptance 记录](06-business-acceptance-record.md)；path：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/06-business-acceptance-record.md` | `2026-07-20T09:11:04+0800`，选项 1：Accept | `97de7f186cea548e7491939c7fc8121d74eb4246` | 用户接受修复；验收记录检查点已验证，当前进入 Completion。 |
 
 ## Work Item Identity And Claim
 
@@ -54,10 +54,10 @@
 - Run directory：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/`
 - Task branch：`codex/b013-story-ready-feature`
 - Base branch：`main`
-- Expected HEAD SHA：`5cb09c6e1423add910c63b25470f8aa6beff5c70`
+- Expected HEAD SHA：`97de7f186cea548e7491939c7fc8121d74eb4246`
 - Expected base SHA：`5cb09c6e1423add910c63b25470f8aa6beff5c70`
-- Owned commit range：`5cb09c6e1423add910c63b25470f8aa6beff5c70..HEAD`
-- Owned tracked paths：`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/manifest.md`、`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/01-problem-diagnosis-record.md`
-- Owned untracked paths：`none at start`
+- Owned commit range：`5cb09c6e1423add910c63b25470f8aa6beff5c70..97de7f186cea548e7491939c7fc8121d74eb4246`
+- Owned tracked paths：`.dev-cadence/AGENTS-snippet.md`、`.dev-cadence/README.md`、`.dev-cadence/README.zh-CN.md`、`.dev-cadence/skills/`、`.dev-cadence/version`、`src/skills/using-dev-cadence/SKILL.md`、`src/skills/work-item-analysis/SKILL.md`、`tests/routing-contract.sh`、`tests/work-item-analysis-contract.sh`、`version`、`build/dev-cadence/bug-fix/b-013-story-ready-feature-reference-required/`。
+- Owned untracked paths：`none`
 - Workspace path：`.worktrees/b013-story-ready-feature`
 - Worktree created by this run：`yes`
