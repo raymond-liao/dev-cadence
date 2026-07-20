@@ -11,7 +11,7 @@ Do not rely on this file in place. It is only an installation snippet.
 
 Before responding to or acting on requests involving product discovery, product ideas, architecture design, requirements or work-item management, development, active-task follow-up, testing, verification, Dev Cadence-managed assets, or commit/checkpoint operations, read and follow:
 
-`.dev-cadence/skills/using-dev-cadence/SKILL.md`
+`.dev-cadence/workflows/using-dev-cadence/SKILL.md`
 
 Do this before any repository exploration, clarification question, user-facing guidance, document or code change, test execution, verification claim, or Git mutation.
 
