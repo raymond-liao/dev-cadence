@@ -161,19 +161,24 @@ validate_solution_fields() {
   done
 }
 
-read_required_metadata() {
-  local label="$1"
-  local record="$2"
-  local value
-  value="$(awk -v label="$label" '
-    index($0, label ":") {
-      sub("^[^-]*" label ":[[:space:]]*", "")
-      if (match($0, /`[^`]+`/)) print substr($0, RSTART + 1, RLENGTH - 2)
-      else print $0
-      exit
+read_metadata_any() {
+  local record="$1"
+  shift
+  local label value
+  for label in "$@"; do
+    value="$(awk -v label="$label" '
+      index($0, label ":") {
+        sub("^[^-]*" label ":[[:space:]]*", "")
+        if (match($0, /`[^`]+`/)) print substr($0, RSTART + 1, RLENGTH - 2)
+        else print $0
+        exit
+      }
+    ' "$record")"
+    [[ -n "$value" ]] && {
+      printf '%s' "$value"
+      return 0
     }
-  ' "$record")"
-  printf '%s' "$value"
+  done
 }
 
 [[ "$#" -eq 1 ]] || fail "usage: $0 RUN_DIR"
@@ -235,8 +240,8 @@ checkpoint_matches "$solution_checkpoint" "$solution_path" "$solution_sha" ||
   target 'Technical Solution' 'technical solution checkpoint mismatch'
 validate_solution_fields "$repo_root/$solution_path" ||
   target 'Technical Solution' 'technical solution record is incomplete'
-[[ "$(read_required_metadata '已确认需求来源' "$repo_root/$solution_path")" == "$requirements_path" ]] &&
-  [[ "$(read_required_metadata 'Requirements SHA-256' "$repo_root/$solution_path")" == "$requirements_sha" ]] ||
+[[ "$(read_metadata_any "$repo_root/$solution_path" '已确认需求来源' 'Confirmed Requirements Source')" == "$requirements_path" ]] &&
+  [[ "$(read_metadata_any "$repo_root/$solution_path" 'Requirements SHA-256')" == "$requirements_sha" ]] ||
   target 'Technical Solution' 'solution requirements identity mismatch'
 
 target 'Implementation Plan' 'requirements and technical solution identities are valid'

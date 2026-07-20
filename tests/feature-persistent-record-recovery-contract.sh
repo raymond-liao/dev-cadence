@@ -114,6 +114,38 @@ write_solution() {
     source_sha="$(printf '%064d' 0)"
   fi
 
+  if [[ "$match" == english ]]; then
+    write_file "$repo" "$path" "# Technical Solution
+
+- Confirmed Requirements Source: \`$source_path\`
+- Requirements SHA-256: \`$source_sha\`
+
+## Selected Approach
+
+- Feature-only validator.
+
+## Alternatives
+
+- Shared validator.
+
+## Affected Boundaries
+
+- feature-dev only.
+
+## Key Constraints
+
+- Read-only.
+
+## Open Questions
+
+- None.
+
+## Acceptance Criteria to Verification Strategy Mapping
+
+- Fixture tests prove recovery."
+    return
+  fi
+
   write_file "$repo" "$path" "# Technical Solution
 
 - 已确认需求来源: \`$source_path\`
@@ -195,9 +227,9 @@ create_fixture() {
   solution_sha="$(printf '%064d' 0)"
 
   case "$scenario" in
-    two-confirmed|solution-identity-mismatch|solution-before-requirements)
+    two-confirmed|english-solution|solution-identity-mismatch|solution-before-requirements)
       write_solution "$repo" "$solution_path" "$requirements_path" "$requirements_sha" \
-        "$([[ "$scenario" == solution-identity-mismatch ]] && printf no || printf yes)"
+        "$([[ "$scenario" == solution-identity-mismatch ]] && printf no || ([[ "$scenario" == english-solution ]] && printf english || printf yes))"
       solution_sha="$(sha256_file "$repo/$solution_path")"
       solution_checkpoint="$(commit_paths "$repo" solution "$solution_path")"
       solution_status=confirmed
@@ -251,6 +283,7 @@ run_fixtures() {
   test -x "$VALIDATOR" || fail "missing validator: $VALIDATOR"
   expect_fixture requirements-only "Technical Solution" "requirements identity is valid"
   expect_fixture two-confirmed "Implementation Plan" "requirements and technical solution identities are valid"
+  expect_fixture english-solution "Implementation Plan" "requirements and technical solution identities are valid"
   expect_fixture requirements-skipped "Technical Solution" "requirements identity is valid"
   expect_fixture missing-acceptance "Requirements Confirmation" "missing Acceptance Criteria"
   expect_fixture requirements-sha-mismatch "Requirements Confirmation" "requirements SHA-256 mismatch"
