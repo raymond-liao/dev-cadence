@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ENTRY="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+ENTRY="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 COMMIT_SKILL="$ROOT_DIR/src/skills/git-commit/SKILL.md"
 
 fail() {

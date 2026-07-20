@@ -2,10 +2,10 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
-FEATURE_SKILL="$ROOT_DIR/src/skills/feature-dev/SKILL.md"
-BUG_FIX_SKILL="$ROOT_DIR/src/skills/bug-fix/SKILL.md"
-REFACTOR_SKILL="$ROOT_DIR/src/skills/refactor/SKILL.md"
+ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
+FEATURE_SKILL="$ROOT_DIR/src/workflows/feature-dev/SKILL.md"
+BUG_FIX_SKILL="$ROOT_DIR/src/workflows/bug-fix/SKILL.md"
+REFACTOR_SKILL="$ROOT_DIR/src/workflows/refactor/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2

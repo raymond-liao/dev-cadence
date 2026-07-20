@@ -15,13 +15,13 @@ Do not copy Delivery Workflow evidence into work-item assets.
 Before reading, creating, or updating an owned asset Change Log, read and follow:
 
 ```text
-.dev-cadence/skills/contracts/change-log.md
+.dev-cadence/references/contracts/change-log.md
 ```
 
 Before creating or updating cards, read and follow:
 
 ```text
-.dev-cadence/skills/document-conventions/SKILL.md
+.dev-cadence/references/document-conventions/SKILL.md
 ```
 
 ## Configuration

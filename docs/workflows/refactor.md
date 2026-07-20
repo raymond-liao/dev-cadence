@@ -2,7 +2,7 @@
 
 本文说明 Dev Cadence 的 `refactor` 业务流程，包括适用场景、阶段目标、主要产出以及与其他 workflow 的边界。本文面向 Dev Cadence 维护者、流程评审者和希望了解交付模型的使用者。
 
-目标仓库中的实际执行规则以 `src/skills/refactor/SKILL.md` 生成的安装内容为准。本文用于解释业务流程设计，不替代 workflow skill。
+目标仓库中的实际执行规则以 `src/workflows/refactor/SKILL.md` 生成的安装内容为准。本文用于解释业务流程设计，不替代 workflow skill。
 
 ## 目的
 

@@ -2,10 +2,10 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CONTRACT="$ROOT_DIR/src/skills/contracts/change-log.md"
-DISCOVERY="$ROOT_DIR/src/skills/discovery/SKILL.md"
-PLANNING="$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
-ANALYSIS="$ROOT_DIR/src/skills/work-item-analysis/SKILL.md"
+CONTRACT="$ROOT_DIR/src/references/contracts/change-log.md"
+DISCOVERY="$ROOT_DIR/src/workflows/discovery/SKILL.md"
+PLANNING="$ROOT_DIR/src/workflows/work-item-planning/SKILL.md"
+ANALYSIS="$ROOT_DIR/src/workflows/work-item-analysis/SKILL.md"
 BACKLOG="$ROOT_DIR/docs/backlog.md"
 REGISTRY="$ROOT_DIR/docs/open-questions.md"
 MIGRATION_CHANGE='Normalized legacy status and delivery events to reuse the active definition Version.'
@@ -314,7 +314,7 @@ PUBLIC_CONTRACT_LITERALS=(
 )
 
 for consumer in "$DISCOVERY" "$PLANNING" "$ANALYSIS"; do
-  assert_literal "shared contract read" '.dev-cadence/skills/contracts/change-log.md' "$consumer"
+  assert_literal "shared contract read" '.dev-cadence/references/contracts/change-log.md' "$consumer"
 
   for literal in "${PUBLIC_CONTRACT_LITERALS[@]}"; do
     assert_not_literal "duplicated public Change Log contract detail" "$literal" "$consumer"

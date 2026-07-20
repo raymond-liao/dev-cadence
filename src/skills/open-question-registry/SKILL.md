@@ -12,7 +12,7 @@ This is an auxiliary asset-maintenance skill. It is not a business delivery work
 Before creating or updating Registry Markdown, read and follow:
 
 ```text
-.dev-cadence/skills/document-conventions/SKILL.md
+.dev-cadence/references/document-conventions/SKILL.md
 ```
 
 ## Applicability

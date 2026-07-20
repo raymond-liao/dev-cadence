@@ -12,7 +12,7 @@ This is an Asset Workflow.
 Before reading, creating, or updating an owned asset Change Log, read and follow:
 
 ```text
-.dev-cadence/skills/contracts/change-log.md
+.dev-cadence/references/contracts/change-log.md
 ```
 
 It creates or updates durable planning assets under `docs/`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or other persistent copies of the workflow process. It must not copy the Delivery Workflow record chain used by `feature-dev`, `bug-fix`, or `refactor`.

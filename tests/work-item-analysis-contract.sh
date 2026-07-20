@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SKILL="$ROOT_DIR/src/skills/work-item-analysis/SKILL.md"
-ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+SKILL="$ROOT_DIR/src/workflows/work-item-analysis/SKILL.md"
+ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -101,7 +101,7 @@ assert_match "lightweight card creation" 'create a lightweight card and complete
 assert_literal "missing-card backlog handoff" 'When Work Item Analysis creates a card that is not yet registered in `docs/backlog.md`, it must hand the card to `work-item-planning` for Backlog registration before downstream delivery.' "$SKILL"
 assert_literal "missing-card no order write" 'Work Item Analysis must not add, remove, or reorder Backlog rows while creating or analyzing a missing card.' "$SKILL"
 assert_literal "shared card conflict stop" 'When Work Item Analysis finds a Version or visible-fact conflict, it must stop and require a user decision before continuing.' "$SKILL"
-assert_literal "shared Change Log contract read" '.dev-cadence/skills/contracts/change-log.md' "$SKILL"
+assert_literal "shared Change Log contract read" '.dev-cadence/references/contracts/change-log.md' "$SKILL"
 assert_literal "card Change Log follows shared contract" 'For every card Change Log, follow the shared Change Log contract.' "$SKILL"
 assert_match "substantive version increments" 'Increment the Version when confirmed changes alter the card'\''s goal, scope, expected behavior, acceptance or completion conditions, key dependencies, or requirement decisions' "$SKILL"
 assert_match "non substantive no increment" 'Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes' "$SKILL"
@@ -120,7 +120,7 @@ assert_match "downstream handoff" 'Ready Story -> `feature-dev`|Task -> `feature
 assert_not_match "delivery build records" '04-code-review-report\.md|01-requirements\.md|02-technical-solution\.md|03-implementation-plan\.md|Business Acceptance' "$SKILL"
 assert_not_match "personal absolute paths" '/Users/|/private/tmp|/private/var|[A-Za-z]:\\Users\\' "$SKILL"
 
-assert_literal "entry route path" '.dev-cadence/skills/work-item-analysis/SKILL.md' "$ENTRY_SKILL"
+assert_literal "entry route path" '.dev-cadence/workflows/work-item-analysis/SKILL.md' "$ENTRY_SKILL"
 assert_match "entry route row" 'analyze, clarify, or confirm one Story, Task, or Bug definition|selected batch of Story, Task, or Bug definitions' "$ENTRY_SKILL"
 assert_match "entry routing boundary" 'after analysis, hand confirmed work items to `feature-dev`, `bug-fix`, or `refactor`|does not replace downstream delivery workflows' "$ENTRY_SKILL"
 

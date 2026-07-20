@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REGISTRY_SKILL="$ROOT_DIR/src/skills/open-question-registry/SKILL.md"
-ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2

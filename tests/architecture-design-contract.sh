@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SKILL="$ROOT_DIR/src/skills/architecture-design/SKILL.md"
-ENTRY="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+SKILL="$ROOT_DIR/src/workflows/architecture-design/SKILL.md"
+ENTRY="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -80,7 +80,7 @@ assert_match "no implementation" 'must not.*modify code|do not.*modify code' "$S
 assert_match "no planning" 'implementation plan|work-item decomposition' "$SKILL"
 assert_match "does not replace delivery solution" 'must not replace|does not replace' "$SKILL"
 
-assert_literal "available workflow route" '.dev-cadence/skills/architecture-design/SKILL.md' "$ENTRY"
+assert_literal "available workflow route" '.dev-cadence/workflows/architecture-design/SKILL.md' "$ENTRY"
 assert_match "explicit architecture route" 'Architecture Design.*explicit|explicit.*Architecture Design' "$ENTRY"
 assert_match "repository state does not route" 'architecture.*repository state.*does not|repository state.*does not.*architecture' "$ENTRY"
 assert_match "delivery solution boundary" 'architecture-design.*does not replace|does not replace.*architecture-design' "$ENTRY"

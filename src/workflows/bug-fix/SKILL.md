@@ -1,13 +1,13 @@
 ---
-name: feature-dev
-description: Use when a user asks to add a capability or intentionally change expected user-visible or system-visible behavior in a target project.
+name: bug-fix
+description: Use when a user reports or asks to fix a bug, error, crash, regression, failing test, broken expected behavior, or unexpected behavior in a target project.
 ---
 
-# Feature Dev
+# Bug Fix
 
-Use this skill to run the Dev Cadence feature development workflow.
+Use this skill to run the Dev Cadence bug fix workflow.
 
-This is a Delivery Workflow. Preserve its complete implementation and verification evidence chain under `build/dev-cadence/feature-dev/<feature-slug>/` according to the shared record-model contract in `using-dev-cadence`.
+This is a Delivery Workflow. Preserve its complete diagnosis, implementation, and verification evidence chain under `build/dev-cadence/bug-fix/<bug-slug>/` according to the shared record-model contract in `using-dev-cadence`.
 
 Dev Cadence is a business-facing workflow wrapper around vendored Superpowers skills. It does not replace the Superpowers process. It makes each business stage visible to the user, fixes confirmation gates, and keeps the target repository on the vendored skill version.
 
@@ -29,9 +29,9 @@ Before producing user-facing workflow documents or records, read:
 .dev-cadence.yaml
 ```
 
-Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before writing any plan, record, or summary. In a linked worktree, verify that the propagated configuration is present and matches the active run snapshot before continuing.
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before writing any diagnosis, solution, plan, record, or summary. In a linked worktree, verify that the propagated configuration is present and matches the active run snapshot before continuing.
 
-Use `output_language` from that file for all workflow documents and records, including Superpowers spec documents, Superpowers plan documents, Dev Cadence records, and user-facing stage summaries.
+Use `output_language` from that file for all workflow documents and records, including Superpowers plan documents, Dev Cadence records, and user-facing stage summaries.
 
 Supported values:
 
@@ -75,8 +75,8 @@ Commits do not require user confirmation. User confirmation controls whether the
 
 Before creating any Dev Cadence workflow commit:
 
-1. Ensure the work is on a dedicated branch for this feature or task.
-2. If the current branch is not dedicated to this task, create or switch to a dedicated branch automatically and report the branch name.
+1. Ensure the work is on a dedicated branch for this bug fix.
+2. If the current branch is not dedicated to this bug fix, create or switch to a dedicated branch automatically and report the branch name.
 3. Include only files related to the active workflow scope and current progress.
 4. Run the checks appropriate for the files being committed.
 5. Report the commit hash after committing.
@@ -105,39 +105,39 @@ If there are no in-scope tracked changes, report that no commit was created and 
 | --- | --- |
 | "User asked to commit, so the workflow is complete." | A commit only records current progress. Continue through the remaining stage gates. |
 | "I need user approval before every commit." | Commits do not require approval. Merge, PR, push, discard, and branch deletion decisions do. |
-| "The code is committed, so testing can happen later." | Commit timing does not relax implementation, review, System Testing, or Business Acceptance requirements. |
+| "The repair is committed, so regression verification can happen later." | Commit timing does not relax implementation, review, Regression Verification, or Business Acceptance requirements. |
 
 ## Dev Cadence Stages
 
 Present the work to the user using these business stages:
 
 ```text
-Requirements Confirmation -> Technical Solution -> Implementation Plan -> Development Implementation -> System Testing -> Business Acceptance
+Problem Diagnosis -> Repair Solution -> Repair Plan -> Repair Implementation -> Regression Verification -> Business Acceptance
 ```
 
 Do not start implementation before the user has confirmed:
 
-- Requirements Confirmation
-- Technical Solution
-- Implementation Plan
+- Problem Diagnosis
+- Repair Solution
+- Repair Plan
 
 ## Superpowers Mapping
 
 Use the vendored Superpowers workflow as the execution method:
 
 ```text
-brainstorming -> using-git-worktrees -> writing-plans -> test-driven-development / subagent-driven-development / executing-plans -> requesting-code-review -> verification-before-completion
+systematic-debugging -> using-git-worktrees -> writing-plans -> test-driven-development / subagent-driven-development / executing-plans -> requesting-code-review -> verification-before-completion
 ```
 
 Map it to Dev Cadence like this:
 
 | Dev Cadence stage | Superpowers work | Business output |
 | --- | --- | --- |
-| Requirements Confirmation | `brainstorming` requirement clarification | Confirmed requirements |
-| Technical Solution | `brainstorming` design/spec work | Technical solution |
-| Implementation Plan | `using-git-worktrees` and `writing-plans` | entry-prepared workspace verification, TDD implementation plan |
-| Development Implementation | `test-driven-development`, `subagent-driven-development`, `executing-plans`, and `requesting-code-review` | Working deliverable, test assets, implementation notes, code review evidence |
-| System Testing | `verification-before-completion` | System test report |
+| Problem Diagnosis | `systematic-debugging` root cause investigation | Problem diagnosis record |
+| Repair Solution | `systematic-debugging` hypothesis and fix boundary | Repair solution and impact scope |
+| Repair Plan | `using-git-worktrees` and `writing-plans` | entry-prepared workspace verification, TDD repair plan |
+| Repair Implementation | `test-driven-development`, `subagent-driven-development`, `executing-plans`, and `requesting-code-review` | Working deliverable, supporting test assets, repair notes, code review evidence |
+| Regression Verification | `verification-before-completion` | Regression test report |
 | Business Acceptance | Dev Cadence user decision gate | Business acceptance record |
 
 The mapping is semantic, not one-skill-per-stage. If a Superpowers skill naturally spans more than one Dev Cadence stage, keep the Superpowers flow intact and make the Dev Cadence stage boundary explicit in the user-facing update.
@@ -149,47 +149,31 @@ The active AI agent is responsible for writing or updating the record for the st
 Use one task directory for every workflow record and short-lived execution artifact:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/
+build/dev-cadence/bug-fix/<bug-slug>/
 ```
 
-Stage records:
+Use these records:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/01-requirements.md
-build/dev-cadence/feature-dev/<feature-slug>/02-technical-solution.md
-build/dev-cadence/feature-dev/<feature-slug>/03-implementation-plan.md
-build/dev-cadence/feature-dev/<feature-slug>/04-implementation-record.md
-build/dev-cadence/feature-dev/<feature-slug>/04-code-review-report.md
-build/dev-cadence/feature-dev/<feature-slug>/05-system-test-report.md
-build/dev-cadence/feature-dev/<feature-slug>/06-business-acceptance-record.md
+build/dev-cadence/bug-fix/<bug-slug>/01-problem-diagnosis-record.md
+build/dev-cadence/bug-fix/<bug-slug>/02-repair-solution.md
+build/dev-cadence/bug-fix/<bug-slug>/03-repair-plan.md
+build/dev-cadence/bug-fix/<bug-slug>/04-repair-record.md
+build/dev-cadence/bug-fix/<bug-slug>/04-code-review-report.md
+build/dev-cadence/bug-fix/<bug-slug>/05-regression-test-report.md
+build/dev-cadence/bug-fix/<bug-slug>/06-business-acceptance-record.md
 ```
 
 Subagent-driven development artifacts, when used, must be written under:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/sdd/
+build/dev-cadence/bug-fix/<bug-slug>/sdd/
 ```
-
-Visual companion artifacts, when used during Requirements Confirmation or Technical Solution, must stay under the same task directory by starting or restarting the vendored visual companion with the task directory as `--project-dir`:
-
-```bash
-.dev-cadence/vendor/superpowers/skills/brainstorming/scripts/start-server.sh \
-  --project-dir build/dev-cadence/feature-dev/<feature-slug> \
-  --open
-```
-
-This preserves the vendored Superpowers visual companion layout while keeping its files inside the Dev Cadence task directory:
-
-```text
-build/dev-cadence/feature-dev/<feature-slug>/.superpowers/brainstorm/
-```
-
-Do not edit or fork the vendored visual companion scripts to change this path.
 
 Create and maintain a run manifest for every workflow run:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/manifest.md
+build/dev-cadence/bug-fix/<bug-slug>/manifest.md
 ```
 
 The manifest is the run index. It does not replace the stage records.
@@ -233,138 +217,113 @@ Also ensure the manifest points to the latest stage record and checkpoint commit
 
 ## Work Item Card Integration
 
-Every `feature-dev` run must reuse one authoritative Story or Task card and must not create a parallel card. The first stage record must capture the exact card path, work-item type, current card Version, visible Status, and the selected scope; it must reference the card rather than copy its body.
+Every `bug-fix` run must reuse one authoritative Bug card when one exists; direct Bug investigation may create or complete the Bug card under this workflow when no card exists. The first diagnosis record must capture the exact card path, `Bug` type, current card Version, visible Status, and the selected scope; it must reference the card rather than copy its body.
 
-`feature-dev` may enter from a `Ready Story` only after the Story definition is user-confirmed. A Task does not require `Ready`, but the first stage must confirm its goal, scope, and completion conditions before code changes. A Bug belongs to `bug-fix` and must not be silently converted into a Feature request.
+A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known root cause. Diagnosis owns reproduction, root-cause evidence, and the repair boundary. A Feature request or intentional behavior change must route to `feature-dev`, not be hidden inside a Bug Fix.
 
 Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version.
 
-At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, delivery result/reference, and exact Backlog source and destination sections. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or delivery result qualifies under `.dev-cadence/skills/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
+At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, and exact Backlog source and destination sections. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or repair result qualifies under `.dev-cadence/references/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
 ## Active Task Change Handling
 
-Until Business Acceptance and Completion are finished, treat user requests about the same feature as changes to the current workflow run.
+Until Business Acceptance and Completion are finished, treat user requests about the same bug fix as changes to the current workflow run.
 
-When the user asks for a requirement adjustment, scope clarification, implementation change, test change, review fix, or acceptance feedback that belongs to the current feature:
+When the user provides additional symptoms, reproduction feedback, repair requirements, implementation change requests, test changes, review fixes, or acceptance feedback that belongs to the current bug fix:
 
-- update the existing task directory under `build/dev-cadence/feature-dev/<feature-slug>/`;
-- update the existing stage records and manifest instead of creating a new feature slug, workflow run, requirements document, or technical solution document;
+- update the existing task directory under `build/dev-cadence/bug-fix/<bug-slug>/`;
+- update the existing stage records and manifest instead of creating a new bug slug, workflow run, diagnosis document, repair solution document, or repair plan document;
 - if the change affects an already confirmed stage, return to the earliest affected stage, mark affected later stages as `pending` or `in_progress` in the manifest, and refresh their records before moving forward again;
-- if implementation has already started, update `03-implementation-plan.md` when the plan no longer matches the requested change before continuing implementation;
-- preserve prior decisions and evidence in the relevant record when they still explain the task history, but make the latest confirmed scope, plan, and verification state explicit.
+- if repair implementation has already started, update `03-repair-plan.md` when the plan no longer matches the requested change before continuing implementation;
+- preserve prior diagnosis, decisions, and evidence in the relevant record when they still explain the task history, but make the latest confirmed problem, repair boundary, plan, and verification state explicit.
 
-If the requested change clearly exceeds the current confirmed scope, ask whether the user wants to expand the current feature or start a separate task before creating any new workflow run or document.
+If the requested change clearly exceeds the current confirmed repair boundary, ask whether the user wants to expand the current bug fix or start a separate task before creating any new workflow run or document.
 
 ### ⚠️ Active Task Red Flags
 
 | Thought | Reality |
 | --- | --- |
-| "The user added details, so start a new requirements document." | Same-feature changes update the current workflow run and existing records. |
-| "The confirmed plan is old, but keep implementing anyway." | Return to the earliest affected stage and refresh records before moving forward. |
-| "This sounds bigger, so silently start a new task." | Ask whether to expand the current feature or start a separate task. |
-
-## Consolidated Brainstorming Confirmation
-
-For the brainstorming-backed Requirements Confirmation and Technical Solution stages, this active workflow overrides the vendored brainstorming instruction to request approval after each design subsection.
-
-A clarifying question is a decision input, not a stage confirmation. An approach selection is also a decision input, not a stage confirmation.
-
-Do not request approval after each subsection by default. Ask an additional question only when the answer materially changes the remaining requirements or design and is needed before the next part can be completed.
-
-After required clarification and exploration, use this order:
-
-1. Write or update the required stage record.
-2. Update the manifest for that record and create or record the stage checkpoint under the Git Checkpoints rules, using `skipped: no tracked changes` when applicable.
-3. Present the complete stage output in a single consolidated review that points to the written record.
-4. Request one final confirmation interaction for each completed version of the stage. Make the written stage record review and the stage confirmation the same interaction; do not request another confirmation after the user approves that record.
-5. After the user's decision, record the user confirmation separately in the manifest. A checkpoint commit does not count as confirmation.
-
-If the user's response changes the proposed stage output, update the same record and repeat this order before moving to the next stage.
+| "The user added details, so start a new diagnosis document." | Same-bug changes update the current workflow run and existing records. |
+| "The confirmed repair plan is old, but keep implementing anyway." | Return to the earliest affected stage and refresh records before moving forward. |
+| "This sounds bigger, so silently start a new task." | Ask whether to expand the current bug fix or start a separate task. |
 
 ## Confirmation Gate Presentation
 
-Before each real pre-Business Acceptance confirmation gate in `Requirements Confirmation`, `Technical Solution`, and `Implementation Plan`, present the decision in this order before any evidence link:
+Before each real pre-Business Acceptance confirmation gate in `Problem Diagnosis`, `Repair Solution`, and `Repair Plan`, present the decision in this order before any evidence link:
 
-1. `current conclusion`: the complete conclusion for the current Dev Cadence stage.
-2. `included scope`: the requirements, modules, plan tasks, acceptance criteria, and records covered by this version.
-3. `excluded scope`: non-goals, deferred work, unrelated files, and later workflow stages not covered by this decision.
-4. `risks or open questions`: unresolved requirements, technical constraints, implementation risks, and assumptions that affect the decision.
-5. `evidence link`: a repository-relative link to the stage record, plan, or other complete evidence. The link supports the summary and does not replace it.
+1. `current conclusion`: the confirmed diagnosis, repair approach, or repair plan for the current stage.
+2. `included scope`: the symptom, root cause, repair boundary, files, regression checks, and records covered by this version.
+3. `excluded scope`: unrelated defects, intentional behavior changes, deferred work, and later workflow stages not covered by this decision.
+4. `risks or open questions`: diagnosis confidence, repair risks, unresolved assumptions, and regression gaps that affect the decision.
+5. `evidence link`: a repository-relative link to the stage record, repair plan, or other complete evidence. The link supports the summary and does not replace it.
 
 Then present the actual choices and their effects. The minimum delivery choices are:
 
-- `confirm current version and advance to the next stage`: record the user's confirmation for the current stage, keep the confirmed scope and version, create the required checkpoint when applicable, and allow the next Dev Cadence stage to begin.
-- `request changes and remain at the current stage`: do not advance or start later-stage work, update the same stage record or plan with the requested changes, and present the complete gate again for confirmation.
+- `confirm current version and advance to the next stage`: record the user's confirmation for the current stage, preserve the confirmed repair scope and version, create the required checkpoint when applicable, and allow the next Dev Cadence stage to begin.
+- `request changes and remain at the current stage`: do not advance or start later-stage work, update the same diagnosis, solution, or plan record with the requested changes, and present the complete gate again for confirmation.
 
-Every choice must state its effect on the next stage, asset writes, workflow records, stage status, and whether re-confirmation is required. List additional approach, implementation-mode, or worktree choices only when the vendored workflow can execute them, and keep those decision inputs separate from stage confirmation. This contract does not replace the fixed Business Acceptance or Completion menus.
+Every choice must state its effect on the next stage, asset writes, workflow records, stage status, and whether re-confirmation is required. A diagnosis that remains ambiguous must stay in diagnosis; `not-a-bug`, scope expansion, and any intentional behavior change keep their existing routing rules. This contract does not replace the fixed Business Acceptance or Completion menus.
 
 ## Stage Rules
 
-### Enhanced Exploration Mode
-
-Use enhanced exploration mode for features that touch multiple files or modules, require architectural decisions, integrate with existing workflows, have unclear requirements, or introduce meaningful user-visible behavior. Do not force enhanced exploration mode for trivial, well-scoped changes.
-
-When enhanced exploration mode applies:
-
-- explore 2-3 independent perspectives before finalizing the Technical Solution, such as similar existing features, relevant architecture and data flow, UI or API patterns, testing strategy, integration boundaries, accessibility, security, or operational constraints;
-- each exploration perspective must identify key files with line references, established patterns, constraints, risks, and 5-10 essential files the main agent must read;
-- the main agent must read the essential files before writing the Technical Solution;
-- record the exploration summary in `02-technical-solution.md` under `Codebase Exploration Findings`;
-- present multiple architecture alternatives in `02-technical-solution.md`, including minimal-change, clean-architecture, and pragmatic-balance options when those options are meaningfully different;
-- recommend one option with concrete rationale and ask the user to confirm the Technical Solution before writing the implementation plan.
-
-### Requirements Confirmation
+### Problem Diagnosis
 
 Use:
 
 ```text
-.dev-cadence/vendor/superpowers/skills/brainstorming/SKILL.md
+.dev-cadence/vendor/superpowers/skills/systematic-debugging/SKILL.md
 ```
 
-Clarify the user-visible or system-visible requirement. Before moving on, explicitly present:
+Clarify and investigate the reported problem. Before moving on, explicitly present:
 
-- confirmed scope;
-- non-goals;
-- acceptance criteria;
+- reported symptom;
+- expected behavior;
+- actual behavior;
+- impact scope;
+- whether this is confirmed as a bug or still ambiguous;
+- reproduction steps or why reproduction is not currently possible;
+- root cause hypothesis, evidence, and confidence;
 - open questions or assumptions.
 
-If enhanced exploration mode might apply but the trigger is unclear, state the assumption and either enter enhanced exploration mode or explain why the request is trivial enough to skip it.
+Do not propose or implement a fix until the root cause investigation has enough evidence.
 
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/01-requirements.md
+build/dev-cadence/bug-fix/<bug-slug>/01-problem-diagnosis-record.md
 ```
 
-Ask the user to confirm this stage. Do not start implementation planning or code.
+Ask the user to confirm this stage. Do not write the repair plan or code yet.
 
-### Technical Solution
+### Repair Solution
 
 Continue with:
 
 ```text
-.dev-cadence/vendor/superpowers/skills/brainstorming/SKILL.md
+.dev-cadence/vendor/superpowers/skills/systematic-debugging/SKILL.md
 ```
 
-Use its design/spec guidance. Before moving on, explicitly present:
+Based on the diagnosis, define the repair approach. Before moving on, explicitly present:
 
-- recommended approach;
-- alternatives or tradeoffs when relevant, and for enhanced exploration mode include minimal-change, clean-architecture, and pragmatic-balance alternatives unless two or more are effectively identical;
-- affected modules and boundaries;
-- high-level testing strategy;
-- risks or constraints.
+- root cause being fixed;
+- repair point and repair boundary;
+- files, modules, data, configuration, or workflows likely to change;
+- related behavior that may be affected;
+- regression scope that must be checked later;
+- repair acceptance criteria;
+- behavior that must remain unchanged;
+- alternatives or tradeoffs when relevant;
+- risks and user decisions needed.
 
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/02-technical-solution.md
+build/dev-cadence/bug-fix/<bug-slug>/02-repair-solution.md
 ```
 
-The Technical Solution record must link to `01-requirements.md` as the confirmed requirement source. This active workflow path overrides any generic feature-spec default in the vendored brainstorming skill.
+Ask the user to confirm this stage. Do not write the TDD repair plan or code yet.
 
-Ask the user to confirm this stage. Do not write the TDD implementation plan or code yet.
-
-### Implementation Plan
+### Repair Plan
 
 Use:
 
@@ -373,18 +332,20 @@ Use:
 .dev-cadence/vendor/superpowers/skills/writing-plans/SKILL.md
 ```
 
-The entry-prepared workspace must be verified and reused at Plan stage; this stage must not first create a task branch or worktree. When `worktree.enabled` is `true`, verify the entry created or verified the configured isolated feature worktree. When `worktree.enabled` is `false`, verify the entry prepared the dedicated feature branch with no worktree.
+The entry-prepared workspace must be verified and reused at Plan stage; this stage must not first create a task branch or worktree. When `worktree.enabled` is `true`, verify the entry created or verified the configured isolated repair worktree. When `worktree.enabled` is `false`, verify the entry prepared the dedicated repair branch with no worktree.
 
-The plan is only for the next stage, Development Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
+The plan is only for the next stage, Repair Implementation. It must follow the Superpowers plan requirements: concrete files, concrete steps, test-first cycles, commands, expected results, and self-review.
 
 The plan must include:
 
-- tasks that implement only the confirmed requirement and technical solution;
-- tests or checks for each acceptance criterion;
-- development-stage verification needed to prove the working deliverable;
-- completion conditions for Development Implementation.
+- a failing test or reproducible check that proves the bug;
+- the expected failure evidence before the fix;
+- the minimal repair steps;
+- supporting unit, integration, frontend, API, script, or manual checks needed for the repaired behavior;
+- regression checks derived from the Repair Solution impact scope;
+- completion conditions for Repair Implementation.
 
-Before detailed task steps, the plan must include a `Task Overview` section that lets the user quickly scan the planned tasks without reading every step.
+Before detailed task steps, the plan must include a `Task Overview` section that lets the user quickly scan the planned repair tasks without reading every step.
 
 Use this structure before the first detailed task:
 
@@ -403,34 +364,32 @@ Each detailed task must have a matching row in `Task Overview`. Keep overview ro
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/03-implementation-plan.md
+build/dev-cadence/bug-fix/<bug-slug>/03-repair-plan.md
 ```
-
-This active workflow path overrides any generic default plan path in the vendored writing-plans skill.
 
 Ask the user to confirm the plan before implementation starts.
 
 #### Pre-Implementation Design Freshness Gate
 
-Immediately before entering Development Implementation, revalidate that the confirmed design and implementation plan still match the current delivery context.
+Immediately before entering Repair Implementation, revalidate that the confirmed diagnosis, Repair Solution, and Repair Plan still match the current repair context.
 
-Compare the current work item card version, confirmed requirements record, confirmed Technical Solution record, Implementation Plan, and current code state. When present, also inspect authoritative product design, architecture, Decision, dependency state, and other sources referenced by the plan.
+Compare the current work item card version, confirmed diagnosis record, confirmed Repair Solution record, Repair Plan, and current code state. When present, also inspect authoritative product design, architecture, Decision, dependency state, and other sources referenced by the plan.
 
-Record the input identities, conclusion, and evidence summary in the manifest and current plan or implementation record. The evidence must identify the card and document versions or paths used, the current branch and commit, relevant dependency state, and material repository changes since confirmation.
+Record the input identities, conclusion, and evidence summary in the manifest and current plan or repair record. The evidence must identify the card and document versions or paths used, the current branch and commit, relevant dependency state, and material repository changes since confirmation.
 
 Classify the result:
 
 - If the inputs remain valid, continue directly without asking the user to reconfirm unchanged content.
-- If requirements, scope, or acceptance criteria changed, return to the earliest affected Requirements Confirmation stage.
-- If architecture, data, interface, security, or delivery-strategy assumptions changed, return to Technical Solution.
-- If only the task split, file list, order, or verification steps changed, return to Implementation Plan.
+- If the diagnosis, expected behavior, repair boundary, or acceptance criteria changed, return to the earliest affected Problem Diagnosis stage.
+- If architecture, data, interface, security, or repair-strategy assumptions changed, return to Repair Solution.
+- If only the task split, file list, order, or verification steps changed, return to Repair Plan.
 - Unrelated code changes, formatting changes, generated output, or files outside the affected boundary do not invalidate the design.
 
 When returning to an earlier stage, mark affected later confirmation and verification evidence as superseded, set the earliest affected stage to `in_progress`, set later affected stages to `pending`, refresh and reconfirm the affected records, and block implementation until the gate passes again.
 
 ### Failure Classification And Stage Routing
 
-Use this lifecycle for blocking failures observed during implementation, compilation or build, automated testing, System Testing, regression checks, or implementation-stage code review. Classify from inspectable evidence, not from the failure symptom alone.
+Use this lifecycle for blocking failures observed during implementation, compilation or build, automated testing, Regression Verification, regression checks, or implementation-stage code review. Classify from inspectable evidence, not from the failure symptom alone.
 
 Use exactly these canonical classifications: `implementation_bug`, `test_bug`, `environment_issue`, `unclear_requirement`, `design_conflict`, `architecture_conflict`, and `missing_dependency`.
 
@@ -438,13 +397,13 @@ Assign every failure a stable failure ID that remains unchanged across remediati
 
 Route each classification as follows:
 
-- `implementation_bug`: return to Development Implementation.
-- `test_bug`: return to the test asset owner or the test-correction step within Development Implementation. Do not delete, skip, or weaken an effective test to hide an implementation failure. If the test asset owner is external, keep `test_bug`, record the owner and unblock conditions, and do not relabel it as `missing_dependency`.
-- `unclear_requirement`: return to Requirements Confirmation, the earliest requirement stage for this workflow.
-- `design_conflict`: return to Technical Solution.
-- `architecture_conflict`: return to Technical Solution and reassess the relevant Architecture and Decision sources before reconfirming the solution.
+- `implementation_bug`: return to Repair Implementation.
+- `test_bug`: return to the test asset owner or the test-correction step within Repair Implementation. Do not delete, skip, or weaken an effective test to hide an implementation failure. If the test asset owner is external, keep `test_bug`, record the owner and unblock conditions, and do not relabel it as `missing_dependency`.
+- `unclear_requirement`: return to Problem Diagnosis, the earliest requirement or diagnosis stage for this workflow.
+- `design_conflict`: return to Repair Solution.
+- `architecture_conflict`: return to Repair Solution and reassess the relevant Architecture and Decision sources before reconfirming the solution.
 - `environment_issue`: keep the current business stage as `blocked`, keep the overall status as `in_progress`, and record reproducible evidence plus unblock conditions. Do not report the implementation or verification as passed, failed, or ready solely because the environment is blocked.
-- `missing_dependency`: return a requirement dependency to Requirements Confirmation, a solution dependency to Technical Solution, and an execution dependency to Implementation Plan or Development Implementation, choosing the earliest stage that can resolve it. If the current task cannot resolve it, block the run and record the responsible owner and unblock conditions without reporting a false verification conclusion.
+- `missing_dependency`: return a requirement dependency to Problem Diagnosis, a solution dependency to Repair Solution, and an execution dependency to Repair Plan or Repair Implementation, choosing the earliest stage that can resolve it. If the current task cannot resolve it, block the run and record the responsible owner and unblock conditions without reporting a false verification conclusion.
 
 Do not retry the same failure without new evidence, a corrective action, or an environment change. After remediation, rerun the check associated with the stable failure ID and record exactly one failure lifecycle result: `closed`, `reclassified`, or `blocked`. These failure lifecycle results are internal record values and must not become Backlog or work-item statuses.
 
@@ -452,7 +411,7 @@ Only a validated blocking code review finding enters this failure lifecycle; pre
 
 When routing returns to an earlier stage, reuse the active-task rollback semantics: set the earliest affected stage to `in_progress`, set later affected stages to `pending`, mark invalidated confirmation and verification evidence as `superseded`, refresh the affected records, and obtain the confirmations required by this workflow before continuing.
 
-### Development Implementation
+### Repair Implementation
 
 Use:
 
@@ -463,36 +422,36 @@ Use:
 .dev-cadence/vendor/superpowers/skills/requesting-code-review/SKILL.md
 ```
 
-Follow the confirmed plan. Development-stage verification belongs here: failing tests first, minimal implementation, passing focused tests, refactor after green, and implementation notes.
+Follow the confirmed plan. Development-stage verification belongs here: reproduce the bug first, write or run the failing test/check, implement the minimal fix, pass focused tests, refactor only after green, and record repair notes.
 
 Use `subagent-driven-development` when the plan has independent tasks and the platform supports subagents. Use `executing-plans` when subagent-driven development is not available or not appropriate.
 
-Vendored implementation skills may create progress commits without asking. These commits do not confirm Development Implementation or advance the workflow.
+Vendored implementation skills may create progress commits without asking. These commits do not confirm Repair Implementation or advance the workflow.
 
-Return control to Dev Cadence after implementation and review. Do not invoke `finishing-a-development-branch` during Development Implementation, even if a vendored implementation skill normally invokes it after its tasks. This active workflow overrides that terminal step; proceed to System Testing instead.
+Return control to Dev Cadence after implementation and review. Do not invoke `finishing-a-development-branch` during Repair Implementation, even if a vendored implementation skill normally invokes it after its tasks. This active workflow overrides that terminal step; proceed to Regression Verification instead.
 
-Follow the Superpowers code review requirements during Development Implementation: review after each subagent-driven task, review after major feature completion, and review before merge. Fix Critical and Important findings before moving to System Testing, unless the user explicitly accepts the risk.
+Follow the Superpowers code review requirements during Repair Implementation. Fix Critical and Important findings before moving to Regression Verification, unless the user explicitly accepts the risk.
 
 #### Executing-Plans Pre-Commit Review
 
-This subsection applies only when `executing-plans` is selected. It governs every implementation commit created while executing the confirmed plan, including plan-task commits, user-requested implementation progress commits, and final-review fix commits. The active main agent must perform this review without requiring a subagent. It does not apply to `subagent-driven-development` task commits or stage checkpoint commits.
+This subsection applies only when `executing-plans` is selected. It governs every implementation commit created while executing the confirmed repair plan, including plan-task commits, user-requested repair progress commits, and final-review fix commits. The active main agent must perform this review without requiring a subagent. It does not apply to `subagent-driven-development` task commits or stage checkpoint commits.
 
-Before the first implementation commit, capture and persist the implementation base in the implementation record:
+Before the first implementation commit, capture and persist the implementation base in the repair record:
 
 ```bash
 IMPLEMENTATION_BASE_SHA=$(git rev-parse HEAD)
 ```
 
-The implementation record must record the implementation base SHA before any implementation commit. Use one review unit for every commit:
+The repair record must record the implementation base SHA before any implementation commit. Use one review unit for every commit:
 
-- `plan-task-<n>` for a commit required by the confirmed plan task;
-- `progress-<n>-<k>` for a user-requested commit before plan task `<n>` is complete;
-- `final-review-fix-<k>` for commits that resolve findings from the final whole-implementation review;
+- `plan-task-<n>` for a commit required by the confirmed repair-plan task;
+- `progress-<n>-<k>` for a user-requested commit before repair-plan task `<n>` is complete;
+- `final-review-fix-<k>` for commits that resolve findings from the final whole-repair review;
 - `recovery-fix-<review-id>-<k>` for a corrective commit required to close retrospective findings for `<review-id>`.
 
 A progress unit runs checks appropriate to its staged work; the current plan task must remain `in_progress` and its checklist must not advance. A final-review fix unit cites its finding IDs and affected tasks and may cross completed-task file boundaries only to resolve those findings. A recovery-fix unit is limited to the changes required by its linked retrospective findings.
 
-Maintain an `Executing-Plans Commit Review Ledger` in the implementation record. Each entry records the review ID and unit, commit type, state, Expected parent, Reviewed tree, staged files, checks, decision, commit hash, Committed parent, Committed tree, Identity, findings, residual risks, and separate Source finding IDs and Affected tasks fields when applicable. Allowed states are `reviewed-pending-commit` (reviewed snapshot persisted, commit not verified), `verified` (identity proven or retrospective review closed), and `recovery-required` (actual commit is not proven or its retrospective findings remain open). Identity is `pending`, `exact`, or `retrospective`.
+Maintain an `Executing-Plans Commit Review Ledger` in the repair record. Each entry records the review ID and unit, commit type, state, Expected parent, Reviewed tree, staged files, checks, decision, commit hash, Committed parent, Committed tree, Identity, findings, residual risks, and separate Source finding IDs and Affected tasks fields when applicable. Allowed states are `reviewed-pending-commit` (reviewed snapshot persisted, commit not verified), `verified` (identity proven or retrospective review closed), and `recovery-required` (actual commit is not proven or its retrospective findings remain open). Identity is `pending`, `exact`, or `retrospective`.
 
 Before any implementation commit, run this gate:
 
@@ -507,7 +466,7 @@ Before any implementation commit, run this gate:
    git diff --cached
    ```
 
-3. Review the complete staged diff against the review unit, confirmed requirements and solution, implementation plan, acceptance criteria, applicable repository rules, correctness and risk, required test evidence, and scope. Fix findings, rerun relevant checks, restage, and repeat the complete gate.
+3. Review the complete staged diff against the review unit, confirmed diagnosis and solution, repair plan, acceptance criteria, applicable repository rules, correctness and risk, required regression evidence, and scope. Fix findings, rerun relevant checks, restage, and repeat the complete gate.
 4. Confirm the reviewed identity is still current:
 
    ```bash
@@ -527,7 +486,7 @@ Before any implementation commit, run this gate:
 
 8. Only after both comparisons pass may the entry become `verified` with `Identity: exact`: `COMMIT_PARENT_SHA` equals `EXPECTED_PARENT_SHA`, and `COMMITTED_TREE_SHA` equals `REVIEWED_TREE_SHA`. For `Identity: exact`, Expected parent is the Commit's actual immediate parent. Otherwise set `recovery-required` with `Identity: retrospective`, record Committed parent, and review `EXPECTED_PARENT_SHA..COMMIT_SHA`; for `Identity: retrospective`, use Committed parent rather than Expected parent when reconciling actual history. Stop further implementation commits except linked `recovery-fix-<review-id>-<k>` commits, each of which uses the normal exact-identity gate. Mark the recovery entry `verified` when the retrospective review is recorded and no blocking finding remains: validated Critical or Important findings are fixed or recorded as accepted risk after explicit user acceptance, while not validated and other non-blocking findings remain visible. Never call retrospective evidence pre-commit evidence.
 
-Do not mark a plan task complete until its final plan-task entry is `verified`, its required checks pass, and its evidence is complete. A progress entry never completes a plan task.
+Do not mark a repair-plan task complete until its final plan-task entry is `verified`, its required checks pass, and its evidence is complete. A progress entry never completes a repair-plan task.
 
 When resuming, read `IMPLEMENTATION_BASE_SHA` and the complete ledger before continuing. Reconcile the ledger with:
 
@@ -543,18 +502,18 @@ Before treating any history entry as unmatched, classify each first-parent commi
 
 Verified ledger commits must appear in first-parent order, but recorded stage checkpoints may appear between them. For an exact entry, Expected parent must equal the Commit's actual immediate parent; for a retrospective entry, Committed parent must equal the actual immediate parent. Implementation commits do not need to be adjacent to one another. If a pending entry's Expected parent equals `HEAD`, no commit occurred. Continue if the index still equals its Reviewed tree. If the index differs, record why the pending snapshot was invalidated, repeat the complete gate, and replace its identity and review evidence before committing. If the direct first-parent child is a recorded stage checkpoint, the pending snapshot is stale; invalidate it and repeat the gate from the current `HEAD` after classifying later commits. Otherwise set `COMMIT_SHA` to the direct first-parent child and recompute only `COMMIT_PARENT_SHA` and `COMMITTED_TREE_SHA` for that selected commit using the last two committed-identity commands above; do not reset `COMMIT_SHA` from `HEAD`. If the parent and tree match, attach it as `verified` and `exact`. Any remaining unclassified commit requires retrospective review and `Identity: retrospective`; never fabricate pre-commit evidence. Recover a missing base only from the earliest ledger Expected parent after verifying the ordered history. Stop and ask the user for rewritten history, unexplained merges, broken ancestry, missing evidence, or ambiguous ownership; do not guess, amend, or rewrite history.
 
-After all plan tasks have verified final entries and no entry remains pending or recovery-required, set `FINAL_IMPLEMENTATION_SHA` to the Commit hash of the latest verified implementation commit in the ledger and consolidate the ledger into `04-code-review-report.md`. The final review must cover the complete implementation range `IMPLEMENTATION_BASE_SHA..FINAL_IMPLEMENTATION_SHA`; use that range as the ancestry boundary, but exclude changes introduced only by recorded stage checkpoints from implementation findings and list those checkpoint hashes separately. Do not use `HEAD~1` for a multi-commit implementation. If reviewer subagents are available, use `requesting-code-review` for an additional final independent review. If reviewer subagents are unavailable, the active main agent must perform the final whole-implementation review and record its reviewed commit range, findings, fixes, and decision in the same report.
+After all repair-plan tasks have verified final entries and no entry remains pending or recovery-required, set `FINAL_IMPLEMENTATION_SHA` to the Commit hash of the latest verified implementation commit in the ledger and consolidate the ledger into `04-code-review-report.md`. The final review must cover the complete repair range `IMPLEMENTATION_BASE_SHA..FINAL_IMPLEMENTATION_SHA`; use that range as the ancestry boundary, but exclude changes introduced only by recorded stage checkpoints from repair findings and list those checkpoint hashes separately. Do not use `HEAD~1` for a multi-commit repair. If reviewer subagents are available, use `requesting-code-review` for an additional final independent review. If reviewer subagents are unavailable, the active main agent must perform the final whole-repair review and record its reviewed commit range, findings, fixes, and decision in the same report.
 
-If the final review produces a validated finding that requires code changes, create a `final-review-fix-<k>` unit with the next unused `<k>` and tie it to the finding IDs; because one unit covers one commit, additional commits use successive values. Keep completed plan tasks closed for cross-task integration fixes. Reopen an affected task only when the finding proves that its acceptance criteria or required verification were not satisfied. If the fix expands confirmed scope, do not treat it as a review fix; follow Active Task Change Handling and return to the earliest affected stage. Every final-review fix commit must pass the normal exact-identity gate. After any verified implementation commit created during final-review remediation, whether `final-review-fix` or `recovery-fix`, set `FINAL_IMPLEMENTATION_SHA` to the latest verified implementation commit and repeat the final whole-implementation review. Continue until no blocking finding remains or the user explicitly accepts the residual risk.
+If the final review produces a validated finding that requires code changes, create a `final-review-fix-<k>` unit with the next unused `<k>` and tie it to the finding IDs; because one unit covers one commit, additional commits use successive values. Keep completed repair-plan tasks closed for cross-task integration fixes. Reopen an affected task only when the finding proves that its acceptance criteria or required verification were not satisfied. If the fix expands confirmed scope, do not treat it as a review fix; follow Active Task Change Handling and return to the earliest affected stage. Every final-review fix commit must pass the normal exact-identity gate. After any verified implementation commit created during final-review remediation, whether `final-review-fix` or `recovery-fix`, set `FINAL_IMPLEMENTATION_SHA` to the latest verified implementation commit and repeat the final whole-repair review. Continue until no blocking finding remains or the user explicitly accepts the residual risk.
 
-This gate applies only to implementation commits created while executing the confirmed plan. Stage checkpoint commits remain governed by the Git Checkpoints rules. Do not mix implementation changes into a stage checkpoint commit.
+This gate applies only to implementation commits created while executing the confirmed repair plan. Stage checkpoint commits remain governed by the Git Checkpoints rules. Do not mix implementation changes into a stage checkpoint commit.
 
 #### Subagent-Driven Development
 
 Before using `subagent-driven-development`, set:
 
 ```text
-DEV_CADENCE_TASK_DIR=build/dev-cadence/feature-dev/<feature-slug>
+DEV_CADENCE_TASK_DIR=build/dev-cadence/bug-fix/<bug-slug>
 ```
 
 All SDD task briefs, implementer reports, review packages, and progress ledgers must stay under that task directory.
@@ -565,7 +524,7 @@ Ignored SDD scratch such as `sdd/progress.md` is useful during implementation, b
 
 These common rules apply to both `executing-plans` and `subagent-driven-development`.
 
-If debugging is needed, use:
+If new debugging is needed, return to:
 
 ```text
 .dev-cadence/vendor/superpowers/skills/systematic-debugging/SKILL.md
@@ -574,33 +533,34 @@ If debugging is needed, use:
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/04-implementation-record.md
+build/dev-cadence/bug-fix/<bug-slug>/04-repair-record.md
 ```
 
 For committed tracked changes, terminal evidence must include the Implementation Base SHA, final implementation commit hash, and final changed-files state derived from that implementation range. If a terminal or stage checkpoint has no tracked changes, record `skipped: no tracked changes` instead of substituting alternative evidence.
 
 After writing or updating the stage record, follow this sequence exactly: Write or update the stage record -> create the stage checkpoint -> verify the checkpoint tree contains the stage record -> bind the verified SHA in manifest -> run the installed delivery-record validator.
 
-Verify the checkpoint tree contains the stage record with `git cat-file -e "<checkpoint-commit>:build/dev-cadence/feature-dev/<feature-slug>/04-implementation-record.md"`, then record the verified checkpoint SHA in the manifest and run `bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/feature-dev/<feature-slug>`.
+Verify the checkpoint tree contains the stage record with `git cat-file -e "<checkpoint-commit>:build/dev-cadence/bug-fix/<bug-slug>/04-repair-record.md"`, then record the verified checkpoint SHA in the manifest and run `bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/bug-fix/<bug-slug>`.
 
-The implementation record must include:
+The repair record must include:
 
 - final implementation commit hash and Changed Files for committed tracked changes, or `skipped: no tracked changes` when applicable;
 - completed plan tasks;
-- tests and checks run during development;
+- original bug reproduction evidence;
+- tests and checks run during repair implementation;
 - code review report path, summary, and unresolved review findings, if any;
 - skipped checks with reasons;
-- implementation notes and known residual risks.
+- repair notes and known residual risks.
 
-Completed plan task evidence must be kept in sync with the plan. Mark completed implementation-plan steps as `- [x]`. If the plan file cannot be updated, record the completed step numbers and the reason the checklist could not be updated in the implementation record.
+Completed plan task evidence must be kept in sync with the plan. Mark completed repair-plan steps as `- [x]`. If the plan file cannot be updated, record the completed step numbers and the reason the checklist could not be updated in the repair record.
 
 Code review evidence must be traceable and high signal. Write the detailed review report to:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/04-code-review-report.md
+build/dev-cadence/bug-fix/<bug-slug>/04-code-review-report.md
 ```
 
-The implementation record must link to `04-code-review-report.md` and summarize:
+The repair record must link to `04-code-review-report.md` and summarize:
 
 - review decision;
 - Critical findings count and status;
@@ -618,18 +578,18 @@ Review must cover these perspectives:
 
 - `rules compliance`: violations of explicit AGENTS/CLAUDE rules that apply to the changed files;
 - `correctness / bugs`: functional bugs, missing imports, invalid state handling, error handling gaps, security issues, or other defects introduced by the change;
-- `test / acceptance alignment`: whether implementation and tests match the confirmed requirements, technical solution, implementation plan, and acceptance criteria.
+- `test / acceptance alignment`: whether implementation and tests match the confirmed problem diagnosis, repair solution, repair plan, and repair acceptance criteria.
 
 Only record high-signal findings. A finding must have file/line evidence or a clearly stated proof, must be introduced by the current change, and must affect functionality, rule compliance, security, maintainability, or acceptance. Do not record pure style preferences, speculative concerns, pre-existing issues, or issues a linter/formatter will catch unless they block delivery.
 
-For each Critical or Important finding, record one validation state: `validated`, `not validated`, `fixed`, or `accepted risk`. Unvalidated findings must not block System Testing, but must remain visible as review notes. Critical and Important validated findings must be fixed or explicitly accepted by the user before moving to System Testing.
+For each Critical or Important finding, record one validation state: `validated`, `not validated`, `fixed`, or `accepted risk`. Unvalidated findings must not block Regression Verification, but must remain visible as review notes. Critical and Important validated findings must be fixed or explicitly accepted by the user before moving to Regression Verification.
 
-Use this `Code Review Evidence` structure in the implementation record:
+Use this `Code Review Evidence` structure in the repair record:
 
 ```text
 ## Code Review Evidence
 
-- Report: [Code review report](04-code-review-report.md) (`build/dev-cadence/feature-dev/<feature-slug>/04-code-review-report.md`)
+- Report: [Code review report](04-code-review-report.md) (`build/dev-cadence/bug-fix/<bug-slug>/04-code-review-report.md`)
 - Review decision:
 - Critical findings:
 - Important findings:
@@ -645,8 +605,8 @@ The code review report must use this checklist structure:
 
 - [ ] Changed files are listed.
 - [ ] Applicable `AGENTS.md` or `CLAUDE.md` rule sources are listed, or `None found` is recorded.
-- [ ] Confirmed requirements and technical solution source is linked.
-- [ ] Implementation plan source is linked.
+- [ ] Confirmed problem diagnosis and repair solution sources are linked.
+- [ ] Repair plan source is linked.
 - [ ] Reviewed diff or commit range is identified by branch and commit hash when available.
 
 ## Review Perspectives
@@ -665,15 +625,13 @@ The code review report must use this checklist structure:
 
 ## Review Decision
 
-- [ ] Safe to proceed to System Testing, or blocking reason recorded.
+- [ ] Safe to proceed to Regression Verification, or blocking reason recorded.
 - [ ] Fixes applied are listed, or `None`.
 - [ ] Unresolved findings are listed, or `None`.
 - [ ] Residual review risks are listed, or `None`.
 ```
 
-For enhanced exploration mode, code review evidence must cover multiple perspectives before moving to System Testing: correctness and bugs; simplicity, duplication, and maintainability; and project conventions, tests, accessibility, security, or performance as relevant to the feature. Record each perspective's conclusion and any Critical or Important findings.
-
-### System Testing
+### Regression Verification
 
 Use:
 
@@ -681,25 +639,25 @@ Use:
 .dev-cadence/vendor/superpowers/skills/verification-before-completion/SKILL.md
 ```
 
-Verify the working deliverable against the confirmed requirement, technical solution, implementation plan, and actual changes. Record passed checks, failures, skipped checks, residual risk, and whether the work can enter business acceptance.
+Verify the working deliverable against the problem diagnosis, repair solution, repair plan, and actual changes. Confirm the original problem is fixed and that behavior inside the stated impact scope has not regressed.
 
-Do not claim the system is ready without fresh verification evidence.
+Do not claim the bug is fixed or regression-free without fresh verification evidence.
 
 #### Verification Decision Gate
 
-The final system test report must record a normalized `Verification Decision`:
+The final regression test report must record a normalized `Verification Decision`:
 
 - `ready`: executed evidence shows the confirmed goal is satisfied and no blocking gap remains.
 - `ready_with_risk`: executed evidence does not show a confirmed goal failure, but explicitly listed non-blocking skipped checks, uncovered optional areas, or residual risks remain for Business Acceptance.
 - `not_ready`: an executed check failed, a confirmed goal is unmet, required evidence is inconsistent, or a blocking gap remains.
 
-A required acceptance criterion without executed evidence must be `not_ready`. It must not be downgraded to `ready_with_risk`.
+If the original bug still reproduces or a required bug-fix outcome lacks executed evidence, the decision must be `not_ready`. It must not be downgraded to `ready_with_risk`.
 
 Only `ready` and `ready_with_risk` may enter Business Acceptance.
 
 When the decision is `not_ready`:
 
-1. record the blocking evidence and the earliest affected stage in the system test report;
+1. record the blocking evidence and the earliest affected stage in the regression test report;
 2. set the earliest affected stage to `in_progress` and later affected stages to `pending` in the manifest;
 3. mark confirmation and verification information invalidated by the finding as `superseded` instead of treating it as current evidence;
 4. update and reconfirm the affected stage records;
@@ -710,21 +668,22 @@ Historical confirmation and checkpoint information may remain for auditability, 
 At the end of this stage, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/05-system-test-report.md
+build/dev-cadence/bug-fix/<bug-slug>/05-regression-test-report.md
 ```
 
-The system test report must use this structure:
+The regression test report must use this structure:
 
-- `Requirement, Technical Solution, And Implementation Sources`: requirements source, technical solution source, plan source, and implementation source.
+- `Problem And Repair Sources`: diagnosis source, solution source, plan source, and repair source.
 - `Test Environment`: repository, branch, date, runtime, servers, tools, and relevant configuration.
-- `Test Cases`: a table with columns `ID`, `Scenario`, `Type`, `Execution`, `Result`, and `Evidence`. List every automated, manual, smoke, build, source-inspection, and skipped test case that matters to the confirmed requirement.
-- `Requirement Coverage`: map each acceptance criterion or important requirement to test case IDs and an explicit status: `covered`, `skipped`, `not covered`, or `accepted risk`.
+- `Test Cases`: a table with columns `ID`, `Scenario`, `Type`, `Execution`, `Result`, and `Evidence`. List every automated, manual, smoke, build, source-inspection, regression, and skipped test case that matters to the confirmed bug and impact scope.
+- `Bug Fix Coverage`: map the original symptom, root cause, and repair acceptance points to test case IDs and an explicit status: `covered`, `skipped`, `not covered`, or `accepted risk`.
+- `Impact Scope Coverage`: map each affected area from the Repair Solution to test case IDs and an explicit status: `covered`, `skipped`, `not covered`, or `accepted risk`.
 - `Failed Or Skipped Checks`: failures and skipped checks with reasons. If none, write `None`.
 - `Residual Risks`: remaining risks after testing. If none, write `None`.
 - `Verification Decision`: exactly one of `ready`, `ready_with_risk`, or `not_ready`, determined by the Verification Decision Gate.
-- `Recommendation`: whether the work can enter Business Acceptance.
+- `Recommendation`: whether the fix can enter Business Acceptance.
 
-Coverage must be honest. If a confirmed acceptance criterion is not verified by an executed test or check, list it as `skipped`, `not covered`, or `accepted risk` in `Requirement Coverage`; do not only mention it in `Residual Risks`.
+Coverage must be honest. If the original symptom, root cause, repair acceptance point, or affected area is not verified by an executed test or check, list it as `skipped`, `not covered`, or `accepted risk` in `Bug Fix Coverage` or `Impact Scope Coverage`; do not only mention it in `Residual Risks`.
 
 ### Business Acceptance
 
@@ -734,9 +693,9 @@ The same user-visible message must present the Business Acceptance summary, sele
 
 Delegated continuation must not create, imply, or select a Business Acceptance or Completion decision. It applies only to explicitly delegated intermediate confirmation gates. If the fixed menu was not presented, no terminal decision exists and no acceptance record may be written.
 
-- summarize the confirmed requirement;
-- summarize the technical solution and implementation result;
-- summarize system test evidence and residual risks;
+- summarize the confirmed problem;
+- summarize the root cause and repair result;
+- summarize regression evidence and residual risks;
 - ask the user to choose a business acceptance decision from fixed numbered options:
   1. Accept
   2. Reject
@@ -744,7 +703,7 @@ Delegated continuation must not create, imply, or select a Business Acceptance o
 - get the business acceptor identity from the target repository's `git config user.name` and `git config user.email`; ask the user only if git identity is unavailable;
 - map the user's selected number or exact option text to the normalized decision, then record the decision, decision maker, exact decision time with timezone, and accepted residual risks.
 
-Do not substitute system test success for user acceptance.
+Do not substitute regression verification success for user acceptance.
 Do not infer acceptance from ambiguous positive feedback such as "looks good", "seems fine", "looks okay", localized equivalents, or similar wording.
 Only treat the response as a business acceptance decision when the user selects one of the numbered options or repeats the exact option text.
 If the user's response does not clearly select one fixed option, ask the user to choose again and do not write the business acceptance record yet.
@@ -761,13 +720,13 @@ If the user's response does not clearly select one fixed option, ask the user to
 After the user gives the acceptance decision, write or update:
 
 ```text
-build/dev-cadence/feature-dev/<feature-slug>/06-business-acceptance-record.md
+build/dev-cadence/bug-fix/<bug-slug>/06-business-acceptance-record.md
 ```
 
 The business acceptance record must use this structure:
 
-- `Accepted Requirement And Solution Sources`: confirmed requirements, technical solution, and plan sources.
-- `System Test Report Source`: system test report source.
+- `Accepted Problem Source`: confirmed diagnosis and solution sources.
+- `Regression Test Report Source`: regression test report source.
 - `User Decision`: normalized decision selected from the fixed options: accepted, rejected, or accepted with residual risk.
 - `Decision By`: target repository git identity that made the business acceptance decision, formatted as `user.name <user.email>` when both values are available.
 - `Decision At`: exact decision timestamp with timezone, preferably ISO 8601 with offset.
@@ -804,14 +763,30 @@ Handle the normalized finishing result:
 - `discard_cancelled` or `discard_blocked`: retain the current run and its records, report the reason, and remain in Completion without claiming a terminal result.
 - merge, pull request, or keep: update the manifest and Business Acceptance record with the final integration result, then complete the existing terminal-record readiness checklist.
 
+## Backlog Synchronization After Completion
+
+Only a successful Completion whose normalized finishing result is exactly `merge` may synchronize the Bug Fix to the Backlog. Completion must have succeeded, including accepted Business Acceptance, before this synchronization starts. A `pull request`, `keep`, `discard_cancelled`, `discard_blocked`, or `whole_run_discarded` result must not mark the Bug `Done` and must not move it into the completed lifecycle section.
+
+For the `merge` path, locate the existing Bug card and its Backlog row by the card's Bug ID and Version. Re-read the current card and Backlog visible facts immediately before writing. If the Bug ID, Version, title, priority, status, link, or lifecycle location conflicts with the confirmed facts, stop on the conflict and require a user decision; do not partially write either the card or Backlog.
+
+After identity and visible-fact checks pass, perform one atomic card and Backlog write:
+
+1. Update the Bug card `Status` to `Done`.
+2. Record the repair result and integration reference on the Bug card. When this execution is an important event, append its Change Log event using the current Version; an execution-only status or delivery-reference write does not increment the confirmed requirement Version, and the same execution event must not duplicate the Change Log entry.
+3. Atomically update the Backlog: remove the matching row from the active or pending lifecycle section and add that same row to the completed lifecycle section with status `Done`.
+
+If any card or Backlog write cannot be completed against the re-read facts, perform zero partial writes and stop for a user decision. Preserve the title, Version, priority, link, and all unrelated row order in every affected table; do not recalculate or reorder unrelated work items as part of this write.
+
+The manifest, Business Acceptance record, and follow-up evidence must record the actual sync result, including the matched Bug ID and Version, card status and repair/integration references, the source and destination lifecycle sections, or the conflict and no-write outcome. The `merge` write must be idempotent: a repeat after the same visible facts are already synchronized records the existing `Done` state without duplicating the card reference, execution Change Log entry, or Backlog row.
+
 Before marking the run terminal, complete this readiness checklist:
 
 - [ ] Manifest has a terminal overall status and no `pending` checkpoint commit values.
 - [ ] Business acceptance record has `Final Follow-Up Actions` updated with actual past-tense results.
-- [ ] Implementation record has the final implementation commit hash and final changed-files state for committed changes, or `skipped: no tracked changes` when the terminal stage has no tracked changes.
-- [ ] Implementation record links to `04-code-review-report.md`.
+- [ ] Repair record has the final implementation commit hash and final changed-files state for committed changes, or `skipped: no tracked changes` when the terminal stage has no tracked changes.
+- [ ] Repair record links to `04-code-review-report.md`.
 - [ ] Code review report exists and all checklist items are checked or have an explicit reason.
-- [ ] System test report records skipped checks and residual risks honestly.
+- [ ] Regression test report records skipped checks and residual risks honestly.
 - [ ] No stage record contains stale future-tense or pre-commit status that conflicts with the manifest.
 - [ ] Artifact paths are repository-relative; no local absolute paths are persisted unless explicitly requested by the user.
 
@@ -820,7 +795,7 @@ If any checklist item is not satisfied, update the affected record before report
 Before marking the run terminal, run:
 
 ```bash
-bash .dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/feature-dev/<feature-slug> --terminal
+bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh build/dev-cadence/bug-fix/<bug-slug> --terminal
 ```
 
 Then follow the vendored finishing skill.

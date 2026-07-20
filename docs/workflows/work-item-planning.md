@@ -2,7 +2,7 @@
 
 本文说明 Dev Cadence 的 `work-item-planning` 业务流程，包括适用场景、阶段目标、Story Map、Milestone、估算、工作项和 Backlog 的职责边界。本文面向 Dev Cadence 维护者、流程评审者和希望了解工作项治理模型的使用者。
 
-目标仓库中的实际执行规则将由 `src/skills/work-item-planning/SKILL.md` 定义并生成安装内容。本文用于说明业务流程设计，不替代 workflow skill。
+目标仓库中的实际执行规则将由 `src/workflows/work-item-planning/SKILL.md` 定义并生成安装内容。本文用于说明业务流程设计，不替代 workflow skill。
 
 ## 目的
 

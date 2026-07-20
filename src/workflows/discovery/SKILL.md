@@ -16,7 +16,7 @@ Discovery is a product workflow. It clarifies what product should exist and how 
 Before reading, creating, or updating an owned asset Change Log, read and follow:
 
 ```text
-.dev-cadence/skills/contracts/change-log.md
+.dev-cadence/references/contracts/change-log.md
 ```
 
 Use only vendored Superpowers skills from:

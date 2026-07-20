@@ -8,10 +8,11 @@
 
 ## 目录职责
 
-- `src/skills/using-dev-cadence/SKILL.md`：目标仓库中的工作流入口选择器。
-- `src/skills/feature-dev/SKILL.md`：功能开发工作流规则源文件。
-- `src/skills/bug-fix/SKILL.md`：Bug 修复工作流规则源文件。
-- `src/skills/refactor/SKILL.md`：保持行为不变的重构工作流规则源文件。
+- `src/workflows/using-dev-cadence/SKILL.md`：目标仓库中的工作流入口选择器。
+- `src/workflows/feature-dev/SKILL.md`：功能开发工作流规则源文件。
+- `src/workflows/bug-fix/SKILL.md`：Bug 修复工作流规则源文件。
+- `src/workflows/refactor/SKILL.md`：保持行为不变的重构工作流规则源文件。
+- `src/references/`：跨 workflow 复用的 contracts 与文档约定。
 - `src/AGENTS-snippet.md`：安装到目标仓库根 `AGENTS.md` 的片段，不等同于本仓库自己的 `AGENTS.md`。
 - `src/.dev-cadence.example.yaml`：目标仓库运行时配置示例。
 - `src/vendor/superpowers/`：固定版本的 vendored Superpowers 副本。
@@ -32,10 +33,10 @@
 
 ## 修改入口
 
-- 修改 feature 工作流时，优先改 `src/skills/feature-dev/SKILL.md`。
-- 修改 bug fix 工作流时，优先改 `src/skills/bug-fix/SKILL.md`。
-- 修改 refactor 工作流时，优先改 `src/skills/refactor/SKILL.md`。
-- 修改工作流入口选择规则时，改 `src/skills/using-dev-cadence/SKILL.md`。
+- 修改 feature 工作流时，优先改 `src/workflows/feature-dev/SKILL.md`。
+- 修改 bug fix 工作流时，优先改 `src/workflows/bug-fix/SKILL.md`。
+- 修改 refactor 工作流时，优先改 `src/workflows/refactor/SKILL.md`。
+- 修改工作流入口选择规则时，改 `src/workflows/using-dev-cadence/SKILL.md`。
 - 修改目标仓库接入说明片段时，改 `src/AGENTS-snippet.md`。
 - 修改目标仓库默认配置示例时，改 `src/.dev-cadence.example.yaml`。
 - 不要直接编辑 `dist/.dev-cadence/**`；需要同步分发包时运行构建脚本。
@@ -84,7 +85,7 @@
 
 ## 构建与验证
 
-- 修改 `src/skills/**` 后，运行 `bash scripts/build.sh` 同步 `dist/.dev-cadence`。
+- 修改 `src/workflows/**`、`src/references/**` 或 `src/skills/**` 后，运行 `bash scripts/build.sh` 同步 `dist/.dev-cadence`。
 - 根目录 `*.md` 和 `docs/**` 下的文件不要求新增或修改自动化测试；不要仅因这些文档变化而编写锁定自然语言措辞的测试。同一任务同时改变可执行行为时，只测试该可执行行为。
 - 提交前运行 `bash scripts/check-whitespace.sh`。
 - 提交前运行 `bash scripts/check-all.sh` 完成构建和契约验证。
@@ -98,7 +99,7 @@
 - 是否把执行规则改在对应 workflow skill，而不是 README 或 demo 记录。
 - 是否误改了 `dist/.dev-cadence/**` 而没有修改 `src/` 源文件。
 - 是否误改了 `src/vendor/superpowers/**`。
-- 修改 `src/skills/**` 后是否运行了 `bash scripts/build.sh`。
+- 修改 `src/workflows/**`、`src/references/**` 或 `src/skills/**` 后是否运行了 `bash scripts/build.sh`。
 - 影响可安装包或 workflow 行为的修改是否同步更新了根目录 `version`，或明确说明不更新版本号的理由。
 - feature-dev、bug-fix 和 refactor 中同类规则是否保持一致，差异是否有明确原因。
 - manifest、stage record、review evidence、coverage、business acceptance 等记录要求是否闭环。
@@ -131,7 +132,7 @@
 
 Before responding to or acting on requests involving product discovery, product ideas, architecture design, requirements or work-item management, development, active-task follow-up, testing, verification, Dev Cadence-managed assets, or commit/checkpoint operations, read and follow:
 
-`.dev-cadence/skills/using-dev-cadence/SKILL.md`
+`.dev-cadence/workflows/using-dev-cadence/SKILL.md`
 
 Do this before any repository exploration, clarification question, user-facing guidance, document or code change, test execution, verification claim, or Git mutation.
 

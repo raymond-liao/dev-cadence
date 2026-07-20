@@ -16,7 +16,7 @@ Do not start Architecture Design merely because a repository contains technical 
 Before creating or updating the architecture document, read and follow:
 
 ```text
-.dev-cadence/skills/document-conventions/SKILL.md
+.dev-cadence/references/document-conventions/SKILL.md
 ```
 
 ## Configuration

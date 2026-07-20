@@ -1,6 +1,6 @@
 # 架构设计流程
 
-本文说明 Dev Cadence 的 `architecture-design` Asset Workflow。目标仓库中的权威执行规则位于 `src/skills/architecture-design/SKILL.md`；本文只解释用户可见的流程与边界。
+本文说明 Dev Cadence 的 `architecture-design` Asset Workflow。目标仓库中的权威执行规则位于 `src/workflows/architecture-design/SKILL.md`；本文只解释用户可见的流程与边界。
 
 ## 目的
 
