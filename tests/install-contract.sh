@@ -31,6 +31,14 @@ cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "installe
 cmp -s \
   "$ROOT_DIR/src/skills/contracts/change-log.md" \
   "$TARGET_REPO/.dev-cadence/skills/contracts/change-log.md" || fail "installed Change Log contract differs from source"
+for skill in using-dev-cadence discovery architecture-design; do
+  test -f "$TARGET_REPO/.dev-cadence/skills/$skill/SKILL.md" ||
+    fail "first install did not create $skill skill"
+  cmp -s \
+    "$ROOT_DIR/src/skills/$skill/SKILL.md" \
+    "$TARGET_REPO/.dev-cadence/skills/$skill/SKILL.md" ||
+    fail "first installed $skill skill differs from source"
+done
 
 printf 'stale\n' > "$TARGET_REPO/.dev-cadence/stale-file"
 bash "$INSTALL_SCRIPT" "$TARGET_REPO"
@@ -53,5 +61,11 @@ cmp -s \
 cmp -s \
   "$ROOT_DIR/src/skills/work-item-analysis/SKILL.md" \
   "$TARGET_REPO/.dev-cadence/skills/work-item-analysis/SKILL.md" || fail "installed work-item-analysis skill differs from source"
+for skill in using-dev-cadence discovery architecture-design; do
+  cmp -s \
+    "$ROOT_DIR/src/skills/$skill/SKILL.md" \
+    "$TARGET_REPO/.dev-cadence/skills/$skill/SKILL.md" ||
+    fail "updated installed $skill skill differs from source"
+done
 
 printf 'Install contract checks passed.\n'
