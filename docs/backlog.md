@@ -4,7 +4,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `Ready` | `P1` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `2` | `Draft` | `P3` |
 | `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `3` | `Draft` | `P1` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `2` | `Draft` | `P2` |
@@ -18,6 +17,12 @@
 | `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
 | `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `3` | `Draft` | `P0` |
 | `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `2` | `Draft` | `P1` |
+
+## 进行中
+
+| ID | Title | Version | Status | Priority |
+|---|---|---:|---|---|
+| `S-042` | [Dev Cadence 全流程主执行子代理委派](stories/S-042-dev-cadence-primary-subagent-delegation.md) | `1` | `In Progress` | `P1` |
 
 ## 已完成
 
