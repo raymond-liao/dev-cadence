@@ -15,8 +15,6 @@
 | [Q-014](#q-014) | Open | proof ID 的跨阶段字段名称和最小格式是什么？ | [S-025 Bug Red-Green 证据](stories/S-025-bug-red-green-evidence.md) |
 | [Q-015](#q-015) | Open | 未提交但已跟踪的基线差异应如何形成稳定身份？ | [S-026 Refactor 基线身份](stories/S-026-refactor-baseline-identity.md) |
 | [Q-016](#q-016) | Open | 迁移状态应保存在实施记录还是独立清单中？ | [S-027 Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) |
-| [Q-017](#q-017) | Open | 所有权证据应保存在 manifest、配置派生记录还是独立元数据中？ | [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) |
-| [Q-018](#q-018) | Open | 多 worktree 并行运行时，保存目录如何避免任务 slug 冲突？ | [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) |
 | [Q-019](#q-019) | Open | 外部环境是否需要提供可持久化的 workspace identity？ | [S-032 Detached Head 收尾](stories/S-032-detached-head-finishing.md) |
 | [Q-022](#q-022) | Open | 哪些代表性路径足以覆盖升级兼容，而不会把测试固化为单一实现？ | [T-002 需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) |
 | [Q-005](#q-005) | Resolved | 并行视图最终采用“当前可并行推进表”还是保留原名称，并将入口资格作为独立列展示？ | [B-007 当前可并行实施表混用卡片状态与流程入口资格](bugs/B-007-parallel-work-table-entry-qualification.md) |
@@ -24,6 +22,8 @@
 | [Q-008](#q-008) | Resolved | `rejected` 应返回返工阶段还是进入独立关闭终态，是否需要按原因区分？ | [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) |
 | [Q-009](#q-009) | Resolved | tracked working-tree 差异使用 patch hash 还是其他稳定身份表达？ | [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) |
 | [Q-012](#q-012) | Resolved | 哪些失败类别允许进入 manual recovery，哪些必须继续阻塞？ | [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) |
+| [Q-017](#q-017) | Resolved | 所有权证据应保存在 manifest、配置派生记录还是独立元数据中？ | [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) |
+| [Q-018](#q-018) | Invalid | 多 worktree 并行运行时，保存目录如何避免任务 slug 冲突？ | [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) |
 | [Q-020](#q-020) | Superseded | 发布、部署、生产验证和事故处置应拆成几个 workflow？ | [S-034 发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) |
 | [Q-021](#q-021) | Superseded | 首个实施切片应优先覆盖哪类交付环境？ | [S-034 发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) |
 | [Q-023](#q-023) | Resolved | 历史 Change Log 缺少准确时间、时间精度或作者时应如何迁移？ | [S-041 Change Log 共享契约与历史记录治理](stories/S-041-change-log-contract-and-history-governance.md) |
