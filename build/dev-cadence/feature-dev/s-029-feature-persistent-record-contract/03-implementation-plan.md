@@ -37,7 +37,7 @@
 - Consumes: `src/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh RUN_DIR`.
 - Produces: `Recovery Target: Requirements Confirmation`, `Recovery Target: Technical Solution`, or `Recovery Target: Implementation Plan`, plus the matching fixed `Reason` value.
 
-- [ ] **Step 1: Create temporary-Git fixture helpers and expected targets.**
+- [x] **Step 1: Create temporary-Git fixture helpers and expected targets.**
 
 Begin the file with `#!/usr/bin/env bash`, `set -euo pipefail`, `ROOT_DIR`, `VALIDATOR`, `fail`, `assert_contains`, `sha256_file`, `init_repo`, `write_file`, `commit_paths`, `write_requirements`, `write_solution`, and `write_manifest`. `sha256_file` must use `shasum -a 256 "$1" | awk '{print $1}'`. The fixture manifest must contain both the fixed Stage Table header and `Confirmed Stage Record Identities` with `Stage | Record Path | SHA-256`.
 
@@ -45,7 +45,7 @@ Implement these exact cases: requirements-only hash checkpoint returns `Technica
 
 Default mode must assert `src/workflows/feature-dev/SKILL.md` contains `Confirmed Stage Record Identities`, `validate-persistent-record-recovery.sh`, `SHA-256`, `Requirements Confirmation`, `Technical Solution`, and `Pre-Implementation Design Freshness Gate`.
 
-- [ ] **Step 2: Run RED and preserve the evidence.**
+- [x] **Step 2: Run RED and preserve the evidence.**
 
 Run `bash tests/feature-persistent-record-recovery-contract.sh fixtures`. Expected: exit `1` because the validator is absent. Record command, exit status, and missing-validator evidence in `04-implementation-record.md`; do not weaken any case.
 
@@ -59,15 +59,15 @@ Run `bash tests/feature-persistent-record-recovery-contract.sh fixtures`. Expect
 - Consumes: a feature-dev run directory with manifest, records, checkpoints, and direct input identities.
 - Produces: exit `0` and the two fixed target/reason output lines.
 
-- [ ] **Step 1: Implement the script entry and parser.**
+- [x] **Step 1: Implement the script entry and parser.**
 
 Use `set -euo pipefail`; define `fail`, `target`, and `sha256_file`; require exactly one `RUN_DIR`; require `manifest.md`; resolve `repo_root` using `git -C "$run_dir" rev-parse --show-toplevel`. Parse only the fixed Stage Table and identity-table headers with `awk -F'|'`, extracting canonical status values from backticks. A confirmed stage after an unconfirmed predecessor returns the earliest predecessor with reason `stage confirmation is not continuous`.
 
-- [ ] **Step 2: Implement Requirements validation.**
+- [x] **Step 2: Implement Requirements validation.**
 
 For a confirmed Requirements stage, require a relative path and 64-character lowercase SHA-256, reject absolute or `../` paths, validate current file hash, Git checkpoint tree when the checkpoint is a hash, and direct input relative paths plus SHA-256. A `skipped` checkpoint omits only the tree lookup. Require these fields: `工作项`, `工作项类型`, `工作项 Version`, `当前 Status`, `selected scope`, `## 目标`, `## ✅ 范围`, `## ❌ 非范围`, `## 验收标准`, `## 业务规则`, `假设`, `Open Questions`, and `直接依赖输入身份`. Any failure returns `Requirements Confirmation` with its specific reason. Unconfirmed Requirements returns `Requirements Confirmation` / `requirements are not confirmed` without requiring records.
 
-- [ ] **Step 3: Implement Solution validation and GREEN.**
+- [x] **Step 3: Implement Solution validation and GREEN.**
 
 After valid Requirements and unconfirmed Solution, return `Technical Solution` / `requirements identity is valid`; missing solution is normal. For confirmed Solution validate identity, SHA, checkpoint, and `已确认需求来源`, `Requirements SHA-256`, `已选方案`, `备选方案`, `受影响边界`, `关键约束`, `Open Questions`, `验收标准到验证策略映射`. Its requirements path and SHA must match the validated identity; mismatch returns `Technical Solution` / `solution requirements identity mismatch`; success returns `Implementation Plan` / `requirements and technical solution identities are valid`.
 
@@ -85,19 +85,19 @@ Run `chmod +x src/workflows/feature-dev/scripts/validate-persistent-record-recov
 - Consumes: Task 2 validator and fixtures.
 - Produces: source/dist/install contract at version `0.29.0`.
 
-- [ ] **Step 1: Run source-contract RED.**
+- [x] **Step 1: Run source-contract RED.**
 
 Run `bash tests/feature-persistent-record-recovery-contract.sh`. Expected: exit `1` because feature-dev has not declared the identity table and recovery command; fixture mode remains GREEN.
 
-- [ ] **Step 2: Add the confirmed feature-dev rules.**
+- [x] **Step 2: Add the confirmed feature-dev rules.**
 
 Add `Confirmed Stage Record Identities` with `Stage | Record Path | SHA-256`, written only after Requirements/Solution confirmation. State that manifest never copies record bodies and Stage Table retains confirmation/checkpoint. Add the command whose second argument is the active run directory under `build/dev-cadence/feature-dev/`, immediately after the fixed validator path `.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh`. Specify manifest-first continuous confirmation, requirements-only normal recovery, two-stage plan recovery, earliest-stage fallback, direct-input drift, and continued use of the existing freshness gate. Add the precise Requirements and Solution field lists from Task 2. Do not modify Bug Fix or Refactor.
 
-- [ ] **Step 3: Add test/package/install/version integration.**
+- [x] **Step 3: Add test/package/install/version integration.**
 
 Insert `bash "$ROOT_DIR/tests/feature-persistent-record-recovery-contract.sh"` after `delivery-record-contract.sh` in `tests/run-all.sh`. Add `dist/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh` to required package files and source/dist `assert_same_file`. Add first-install `test -f` and update-install `cmp -s` for `workflows/feature-dev/scripts/validate-persistent-record-recovery.sh`. Replace `version` with `0.29.0`.
 
-- [ ] **Step 4: Run integration GREEN and commit.**
+- [x] **Step 4: Run integration GREEN and commit.**
 
 Run `bash scripts/build.sh`, the default new contract test, `bash tests/package-contract.sh`, and `bash tests/install-contract.sh`. Expected: each exits `0`; `dist/` remains unstaged. Stage only Task 3 source/test/version paths, run `git diff --cached --check`, then commit `feat(flow): preserve feature record identities`.
 
@@ -107,11 +107,11 @@ Run `bash scripts/build.sh`, the default new contract test, `bash tests/package-
 - Generated: `dist/.dev-cadence/workflows/feature-dev/SKILL.md`
 - Generated: `dist/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh`
 
-- [ ] **Step 1: Build and prove source/dist parity.**
+- [x] **Step 1: Build and prove source/dist parity.**
 
 Run `bash scripts/build.sh`; search both source and dist feature skills for `Confirmed Stage Record Identities`, `validate-persistent-record-recovery.sh`, and `SHA-256`; then compare the source and distribution validator with `cmp -s`. Expected: all rules occur in both skills and the script comparison exits `0`.
 
-- [ ] **Step 2: Run full regression and scope review.**
+- [x] **Step 2: Run full regression and scope review.**
 
 Run `git diff --check`, `bash scripts/check-whitespace.sh`, `bash scripts/check-all.sh`, `git diff --name-only e31db56b88aabdf6854bbc8454101d24e01a852a..HEAD`, and `git status --short`. Expected: all checks pass; committed scope contains only S-029 source/test/version changes and S-029 records; dist remains ignored and unstaged.
 
