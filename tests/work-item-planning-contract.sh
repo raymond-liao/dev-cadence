@@ -2,13 +2,13 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SKILL="$ROOT_DIR/src/skills/work-item-planning/SKILL.md"
-ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+SKILL="$ROOT_DIR/src/workflows/work-item-planning/SKILL.md"
+ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 BACKLOG="$ROOT_DIR/docs/backlog.md"
 WORKFLOW_DOC="$ROOT_DIR/docs/workflows/work-item-planning.md"
-FEATURE_SKILL="$ROOT_DIR/src/skills/feature-dev/SKILL.md"
-BUG_FIX_SKILL="$ROOT_DIR/src/skills/bug-fix/SKILL.md"
-REFACTOR_SKILL="$ROOT_DIR/src/skills/refactor/SKILL.md"
+FEATURE_SKILL="$ROOT_DIR/src/workflows/feature-dev/SKILL.md"
+BUG_FIX_SKILL="$ROOT_DIR/src/workflows/bug-fix/SKILL.md"
+REFACTOR_SKILL="$ROOT_DIR/src/workflows/refactor/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -234,7 +234,7 @@ assert_literal 'bug ready boundary' 'Bug may enter `bug-fix` without a `Ready` p
 assert_literal 'version starts at one' 'Every Story, Task, and Bug card must use an independent integer Version starting at `1`.' "$SKILL"
 assert_match "substantive version increments" 'Increment the Version when confirmed changes alter the card'\''s goal, scope, expected behavior, acceptance or completion conditions, key dependencies, or requirement decisions' "$SKILL"
 assert_match "non substantive no increment" 'Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes' "$SKILL"
-assert_literal "shared Change Log contract read" '.dev-cadence/skills/contracts/change-log.md' "$SKILL"
+assert_literal "shared Change Log contract read" '.dev-cadence/references/contracts/change-log.md' "$SKILL"
 assert_literal "card Change Log follows shared contract" 'For every card Change Log, follow the shared Change Log contract.' "$SKILL"
 assert_match "version conflict stop" 'check the current Version and visible facts.*stop.*conflict|stop.*conflict.*current Version and visible facts' "$SKILL"
 
@@ -250,7 +250,7 @@ assert_not_match "delivery stage records" '04-code-review-report\.md|01-requirem
 assert_not_match "delivery build records" 'build/dev-cadence/(feature-dev|bug-fix|refactor)/' "$SKILL"
 assert_not_match "personal absolute paths" '/Users/|/private/tmp|/private/var|[A-Za-z]:\\Users\\' "$SKILL"
 
-assert_literal "entry route" '.dev-cadence/skills/work-item-planning/SKILL.md' "$ENTRY_SKILL"
+assert_literal "entry route" '.dev-cadence/workflows/work-item-planning/SKILL.md' "$ENTRY_SKILL"
 assert_match "entry planning route row" 'Plan a portfolio from confirmed User Journey, PRD, and Business Architecture assets, maintain a Story Map, or register a single clear Story, Task, or Bug work item' "$ENTRY_SKILL"
 assert_match "entry direct intake route" 'Direct Work Item Intake' "$ENTRY_SKILL"
 assert_match "entry discovery boundary" 'only references confirmed Features and must not define or reinterpret them' "$ENTRY_SKILL"

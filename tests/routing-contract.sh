@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -66,7 +66,7 @@ for skill in discovery architecture-design; do
   assert_literal_in \
     "ordinary-subtask guard in $skill" \
     "If you are an ordinary subtask agent and are not explicitly designated as the primary execution subagent for the complete Dev Cadence request, do not execute this workflow." \
-    "$ROOT_DIR/src/skills/$skill/SKILL.md"
+    "$ROOT_DIR/src/workflows/$skill/SKILL.md"
 done
 
 for category in \
@@ -127,7 +127,7 @@ for skill in discovery feature-dev bug-fix refactor work-item-planning work-item
   assert_not_match \
     "duplicated routing matrix in $skill" \
     '^## Representative Routing Examples$' \
-    "$ROOT_DIR/src/skills/$skill/SKILL.md"
+    "$ROOT_DIR/src/workflows/$skill/SKILL.md"
 done
 
 printf 'Routing contract checks passed.\n'

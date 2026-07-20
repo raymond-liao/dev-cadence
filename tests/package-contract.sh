@@ -49,19 +49,19 @@ required_files=(
   "dist/.dev-cadence/README.zh-CN.md"
   "dist/.dev-cadence/.dev-cadence.example.yaml"
   "dist/.dev-cadence/AGENTS-snippet.md"
-  "dist/.dev-cadence/skills/using-dev-cadence/SKILL.md"
-  "dist/.dev-cadence/skills/contracts/change-log.md"
+  "dist/.dev-cadence/workflows/using-dev-cadence/SKILL.md"
+  "dist/.dev-cadence/references/contracts/change-log.md"
   "dist/.dev-cadence/skills/git-commit/SKILL.md"
-  "dist/.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh"
-  "dist/.dev-cadence/skills/document-conventions/SKILL.md"
+  "dist/.dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh"
+  "dist/.dev-cadence/references/document-conventions/SKILL.md"
   "dist/.dev-cadence/skills/open-question-registry/SKILL.md"
-  "dist/.dev-cadence/skills/architecture-design/SKILL.md"
-  "dist/.dev-cadence/skills/discovery/SKILL.md"
-  "dist/.dev-cadence/skills/work-item-planning/SKILL.md"
-  "dist/.dev-cadence/skills/work-item-analysis/SKILL.md"
-  "dist/.dev-cadence/skills/feature-dev/SKILL.md"
-  "dist/.dev-cadence/skills/bug-fix/SKILL.md"
-  "dist/.dev-cadence/skills/refactor/SKILL.md"
+  "dist/.dev-cadence/workflows/architecture-design/SKILL.md"
+  "dist/.dev-cadence/workflows/discovery/SKILL.md"
+  "dist/.dev-cadence/workflows/work-item-planning/SKILL.md"
+  "dist/.dev-cadence/workflows/work-item-analysis/SKILL.md"
+  "dist/.dev-cadence/workflows/feature-dev/SKILL.md"
+  "dist/.dev-cadence/workflows/bug-fix/SKILL.md"
+  "dist/.dev-cadence/workflows/refactor/SKILL.md"
   "dist/.dev-cadence/vendor/superpowers/LICENSE"
   "dist/.dev-cadence/vendor/superpowers/RELEASE-NOTES.md"
 )
@@ -78,7 +78,7 @@ assert_same_file "src/.dev-cadence.example.yaml" "dist/.dev-cadence/.dev-cadence
 assert_same_file "src/AGENTS-snippet.md" "dist/.dev-cadence/AGENTS-snippet.md"
 assert_same_tree "src/vendor" "dist/.dev-cadence/vendor"
 
-assert_match ".dev-cadence/skills/git-commit/SKILL.md" "src/skills/using-dev-cadence/SKILL.md"
+assert_match ".dev-cadence/skills/git-commit/SKILL.md" "src/workflows/using-dev-cadence/SKILL.md"
 assert_match "Use when using-dev-cadence delegates a Dev Cadence-managed commit" "src/skills/git-commit/SKILL.md"
 
 while IFS= read -r -d '' source_file; do
@@ -86,36 +86,49 @@ while IFS= read -r -d '' source_file; do
   assert_same_file "src/skills/$rel_path" "dist/.dev-cadence/skills/$rel_path"
 done < <(find "$ROOT_DIR/src/skills" -type f -print0)
 
-assert_same_file \
-  "src/skills/using-dev-cadence/scripts/validate-delivery-record.sh" \
-  "dist/.dev-cadence/skills/using-dev-cadence/scripts/validate-delivery-record.sh"
+while IFS= read -r -d '' source_file; do
+  rel_path="${source_file#"$ROOT_DIR/src/workflows/"}"
+  assert_same_file "src/workflows/$rel_path" "dist/.dev-cadence/workflows/$rel_path"
+done < <(find "$ROOT_DIR/src/workflows" -type f -print0)
 
-assert_match "04-code-review-report.md" "src/skills/feature-dev/SKILL.md"
-assert_match "04-code-review-report.md" "src/skills/bug-fix/SKILL.md"
-assert_match "04-code-review-report.md" "src/skills/refactor/SKILL.md"
-assert_match "01-requirements.md" "src/skills/feature-dev/SKILL.md"
-assert_match "02-technical-solution.md" "src/skills/feature-dev/SKILL.md"
-assert_match "03-implementation-plan.md" "src/skills/feature-dev/SKILL.md"
-assert_match "Behavior Baseline" "src/skills/refactor/SKILL.md"
-assert_match "Common Refactoring Methods" "src/skills/refactor/SKILL.md"
-assert_match "Regression Verification" "src/skills/refactor/SKILL.md"
-assert_match "Task Overview" "src/skills/feature-dev/SKILL.md"
-assert_match "Task Overview" "src/skills/bug-fix/SKILL.md"
-assert_match "Task Overview" "src/skills/refactor/SKILL.md"
-assert_match "Before marking the run terminal" "src/skills/feature-dev/SKILL.md"
-assert_match "Before marking the run terminal" "src/skills/bug-fix/SKILL.md"
-assert_match "Before marking the run terminal" "src/skills/refactor/SKILL.md"
-assert_match "Business Acceptance" "src/skills/feature-dev/SKILL.md"
-assert_match "Business Acceptance" "src/skills/bug-fix/SKILL.md"
-assert_match "Business Acceptance" "src/skills/refactor/SKILL.md"
+while IFS= read -r -d '' source_file; do
+  rel_path="${source_file#"$ROOT_DIR/src/references/"}"
+  assert_same_file "src/references/$rel_path" "dist/.dev-cadence/references/$rel_path"
+done < <(find "$ROOT_DIR/src/references" -type f -print0)
+
+test ! -e "$DIST_DIR/skills/using-dev-cadence" || fail "package retained legacy workflow path"
+test ! -e "$DIST_DIR/skills/contracts" || fail "package retained legacy reference path"
+
+assert_same_file \
+  "src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh" \
+  "dist/.dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh"
+
+assert_match "04-code-review-report.md" "src/workflows/feature-dev/SKILL.md"
+assert_match "04-code-review-report.md" "src/workflows/bug-fix/SKILL.md"
+assert_match "04-code-review-report.md" "src/workflows/refactor/SKILL.md"
+assert_match "01-requirements.md" "src/workflows/feature-dev/SKILL.md"
+assert_match "02-technical-solution.md" "src/workflows/feature-dev/SKILL.md"
+assert_match "03-implementation-plan.md" "src/workflows/feature-dev/SKILL.md"
+assert_match "Behavior Baseline" "src/workflows/refactor/SKILL.md"
+assert_match "Common Refactoring Methods" "src/workflows/refactor/SKILL.md"
+assert_match "Regression Verification" "src/workflows/refactor/SKILL.md"
+assert_match "Task Overview" "src/workflows/feature-dev/SKILL.md"
+assert_match "Task Overview" "src/workflows/bug-fix/SKILL.md"
+assert_match "Task Overview" "src/workflows/refactor/SKILL.md"
+assert_match "Before marking the run terminal" "src/workflows/feature-dev/SKILL.md"
+assert_match "Before marking the run terminal" "src/workflows/bug-fix/SKILL.md"
+assert_match "Before marking the run terminal" "src/workflows/refactor/SKILL.md"
+assert_match "Business Acceptance" "src/workflows/feature-dev/SKILL.md"
+assert_match "Business Acceptance" "src/workflows/bug-fix/SKILL.md"
+assert_match "Business Acceptance" "src/workflows/refactor/SKILL.md"
 assert_match "docs/open-questions.md" "src/skills/open-question-registry/SKILL.md"
-assert_match "docs/product-planning/story-map.md" "src/skills/work-item-planning/SKILL.md"
-assert_match "docs/backlog.md" "src/skills/work-item-planning/SKILL.md"
-assert_match 'Story must reach `Ready` before entering `feature-dev`' "src/skills/work-item-planning/SKILL.md"
-assert_match 'Bug may enter `bug-fix` without a `Ready` precondition' "src/skills/work-item-planning/SKILL.md"
-assert_match 'Work Item Analysis must not investigate or confirm technical root cause' "src/skills/work-item-analysis/SKILL.md"
-assert_match 'Task does not need to reach `Ready` before a Delivery Workflow starts' "src/skills/work-item-analysis/SKILL.md"
-assert_match 'Ready Story -> `feature-dev`' "src/skills/work-item-analysis/SKILL.md"
+assert_match "docs/product-planning/story-map.md" "src/workflows/work-item-planning/SKILL.md"
+assert_match "docs/backlog.md" "src/workflows/work-item-planning/SKILL.md"
+assert_match 'Story must reach `Ready` before entering `feature-dev`' "src/workflows/work-item-planning/SKILL.md"
+assert_match 'Bug may enter `bug-fix` without a `Ready` precondition' "src/workflows/work-item-planning/SKILL.md"
+assert_match 'Work Item Analysis must not investigate or confirm technical root cause' "src/workflows/work-item-analysis/SKILL.md"
+assert_match 'Task does not need to reach `Ready` before a Delivery Workflow starts' "src/workflows/work-item-analysis/SKILL.md"
+assert_match 'Ready Story -> `feature-dev`' "src/workflows/work-item-analysis/SKILL.md"
 
 if find "$DIST_DIR" -path '*/build/dev-cadence/*' -print -quit | grep -q .; then
   fail "dist package contains old Dev Cadence run records"

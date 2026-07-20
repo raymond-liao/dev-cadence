@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VALIDATOR="$ROOT_DIR/src/skills/using-dev-cadence/scripts/validate-delivery-record.sh"
+VALIDATOR="$ROOT_DIR/src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh"
 TMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/delivery-record-contract.XXXXXX")"
 trap 'rm -rf "$TMP_ROOT"' EXIT
 

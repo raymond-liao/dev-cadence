@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SKILL="$ROOT_DIR/src/skills/bug-fix/SKILL.md"
+SKILL="$ROOT_DIR/src/workflows/bug-fix/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -12,7 +12,7 @@ fail() {
 assert_match() {
   local label="$1"
   local pattern="$2"
-  rg --no-ignore -n "$pattern" "$SKILL" >/dev/null || fail "missing $label in src/skills/bug-fix/SKILL.md"
+  rg --no-ignore -n "$pattern" "$SKILL" >/dev/null || fail "missing $label in src/workflows/bug-fix/SKILL.md"
 }
 
 assert_match "completion synchronization section" '^## Backlog Synchronization After Completion$'

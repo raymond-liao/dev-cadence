@@ -2,12 +2,12 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CONVENTIONS_SKILL="$ROOT_DIR/src/skills/document-conventions/SKILL.md"
-ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
-DISCOVERY_SKILL="$ROOT_DIR/src/skills/discovery/SKILL.md"
-FEATURE_SKILL="$ROOT_DIR/src/skills/feature-dev/SKILL.md"
-BUG_FIX_SKILL="$ROOT_DIR/src/skills/bug-fix/SKILL.md"
-REFACTOR_SKILL="$ROOT_DIR/src/skills/refactor/SKILL.md"
+CONVENTIONS_SKILL="$ROOT_DIR/src/references/document-conventions/SKILL.md"
+ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
+DISCOVERY_SKILL="$ROOT_DIR/src/workflows/discovery/SKILL.md"
+FEATURE_SKILL="$ROOT_DIR/src/workflows/feature-dev/SKILL.md"
+BUG_FIX_SKILL="$ROOT_DIR/src/workflows/bug-fix/SKILL.md"
+REFACTOR_SKILL="$ROOT_DIR/src/workflows/refactor/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -190,7 +190,7 @@ assert_match \
 
 assert_literal \
   "entry convention path" \
-  '.dev-cadence/skills/document-conventions/SKILL.md' \
+  '.dev-cadence/references/document-conventions/SKILL.md' \
   "$ENTRY_SKILL"
 assert_match \
   "entry reads convention before writing" \

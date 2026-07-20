@@ -35,11 +35,11 @@ assert_no_process_summary() {
 }
 
 assert_description \
-  "src/skills/using-dev-cadence/SKILL.md" \
+  "src/workflows/using-dev-cadence/SKILL.md" \
   "Use when a Dev Cadence-installed repository receives product discovery, architecture design, requirements, development work, active-task follow-up, testing, verification, or commit/checkpoint requests."
 
 assert_description \
-  "src/skills/document-conventions/SKILL.md" \
+  "src/references/document-conventions/SKILL.md" \
   "Use when creating or updating Dev Cadence-managed Markdown documents, examples, reports, or summaries."
 
 assert_description \
@@ -47,47 +47,47 @@ assert_description \
   "Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or update the status of repository-level unresolved questions."
 
 assert_description \
-  "src/skills/discovery/SKILL.md" \
+  "src/workflows/discovery/SKILL.md" \
   "Use when a user wants to explore a product idea or update an existing product-design baseline in a target project."
 
 assert_description \
-  "src/skills/work-item-planning/SKILL.md" \
+  "src/workflows/work-item-planning/SKILL.md" \
   "Use when a user asks to create, update, or review Story Map, milestone, or work-item planning assets in a target project."
 
 assert_description \
-  "src/skills/work-item-analysis/SKILL.md" \
+  "src/workflows/work-item-analysis/SKILL.md" \
   "Use when a user asks to analyze, clarify, or confirm Story, Task, or Bug definitions before downstream delivery work in a target project."
 
 assert_description \
-  "src/skills/architecture-design/SKILL.md" \
+  "src/workflows/architecture-design/SKILL.md" \
   "Use when a user explicitly asks for architecture design, an architecture proposal, or an architecture review for a stated goal."
 
 assert_description \
-  "src/skills/feature-dev/SKILL.md" \
+  "src/workflows/feature-dev/SKILL.md" \
   "Use when a user asks to add a capability or intentionally change expected user-visible or system-visible behavior in a target project."
 
 assert_description \
-  "src/skills/bug-fix/SKILL.md" \
+  "src/workflows/bug-fix/SKILL.md" \
   "Use when a user reports or asks to fix a bug, error, crash, regression, failing test, broken expected behavior, or unexpected behavior in a target project."
 
 assert_description \
-  "src/skills/refactor/SKILL.md" \
+  "src/workflows/refactor/SKILL.md" \
   "Use when a user asks to improve internal code structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior in a target project."
 
 assert_description \
   "src/skills/git-commit/SKILL.md" \
   "Use when using-dev-cadence delegates a Dev Cadence-managed commit."
 
-assert_no_process_summary "src/skills/using-dev-cadence/SKILL.md"
-assert_no_process_summary "src/skills/document-conventions/SKILL.md"
+assert_no_process_summary "src/workflows/using-dev-cadence/SKILL.md"
+assert_no_process_summary "src/references/document-conventions/SKILL.md"
 assert_no_process_summary "src/skills/open-question-registry/SKILL.md"
-assert_no_process_summary "src/skills/discovery/SKILL.md"
-assert_no_process_summary "src/skills/work-item-planning/SKILL.md"
-assert_no_process_summary "src/skills/work-item-analysis/SKILL.md"
-assert_no_process_summary "src/skills/architecture-design/SKILL.md"
-assert_no_process_summary "src/skills/feature-dev/SKILL.md"
-assert_no_process_summary "src/skills/bug-fix/SKILL.md"
-assert_no_process_summary "src/skills/refactor/SKILL.md"
+assert_no_process_summary "src/workflows/discovery/SKILL.md"
+assert_no_process_summary "src/workflows/work-item-planning/SKILL.md"
+assert_no_process_summary "src/workflows/work-item-analysis/SKILL.md"
+assert_no_process_summary "src/workflows/architecture-design/SKILL.md"
+assert_no_process_summary "src/workflows/feature-dev/SKILL.md"
+assert_no_process_summary "src/workflows/bug-fix/SKILL.md"
+assert_no_process_summary "src/workflows/refactor/SKILL.md"
 assert_no_process_summary "src/skills/git-commit/SKILL.md"
 
 printf 'Skill description contract checks passed.\n'

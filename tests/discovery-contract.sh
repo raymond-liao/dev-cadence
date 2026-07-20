@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DISCOVERY_SKILL="$ROOT_DIR/src/skills/discovery/SKILL.md"
-ENTRY_SKILL="$ROOT_DIR/src/skills/using-dev-cadence/SKILL.md"
+DISCOVERY_SKILL="$ROOT_DIR/src/workflows/discovery/SKILL.md"
+ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 AGENTS_SNIPPET="$ROOT_DIR/src/AGENTS-snippet.md"
 
 fail() {
@@ -172,7 +172,7 @@ assert_match "PRD traceability" 'Product Requirement.*Journey.*Feature' "$DISCOV
 assert_match "Business Architecture traceability" 'Business Architecture.*Journey.*Feature' "$DISCOVERY_SKILL"
 assert_match "Journey unaffected incremental path" 'does not affect.*User Journey.*do not.*reconfirm.*rewrite.*increment|do not.*reconfirm.*rewrite.*increment.*User Journey' "$DISCOVERY_SKILL"
 assert_match "legacy baseline migration" 'PRD.*Business Architecture.*without.*User Journey|without.*User Journey.*PRD.*Business Architecture' "$DISCOVERY_SKILL"
-assert_literal "shared Change Log contract read" '.dev-cadence/skills/contracts/change-log.md' "$DISCOVERY_SKILL"
+assert_literal "shared Change Log contract read" '.dev-cadence/references/contracts/change-log.md' "$DISCOVERY_SKILL"
 assert_not_match "legacy four-field Change Log wording" 'rows record version, date, change, and reason' "$DISCOVERY_SKILL"
 assert_literal "all product-design assets own Change Logs" 'Each document contains its own `Change Log` and must follow the shared Change Log contract.' "$DISCOVERY_SKILL"
 assert_match "User Journey increment rule" 'Increment the User Journey only when a confirmed revision changes its business line, boundary, Journey Map, or Feature Definitions' "$DISCOVERY_SKILL"
@@ -249,14 +249,14 @@ do
   assert_match "Discovery boundary $pattern" "$pattern" "$DISCOVERY_SKILL"
 done
 
-assert_literal "entry Discovery flow" '.dev-cadence/skills/discovery/SKILL.md' "$ENTRY_SKILL"
+assert_literal "entry Discovery flow" '.dev-cadence/workflows/discovery/SKILL.md' "$ENTRY_SKILL"
 assert_match "entry initial discovery route" 'incomplete product idea|broad product idea' "$ENTRY_SKILL"
 assert_match "entry initial business architecture route" 'initial.*Business Architecture|first.*Business Architecture' "$ENTRY_SKILL"
 assert_match "entry existing baseline boundary" 'existing.*PRD|existing.*product-design' "$ENTRY_SKILL"
 assert_not_match "temporary Discovery exception" 'Until S-013 is complete|Remove this exception when S-013 migrates Discovery' "$ENTRY_SKILL"
 
 for flow in feature-dev bug-fix refactor; do
-  assert_literal "entry direct $flow flow" ".dev-cadence/skills/$flow/SKILL.md" "$ENTRY_SKILL"
+  assert_literal "entry direct $flow flow" ".dev-cadence/workflows/$flow/SKILL.md" "$ENTRY_SKILL"
 done
 
 assert_match "AGENTS discovery trigger" 'product discovery|product ideas|requirements work' "$AGENTS_SNIPPET"
