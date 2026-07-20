@@ -5,9 +5,9 @@ description: Use when a user explicitly asks for architecture design, an archite
 
 # Architecture Design
 
-<SUBAGENT-STOP>
-If you were dispatched as a subagent to execute a specific task, ignore this skill.
-</SUBAGENT-STOP>
+<ORDINARY-SUBAGENT-STOP>
+If you are an ordinary subtask agent and are not explicitly designated as the primary execution subagent for the complete Dev Cadence request, do not execute this workflow. Execute only the bounded task brief.
+</ORDINARY-SUBAGENT-STOP>
 
 Use this skill only when the user explicitly asks to design, propose, or review architecture for a stated goal. This is an Asset Workflow. It produces one durable, authoritative architecture document and does not perform software delivery.
 

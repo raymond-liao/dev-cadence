@@ -30,6 +30,8 @@ Dev Cadence starts when a user asks for product discovery, architecture design, 
 
 If a workflow applies, the agent uses that workflow before implementation. Asset Workflows keep analysis and confirmation gates in the conversation and persist only authoritative assets. Delivery Workflows record stage artifacts and use the vendored Superpowers skills for the underlying engineering method: brainstorming, systematic debugging, planning, test-driven development, code review, verification, and branch finishing.
 
+When the platform supports internal subagents, Dev Cadence delegates the complete non-interactive workflow to a designated primary execution subagent before workflow-specific investigation begins. The main session returns only for user decisions, input-dependent blockers, and completion; it retains all existing confirmation and Git authorization gates. On platforms without internal subagents, Dev Cadence runs the same workflow directly in the main session.
+
 Dev Cadence does not replace Superpowers. It fixes the business workflow around Superpowers:
 
 - which workflow applies;
