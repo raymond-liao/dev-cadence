@@ -12,7 +12,7 @@
 |---|---|---:|---|---|
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Ready` | `P2` |
 | `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `2` | `Ready` | `P2` |
-| `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `3` | `Draft` | `P2` |
+| `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `4` | `Ready` | `P2` |
 | `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Ready` | `P1` |
 | `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) | `1` | `Blocked` | `P1` |
 | `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
