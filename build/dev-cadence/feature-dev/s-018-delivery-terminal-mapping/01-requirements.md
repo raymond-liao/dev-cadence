@@ -59,18 +59,19 @@
 
 | Path | SHA-256 | 使用方式 |
 | --- | --- | --- |
-| `docs/stories/S-018-business-acceptance-terminal-mapping.md` | `3405669a6c06a40151f004f21301f996b3eee38ab7a0f0a379976fcd16b1c3d0` | Story Version `4`、Status `In Progress`；本次交付的权威需求和验收来源。 |
-| `docs/backlog.md` | `5710f74571f0a1d6acd3727e676709f017a2141211a2bf23488836bfbda94c30` | 验证 S-018 已从 `待处理` 原子领取到 `进行中`。 |
-| `.dev-cadence.yaml` | `9ba610320f36b3d0b18536daa896113584f7b6be679b1a6f118b8232516dc83b` | 固定 `zh-CN`、隔离 worktree 与 `.worktrees` 目录。 |
-| `src/workflows/feature-dev/SKILL.md` | `1f8bd64de73addf361d2d531d8783956862d80db66ef00780bdb052c3ad52279` | Feature Delivery 的当前验收和 Completion 基线。 |
-| `src/workflows/bug-fix/SKILL.md` | `31849c6d1efcd13679072728b18c4fb6447b59d253879c42ee98587f2017c15e` | Bug Fix 的当前验收和 Completion 基线。 |
-| `src/workflows/refactor/SKILL.md` | `76ed1580dd0958b1f8e8358deedff6142a5c38625b34ecc29f14dbdd1836629c` | Refactor 的当前验收和 Completion 基线。 |
-| `src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh` | `12a0faba9aaf3ef3f7880b0405601e2dadfe41ebd926affcaf84e2fce868df2d` | 现有 manifest 终态和 checkpoint 验证基线。 |
-| `tests/delivery-record-contract.sh` | `8c9a531746c521f95dda66678d629b6197ed5d3d70b2a2ba8af62e78d4e36bbd` | 终态记录 fixture 的可执行验证基线。 |
-| `tests/workflow-symmetry.sh` | `2a75802a7bc0886380d170f0fe102885b4a323c68ee54b744bd9a03aa716dd4d` | 三个 Delivery workflow 对称性验证基线。 |
+| docs/stories/S-018-business-acceptance-terminal-mapping.md | 3405669a6c06a40151f004f21301f996b3eee38ab7a0f0a379976fcd16b1c3d0 | Story Version `4`、Status `In Progress`；本次交付的权威需求和验收来源。 |
+| docs/backlog.md | 5710f74571f0a1d6acd3727e676709f017a2141211a2bf23488836bfbda94c30 | 验证 S-018 已从 `待处理` 原子领取到 `进行中`。 |
+| .dev-cadence.yaml | 9ba610320f36b3d0b18536daa896113584f7b6be679b1a6f118b8232516dc83b | 固定 `zh-CN`、隔离 worktree 与 `.worktrees` 目录。 |
+| src/workflows/feature-dev/SKILL.md | 1f8bd64de73addf361d2d531d8783956862d80db66ef00780bdb052c3ad52279 | Feature Delivery 的当前验收和 Completion 基线。 |
+| src/workflows/bug-fix/SKILL.md | 31849c6d1efcd13679072728b18c4fb6447b59d253879c42ee98587f2017c15e | Bug Fix 的当前验收和 Completion 基线。 |
+| src/workflows/refactor/SKILL.md | 76ed1580dd0958b1f8e8358deedff6142a5c38625b34ecc29f14dbdd1836629c | Refactor 的当前验收和 Completion 基线。 |
+| src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh | 12a0faba9aaf3ef3f7880b0405601e2dadfe41ebd926affcaf84e2fce868df2d | 现有 manifest 终态和 checkpoint 验证基线。 |
+| tests/delivery-record-contract.sh | 8c9a531746c521f95dda66678d629b6197ed5d3d70b2a2ba8af62e78d4e36bbd | 终态记录 fixture 的可执行验证基线。 |
+| tests/workflow-symmetry.sh | 2a75802a7bc0886380d170f0fe102885b4a323c68ee54b744bd9a03aa716dd4d | 三个 Delivery workflow 对称性验证基线。 |
 
 ## 阶段决定
 
-- Status: ✅ `confirmed`
-- User Confirmation: 用户于 `2026-07-21T14:31:39+0800` 选择“确认当前版本并进入 Technical Solution”。
-- 下一阶段：Technical Solution；Implementation Plan 和代码修改仍需要各自的后续确认。
+- Status: 🔄 `in_progress`
+- Prior Confirmation: superseded because the direct-input table encoded both paths and SHA-256 values as Markdown code; validator-readable fields are raw values. Requirements scope and input identities are unchanged.
+- User Confirmation: `pending`。修复后的记录需要重新确认后才可开始 Technical Solution。
+- 下一阶段：Requirements Confirmation；Technical Solution、Implementation Plan 和代码修改均已停止。

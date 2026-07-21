@@ -123,6 +123,7 @@ build/dev-cadence/<workflow>/<task-slug>/07-manual-recovery-record.md
 
 ## 阶段决定
 
-- Status: ✅ `confirmed`
-- User Confirmation: 用户于 `2026-07-21T14:49:01+0800` 选择“确认方案 C 并进入 Implementation Plan”。
-- 下一阶段：Implementation Plan；实现仍需要用户确认该计划后才能开始。
+- Status: `superseded`
+- Superseded Reason: Requirements Confirmation recovery corrected validator-readable direct-input table encoding; the technical decision must be refreshed after renewed Requirements Confirmation.
+- User Confirmation: superseded pending renewed Requirements Confirmation.
+- 下一阶段：等待 Requirements Confirmation 重新确认。

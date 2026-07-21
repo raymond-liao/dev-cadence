@@ -334,7 +334,8 @@ Expected: one reviewed release commit; `git status --short` contains no tracked 
 
 ## 阶段决定
 
-- Status: ✅ `confirmed`
-- User Confirmation: 用户于 `2026-07-21T15:01:29+0800` 选择“确认当前计划并进入 Development Implementation”。
-- Implementation Mode: `Subagent-Driven`。
-- 下一阶段：Development Implementation；在执行任何 Task 前必须通过持久记录恢复与设计新鲜度门。
+- Status: `superseded`
+- Superseded Reason: Requirements Confirmation recovery corrected validator-readable direct-input table encoding; this plan must be refreshed and reconfirmed after the renewed Requirements and Technical Solution stages.
+- User Confirmation: superseded pending renewed Requirements Confirmation.
+- Implementation Mode: `Subagent-Driven` was selected for the superseded plan and must be reconfirmed with the refreshed plan.
+- 下一阶段：等待 Requirements Confirmation 重新确认；不得开始 Development Implementation。
