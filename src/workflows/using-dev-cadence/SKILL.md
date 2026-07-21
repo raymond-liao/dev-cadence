@@ -227,7 +227,7 @@ Creation HEAD SHA: <full SHA|not_applicable>
 Evidence Source: git worktree list --porcelain
 ```
 
-For `Created By Current Run: no`, use `not_applicable` for the ownership tuple values; do not reconstruct them from reuse state.
+For `Created By Current Run: no`, use `not_applicable` for the ownership tuple values; do not reconstruct them from reuse state. This tuple must not authorize deletion. When a cleanup verifier rejects it as `not_owned`, follow deny semantics: return `discard_blocked` and retain the worktree, task branch, and active run records.
 
 Each Delivery workflow must preserve this immutable creation-evidence handoff separately from its Current-run Discard context. `Workspace Path` is created-worktree provenance only. For `Created By Current Run: no`, its `not_applicable` value must not populate or replace the Current-run Discard context's actual `Workspace path` classification.
 

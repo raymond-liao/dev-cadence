@@ -188,6 +188,10 @@ assert_match "creation tuple workspace path is provenance only" \
   'Workspace Path.*created-worktree provenance|created-worktree provenance.*Workspace Path' "$ENTRY_SKILL"
 assert_match "creation no tuple does not populate workspace classification" \
   'Created By Current Run: no.*not_applicable.*must not populate.*Workspace path|not_applicable.*must not populate.*Workspace path.*Created By Current Run: no' "$ENTRY_SKILL"
+assert_match "creation no tuple never authorizes deletion" \
+  'Created By Current Run: no.*not_applicable.*must not authorize.*deletion|not_applicable.*must not authorize.*deletion.*Created By Current Run: no' "$ENTRY_SKILL"
+assert_match "creation no verifier rejection uses deny semantics" \
+  'verifier.*reject.*not_owned.*deny semantics.*discard_blocked.*worktree.*task branch.*active run records|not_owned.*deny semantics.*discard_blocked.*worktree.*task branch.*active run records' "$ENTRY_SKILL"
 assert_match "disabled branch handoff" \
   'worktree\.enabled: false.*immediately.*prepare.*dedicated.*branch.*must not.*create.*worktree' "$ENTRY_SKILL"
 assert_match "authoritative base ref resolved before claim" \

@@ -791,10 +791,14 @@ assert_workflows "completion preserves independent classification context" \
   "pass.*unchanged.*Current-run Discard context.*Workspace path.*separately" \
   "pass.*unchanged.*Current-run Discard context.*Workspace path.*separately" \
   "pass.*unchanged.*Current-run Discard context.*Workspace path.*separately"
-assert_workflows "creation no cannot independently block discard or authorize deletion" \
-  "Created By Current Run: no.*must not.*discard_blocked.*does not authorize.*deletion" \
-  "Created By Current Run: no.*must not.*discard_blocked.*does not authorize.*deletion" \
-  "Created By Current Run: no.*must not.*discard_blocked.*does not authorize.*deletion"
+assert_workflows "creation no tuple blocks whole-run discard without deletion authority" \
+  "Created By Current Run: no.*not_applicable.*Whole-run Discard.*discard_blocked.*does not authorize.*deletion" \
+  "Created By Current Run: no.*not_applicable.*Whole-run Discard.*discard_blocked.*does not authorize.*deletion" \
+  "Created By Current Run: no.*not_applicable.*Whole-run Discard.*discard_blocked.*does not authorize.*deletion"
+assert_workflows "cleanup verifier rejection follows deny semantics" \
+  "verifier.*not_owned.*deny semantics.*discard_blocked.*worktree.*task branch.*active run records" \
+  "verifier.*not_owned.*deny semantics.*discard_blocked.*worktree.*task branch.*active run records" \
+  "verifier.*not_owned.*deny semantics.*discard_blocked.*worktree.*task branch.*active run records"
 
 assert_workflows "whole-run discard result" \
   'whole_run_discarded' \
