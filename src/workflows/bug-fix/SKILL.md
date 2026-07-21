@@ -758,7 +758,7 @@ When the run records remain after Completion, update `Final Follow-Up Actions` w
 
 ## Completion
 
-After Business Acceptance is accepted, invoke:
+After Business Acceptance is `accepted` or `accepted_with_risk`, invoke normal Completion. For `accepted_with_risk`, preserve the original decision and `Accepted Risk Register` through integration:
 
 The Completion menu must be presented to the user with every option actually supported by the finishing flow and its result. Delegated continuation must not select a Completion action.
 
@@ -768,7 +768,7 @@ The Completion menu must be presented to the user with every option actually sup
 
 Pass this Dev Cadence context into the finishing flow:
 
-- Business Acceptance has already been accepted.
+- Business Acceptance has already been recorded as `accepted` or `accepted_with_risk`; preserve the original decision and `Accepted Risk Register` through integration.
 - The business acceptance record has been written or updated.
 - Ignored Dev Cadence run records under `build/dev-cadence/` may remain on disk after merge.
 - Do not push unless the user explicitly asks.

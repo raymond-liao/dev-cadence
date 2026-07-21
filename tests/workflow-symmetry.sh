@@ -781,6 +781,10 @@ assert_workflows "manual recovery eligibility" \
   'manual recovery.*accepted_with_risk.*unrecoverable.*Recovery Attempt.*User Confirmation'
 assert_workflows "manual recovery record" \
   '07-manual-recovery-record\.md' '07-manual-recovery-record\.md' '07-manual-recovery-record\.md'
+assert_workflows "risk acceptance enters Completion" \
+  'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration' \
+  'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration' \
+  'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration'
 
 assert_workflows "completion finishing flow" "finishing-a-development-branch/SKILL\\.md" "finishing-a-development-branch/SKILL\\.md" "finishing-a-development-branch/SKILL\\.md"
 assert_workflows "whole-run discard context" \
