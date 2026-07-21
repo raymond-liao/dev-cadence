@@ -16,7 +16,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `pending` | `pending` | 已写入待确认范围；未经用户确认不得开始 Technical Solution。 |
+| Requirements Confirmation | 🔄 `in_progress` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `pending` | `785d3af749ac2f06e6d9219ffb759c054ffc1d28` | 记录 checkpoint 已验证包含需求记录；未经用户确认不得开始 Technical Solution。 |
 | Technical Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `pending` | `pending` | 等待 Requirements Confirmation。 |
 | Implementation Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `pending` | `pending` | 等待 Technical Solution。 |
 | Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `pending` | `pending` | 等待已确认的实施计划。 |
