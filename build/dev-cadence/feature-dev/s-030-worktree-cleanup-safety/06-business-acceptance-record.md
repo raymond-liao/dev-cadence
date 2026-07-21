@@ -38,12 +38,11 @@ None. 真实 destructive Completion 或 whole-run discard 不属于 System Testi
 
 ## Lifecycle Writeback
 
-- Card status: `In Progress` (unchanged because the accepted delivery is not yet integrated).
-- Delivery result/reference: `accepted`; current-run evidence is `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/06-business-acceptance-record.md`.
+- Card status: `Done`.
+- Delivery result/reference: local merge to `main` at `46394774b3278e2af160a102931d4676642502bf`; current-run evidence is `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/06-business-acceptance-record.md`.
 - Backlog source section: `进行中`.
-- Backlog destination section: `进行中` (unchanged until a Completion result authorizes an integrated terminal state).
+- Backlog destination section: `已完成`.
 
 ## Final Follow-Up Actions
 
-- No merge, push, pull request, discard, worktree removal, or task-branch deletion has been authorized or performed.
-- Completion is awaiting the user's explicit integration choice.
+- The accepted delivery was locally merged to `main` at `46394774b3278e2af160a102931d4676642502bf`.

@@ -4,9 +4,10 @@
 
 - ID：`S-030`
 - Version：`4`
-- Status：`In Progress`
+- Status：`Done`
 - Priority：`P0`
 - Change Type：Feature
+- Delivery Result：已本地合并到 `main`，提交 `46394774b3278e2af160a102931d4676642502bf`；交付证据见 `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/06-business-acceptance-record.md`。
 
 ## 目标
 
@@ -80,3 +81,4 @@
 | 3 | 2026-07-19T20:23:56+0800 | Raymond Liao <raymond-liao@outlook.com> | 补全记录集合、稳定位置、完整性验证、恢复信息、统一结果值和清理边界。 | 完整保留 S-031 和 S-033 的删除安全与交付证据契约。 |
 | 4 | 2026-07-20T20:21:54+0800 | Raymond Liao <raymond-liao@outlook.com> | 将范围收敛为删除前的 worktree 所有权验证，并将状态更新为 Ready。 | 用户确认不在任何 Completion 或 discard 路径归档运行记录或持久化清理结果；manifest 创建证据与 Git 身份比对足以界定交付范围。 |
 | 4 | 2026-07-20T20:52:40+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 Story 状态更新为 `In Progress`。 | 用户明确请求开始实施；S-030 已是用户确认的 `Ready` Story。 |
+| 4 | 2026-07-21T13:20:34+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 Story 状态更新为 `Done`。 | 已接受的交付已本地合并到 `main`。 |

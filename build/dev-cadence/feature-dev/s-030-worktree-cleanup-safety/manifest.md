@@ -10,7 +10,7 @@
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
 - Current Stage: Completion
-- Overall Status: ✅ `accepted`
+- Overall Status: ✅ `integrated`
 
 ## Stage Table
 
@@ -83,7 +83,13 @@
 
 ## Verification Summary
 
-- ✅ `accepted`: 用户已在 Business Acceptance 选择 `1. Accept`；等待明确的 Completion 集成决定。
+- ✅ `integrated`: 用户已在 Business Acceptance 选择 `1. Accept`，并选择本地合并到 `main`。
+
+## Final Integration Decision
+
+- Result: ✅ `integrated` via local merge.
+- Base Branch: `main`.
+- Integrated Commit: `46394774b3278e2af160a102931d4676642502bf`.
 
 ## Residual Risks
 
