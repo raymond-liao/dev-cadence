@@ -222,7 +222,7 @@ Immediately after final user confirmation and before any destructive command, re
 
 Immediately after final user confirmation and before any destructive command, re-enumerate and reclassify every changed path as current-run, external, or unknown and compare the complete classified path set with the confirmed snapshot. Any change, addition, deletion, or classification mismatch returns `discard_blocked` without changing Git or filesystem state.
 
-Immediately after final user confirmation and before any destructive command, freeze the exact task branch ref and `Expected Current HEAD SHA` again and invoke `scripts/verify-worktree-ownership.sh` with the immutable manifest ownership tuple. A `not_owned` result or any verifier failure returns `discard_blocked` before destructive commands and preserves the worktree, task branch, and active run records. With `Created By Current Run: no`, the manifest `not_applicable` tuple is rejected by the verifier; return `discard_blocked` and preserve the worktree, task branch, and active run records.
+Immediately after final user confirmation and before any destructive command, freeze the exact task branch ref and `Expected Current HEAD SHA` again and invoke `scripts/verify-worktree-ownership.sh` with the immutable manifest ownership tuple. After changing to the target repository root, resolve that verifier as `$MAIN_ROOT/.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh`; do not invoke a source-repository-relative `scripts/...` path. Both Dev Cadence cleanup gates must invoke this same installed verifier. A `not_owned` result or any verifier failure returns `discard_blocked` before destructive commands and preserves the worktree, task branch, and active run records. With `Created By Current Run: no`, the manifest `not_applicable` tuple is rejected by the verifier; return `discard_blocked` and preserve the worktree, task branch, and active run records.
 
 #### Ownership and execution
 
@@ -287,13 +287,14 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 
 Dev Cadence cleanup caller must read the immutable ownership tuple only from the run manifest: `Created By Current Run`, `Workspace Path`, `Task Branch Ref`, and `Creation HEAD SHA`. It must pass the actual current workspace classification separately from the manifest ownership tuple. The Dev Cadence caller must not infer or fall back to `.worktrees/`, `worktrees/`, or configured worktree directories to prove ownership.
 
-For a Dev Cadence named-branch worktree, invoke `scripts/verify-worktree-ownership.sh` with the primary root and the immutable manifest tuple. Immediately before `git worktree remove`, freeze the exact task branch ref and `Expected Current HEAD SHA`, then run that verifier. Only an `owned` result permits the existing removal command. On `not_owned` or any verifier failure, skip `git worktree remove` and preserve the task branch and worktree. With `Created By Current Run: no`, pass the manifest `not_applicable` tuple unchanged; the verifier must reject it.
+For a Dev Cadence named-branch worktree, invoke the installed `scripts/verify-worktree-ownership.sh` with the primary root and the immutable manifest tuple. Immediately before `git worktree remove`, freeze the exact task branch ref and `Expected Current HEAD SHA`, then run that verifier. Only an `owned` result permits the existing removal command. On `not_owned` or any verifier failure, skip `git worktree remove` and preserve the task branch and worktree. With `Created By Current Run: no`, pass the manifest `not_applicable` tuple unchanged; the verifier must reject it.
 
 ```bash
 # Dev Cadence callers only, immediately before the existing removal command
 TASK_BRANCH_REF=<manifest-task-branch-ref>
 EXPECTED_CURRENT_HEAD_SHA=$(git rev-parse "$TASK_BRANCH_REF")
-scripts/verify-worktree-ownership.sh \
+OWNERSHIP_VERIFIER="$MAIN_ROOT/.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh"
+"$OWNERSHIP_VERIFIER" \
   "$MAIN_ROOT" \
   <manifest-created-by-current-run> \
   <manifest-workspace-path> \

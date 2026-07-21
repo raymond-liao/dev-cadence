@@ -21,6 +21,11 @@ git -C "$repo" config user.email "contract@example.invalid"
 git -C "$repo" commit -q --allow-empty -m "base"
 base_sha="$(git -C "$repo" rev-parse HEAD)"
 
+installed_verifier="$repo/.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh"
+mkdir -p "$(dirname "$installed_verifier")"
+cp "$VERIFIER" "$installed_verifier"
+chmod +x "$installed_verifier"
+
 create_worktree() {
   branch_name="$1"
   workspace_path="$2"
@@ -28,7 +33,7 @@ create_worktree() {
 }
 
 assert_owned() {
-  output="$("$VERIFIER" "$repo" yes "$workspace" "$branch_ref" "$creation_sha" "$current_sha")"
+  output="$(cd "$repo" && "$installed_verifier" "$repo" yes "$workspace" "$branch_ref" "$creation_sha" "$current_sha")"
   [[ "$output" == owned ]] || fail "expected owned, got: $output"
 }
 

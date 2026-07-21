@@ -55,6 +55,8 @@ assert_literal "already integrated result" 'already-integrated' "$FINISHING_SKIL
 assert_literal "post merge HEAD capture" 'FINAL_BASE_SHA=$(git rev-parse "$BASE_BRANCH")' "$FINISHING_SKILL"
 assert_literal "local only wording" 'local-only' "$FINISHING_SKILL"
 assert_literal "ownership verifier reference" '`scripts/verify-worktree-ownership.sh`' "$FINISHING_SKILL"
+assert_literal "installed ownership verifier path" 'OWNERSHIP_VERIFIER="$MAIN_ROOT/.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh"' "$FINISHING_SKILL"
+assert_literal "installed ownership verifier invocation" '"$OWNERSHIP_VERIFIER" \' "$FINISHING_SKILL"
 assert_literal "immutable manifest tuple" 'Dev Cadence cleanup caller must read the immutable ownership tuple only from the run manifest' "$FINISHING_SKILL"
 assert_literal "separate workspace classification" 'actual current workspace classification separately from the manifest ownership tuple' "$FINISHING_SKILL"
 assert_literal "no directory fallback" 'must not infer or fall back to `.worktrees/`, `worktrees/`, or configured worktree directories' "$FINISHING_SKILL"
