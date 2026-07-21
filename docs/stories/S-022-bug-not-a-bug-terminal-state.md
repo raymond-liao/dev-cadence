@@ -4,7 +4,7 @@
 
 - ID：`S-022`
 - Version：`1`
-- Status：`Superseded`
+- Status：`Dropped`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -41,15 +41,15 @@
 
 ## Story Relationships
 
-- Superseded By：[S-024 Bug 诊断门禁](S-024-bug-diagnosis-gate.md)。
+- 后续工作项：[S-024 Bug 诊断门禁](S-024-bug-diagnosis-gate.md) 已停止；本卡不恢复为独立交付项。
 
 ## 处置
 
-本卡的 `not-a-bug` 终态是 Problem Diagnosis 的结果之一，已并入 S-024 的诊断结果门禁，不再作为独立交付项实施。
+本卡曾并入 S-024 的诊断门禁。S-024 已停止，本卡也不再作为独立交付项实施。
 
 ## Open Questions
 
-- [Q-011 Bug 非缺陷终态命名](../open-questions.md#q-011) 已迁移至 S-024。
+- [Q-011 Bug 非缺陷终态命名](../open-questions.md#q-011) 已随 S-024 停止而标记为 `Invalid`。
 
 ## 相关文档
 
@@ -61,3 +61,4 @@
 |---:|---|---|---|---|
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Bug `not-a-bug` 终态 Story。 | 避免非缺陷调查停留在 `pending` 或伪装为已修复。 |
 | 1 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Superseded，并将职责迁移至 S-024。 | 非缺陷判断与确认缺陷、证据不足共同构成诊断门禁的结果模型。 |
+| 1 | 2026-07-21T14:44:22+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Dropped。 | S-024 已停止，且用户确认不恢复本卡为独立交付项。 |

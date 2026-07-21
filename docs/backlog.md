@@ -12,7 +12,6 @@
 |---|---|---:|---|---|
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Ready` | `P2` |
 | `S-020` | [实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) | `3` | `Draft` | `P2` |
-| `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `3` | `Draft` | `P2` |
 | `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `1` | `Draft` | `P2` |
 | `S-026` | [Refactor 基线身份](stories/S-026-refactor-baseline-identity.md) | `1` | `Draft` | `P2` |
 | `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `3` | `Draft` | `P2` |
@@ -75,7 +74,8 @@
 |---|---|---:|---|---|
 | `-` | 实现 Discovery workflow 和 PRD 契约：原任务已拆分为 [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md) 和 [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)。该条目的 Superseded 状态只说明任务被拆分；S-001 的实际完成状态以 Story 和运行记录为准。 | `-` | `Superseded` | `-` |
 | `S-021` | [验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) — 已并入 [S-020 实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md)；两卡属于同一端到端风险证据链。 | `1` | `Superseded` | `P2` |
-| `S-022` | [Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) — 已并入 [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md)；`not-a-bug` 是 Bug 诊断门禁的一种结果。 | `1` | `Superseded` | `P1` |
+| `S-022` | [Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) — 后续 [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) 已停止；本卡不恢复为独立交付项。 | `1` | `Dropped` | `P1` |
+| `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) — 用户确认停止该工作项，不再进入 Ready 或交付。 | `3` | `Dropped` | `P2` |
 | `S-023` | [Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md) — 已并入 [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md)；manual recovery 与正常验收共同定义 Delivery 终态。 | `1` | `Superseded` | `P1` |
 | `S-028` | [Refactor 旧路径删除门禁](stories/S-028-refactor-legacy-path-removal-gate.md) — 已并入 [S-027 Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md)；删除门禁依赖同一迁移清单和迁移状态。 | `1` | `Superseded` | `P2` |
 | `S-031` | [保存 Worktree 运行记录](stories/S-031-preserve-worktree-run-records.md) — 已并入 [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md)；记录保存是 worktree 清理的前置安全条件。 | `1` | `Superseded` | `P0` |
@@ -130,8 +130,7 @@
 | [B-012](bugs/B-012-draft-story-claimed-before-ready-gate.md) | - | - |
 | [B-013](bugs/B-013-story-ready-feature-reference-required.md) | - | - |
 | [B-014](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | - | - |
-| [S-024](stories/S-024-bug-diagnosis-gate.md) | - | - |
-| [S-025](stories/S-025-bug-red-green-evidence.md) | [S-024](stories/S-024-bug-diagnosis-gate.md) | - |
+| [S-025](stories/S-025-bug-red-green-evidence.md) | - | - |
 | [B-006](bugs/B-006-delivery-record-evidence-completeness.md) | - | - |
 | [S-026](stories/S-026-refactor-baseline-identity.md) | - | - |
 | [S-027](stories/S-027-refactor-migration-start-contract.md) | - | - |

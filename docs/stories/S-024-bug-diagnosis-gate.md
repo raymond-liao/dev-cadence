@@ -4,7 +4,7 @@
 
 - ID：`S-024`
 - Version：`3`
-- Status：`Draft`
+- Status：`Dropped`
 - Priority：`P2`
 - Change Type：Feature
 
@@ -40,7 +40,7 @@
 
 ## Story Relationships
 
-- Supersedes：[S-022 Bug `not-a-bug` 终态](S-022-bug-not-a-bug-terminal-state.md)。
+- [S-022 Bug `not-a-bug` 终态](S-022-bug-not-a-bug-terminal-state.md) 已与本卡一同停止；两卡均不作为独立交付项实施。
 
 ## 依赖
 
@@ -48,8 +48,8 @@
 
 ## Open Questions
 
-- [Q-011 Bug 非缺陷终态命名](../open-questions.md#q-011)：manifest 使用 `not_a_bug` 还是更通用的关闭状态？
-- [Q-013 替代因果证据门槛](../open-questions.md#q-013)：哪些替代因果证据足以在无法完全复现时通过门禁？
+- [Q-011 Bug 非缺陷终态命名](../open-questions.md#q-011) 已标记为 `Invalid`：本卡已停止，不再需要为该交付项选择 manifest 终态命名。
+- [Q-013 替代因果证据门槛](../open-questions.md#q-013) 已标记为 `Invalid`：本卡已停止，不再需要为该交付项定义替代因果证据门槛。
 
 ## 相关文档
 
@@ -62,3 +62,4 @@
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Bug 诊断门禁 Story。 | 防止在问题和根因仍不明确时过早设计修复。 |
 | 2 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 吸收 S-022，明确诊断阶段的缺陷、非缺陷和未决三类结果。 | `not-a-bug` 是诊断门禁的另一种结果，必须与进入 Repair Solution 的条件共同维护。 |
 | 3 | 2026-07-19T20:23:56+0800 | Raymond Liao <raymond-liao@outlook.com> | 补全用户取消修复不等于 `not-a-bug` 的边界。 | 防止将处理意愿与缺陷性质混淆。 |
+| 3 | 2026-07-21T14:44:22+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Dropped，并将 Q-011 与 Q-013 标记为 Invalid。 | 用户确认停止该工作项；不再进入 Ready 或交付。 |

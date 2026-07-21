@@ -10,8 +10,6 @@
 | [Q-004](#q-004) | Open | worktree 和会话恢复是否改变了配置查找根目录？ | [B-004 输出语言配置一致性](bugs/B-004-output-language-configuration-not-consistently-applied.md) |
 | [Q-006](#q-006) | Open | 是否需要在后续 Story 中为连续失败设置统一最大恢复轮次，还是由各 workflow 根据风险和失败类型决定？ | [S-004 实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md) |
 | [Q-010](#q-010) | Open | 不同阶段的风险 ID 是否共享统一命名空间？ | [S-020 实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) |
-| [Q-011](#q-011) | Open | manifest 使用 `not_a_bug` 还是更通用的关闭状态？ | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) |
-| [Q-013](#q-013) | Open | 哪些替代因果证据足以在无法完全复现时通过门禁？ | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) |
 | [Q-014](#q-014) | Open | proof ID 的跨阶段字段名称和最小格式是什么？ | [S-025 Bug Red-Green 证据](stories/S-025-bug-red-green-evidence.md) |
 | [Q-015](#q-015) | Open | 未提交但已跟踪的基线差异应如何形成稳定身份？ | [S-026 Refactor 基线身份](stories/S-026-refactor-baseline-identity.md) |
 | [Q-016](#q-016) | Open | 迁移状态应保存在实施记录还是独立清单中？ | [S-027 Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) |
@@ -21,7 +19,9 @@
 | [Q-007](#q-007) | Resolved | 已关闭列表如何在保持五列表格的同时呈现历史合并事件的来源卡片、目标卡片和合并原因？ | [S-016 统一 Backlog 看板](stories/S-016-unified-backlog-board.md) |
 | [Q-008](#q-008) | Resolved | `rejected` 应返回返工阶段还是进入独立关闭终态，是否需要按原因区分？ | [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) |
 | [Q-009](#q-009) | Resolved | tracked working-tree 差异使用 patch hash 还是其他稳定身份表达？ | [S-019 最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) |
+| [Q-011](#q-011) | Invalid | manifest 使用 `not_a_bug` 还是更通用的关闭状态？ | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) |
 | [Q-012](#q-012) | Resolved | 哪些失败类别允许进入 manual recovery，哪些必须继续阻塞？ | [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) |
+| [Q-013](#q-013) | Invalid | 哪些替代因果证据足以在无法完全复现时通过门禁？ | [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) |
 | [Q-017](#q-017) | Resolved | 所有权证据应保存在 manifest、配置派生记录还是独立元数据中？ | [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) |
 | [Q-018](#q-018) | Invalid | 多 worktree 并行运行时，保存目录如何避免任务 slug 冲突？ | [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) |
 | [Q-020](#q-020) | Superseded | 发布、部署、生产验证和事故处置应拆成几个 workflow？ | [S-034 发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) |
