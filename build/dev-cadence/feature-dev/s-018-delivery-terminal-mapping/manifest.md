@@ -17,7 +17,7 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user instructed continue at 2026-07-21T15:24:13+0800` | `dc9243d2ec7ddceba1816e54d2fe9a3bb6a05c26` | 恢复后的 Requirements 已重新确认；确认 checkpoint 已验证。 |
-| Technical Solution | 🔄 `in_progress` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `superseded: validator-required headings were absent` | `pending` | 已规范化 `已选方案` 与 `备选方案`；等待重新确认。 |
+| Technical Solution | 🔄 `in_progress` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `superseded: validator-required headings were absent` | `695f43ef3d9df4a9f35b63f4e537c8d4bb235100` | 已规范化 `已选方案` 与 `备选方案`；恢复 checkpoint 已验证，等待重新确认。 |
 | Implementation Plan | ⏳ `pending` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `superseded: Technical Solution recovery` | `superseded: f2374f2dc57e42abcce5fc43ad10770536092b87` | 需在 Technical Solution 重新确认后刷新。 |
 | Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `pending` | 被 Technical Solution recovery 阻断。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `pending` | `pending` | 等待 Development Implementation。 |
