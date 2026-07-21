@@ -783,6 +783,11 @@ Delegated continuation must not create, imply, or select a Business Acceptance o
 - get the business acceptor identity from the target repository's `git config user.name` and `git config user.email`; ask the user only if git identity is unavailable;
 - map the user's selected number or exact option text to the normalized decision, then record the decision, decision maker, exact decision time with timezone, and accepted residual risks.
 
+- Map `Accept` to `accepted`, record it, set the manifest overall status to `accepted`, and enter normal Completion.
+- Map `Accept with residual risk` to `accepted_with_risk`; require a table of stable Risk ID, description, and owner before entering normal Completion, and preserve that table after integration.
+- For `Reject`, require a rejection reason. When it identifies the earliest affected stage, record `rejected`, set that stage to `in_progress`, set later affected stages to `pending`, mark invalidated evidence `superseded`, and return there. When it does not identify a stage, remain in Business Acceptance and request clarification.
+- `rejected` returns to the earliest affected stage, which becomes `in_progress`, and must not enter Completion, report success, or set `integrated`.
+
 Do not substitute system test success for user acceptance.
 Do not infer acceptance from ambiguous positive feedback such as "looks good", "seems fine", "looks okay", localized equivalents, or similar wording.
 Only treat the response as a business acceptance decision when the user selects one of the numbered options or repeats the exact option text.
@@ -807,11 +812,13 @@ The business acceptance record must use this structure:
 
 - `Accepted Requirement And Solution Sources`: confirmed requirements, technical solution, and plan sources.
 - `System Test Report Source`: system test report source.
-- `User Decision`: normalized decision selected from the fixed options: accepted, rejected, or accepted with residual risk.
+- `User Decision`: normalized decision selected from the fixed options: `accepted`, `rejected`, or `accepted_with_risk`.
 - `Decision By`: target repository git identity that made the business acceptance decision, formatted as `user.name <user.email>` when both values are available.
 - `Decision At`: exact decision timestamp with timezone, preferably ISO 8601 with offset.
 - `Accepted Result`: brief business summary of what was accepted.
 - `Accepted Residual Risks`: residual risks accepted by the user, if any.
+- `Accepted Risk Register`: a table with `Risk ID`, `Description`, and `Owner`; use `None` when the decision is not `accepted_with_risk`.
+- `Rejection Reason and Return Target`: the rejection reason and earliest affected stage, or `None` when the decision is not `rejected`.
 - `Final Follow-Up Actions`: final follow-up actions, if any.
 
 When the run records remain after Completion, update `Final Follow-Up Actions` with the actual final result. Record whether the branch was merged, a PR was created, or the branch was kept; also record whether any worktree was removed and whether the task branch was deleted or preserved. Do not require or attempt this update after `whole_run_discarded`. Do not leave final follow-up actions as future-tense TODOs when the manifest is in a terminal status.
@@ -842,6 +849,28 @@ Handle the normalized finishing result:
 - `whole_run_discarded`: the current run directory no longer exists; do not update the manifest, Business Acceptance record, checkpoint fields, or any other run record. Do not run the terminal-record readiness checklist. Report the verified deletion result in the current conversation and stop this workflow.
 - `discard_cancelled` or `discard_blocked`: retain the current run and its records, report the reason, and remain in Completion without claiming a terminal result.
 - merge, pull request, or keep: update the manifest and Business Acceptance record with the final integration result, then complete the existing terminal-record readiness checklist.
+
+### Manual Recovery
+
+Manual recovery is available only after `accepted` or `accepted_with_risk` has entered normal Completion and a verified, unrecoverable Git, branch, worktree, permission, or external-service blocker prevents Completion from continuing. A manual recovery for `accepted` or `accepted_with_risk` requires an unrecoverable blocker, a documented `Recovery Attempt`, a failed `Recovery Result`, an explanation of why normal recovery cannot continue, and explicit `User Confirmation`.
+
+Do not use manual recovery for retryable tool failures, verification or code-review failures, ordinary rework, incomplete acceptance, discard, or recoverable Completion cases. Retain all code, branch, worktree, and run-record evidence. Mark the manifest `abandoned` only after every stage and checkpoint is terminal.
+
+Write `build/dev-cadence/feature-dev/<feature-slug>/07-manual-recovery-record.md` before setting `abandoned`. It must contain:
+
+- `Blocking Category`
+- `Blocking Evidence`
+- `Blocked Completion Action`
+- `Recovery Attempt`
+- `Recovery Result`
+- `Why Further Recovery Is Not Viable`
+- `User Confirmation`
+- `Code Preservation`
+- `Branch Preservation`
+- `Worktree Preservation`
+- `Run Record Preservation`
+- `Follow-up Owner`
+- `Next Step`
 
 Before marking the run terminal, complete this readiness checklist:
 
