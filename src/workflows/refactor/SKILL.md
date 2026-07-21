@@ -865,9 +865,15 @@ Handle the normalized finishing result:
 - `discard_cancelled` or `discard_blocked`: retain the current run and its records, report the reason, and remain in Completion without claiming a terminal result.
 - merge, pull request, or keep: update the manifest and Business Acceptance record with the final integration result, then complete the existing terminal-record readiness checklist.
 
+Only an actual `merge` result may set manifest `Overall Status` to `integrated`. A `pull request` or `keep` result must preserve the original Business Acceptance decision as manifest `Overall Status` (`accepted` or `accepted_with_risk`) and preserve the `Accepted Risk Register`.
+
 ### Manual Recovery
 
 Manual recovery is available only after `accepted` or `accepted_with_risk` has entered normal Completion and a verified, unrecoverable Git, branch, worktree, permission, or external-service blocker prevents Completion from continuing. A manual recovery for `accepted` or `accepted_with_risk` requires an unrecoverable blocker, a documented `Recovery Attempt`, a failed `Recovery Result`, an explanation of why normal recovery cannot continue, and explicit `User Confirmation`.
+
+Allowed `Blocking Category` values are `git`, `branch`, `worktree`, `permission`, and `external_environment`.
+
+Manual recovery is forbidden for `retryable_tool_failure`, `verification_failure`, `code_review_failure`, `ordinary_rework`, `incomplete_acceptance`, `user_requested_discard`, and `recoverable_completion`.
 
 Do not use manual recovery for retryable tool failures, verification or code-review failures, ordinary rework, incomplete acceptance, discard, or recoverable Completion cases. Retain all code, branch, worktree, and run-record evidence. Mark the manifest `abandoned` only after every stage and checkpoint is terminal.
 

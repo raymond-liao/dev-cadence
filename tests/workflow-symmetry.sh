@@ -785,6 +785,46 @@ assert_workflows "risk acceptance enters Completion" \
   'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration' \
   'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration' \
   'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration'
+assert_workflows "only merge maps to integrated" \
+  'Only an actual `merge` result may set.*Overall Status.*`integrated`' \
+  'Only an actual `merge` result may set.*Overall Status.*`integrated`' \
+  'Only an actual `merge` result may set.*Overall Status.*`integrated`'
+assert_workflows "pull request and keep preserve acceptance status" \
+  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Risk Register' \
+  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Risk Register' \
+  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Risk Register'
+
+for blocking_category in git branch worktree permission external_environment; do
+  assert_workflows "manual recovery blocker category $blocking_category" \
+    "Blocking Category.*\`$blocking_category\`" \
+    "Blocking Category.*\`$blocking_category\`" \
+    "Blocking Category.*\`$blocking_category\`"
+done
+
+for excluded_case in retryable_tool_failure verification_failure code_review_failure ordinary_rework incomplete_acceptance user_requested_discard recoverable_completion; do
+  assert_workflows "manual recovery exclusion $excluded_case" \
+    "[Mm]anual recovery.*\`$excluded_case\`" \
+    "[Mm]anual recovery.*\`$excluded_case\`" \
+    "[Mm]anual recovery.*\`$excluded_case\`"
+done
+
+for recovery_field in \
+  "Blocking Category" \
+  "Blocking Evidence" \
+  "Blocked Completion Action" \
+  "Recovery Attempt" \
+  "Recovery Result" \
+  "Why Further Recovery Is Not Viable" \
+  "User Confirmation" \
+  "Code Preservation" \
+  "Branch Preservation" \
+  "Worktree Preservation" \
+  "Run Record Preservation" \
+  "Follow-up Owner" \
+  "Next Step"; do
+  assert_workflows "manual recovery field $recovery_field" \
+    "\`$recovery_field\`" "\`$recovery_field\`" "\`$recovery_field\`"
+done
 
 assert_workflows "completion finishing flow" "finishing-a-development-branch/SKILL\\.md" "finishing-a-development-branch/SKILL\\.md" "finishing-a-development-branch/SKILL\\.md"
 assert_workflows "whole-run discard context" \
