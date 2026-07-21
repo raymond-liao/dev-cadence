@@ -11,7 +11,6 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Ready` | `P2` |
-| `S-020` | [实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) | `3` | `Draft` | `P2` |
 | `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `1` | `Draft` | `P2` |
 | `S-026` | [Refactor 基线身份](stories/S-026-refactor-baseline-identity.md) | `1` | `Draft` | `P2` |
 | `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `3` | `Draft` | `P2` |
@@ -19,6 +18,7 @@
 | `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) | `1` | `Blocked` | `P1` |
 | `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
 | `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `2` | `Draft` | `P1` |
+| `T-005` | [最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) | `1` | `Ready` | `P2` |
 
 ## 已完成
 
@@ -73,7 +73,8 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `-` | 实现 Discovery workflow 和 PRD 契约：原任务已拆分为 [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md) 和 [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)。该条目的 Superseded 状态只说明任务被拆分；S-001 的实际完成状态以 Story 和运行记录为准。 | `-` | `Superseded` | `-` |
-| `S-021` | [验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) — 已并入 [S-020 实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md)；两卡属于同一端到端风险证据链。 | `1` | `Superseded` | `P2` |
+| `S-021` | [验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) — 历史上已并入 S-020，现由 [T-005 最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) 承接最小必要范围。 | `1` | `Superseded` | `P2` |
+| `S-020` | [实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) — 已由 [T-005 最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) 替代；新 Task 只保留 `ready_with_risk` 的带入限制呈现与验收引用。 | `3` | `Superseded` | `P2` |
 | `S-022` | [Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) — 后续 [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) 已停止；本卡不恢复为独立交付项。 | `1` | `Dropped` | `P1` |
 | `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) — 用户确认停止该工作项，不再进入 Ready 或交付。 | `3` | `Dropped` | `P2` |
 | `S-023` | [Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md) — 已并入 [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md)；manual recovery 与正常验收共同定义 Delivery 终态。 | `1` | `Superseded` | `P1` |
@@ -116,7 +117,7 @@
 | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) | [S-004](stories/S-004-failure-classification-stage-routing.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md), [S-039](stories/S-039-iteration-plan-capacity-calibration.md) | - |
 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md) | - | - |
 | [S-019](stories/S-019-final-verification-revision-binding.md) | - | - |
-| [S-020](stories/S-020-implementation-review-risk-to-verification.md) | - | - |
+| [T-005](tasks/T-005-final-verification-carried-limitations.md) | - | - |
 | [B-001](bugs/B-001-normal-checkout-local-merge-safety.md) | - | - |
 | [B-002](bugs/B-002-normal-checkout-discard-safety.md) | - | - |
 | [B-004](bugs/B-004-output-language-configuration-not-consistently-applied.md) | - | - |
@@ -151,7 +152,7 @@
 
 ## Ordering Version
 
-`8`
+`10`
 
 ## Ordering Change Log
 
@@ -165,3 +166,5 @@
 | 6 | 2026-07-19T13:08:29+08:00 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-014` 插入 `B-013` 之后、`S-042` 之前，并保留其他待处理项的相对顺序。 | 用户确认单项建卡不应重复执行输入范围确认和完整结果确认，相关交互问题应在 S-042 之前进入待处理。 |
 | 7 | 2026-07-19T16:43:14+0800 | Raymond Liao <raymond-liao@outlook.com> | 将新建的 `B-015` 插入 `B-011` 之后、`B-013` 之前，并保留其他待处理项的相对顺序。 | 当前 B-011 的实施表明领取状态仅存在于任务分支；B-015 记录主分支领取持久化缺口，应紧随同一入口问题。 |
 | 8 | 2026-07-20T18:10:59+0800 | Raymond Liao <raymond-liao@outlook.com> | 取消 `S-030` 保持在 `T-002` 之后的排序例外，将 `S-030` 移至 `待处理` 首位，并保持其余待处理项相对顺序。 | 用户确认 worktree 目前使用频繁，需要优先处理其清理安全与证据风险。 |
+| 9 | 2026-07-21T14:52:12+0800 | Raymond Liao <raymond-liao@outlook.com> | 以 `T-005` 在原 `S-020` 的待处理位置替换该 Story，并保留相邻待处理项的相对顺序。 | 用户确认将过度复杂的风险追溯 Story 收敛为轻量 Task，排序优先级不变。 |
+| 10 | 2026-07-21T15:14:33+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 `T-005` 移至待处理末位，位于 `S-032` 之后，并保留其余待处理项的相对顺序。 | 用户确认 T-005 属于可省略或延期的审计增强，不应占用近期交付优先级。 |
