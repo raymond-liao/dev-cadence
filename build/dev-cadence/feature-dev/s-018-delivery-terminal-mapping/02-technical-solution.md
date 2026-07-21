@@ -48,9 +48,9 @@
 - 优点：每条 workflow 保持自身终态与记录所有权；不新建路由；validator 可以阻止无验收或无证据的 `abandoned`；对称测试避免漂移。
 - 缺点：三份受控的对称规则需要同步维护。
 
-## ❓ Decision Pending：推荐方案 C
+## ✅ Selected：方案 C
 
-在用户确认前，推荐采用方案 C。它以现有 workflow 为自然所有者，满足 S-018 对对称性的要求，同时以 validator 和 fixture 将 `abandoned` 从宽松枚举值收紧为可审计例外，不扩大到 merge、discard 或 worktree 命令实现。
+用户于 `2026-07-21T14:49:01+0800` 确认方案 C。它以现有 workflow 为自然所有者，满足 S-018 对对称性的要求，同时以 validator 和 fixture 将 `abandoned` 从宽松枚举值收紧为可审计例外，不扩大到 merge、discard 或 worktree 命令实现。
 
 ## 设计细节
 
@@ -120,3 +120,9 @@ build/dev-cadence/<workflow>/<task-slug>/07-manual-recovery-record.md
 ## Open Questions
 
 - 无。拒绝理由如何映射到当前 run 的最早受影响阶段是 Business Acceptance 的运行时用户输入，不是本次技术方案的未决设计。
+
+## 阶段决定
+
+- Status: ✅ `confirmed`
+- User Confirmation: 用户于 `2026-07-21T14:49:01+0800` 选择“确认方案 C 并进入 Implementation Plan”。
+- 下一阶段：Implementation Plan；实现仍需要用户确认该计划后才能开始。
