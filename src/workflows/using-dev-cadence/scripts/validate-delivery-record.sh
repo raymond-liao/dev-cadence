@@ -44,11 +44,17 @@ require_manual_recovery_field() {
 
 require_abandoned_evidence() {
   local acceptance_path="$1"
-  local recovery_path="$2"
+  local acceptance_status="$2"
+  local acceptance_checkpoint="$3"
+  local recovery_path="$4"
   local decision
 
   [[ -n "$acceptance_path" && -f "$acceptance_path" ]] ||
     fail "abandoned manifest is missing Business Acceptance record"
+  [[ "$acceptance_status" == "confirmed" ]] ||
+    fail "abandoned manifest requires confirmed Business Acceptance stage"
+  [[ "$acceptance_checkpoint" != "pending" ]] ||
+    fail "abandoned manifest requires Business Acceptance checkpoint"
   decision="$(rg -n '^- User Decision:' "$acceptance_path" | head -n 1 | sed 's/^[0-9]*:- User Decision: *//' || true)"
   case "$decision" in
     \`accepted\`|\`accepted_with_risk\`)
@@ -70,6 +76,8 @@ artifact_exists_in_stage_table=0
 implementation_record_path=""
 verification_record_path=""
 business_acceptance_path=""
+business_acceptance_status=""
+business_acceptance_checkpoint=""
 terminal_mode=0
 terminal_stage_gap=""
 
@@ -177,6 +185,8 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
       ;;
     */06-business-acceptance-record.md)
       business_acceptance_path="$repo_root_abs/$artifact_path"
+      business_acceptance_status="$status"
+      business_acceptance_checkpoint="$checkpoint_value"
       ;;
   esac
 done < <(
@@ -195,7 +205,7 @@ done < <(
 
 if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then
   [[ -z "$terminal_stage_gap" ]] || fail "terminal manifest has non-terminal stage: $terminal_stage_gap"
-  require_abandoned_evidence "$business_acceptance_path" "$run_dir/07-manual-recovery-record.md"
+  require_abandoned_evidence "$business_acceptance_path" "$business_acceptance_status" "$business_acceptance_checkpoint" "$run_dir/07-manual-recovery-record.md"
   printf 'Delivery record validation passed: %s\n' "$run_dir"
   exit 0
 fi

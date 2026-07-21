@@ -319,6 +319,15 @@ echo changed after skipped"
         "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$manual_recovery_path.bak" "$repo/$run_dir_rel/manifest.md.bak"
       ;;
+    invalid-abandoned-skipped-acceptance)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak \
+        -e 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        -e 's/| Business Acceptance | `confirmed` |/| Business Acceptance | `skipped` |/' \
+        -e 's/| `confirmed` | `[^`]*` | acceptance captured |$/| `skipped` | `skipped: abandoned` | acceptance captured |/' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
     invalid-skipped-pending)
       sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/; s/| Business Acceptance | `confirmed` |/| Business Acceptance | `skipped` |/; s/| `confirmed` | `[^`]*` | acceptance captured |$/| `skipped` | `pending` | acceptance captured |/' "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$run_dir_rel/manifest.md.bak"
@@ -374,6 +383,9 @@ run_expect_failure "$rejected_recovery_run" "FAIL: abandoned manifest requires a
 
 incomplete_recovery_run="$(create_fixture "invalid-abandoned-missing-field")"
 run_expect_failure "$incomplete_recovery_run" "FAIL: manual recovery record is missing Follow-up Owner"
+
+skipped_acceptance_run="$(create_fixture "invalid-abandoned-skipped-acceptance")"
+run_expect_failure "$skipped_acceptance_run" "FAIL: abandoned manifest requires confirmed Business Acceptance stage"
 
 placeholder_run="$(create_fixture "invalid-placeholder")"
 run_expect_failure "$placeholder_run" "FAIL: implementation record has pending Changed Files"
