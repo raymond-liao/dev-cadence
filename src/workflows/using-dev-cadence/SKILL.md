@@ -229,6 +229,8 @@ Evidence Source: git worktree list --porcelain
 
 For `Created By Current Run: no`, use `not_applicable` for the ownership tuple values; do not reconstruct them from reuse state.
 
+Each Delivery workflow must preserve this immutable creation-evidence handoff separately from its Current-run Discard context. `Workspace Path` is created-worktree provenance only. For `Created By Current Run: no`, its `not_applicable` value must not populate or replace the Current-run Discard context's actual `Workspace path` classification.
+
 Claim the item before switching the task branch. Claim the item before creating the worktree. The card and Backlog must be updated atomically.
 
 Use the default Story route `Draft Story -> work-item-analysis -> Ready Story -> feature-dev`; the matrix above governs when a claim may occur along that route.

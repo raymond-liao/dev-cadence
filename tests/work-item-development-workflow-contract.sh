@@ -182,6 +182,12 @@ assert_literal "creation evidence handoff workspace field" "Workspace Path: <rep
 assert_literal "creation evidence handoff branch field" "Task Branch Ref: <refs/heads/...|not_applicable>" "$ENTRY_SKILL"
 assert_literal "creation evidence handoff creation head field" "Creation HEAD SHA: <full SHA|not_applicable>" "$ENTRY_SKILL"
 assert_literal "creation evidence handoff source field" "Evidence Source: git worktree list --porcelain" "$ENTRY_SKILL"
+assert_match "creation evidence tuple is distinct from workspace classification" \
+  'immutable creation-evidence handoff.*separately.*Current-run Discard context|Current-run Discard context.*separately.*immutable creation-evidence handoff' "$ENTRY_SKILL"
+assert_match "creation tuple workspace path is provenance only" \
+  'Workspace Path.*created-worktree provenance|created-worktree provenance.*Workspace Path' "$ENTRY_SKILL"
+assert_match "creation no tuple does not populate workspace classification" \
+  'Created By Current Run: no.*not_applicable.*must not populate.*Workspace path|not_applicable.*must not populate.*Workspace path.*Created By Current Run: no' "$ENTRY_SKILL"
 assert_match "disabled branch handoff" \
   'worktree\.enabled: false.*immediately.*prepare.*dedicated.*branch.*must not.*create.*worktree' "$ENTRY_SKILL"
 assert_match "authoritative base ref resolved before claim" \

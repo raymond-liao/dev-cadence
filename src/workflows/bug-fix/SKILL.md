@@ -187,6 +187,8 @@ The manifest is the sole authority for this immutable creation-evidence tuple. W
 - Task Branch Ref: `<refs/heads/... or not_applicable>`
 - Creation HEAD SHA: `<full 40-hex SHA or not_applicable>`
 
+`Workspace Path` is created-worktree provenance only. When `Created By Current Run: no`, every tuple value is `not_applicable`; this does not describe or replace the actual current workspace classification used in Current-run Discard context.
+
 Do not reconstruct or replace this tuple from stage records, workspace path, configuration, branch name, or an existing worktree registration.
 
 The manifest must include:
@@ -196,7 +198,7 @@ The manifest must include:
 - verification summary and residual risks once available;
 - business acceptance decision once available;
 - final integration decision after Completion only when run records remain.
-- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Base branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
+- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Base branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path (the actual current workspace classification, independent of the creation-evidence tuple and not ownership evidence), and Worktree created by this run.
 
 Repository and path fields must be portable:
 
@@ -766,7 +768,7 @@ Pass this Dev Cadence context into the finishing flow:
 - Current-run Discard context: Workflow, Task slug, Run directory, Task branch, Expected HEAD SHA, Base branch, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
 - Successful whole-run Discard intentionally deletes the current run records and leaves no persistent terminal record.
 
-Completion must read `Created By Current Run`, `Workspace Path`, `Task Branch Ref`, and `Creation HEAD SHA` only from the manifest and pass the same tuple unchanged to the finishing flow. The manifest is the sole authority; Completion must not use stage records, workspace path, or configuration as fallback evidence. Derive the remaining current-run Discard context from the confirmed manifest and stage records, then revalidate every value against current Git and filesystem state immediately before invoking the finishing flow.
+Completion must read `Created By Current Run`, `Workspace Path`, `Task Branch Ref`, and `Creation HEAD SHA` only from the manifest and pass the same tuple unchanged to the finishing flow. Completion must also pass the independently recorded Current-run Discard context `Workspace path` separately as the actual current workspace classification. Map manifest `Created By Current Run` directly to finishing `Worktree created by this run`; do not infer that value from the classification context. The manifest is the sole authority for the tuple; Completion must not use stage records, workspace path, or configuration as fallback evidence for it. Derive the remaining current-run Discard context from the confirmed manifest and stage records, then revalidate every value against current Git and filesystem state immediately before invoking the finishing flow. `Created By Current Run: no` must not by itself produce `discard_blocked` and does not authorize deletion.
 
 Handle the normalized finishing result:
 

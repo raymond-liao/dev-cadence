@@ -588,6 +588,10 @@ assert_workflows "worktree creation evidence workspace field" "Workspace Path" "
 assert_workflows "worktree creation evidence branch field" "Task Branch Ref" "Task Branch Ref" "Task Branch Ref"
 assert_workflows "worktree creation evidence creation head field" "Creation HEAD SHA" "Creation HEAD SHA" "Creation HEAD SHA"
 assert_workflows "worktree creation evidence sole manifest authority" "manifest is the sole authority" "manifest is the sole authority" "manifest is the sole authority"
+assert_workflows "worktree creation evidence workspace path is provenance only" \
+  "Workspace Path.*created-worktree provenance" \
+  "Workspace Path.*created-worktree provenance" \
+  "Workspace Path.*created-worktree provenance"
 assert_identical_worktree_creation_evidence
 assert_workflows "manifest status values" "Use stage status values" "Use stage status values" "Use stage status values"
 assert_workflows "terminal checkpoint rule" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values"
@@ -775,6 +779,22 @@ assert_workflows "completion has no worktree evidence fallback" \
   "must not use.*stage records.*workspace path.*configuration.*fallback" \
   "must not use.*stage records.*workspace path.*configuration.*fallback" \
   "must not use.*stage records.*workspace path.*configuration.*fallback"
+assert_workflows "discard workspace classification is independent of provenance tuple" \
+  "Current-run Discard context.*actual current workspace classification.*not.*ownership evidence" \
+  "Current-run Discard context.*actual current workspace classification.*not.*ownership evidence" \
+  "Current-run Discard context.*actual current workspace classification.*not.*ownership evidence"
+assert_workflows "completion maps creation flag to discard worktree flag" \
+  "Created By Current Run.*Worktree created by this run" \
+  "Created By Current Run.*Worktree created by this run" \
+  "Created By Current Run.*Worktree created by this run"
+assert_workflows "completion preserves independent classification context" \
+  "pass.*unchanged.*Current-run Discard context.*Workspace path.*separately" \
+  "pass.*unchanged.*Current-run Discard context.*Workspace path.*separately" \
+  "pass.*unchanged.*Current-run Discard context.*Workspace path.*separately"
+assert_workflows "creation no cannot independently block discard or authorize deletion" \
+  "Created By Current Run: no.*must not.*discard_blocked.*does not authorize.*deletion" \
+  "Created By Current Run: no.*must not.*discard_blocked.*does not authorize.*deletion" \
+  "Created By Current Run: no.*must not.*discard_blocked.*does not authorize.*deletion"
 
 assert_workflows "whole-run discard result" \
   'whole_run_discarded' \
