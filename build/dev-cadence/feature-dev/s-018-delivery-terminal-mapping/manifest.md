@@ -9,7 +9,7 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: System Testing
+- Current Stage: Business Acceptance
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -20,7 +20,7 @@
 | Technical Solution | ✅ `confirmed` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `confirmed: prior user continue instruction reconfirmed unchanged solution C` | `f56e423fb49dd17abe67028bda3ee0af0399dd28` | metadata 标签与分隔符已规范化；方案内容未变，确认 checkpoint 已绑定。 |
 | Implementation Plan | ✅ `confirmed` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `confirmed: user approved final-integration version assessment and Subagent-Driven` | `4cf037cefdfd4ac6061830327ff0fbf8820eb278` | 用户确认将版本评估移至最终集成；范围和行为不变，计划 checkpoint 已绑定。 |
 | Development Implementation | ✅ `confirmed` | [S-018 实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `39b23ba513d90b9aca0867196d85cf3ec55870e6` | 实现提交范围 `f30009d..b66a146` 已复审；checkpoint 已验证。 |
-| System Testing | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `not_required` | `pending` | 正在提交系统测试证据。 |
+| System Testing | ✅ `confirmed` | [S-018 系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `not_required` | `3359dabf6698066cadb456246b58c48db662bbf5` | Verification Decision: `ready`; checkpoint 已验证。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/06-business-acceptance-record.md` | `pending` | `pending` | 等待 System Testing 的 Verification Decision。 |
 
 ## Recovery Summary
@@ -90,7 +90,7 @@
 
 ## Verification Summary
 
-- 🔄 `in_progress`: `bash tests/delivery-record-contract.sh`、`bash tests/workflow-symmetry.sh`、`bash scripts/build.sh`、`bash scripts/check-whitespace.sh` 与 `bash scripts/check-all.sh` 已通过；正在绑定系统测试 evidence checkpoint。
+- ✅ `ready`: `bash tests/delivery-record-contract.sh`、`bash tests/workflow-symmetry.sh`、`bash scripts/build.sh`、`bash scripts/check-whitespace.sh` 与 `bash scripts/check-all.sh` 已通过；可进入 Business Acceptance。
 
 ## Residual Risks
 
