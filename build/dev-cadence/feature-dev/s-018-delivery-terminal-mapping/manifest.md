@@ -17,7 +17,7 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user instructed continue at 2026-07-21T15:24:13+0800` | `dc9243d2ec7ddceba1816e54d2fe9a3bb6a05c26` | 恢复后的 Requirements 已重新确认；确认 checkpoint 已验证。 |
-| Technical Solution | ✅ `confirmed` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `confirmed: prior user continue instruction reconfirmed unchanged solution C` | `990e11c8e03b6b0e7fd77d0726e8f62dd533cd25` | 字段标签规范化后按原用户指令重新确认。 |
+| Technical Solution | ✅ `confirmed` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `confirmed: prior user continue instruction reconfirmed unchanged solution C` | `pending` | 规范化恢复脚本可读的 metadata 标签与分隔符；方案内容未变，等待本次记录 checkpoint。 |
 | Implementation Plan | ✅ `confirmed` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `confirmed: prior user continue instruction reconfirmed unchanged plan and Subagent-Driven` | `990e11c8e03b6b0e7fd77d0726e8f62dd533cd25` | 计划内容未变，按原用户指令重新确认。 |
 | Development Implementation | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `pending` | 执行持久记录恢复与新鲜度门。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `pending` | `pending` | 等待 Development Implementation。 |
@@ -38,7 +38,7 @@
 | Stage | Record Path | SHA-256 |
 | --- | --- | --- |
 | Requirements Confirmation | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md | 4348982eabe9414956c9edb92cc62926a0b30eef07b4f3fd785c50fd3470c16e |
-| Technical Solution | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md | 9272c151968bc34b70a37a3a620b03a2c4b21c77c88a569a9b5173edabb94d2f |
+| Technical Solution | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md | 6e2e1f69dbcba1aa4625dbb445fe8330c8888401fd3f35a856962ee0b2678bf5 |
 | Implementation Plan | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md | ed9960ab7d805192600d98749d3c1709f4529ddb0914c608c54f0a85ecb65ed7 |
 
 ## Work Item Identity

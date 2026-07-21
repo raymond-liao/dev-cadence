@@ -2,8 +2,8 @@
 
 ## 已确认需求来源
 
-- Requirements Confirmation：[S-018 需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md`)
-- Requirements SHA-256：`4348982eabe9414956c9edb92cc62926a0b30eef07b4f3fd785c50fd3470c16e`
+- 已确认需求来源: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` ([S-018 需求确认](01-requirements.md))
+- Requirements SHA-256: `4348982eabe9414956c9edb92cc62926a0b30eef07b4f3fd785c50fd3470c16e`
 - 工作项：[S-018 Delivery 终态映射与 Manual Recovery](../../../../docs/stories/S-018-business-acceptance-terminal-mapping.md) (`docs/stories/S-018-business-acceptance-terminal-mapping.md`)，Version `4`，Status `In Progress`。
 
 ## Codebase Exploration Findings
@@ -130,6 +130,6 @@ build/dev-cadence/<workflow>/<task-slug>/07-manual-recovery-record.md
 ## 阶段决定
 
 - Status: ✅ `confirmed`
-- Recovery Note: validator-required headings were normalized; solution content and scope are unchanged.
+- Recovery Note: validator-readable headings, metadata label, and delimiters were normalized; solution content and scope are unchanged.
 - User Confirmation: user previously instructed “继续执行” after recovery explanation; that instruction reconfirms unchanged solution C.
 - 下一阶段：Implementation Plan；代码修改仍需恢复后的计划确认与新鲜度门。
