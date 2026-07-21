@@ -355,7 +355,7 @@ Each Backlog lifecycle section must use exactly these columns: `ID | Title | Ver
 
 Backlog rows must summarize cards only. Do not duplicate card body details, acceptance conditions, change logs, workflow-run evidence, or other card-only fields in the Backlog table.
 
-When `已关闭` keeps a historical closure note without a surviving current card, keep the row as a compact summary and use `-` for fields that do not belong to a current card.
+Removing an existing `待处理` item through confirmed deletion, `Dropped`, or unreplaced `Superseded` must atomically remove the active card and its active Backlog and dependency references, then append a compact historical closure row under `已关闭`. The closure row must retain the ID, terminal disposition, and user-confirmed reason, use no link to the deleted card, and use `-` for fields that do not belong to a current card. Synchronize an Open Question Registry entry when the deletion would otherwise orphan its authoritative question body.
 
 Preserve the existing row order inside `待处理` unless the confirmed planning change explicitly updates that recommendation.
 
@@ -375,7 +375,10 @@ Increment `Ordering Version` and append an `Ordering Change Log` event only when
 
 - reordering existing `待处理` items;
 - inserting a new work item at an explicitly confirmed `待处理` position; or
+- removing an existing `待处理` item through confirmed deletion, `Dropped`, or unreplaced `Superseded`; or
 - adding, modifying, or cancelling an ordering exception.
+
+For an existing-item removal, `Ordering Change Log` must record the removed ID, its confirmed relative position before removal, the remaining adjacent or relative items, and the user-confirmed reason. When a replacement enters `待处理` in the same decision, record the removal and insertion together as one ordering unit.
 
 A lifecycle synchronization must not increment `Ordering Version`. A completed-item move must not increment `Ordering Version`. A mechanical synchronization of title, card Version, or Priority must not increment `Ordering Version`. A derived planning-view refresh must not increment `Ordering Version`. A formatting-only or link-only change must not increment `Ordering Version`.
 

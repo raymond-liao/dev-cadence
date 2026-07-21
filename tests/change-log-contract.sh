@@ -46,7 +46,6 @@ S-022:1
 S-023:1
 S-024:1
 S-025:1
-S-026:1
 S-027:1
 S-028:1
 S-029:1
@@ -322,7 +321,7 @@ for consumer in "$DISCOVERY" "$PLANNING" "$ANALYSIS"; do
 done
 
 CARD_COUNT="$(find "${WORK_ITEM_DIRS[@]}" -maxdepth 1 -name '*.md' -print | wc -l | tr -d ' ')"
-test "$CARD_COUNT" = "62" || fail "expected 62 current work-item cards, found $CARD_COUNT"
+test "$CARD_COUNT" = "61" || fail "expected 61 current work-item cards, found $CARD_COUNT"
 
 if rg -n '^\| Version \| Date \| Change \| Reason \|' "${WORK_ITEM_DIRS[@]}"; then
   fail "legacy four-column Change Log remains"
@@ -330,7 +329,7 @@ fi
 
 STANDARD_HEADER_COUNT="$(rg -l '^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|' \
   "${WORK_ITEM_DIRS[@]}" | wc -l | tr -d ' ')"
-test "$STANDARD_HEADER_COUNT" = "62" ||
+test "$STANDARD_HEADER_COUNT" = "61" ||
   fail "not every current work-item card uses the standard schema"
 
 if rg -n '^\| [0-9]+ \| [0-9]{4}-[0-9]{2}-[0-9]{2} \|' "${WORK_ITEM_DIRS[@]}"; then
@@ -382,12 +381,12 @@ ORIGINAL_METADATA="$(while IFS=: read -r id expected_rows; do
   ' "$path" || fail "$id has fewer than $expected_rows original rows"
 done <<< "$ORIGINAL_ROW_COUNTS")"
 
-test "$(printf '%s\n' "$ORIGINAL_METADATA" | wc -l | tr -d ' ')" = "152" ||
-  fail "explicit original-row cohort is not 152 rows"
+test "$(printf '%s\n' "$ORIGINAL_METADATA" | wc -l | tr -d ' ')" = "151" ||
+  fail "explicit original-row cohort is not 151 rows"
 
 ORIGINAL_METADATA_HASH="$(printf '%s\n' "$ORIGINAL_METADATA" |
   LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-test "$ORIGINAL_METADATA_HASH" = "1cd36c3087dba7975258b5767983e7e1afa0ee81290922dccb8337195d43cc1e" ||
+test "$ORIGINAL_METADATA_HASH" = "07ff1b3016ad92460bb6dd3a1f68a2573f15f5ffdf37f9bcf344a8bb02d7ecb8" ||
   fail "original Recorded At/Recorded By migration metadata changed"
 
 printf '%s\n' "$ORIGINAL_METADATA" | awk -F'\t' '
@@ -410,16 +409,16 @@ printf '%s\n' "$ORIGINAL_METADATA" | awk -F'\t' '
     }
   }
   END {
-    if (precision_unknown != 138) {
-      printf "legacy precision-unknown count is %d, expected 138\n", precision_unknown > "/dev/stderr"
+    if (precision_unknown != 137) {
+      printf "legacy precision-unknown count is %d, expected 137\n", precision_unknown > "/dev/stderr"
       invalid = 1
     }
     if (date_unknown != 0) {
       printf "legacy recorded-at-unknown count is %d, expected 0\n", date_unknown > "/dev/stderr"
       invalid = 1
     }
-    if (author_unknown != 137) {
-      printf "legacy recorded-by-unknown count is %d, expected 137\n", author_unknown > "/dev/stderr"
+    if (author_unknown != 136) {
+      printf "legacy recorded-by-unknown count is %d, expected 136\n", author_unknown > "/dev/stderr"
       invalid = 1
     }
     exit invalid
@@ -546,8 +545,8 @@ done
 
 ORIGINAL_HISTORY_COUNT="$(printf '%s\n' "$ORIGINAL_ROW_COUNTS" |
   awk -F: '{ count += $2 } END { print count }')"
-test "$ORIGINAL_HISTORY_COUNT" = "152" ||
-  fail "explicit original-row cohort is $ORIGINAL_HISTORY_COUNT rows, expected 152"
+test "$ORIGINAL_HISTORY_COUNT" = "151" ||
+  fail "explicit original-row cohort is $ORIGINAL_HISTORY_COUNT rows, expected 151"
 
 ORIGINAL_HISTORY_HASH="$(while IFS=: read -r id expected_rows; do
   path="$(card_path "$id")"
@@ -575,7 +574,7 @@ ORIGINAL_HISTORY_HASH="$(while IFS=: read -r id expected_rows; do
     }
   ' "$path" || fail "$id original-row payload cohort is incomplete"
 done <<< "$ORIGINAL_ROW_COUNTS" | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-test "$ORIGINAL_HISTORY_HASH" = "a5aa15c78a430862b65ab4857308cfeebac170db202f1649c05bcbc01bbb5630" ||
+test "$ORIGINAL_HISTORY_HASH" = "efc0935996403c3ab51d299d67abb946fc42870d06573a14483ca89040682360" ||
   fail "original Change/Reason history content changed"
 
 printf 'Change Log contract checks passed.\n'

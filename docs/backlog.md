@@ -11,10 +11,9 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Ready` | `P2` |
-| `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `1` | `Draft` | `P2` |
-| `S-026` | [Refactor 基线身份](stories/S-026-refactor-baseline-identity.md) | `1` | `Draft` | `P2` |
+| `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `2` | `Ready` | `P2` |
 | `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `3` | `Draft` | `P2` |
-| `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Draft` | `P1` |
+| `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Ready` | `P1` |
 | `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) | `1` | `Blocked` | `P1` |
 | `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
 | `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `2` | `Draft` | `P1` |
@@ -82,6 +81,7 @@
 | `S-031` | [保存 Worktree 运行记录](stories/S-031-preserve-worktree-run-records.md) — 已并入 [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md)；记录保存是 worktree 清理的前置安全条件。 | `1` | `Superseded` | `P0` |
 | `S-033` | [Worktree 清理结果记录](stories/S-033-worktree-cleanup-result-recording.md) — 已并入 [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md)；清理结果与所有权、记录保存属于同一 Completion 操作。 | `1` | `Superseded` | `P1` |
 | `S-034` | [发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) — 当前没有已确认的发布、部署或生产交付目标，缺少可独立交付的当前用户结果。 | `1` | `Dropped` | `P3` |
+| `S-026` | Refactor 基线身份：用户确认不再推进；卡片已删除，Q-015 已标记为 Invalid。 | `-` | `Dropped` | `-` |
 
 ## 评级说明
 
@@ -133,7 +133,6 @@
 | [B-014](bugs/B-014-single-card-intake-duplicate-confirmation-gates.md) | - | - |
 | [S-025](stories/S-025-bug-red-green-evidence.md) | - | - |
 | [B-006](bugs/B-006-delivery-record-evidence-completeness.md) | - | - |
-| [S-026](stories/S-026-refactor-baseline-identity.md) | - | - |
 | [S-027](stories/S-027-refactor-migration-start-contract.md) | - | - |
 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | - |
 | [S-030](stories/S-030-worktree-ownership-detection.md) | - | - |
@@ -152,7 +151,7 @@
 
 ## Ordering Version
 
-`10`
+`11`
 
 ## Ordering Change Log
 
@@ -168,3 +167,4 @@
 | 8 | 2026-07-20T18:10:59+0800 | Raymond Liao <raymond-liao@outlook.com> | 取消 `S-030` 保持在 `T-002` 之后的排序例外，将 `S-030` 移至 `待处理` 首位，并保持其余待处理项相对顺序。 | 用户确认 worktree 目前使用频繁，需要优先处理其清理安全与证据风险。 |
 | 9 | 2026-07-21T14:52:12+0800 | Raymond Liao <raymond-liao@outlook.com> | 以 `T-005` 在原 `S-020` 的待处理位置替换该 Story，并保留相邻待处理项的相对顺序。 | 用户确认将过度复杂的风险追溯 Story 收敛为轻量 Task，排序优先级不变。 |
 | 10 | 2026-07-21T15:14:33+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 `T-005` 移至待处理末位，位于 `S-032` 之后，并保留其余待处理项的相对顺序。 | 用户确认 T-005 属于可省略或延期的审计增强，不应占用近期交付优先级。 |
+| 11 | 2026-07-21T15:44:39+08:00 | Raymond Liao <raymond-liao@outlook.com> | 从 `待处理` 移除 `S-026`；其原位置位于 `S-025` 之后、`S-027` 之前，二者在移除后保持相邻。 | 用户确认不再推进 Refactor 基线身份，删除卡片并将 Q-015 标记为 Invalid。 |

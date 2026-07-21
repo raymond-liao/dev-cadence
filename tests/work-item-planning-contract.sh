@@ -167,6 +167,8 @@ assert_match "atomic ordering unit" 'three-part atomic ordering unit.*`待处理
 assert_match "reordering trigger" 'reorder.*existing.*`待处理`|existing.*`待处理`.*reorder' "$SKILL"
 assert_match "new item insertion trigger" 'new.*work item.*explicit.*`待处理`.*position|explicit.*`待处理`.*position.*new.*work item' "$SKILL"
 assert_match "ordering exception trigger" 'add.*modify.*cancel.*ordering exception|ordering exception.*add.*modify.*cancel' "$SKILL"
+assert_match "pending removal trigger" '[Rr]emov.*existing.*`待处理`.*deletion.*`Dropped`.*unreplaced.*`Superseded`|deletion.*`Dropped`.*unreplaced.*`Superseded`.*[Rr]emov.*existing.*`待处理`' "$SKILL"
+assert_match "pending removal closure history" '[Rr]emov.*existing.*`待处理`.*compact.*historical closure.*`已关闭`|compact.*historical closure.*`已关闭`.*[Rr]emov.*existing.*`待处理`' "$SKILL"
 assert_match "lifecycle synchronization no trigger" 'lifecycle synchronization.*must not.*increment.*`Ordering Version`|must not.*increment.*`Ordering Version`.*lifecycle synchronization' "$SKILL"
 assert_match "completion removal no trigger" 'completed.*move.*must not.*increment.*`Ordering Version`|must not.*increment.*`Ordering Version`.*completed.*move' "$SKILL"
 assert_match "mechanical synchronization no trigger" 'mechanical.*synchronization.*must not.*increment.*`Ordering Version`|must not.*increment.*`Ordering Version`.*mechanical.*synchronization' "$SKILL"

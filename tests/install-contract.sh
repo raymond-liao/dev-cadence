@@ -32,7 +32,7 @@ test -f "$TARGET_REPO/.dev-cadence/$OWNERSHIP_VERIFIER_REL" || fail "first insta
 test -x "$TARGET_REPO/.dev-cadence/$OWNERSHIP_VERIFIER_REL" || fail "installed worktree ownership verifier is not executable"
 test ! -e "$TARGET_REPO/docs/open-questions.md" || fail "install created an empty target-repository Open Question Registry"
 cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "installed version differs from source"
-test "$(<"$TARGET_REPO/.dev-cadence/version")" = "0.30.0" || fail "installed version is not 0.30.0"
+test "$(<"$TARGET_REPO/.dev-cadence/version")" = "0.31.0" || fail "installed version is not 0.31.0"
 cmp -s \
   "$ROOT_DIR/src/$OWNERSHIP_VERIFIER_REL" \
   "$TARGET_REPO/.dev-cadence/$OWNERSHIP_VERIFIER_REL" || fail "installed worktree ownership verifier differs from source"
