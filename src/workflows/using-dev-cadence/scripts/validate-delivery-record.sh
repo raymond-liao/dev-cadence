@@ -34,9 +34,42 @@ extract_status_value() {
   fi
 }
 
+require_manual_recovery_field() {
+  local record_path="$1"
+  local field="$2"
+
+  rg -q "^- ${field}: .+" "$record_path" ||
+    fail "manual recovery record is missing ${field}"
+}
+
+require_abandoned_evidence() {
+  local acceptance_path="$1"
+  local recovery_path="$2"
+  local decision
+
+  [[ -n "$acceptance_path" && -f "$acceptance_path" ]] ||
+    fail "abandoned manifest is missing Business Acceptance record"
+  decision="$(rg -n '^- User Decision:' "$acceptance_path" | head -n 1 | sed 's/^[0-9]*:- User Decision: *//' || true)"
+  case "$decision" in
+    \`accepted\`|\`accepted_with_risk\`)
+      ;;
+    *)
+      fail "abandoned manifest requires accepted Business Acceptance decision"
+      ;;
+  esac
+  [[ -f "$recovery_path" ]] || fail "abandoned manifest is missing manual recovery record"
+  for field in "Blocking Category" "Blocking Evidence" "Blocked Completion Action" \
+    "Recovery Attempt" "Recovery Result" "Why Further Recovery Is Not Viable" \
+    "User Confirmation" "Code Preservation" "Branch Preservation" \
+    "Worktree Preservation" "Run Record Preservation" "Follow-up Owner" "Next Step"; do
+    require_manual_recovery_field "$recovery_path" "$field"
+  done
+}
+
 artifact_exists_in_stage_table=0
 implementation_record_path=""
 verification_record_path=""
+business_acceptance_path=""
 terminal_mode=0
 terminal_stage_gap=""
 
@@ -142,6 +175,9 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
     */05-system-test-report.md|*/05-regression-test-report.md)
       verification_record_path="$repo_root_abs/$artifact_path"
       ;;
+    */06-business-acceptance-record.md)
+      business_acceptance_path="$repo_root_abs/$artifact_path"
+      ;;
   esac
 done < <(
   awk -F'|' '
@@ -159,6 +195,7 @@ done < <(
 
 if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then
   [[ -z "$terminal_stage_gap" ]] || fail "terminal manifest has non-terminal stage: $terminal_stage_gap"
+  require_abandoned_evidence "$business_acceptance_path" "$run_dir/07-manual-recovery-record.md"
   printf 'Delivery record validation passed: %s\n' "$run_dir"
   exit 0
 fi
