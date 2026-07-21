@@ -9,7 +9,7 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Technical Solution
+- Current Stage: Development Implementation
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -17,9 +17,9 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user instructed continue at 2026-07-21T15:24:13+0800` | `dc9243d2ec7ddceba1816e54d2fe9a3bb6a05c26` | 恢复后的 Requirements 已重新确认；确认 checkpoint 已验证。 |
-| Technical Solution | 🔄 `in_progress` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `superseded: validator-required headings were absent` | `695f43ef3d9df4a9f35b63f4e537c8d4bb235100` | 已规范化 `已选方案` 与 `备选方案`；恢复 checkpoint 已验证，等待重新确认。 |
-| Implementation Plan | ⏳ `pending` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `superseded: Technical Solution recovery` | `superseded: f2374f2dc57e42abcce5fc43ad10770536092b87` | 需在 Technical Solution 重新确认后刷新。 |
-| Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `pending` | 被 Technical Solution recovery 阻断。 |
+| Technical Solution | ✅ `confirmed` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `confirmed: prior user continue instruction reconfirmed unchanged solution C` | `pending` | 字段标签规范化后按原用户指令重新确认。 |
+| Implementation Plan | ✅ `confirmed` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `confirmed: prior user continue instruction reconfirmed unchanged plan and Subagent-Driven` | `pending` | 计划内容未变，按原用户指令重新确认。 |
+| Development Implementation | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `pending` | 执行持久记录恢复与新鲜度门。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `pending` | `pending` | 等待 Development Implementation。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/06-business-acceptance-record.md` | `pending` | `pending` | 等待 System Testing 的 Verification Decision。 |
 
@@ -38,6 +38,8 @@
 | Stage | Record Path | SHA-256 |
 | --- | --- | --- |
 | Requirements Confirmation | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md | 4348982eabe9414956c9edb92cc62926a0b30eef07b4f3fd785c50fd3470c16e |
+| Technical Solution | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md | 9272c151968bc34b70a37a3a620b03a2c4b21c77c88a569a9b5173edabb94d2f |
+| Implementation Plan | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md | ed9960ab7d805192600d98749d3c1709f4529ddb0914c608c54f0a85ecb65ed7 |
 
 ## Work Item Identity
 

@@ -129,7 +129,7 @@ build/dev-cadence/<workflow>/<task-slug>/07-manual-recovery-record.md
 
 ## 阶段决定
 
-- Status: 🔄 `in_progress`
-- Prior Confirmation: superseded because validator-required `已选方案` and `备选方案` headings were normalized; solution content and scope are unchanged.
-- User Confirmation: `pending`。需要重新确认方案 C 后才可开始刷新后的 Implementation Plan。
-- 下一阶段：Technical Solution；Implementation Plan 和代码修改均已停止。
+- Status: ✅ `confirmed`
+- Recovery Note: validator-required headings were normalized; solution content and scope are unchanged.
+- User Confirmation: user previously instructed “继续执行” after recovery explanation; that instruction reconfirms unchanged solution C.
+- 下一阶段：Implementation Plan；代码修改仍需恢复后的计划确认与新鲜度门。

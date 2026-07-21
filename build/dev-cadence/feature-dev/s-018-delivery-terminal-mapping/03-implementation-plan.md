@@ -340,8 +340,8 @@ Expected: one reviewed release commit; `git status --short` contains no tracked 
 
 ## 阶段决定
 
-- Status: `superseded`
-- Superseded Reason: Technical Solution recovery normalized validator-required headings; this plan must be refreshed and reconfirmed after renewed Technical Solution.
-- User Confirmation: superseded pending renewed Technical Solution.
-- Implementation Mode: `Subagent-Driven` was selected for the superseded plan and must be reconfirmed with the refreshed plan.
-- 下一阶段：等待 Technical Solution 重新确认；不得开始 Development Implementation。
+- Status: ✅ `confirmed`
+- Recovery Note: Technical Solution field headings were normalized; plan tasks, scope, file list, test-first cycles and verification commands are unchanged.
+- User Confirmation: user previously instructed “继续执行”; that instruction reconfirms the unchanged plan.
+- Implementation Mode: `Subagent-Driven`.
+- 下一阶段：Development Implementation；在任何 Task 前执行持久记录恢复与新鲜度门。
