@@ -46,12 +46,48 @@ assert_not_owned_and_preserved() {
     fail "rejected worktree was removed"
 }
 
+REAL_GIT="$(command -v git)"
+FAKE_GIT_BIN="$TMP_ROOT/fake-git-bin"
+mkdir -p "$FAKE_GIT_BIN"
+printf '%s\n' \
+  '#!/usr/bin/env bash' \
+  'set -euo pipefail' \
+  'if [[ "$#" -eq 6 && "$1" == -C && "$3" == worktree && "$4" == list && "$5" == --porcelain && "$6" == -z && "${INJECT_UNKNOWN_WORKTREE_FIELD:-}" == yes ]]; then' \
+  '  printf "worktree %s\\0HEAD %s\\0branch %s\\0unknown-field injected\\0\\0" "$FIXTURE_WORKTREE" "$FIXTURE_HEAD" "$FIXTURE_BRANCH"' \
+  '  exit 0' \
+  'fi' \
+  'exec "$REAL_GIT" "$@"' \
+  > "$FAKE_GIT_BIN/git"
+chmod +x "$FAKE_GIT_BIN/git"
+
+assert_unknown_porcelain_field_rejected() {
+  expected_workspace="$1"
+  set +e
+  output="$(
+    PATH="$FAKE_GIT_BIN:$PATH" \
+      REAL_GIT="$REAL_GIT" \
+      INJECT_UNKNOWN_WORKTREE_FIELD=yes \
+      FIXTURE_WORKTREE="$expected_workspace" \
+      FIXTURE_HEAD="$base_sha" \
+      FIXTURE_BRANCH="refs/heads/owned-default" \
+      "$VERIFIER" "$repo" yes ".worktrees/owned-default" "refs/heads/owned-default" "$base_sha" "$base_sha"
+  )"
+  status=$?
+  set -e
+  [[ "$status" -ne 0 ]] || fail "expected verifier rejection for unknown porcelain field"
+  [[ "$output" == "not_owned:unsupported_worktree_state" ]] || fail "unexpected reason: $output"
+  git -C "$repo" worktree list --porcelain | rg -F "worktree $expected_workspace" >/dev/null ||
+    fail "unknown-field rejection removed worktree"
+}
+
 create_worktree "owned-default" ".worktrees/owned-default"
 workspace=".worktrees/owned-default"
 branch_ref="refs/heads/owned-default"
 creation_sha="$base_sha"
 current_sha="$base_sha"
 assert_owned
+
+assert_unknown_porcelain_field_rejected "$repo/.worktrees/owned-default"
 
 create_worktree "owned-custom" "custom-worktrees/owned-custom"
 workspace="custom-worktrees/owned-custom"
@@ -102,6 +138,12 @@ prunable_workspace="$repo/.worktrees/prunable"
 rm -rf "$prunable_workspace"
 assert_not_owned_and_preserved unsupported_worktree_state "$prunable_workspace" \
   "$repo" yes ".worktrees/prunable" "refs/heads/prunable" "$base_sha" "$base_sha"
+
+create_worktree "nested-prunable" "removed-parent/nested"
+nested_prunable_workspace="$repo/removed-parent/nested"
+rm -rf "$repo/removed-parent"
+assert_not_owned_and_preserved unsupported_worktree_state "$nested_prunable_workspace" \
+  "$repo" yes "removed-parent/nested" "refs/heads/nested-prunable" "$base_sha" "$base_sha"
 
 create_worktree "ambiguous" ".worktrees/ambiguous"
 ambiguous_workspace="$repo/.worktrees/ambiguous"

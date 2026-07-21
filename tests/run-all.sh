@@ -5,7 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 "$ROOT_DIR/tests/package-contract.sh"
 bash "$ROOT_DIR/tests/finishing-a-development-branch-contract.sh"
-bash tests/finishing-worktree-ownership-contract.sh
+bash "$ROOT_DIR/tests/finishing-worktree-ownership-contract.sh"
 bash "$ROOT_DIR/tests/asset-delivery-record-contract.sh"
 bash "$ROOT_DIR/tests/delivery-record-contract.sh"
 bash "$ROOT_DIR/tests/feature-persistent-record-recovery-contract.sh"

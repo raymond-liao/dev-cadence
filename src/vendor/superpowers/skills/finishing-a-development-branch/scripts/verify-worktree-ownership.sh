@@ -20,15 +20,17 @@ expected_current_head="$6"
 
 canonicalize_path() {
   candidate="$1"
-  if [[ -d "$candidate" ]]; then
-    (cd "$candidate" 2>/dev/null && pwd -P)
-    return
-  fi
+  missing_suffix=""
+  while [[ ! -d "$candidate" ]]; do
+    candidate_parent="${candidate%/*}"
+    candidate_name="${candidate##*/}"
+    [[ "$candidate_parent" != "$candidate" ]] || return 1
+    missing_suffix="/$candidate_name$missing_suffix"
+    candidate="$candidate_parent"
+  done
 
-  candidate_parent="${candidate%/*}"
-  candidate_name="${candidate##*/}"
-  canonical_parent="$(cd "$candidate_parent" 2>/dev/null && pwd -P)" || return 1
-  printf '%s/%s\n' "$canonical_parent" "$candidate_name"
+  canonical_parent="$(cd "$candidate" 2>/dev/null && pwd -P)" || return 1
+  printf '%s%s\n' "$canonical_parent" "$missing_suffix"
 }
 
 canonical_primary="$(canonicalize_path "$primary_root")" || reject worktree_not_found
@@ -45,6 +47,7 @@ matched_bare=""
 matched_detached=""
 matched_locked=""
 matched_prunable=""
+matched_unknown=""
 
 stanza_worktree=""
 stanza_head=""
@@ -53,6 +56,7 @@ stanza_bare=""
 stanza_detached=""
 stanza_locked=""
 stanza_prunable=""
+stanza_unknown=""
 
 record_stanza() {
   [[ -n "$stanza_worktree" ]] || return 0
@@ -66,6 +70,7 @@ record_stanza() {
       matched_detached="$stanza_detached"
       matched_locked="$stanza_locked"
       matched_prunable="$stanza_prunable"
+      matched_unknown="$stanza_unknown"
     fi
   fi
 }
@@ -78,6 +83,7 @@ reset_stanza() {
   stanza_detached=""
   stanza_locked=""
   stanza_prunable=""
+  stanza_unknown=""
 }
 
 while IFS= read -r -d '' field; do
@@ -93,6 +99,7 @@ while IFS= read -r -d '' field; do
     detached) stanza_detached=1 ;;
     locked | "locked "*) stanza_locked=1 ;;
     prunable | "prunable "*) stanza_prunable=1 ;;
+    *) stanza_unknown=1 ;;
   esac
 done < <(git -C "$canonical_primary" worktree list --porcelain -z 2>/dev/null)
 record_stanza
@@ -100,7 +107,7 @@ record_stanza
 [[ "$match_count" -gt 0 ]] || reject worktree_not_found
 [[ "$match_count" -eq 1 ]] || reject ambiguous_worktree
 [[ "$matched_branch" == "$task_branch_ref" ]] || reject branch_mismatch
-[[ -z "$matched_bare$matched_detached$matched_locked$matched_prunable" ]] || reject unsupported_worktree_state
+[[ -z "$matched_bare$matched_detached$matched_locked$matched_prunable$matched_unknown" ]] || reject unsupported_worktree_state
 branch_head="$(git -C "$primary_root" rev-parse --verify "$task_branch_ref^{commit}" 2>/dev/null)" || reject head_mismatch
 [[ "$matched_head" == "$expected_current_head" && "$branch_head" == "$expected_current_head" ]] || reject head_mismatch
 git -C "$primary_root" merge-base --is-ancestor "$creation_head" "$expected_current_head" 2>/dev/null || reject creation_lineage_mismatch
