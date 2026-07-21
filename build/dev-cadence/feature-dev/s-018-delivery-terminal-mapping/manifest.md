@@ -16,7 +16,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-21T14:31:39+0800` | `pending` | 用户确认当前范围与验收条件；等待确认 checkpoint 绑定。 |
+| Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-21T14:31:39+0800` | `9bc97c85808c610e061fef2b0e72e1c01f7ffff8` | 用户确认当前范围与验收条件；确认 checkpoint 已验证。 |
 | Technical Solution | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `pending` | `pending` | 已开始增强探索与技术方案准备。 |
 | Implementation Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `pending` | `pending` | 等待 Technical Solution。 |
 | Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `pending` | `pending` | 等待已确认的实施计划。 |
