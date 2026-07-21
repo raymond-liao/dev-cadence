@@ -3,7 +3,7 @@
 ## 已确认需求来源
 
 - Requirements Confirmation：[S-018 需求确认](01-requirements.md) (`build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md`)
-- Requirements SHA-256：`6b2a3cfdb182d7bbdbcd1552ae5a205949508ddd6b9268dd77a130fff550c039`
+- Requirements SHA-256：`4348982eabe9414956c9edb92cc62926a0b30eef07b4f3fd785c50fd3470c16e`
 - 工作项：[S-018 Delivery 终态映射与 Manual Recovery](../../../../docs/stories/S-018-business-acceptance-terminal-mapping.md) (`docs/stories/S-018-business-acceptance-terminal-mapping.md`)，Version `4`，Status `In Progress`。
 
 ## Codebase Exploration Findings
@@ -48,9 +48,9 @@
 - 优点：每条 workflow 保持自身终态与记录所有权；不新建路由；validator 可以阻止无验收或无证据的 `abandoned`；对称测试避免漂移。
 - 缺点：三份受控的对称规则需要同步维护。
 
-## ✅ Selected：方案 C
+## ❓ Decision Pending：推荐方案 C
 
-用户于 `2026-07-21T14:49:01+0800` 确认方案 C。它以现有 workflow 为自然所有者，满足 S-018 对对称性的要求，同时以 validator 和 fixture 将 `abandoned` 从宽松枚举值收紧为可审计例外，不扩大到 merge、discard 或 worktree 命令实现。
+此前对方案 C 的确认随 Requirements recovery 被 superseded。恢复后的需求范围和输入内容未变，方案 C 仍以现有 workflow 为自然所有者，满足 S-018 对对称性的要求，同时以 validator 和 fixture 将 `abandoned` 从宽松枚举值收紧为可审计例外，不扩大到 merge、discard 或 worktree 命令实现；等待新的 Technical Solution 确认。
 
 ## 设计细节
 
@@ -121,9 +121,15 @@ build/dev-cadence/<workflow>/<task-slug>/07-manual-recovery-record.md
 
 - 无。拒绝理由如何映射到当前 run 的最早受影响阶段是 Business Acceptance 的运行时用户输入，不是本次技术方案的未决设计。
 
+## Recovery Refresh
+
+- Requirements recovery 将 Direct Input Identities 编码规范为 validator 可读的原始值，更新了 Requirements record SHA-256，但未改变 Story Version、Status、范围、验收标准或直接输入内容。
+- `validate-persistent-record-recovery.sh` 已在刷新前返回 `Recovery Target: Technical Solution`、`requirements identity is valid`。
+- 主分支从计划基线新增的提交只触及 Backlog、Open Questions 和 Bug Story，不触及本方案的 workflow、validator、test 或 version 边界；Implementation 前仍会重新执行正式新鲜度门。
+
 ## 阶段决定
 
-- Status: `superseded`
-- Superseded Reason: Requirements Confirmation recovery corrected validator-readable direct-input table encoding; the technical decision must be refreshed after renewed Requirements Confirmation.
-- User Confirmation: superseded pending renewed Requirements Confirmation.
-- 下一阶段：等待 Requirements Confirmation 重新确认。
+- Status: 🔄 `in_progress`
+- Prior Confirmation: superseded by Requirements recovery; this refreshed version keeps the same recommended approach and refreshed Requirements SHA-256.
+- User Confirmation: `pending`。需要确认方案 C 后才可开始刷新后的 Implementation Plan。
+- 下一阶段：Technical Solution；Implementation Plan 和代码修改仍需后续确认。
