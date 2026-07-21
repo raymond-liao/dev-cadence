@@ -4,7 +4,7 @@
 
 - ID：`S-032`
 - Version：`2`
-- Status：`Draft`
+- Status：`Dropped`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -40,9 +40,13 @@
 
 - 无强制前置依赖。
 
+## 处置
+
+用户确认不再将外部管理 detached HEAD 工作区的 Finishing 作为 Dev Cadence 的独立交付目标。当环境不允许执行 Git 操作时，由 AI 在可用平台能力范围内处理；本仓库不再为该场景定义专门的分支、PR、保留或 discard 契约。
+
 ## Open Questions
 
-- Q-019：外部环境是否需要提供可持久化的 workspace identity？
+- [Q-019 外部 workspace identity](../open-questions.md#q-019) 已随本卡 Dropped 标记为 Invalid。未来若重新要求支持该环境，必须新建工作项和问题，不恢复本卡的旧假设。
 
 ## 相关文档
 
@@ -54,3 +58,4 @@
 |---:|---|---|---|---|
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Detached HEAD Finishing Story。 | 为外部管理隔离环境补齐可验证的完成路径。 |
 | 2 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 收敛为修复并验证现有 detached HEAD Finishing 规则的菜单与执行断链。 | 当前规则已具备环境识别和菜单，剩余工作是让每个选项拥有一致、可执行的后续路径。 |
+| 2 | 2026-07-21T19:53:42+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Dropped，并终止 Q-019 的当前待决状态。 | 用户确认该场景不再构成 Dev Cadence 的独立交付目标；环境受限时由 AI 在可用平台能力范围内处理。 |

@@ -16,7 +16,6 @@
 | `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Ready` | `P1` |
 | `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) | `1` | `Blocked` | `P1` |
 | `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
-| `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) | `2` | `Draft` | `P1` |
 | `T-005` | [最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) | `1` | `Ready` | `P2` |
 
 ## 已完成
@@ -82,6 +81,7 @@
 | `S-033` | [Worktree 清理结果记录](stories/S-033-worktree-cleanup-result-recording.md) — 已并入 [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md)；清理结果与所有权、记录保存属于同一 Completion 操作。 | `1` | `Superseded` | `P1` |
 | `S-034` | [发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) — 当前没有已确认的发布、部署或生产交付目标，缺少可独立交付的当前用户结果。 | `1` | `Dropped` | `P3` |
 | `S-026` | Refactor 基线身份：用户确认不再推进；卡片已删除，Q-015 已标记为 Invalid。 | `-` | `Dropped` | `-` |
+| `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) — 用户确认不再将外部管理 detached HEAD 工作区作为 Dev Cadence 的独立交付目标。 | `2` | `Dropped` | `P1` |
 
 ## 评级说明
 
