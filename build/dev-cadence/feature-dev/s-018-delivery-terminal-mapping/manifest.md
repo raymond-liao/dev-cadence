@@ -17,7 +17,7 @@
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user instructed continue at 2026-07-21T15:24:13+0800` | `dc9243d2ec7ddceba1816e54d2fe9a3bb6a05c26` | 恢复后的 Requirements 已重新确认；确认 checkpoint 已验证。 |
-| Technical Solution | ✅ `confirmed` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `confirmed: user selected refreshed solution C at 2026-07-21T15:36:06+0800` | `pending` | 刷新后的方案 C 已确认；等待确认 checkpoint 绑定。 |
+| Technical Solution | ✅ `confirmed` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `confirmed: user selected refreshed solution C at 2026-07-21T15:36:06+0800` | `eed1cc1700fa7a0e0e580d01ec18c2c09d07a5d1` | 刷新后的方案 C 已确认；确认 checkpoint 已验证。 |
 | Implementation Plan | 🔄 `in_progress` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `pending` | `pending` | 正在刷新 test-first 计划与 execution mode。 |
 | Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `pending` | 被 Requirements recovery 阻断。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `pending` | `pending` | 等待 Development Implementation。 |
