@@ -9,7 +9,7 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Implementation Plan
+- Current Stage: Development Implementation
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -18,8 +18,8 @@
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-21T14:31:39+0800` | `9bc97c85808c610e061fef2b0e72e1c01f7ffff8` | 用户确认当前范围与验收条件；确认 checkpoint 已验证。 |
 | Technical Solution | ✅ `confirmed` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `confirmed: user selected solution C at 2026-07-21T14:49:01+0800` | `4c136dcaad68909cef7f1d3bec211fd3afe38607` | 用户确认方案 C；确认 checkpoint 已验证。 |
-| Implementation Plan | 🔄 `in_progress` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `pending` | `e5596d4ac983d799b8762ec820ce11772283fb93` | 计划记录 checkpoint 已验证；等待用户确认。 |
-| Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `pending` | `pending` | 等待已确认的实施计划。 |
+| Implementation Plan | ✅ `confirmed` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `confirmed: user selected option 1 and Subagent-Driven at 2026-07-21T15:01:29+0800` | `pending` | 用户确认 test-first 计划并选择 Subagent-Driven；等待确认 checkpoint 绑定。 |
+| Development Implementation | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `pending` | 先执行持久记录恢复与设计新鲜度门。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `pending` | `pending` | 等待 Development Implementation。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/06-business-acceptance-record.md` | `pending` | `pending` | 等待 System Testing 的 Verification Decision。 |
 
@@ -29,6 +29,7 @@
 | --- | --- | --- |
 | Requirements Confirmation | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md | 6b2a3cfdb182d7bbdbcd1552ae5a205949508ddd6b9268dd77a130fff550c039 |
 | Technical Solution | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md | f6361b8c43b7d11b43f0891a8a9140393c7245a8a73c3bd218611b03218620e7 |
+| Implementation Plan | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md | 6fd8ae48078c153f839d135d457d880750573cce4cb0c0461cdb7edcbf8e3d73 |
 
 ## Work Item Identity
 

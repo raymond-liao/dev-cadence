@@ -331,3 +331,10 @@ Expected: one reviewed release commit; `git status --short` contains no tracked 
 - Spec coverage: Task 2 covers three decision mappings, risk responsibility, rejection return, eligibility and forbidden manual recovery paths. Task 1 verifies accepted-run evidence and no-pending terminal invariants. Task 3 covers versioning, build synchronization and full validation.
 - Placeholder scan: no deferred implementation placeholders or unspecified test commands remain.
 - Interface consistency: Task 1 establishes `User Decision` and the exact `07` fields; Task 2 requires the same names in every workflow; Task 3 verifies generated package propagation.
+
+## 阶段决定
+
+- Status: ✅ `confirmed`
+- User Confirmation: 用户于 `2026-07-21T15:01:29+0800` 选择“确认当前计划并进入 Development Implementation”。
+- Implementation Mode: `Subagent-Driven`。
+- 下一阶段：Development Implementation；在执行任何 Task 前必须通过持久记录恢复与设计新鲜度门。
