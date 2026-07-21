@@ -16,8 +16,8 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `superseded: direct-input table encoding was not validator-readable` | `1e7a335871847c573ca9c36c6e2a7a0aeadcddb1` | 已修复为原始仓库相对路径与 SHA-256；恢复 checkpoint 已验证，等待重新确认。 |
-| Technical Solution | ⏳ `pending` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `superseded: Requirements recovery` | `superseded: 4c136dcaad68909cef7f1d3bec211fd3afe38607` | 需在 Requirements 重新确认后刷新。 |
+| Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user instructed continue at 2026-07-21T15:24:13+0800` | `pending` | 恢复后的 Requirements 已重新确认；等待确认 checkpoint 绑定。 |
+| Technical Solution | 🔄 `in_progress` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `superseded: Requirements recovery` | `pending` | 正在刷新已确认 Requirements 的身份引用。 |
 | Implementation Plan | ⏳ `pending` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `superseded: Requirements recovery` | `superseded: 86fbd2411f05d403d2bc07c37b309149045c98f5` | 需在 Requirements 和 Technical Solution 重新确认后刷新。 |
 | Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `pending` | 被 Requirements recovery 阻断。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `pending` | `pending` | 等待 Development Implementation。 |
@@ -30,6 +30,12 @@
 - Root Cause: Direct Input Identities encoded repository-relative paths and SHA-256 values as Markdown code values; the validator requires raw table fields.
 - Scope Impact: None. The work-item Version, Status, selected scope, and all direct-input SHA-256 values remain unchanged.
 - Recovery Action: Requirements record paths normalized; Technical Solution and Implementation Plan confirmations superseded and must be refreshed after renewed Requirements Confirmation.
+
+## Confirmed Stage Record Identities
+
+| Stage | Record Path | SHA-256 |
+| --- | --- | --- |
+| Requirements Confirmation | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md | 7a0a7304fe251c84b9ba05a10588449e450dc77146757c28c2e081677a3c6278 |
 
 ## Work Item Identity
 

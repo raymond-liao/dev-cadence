@@ -71,7 +71,7 @@
 
 ## 阶段决定
 
-- Status: 🔄 `in_progress`
-- Prior Confirmation: superseded because the direct-input table encoded both paths and SHA-256 values as Markdown code; validator-readable fields are raw values. Requirements scope and input identities are unchanged.
-- User Confirmation: `pending`。修复后的记录需要重新确认后才可开始 Technical Solution。
-- 下一阶段：Requirements Confirmation；Technical Solution、Implementation Plan 和代码修改均已停止。
+- Status: ✅ `confirmed`
+- Recovery Note: The direct-input table now uses validator-readable raw values; requirements scope and input identities remain unchanged.
+- User Confirmation: 用户于 `2026-07-21T15:24:13+0800` 指示“继续执行”，确认恢复后的 Requirements 版本。
+- 下一阶段：Technical Solution；Implementation Plan 和代码修改仍需要各自的后续确认。
