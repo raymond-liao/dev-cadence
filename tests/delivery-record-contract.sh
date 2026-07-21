@@ -56,6 +56,27 @@ commit_paths() {
   git -C "$repo" rev-parse --short HEAD
 }
 
+write_manual_recovery_record() {
+  local repo="$1"
+  local path="$2"
+
+  write_file "$repo" "$path" "# Manual Recovery Record
+
+- Blocking Category: \`git\`
+- Blocking Evidence: merge identity mismatch reproduced.
+- Blocked Completion Action: local merge to main.
+- Recovery Attempt: refreshed merge identity and retried local merge.
+- Recovery Result: failed; target branch changed outside this run.
+- Why Further Recovery Is Not Viable: resolving target history requires external owner action.
+- User Confirmation: explicit abandonment of normal Completion captured.
+- Code Preservation: task branch preserved.
+- Branch Preservation: preserved for follow-up owner.
+- Worktree Preservation: preserved for follow-up owner.
+- Run Record Preservation: preserved in the task worktree.
+- Follow-up Owner: Delivery Contract.
+- Next Step: owner reconciles target history before a new Completion attempt."
+}
+
 create_fixture() {
   local scenario="$1"
   local repo
@@ -68,8 +89,9 @@ create_fixture() {
   local implementation_path="$run_dir_rel/04-repair-record.md"
   local verification_path="$run_dir_rel/05-regression-test-report.md"
   local acceptance_path="$run_dir_rel/06-business-acceptance-record.md"
+  local manual_recovery_path="$run_dir_rel/07-manual-recovery-record.md"
   local source_path="src/example.sh"
-  local diag_sha solution_sha plan_sha implementation_sha implementation_record_sha verification_sha acceptance_sha
+  local diag_sha solution_sha plan_sha implementation_sha implementation_record_sha verification_sha acceptance_sha borrowed_acceptance_sha
   local implementation_record_text verification_text artifact_for_manifest checkpoint_for_manifest base_sha base_line
 
   write_file "$repo" "$diag_path" "# Problem Diagnosis
@@ -218,7 +240,8 @@ echo changed after skipped"
 
   write_file "$repo" "$acceptance_path" "# Business Acceptance
 
-- Decision: \`accepted\`"
+- User Decision: \`accepted\`
+- Accepted Residual Risks: None"
   acceptance_sha="$(commit_paths "$repo" "acceptance" "$acceptance_path")"
 
   artifact_for_manifest="$implementation_path"
@@ -271,11 +294,83 @@ echo changed after skipped"
       rm "$repo/$run_dir_rel/manifest.md.bak"
       ;;
     valid-abandoned)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-missing-record)
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-rejected-decision)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak 's/User Decision: `accepted`/User Decision: `rejected`/' \
+        "$repo/$acceptance_path"
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$acceptance_path.bak" "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-missing-field)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak '/^- Follow-up Owner:/d' "$repo/$manual_recovery_path"
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$manual_recovery_path.bak" "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-invalid-blocking-category)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak 's/Blocking Category: `git`/Blocking Category: `git_state`/' \
+        "$repo/$manual_recovery_path"
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$manual_recovery_path.bak" "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-invalid-implementation)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak '/^- Final Implementation SHA:/d' "$repo/$implementation_path"
+      sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$implementation_path.bak" "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-missing-verification)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
       sed -i.bak \
         -e 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
-        -e "s#| Repair Implementation | .*#| Repair Implementation | \`skipped\` | pending | \`skipped\` | \`skipped: abandoned\` | abandoned before implementation |#" \
-        -e "s#| Regression Verification | .*#| Regression Verification | \`skipped\` | pending | \`skipped\` | \`skipped: abandoned\` | abandoned before verification |#" \
-        -e "s#| Business Acceptance | .*#| Business Acceptance | \`skipped\` | pending | \`skipped\` | \`skipped: abandoned\` | abandoned before acceptance |#" \
+        -e '/| Regression Verification |/d' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-cross-run-acceptance)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      write_file "$repo" "build/dev-cadence/bug-fix/other-run/06-business-acceptance-record.md" "# Business Acceptance
+
+- User Decision: \`accepted\`
+- Accepted Residual Risks: None"
+      borrowed_acceptance_sha="$(commit_paths "$repo" "other run acceptance" \
+        "build/dev-cadence/bug-fix/other-run/06-business-acceptance-record.md")"
+      sed -i.bak \
+        -e 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        -e "s#\`$acceptance_path\` | \`confirmed\` | \`$acceptance_sha\`#\`build/dev-cadence/bug-fix/other-run/06-business-acceptance-record.md\` | \`confirmed\` | \`$borrowed_acceptance_sha\`#" \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-skipped-acceptance)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak \
+        -e 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        -e 's/| Business Acceptance | `confirmed` |/| Business Acceptance | `skipped` |/' \
+        -e 's/| `confirmed` | `[^`]*` | acceptance captured |$/| `skipped` | `skipped: abandoned` | acceptance captured |/' \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
+    invalid-abandoned-impersonated-acceptance)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak \
+        -e 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        -e "s#| Regression Verification | .*#| Regression Verification | \`confirmed\` | \`$acceptance_path\` | \`confirmed\` | \`$acceptance_sha\` | impersonating acceptance evidence |#" \
+        -e "s#| Business Acceptance | .*#| Business Acceptance | \`skipped\` | \`$verification_path\` | \`skipped\` | \`skipped: abandoned\` | skipped acceptance |#" \
         "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$run_dir_rel/manifest.md.bak"
       ;;
@@ -325,6 +420,33 @@ run_expect_success "$valid_no_tracked_changes_run"
 
 valid_abandoned_run="$(create_fixture "valid-abandoned")"
 run_expect_success "$valid_abandoned_run"
+
+missing_recovery_run="$(create_fixture "invalid-abandoned-missing-record")"
+run_expect_failure "$missing_recovery_run" "FAIL: abandoned manifest is missing manual recovery record"
+
+rejected_recovery_run="$(create_fixture "invalid-abandoned-rejected-decision")"
+run_expect_failure "$rejected_recovery_run" "FAIL: abandoned manifest requires accepted Business Acceptance decision"
+
+incomplete_recovery_run="$(create_fixture "invalid-abandoned-missing-field")"
+run_expect_failure "$incomplete_recovery_run" "FAIL: manual recovery record is missing Follow-up Owner"
+
+invalid_blocking_category_run="$(create_fixture "invalid-abandoned-invalid-blocking-category")"
+run_expect_failure "$invalid_blocking_category_run" "FAIL: manual recovery record has invalid Blocking Category"
+
+invalid_abandoned_implementation_run="$(create_fixture "invalid-abandoned-invalid-implementation")"
+run_expect_failure "$invalid_abandoned_implementation_run" "FAIL: implementation record is missing final implementation SHA"
+
+missing_abandoned_verification_run="$(create_fixture "invalid-abandoned-missing-verification")"
+run_expect_failure "$missing_abandoned_verification_run" "FAIL: terminal manifest is missing verification record artifact"
+
+cross_run_acceptance_run="$(create_fixture "invalid-abandoned-cross-run-acceptance")"
+run_expect_failure "$cross_run_acceptance_run" "FAIL: abandoned manifest is missing Business Acceptance record"
+
+skipped_acceptance_run="$(create_fixture "invalid-abandoned-skipped-acceptance")"
+run_expect_failure "$skipped_acceptance_run" "FAIL: abandoned manifest requires confirmed Business Acceptance stage"
+
+impersonated_acceptance_run="$(create_fixture "invalid-abandoned-impersonated-acceptance")"
+run_expect_failure "$impersonated_acceptance_run" "FAIL: abandoned manifest is missing Business Acceptance record"
 
 placeholder_run="$(create_fixture "invalid-placeholder")"
 run_expect_failure "$placeholder_run" "FAIL: implementation record has pending Changed Files"

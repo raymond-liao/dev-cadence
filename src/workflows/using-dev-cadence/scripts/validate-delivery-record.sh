@@ -34,9 +34,61 @@ extract_status_value() {
   fi
 }
 
+require_manual_recovery_field() {
+  local record_path="$1"
+  local field="$2"
+
+  rg -q "^- ${field}: .+" "$record_path" ||
+    fail "manual recovery record is missing ${field}"
+}
+
+require_abandoned_evidence() {
+  local acceptance_path="$1"
+  local expected_acceptance_path="$2"
+  local acceptance_status="$3"
+  local acceptance_checkpoint="$4"
+  local recovery_path="$5"
+  local decision
+  local blocking_category
+
+  [[ "$acceptance_path" == "$expected_acceptance_path" && -f "$acceptance_path" ]] ||
+    fail "abandoned manifest is missing Business Acceptance record"
+  [[ "$acceptance_status" == "confirmed" ]] ||
+    fail "abandoned manifest requires confirmed Business Acceptance stage"
+  [[ "$acceptance_checkpoint" != "pending" ]] ||
+    fail "abandoned manifest requires Business Acceptance checkpoint"
+  decision="$(rg -n '^- User Decision:' "$acceptance_path" | head -n 1 | sed 's/^[0-9]*:- User Decision: *//' || true)"
+  case "$decision" in
+    \`accepted\`|\`accepted_with_risk\`)
+      ;;
+    *)
+      fail "abandoned manifest requires accepted Business Acceptance decision"
+      ;;
+  esac
+  [[ -f "$recovery_path" ]] || fail "abandoned manifest is missing manual recovery record"
+  for field in "Blocking Category" "Blocking Evidence" "Blocked Completion Action" \
+    "Recovery Attempt" "Recovery Result" "Why Further Recovery Is Not Viable" \
+    "User Confirmation" "Code Preservation" "Branch Preservation" \
+    "Worktree Preservation" "Run Record Preservation" "Follow-up Owner" "Next Step"; do
+    require_manual_recovery_field "$recovery_path" "$field"
+  done
+
+  blocking_category="$(rg -n '^- Blocking Category:' "$recovery_path" | head -n 1 | sed 's/^[0-9]*:- Blocking Category: *//' || true)"
+  case "$blocking_category" in
+    \`git\`|\`branch\`|\`worktree\`|\`permission\`|\`external_environment\`)
+      ;;
+    *)
+      fail "manual recovery record has invalid Blocking Category"
+      ;;
+  esac
+}
+
 artifact_exists_in_stage_table=0
 implementation_record_path=""
 verification_record_path=""
+business_acceptance_path=""
+business_acceptance_status=""
+business_acceptance_checkpoint=""
 terminal_mode=0
 terminal_stage_gap=""
 
@@ -135,6 +187,12 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
       fail "checkpoint tree is missing stage artifact: $checkpoint_value $artifact_path"
   fi
 
+  if [[ "$stage" == "Business Acceptance" ]]; then
+    business_acceptance_path="$repo_root_abs/$artifact_path"
+    business_acceptance_status="$status"
+    business_acceptance_checkpoint="$checkpoint_value"
+  fi
+
   case "$artifact_path" in
     */04-implementation-record.md|*/04-repair-record.md|*/04-refactor-record.md)
       implementation_record_path="$repo_root_abs/$artifact_path"
@@ -156,12 +214,6 @@ done < <(
 )
 
 [[ "$artifact_exists_in_stage_table" -eq 1 ]] || fail "manifest does not contain any stage artifact rows"
-
-if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then
-  [[ -z "$terminal_stage_gap" ]] || fail "terminal manifest has non-terminal stage: $terminal_stage_gap"
-  printf 'Delivery record validation passed: %s\n' "$run_dir"
-  exit 0
-fi
 
 [[ -n "$implementation_record_path" ]] || fail "implementation record artifact not found in manifest"
 [[ -f "$implementation_record_path" ]] || fail "implementation record does not exist: ${implementation_record_path#"$repo_root_abs/"}"
@@ -272,6 +324,15 @@ if [[ "$terminal_mode" -eq 1 ]]; then
     fi
     [[ -n "$test_value" && "$test_value" != "pending" ]] || fail "terminal verification record is missing test conclusion"
   fi
+fi
+
+if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then
+  require_abandoned_evidence \
+    "$business_acceptance_path" \
+    "$run_dir_abs/06-business-acceptance-record.md" \
+    "$business_acceptance_status" \
+    "$business_acceptance_checkpoint" \
+    "$run_dir_abs/07-manual-recovery-record.md"
 fi
 
 printf 'Delivery record validation passed: %s\n' "$run_dir"
