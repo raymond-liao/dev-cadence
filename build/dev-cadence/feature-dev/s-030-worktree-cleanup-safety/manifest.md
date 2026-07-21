@@ -9,7 +9,7 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Development Implementation
+- Current Stage: System Testing
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -19,8 +19,8 @@
 | Requirements Confirmation | ✅ `confirmed` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T21:04:26+0800` | `2aa3e65` | 用户确认的业务内容未变；checkpoint 包含符合恢复契约的直接输入身份，Technical Solution 可以继续。 |
 | Technical Solution | ✅ `confirmed` | [S-030 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/02-technical-solution.md` | `confirmed: user selected option 1 at 2026-07-20T21:37:43+0800` | `d8c3beb` | 用户确认方案 C，并授权限定的 vendored finishing 修改进入实施计划。 |
 | Implementation Plan | ✅ `confirmed` | [S-030 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/03-implementation-plan.md` | `confirmed: user selected option 1 at 2026-07-20T21:50:36+0800` | `0997c87` | 用户确认 Task 1-4，并选择 Subagent-Driven Development。 |
-| Development Implementation | 🔄 `in_progress` | pending | `not_required` | `pending` | Pre-Implementation Design Freshness Gate 已通过；等待任务实现与审查。 |
-| System Testing | ⏳ `pending` | pending | `pending` | `pending` | 等待实现和代码审查完成。 |
+| Development Implementation | 🔄 `in_progress` | [实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/04-implementation-record.md` | `not_required` | `pending` | Task 1-4 已完成；本次 checkpoint 将覆盖实施记录与代码审查证据。 |
+| System Testing | 🔄 `in_progress` | [系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/05-system-test-report.md` | `not_required` | `pending` | `Verification Decision: ready`；focused contracts、package/install、whitespace 与 `check-all` 通过；本次 checkpoint 将覆盖系统测试报告。 |
 | Business Acceptance | ⏳ `pending` | pending | `pending` | `pending` | 仅在系统测试达到 `ready` 或 `ready_with_risk` 后开始。 |
 
 ## Confirmed Stage Record Identities
@@ -83,8 +83,8 @@
 
 ## Verification Summary
 
-- 🔄 `in_progress`: Requirements Confirmation、Technical Solution 与 Implementation Plan 已确认；freshness gate 通过，Development Implementation 使用 Subagent-Driven Development。
+- 🟢 `ready`: Development Implementation 与 System Testing 已完成；等待 Business Acceptance 决定。
 
 ## Residual Risks
 
-- ⚠️ 实现必须保持六参数 verifier 接口、三个 Delivery workflow 对称性与 normal/discard fail-closed 语义；任务级 spec 与 code-quality review 未完成前不得进入下一任务。
+- ⚠️ destructive Completion/Discard 未在系统测试中执行，必须在 Business Acceptance 后由用户明确选择 Completion 操作。

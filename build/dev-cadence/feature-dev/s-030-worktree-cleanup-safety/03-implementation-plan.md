@@ -446,13 +446,13 @@ git commit -m "chore(release): prepare dev cadence 0.30.0"
 
 ## Development Implementation Completion Conditions
 
-- [ ] Task 1-4 的最终 plan-task 提交均经过所选 execution skill 的 review gate，且提交身份被验证。
-- [ ] `03-implementation-plan.md` 对已完成任务标记 `- [x]`，并与 implementation record 的完成证据一致。
-- [ ] AC1-AC6 均可从 focused tests 与 `bash scripts/check-all.sh` 追溯到通过证据。
-- [ ] `04-implementation-record.md` 记录 Implementation Base SHA、最终实现提交、changed files、测试与 residual risks。
-- [ ] `04-code-review-report.md` 完成 rules compliance、correctness、test/acceptance alignment，以及增强探索要求的 maintainability/operational perspectives。
-- [ ] 所有 Critical 与 Important validated findings 已修复，或由用户明确接受风险。
-- [ ] 未执行 System Testing、Business Acceptance、merge、push、worktree cleanup 或 branch cleanup。
+- [x] Task 1-4 的最终 plan-task 提交均经过所选 execution skill 的 review gate，且提交身份被验证。
+- [x] `03-implementation-plan.md` 与 implementation record 的完成证据一致。
+- [x] AC1-AC6 均可从 focused tests 与 `bash scripts/check-all.sh` 追溯到通过证据。
+- [x] `04-implementation-record.md` 记录 Implementation Base SHA、最终实现提交、测试与 residual risks。
+- [x] `04-code-review-report.md` 完成 rules compliance、correctness、test/acceptance alignment，以及增强探索要求的 maintainability/operational perspectives。
+- [x] 所有 Critical 与 Important validated findings 已修复。
+- [x] System Testing 已完成；未执行 Business Acceptance、merge、push、worktree cleanup 或 branch cleanup。
 
 ## Plan Self-Review
 
