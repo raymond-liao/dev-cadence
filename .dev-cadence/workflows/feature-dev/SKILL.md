@@ -194,6 +194,32 @@ build/dev-cadence/feature-dev/<feature-slug>/manifest.md
 
 The manifest is the run index. It does not replace the stage records.
 
+## Worktree Creation Evidence
+
+The manifest is the sole authority for this immutable creation-evidence tuple. Write this section once when the initial manifest is created from the entry handoff, and never update it during checkpoints or later stages.
+
+- Created By Current Run: `yes|no`
+- Workspace Path: `<repository-relative path or not_applicable>`
+- Task Branch Ref: `<refs/heads/... or not_applicable>`
+- Creation HEAD SHA: `<full 40-hex SHA or not_applicable>`
+
+`Workspace Path` is created-worktree provenance only. When `Created By Current Run: no`, every tuple value is `not_applicable`; this does not describe or replace the actual current workspace classification used in Current-run Discard context.
+
+Do not reconstruct or replace this tuple from stage records, workspace path, configuration, branch name, or an existing worktree registration.
+
+After the user confirms Requirements Confirmation or Technical Solution, add or update this manifest table. It is the compact identity index for confirmed source records; it must not copy record bodies. The Stage Table remains the sole owner of user-confirmation and checkpoint facts.
+
+```text
+## Confirmed Stage Record Identities
+
+| Stage | Record Path | SHA-256 |
+| --- | --- | --- |
+| Requirements Confirmation | build/dev-cadence/feature-dev/<feature-slug>/01-requirements.md | <lowercase SHA-256> |
+| Technical Solution | build/dev-cadence/feature-dev/<feature-slug>/02-technical-solution.md | <lowercase SHA-256> |
+```
+
+Only add an identity row after its stage is confirmed. Record paths must be repository-relative and SHA-256 values must be lowercase hashes of the current record content. Do not add a row for an unconfirmed stage.
+
 The manifest must include:
 
 - workflow, task slug, repository, branch, started at, current stage, and overall status;
@@ -201,7 +227,7 @@ The manifest must include:
 - verification summary and residual risks once available;
 - business acceptance decision once available;
 - final integration decision after Completion only when run records remain.
-- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Base branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
+- Current-run Discard context and ownership evidence, captured during the run before Completion: Workflow, Task slug, Run directory, Task branch, Base branch, Expected HEAD SHA, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path (the actual current workspace classification, independent of the creation-evidence tuple and not ownership evidence), and Worktree created by this run.
 
 Repository and path fields must be portable:
 
@@ -336,6 +362,8 @@ At the end of this stage, write or update:
 build/dev-cadence/feature-dev/<feature-slug>/01-requirements.md
 ```
 
+The Requirements record must include the work item path, work-item type, work-item Version, current Status, selected scope, Goal, In Scope, Out of Scope, Acceptance Criteria, Business Rules, Assumptions, Open Questions, and Direct Input Identities. Direct Input Identities must list each direct work-item or dependency input as a repository-relative path with its lowercase SHA-256. Use the configured output language for prose and headings, but preserve these semantic fields.
+
 Ask the user to confirm this stage. Do not start implementation planning or code.
 
 ### Technical Solution
@@ -361,6 +389,8 @@ build/dev-cadence/feature-dev/<feature-slug>/02-technical-solution.md
 ```
 
 The Technical Solution record must link to `01-requirements.md` as the confirmed requirement source. This active workflow path overrides any generic feature-spec default in the vendored brainstorming skill.
+
+The Technical Solution record must include the confirmed Requirements source path, Requirements SHA-256, Selected Approach, Alternatives, Affected Boundaries, Key Constraints, Open Questions, and Acceptance Criteria to Verification Strategy Mapping. The confirmed Requirements source path and SHA-256 must exactly match the validated Requirements identity row.
 
 Ask the user to confirm this stage. Do not write the TDD implementation plan or code yet.
 
@@ -413,6 +443,15 @@ Ask the user to confirm the plan before implementation starts.
 #### Pre-Implementation Design Freshness Gate
 
 Immediately before entering Development Implementation, revalidate that the confirmed design and implementation plan still match the current delivery context.
+
+Before the existing freshness assessment, run the feature persistent-record recovery validator from the installed package:
+
+```bash
+bash .dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh \
+  build/dev-cadence/feature-dev/<feature-slug>
+```
+
+Read the manifest first. Confirmed stages must be continuous from Requirements Confirmation through Technical Solution. A valid Requirements-only run normally recovers at Technical Solution; valid Requirements and Technical Solution identities normally recover at Implementation Plan. When a record, checkpoint, mandatory field, direct input identity, or stage continuity is invalid, return to the earliest reported recovery stage, repair and reconfirm it, and refresh later affected evidence. This recovery validation is distinct from the Pre-Implementation Design Freshness Gate: it validates persisted evidence, while the freshness gate evaluates whether still-valid evidence matches the current delivery context.
 
 Compare the current work item card version, confirmed requirements record, confirmed Technical Solution record, Implementation Plan, and current code state. When present, also inspect authoritative product design, architecture, Decision, dependency state, and other sources referenced by the plan.
 
@@ -796,7 +835,7 @@ Pass this Dev Cadence context into the finishing flow:
 - Current-run Discard context: Workflow, Task slug, Run directory, Task branch, Expected HEAD SHA, Base branch, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
 - Successful whole-run Discard intentionally deletes the current run records and leaves no persistent terminal record.
 
-Derive the current-run Discard context from the confirmed manifest and stage records, then revalidate every value against current Git and filesystem state immediately before invoking the finishing flow.
+Completion must read `Created By Current Run`, `Workspace Path`, `Task Branch Ref`, and `Creation HEAD SHA` only from the manifest and pass the same tuple unchanged to the finishing flow. Completion must also pass the independently recorded Current-run Discard context `Workspace path` separately as the actual current workspace classification. Map manifest `Created By Current Run` directly to finishing `Worktree created by this run`; do not infer that value from the classification context. The manifest is the sole authority for the tuple; Completion must not use stage records, workspace path, or configuration as fallback evidence for it. Derive the remaining current-run Discard context from the confirmed manifest and stage records, then revalidate every value against current Git and filesystem state immediately before invoking the finishing flow. With `Created By Current Run: no`, the `not_applicable` ownership tuple must make Whole-run Discard take the conservative cleanup-verifier denial path: the verifier's `not_owned` rejection follows deny semantics, returns `discard_blocked`, and retains the worktree, task branch, and active run records. It does not authorize deletion.
 
 Handle the normalized finishing result:
 

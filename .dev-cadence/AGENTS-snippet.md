@@ -16,10 +16,4 @@ Before responding to or acting on requests involving product discovery, product 
 Do this before any repository exploration, clarification question, user-facing guidance, document or code change, test execution, verification claim, or Git mutation.
 
 Let `using-dev-cadence` determine whether an installed workflow, shared capability, or ordinary handling applies.
-
-Worktree options:
-
-- `worktree.enabled: false` - use an entry-prepared dedicated task branch and do not create a worktree.
-- `worktree.enabled: true` - the entry creates or verifies an isolated worktree without asking.
-- `worktree.directory` - preferred project-local worktree directory.
 ```
