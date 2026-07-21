@@ -16,7 +16,7 @@
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `superseded: direct-input table encoding was not validator-readable` | `pending` | 已修复为原始仓库相对路径与 SHA-256；等待重新确认。 |
+| Requirements Confirmation | 🔄 `in_progress` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `superseded: direct-input table encoding was not validator-readable` | `1e7a335871847c573ca9c36c6e2a7a0aeadcddb1` | 已修复为原始仓库相对路径与 SHA-256；恢复 checkpoint 已验证，等待重新确认。 |
 | Technical Solution | ⏳ `pending` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `superseded: Requirements recovery` | `superseded: 4c136dcaad68909cef7f1d3bec211fd3afe38607` | 需在 Requirements 重新确认后刷新。 |
 | Implementation Plan | ⏳ `pending` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `superseded: Requirements recovery` | `superseded: 86fbd2411f05d403d2bc07c37b309149045c98f5` | 需在 Requirements 和 Technical Solution 重新确认后刷新。 |
 | Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `pending` | 被 Requirements recovery 阻断。 |
