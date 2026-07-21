@@ -25,7 +25,7 @@
 | --- | --- | --- | --- |
 | Task 1: Terminal evidence validator | 先用真实 fixture 锁定有效与无效 `abandoned`，再收紧 validator。 | `tests/delivery-record-contract.sh`, `src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh` | `bash tests/delivery-record-contract.sh` |
 | Task 2: Symmetric workflow mapping | 先锁定三份 workflow 的终态文字契约，再写入一致的验收、返工和 recovery 规则。 | `tests/workflow-symmetry.sh`, `src/workflows/{feature-dev,bug-fix,refactor}/SKILL.md` | `bash tests/workflow-symmetry.sh` |
-| Task 3: Package release verification | 升级可安装包版本、构建分发包并验证 source/distribution 与完整契约。 | `version`, `dist/.dev-cadence/**` generated | `bash scripts/check-all.sh`, source/dist `rg` |
+| Task 3: Package release verification | 在最终集成时评估版本是否需要更新，再构建分发包并验证 source/distribution 与完整契约。 | `version` (如评估要求), `dist/.dev-cadence/**` generated | `bash scripts/check-all.sh`, source/dist `rg` |
 
 ## Pre-Implementation Gate
 
@@ -275,19 +275,21 @@ Expected: one reviewed implementation commit with the symmetry contract passing.
 
 **Interfaces:**
 - Consumes: the reviewed source workflow, validator, and contract-test changes from Tasks 1-2.
-- Produces: source version `0.31.0` and a synchronized, verified installed package; generated `dist/` remains ignored.
+- Produces: 在最终集成时基于当前 `main` 评估并按需更新的 source version，以及同步、验证过的 installed package；generated `dist/` remains ignored.
 
-- [ ] **Step 1: Update the package version**
+- [ ] **Step 1: Assess the package version at final integration**
 
-Replace the complete contents of `version` with:
+Immediately before final integration, inspect the current `main` version and the integration diff:
 
-```text
-0.31.0
+```bash
+git rev-parse main
+git show main:version
+git diff --name-status main...HEAD -- version
 ```
 
-Run: `test "$(<version)" = "0.31.0"`
+Record the main SHA, observed version, assessment, and final version decision in the implementation record. Update `version` only when the current main version does not already provide the required release increment for the S-018 package behavior. Do not reuse the task-worktree snapshot as the version decision.
 
-Expected: exit status `0`.
+Expected: the version decision is made against the actual integration target and is traceable in the run record.
 
 - [ ] **Step 2: Build the distribution and check source/distribution synchronization**
 
@@ -315,16 +317,16 @@ bash scripts/check-all.sh
 
 Expected: all commands pass. If any command fails, classify the evidence under the existing Failure Classification And Stage Routing rules before changing implementation or tests.
 
-- [ ] **Step 4: Review and commit release-source changes**
+- [ ] **Step 4: Review and commit release-source changes when required**
 
-Review `version` and confirm generated `dist/` remains ignored. Commit only the tracked source version file:
+Review the version assessment and confirm generated `dist/` remains ignored. When Step 1 changes `version`, commit only the tracked source version file using the version selected by that assessment:
 
 ```bash
 git add version
-git commit -m "chore(release): prepare dev cadence 0.31.0"
+git commit -m "chore(release): prepare dev cadence <assessed-version>"
 ```
 
-Expected: one reviewed release commit; `git status --short` contains no tracked S-018 implementation change.
+When Step 1 leaves `version` unchanged, do not create an empty release commit. In either case, `git status --short` contains no tracked S-018 implementation change after the final integration work is complete.
 
 ## Plan Self-Review
 
@@ -334,14 +336,15 @@ Expected: one reviewed release commit; `git status --short` contains no tracked 
 
 ## Recovery Refresh
 
-- Requirements and Technical Solution have been reconfirmed with validator-readable record identities. The selected scope, three task boundaries, file list, test-first cycles, version target and verification commands remain unchanged.
+- Requirements and Technical Solution have been reconfirmed with validator-readable record identities. The selected scope, three task boundaries, file list, test-first cycles and verification commands remain unchanged.
 - The prior Implementation Plan confirmation and `Subagent-Driven` selection were superseded by Requirements recovery. This refreshed plan requires a new plan confirmation and a new execution-mode selection before any Task starts.
 - The persistent-record recovery validator now reaches Implementation Plan only after validating the refreshed Requirements and Technical Solution identities. The formal Pre-Implementation Design Freshness Gate remains mandatory immediately before Development Implementation.
+- User direction received after freshness review: do not block S-018 implementation on the current main version. The fixed `0.31.0` target is replaced by a final-integration assessment against current `main`; this is a release-timing correction only, not a change to S-018 scope, behavior, files, or risks.
 
 ## 阶段决定
 
 - Status: ✅ `confirmed`
-- Recovery Note: Technical Solution field headings were normalized; plan tasks, scope, file list, test-first cycles and verification commands are unchanged.
-- User Confirmation: user previously instructed “继续执行”; that instruction reconfirms the unchanged plan.
+- Recovery Note: Technical Solution field headings were normalized. The user additionally confirmed that version assessment occurs at final integration against current `main`; all delivery behavior, scope, file boundaries, test-first cycles and verification commands are unchanged.
+- User Confirmation: user instructed that version does not block implementation and explicitly confirmed this narrow plan correction.
 - Implementation Mode: `Subagent-Driven`.
 - 下一阶段：Development Implementation；在任何 Task 前执行持久记录恢复与新鲜度门。
