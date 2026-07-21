@@ -9,8 +9,8 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Business Acceptance
-- Overall Status: 🔄 `in_progress`
+- Current Stage: Completion
+- Overall Status: ✅ `accepted`
 
 ## Stage Table
 
@@ -21,7 +21,7 @@
 | Implementation Plan | ✅ `confirmed` | [S-030 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/03-implementation-plan.md` | `confirmed: user selected option 1 at 2026-07-20T21:50:36+0800` | `0997c87` | 用户确认 Task 1-4，并选择 Subagent-Driven Development。 |
 | Development Implementation | ✅ `confirmed` | [实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/04-implementation-record.md` | `not_required` | `12782a8` | Task 1-4 已完成；checkpoint 已验证包含实施记录与代码审查证据。 |
 | System Testing | ✅ `confirmed` | [系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/05-system-test-report.md` | `not_required` | `12782a8` | `Verification Decision: ready`；focused contracts、package/install、whitespace 与 `check-all` 通过。 |
-| Business Acceptance | 🔄 `in_progress` | [业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/06-business-acceptance-record.md` | `accepted: user selected option 1 (Accept) at 2026-07-21T12:23:29+0800` | `pending` | 用户接受实现与系统测试结论；正在创建业务验收 checkpoint，尚未授权任何 Completion 动作。 |
+| Business Acceptance | ✅ `confirmed` | [业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/06-business-acceptance-record.md` | `accepted: user selected option 1 (Accept) at 2026-07-21T12:23:29+0800` | `d17069d` | 用户接受实现与系统测试结论；验收 checkpoint 已验证，等待用户选择 Completion 动作。 |
 
 ## Confirmed Stage Record Identities
 
@@ -62,7 +62,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety`
 - Task Branch: `codex/s-030-worktree-cleanup-safety`
 - Base Branch: `main`
-- Expected HEAD SHA: `0997c877dfbd1fcb68ce93416442a0e29791e4f3`
+- Expected HEAD SHA: `d17069d37549d5f803fba7fd2f313e2df1ba9c78`
 - Expected Base SHA: `c340758c5ffa6dd6673c0667e094c64e6155f774`
 - Owned Commit Range: `c340758c5ffa6dd6673c0667e094c64e6155f774..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/**`; `src/workflows/using-dev-cadence/SKILL.md`; `src/workflows/feature-dev/SKILL.md`; `src/workflows/bug-fix/SKILL.md`; `src/workflows/refactor/SKILL.md`; `src/vendor/superpowers/skills/finishing-a-development-branch/**`; planned S-030 contract tests; `version`.
@@ -83,7 +83,7 @@
 
 ## Verification Summary
 
-- 🟢 `ready`: Development Implementation 与 System Testing 已完成；等待 Business Acceptance 决定。
+- ✅ `accepted`: 用户已在 Business Acceptance 选择 `1. Accept`；等待明确的 Completion 集成决定。
 
 ## Residual Risks
 
