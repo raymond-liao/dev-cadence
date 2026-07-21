@@ -4,7 +4,7 @@
 
 - ID：`S-018`
 - Version：`4`
-- Status：`In Progress`
+- Status：`Done`
 - Priority：`P1`
 - Change Type：Feature
 
@@ -87,3 +87,4 @@
 | 3 | 2026-07-19T20:23:56+0800 | Raymond Liao <raymond-liao@outlook.com> | 补全 manual recovery 的恢复优先、证据保留和命令边界，并修正标题。 | 确保吸收 S-023 后不会绕过可恢复失败或丢失人工恢复证据。 |
 | 4 | 2026-07-20T17:33:03+0800 | Raymond Liao <raymond-liao@outlook.com> | 明确业务验收三种决策、返工回退、风险保留、manual recovery 条件和最小记录，并将 Story 标记为 `Ready`。 | 用户确认 `rejected` 返回最早受影响阶段；仅在正常 Completion 已失败且不可恢复时，经用户确认进入 `abandoned`。 |
 | 4 | 2026-07-21T14:18:56+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 Story 状态更新为 `In Progress`。 | 用户明确请求开始实施；S-018 已是用户确认的 `Ready` Story。 |
+| 4 | 2026-07-21T22:12:49+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 Story 状态更新为 `Done`。 | 已接受的交付已本地集成并通过合并后验证。 |

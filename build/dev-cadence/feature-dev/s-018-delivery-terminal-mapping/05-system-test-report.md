@@ -55,4 +55,4 @@ No verification risk. The release-version decision and a normal Completion actio
 
 ## Recommendation
 
-The verified implementation has entered Business Acceptance, was accepted, and is ready for a user-selected Completion action.
+The verified implementation entered Business Acceptance, was accepted, and was merged locally into `main` after fresh post-merge verification.

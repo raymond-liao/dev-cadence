@@ -10,7 +10,7 @@
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
 - Current Stage: Completion
-- Overall Status: ✅ `accepted`
+- Overall Status: ✅ `integrated`
 
 ## Stage Table
 
@@ -48,7 +48,7 @@
 - Card Version At Claim: `4`
 - Card Status At Claim: `In Progress`
 - Selected Scope: 明确三个 Delivery workflow 中 `accepted`、`rejected` 与 `accepted_with_risk` 的后续路径，保留风险责任；仅为已接受且正常 Completion 已被证明不可恢复阻断的 run 定义 manual recovery 与 `abandoned` 终态记录，并以对称契约测试验证。
-- Backlog Projection: [Backlog](../../../../docs/backlog.md) (`docs/backlog.md`), source `待处理`, destination `进行中`, Version `4`, Status `In Progress`
+- Backlog Projection: [Backlog](../../../../docs/backlog.md) (`docs/backlog.md`), source `进行中`, destination `已完成`, Version `4`, Status `Done`
 - Claim Checkpoint: `be7c945af634abab30a86f286ee3262e6352150e`
 
 ## Baseline
@@ -95,7 +95,7 @@
 ## Residual Risks
 
 - ⚠️ 三个 workflow、终态记录 validator 与契约测试必须保持对称；任何误将可恢复失败、验收拒绝或用户 discard 归为 manual recovery 都会破坏 Story 边界。
-- ⚠️ Completion 尚未选择 merge、Pull Request、keep 或 discard；在该决定前，任务分支和 worktree 必须保留。
+- ⚠️ 本地 merge 已完成；任务分支与 worktree 按当前授权保留，未执行 push、Pull Request、分支删除或 worktree 清理。
 
 ## Failure Routing Summary
 
@@ -109,3 +109,15 @@
 - Decision: S-018 changes the installed delivery workflow package, so `main`'s version does not yet include the required release increment. Set the task branch source version to `0.32.0`.
 - Release-source Commit: `0202648c3d8599268f9219bd01cd8df5f847d71c`.
 - Distribution: rebuilt from source; `dist/.dev-cadence/` remains ignored.
+
+## Final Integration Decision
+
+- Completion Action: `merge`
+- Result: `merged`
+- Base Branch Before Merge: `main` at `c8d9c42d5f25ffa2d2eb8338dd24ca51aaf81a17`
+- Task Branch: `codex/s-018-delivery-terminal-mapping` at `e72eb9163ddc0164e69c8d941d0de96321120d9b`
+- Merge Commit: `27e0c0911e6be378172f9b4b15dd02ffecaa58c3`
+- Post-Merge Verification: fresh `bash scripts/check-all.sh` passed on `main`.
+- Worktree: retained at `.worktrees/s-018-delivery-terminal-mapping`.
+- Task Branch: preserved; deletion was not authorized.
+- Remote Integration: no push or Pull Request was created.

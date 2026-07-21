@@ -32,4 +32,4 @@ None.
 
 ## Final Follow-Up Actions
 
-Completion action has not yet been selected. The task branch and worktree are retained.
+The accepted task was merged locally into `main`. The task branch and worktree were retained; no push or Pull Request was created, and no branch or worktree deletion was performed.

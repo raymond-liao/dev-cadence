@@ -60,4 +60,4 @@
 
 ## Known Residual Risks
 
-- A Completion action has not yet been selected. No implementation or verification gap is known.
+- Local integration completed after fresh `check-all` verification. The task branch and worktree remain retained; no implementation or verification gap is known.
