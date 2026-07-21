@@ -4,12 +4,12 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `4` | `In Progress` | `P1` |
 
 ## 待处理
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `4` | `Ready` | `P1` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Ready` | `P2` |
 | `S-020` | [实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) | `3` | `Draft` | `P2` |
 | `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) | `3` | `Draft` | `P2` |
