@@ -49,7 +49,7 @@ require_abandoned_evidence() {
   local recovery_path="$4"
   local decision
 
-  [[ -n "$acceptance_path" && -f "$acceptance_path" ]] ||
+  [[ "$acceptance_path" == */06-business-acceptance-record.md && -f "$acceptance_path" ]] ||
     fail "abandoned manifest is missing Business Acceptance record"
   [[ "$acceptance_status" == "confirmed" ]] ||
     fail "abandoned manifest requires confirmed Business Acceptance stage"
@@ -176,17 +176,18 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
       fail "checkpoint tree is missing stage artifact: $checkpoint_value $artifact_path"
   fi
 
+  if [[ "$stage" == "Business Acceptance" ]]; then
+    business_acceptance_path="$repo_root_abs/$artifact_path"
+    business_acceptance_status="$status"
+    business_acceptance_checkpoint="$checkpoint_value"
+  fi
+
   case "$artifact_path" in
     */04-implementation-record.md|*/04-repair-record.md|*/04-refactor-record.md)
       implementation_record_path="$repo_root_abs/$artifact_path"
       ;;
     */05-system-test-report.md|*/05-regression-test-report.md)
       verification_record_path="$repo_root_abs/$artifact_path"
-      ;;
-    */06-business-acceptance-record.md)
-      business_acceptance_path="$repo_root_abs/$artifact_path"
-      business_acceptance_status="$status"
-      business_acceptance_checkpoint="$checkpoint_value"
       ;;
   esac
 done < <(

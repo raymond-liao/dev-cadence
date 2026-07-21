@@ -328,6 +328,15 @@ echo changed after skipped"
         "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$run_dir_rel/manifest.md.bak"
       ;;
+    invalid-abandoned-impersonated-acceptance)
+      write_manual_recovery_record "$repo" "$manual_recovery_path"
+      sed -i.bak \
+        -e 's/Overall Status: `accepted`/Overall Status: `abandoned`/' \
+        -e "s#| Regression Verification | .*#| Regression Verification | \`confirmed\` | \`$acceptance_path\` | \`confirmed\` | \`$acceptance_sha\` | impersonating acceptance evidence |#" \
+        -e "s#| Business Acceptance | .*#| Business Acceptance | \`skipped\` | \`$verification_path\` | \`skipped\` | \`skipped: abandoned\` | skipped acceptance |#" \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
     invalid-skipped-pending)
       sed -i.bak 's/Overall Status: `accepted`/Overall Status: `abandoned`/; s/| Business Acceptance | `confirmed` |/| Business Acceptance | `skipped` |/; s/| `confirmed` | `[^`]*` | acceptance captured |$/| `skipped` | `pending` | acceptance captured |/' "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$run_dir_rel/manifest.md.bak"
@@ -386,6 +395,9 @@ run_expect_failure "$incomplete_recovery_run" "FAIL: manual recovery record is m
 
 skipped_acceptance_run="$(create_fixture "invalid-abandoned-skipped-acceptance")"
 run_expect_failure "$skipped_acceptance_run" "FAIL: abandoned manifest requires confirmed Business Acceptance stage"
+
+impersonated_acceptance_run="$(create_fixture "invalid-abandoned-impersonated-acceptance")"
+run_expect_failure "$impersonated_acceptance_run" "FAIL: abandoned manifest is missing Business Acceptance record"
 
 placeholder_run="$(create_fixture "invalid-placeholder")"
 run_expect_failure "$placeholder_run" "FAIL: implementation record has pending Changed Files"
