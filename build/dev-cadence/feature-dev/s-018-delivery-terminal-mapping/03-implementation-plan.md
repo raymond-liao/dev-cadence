@@ -340,8 +340,8 @@ Expected: one reviewed release commit; `git status --short` contains no tracked 
 
 ## 阶段决定
 
-- Status: 🔄 `in_progress`
-- Prior Confirmation: superseded by Requirements recovery; this refreshed plan preserves the same tasks and test-first verification.
-- User Confirmation: `pending`。需要确认刷新后的 Implementation Plan 后才可开始 Development Implementation。
-- Implementation Mode: `pending`; choose `Subagent-Driven` or `Inline Execution` with plan confirmation.
-- 下一阶段：Implementation Plan；不得开始 Development Implementation。
+- Status: ✅ `confirmed`
+- Recovery Refresh: the refreshed plan preserves the same tasks and test-first verification after Requirements recovery.
+- User Confirmation: 用户于 `2026-07-21T17:26:43+0800` 选择“确认刷新后的计划并选择 Subagent-Driven”。
+- Implementation Mode: `Subagent-Driven`。
+- 下一阶段：Development Implementation；在执行任何 Task 前必须通过持久记录恢复与设计新鲜度门。
