@@ -9,7 +9,7 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: System Testing
+- Current Stage: Business Acceptance
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
@@ -19,9 +19,9 @@
 | Requirements Confirmation | ✅ `confirmed` | [S-030 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-20T21:04:26+0800` | `2aa3e65` | 用户确认的业务内容未变；checkpoint 包含符合恢复契约的直接输入身份，Technical Solution 可以继续。 |
 | Technical Solution | ✅ `confirmed` | [S-030 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/02-technical-solution.md` | `confirmed: user selected option 1 at 2026-07-20T21:37:43+0800` | `d8c3beb` | 用户确认方案 C，并授权限定的 vendored finishing 修改进入实施计划。 |
 | Implementation Plan | ✅ `confirmed` | [S-030 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/03-implementation-plan.md` | `confirmed: user selected option 1 at 2026-07-20T21:50:36+0800` | `0997c87` | 用户确认 Task 1-4，并选择 Subagent-Driven Development。 |
-| Development Implementation | 🔄 `in_progress` | [实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/04-implementation-record.md` | `not_required` | `pending` | Task 1-4 已完成；本次 checkpoint 将覆盖实施记录与代码审查证据。 |
-| System Testing | 🔄 `in_progress` | [系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/05-system-test-report.md` | `not_required` | `pending` | `Verification Decision: ready`；focused contracts、package/install、whitespace 与 `check-all` 通过；本次 checkpoint 将覆盖系统测试报告。 |
-| Business Acceptance | ⏳ `pending` | pending | `pending` | `pending` | 仅在系统测试达到 `ready` 或 `ready_with_risk` 后开始。 |
+| Development Implementation | ✅ `confirmed` | [实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/04-implementation-record.md` | `not_required` | `12782a8` | Task 1-4 已完成；checkpoint 已验证包含实施记录与代码审查证据。 |
+| System Testing | ✅ `confirmed` | [系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/05-system-test-report.md` | `not_required` | `12782a8` | `Verification Decision: ready`；focused contracts、package/install、whitespace 与 `check-all` 通过。 |
+| Business Acceptance | 🔄 `in_progress` | [业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/06-business-acceptance-record.md` | `accepted: user selected option 1 (Accept) at 2026-07-21T12:23:29+0800` | `pending` | 用户接受实现与系统测试结论；正在创建业务验收 checkpoint，尚未授权任何 Completion 动作。 |
 
 ## Confirmed Stage Record Identities
 
@@ -88,3 +88,8 @@
 ## Residual Risks
 
 - ⚠️ destructive Completion/Discard 未在系统测试中执行，必须在 Business Acceptance 后由用户明确选择 Completion 操作。
+
+## Business Acceptance Decision
+
+- Decision: ✅ `accepted` (`1. Accept`).
+- Record: `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/06-business-acceptance-record.md`.
