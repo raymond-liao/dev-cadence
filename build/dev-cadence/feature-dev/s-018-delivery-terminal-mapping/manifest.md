@@ -9,8 +9,8 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Business Acceptance
-- Overall Status: 🔄 `in_progress`
+- Current Stage: Completion
+- Overall Status: ✅ `accepted`
 
 ## Stage Table
 
@@ -21,7 +21,7 @@
 | Implementation Plan | ✅ `confirmed` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `confirmed: user approved final-integration version assessment and Subagent-Driven` | `4cf037cefdfd4ac6061830327ff0fbf8820eb278` | 用户确认将版本评估移至最终集成；范围和行为不变，计划 checkpoint 已绑定。 |
 | Development Implementation | ✅ `confirmed` | [S-018 实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `39b23ba513d90b9aca0867196d85cf3ec55870e6` | 实现提交范围 `f30009d..b66a146` 已复审；checkpoint 已验证。 |
 | System Testing | ✅ `confirmed` | [S-018 系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `not_required` | `3359dabf6698066cadb456246b58c48db662bbf5` | Verification Decision: `ready`; checkpoint 已验证。 |
-| Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/06-business-acceptance-record.md` | `pending` | `pending` | 等待 System Testing 的 Verification Decision。 |
+| Business Acceptance | ✅ `confirmed` | [S-018 业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-21T21:54:25+0800` | `pending` | 用户选择 Accept；正常 Completion 尚未选择具体集成动作。 |
 
 ## Recovery Summary
 
@@ -72,8 +72,8 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping`
 - Task Branch: `codex/s-018-delivery-terminal-mapping`
 - Base Branch: `main`
-- Expected HEAD SHA: `be7c945af634abab30a86f286ee3262e6352150e`
-- Expected Base SHA: `be7c945af634abab30a86f286ee3262e6352150e`
+- Expected HEAD SHA: `0202648c3d8599268f9219bd01cd8df5f847d71c`
+- Expected Base SHA: `c8d9c42d5f25ffa2d2eb8338dd24ca51aaf81a17`
 - Owned Commit Range: `be7c945af634abab30a86f286ee3262e6352150e..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/**`; planned Delivery workflow sources, validator, contract tests, and `version` within the confirmed S-018 scope.
 - Owned Untracked Paths: `None`
@@ -90,9 +90,18 @@
 
 ## Verification Summary
 
-- ✅ `ready`: `bash tests/delivery-record-contract.sh`、`bash tests/workflow-symmetry.sh`、`bash scripts/build.sh`、`bash scripts/check-whitespace.sh` 与 `bash scripts/check-all.sh` 已通过；可进入 Business Acceptance。
+- ✅ `ready`: `bash tests/delivery-record-contract.sh`、`bash tests/workflow-symmetry.sh`、`bash scripts/build.sh`、`bash scripts/check-whitespace.sh` 与 `bash scripts/check-all.sh` 已通过；Business Acceptance 已接受，可进入 Completion。
 
 ## Residual Risks
 
 - ⚠️ 三个 workflow、终态记录 validator 与契约测试必须保持对称；任何误将可恢复失败、验收拒绝或用户 discard 归为 manual recovery 都会破坏 Story 边界。
-- ⚠️ 根版本将在用户选择 Completion 且实际集成目标确定后，对当时的 `main` 评估；此延后不影响当前实现或系统验证结论。
+- ⚠️ Completion 尚未选择 merge、Pull Request、keep 或 discard；在该决定前，任务分支和 worktree 必须保留。
+
+## Final-Integration Version Assessment
+
+- Integration Target: `main` at `c8d9c42d5f25ffa2d2eb8338dd24ca51aaf81a17`.
+- Observed Main Version: `0.31.0`.
+- Pre-release Diff: `main...52e9e1952cd4d287a37f4c149ddabe28de330021` contained no `version` change.
+- Decision: S-018 changes the installed delivery workflow package, so `main`'s version does not yet include the required release increment. Set the task branch source version to `0.32.0`.
+- Release-source Commit: `0202648c3d8599268f9219bd01cd8df5f847d71c`.
+- Distribution: rebuilt from source; `dist/.dev-cadence/` remains ignored.

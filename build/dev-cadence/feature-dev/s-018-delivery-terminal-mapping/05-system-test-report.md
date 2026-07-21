@@ -50,6 +50,8 @@ No verification risk. The release-version decision and a normal Completion actio
 
 `ready`
 
+- Verification Result: `passed`.
+
 ## Recommendation
 
-The verified implementation can enter Business Acceptance.
+The verified implementation has entered Business Acceptance and was accepted.

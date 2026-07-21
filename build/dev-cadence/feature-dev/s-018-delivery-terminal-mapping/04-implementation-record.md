@@ -10,8 +10,8 @@
 
 - Task 1 completed: abandoned terminal validation now requires the active run's confirmed acceptance record, implementation evidence, verification evidence, complete recovery evidence, and an allowed blocker category.
 - Task 2 completed: three Delivery workflows preserve accepted and risk-accepted decisions through Completion, reserve `integrated` for merge, and expose symmetric recovery boundaries.
-- Task 3 Steps 2 and 3 completed: distribution was built, source/distribution rules were scanned, and focused/full checks were executed.
-- Task 3 Steps 1 and 4 are intentionally deferred to actual integration, per the confirmed plan and user direction. The version will be assessed against the then-current `main`; no release-source commit is due before that assessment.
+- Task 3 completed: the final-integration assessment found `main` at `c8d9c42d5f25ffa2d2eb8338dd24ca51aaf81a17` on `0.31.0` and no `version` change in `main...52e9e1952cd4d287a37f4c149ddabe28de330021`. Because S-018 changes the installable workflow package, it requires the next minor release, `0.32.0`.
+- Task 3 release-source commit: `0202648c3d8599268f9219bd01cd8df5f847d71c` (`chore(release): prepare dev cadence 0.32.0`). The generated `dist/.dev-cadence/` was rebuilt and remains ignored.
 
 ## Changed Files
 
@@ -35,6 +35,7 @@
 
 - Report: [S-018 code review report](04-code-review-report.md) (`build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-code-review-report.md`)
 - Review decision: `approved`.
+- Final Review: `approved`; the whole implementation range `f30009d97c786d87a1055b152de2101e4e43dd14..b66a146b125fdb707c8d091a4076426ca22881fb` has no unresolved Critical or Important finding.
 - Critical findings: None.
 - Important findings: None unresolved; all confirmed whole-branch findings were fixed and re-reviewed.
 - Unresolved findings: None.
@@ -46,4 +47,4 @@
 
 ## Known Residual Risks
 
-- Final integration, the associated version decision, and any user-selected Completion action remain pending after Business Acceptance. No implementation or verification gap is known.
+- A Completion action has not yet been selected. No implementation or verification gap is known.

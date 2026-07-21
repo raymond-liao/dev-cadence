@@ -277,7 +277,7 @@ Expected: one reviewed implementation commit with the symmetry contract passing.
 - Consumes: the reviewed source workflow, validator, and contract-test changes from Tasks 1-2.
 - Produces: 在最终集成时基于当前 `main` 评估并按需更新的 source version，以及同步、验证过的 installed package；generated `dist/` remains ignored.
 
-- [ ] **Step 1: Assess the package version at final integration**
+- [x] **Step 1: Assess the package version at final integration**
 
 Immediately before final integration, inspect the current `main` version and the integration diff:
 
@@ -317,7 +317,7 @@ bash scripts/check-all.sh
 
 Expected: all commands pass. If any command fails, classify the evidence under the existing Failure Classification And Stage Routing rules before changing implementation or tests.
 
-- [ ] **Step 4: Review and commit release-source changes when required**
+- [x] **Step 4: Review and commit release-source changes when required**
 
 Review the version assessment and confirm generated `dist/` remains ignored. When Step 1 changes `version`, commit only the tracked source version file using the version selected by that assessment:
 
@@ -340,7 +340,7 @@ When Step 1 leaves `version` unchanged, do not create an empty release commit. I
 - The prior Implementation Plan confirmation and `Subagent-Driven` selection were superseded by Requirements recovery. This refreshed plan requires a new plan confirmation and a new execution-mode selection before any Task starts.
 - The persistent-record recovery validator now reaches Implementation Plan only after validating the refreshed Requirements and Technical Solution identities. The formal Pre-Implementation Design Freshness Gate remains mandatory immediately before Development Implementation.
 - User direction received after freshness review: do not block S-018 implementation on the current main version. The fixed `0.31.0` target is replaced by a final-integration assessment against current `main`; this is a release-timing correction only, not a change to S-018 scope, behavior, files, or risks.
-- Development update: Tasks 1 and 2, Task 3 Steps 2 and 3, and their required focused/full verification are complete. Task 3 Steps 1 and 4 remain intentionally deferred to actual integration, where the then-current `main` version is authoritative.
+- Development update: Tasks 1 and 2 plus all Task 3 steps are complete. The final-integration assessment used `main` at `c8d9c42d5f25ffa2d2eb8338dd24ca51aaf81a17`; the resulting `0.32.0` release-source commit is `0202648`.
 
 ## 阶段决定
 
