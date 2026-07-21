@@ -25,6 +25,7 @@
 | ST-004 | Terminal rules occur in source and generated package | source inspection | `rg --no-ignore -n ...` | passed | Required terminal rule terms occur in the expected source and distribution files. |
 | ST-005 | Tracked files have no whitespace contract violation | automated contract | `bash scripts/check-whitespace.sh` | passed | No whitespace failure output and zero exit status. |
 | ST-006 | Repository contract suite | automated system test | `bash scripts/check-all.sh` | passed | Build, delivery-record, workflow-symmetry, install, and related repository contracts passed. |
+| ST-007 | Installed package preserves the release-source version | automated install contract | `bash tests/install-contract.sh` | passed | Source and installed package both report `0.32.0`; the contract no longer assumes an obsolete fixed release value. |
 
 ## Requirement Coverage
 
@@ -40,7 +41,7 @@
 
 ## Failed Or Skipped Checks
 
-None.
+`F-S018-001` was observed during Completion fresh verification: the installation contract still required `0.30.0` despite source/package equivalence at `0.32.0`. It was classified as `test_bug`, corrected in `6de907af5f3379bb3e3471ec378182148af492c6`, and closed after ST-007 and a fresh ST-006 pass.
 
 ## Residual Risks
 
@@ -54,4 +55,4 @@ No verification risk. The release-version decision and a normal Completion actio
 
 ## Recommendation
 
-The verified implementation has entered Business Acceptance and was accepted.
+The verified implementation has entered Business Acceptance, was accepted, and is ready for a user-selected Completion action.

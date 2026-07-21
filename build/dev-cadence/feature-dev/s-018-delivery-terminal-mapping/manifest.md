@@ -19,8 +19,8 @@
 | Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user instructed continue at 2026-07-21T15:24:13+0800` | `dc9243d2ec7ddceba1816e54d2fe9a3bb6a05c26` | 恢复后的 Requirements 已重新确认；确认 checkpoint 已验证。 |
 | Technical Solution | ✅ `confirmed` | [S-018 技术方案](02-technical-solution.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `confirmed: prior user continue instruction reconfirmed unchanged solution C` | `f56e423fb49dd17abe67028bda3ee0af0399dd28` | metadata 标签与分隔符已规范化；方案内容未变，确认 checkpoint 已绑定。 |
 | Implementation Plan | ✅ `confirmed` | [S-018 实施计划](03-implementation-plan.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `confirmed: user approved final-integration version assessment and Subagent-Driven` | `4cf037cefdfd4ac6061830327ff0fbf8820eb278` | 用户确认将版本评估移至最终集成；范围和行为不变，计划 checkpoint 已绑定。 |
-| Development Implementation | ✅ `confirmed` | [S-018 实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `39b23ba513d90b9aca0867196d85cf3ec55870e6` | 实现提交范围 `f30009d..b66a146` 已复审；checkpoint 已验证。 |
-| System Testing | ✅ `confirmed` | [S-018 系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `not_required` | `3359dabf6698066cadb456246b58c48db662bbf5` | Verification Decision: `ready`; checkpoint 已验证。 |
+| Development Implementation | ✅ `confirmed` | [S-018 实施记录](04-implementation-record.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `not_required` | `39b23ba513d90b9aca0867196d85cf3ec55870e6` | `F-S018-001` test_bug 已修复并复审；刷新后的 checkpoint 待绑定。 |
+| System Testing | ✅ `confirmed` | [S-018 系统测试报告](05-system-test-report.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `not_required` | `3359dabf6698066cadb456246b58c48db662bbf5` | fresh `check-all` 已通过；刷新后的 checkpoint 待绑定。 |
 | Business Acceptance | ✅ `confirmed` | [S-018 业务验收记录](06-business-acceptance-record.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-21T21:54:25+0800` | `14acd19699d43ea98e068635fc24a98eae4b75e7` | 用户选择 Accept；正常 Completion 尚未选择具体集成动作，checkpoint 已验证。 |
 
 ## Recovery Summary
@@ -72,7 +72,7 @@
 - Run Directory: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping`
 - Task Branch: `codex/s-018-delivery-terminal-mapping`
 - Base Branch: `main`
-- Expected HEAD SHA: `14acd19699d43ea98e068635fc24a98eae4b75e7`
+- Expected HEAD SHA: `6de907af5f3379bb3e3471ec378182148af492c6`
 - Expected Base SHA: `c8d9c42d5f25ffa2d2eb8338dd24ca51aaf81a17`
 - Owned Commit Range: `be7c945af634abab30a86f286ee3262e6352150e..HEAD`
 - Owned Tracked Paths: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/**`; planned Delivery workflow sources, validator, contract tests, and `version` within the confirmed S-018 scope.
@@ -90,12 +90,16 @@
 
 ## Verification Summary
 
-- ✅ `ready`: `bash tests/delivery-record-contract.sh`、`bash tests/workflow-symmetry.sh`、`bash scripts/build.sh`、`bash scripts/check-whitespace.sh` 与 `bash scripts/check-all.sh` 已通过；Business Acceptance 已接受，可进入 Completion。
+- ✅ `ready`: `bash tests/delivery-record-contract.sh`、`bash tests/workflow-symmetry.sh`、`bash tests/install-contract.sh`、`bash scripts/build.sh`、`bash scripts/check-whitespace.sh` 与 fresh `bash scripts/check-all.sh` 已通过；Business Acceptance 已接受，可进入 Completion。
 
 ## Residual Risks
 
 - ⚠️ 三个 workflow、终态记录 validator 与契约测试必须保持对称；任何误将可恢复失败、验收拒绝或用户 discard 归为 manual recovery 都会破坏 Story 边界。
 - ⚠️ Completion 尚未选择 merge、Pull Request、keep 或 discard；在该决定前，任务分支和 worktree 必须保留。
+
+## Failure Routing Summary
+
+- `F-S018-001`: `test_bug`, returned to Development Implementation test correction, closed by `6de907af5f3379bb3e3471ec378182148af492c6`; fresh system verification passed.
 
 ## Final-Integration Version Assessment
 

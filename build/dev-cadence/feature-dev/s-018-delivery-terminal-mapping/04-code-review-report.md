@@ -2,17 +2,17 @@
 
 ## Review Inputs
 
-- [x] Changed files are listed: `src/workflows/bug-fix/SKILL.md`, `src/workflows/feature-dev/SKILL.md`, `src/workflows/refactor/SKILL.md`, `src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh`, `tests/delivery-record-contract.sh`, and `tests/workflow-symmetry.sh`.
+- [x] Changed files are listed: `src/workflows/bug-fix/SKILL.md`, `src/workflows/feature-dev/SKILL.md`, `src/workflows/refactor/SKILL.md`, `src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh`, `tests/delivery-record-contract.sh`, `tests/install-contract.sh`, `tests/workflow-symmetry.sh`, and `version`.
 - [x] Applicable rule source: root `AGENTS.md`.
 - [x] Confirmed [requirements](01-requirements.md) and [technical solution](02-technical-solution.md) are reviewed.
 - [x] [Implementation plan](03-implementation-plan.md) is reviewed.
-- [x] Reviewed commit range: `f30009d97c786d87a1055b152de2101e4e43dd14..b66a146b125fdb707c8d091a4076426ca22881fb` on `codex/s-018-delivery-terminal-mapping`.
+- [x] Reviewed commit range: `f30009d97c786d87a1055b152de2101e4e43dd14..6de907af5f3379bb3e3471ec378182148af492c6` on `codex/s-018-delivery-terminal-mapping`.
 
 ## Review Perspectives
 
 - [x] Rules compliance reviewed: only authority files, validator, and existing contract tests changed; no vendored skills or generated distribution files were edited directly.
 - [x] Correctness / bugs reviewed: abandoned records now pass through generic implementation and verification evidence checks, bind Business Acceptance to the active run, and reject unsupported blocker categories.
-- [x] Test / acceptance alignment reviewed: fixture coverage verifies valid abandoned recovery and invalid recovery evidence; symmetry assertions cover the three workflow mappings and the allowed/forbidden recovery boundaries.
+- [x] Test / acceptance alignment reviewed: fixture coverage verifies valid abandoned recovery and invalid recovery evidence; symmetry assertions cover the three workflow mappings and the allowed/forbidden recovery boundaries. The install contract now checks source-to-installed version equivalence without binding every release to obsolete `0.30.0` text.
 - [x] Security, accessibility, performance, or operational concerns considered when relevant: no runtime service, accessibility surface, or performance path changed; terminal-record validation now fails closed on the specified evidence gaps.
 
 ## Findings
@@ -25,6 +25,6 @@
 ## Review Decision
 
 - [x] Safe to proceed to System Testing.
-- [x] Fixes applied: `038ec15` and `b66a146`; prior implementation commits remain in the reviewed range.
+- [x] Fixes applied: `038ec15`, `b66a146`, and `6de907a`; prior implementation commits remain in the reviewed range.
 - [x] Unresolved findings: None.
-- [x] Residual review risks: normal Completion integration and final package-version assessment still require their separate user-authorized Completion steps.
+- [x] Residual review risks: normal Completion integration still requires a separate user-authorized action.
