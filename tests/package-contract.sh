@@ -20,6 +20,11 @@ assert_same_file() {
   cmp -s "$ROOT_DIR/$left" "$ROOT_DIR/$right" || fail "files differ: $left -> $right"
 }
 
+assert_executable() {
+  local path="$1"
+  test -x "$ROOT_DIR/$path" || fail "required executable is not executable: $path"
+}
+
 assert_same_tree() {
   local left="$1"
   local right="$2"
@@ -65,6 +70,7 @@ required_files=(
   "dist/.dev-cadence/workflows/refactor/SKILL.md"
   "dist/.dev-cadence/vendor/superpowers/LICENSE"
   "dist/.dev-cadence/vendor/superpowers/RELEASE-NOTES.md"
+  "dist/.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh"
 )
 
 for path in "${required_files[@]}"; do
@@ -106,6 +112,11 @@ assert_same_file \
 assert_same_file \
   "src/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" \
   "dist/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh"
+assert_same_file \
+  "src/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh" \
+  "dist/.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh"
+assert_executable "src/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh"
+assert_executable "dist/.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh"
 
 assert_match "04-code-review-report.md" "src/workflows/feature-dev/SKILL.md"
 assert_match "04-code-review-report.md" "src/workflows/bug-fix/SKILL.md"

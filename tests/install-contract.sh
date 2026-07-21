@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 INSTALL_SCRIPT="$ROOT_DIR/scripts/install.sh"
+OWNERSHIP_VERIFIER_REL="vendor/superpowers/skills/finishing-a-development-branch/scripts/verify-worktree-ownership.sh"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -27,8 +28,14 @@ test -f "$TARGET_REPO/.dev-cadence/skills/open-question-registry/SKILL.md" || fa
 test -f "$TARGET_REPO/.dev-cadence/workflows/work-item-analysis/SKILL.md" || fail "first install did not create work-item-analysis skill"
 test -f "$TARGET_REPO/.dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh" || fail "first install did not create delivery-record validator"
 test -f "$TARGET_REPO/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" || fail "first install did not create feature recovery validator"
+test -f "$TARGET_REPO/.dev-cadence/$OWNERSHIP_VERIFIER_REL" || fail "first install did not create worktree ownership verifier"
+test -x "$TARGET_REPO/.dev-cadence/$OWNERSHIP_VERIFIER_REL" || fail "installed worktree ownership verifier is not executable"
 test ! -e "$TARGET_REPO/docs/open-questions.md" || fail "install created an empty target-repository Open Question Registry"
 cmp -s "$ROOT_DIR/version" "$TARGET_REPO/.dev-cadence/version" || fail "installed version differs from source"
+test "$(<"$TARGET_REPO/.dev-cadence/version")" = "0.30.0" || fail "installed version is not 0.30.0"
+cmp -s \
+  "$ROOT_DIR/src/$OWNERSHIP_VERIFIER_REL" \
+  "$TARGET_REPO/.dev-cadence/$OWNERSHIP_VERIFIER_REL" || fail "installed worktree ownership verifier differs from source"
 cmp -s \
   "$ROOT_DIR/src/references/contracts/change-log.md" \
   "$TARGET_REPO/.dev-cadence/references/contracts/change-log.md" || fail "installed Change Log contract differs from source"
@@ -58,6 +65,10 @@ cmp -s \
 cmp -s \
   "$ROOT_DIR/src/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" \
   "$TARGET_REPO/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" || fail "installed feature recovery validator differs from source"
+test -x "$TARGET_REPO/.dev-cadence/$OWNERSHIP_VERIFIER_REL" || fail "updated worktree ownership verifier is not executable"
+cmp -s \
+  "$ROOT_DIR/src/$OWNERSHIP_VERIFIER_REL" \
+  "$TARGET_REPO/.dev-cadence/$OWNERSHIP_VERIFIER_REL" || fail "updated worktree ownership verifier differs from source"
 cmp -s \
   "$ROOT_DIR/src/references/document-conventions/SKILL.md" \
   "$TARGET_REPO/.dev-cadence/references/document-conventions/SKILL.md" || fail "installed document-conventions skill differs from source"
