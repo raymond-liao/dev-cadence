@@ -71,6 +71,6 @@
 
 ## 阶段决定
 
-- Status: 🔄 `in_progress`
-- User Confirmation: `pending`。本记录需要用户确认后才可开始 Technical Solution。
+- Status: ✅ `confirmed`
+- User Confirmation: 用户于 `2026-07-21T14:31:39+0800` 选择“确认当前版本并进入 Technical Solution”。
 - 下一阶段：Technical Solution；Implementation Plan 和代码修改仍需要各自的后续确认。

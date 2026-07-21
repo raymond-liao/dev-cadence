@@ -9,19 +9,25 @@
 - Output Language: `zh-CN`
 - Configuration Source: `target repository root/.dev-cadence.yaml`
 - Worktree Configuration Propagated: `yes`
-- Current Stage: Requirements Confirmation
+- Current Stage: Technical Solution
 - Overall Status: 🔄 `in_progress`
 
 ## Stage Table
 
 | Stage | Status | Artifact | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | 🔄 `in_progress` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `pending` | `785d3af749ac2f06e6d9219ffb759c054ffc1d28` | 记录 checkpoint 已验证包含需求记录；未经用户确认不得开始 Technical Solution。 |
-| Technical Solution | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `pending` | `pending` | 等待 Requirements Confirmation。 |
+| Requirements Confirmation | ✅ `confirmed` | [S-018 需求确认](01-requirements.md); `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` | `confirmed: user selected option 1 at 2026-07-21T14:31:39+0800` | `pending` | 用户确认当前范围与验收条件；等待确认 checkpoint 绑定。 |
+| Technical Solution | 🔄 `in_progress` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/02-technical-solution.md` | `pending` | `pending` | 已开始增强探索与技术方案准备。 |
 | Implementation Plan | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/03-implementation-plan.md` | `pending` | `pending` | 等待 Technical Solution。 |
 | Development Implementation | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/04-implementation-record.md` | `pending` | `pending` | 等待已确认的实施计划。 |
 | System Testing | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/05-system-test-report.md` | `pending` | `pending` | 等待 Development Implementation。 |
 | Business Acceptance | ⏳ `pending` | ⏳ `pending`: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/06-business-acceptance-record.md` | `pending` | `pending` | 等待 System Testing 的 Verification Decision。 |
+
+## Confirmed Stage Record Identities
+
+| Stage | Record Path | SHA-256 |
+| --- | --- | --- |
+| Requirements Confirmation | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md | 6b2a3cfdb182d7bbdbcd1552ae5a205949508ddd6b9268dd77a130fff550c039 |
 
 ## Work Item Identity
 
