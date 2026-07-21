@@ -332,10 +332,16 @@ Expected: one reviewed release commit; `git status --short` contains no tracked 
 - Placeholder scan: no deferred implementation placeholders or unspecified test commands remain.
 - Interface consistency: Task 1 establishes `User Decision` and the exact `07` fields; Task 2 requires the same names in every workflow; Task 3 verifies generated package propagation.
 
+## Recovery Refresh
+
+- Requirements and Technical Solution have been reconfirmed with validator-readable record identities. The selected scope, three task boundaries, file list, test-first cycles, version target and verification commands remain unchanged.
+- The prior Implementation Plan confirmation and `Subagent-Driven` selection were superseded by Requirements recovery. This refreshed plan requires a new plan confirmation and a new execution-mode selection before any Task starts.
+- The persistent-record recovery validator now reaches Implementation Plan only after validating the refreshed Requirements and Technical Solution identities. The formal Pre-Implementation Design Freshness Gate remains mandatory immediately before Development Implementation.
+
 ## 阶段决定
 
-- Status: `superseded`
-- Superseded Reason: Requirements Confirmation recovery corrected validator-readable direct-input table encoding; this plan must be refreshed and reconfirmed after the renewed Requirements and Technical Solution stages.
-- User Confirmation: superseded pending renewed Requirements Confirmation.
-- Implementation Mode: `Subagent-Driven` was selected for the superseded plan and must be reconfirmed with the refreshed plan.
-- 下一阶段：等待 Requirements Confirmation 重新确认；不得开始 Development Implementation。
+- Status: 🔄 `in_progress`
+- Prior Confirmation: superseded by Requirements recovery; this refreshed plan preserves the same tasks and test-first verification.
+- User Confirmation: `pending`。需要确认刷新后的 Implementation Plan 后才可开始 Development Implementation。
+- Implementation Mode: `pending`; choose `Subagent-Driven` or `Inline Execution` with plan confirmation.
+- 下一阶段：Implementation Plan；不得开始 Development Implementation。
