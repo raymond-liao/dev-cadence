@@ -222,6 +222,8 @@ Immediately after final user confirmation and before any destructive command, re
 
 Immediately after final user confirmation and before any destructive command, re-enumerate and reclassify every changed path as current-run, external, or unknown and compare the complete classified path set with the confirmed snapshot. Any change, addition, deletion, or classification mismatch returns `discard_blocked` without changing Git or filesystem state.
 
+Immediately after final user confirmation and before any destructive command, freeze the exact task branch ref and `Expected Current HEAD SHA` again and invoke `scripts/verify-worktree-ownership.sh` with the immutable manifest ownership tuple. A `not_owned` result or any verifier failure returns `discard_blocked` before destructive commands and preserves the worktree, task branch, and active run records. With `Created By Current Run: no`, the manifest `not_applicable` tuple is rejected by the verifier; return `discard_blocked` and preserve the worktree, task branch, and active run records.
+
 #### Ownership and execution
 
 - The workflow-only choice must preserve external and unknown paths byte-for-byte and path-for-path.
@@ -281,7 +283,28 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 
 **If `GIT_DIR == GIT_COMMON`:** Normal repo, no worktree to clean up. Done.
 
-**If worktree path is under `.worktrees/` or `worktrees/`:** Superpowers created this worktree — we own cleanup.
+### Dev Cadence ownership gate
+
+Dev Cadence cleanup caller must read the immutable ownership tuple only from the run manifest: `Created By Current Run`, `Workspace Path`, `Task Branch Ref`, and `Creation HEAD SHA`. It must pass the actual current workspace classification separately from the manifest ownership tuple. The Dev Cadence caller must not infer or fall back to `.worktrees/`, `worktrees/`, or configured worktree directories to prove ownership.
+
+For a Dev Cadence named-branch worktree, invoke `scripts/verify-worktree-ownership.sh` with the primary root and the immutable manifest tuple. Immediately before `git worktree remove`, freeze the exact task branch ref and `Expected Current HEAD SHA`, then run that verifier. Only an `owned` result permits the existing removal command. On `not_owned` or any verifier failure, skip `git worktree remove` and preserve the task branch and worktree. With `Created By Current Run: no`, pass the manifest `not_applicable` tuple unchanged; the verifier must reject it.
+
+```bash
+# Dev Cadence callers only, immediately before the existing removal command
+TASK_BRANCH_REF=<manifest-task-branch-ref>
+EXPECTED_CURRENT_HEAD_SHA=$(git rev-parse "$TASK_BRANCH_REF")
+scripts/verify-worktree-ownership.sh \
+  "$MAIN_ROOT" \
+  <manifest-created-by-current-run> \
+  <manifest-workspace-path> \
+  "$TASK_BRANCH_REF" \
+  <manifest-creation-head-sha> \
+  "$EXPECTED_CURRENT_HEAD_SHA"
+```
+
+The Dev Cadence Whole-Run Discard gate above uses this same verifier after final confirmation. A verifier denial blocks the whole run before any destructive command; do not create a persistent cleanup or audit record for either gate.
+
+**For legacy ordinary Superpowers callers, if worktree path is under `.worktrees/` or `worktrees/`:** Superpowers created this worktree — retain the existing path-convention cleanup behavior.
 
 ```bash
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)

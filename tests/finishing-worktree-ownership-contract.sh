@@ -36,6 +36,7 @@ assert_not_owned_and_preserved() {
   expected_reason="$1"
   expected_workspace="$2"
   shift 2
+  expected_branch_ref="${PRESERVED_BRANCH_REF:-$4}"
   set +e
   output="$("$VERIFIER" "$@")"
   status=$?
@@ -44,6 +45,8 @@ assert_not_owned_and_preserved() {
   [[ "$output" == "not_owned:$expected_reason" ]] || fail "unexpected reason: $output"
   git -C "$repo" worktree list --porcelain | rg -F "worktree $expected_workspace" >/dev/null ||
     fail "rejected worktree was removed"
+  git -C "$repo" show-ref --verify --quiet "$expected_branch_ref" ||
+    fail "rejected task branch was removed: $expected_branch_ref"
 }
 
 REAL_GIT="$(command -v git)"
@@ -99,6 +102,8 @@ assert_not_owned_and_preserved missing_evidence "$default_workspace" \
   "$repo" yes ".worktrees/owned-default" "refs/heads/owned-default" "$base_sha"
 assert_not_owned_and_preserved not_created_by_run "$default_workspace" \
   "$repo" no ".worktrees/owned-default" "refs/heads/owned-default" "$base_sha" "$base_sha"
+PRESERVED_BRANCH_REF="refs/heads/owned-default" assert_not_owned_and_preserved not_created_by_run "$default_workspace" \
+  "$repo" no not_applicable not_applicable not_applicable not_applicable
 assert_not_owned_and_preserved invalid_workspace_path "$default_workspace" \
   "$repo" yes "../escape" "refs/heads/owned-default" "$base_sha" "$base_sha"
 assert_not_owned_and_preserved worktree_not_found "$default_workspace" \
