@@ -30,12 +30,13 @@
 - Root Cause: Direct Input Identities encoded repository-relative paths and SHA-256 values as Markdown code values; the validator requires raw table fields.
 - Scope Impact: None. The work-item Version, Status, selected scope, and all direct-input SHA-256 values remain unchanged.
 - Recovery Action: Requirements record paths normalized; Technical Solution and Implementation Plan confirmations superseded and must be refreshed after renewed Requirements Confirmation.
+- Identity Binding Correction: Requirements identity was recomputed from the confirmed-record checkpoint after its confirmation metadata was written; scope remains unchanged.
 
 ## Confirmed Stage Record Identities
 
 | Stage | Record Path | SHA-256 |
 | --- | --- | --- |
-| Requirements Confirmation | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md | 7a0a7304fe251c84b9ba05a10588449e450dc77146757c28c2e081677a3c6278 |
+| Requirements Confirmation | build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md | 4348982eabe9414956c9edb92cc62926a0b30eef07b4f3fd785c50fd3470c16e |
 
 ## Work Item Identity
 
