@@ -25,7 +25,7 @@
 - 根 `version` 当前为 `0.30.0`；本 Story 改变可安装 package 的 workflow 行为、记录格式和 validator，因此实施应将它更新为 `0.31.0`。
 - `scripts/build.sh` 从 `src/` 生成忽略的 `dist/.dev-cadence/`。权威修改必须落在 `src/`，构建负责同步；不得直接编辑 `dist/` 或 `src/vendor/superpowers/skills/**`。
 
-## 方案备选
+## 备选方案
 
 ### 方案 A：最小文字映射
 
@@ -48,7 +48,7 @@
 - 优点：每条 workflow 保持自身终态与记录所有权；不新建路由；validator 可以阻止无验收或无证据的 `abandoned`；对称测试避免漂移。
 - 缺点：三份受控的对称规则需要同步维护。
 
-## ✅ Selected：方案 C
+## ✅ 已选方案：方案 C
 
 用户于 `2026-07-21T15:36:06+0800` 确认刷新后的方案 C。恢复后的需求范围和输入内容未变；方案 C 仍以现有 workflow 为自然所有者，满足 S-018 对对称性的要求，同时以 validator 和 fixture 将 `abandoned` 从宽松枚举值收紧为可审计例外，不扩大到 merge、discard 或 worktree 命令实现。
 
@@ -129,7 +129,7 @@ build/dev-cadence/<workflow>/<task-slug>/07-manual-recovery-record.md
 
 ## 阶段决定
 
-- Status: ✅ `confirmed`
-- Recovery Refresh: prior confirmation was superseded by Requirements recovery; this confirmed version references the refreshed Requirements SHA-256.
-- User Confirmation: 用户于 `2026-07-21T15:36:06+0800` 选择“确认刷新后的方案 C 并进入 Implementation Plan”。
-- 下一阶段：Implementation Plan；代码修改仍需用户确认刷新后的计划。
+- Status: 🔄 `in_progress`
+- Prior Confirmation: superseded because validator-required `已选方案` and `备选方案` headings were normalized; solution content and scope are unchanged.
+- User Confirmation: `pending`。需要重新确认方案 C 后才可开始刷新后的 Implementation Plan。
+- 下一阶段：Technical Solution；Implementation Plan 和代码修改均已停止。
