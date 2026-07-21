@@ -31,6 +31,32 @@ assert_literal() {
   rg --no-ignore -F -n -- "$literal" "$path" >/dev/null || fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
+worktree_creation_evidence_section() {
+  local path="$1"
+
+  awk '
+    /^## Worktree Creation Evidence$/ { count++; capture = 1; next }
+    capture && /^## / { capture = 0 }
+    capture { print }
+    capture && /Do not reconstruct or replace this tuple/ { capture = 0 }
+    END { if (count != 1) exit 1 }
+  ' "$path"
+}
+
+assert_identical_worktree_creation_evidence() {
+  local feature_section bug_section refactor_section
+
+  feature_section="$(worktree_creation_evidence_section "$FEATURE_SKILL")" ||
+    fail "feature must contain exactly one Worktree Creation Evidence section"
+  bug_section="$(worktree_creation_evidence_section "$BUG_FIX_SKILL")" ||
+    fail "bug-fix must contain exactly one Worktree Creation Evidence section"
+  refactor_section="$(worktree_creation_evidence_section "$REFACTOR_SKILL")" ||
+    fail "refactor must contain exactly one Worktree Creation Evidence section"
+
+  [[ "$feature_section" == "$bug_section" && "$feature_section" == "$refactor_section" ]] ||
+    fail "Worktree Creation Evidence sections must be identical across Delivery workflows"
+}
+
 assert_workflows() {
   local label="$1"
   local feature_pattern="$2"
@@ -556,6 +582,13 @@ assert_workflows "executable behavior remains tested" "If the same task changes 
 assert_not_match "target repository documentation test policy" "Root-level .*\\*\\.md.*docs/.*do not require new or updated automated tests" "$AGENTS_SNIPPET"
 
 assert_workflows "manifest creation rule" "Create and maintain a run manifest" "Create and maintain a run manifest" "Create and maintain a run manifest"
+assert_workflows "worktree creation evidence section" "## Worktree Creation Evidence" "## Worktree Creation Evidence" "## Worktree Creation Evidence"
+assert_workflows "worktree creation evidence created field" "Created By Current Run" "Created By Current Run" "Created By Current Run"
+assert_workflows "worktree creation evidence workspace field" "Workspace Path" "Workspace Path" "Workspace Path"
+assert_workflows "worktree creation evidence branch field" "Task Branch Ref" "Task Branch Ref" "Task Branch Ref"
+assert_workflows "worktree creation evidence creation head field" "Creation HEAD SHA" "Creation HEAD SHA" "Creation HEAD SHA"
+assert_workflows "worktree creation evidence sole manifest authority" "manifest is the sole authority" "manifest is the sole authority" "manifest is the sole authority"
+assert_identical_worktree_creation_evidence
 assert_workflows "manifest status values" "Use stage status values" "Use stage status values" "Use stage status values"
 assert_workflows "terminal checkpoint rule" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values" "must not contain .*pending.* checkpoint commit values"
 assert_workflows "no tracked changes checkpoint rule" "skipped: no tracked changes" "skipped: no tracked changes" "skipped: no tracked changes"
@@ -734,6 +767,14 @@ assert_workflows "whole-run discard context" \
   "Run directory.*Task branch.*Expected HEAD SHA|Expected HEAD SHA.*Run directory" \
   "Run directory.*Task branch.*Expected HEAD SHA|Expected HEAD SHA.*Run directory" \
   "Run directory.*Task branch.*Expected HEAD SHA|Expected HEAD SHA.*Run directory"
+assert_workflows "completion passes immutable worktree tuple from manifest" \
+  "Completion.*read.*Created By Current Run.*Workspace Path.*Task Branch Ref.*Creation HEAD SHA.*manifest.*pass.*unchanged" \
+  "Completion.*read.*Created By Current Run.*Workspace Path.*Task Branch Ref.*Creation HEAD SHA.*manifest.*pass.*unchanged" \
+  "Completion.*read.*Created By Current Run.*Workspace Path.*Task Branch Ref.*Creation HEAD SHA.*manifest.*pass.*unchanged"
+assert_workflows "completion has no worktree evidence fallback" \
+  "must not use.*stage records.*workspace path.*configuration.*fallback" \
+  "must not use.*stage records.*workspace path.*configuration.*fallback" \
+  "must not use.*stage records.*workspace path.*configuration.*fallback"
 
 assert_workflows "whole-run discard result" \
   'whole_run_discarded' \

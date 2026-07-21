@@ -20,6 +20,15 @@ assert_match() {
     fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
+assert_literal() {
+  local label="$1"
+  local literal="$2"
+  local path="$3"
+
+  rg --no-ignore -F -n -- "$literal" "$path" >/dev/null ||
+    fail "missing $label in ${path#"$ROOT_DIR/"}"
+}
+
 assert_not_match() {
   local label="$1"
   local pattern="$2"
@@ -160,6 +169,19 @@ assert_match "workspace preparation gate" \
   'workspace preparation.*complete.*before.*route.*downstream' "$ENTRY_SKILL"
 assert_match "enabled worktree handoff" \
   'worktree\.enabled: true.*immediately.*create or verify.*worktree' "$ENTRY_SKILL"
+assert_match "worktree creation and reuse branch" \
+  'create.*worktree.*separate.*reuse|reuse.*worktree.*separate.*create' "$ENTRY_SKILL"
+assert_match "creation ownership only follows a successful create" \
+  'actual.*create.*success.*Created By Current Run: yes|Created By Current Run: yes.*actual.*create.*success' "$ENTRY_SKILL"
+assert_match "creation evidence uses exact newly-created porcelain stanza" \
+  'exact newly.created.*git worktree list --porcelain.*stanza|git worktree list --porcelain.*exact newly.created.*stanza' "$ENTRY_SKILL"
+assert_match "creation ownership inference prohibited" \
+  'Do not infer creation ownership from.*worktree\.enabled.*configured directory.*workspace location.*branch name.*pre-existing worktree registration' "$ENTRY_SKILL"
+assert_literal "creation evidence handoff created field" "Created By Current Run: yes|no" "$ENTRY_SKILL"
+assert_literal "creation evidence handoff workspace field" "Workspace Path: <repository-relative path|not_applicable>" "$ENTRY_SKILL"
+assert_literal "creation evidence handoff branch field" "Task Branch Ref: <refs/heads/...|not_applicable>" "$ENTRY_SKILL"
+assert_literal "creation evidence handoff creation head field" "Creation HEAD SHA: <full SHA|not_applicable>" "$ENTRY_SKILL"
+assert_literal "creation evidence handoff source field" "Evidence Source: git worktree list --porcelain" "$ENTRY_SKILL"
 assert_match "disabled branch handoff" \
   'worktree\.enabled: false.*immediately.*prepare.*dedicated.*branch.*must not.*create.*worktree' "$ENTRY_SKILL"
 assert_match "authoritative base ref resolved before claim" \

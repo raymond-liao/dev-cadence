@@ -194,6 +194,17 @@ build/dev-cadence/feature-dev/<feature-slug>/manifest.md
 
 The manifest is the run index. It does not replace the stage records.
 
+## Worktree Creation Evidence
+
+The manifest is the sole authority for this immutable creation-evidence tuple. Write this section once when the initial manifest is created from the entry handoff, and never update it during checkpoints or later stages.
+
+- Created By Current Run: `yes|no`
+- Workspace Path: `<repository-relative path or not_applicable>`
+- Task Branch Ref: `<refs/heads/... or not_applicable>`
+- Creation HEAD SHA: `<full 40-hex SHA or not_applicable>`
+
+Do not reconstruct or replace this tuple from stage records, workspace path, configuration, branch name, or an existing worktree registration.
+
 After the user confirms Requirements Confirmation or Technical Solution, add or update this manifest table. It is the compact identity index for confirmed source records; it must not copy record bodies. The Stage Table remains the sole owner of user-confirmation and checkpoint facts.
 
 ```text
@@ -822,7 +833,7 @@ Pass this Dev Cadence context into the finishing flow:
 - Current-run Discard context: Workflow, Task slug, Run directory, Task branch, Expected HEAD SHA, Base branch, Expected base SHA, Owned commit range, Owned tracked and untracked paths, Workspace path, and Worktree created by this run.
 - Successful whole-run Discard intentionally deletes the current run records and leaves no persistent terminal record.
 
-Derive the current-run Discard context from the confirmed manifest and stage records, then revalidate every value against current Git and filesystem state immediately before invoking the finishing flow.
+Completion must read `Created By Current Run`, `Workspace Path`, `Task Branch Ref`, and `Creation HEAD SHA` only from the manifest and pass the same tuple unchanged to the finishing flow. The manifest is the sole authority; Completion must not use stage records, workspace path, or configuration as fallback evidence. Derive the remaining current-run Discard context from the confirmed manifest and stage records, then revalidate every value against current Git and filesystem state immediately before invoking the finishing flow.
 
 Handle the normalized finishing result:
 
