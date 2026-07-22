@@ -176,6 +176,7 @@ Necessary clarification may ask only the questions needed to make the requested 
 
 Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged for both modes.
 The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content.
+For a relative-size proposal, a named item and its card `Size`, Story Map Size/baseline/distribution, and Backlog `Size Summary` projection are one indivisible confirmation unit.
 
 ## Confirmation Gate Presentation
 
@@ -210,15 +211,15 @@ Do not import the Delivery Workflow advance/revise menu as a replacement for the
 
 Relative-size estimation is a conditional Planning capability. Use only the unique enum `XS | S | M | L | XL | ?`; it expresses relative effort, complexity, and known uncertainty, and must not be converted to person-days, duration, or team capacity.
 
-After the applicable Story Map and cards exist or are included in the current planning proposal, propose a baseline candidate with a reason that it has clear scope, moderate size, and representative characteristics. The user must confirm the selected baseline card as `M` before estimating other items. Record the baseline work-item ID, baseline card Version, selection reason, and `Needs Size Re-estimation: yes|no` in the Story Map; this flag is planning metadata, not a work-item status.
+After the applicable Story Map and cards exist or are included in the current planning proposal, propose a baseline candidate with a reason that it has clear scope, moderate size, and representative characteristics. The user must confirm the selected baseline card as `M` before estimating other items. The active baseline card must remain `M`. Record the baseline work-item ID, baseline card Version, selection reason, and `Needs Size Re-estimation: yes|no` in the Story Map; this flag is planning metadata, not a work-item status.
 
 Estimate Story Map Stories and necessary Tasks relative to the confirmed baseline. Estimate independent Tasks and Bugs only when they are in the current confirmed Planning scope; Bugs remain outside the Story Map. When information is insufficient, preserve `?`; do not substitute a certain level to complete planning. The Story Map must show the Size for its Stories and necessary Tasks, Path and Milestone distributions, and an explicit summary of `XL`, `?`, and significant uncertainty.
 
-For incremental planning, reuse a confirmed baseline while its card exists, is not `Superseded`, and its Version matches the Story Map baseline snapshot. When the baseline is deleted, `Superseded`, or its Version no longer matches the snapshot, the baseline is invalid and Planning must select and ask the user to reconfirm a replacement baseline before estimating or re-estimating affected items.
+For incremental planning, reuse a confirmed baseline while its card exists, is not `Superseded`, and its Version matches the Story Map baseline snapshot. Reuse is valid only when that baseline card currently has Size `M`. When the baseline is deleted, `Superseded`, its Version no longer matches the snapshot, or its Size is no longer `M`, the baseline is invalid and Planning must select and ask the user to reconfirm a replacement baseline before estimating or re-estimating affected items.
 
-The user may adjust an individual item Size or select a replacement baseline; form the resulting re-estimation proposal and wait for the applicable Planning Result Confirmation before writing it.
+The user may adjust an individual item Size or select a replacement baseline; form the resulting re-estimation proposal and wait for the applicable Planning Result Confirmation before writing it. Treat an adjustment of the active baseline card Size as a replacement-baseline selection: do not write it as an individual adjustment; propose a replacement card at `M` and require explicit user reconfirmation before re-estimating affected items.
 
-Record each confirmed item Size in its card. Record Size confirmation, invalidation, and re-estimation in the card Change Log, but Size-only changes must not increment the card Version. Keep each Backlog lifecycle table at exactly `ID | Title | Version | Status | Priority`; do not add a Size column. Instead, maintain a separate Backlog `Size Summary` with exactly `ID | Size | Needs Re-estimation` for the applicable estimated cards.
+Record each confirmed item Size in its card. Record Size confirmation, invalidation, and re-estimation in the card Change Log, but Size-only changes must not increment the card Version. After a re-estimation is confirmed, set `Needs Size Re-estimation: no` and remove its stale invalidation reason in every affected card, Story Map entry, and Backlog `Size Summary` row in the same atomic result. Keep each Backlog lifecycle table at exactly `ID | Title | Version | Status | Priority`; do not add a Size column. Instead, maintain a separate Backlog `Size Summary` with exactly `ID | Size | Needs Re-estimation` for the applicable estimated cards.
 
 ## Story Map Contract
 
