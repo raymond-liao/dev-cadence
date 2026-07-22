@@ -38,7 +38,7 @@
 | Technical Solution | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `8b8b8c4260fbe8576561002871753f9fb981325dd532832773283628a77194b2` |
 | Implementation Plan | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `5d226a456a72663228fe6fff6994ec42869bf70aa7842694701e7ac2ec75299c` |
 | Development Implementation | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `0d0ebbb24fa3c938260b88183b8c49fa4275747ec8bcadb0e7010cf3a1fe928c` |
-| System Testing | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `36bf0e5b6b058caab5178875464f85932ac32fe9ffc0db73ad28cf690d100445` |
+| System Testing | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `fe8af8d2cc75af9534a5f7dd45c0bc8c2684f4d8269c70f1b2269c7ada36cd77` |
 
 ## Stage Table
 
@@ -48,7 +48,7 @@
 | Technical Solution | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `confirmed: user approved on 2026-07-22` | `29937c9` | Planning-owned relative Size approach confirmed. |
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `152f62d` | Final implementation SHA is `e54882f`; final review is approved. |
-| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `confirmed: fresh final verification on main at 2026-07-22T14:16:17+0800` | `pending` | Fresh post-merge candidate binding is ready; checkpoint pending. |
+| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `confirmed: fresh final verification on main at 2026-07-22T14:16:17+0800` | `fcb9d03` | Fresh post-merge candidate binding is ready. |
 | Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `superseded: prior acceptance bound to candidate branch` | `3a00ed7` | A new fixed-menu decision is required after post-merge verification. |
 
 ## Verification Summary

@@ -38,7 +38,7 @@
 | Technical Solution | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/02-technical-solution.md` | `d94013385392b62d036507e3c6ab8c6c70529e9cdf18891f82ea212b55846008` |
 | Implementation Plan | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/03-implementation-plan.md` | `1fc2e00ddb087fdb885d90ca7a48b161219f7a80159e1c391e6bd84f4fbf18da` |
 | Development Implementation | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/04-implementation-record.md` | `a7fa15730a0e23f6d7ac51d0bc0071ddf3931395ff2bcf45818d1821fb056e2a` |
-| System Testing | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `91a2a7b3051b9a9575cc8084f04eab1744c380e36954722eb9259679c7f03a6b` |
+| System Testing | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `691b4361c6cbe267bfc09380b054e78c075f2431bfa93e23aca9188f4b4a5054` |
 
 ## Stage Table
 
@@ -48,7 +48,7 @@
 | Technical Solution | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/02-technical-solution.md` | `confirmed: user approved on 2026-07-22` | `981c63c` | Shared validator approach confirmed. |
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `3a00ed7` | Remediation review is approved; Final Implementation SHA remains `a17b144`. |
-| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `confirmed: fresh final verification on main at 2026-07-22T14:16:17+0800` | `pending` | Fresh post-merge candidate binding is ready; checkpoint pending. |
+| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `confirmed: fresh final verification on main at 2026-07-22T14:16:17+0800` | `fcb9d03` | Fresh post-merge candidate binding is ready. |
 | Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md` | `superseded: prior acceptance bound to candidate branch` | `13b8522` | A new fixed-menu decision is required after post-merge verification. |
 
 ## Verification Summary
