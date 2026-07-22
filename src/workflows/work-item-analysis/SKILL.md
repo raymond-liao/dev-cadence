@@ -166,7 +166,7 @@ For every card Change Log, follow the shared Change Log contract.
 
 When Work Item Analysis finds a Version or visible-fact conflict, it must stop and require a user decision before continuing.
 
-Work Item Analysis must not modify Size, Story Map placement, Milestone membership, Iteration Plan content, or Backlog order. If the analysis shows those planning assets need updates, return to `work-item-planning`.
+Work Item Analysis must not modify Size, Story Map placement, Milestone membership, Iteration Plan content, Backlog Summary, the Size-estimation baseline, or Backlog order. When a substantive scope change makes the existing Size estimate stale, mark the card `Needs Size Re-estimation: yes` with a reason and return to `work-item-planning`.
 
 ## Downstream Boundaries
 

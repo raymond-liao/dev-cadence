@@ -873,6 +873,15 @@ assert_workflows "lifecycle Change Log idempotence" \
   'same.*lifecycle.*event.*must not.*duplicate.*Change Log' \
   'same.*lifecycle.*event.*must not.*duplicate.*Change Log' \
   'same.*lifecycle.*event.*must not.*duplicate.*Change Log'
+assert_workflows 'size re-estimation handoff' 'must not modify Size' 'must not modify Size' 'must not modify Size'
+assert_workflows "size re-estimation marker" \
+  'Needs Size Re-estimation: yes' \
+  'Needs Size Re-estimation: yes' \
+  'Needs Size Re-estimation: yes'
+assert_workflows "size re-estimation reason and planning handoff" \
+  'Needs Size Re-estimation.*reason.*return to `work-item-planning`' \
+  'Needs Size Re-estimation.*reason.*return to `work-item-planning`' \
+  'Needs Size Re-estimation.*reason.*return to `work-item-planning`'
 
 assert_workflows "whole-run no record update" \
   'do not update.*manifest.*Business Acceptance|do not update.*Business Acceptance.*manifest' \
