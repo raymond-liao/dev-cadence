@@ -49,7 +49,7 @@
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `152f62d` | Final implementation SHA is `e54882f`; final review is approved. |
 | System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `confirmed: fresh final verification on main at 2026-07-22T14:16:17+0800` | `fcb9d03` | Fresh post-merge candidate binding is ready. |
-| Business Acceptance | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-22T14:46:35+0800` | `784bdb2` | Post-merge fixed-menu Accept recorded. |
+| Business Acceptance | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-22T14:46:35+0800` | `3baeee4` | Post-merge fixed-menu Accept and cleanup record bound. |
 
 ## Verification Summary
 
