@@ -175,8 +175,8 @@ extract_record_field() {
 }
 
 validate_final_verification() {
-  local start_head start_branch start_final_sha start_snapshot start_state
-  local end_head end_branch end_final_sha end_snapshot end_state
+  local start_head start_branch start_final_sha start_snapshot start_state start_head_canonical
+  local end_head end_branch end_final_sha end_snapshot end_state end_head_canonical
   local current_branch current_snapshot current_state
 
   [[ -n "$implementation_record_path" && -f "$implementation_record_path" ]] ||
@@ -203,20 +203,25 @@ validate_final_verification() {
   [[ "$start_snapshot" =~ ^[0-9a-f]{40,64}$ ]] || fail "final verification has invalid start snapshot"
   [[ "$start_state" == "clean" || "$start_state" == "dirty" ]] || fail "final verification has invalid start snapshot"
   [[ "$end_state" == "clean" || "$end_state" == "dirty" ]] || fail "final verification has invalid end snapshot"
+  [[ "$start_head" =~ ^[0-9a-f]{40}$ && "$end_head" =~ ^[0-9a-f]{40}$ ]] ||
+    fail "final verification HEAD must be a full commit SHA"
   [[ "$start_head" == "$end_head" && "$start_branch" == "$end_branch" && \
     "$start_final_sha" == "$end_final_sha" && "$start_snapshot" == "$end_snapshot" && \
     "$start_state" == "$end_state" ]] || fail "final verification start and end snapshots differ"
 
   git -C "$repo_root_abs" rev-parse --verify "$end_final_sha^{commit}" >/dev/null 2>&1 ||
     fail "final verification references unknown final implementation SHA"
-  git -C "$repo_root_abs" rev-parse --verify "$end_head^{commit}" >/dev/null 2>&1 ||
+  start_head_canonical="$(git -C "$repo_root_abs" rev-parse --verify "$start_head^{commit}" 2>/dev/null)" ||
+    fail "final verification references unknown start HEAD"
+  end_head_canonical="$(git -C "$repo_root_abs" rev-parse --verify "$end_head^{commit}" 2>/dev/null)" ||
     fail "final verification references unknown end HEAD"
+  [[ "$start_head_canonical" == "$end_head_canonical" ]] || fail "final verification start and end snapshots differ"
   [[ "$end_final_sha" == "$final_sha_value" ]] || fail "final verification final implementation SHA changed"
   git -C "$repo_root_abs" merge-base --is-ancestor "$end_final_sha" HEAD ||
     fail "final verification final implementation SHA is not reachable"
-  git -C "$repo_root_abs" merge-base --is-ancestor "$end_head" HEAD ||
+  git -C "$repo_root_abs" merge-base --is-ancestor "$end_head_canonical" HEAD ||
     fail "final verification end HEAD is not reachable"
-  final_verification_end_head="$end_head"
+  final_verification_end_head="$end_head_canonical"
 
   current_branch="$(git -C "$repo_root_abs" branch --show-current)"
   [[ "$current_branch" == "$end_branch" ]] || fail "final verification branch changed"
@@ -228,7 +233,6 @@ validate_final_verification() {
   fi
   [[ "$current_snapshot" == "$end_snapshot" ]] || fail "final verification tracked snapshot changed"
   [[ "$current_state" == "$end_state" ]] || fail "final verification tracked state changed"
-
 }
 
 checkpoint_is_recorded() {

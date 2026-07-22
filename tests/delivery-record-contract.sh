@@ -452,6 +452,20 @@ echo tracked snapshot changed"
     invalid-final-verification-unapproved-code-commit)
       commit_paths "$repo" "candidate code after verification" "$source_path" >/dev/null
       ;;
+    invalid-final-verification-symbolic-head)
+      sed -i.bak \
+        -e 's/^- Verification Start HEAD:.*/- Verification Start HEAD: `HEAD`/' \
+        -e 's/^- Verification End HEAD:.*/- Verification End HEAD: `HEAD`/' \
+        "$repo/$verification_path"
+      rm "$repo/$verification_path.bak"
+      ;;
+    invalid-final-verification-branch-ref-head)
+      sed -i.bak \
+        -e "s#^- Verification Start HEAD:.*#- Verification Start HEAD: \`refs/heads/$verification_branch\`#" \
+        -e "s#^- Verification End HEAD:.*#- Verification End HEAD: \`refs/heads/$verification_branch\`#" \
+        "$repo/$verification_path"
+      rm "$repo/$verification_path.bak"
+      ;;
   esac
 
   printf '%s\n' "$run_dir"
@@ -645,5 +659,11 @@ expect_validator_failure "$tracked_snapshot_changed_run" --final-verification "F
 
 unapproved_code_commit_run="$(create_fixture "invalid-final-verification-unapproved-code-commit")"
 expect_validator_failure "$unapproved_code_commit_run" --final-verification "FAIL: final verification contains unapproved commit after verification"
+
+symbolic_head_run="$(create_fixture "invalid-final-verification-symbolic-head")"
+expect_validator_failure "$symbolic_head_run" --final-verification "FAIL: final verification HEAD must be a full commit SHA"
+
+branch_ref_head_run="$(create_fixture "invalid-final-verification-branch-ref-head")"
+expect_validator_failure "$branch_ref_head_run" --final-verification "FAIL: final verification HEAD must be a full commit SHA"
 
 printf 'Delivery record contract checks passed.\n'
