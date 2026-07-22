@@ -21,11 +21,11 @@
 
 ## Decision At
 
-`2026-07-22T14:03:06+0800`
+`2026-07-22T14:46:35+0800`
 
 ## Accepted Result
 
-接受最终验证的不可变候选身份、记录 checkpoint 的自登记处理，以及仅对 S-019/S-038 交付单元生命周期写回生效的受限快照排除规则。
+接受 `main` 上合并提交 `21cca69a3da93f790da9e22bc5f8696bc346cb21` 的新最终验证证据，以及最终验证的不可变候选身份、记录 checkpoint 的自登记处理和受限快照排除规则。
 
 ## Accepted Residual Risks
 
@@ -41,11 +41,11 @@ None.
 
 ## Lifecycle Writeback
 
-- Card status: `In Progress` until a Completion action integrates the candidate.
-- Delivery result/reference: `accepted`; current evidence is `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md`.
+- Card status: `Done` after the local integration and post-merge Business Acceptance.
+- Delivery result/reference: `integrated` by merge commit `21cca69a3da93f790da9e22bc5f8696bc346cb21`; current evidence is `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md`.
 - Backlog source section: `进行中`.
-- Backlog destination section: `进行中`.
+- Backlog destination section: `已完成`.
 
 ## Final Follow-Up Actions
 
-The user selected local merge and `21cca69a3da93f790da9e22bc5f8696bc346cb21` merged the candidate into `main`. That branch change superseded this acceptance's candidate-bound verification. No push, branch deletion, worktree cleanup, or lifecycle transition to Done occurred; a new Business Acceptance decision is required after the fresh System Testing evidence.
+The candidate was merged locally into `main` by `21cca69a3da93f790da9e22bc5f8696bc346cb21`. After fresh main-branch verification, the user selected Accept. The S-019 card and Backlog row moved to Done. No push or Pull Request was created. The owned original task worktree and branch were verified clean and merged before their authorized cleanup.

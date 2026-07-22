@@ -4,7 +4,7 @@
 
 - ID：`S-019`
 - Version：`3`
-- Status：`In Progress`
+- Status：`Done`
 - Priority：`P2`
 - Change Type：Feature
 
@@ -73,3 +73,4 @@
 | 3 | 2026-07-20T17:50:06+0800 | Raymond Liao <raymond-liao@outlook.com> | 确认严格的最终验证候选快照与 checkpoint 白名单，并将 Story 标记为 Ready。 | 用户确认 Git 原生二进制 diff 身份、非白名单 commit 失效和三 workflow 对称处理。 |
 | 3 | 2026-07-22T09:46:55+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 In Progress，并在 Backlog 中移入进行中。 | 用户明确启动 S-019 的 Feature Dev 交付；本次只改变执行状态。 |
 | 3 | 2026-07-22T14:03:06+0800 | Raymond Liao <raymond-liao@outlook.com> | 记录 Business Acceptance 为 accepted，保持 In Progress 等待 Completion。 | 用户选择固定选项 1；候选分支尚未集成，Status 和 Backlog 保持不变。 |
+| 3 | 2026-07-22T14:46:35+0800 | Raymond Liao <raymond-liao@outlook.com> | 在合并后复验的 Business Acceptance 通过后标记为 Done，并在 Backlog 中移入已完成。 | 候选已本地合入 main，新的精确分支验证已通过，用户再次选择固定选项 1。 |

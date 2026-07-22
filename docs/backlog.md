@@ -4,8 +4,6 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `In Progress` | `P2` |
-| `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `In Progress` | `P1` |
 
 ## 待处理
 
@@ -21,6 +19,8 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Done` | `P2` |
+| `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Done` | `P1` |
 | `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `4` | `Done` | `P1` |
 | `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `4` | `Done` | `P0` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `4` | `Done` | `P3` |

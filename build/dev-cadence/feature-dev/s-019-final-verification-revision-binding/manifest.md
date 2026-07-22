@@ -7,12 +7,12 @@
 - Repository: `dev-cadence`
 - Branch: `main`
 - Started At: `2026-07-22T09:49:47+0800`
-- Current Stage: 🔄 `in_progress` - System Testing
-- Overall Status: 🔄 `in_progress`
+- Current Stage: Completion
+- Overall Status: ✅ `integrated`
 - Work Item: [S-019 最终验证版本绑定](../../../../../docs/stories/S-019-final-verification-revision-binding.md)
 - Work Item Type: `Story`
 - Work Item Version: `3`
-- Work Item Status: `In Progress`
+- Work Item Status: `Done`
 
 ## Worktree Creation Evidence
 
@@ -49,23 +49,34 @@
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `3a00ed7` | Remediation review is approved; Final Implementation SHA remains `a17b144`. |
 | System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `confirmed: fresh final verification on main at 2026-07-22T14:16:17+0800` | `fcb9d03` | Fresh post-merge candidate binding is ready. |
-| Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md` | `superseded: prior acceptance bound to candidate branch` | `13b8522` | A new fixed-menu decision is required after post-merge verification. |
+| Business Acceptance | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-22T14:46:35+0800` | `pending` | Post-merge fixed-menu Accept recorded; checkpoint pending. |
 
 ## Verification Summary
 
-🟢 `ready` - full candidate checks and fresh final verification on `main` passed; Business Acceptance must be selected again.
+✅ `integrated` - fresh final verification on `main` passed, the user accepted the result, and merge commit `21cca69` is on `main`.
 
 ## Residual Risks
 
-- No blocking verification risk remains. The local merge invalidated the prior branch-bound acceptance, so a new Business Acceptance decision is required.
+- No blocking verification risk remains.
 
 ## Business Acceptance Decision
 
-- Previous Decision: ✅ `accepted` (`1. Accept`) - superseded by the local merge's branch change.
+- Decision: ✅ `accepted` (`1. Accept`) after post-merge System Testing.
 - Record: `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md`.
 
 ## Completion Revalidation
 
 - Previous Completion Action: local merge produced `21cca69a3da93f790da9e22bc5f8696bc346cb21` on `main`.
 - Invalidation: the prior final verification was bound to `codex/s019-s038-release-candidate`; the fresh System Testing record is bound to `main`.
-- Next Gate: Business Acceptance fixed menu must be selected again before lifecycle closure.
+- Result: the user selected the fixed Business Acceptance option `1. Accept` after fresh System Testing.
+
+## Final Integration Decision
+
+- Completion Action: `merge`
+- Result: `merged`
+- Base Branch Before Merge: `main` at `f25a76f5cd61fc1fcd9b411769613898eb68237f`
+- Delivery Candidate: `codex/s019-s038-release-candidate` at `7a091029e7992f8470226f5954577580b8359c16`
+- Merge Commit: `21cca69a3da93f790da9e22bc5f8696bc346cb21`
+- Post-Merge Verification: full source checks and final verification passed on `main`.
+- Worktree Cleanup: authorized owned S-019 task worktree and branch are pending removal after terminal validation.
+- Remote Integration: no push or Pull Request was created.
