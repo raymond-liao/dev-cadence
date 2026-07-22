@@ -591,11 +591,17 @@ create_in_progress_fixture() {
 - Boundary: current run only."
   solution_sha="$(commit_paths "$repo" "solution" "$solution_path")"
 
-  if [[ "$scenario" != "in-progress-missing-current-artifact" ]]; then
+  if [[ "$scenario" != "in-progress-missing-current-artifact" && "$scenario" != "blocked-missing-current-artifact" ]]; then
     write_file "$repo" "$plan_path" "# Implementation Plan
 
 - Status: \`in_progress\`
 - Method: test first."
+  fi
+  local plan_status="in_progress"
+  local plan_notes="plan in progress"
+  if [[ "$scenario" == "blocked-missing-current-artifact" ]]; then
+    plan_status="blocked"
+    plan_notes="waiting for recorded blocker evidence"
   fi
   write_file "$repo" "$run_dir_rel/manifest.md" "# Delivery Run Manifest
 
@@ -609,7 +615,7 @@ create_in_progress_fixture() {
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | \`confirmed\` | \`$requirements_path\` | \`confirmed\` | \`$requirements_sha\` | requirements captured |
 | Technical Solution | \`confirmed\` | \`$solution_path\` | \`confirmed\` | \`$solution_sha\` | solution captured |
-| Implementation Plan | \`in_progress\` | \`$plan_path\` | \`pending\` | \`pending\` | plan in progress |
+| Implementation Plan | \`$plan_status\` | \`$plan_path\` | \`pending\` | \`pending\` | $plan_notes |
 | Development Implementation | \`pending\` | \`$implementation_path\` | \`pending\` | \`pending\` | implementation pending |
 | System Testing | \`pending\` | \`$verification_path\` | \`pending\` | \`pending\` | testing pending |
 | Business Acceptance | \`pending\` | \`$acceptance_path\` | \`pending\` | \`pending\` | acceptance pending |"
@@ -623,6 +629,12 @@ run_validator "$in_progress_run" || fail "in-progress manifest should validate s
 in_progress_missing_artifact_run="$(create_in_progress_fixture "in-progress-missing-current-artifact")"
 if output="$(run_validator "$in_progress_missing_artifact_run" 2>&1)"; then
   fail "in-progress stage with a missing current artifact should fail validation"
+fi
+assert_contains "FAIL: artifact path does not exist" "$output"
+
+blocked_missing_artifact_run="$(create_in_progress_fixture "blocked-missing-current-artifact")"
+if output="$(run_validator "$blocked_missing_artifact_run" 2>&1)"; then
+  fail "blocked stage with a missing current artifact should fail validation"
 fi
 assert_contains "FAIL: artifact path does not exist" "$output"
 

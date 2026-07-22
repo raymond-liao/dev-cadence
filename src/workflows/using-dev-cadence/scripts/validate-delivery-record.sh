@@ -287,7 +287,7 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
 
   if [[ "$artifact_path" != "pending" && -f "$repo_root_abs/$artifact_path" ]]; then
     artifact_exists_in_stage_table=1
-  elif [[ "$status" == "confirmed" || "$status" == "in_progress" ]]; then
+  elif [[ "$status" != "pending" && "$status" != "skipped" ]]; then
     fail "artifact path does not exist: $artifact_path"
   fi
 
