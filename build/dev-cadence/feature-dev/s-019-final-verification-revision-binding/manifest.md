@@ -7,8 +7,8 @@
 - Repository: `dev-cadence`
 - Branch: `codex/s019-s038-release-candidate`
 - Started At: `2026-07-22T09:49:47+0800`
-- Current Stage: 🔄 `in_progress` - Business Acceptance
-- Overall Status: 🔄 `in_progress`
+- Current Stage: 🔄 `in_progress` - Completion
+- Overall Status: ✅ `accepted`
 - Work Item: [S-019 最终验证版本绑定](../../../../../docs/stories/S-019-final-verification-revision-binding.md)
 - Work Item Type: `Story`
 - Work Item Version: `3`
@@ -49,12 +49,17 @@
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `3a00ed7` | Remediation review is approved; Final Implementation SHA remains `a17b144`. |
 | System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `confirmed: verification decision ready` | `9940be4` | Final candidate binding passed with the declared delivery-unit lifecycle scope. |
-| Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md` | `pending` | `pending` | Requires a fixed user decision after System Testing. |
+| Business Acceptance | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-22T14:03:06+0800` | `13b8522` | User selected Accept; awaiting a separate Completion action. |
 
 ## Verification Summary
 
-✅ `ready` - full candidate checks and final verification passed; awaiting Business Acceptance.
+✅ `accepted` - full candidate checks and final verification passed; Business Acceptance selected Accept and Completion remains unselected.
 
 ## Residual Risks
 
-- No blocking verification risk remains. S-019 Business Acceptance is still required before Completion.
+- No blocking verification risk remains. Completion action is the remaining user decision.
+
+## Business Acceptance Decision
+
+- Decision: ✅ `accepted` (`1. Accept`).
+- Record: `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md`.
