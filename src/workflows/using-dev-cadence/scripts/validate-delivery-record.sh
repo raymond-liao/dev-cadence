@@ -203,7 +203,7 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
   esac
 done < <(
   awk -F'|' '
-    /^\| Stage \| Status \| Artifact \| User Confirmation \| Checkpoint Commit \| Notes \|$/ { in_table=1; next }
+    /^\| Stage \| Status \| Artifact( Path)? \| User Confirmation \| Checkpoint Commit \| Notes \|$/ { in_table=1; next }
     in_table && /^\| ---/ { next }
     in_table && /^\|/ {
       print $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7
@@ -215,9 +215,6 @@ done < <(
 
 [[ "$artifact_exists_in_stage_table" -eq 1 ]] || fail "manifest does not contain any stage artifact rows"
 
-[[ -n "$implementation_record_path" ]] || fail "implementation record artifact not found in manifest"
-[[ -f "$implementation_record_path" ]] || fail "implementation record does not exist: ${implementation_record_path#"$repo_root_abs/"}"
-
 if [[ "$terminal_mode" -eq 1 ]]; then
   case "$overall_status" in
     accepted|rejected|accepted_with_risk|integrated|abandoned)
@@ -227,23 +224,28 @@ if [[ "$terminal_mode" -eq 1 ]]; then
       ;;
   esac
   [[ -z "$terminal_stage_gap" ]] || fail "terminal manifest has non-terminal stage: $terminal_stage_gap"
+  [[ -n "$implementation_record_path" ]] || fail "implementation record artifact not found in manifest"
+  [[ -f "$implementation_record_path" ]] || fail "implementation record does not exist: ${implementation_record_path#"$repo_root_abs/"}"
   [[ -n "$verification_record_path" ]] || fail "terminal manifest is missing verification record artifact"
   [[ -f "$verification_record_path" ]] || fail "terminal verification record does not exist"
 fi
 
-final_sha_line="$(rg -n 'Final (Implementation|Repair|Refactor) SHA:' "$implementation_record_path" | head -n 1 || true)"
-[[ -n "$final_sha_line" ]] || fail "implementation record is missing final implementation SHA"
+if [[ -n "$implementation_record_path" ]]; then
+  [[ -f "$implementation_record_path" ]] || fail "implementation record does not exist: ${implementation_record_path#"$repo_root_abs/"}"
 
-final_sha_value="pending"
-if [[ "$final_sha_line" == *\`* ]]; then
-  final_sha_value="$(extract_backtick_value "$final_sha_line")"
-else
-  final_sha_value="$(trim "${final_sha_line#*:}")"
-fi
+  final_sha_line="$(rg -n 'Final (Implementation|Repair|Refactor) SHA:' "$implementation_record_path" | head -n 1 || true)"
+  [[ -n "$final_sha_line" ]] || fail "implementation record is missing final implementation SHA"
 
-[[ "$final_sha_value" != "pending" ]] || fail "implementation record has pending final implementation SHA"
+  final_sha_value="pending"
+  if [[ "$final_sha_line" == *\`* ]]; then
+    final_sha_value="$(extract_backtick_value "$final_sha_line")"
+  else
+    final_sha_value="$(trim "${final_sha_line#*:}")"
+  fi
 
-base_sha_line="$(rg -n 'Implementation Base SHA:' "$implementation_record_path" | head -n 1 || true)"
+  [[ "$final_sha_value" != "pending" ]] || fail "implementation record has pending final implementation SHA"
+
+  base_sha_line="$(rg -n 'Implementation Base SHA:' "$implementation_record_path" | head -n 1 || true)"
 
 if [[ "$final_sha_value" == "skipped: no tracked changes" ]]; then
   [[ -n "$base_sha_line" ]] || fail "skipped no-tracked-changes record is missing Implementation Base SHA"
@@ -314,16 +316,17 @@ if [[ "$terminal_mode" -eq 1 ]]; then
     review_value="$(extract_backtick_value "$review_value")"
   fi
   [[ -n "$review_value" && "$review_value" != "pending" ]] || fail "terminal implementation record is missing final review conclusion"
+fi
+fi
 
-  if [[ -n "$verification_record_path" && -f "$verification_record_path" ]]; then
-    test_conclusion="$(rg -n '^(?:- )?(Test Result|Verification Result):' "$verification_record_path" | head -n 1 || true)"
-    [[ -n "$test_conclusion" ]] || fail "terminal verification record is missing test conclusion"
-    test_value="$(trim "${test_conclusion##*:}")"
-    if [[ "$test_value" == *\`* ]]; then
-      test_value="$(extract_backtick_value "$test_value")"
-    fi
-    [[ -n "$test_value" && "$test_value" != "pending" ]] || fail "terminal verification record is missing test conclusion"
+if [[ "$terminal_mode" -eq 1 && -n "$verification_record_path" && -f "$verification_record_path" ]]; then
+  test_conclusion="$(rg -n '^(?:- )?(Test Result|Verification Result):' "$verification_record_path" | head -n 1 || true)"
+  [[ -n "$test_conclusion" ]] || fail "terminal verification record is missing test conclusion"
+  test_value="$(trim "${test_conclusion##*:}")"
+  if [[ "$test_value" == *\`* ]]; then
+    test_value="$(extract_backtick_value "$test_value")"
   fi
+  [[ -n "$test_value" && "$test_value" != "pending" ]] || fail "terminal verification record is missing test conclusion"
 fi
 
 if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then

@@ -412,6 +412,46 @@ run_expect_failure() {
   assert_contains "$expected_message" "$output"
 }
 
+run_validator() {
+  local run_dir="$1"
+
+  bash "$VALIDATOR" "$run_dir"
+}
+
+create_in_progress_fixture() {
+  local scenario="in-progress-run"
+  local repo
+  repo="$(init_repo "$scenario")"
+  local run_dir_rel="build/dev-cadence/feature-dev/${scenario}"
+  local run_dir="$repo/$run_dir_rel"
+  local requirements_path="$run_dir_rel/01-requirements-record.md"
+  local requirements_sha
+
+  write_file "$repo" "$requirements_path" "# Requirements Record
+
+- Status: \`confirmed\`
+- Scope: current run only."
+  requirements_sha="$(commit_paths "$repo" "requirements" "$requirements_path")"
+
+  write_file "$repo" "$run_dir_rel/manifest.md" "# Delivery Run Manifest
+
+- Workflow: \`feature-dev\`
+- Task Slug: \`$scenario\`
+- Overall Status: \`in_progress\`
+
+## Stage Table
+
+| Stage | Status | Artifact Path | User Confirmation | Checkpoint Commit | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Requirements | \`confirmed\` | \`$requirements_path\` | \`confirmed\` | \`$requirements_sha\` | requirements captured |
+| Implementation | \`pending\` | \`pending\` | \`pending\` | \`pending\` | implementation pending |"
+
+  printf '%s\n' "$run_dir"
+}
+
+in_progress_run="$(create_in_progress_fixture)"
+run_validator "$in_progress_run" || fail "in-progress manifest should validate structurally"
+
 valid_run="$(create_fixture "valid-run")"
 run_expect_success "$valid_run"
 
