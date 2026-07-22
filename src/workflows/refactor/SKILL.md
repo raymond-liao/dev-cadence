@@ -790,7 +790,7 @@ bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.s
   build/dev-cadence/refactor/<refactor-slug> --final-verification
 ```
 
-After `Verification End`, only first-parent commits recorded as manifest checkpoint commits that modify only the current run evidence directory are allowed before final revalidation. If the final verification candidate changes, return to Refactor Implementation, repeat implementation review, and repeat Regression Verification before Business Acceptance. If `Final Refactor SHA` is `skipped: no tracked changes`, do not invoke `--final-verification`; preserve the existing terminal validation path.
+If the post-test `--final-verification` call fails because the final verification candidate changes, return to Refactor Implementation, repeat implementation review, and repeat Regression Verification before Business Acceptance. For any other snapshot or evidence-chain failure, mark affected verification evidence as `superseded`, return to final verification in Regression Verification, and rerun `--final-verification` before Business Acceptance. After `Verification End`, only first-parent commits recorded as manifest checkpoint commits that modify only the current run evidence directory are allowed before final revalidation. If `Final Refactor SHA` is `skipped: no tracked changes`, do not invoke `--final-verification`; preserve the existing terminal validation path.
 
 ### Business Acceptance
 

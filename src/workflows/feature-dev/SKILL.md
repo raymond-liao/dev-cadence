@@ -776,7 +776,7 @@ bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.s
   build/dev-cadence/feature-dev/<feature-slug> --final-verification
 ```
 
-After `Verification End`, only first-parent commits recorded as manifest checkpoint commits that modify only the current run evidence directory are allowed before final revalidation. If the final verification candidate changes, return to Development Implementation, repeat implementation review, and repeat System Testing verification before Business Acceptance. If `Final Implementation SHA` is `skipped: no tracked changes`, do not invoke `--final-verification`; preserve the existing terminal validation path.
+If the post-test `--final-verification` call fails because the final verification candidate changes, return to Development Implementation, repeat implementation review, and repeat System Testing verification before Business Acceptance. For any other snapshot or evidence-chain failure, mark affected verification evidence as `superseded`, return to final verification in System Testing, and rerun `--final-verification` before Business Acceptance. After `Verification End`, only first-parent commits recorded as manifest checkpoint commits that modify only the current run evidence directory are allowed before final revalidation. If `Final Implementation SHA` is `skipped: no tracked changes`, do not invoke `--final-verification`; preserve the existing terminal validation path.
 
 ### Business Acceptance
 

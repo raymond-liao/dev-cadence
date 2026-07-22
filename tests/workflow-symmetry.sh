@@ -118,8 +118,12 @@ assert_final_verification_contract() {
     fail "missing $label pre-Completion final verification invocation"
   printf '%s\n' "$verification_section" | rg -q -- 'recorded.*manifest checkpoint.*current run evidence' ||
     fail "missing $label evidence checkpoint whitelist"
+  printf '%s\n' "$verification_section" | rg -q -- 'post-test.*--final-verification.*fails' ||
+    fail "missing $label immediate final verification failure handling"
   printf '%s\n' "$verification_section" | rg -q -- "candidate.*$implementation_stage.*review.*verification" ||
     fail "missing $label candidate-change implementation rollback"
+  printf '%s\n' "$verification_section" | rg -q -- 'other.*snapshot.*evidence-chain.*superseded.*final verification' ||
+    fail "missing $label snapshot and evidence-chain final verification rollback"
   printf '%s\n' "$verification_section" | rg -F -q -- 'skipped: no tracked changes' ||
     fail "missing $label no-tracked-changes final verification exception"
 }
