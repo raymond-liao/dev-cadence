@@ -38,7 +38,7 @@
 | Technical Solution | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `8b8b8c4260fbe8576561002871753f9fb981325dd532832773283628a77194b2` |
 | Implementation Plan | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `5d226a456a72663228fe6fff6994ec42869bf70aa7842694701e7ac2ec75299c` |
 | Development Implementation | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `0d0ebbb24fa3c938260b88183b8c49fa4275747ec8bcadb0e7010cf3a1fe928c` |
-| System Testing | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `741bfb62bdb275abd6c09c1952caf98ab21e98436b4f78dc3b95471a8e9c44a6` |
+| System Testing | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `36bf0e5b6b058caab5178875464f85932ac32fe9ffc0db73ad28cf690d100445` |
 
 ## Stage Table
 
@@ -48,7 +48,7 @@
 | Technical Solution | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `confirmed: user approved on 2026-07-22` | `29937c9` | Planning-owned relative Size approach confirmed. |
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `152f62d` | Final implementation SHA is `e54882f`; final review is approved. |
-| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `confirmed: verification decision ready` | `9940be4` | Shared release-candidate checks passed with an explicit verification result. |
+| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `confirmed: verification decision ready` | `dea15f5` | Final candidate binding passed with the declared delivery-unit lifecycle scope. |
 | Business Acceptance | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-22T13:45:39+0800` | `3a00ed7` | User selected Accept; awaiting a separate Completion action. |
 
 ## Verification Summary
