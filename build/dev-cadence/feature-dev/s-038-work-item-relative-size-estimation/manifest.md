@@ -27,14 +27,15 @@
 | Stage | Record Path | SHA-256 |
 | --- | --- | --- |
 | Requirements Confirmation | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/01-requirements.md` | `b55f1f9ffaee8506f03f8924af7987318cdabe4263222885b311680d5ff26bc2` |
+| Technical Solution | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `8b8b8c4260fbe8576561002871753f9fb981325dd532832773283628a77194b2` |
 
 ## Stage Table
 
 | Stage | Status | Artifact Path | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Requirements Confirmation | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/01-requirements.md` | `confirmed: user requested continued implementation on 2026-07-22` | `78a9f36` | Current card scope confirmed. |
-| Technical Solution | `in_progress` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `pending` | `pending` | Technical solution exploration in progress. |
-| Implementation Plan | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `pending` | `pending` | Begins only after Technical Solution. |
+| Technical Solution | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `confirmed: user approved on 2026-07-22` | `29937c9` | Planning-owned relative Size approach confirmed. |
+| Implementation Plan | `in_progress` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `pending` | `pending` | Test-first implementation plan in progress. |
 | Development Implementation | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `pending` | `pending` | No production changes before all pre-implementation confirmations. |
 | System Testing | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `pending` | `pending` | Pending implementation evidence. |
 | Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `pending` | `pending` | Requires a fixed user decision after System Testing. |
