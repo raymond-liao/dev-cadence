@@ -79,6 +79,51 @@ assert_workflows_not_match() {
   assert_not_match "refactor $label" "$refactor_pattern" "$REFACTOR_SKILL"
 }
 
+assert_final_verification_contract() {
+  local label="$1"
+  local path="$2"
+  local implementation_stage="$3"
+  local verification_stage="$4"
+  local verification_section
+  local completion_section
+
+  verification_section="$(awk -v heading="$verification_stage" '
+    $0 == heading { capture = 1 }
+    capture && $0 != heading && /^### / { exit }
+    capture { print }
+  ' "$path")"
+  completion_section="$(awk '
+    $0 == "## Completion" { capture = 1 }
+    capture { print }
+  ' "$path")"
+
+  for field in \
+    "Verification Start HEAD" \
+    "Verification Start Branch" \
+    "Verification Start FINAL_IMPLEMENTATION_SHA" \
+    "Verification Start Tracked Snapshot" \
+    "Verification Start Tracked State" \
+    "Verification End HEAD" \
+    "Verification End Branch" \
+    "Verification End FINAL_IMPLEMENTATION_SHA" \
+    "Verification End Tracked Snapshot" \
+    "Verification End Tracked State"; do
+    printf '%s\n' "$verification_section" | rg -F -q -- "$field" ||
+      fail "missing $label final verification field '$field'"
+  done
+
+  printf '%s\n' "$verification_section" | rg -q -- '--final-verification' ||
+    fail "missing $label post-testing final verification invocation"
+  printf '%s\n' "$completion_section" | rg -q -- '--final-verification' ||
+    fail "missing $label pre-Completion final verification invocation"
+  printf '%s\n' "$verification_section" | rg -q -- 'recorded.*manifest checkpoint.*current run evidence' ||
+    fail "missing $label evidence checkpoint whitelist"
+  printf '%s\n' "$verification_section" | rg -q -- "candidate.*$implementation_stage.*review.*verification" ||
+    fail "missing $label candidate-change implementation rollback"
+  printf '%s\n' "$verification_section" | rg -F -q -- 'skipped: no tracked changes' ||
+    fail "missing $label no-tracked-changes final verification exception"
+}
+
 assert_code_review_report_reference() {
   local label="$1"
   local path="$2"
@@ -730,6 +775,21 @@ assert_verification_decision_gate \
   "$REFACTOR_SKILL" \
   "### Regression Verification" \
   '(behavior drift|unmet required structural goal).*`not_ready`'
+assert_final_verification_contract \
+  "feature" \
+  "$FEATURE_SKILL" \
+  "Development Implementation" \
+  "### System Testing"
+assert_final_verification_contract \
+  "bug-fix" \
+  "$BUG_FIX_SKILL" \
+  "Repair Implementation" \
+  "### Regression Verification"
+assert_final_verification_contract \
+  "refactor" \
+  "$REFACTOR_SKILL" \
+  "Refactor Implementation" \
+  "### Regression Verification"
 assert_workflows "test cases table contract" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence" "Test Cases.*ID.*Scenario.*Type.*Execution.*Result.*Evidence"
 assert_workflows "coverage honesty rule" "Coverage must be honest" "Coverage must be honest" "Coverage must be honest"
 assert_workflow_evidence_contract \

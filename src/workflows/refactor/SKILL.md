@@ -779,6 +779,19 @@ The regression test report must use this structure:
 
 Coverage must be honest. If a protected behavior, contract, or structural goal is not verified by an executed test or check, list it as `skipped`, `not covered`, `partially met`, `not met`, or `accepted risk`; do not only mention it in `Residual Risks`.
 
+#### Final Verification Candidate Binding
+
+Immediately before final regression testing, record these fields in `05-regression-test-report.md`: `Verification Start HEAD`, `Verification Start Branch`, `Verification Start FINAL_IMPLEMENTATION_SHA`, `Verification Start Tracked Snapshot`, and `Verification Start Tracked State`. Immediately after the final test commands finish, record the corresponding `Verification End HEAD`, `Verification End Branch`, `Verification End FINAL_IMPLEMENTATION_SHA`, `Verification End Tracked Snapshot`, and `Verification End Tracked State` fields. Use full immutable commit SHAs for both HEAD fields, the current branch name, the final implementation SHA from `04-refactor-record.md`, the SHA-256 object ID of the binary tracked diff from that final implementation SHA while excluding only `build/dev-cadence/refactor/<refactor-slug>/`, and `clean` or `dirty` for tracked state. Start and end values must be identical.
+
+After final testing and before Business Acceptance, run:
+
+```bash
+bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh \
+  build/dev-cadence/refactor/<refactor-slug> --final-verification
+```
+
+After `Verification End`, only first-parent commits recorded as manifest checkpoint commits that modify only the current run evidence directory are allowed before final revalidation. If the final verification candidate changes, return to Refactor Implementation, repeat implementation review, and repeat Regression Verification before Business Acceptance. If `Final Refactor SHA` is `skipped: no tracked changes`, do not invoke `--final-verification`; preserve the existing terminal validation path.
+
 ### Business Acceptance
 
 Superpowers does not provide a dedicated business acceptance skill. Use this Dev Cadence gate:
@@ -841,6 +854,13 @@ When the run records remain after Completion, update `Final Follow-Up Actions` w
 ## Completion
 
 After Business Acceptance is `accepted` or `accepted_with_risk`, invoke normal Completion. For `accepted_with_risk`, preserve the original decision and `Accepted Risk Register` through integration:
+
+Before entering the finishing flow, rerun the final-verification validator. If it fails, invalidate Business Acceptance evidence as `superseded`, return to Refactor Implementation, repeat implementation review and Regression Verification, and require Business Acceptance again. When `Final Refactor SHA` is `skipped: no tracked changes`, do not invoke `--final-verification`; preserve the existing terminal validation path.
+
+```bash
+bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh \
+  build/dev-cadence/refactor/<refactor-slug> --final-verification
+```
 
 The Completion menu must be presented to the user with every option actually supported by the finishing flow and its result. Delegated continuation must not select a Completion action.
 
