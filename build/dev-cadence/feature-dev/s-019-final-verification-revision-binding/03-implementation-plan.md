@@ -38,7 +38,7 @@
 - Consumes: manifest Stage Table。
 - Produces: 默认模式可验证 in-progress run，且同时接受 `Artifact` 与 `Artifact Path`。
 
-- [ ] **Step 1: 写出失败的 in-progress fixture**
+- [x] **Step 1: 写出失败的 in-progress fixture**
 
 在 `tests/delivery-record-contract.sh` 创建仅含 Requirements artifact、表头为 `Artifact Path`、无 implementation record 的 run，并断言：
 
@@ -46,13 +46,13 @@
 run_validator "$in_progress_run" || fail "in-progress manifest should validate structurally"
 ```
 
-- [ ] **Step 2: 运行 RED 检查**
+- [x] **Step 2: 运行 RED 检查**
 
 Run: `bash tests/delivery-record-contract.sh`
 
 Expected: 失败，原因是 validator 不识别 `Artifact Path` 或错误要求 implementation record。
 
-- [ ] **Step 3: 最小实现**
+- [x] **Step 3: 最小实现**
 
 修改 validator 的表头匹配和实施记录门槛：
 
@@ -62,13 +62,13 @@ Expected: 失败，原因是 validator 不识别 `Artifact Path` 或错误要求
 
 只有当 implementation artifact path 不是 `pending` 时才执行 Final Implementation SHA 与 changed-files 校验；`--terminal` 仍要求实施和系统测试记录。
 
-- [ ] **Step 4: 运行 GREEN 检查**
+- [x] **Step 4: 运行 GREEN 检查**
 
 Run: `bash tests/delivery-record-contract.sh`
 
 Expected: 新 in-progress fixture 通过，既有 terminal fixture 继续通过。
 
-- [ ] **Step 5: 提交单元**
+- [x] **Step 5: 提交单元**
 
 Run: `git add tests/delivery-record-contract.sh src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh && git commit -m "fix(flow): validate in-progress delivery records"`
 
@@ -82,7 +82,7 @@ Run: `git add tests/delivery-record-contract.sh src/workflows/using-dev-cadence/
 - Consumes: 测试报告中的开始/结束 `HEAD`、branch、`FINAL_IMPLEMENTATION_SHA`、binary diff object ID 与 clean/dirty 状态。
 - Produces: 最终验证模式和 `--terminal` 的明确通过/失败结果。
 
-- [ ] **Step 1: 写出失败场景**
+- [x] **Step 1: 写出失败场景**
 
 为缺失快照、开始/结束不一致、final SHA 不可达、branch 变化、tracked diff 变化、允许证据 checkpoint 和禁止候选代码提交分别添加 fixture，例如：
 
@@ -90,13 +90,13 @@ Run: `git add tests/delivery-record-contract.sh src/workflows/using-dev-cadence/
 expect_validator_failure "$run" --final-verification "tracked snapshot changed"
 ```
 
-- [ ] **Step 2: 运行 RED 检查**
+- [x] **Step 2: 运行 RED 检查**
 
 Run: `bash tests/delivery-record-contract.sh`
 
 Expected: 新失效场景未被拒绝或新模式尚不存在。
 
-- [ ] **Step 3: 最小实现**
+- [x] **Step 3: 最小实现**
 
 增加 `--final-verification` 模式。用以下稳定输入计算身份：
 
@@ -106,13 +106,13 @@ git diff --binary "$FINAL_IMPLEMENTATION_SHA" -- . ":(exclude)$RUN_DIR" | git ha
 
 验证 final SHA 可达、开始/结束字段一致、当前重算身份一致；遍历验证结束后 first-parent 提交，只接受 manifest 记录且 diff 限于 `$RUN_DIR/` 的 checkpoint。
 
-- [ ] **Step 4: 运行 GREEN 检查**
+- [x] **Step 4: 运行 GREEN 检查**
 
 Run: `bash tests/delivery-record-contract.sh`
 
 Expected: 所有允许/拒绝 fixture 与错误信息一致。
 
-- [ ] **Step 5: 提交单元**
+- [x] **Step 5: 提交单元**
 
 Run: `git add tests/delivery-record-contract.sh src/workflows/using-dev-cadence/scripts/validate-delivery-record.sh && git commit -m "feat(flow): bind final verification to candidate identity"`
 
@@ -128,17 +128,17 @@ Run: `git add tests/delivery-record-contract.sh src/workflows/using-dev-cadence/
 - Consumes: validator `--final-verification`。
 - Produces: 三条 workflow 的相同记录字段、重验点和回退边界。
 
-- [ ] **Step 1: 写出失败的对称性断言**
+- [x] **Step 1: 写出失败的对称性断言**
 
 在 `tests/workflow-symmetry.sh` 断言三条 workflow 都包含：开始/结束候选身份字段、Business Acceptance 与 Completion 前的最终验证调用、候选变化回实施并重新 review/验证、证据 checkpoint 白名单。
 
-- [ ] **Step 2: 运行 RED 检查**
+- [x] **Step 2: 运行 RED 检查**
 
 Run: `bash tests/workflow-symmetry.sh`
 
 Expected: 缺少新字段和调用的断言失败。
 
-- [ ] **Step 3: 最小规则修改**
+- [x] **Step 3: 最小规则修改**
 
 在各自 System/Regression Testing、Business Acceptance、Completion 和终态检查清单中写入同义的记录、调用和回退规则；调用：
 
@@ -147,13 +147,13 @@ bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.s
   build/dev-cadence/<workflow>/<slug> --final-verification
 ```
 
-- [ ] **Step 4: 运行 GREEN 检查**
+- [x] **Step 4: 运行 GREEN 检查**
 
 Run: `bash tests/workflow-symmetry.sh && bash tests/delivery-record-contract.sh`
 
 Expected: 对称性和 validator 契约均通过。
 
-- [ ] **Step 5: 提交单元**
+- [x] **Step 5: 提交单元**
 
 Run: `git add src/workflows/feature-dev/SKILL.md src/workflows/bug-fix/SKILL.md src/workflows/refactor/SKILL.md tests/workflow-symmetry.sh && git commit -m "feat(flow): enforce final verification freshness"`
 
@@ -167,23 +167,23 @@ Run: `git add src/workflows/feature-dev/SKILL.md src/workflows/bug-fix/SKILL.md 
 - Consumes: 已通过的 source 契约测试。
 - Produces: 含 S-019 行为的可安装包。
 
-- [ ] **Step 1: 评估版本单元**
+- [x] **Step 1: 评估版本单元**
 
 将 S-019 与并行 S-038 作为同一可安装包发布单元；在合并顺序确定后只更新一次根 `version` 到下一个 minor 版本，并在两个运行记录中说明该共享版本决定。
 
-- [ ] **Step 2: 构建与验证**
+- [x] **Step 2: 构建与验证**
 
 Run: `bash scripts/build.sh && bash scripts/check-all.sh && bash scripts/check-whitespace.sh`
 
 Expected: source 与 dist 同步，所有契约检查通过。
 
-- [ ] **Step 3: 检查关键规则同步**
+- [x] **Step 3: 检查关键规则同步**
 
 Run: `rg --no-ignore 'final verification|FINAL_IMPLEMENTATION_SHA|Artifact Path' src dist/.dev-cadence`
 
 Expected: source 与 dist 均包含最终规则。
 
-- [ ] **Step 4: 提交单元**
+- [x] **Step 4: 提交单元**
 
 Run: `git add version && git commit -m "feat(release): publish workflow verification updates"`
 
