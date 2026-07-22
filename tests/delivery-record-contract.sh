@@ -91,8 +91,9 @@ create_fixture() {
   local acceptance_path="$run_dir_rel/06-business-acceptance-record.md"
   local manual_recovery_path="$run_dir_rel/07-manual-recovery-record.md"
   local source_path="src/example.sh"
-  local diag_sha solution_sha plan_sha implementation_sha implementation_record_sha verification_sha acceptance_sha borrowed_acceptance_sha
+  local diag_sha solution_sha plan_sha implementation_sha implementation_record_sha verification_sha acceptance_sha borrowed_acceptance_sha unreachable_final_sha
   local implementation_record_text verification_text artifact_for_manifest checkpoint_for_manifest base_sha base_line
+  local verification_head verification_branch verification_snapshot verification_state
 
   write_file "$repo" "$diag_path" "# Problem Diagnosis
 
@@ -225,15 +226,49 @@ echo changed after skipped"
   write_file "$repo" "$implementation_path" "$implementation_record_text"
   implementation_record_sha="$(commit_paths "$repo" "implementation record" "$implementation_path")"
 
+  if [[ "$scenario" == "invalid-final-verification-unapproved-code-commit" ]]; then
+    write_file "$repo" "$source_path" "#!/usr/bin/env bash
+echo candidate changed after verification"
+  fi
+
+  verification_head="$(git -C "$repo" rev-parse HEAD)"
+  verification_branch="$(git -C "$repo" branch --show-current)"
+  verification_snapshot="$(git -C "$repo" diff --binary "$implementation_sha" -- . ":(exclude)$run_dir_rel" | git -C "$repo" hash-object --stdin)"
+  if git -C "$repo" diff --quiet "$implementation_sha" -- . ":(exclude)$run_dir_rel"; then
+    verification_state="clean"
+  else
+    verification_state="dirty"
+  fi
+
   verification_text="# Regression Test Report
 
 - Test Result: \`passed\`
-- Command: \`bash tests/delivery-record-contract.sh\`"
+- Command: \`bash tests/delivery-record-contract.sh\`
+- Verification Start HEAD: \`$verification_head\`
+- Verification Start Branch: \`$verification_branch\`
+- Verification Start FINAL_IMPLEMENTATION_SHA: \`$implementation_sha\`
+- Verification Start Tracked Snapshot: \`$verification_snapshot\`
+- Verification Start Tracked State: \`$verification_state\`
+- Verification End HEAD: \`$verification_head\`
+- Verification End Branch: \`$verification_branch\`
+- Verification End FINAL_IMPLEMENTATION_SHA: \`$implementation_sha\`
+- Verification End Tracked Snapshot: \`$verification_snapshot\`
+- Verification End Tracked State: \`$verification_state\`"
   if [[ "$scenario" == "invalid-missing-test-result" ]]; then
     verification_text="# Regression Test Report
 
 - Test Result: pending
-- Command: \`bash tests/delivery-record-contract.sh\`"
+- Command: \`bash tests/delivery-record-contract.sh\`
+- Verification Start HEAD: \`$verification_head\`
+- Verification Start Branch: \`$verification_branch\`
+- Verification Start FINAL_IMPLEMENTATION_SHA: \`$implementation_sha\`
+- Verification Start Tracked Snapshot: \`$verification_snapshot\`
+- Verification Start Tracked State: \`$verification_state\`
+- Verification End HEAD: \`$verification_head\`
+- Verification End Branch: \`$verification_branch\`
+- Verification End FINAL_IMPLEMENTATION_SHA: \`$implementation_sha\`
+- Verification End Tracked Snapshot: \`$verification_snapshot\`
+- Verification End Tracked State: \`$verification_state\`"
   fi
   write_file "$repo" "$verification_path" "$verification_text"
   verification_sha="$(commit_paths "$repo" "verification" "$verification_path")"
@@ -384,6 +419,39 @@ echo changed after skipped"
       sed -i.bak 's/| Business Acceptance | `confirmed` |/| Business Acceptance | `pending` |/; s/| `confirmed` | `[^`]*` | acceptance captured |$/| pending | pending | acceptance captured |/' "$repo/$run_dir_rel/manifest.md"
       rm "$repo/$run_dir_rel/manifest.md.bak"
       ;;
+    invalid-final-verification-missing-snapshot)
+      sed -i.bak '/^- Verification Start Tracked Snapshot:/d' "$repo/$verification_path"
+      rm "$repo/$verification_path.bak"
+      ;;
+    invalid-final-verification-inconsistent-snapshot)
+      sed -i.bak 's/^- Verification End Branch:.*/- Verification End Branch: `other-branch`/' "$repo/$verification_path"
+      rm "$repo/$verification_path.bak"
+      ;;
+    invalid-final-verification-unreachable-final-sha)
+      git -C "$repo" branch snapshot-side "$implementation_record_sha"
+      git -C "$repo" checkout -q snapshot-side
+      git -C "$repo" commit -q --allow-empty -m "unreachable final"
+      unreachable_final_sha="$(git -C "$repo" rev-parse --short HEAD)"
+      git -C "$repo" checkout -q "$verification_branch"
+      sed -i.bak "s/^- Final Implementation SHA:.*/- Final Implementation SHA: \`$unreachable_final_sha\`/" \
+        "$repo/$implementation_path"
+      rm "$repo/$implementation_path.bak"
+      sed -i.bak \
+        -e "s/^- Verification Start FINAL_IMPLEMENTATION_SHA:.*/- Verification Start FINAL_IMPLEMENTATION_SHA: \`$unreachable_final_sha\`/" \
+        -e "s/^- Verification End FINAL_IMPLEMENTATION_SHA:.*/- Verification End FINAL_IMPLEMENTATION_SHA: \`$unreachable_final_sha\`/" \
+        "$repo/$verification_path"
+      rm "$repo/$verification_path.bak"
+      ;;
+    invalid-final-verification-branch-changed)
+      git -C "$repo" checkout -q -b changed-branch
+      ;;
+    invalid-final-verification-tracked-snapshot-changed)
+      write_file "$repo" "$source_path" "#!/usr/bin/env bash
+echo tracked snapshot changed"
+      ;;
+    invalid-final-verification-unapproved-code-commit)
+      commit_paths "$repo" "candidate code after verification" "$source_path" >/dev/null
+      ;;
   esac
 
   printf '%s\n' "$run_dir"
@@ -407,6 +475,31 @@ run_expect_failure() {
 
   if output="$(bash "$VALIDATOR" "$run_dir" --terminal 2>&1)"; then
     fail "expected validator failure for ${run_dir##*/}, got success: $output"
+  fi
+
+  assert_contains "$expected_message" "$output"
+}
+
+expect_validator_success() {
+  local run_dir="$1"
+  local mode="$2"
+  local output
+
+  if ! output="$(bash "$VALIDATOR" "$run_dir" "$mode" 2>&1)"; then
+    fail "expected validator success for ${run_dir##*/} ($mode), got: $output"
+  fi
+
+  assert_contains "Delivery record validation passed:" "$output"
+}
+
+expect_validator_failure() {
+  local run_dir="$1"
+  local mode="$2"
+  local expected_message="$3"
+  local output
+
+  if output="$(bash "$VALIDATOR" "$run_dir" "$mode" 2>&1)"; then
+    fail "expected validator failure for ${run_dir##*/} ($mode), got success: $output"
   fi
 
   assert_contains "$expected_message" "$output"
@@ -454,6 +547,7 @@ run_validator "$in_progress_run" || fail "in-progress manifest should validate s
 
 valid_run="$(create_fixture "valid-run")"
 run_expect_success "$valid_run"
+expect_validator_success "$valid_run" --final-verification
 
 valid_no_tracked_changes_run="$(create_fixture "valid-no-tracked-changes")"
 run_expect_success "$valid_no_tracked_changes_run"
@@ -532,5 +626,24 @@ run_expect_failure "$invalid_skipped_pending_run" "FAIL: stage 'Business Accepta
 
 invalid_abandoned_pending_run="$(create_fixture "invalid-abandoned-pending")"
 run_expect_failure "$invalid_abandoned_pending_run" "FAIL: terminal manifest has non-terminal stage: Business Acceptance (pending)"
+
+missing_snapshot_run="$(create_fixture "invalid-final-verification-missing-snapshot")"
+expect_validator_failure "$missing_snapshot_run" --final-verification "FAIL: final verification record is missing Verification Start Tracked Snapshot"
+run_expect_failure "$missing_snapshot_run" "FAIL: final verification record is missing Verification Start Tracked Snapshot"
+
+inconsistent_snapshot_run="$(create_fixture "invalid-final-verification-inconsistent-snapshot")"
+expect_validator_failure "$inconsistent_snapshot_run" --final-verification "FAIL: final verification start and end snapshots differ"
+
+unreachable_final_sha_run="$(create_fixture "invalid-final-verification-unreachable-final-sha")"
+expect_validator_failure "$unreachable_final_sha_run" --final-verification "FAIL: final verification final implementation SHA is not reachable"
+
+branch_changed_run="$(create_fixture "invalid-final-verification-branch-changed")"
+expect_validator_failure "$branch_changed_run" --final-verification "FAIL: final verification branch changed"
+
+tracked_snapshot_changed_run="$(create_fixture "invalid-final-verification-tracked-snapshot-changed")"
+expect_validator_failure "$tracked_snapshot_changed_run" --final-verification "FAIL: final verification tracked snapshot changed"
+
+unapproved_code_commit_run="$(create_fixture "invalid-final-verification-unapproved-code-commit")"
+expect_validator_failure "$unapproved_code_commit_run" --final-verification "FAIL: final verification contains unapproved commit after verification"
 
 printf 'Delivery record contract checks passed.\n'

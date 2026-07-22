@@ -90,19 +90,30 @@ business_acceptance_path=""
 business_acceptance_status=""
 business_acceptance_checkpoint=""
 terminal_mode=0
+final_verification_mode=0
 terminal_stage_gap=""
+final_sha_value=""
+recorded_checkpoints=""
+final_verification_end_head=""
 
 if [[ $# -lt 1 || $# -gt 2 ]]; then
-  fail "usage: validate-delivery-record.sh RUN_DIR [--terminal]"
+  fail "usage: validate-delivery-record.sh RUN_DIR [--terminal|--final-verification]"
 fi
 
 run_dir="$1"
 
 if [[ $# -eq 2 ]]; then
-  if [[ "$2" != "--terminal" ]]; then
-    fail "usage: validate-delivery-record.sh RUN_DIR [--terminal]"
-  fi
-  terminal_mode=1
+  case "$2" in
+    --terminal)
+      terminal_mode=1
+      ;;
+    --final-verification)
+      final_verification_mode=1
+      ;;
+    *)
+      fail "usage: validate-delivery-record.sh RUN_DIR [--terminal|--final-verification]"
+      ;;
+  esac
 fi
 
 manifest_path="$run_dir/manifest.md"
@@ -129,6 +140,7 @@ case "$run_dir_abs" in
     fail "run directory is outside the repository root"
     ;;
 esac
+run_dir_rel="${run_dir_abs#"$repo_root_abs/"}"
 
 valid_status() {
   case "$1" in
@@ -144,6 +156,91 @@ valid_status() {
 checkpoint_is_allowed() {
   local checkpoint="$1"
   [[ "$checkpoint" =~ ^[0-9a-f]{7,40}$ ]] || [[ "$checkpoint" == skipped:* ]] || [[ "$checkpoint" == "skipped" ]]
+}
+
+extract_record_field() {
+  local record_path="$1"
+  local field="$2"
+  local field_line
+  local field_value
+
+  field_line="$(rg -n "^- ${field}:" "$record_path" | head -n 1 || true)"
+  [[ -n "$field_line" ]] || fail "final verification record is missing ${field}"
+  field_value="$(trim "${field_line#*:}")"
+  if [[ "$field_value" == *\`* ]]; then
+    extract_backtick_value "$field_value"
+  else
+    printf '%s\n' "$field_value"
+  fi
+}
+
+validate_final_verification() {
+  local start_head start_branch start_final_sha start_snapshot start_state
+  local end_head end_branch end_final_sha end_snapshot end_state
+  local current_branch current_snapshot current_state
+
+  [[ -n "$implementation_record_path" && -f "$implementation_record_path" ]] ||
+    fail "final verification requires implementation record evidence"
+  [[ -n "$verification_record_path" && -f "$verification_record_path" ]] ||
+    fail "final verification requires verification record evidence"
+  [[ "$final_sha_value" != "skipped: no tracked changes" ]] ||
+    fail "final verification requires a committed final implementation SHA"
+
+  start_head="$(extract_record_field "$verification_record_path" "Verification Start HEAD")"
+  start_branch="$(extract_record_field "$verification_record_path" "Verification Start Branch")"
+  start_final_sha="$(extract_record_field "$verification_record_path" "Verification Start FINAL_IMPLEMENTATION_SHA")"
+  start_snapshot="$(extract_record_field "$verification_record_path" "Verification Start Tracked Snapshot")"
+  start_state="$(extract_record_field "$verification_record_path" "Verification Start Tracked State")"
+  end_head="$(extract_record_field "$verification_record_path" "Verification End HEAD")"
+  end_branch="$(extract_record_field "$verification_record_path" "Verification End Branch")"
+  end_final_sha="$(extract_record_field "$verification_record_path" "Verification End FINAL_IMPLEMENTATION_SHA")"
+  end_snapshot="$(extract_record_field "$verification_record_path" "Verification End Tracked Snapshot")"
+  end_state="$(extract_record_field "$verification_record_path" "Verification End Tracked State")"
+
+  [[ -n "$start_head" && "$start_head" != "pending" ]] || fail "final verification has invalid start snapshot"
+  [[ -n "$start_branch" && "$start_branch" != "pending" ]] || fail "final verification has invalid start snapshot"
+  [[ -n "$start_final_sha" && "$start_final_sha" != "pending" ]] || fail "final verification has invalid start snapshot"
+  [[ "$start_snapshot" =~ ^[0-9a-f]{40,64}$ ]] || fail "final verification has invalid start snapshot"
+  [[ "$start_state" == "clean" || "$start_state" == "dirty" ]] || fail "final verification has invalid start snapshot"
+  [[ "$end_state" == "clean" || "$end_state" == "dirty" ]] || fail "final verification has invalid end snapshot"
+  [[ "$start_head" == "$end_head" && "$start_branch" == "$end_branch" && \
+    "$start_final_sha" == "$end_final_sha" && "$start_snapshot" == "$end_snapshot" && \
+    "$start_state" == "$end_state" ]] || fail "final verification start and end snapshots differ"
+
+  git -C "$repo_root_abs" rev-parse --verify "$end_final_sha^{commit}" >/dev/null 2>&1 ||
+    fail "final verification references unknown final implementation SHA"
+  git -C "$repo_root_abs" rev-parse --verify "$end_head^{commit}" >/dev/null 2>&1 ||
+    fail "final verification references unknown end HEAD"
+  [[ "$end_final_sha" == "$final_sha_value" ]] || fail "final verification final implementation SHA changed"
+  git -C "$repo_root_abs" merge-base --is-ancestor "$end_final_sha" HEAD ||
+    fail "final verification final implementation SHA is not reachable"
+  git -C "$repo_root_abs" merge-base --is-ancestor "$end_head" HEAD ||
+    fail "final verification end HEAD is not reachable"
+  final_verification_end_head="$end_head"
+
+  current_branch="$(git -C "$repo_root_abs" branch --show-current)"
+  [[ "$current_branch" == "$end_branch" ]] || fail "final verification branch changed"
+  current_snapshot="$(git -C "$repo_root_abs" diff --binary "$end_final_sha" -- . ":(exclude)$run_dir_rel" | git -C "$repo_root_abs" hash-object --stdin)"
+  if git -C "$repo_root_abs" diff --quiet "$end_final_sha" -- . ":(exclude)$run_dir_rel"; then
+    current_state="clean"
+  else
+    current_state="dirty"
+  fi
+  [[ "$current_snapshot" == "$end_snapshot" ]] || fail "final verification tracked snapshot changed"
+  [[ "$current_state" == "$end_state" ]] || fail "final verification tracked state changed"
+
+}
+
+checkpoint_is_recorded() {
+  local commit="$1"
+  local checkpoint full_checkpoint
+
+  while IFS= read -r checkpoint; do
+    [[ -z "$checkpoint" ]] && continue
+    full_checkpoint="$(git -C "$repo_root_abs" rev-parse --verify "$checkpoint^{commit}" 2>/dev/null || true)"
+    [[ "$full_checkpoint" == "$(git -C "$repo_root_abs" rev-parse "$commit")" ]] && return 0
+  done <<<"$recorded_checkpoints"
+  return 1
 }
 
 while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_checkpoint _raw_notes; do
@@ -185,6 +282,7 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
   if [[ "$checkpoint_value" =~ ^[0-9a-f]{7,40}$ ]]; then
     git -C "$repo_root_abs" cat-file -e "$checkpoint_value:$artifact_path" 2>/dev/null ||
       fail "checkpoint tree is missing stage artifact: $checkpoint_value $artifact_path"
+    recorded_checkpoints+=$'\n'"$checkpoint_value"
   fi
 
   if [[ "$stage" == "Business Acceptance" ]]; then
@@ -258,7 +356,6 @@ if [[ "$final_sha_value" == "skipped: no tracked changes" ]]; then
   git -C "$repo_root_abs" rev-parse --verify "$base_sha_value^{commit}" >/dev/null 2>&1 ||
     fail "skipped no-tracked-changes record references unknown Implementation Base SHA '$base_sha_value'"
 
-  run_dir_rel="${run_dir_abs#"$repo_root_abs/"}"
   changed_paths="$(git -C "$repo_root_abs" diff --name-only "$base_sha_value..HEAD")"
   if [[ -n "$changed_paths" ]]; then
     while IFS= read -r changed_path; do
@@ -290,7 +387,6 @@ else
   declared_changed_paths="$(printf '%s\n' "$changed_files_section" | sed -n 's/^[[:space:]]*-[[:space:]]*`\([^`]*\)`[[:space:]]*$/\1/p' | LC_ALL=C sort -u)"
   [[ -n "$declared_changed_paths" ]] || fail "implementation record has no concrete Changed Files paths"
 
-  run_dir_rel="${run_dir_abs#"$repo_root_abs/"}"
   if [[ "$base_sha_line" == *\`* ]]; then
     base_sha_value="$(extract_backtick_value "$base_sha_line")"
   else
@@ -336,6 +432,25 @@ if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then
     "$business_acceptance_status" \
     "$business_acceptance_checkpoint" \
     "$run_dir_abs/07-manual-recovery-record.md"
+fi
+
+if [[ "$final_verification_mode" -eq 1 || ( "$terminal_mode" -eq 1 && "$final_sha_value" != "skipped: no tracked changes" ) ]]; then
+  validate_final_verification
+
+  while IFS= read -r commit; do
+    [[ -z "$commit" ]] && continue
+    checkpoint_is_recorded "$commit" || fail "final verification contains unapproved commit after verification"
+    while IFS= read -r changed_path; do
+      [[ -z "$changed_path" ]] && continue
+      case "$changed_path" in
+        "$run_dir_rel"/*)
+          ;;
+        *)
+          fail "final verification checkpoint changes outside run directory"
+          ;;
+      esac
+    done < <(git -C "$repo_root_abs" diff-tree --no-commit-id --name-only -r "$commit")
+  done < <(git -C "$repo_root_abs" rev-list --first-parent "$final_verification_end_head..HEAD")
 fi
 
 printf 'Delivery record validation passed: %s\n' "$run_dir"
