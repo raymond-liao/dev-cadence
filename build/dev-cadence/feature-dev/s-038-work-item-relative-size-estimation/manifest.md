@@ -22,12 +22,18 @@
 - Creation HEAD SHA: `f25a76f5cd61fc1fcd9b411769613898eb68237f`
 - Evidence Source: `git worktree list --porcelain`
 
+## Confirmed Stage Record Identities
+
+| Stage | Record Path | SHA-256 |
+| --- | --- | --- |
+| Requirements Confirmation | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/01-requirements.md` | `b55f1f9ffaee8506f03f8924af7987318cdabe4263222885b311680d5ff26bc2` |
+
 ## Stage Table
 
 | Stage | Status | Artifact Path | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | `in_progress` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/01-requirements.md` | `pending` | `pending` | Requirements proposal prepared from S-038. |
-| Technical Solution | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `pending` | `pending` | Begins only after Requirements Confirmation. |
+| Requirements Confirmation | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/01-requirements.md` | `confirmed: user requested continued implementation on 2026-07-22` | `78a9f36` | Current card scope confirmed. |
+| Technical Solution | `in_progress` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `pending` | `pending` | Technical solution exploration in progress. |
 | Implementation Plan | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `pending` | `pending` | Begins only after Technical Solution. |
 | Development Implementation | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `pending` | `pending` | No production changes before all pre-implementation confirmations. |
 | System Testing | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `pending` | `pending` | Pending implementation evidence. |
