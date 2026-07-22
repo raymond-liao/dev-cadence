@@ -22,12 +22,18 @@
 - Creation HEAD SHA: `7b255188a16d95b91cc691e219da9f9ba2401d51`
 - Evidence Source: `git worktree list --porcelain`
 
+## Confirmed Stage Record Identities
+
+| Stage | Record Path | SHA-256 |
+| --- | --- | --- |
+| Requirements Confirmation | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/01-requirements.md` | `7fe654dddf820aa526bf60af4a7f98d5b9ccaf3062e1cfcad96c8be0ca6415b8` |
+
 ## Stage Table
 
 | Stage | Status | Artifact Path | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements Confirmation | `in_progress` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/01-requirements.md` | `pending` | `pending` | Requirements proposal prepared from S-019. |
-| Technical Solution | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/02-technical-solution.md` | `pending` | `pending` | Begins only after Requirements Confirmation. |
+| Requirements Confirmation | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/01-requirements.md` | `confirmed: user requested continued implementation on 2026-07-22` | `0caeaa6` | Current card scope confirmed. |
+| Technical Solution | `in_progress` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/02-technical-solution.md` | `pending` | `pending` | Technical solution exploration in progress. |
 | Implementation Plan | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/03-implementation-plan.md` | `pending` | `pending` | Begins only after Technical Solution. |
 | Development Implementation | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/04-implementation-record.md` | `pending` | `pending` | No production changes before all pre-implementation confirmations. |
 | System Testing | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `pending` | `pending` | Pending implementation evidence. |
