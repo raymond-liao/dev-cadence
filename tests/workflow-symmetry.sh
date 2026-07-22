@@ -116,7 +116,7 @@ assert_final_verification_contract() {
     fail "missing $label post-testing final verification invocation"
   printf '%s\n' "$completion_section" | rg -q -- '--final-verification' ||
     fail "missing $label pre-Completion final verification invocation"
-  printf '%s\n' "$verification_section" | rg -q -- 'recorded.*manifest checkpoint.*current run evidence' ||
+  printf '%s\n' "$verification_section" | rg -q -- 'only.*current run evidence directory.*allowed' ||
     fail "missing $label evidence checkpoint whitelist"
   printf '%s\n' "$verification_section" | rg -q -- 'post-test.*--final-verification.*fails' ||
     fail "missing $label immediate final verification failure handling"

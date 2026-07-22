@@ -242,18 +242,6 @@ validate_final_verification() {
   [[ "$current_state" == "$end_state" ]] || fail "final verification tracked state changed"
 }
 
-checkpoint_is_recorded() {
-  local commit="$1"
-  local checkpoint full_checkpoint
-
-  while IFS= read -r checkpoint; do
-    [[ -z "$checkpoint" ]] && continue
-    full_checkpoint="$(git -C "$repo_root_abs" rev-parse --verify "$checkpoint^{commit}" 2>/dev/null || true)"
-    [[ "$full_checkpoint" == "$(git -C "$repo_root_abs" rev-parse "$commit")" ]] && return 0
-  done <<<"$recorded_checkpoints"
-  return 1
-}
-
 while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_checkpoint _raw_notes; do
   stage="$(trim "$raw_stage")"
   status="$(extract_status_value "$raw_status")"
@@ -451,7 +439,6 @@ if [[ "$final_verification_mode" -eq 1 || "$terminal_mode" -eq 1 ]]; then
 
   while IFS= read -r commit; do
     [[ -z "$commit" ]] && continue
-    checkpoint_is_recorded "$commit" || fail "final verification contains unapproved commit after verification"
     while IFS= read -r changed_path; do
       [[ -z "$changed_path" ]] && continue
       case "$changed_path" in

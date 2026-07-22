@@ -93,6 +93,7 @@ create_fixture() {
   local source_path="src/example.sh"
   local diag_sha solution_sha plan_sha implementation_sha implementation_record_sha verification_sha acceptance_sha borrowed_acceptance_sha unreachable_final_sha
   local verification_candidate_sha verification_final_value merge_add_sha merge_restore_sha merge_bridge_sha
+  local post_verification_record_sha
   local implementation_record_text verification_text artifact_for_manifest checkpoint_for_manifest base_sha base_line
   local verification_head verification_branch verification_snapshot verification_state
 
@@ -280,6 +281,13 @@ echo candidate changed after verification"
   fi
   write_file "$repo" "$verification_path" "$verification_text"
   verification_sha="$(commit_paths "$repo" "verification" "$verification_path")"
+
+  if [[ "$scenario" == "valid-final-verification-current-run-evidence-checkpoint" ]]; then
+    write_file "$repo" "$run_dir_rel/post-verification-checkpoint.md" "# Post-verification checkpoint
+
+The final-verification record synchronization is scoped to this run."
+    post_verification_record_sha="$(commit_paths "$repo" "post-verification record checkpoint" "$run_dir_rel/post-verification-checkpoint.md")"
+  fi
 
   write_file "$repo" "$acceptance_path" "# Business Acceptance
 
@@ -642,6 +650,9 @@ valid_run="$(create_fixture "valid-run")"
 run_expect_success "$valid_run"
 expect_validator_success "$valid_run" --final-verification
 
+current_run_evidence_checkpoint_run="$(create_fixture "valid-final-verification-current-run-evidence-checkpoint")"
+expect_validator_success "$current_run_evidence_checkpoint_run" --final-verification
+
 valid_no_tracked_changes_run="$(create_fixture "valid-no-tracked-changes")"
 run_expect_success "$valid_no_tracked_changes_run"
 expect_validator_success "$valid_no_tracked_changes_run" --final-verification
@@ -744,7 +755,7 @@ tracked_snapshot_changed_run="$(create_fixture "invalid-final-verification-track
 expect_validator_failure "$tracked_snapshot_changed_run" --final-verification "FAIL: final verification tracked snapshot changed"
 
 unapproved_code_commit_run="$(create_fixture "invalid-final-verification-unapproved-code-commit")"
-expect_validator_failure "$unapproved_code_commit_run" --final-verification "FAIL: final verification contains unapproved commit after verification"
+expect_validator_failure "$unapproved_code_commit_run" --final-verification "FAIL: final verification checkpoint changes outside run directory"
 
 merge_checkpoint_run="$(create_fixture "invalid-final-verification-merge-checkpoint")"
 expect_validator_failure "$merge_checkpoint_run" --final-verification "FAIL: final verification checkpoint changes outside run directory"
