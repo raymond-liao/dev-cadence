@@ -3,7 +3,7 @@
 ## Implementation Identity
 
 - Implementation base SHA: `568f2119bbd4a1e44a38de5f6c407d63db0d0112`
-- Final implementation SHA: `a17b14433910a1e8b03c935de42ac9aa47f8488a`
+- Final Implementation SHA: `a17b14433910a1e8b03c935de42ac9aa47f8488a`
 - Release candidate branch: `codex/s019-s038-release-candidate`
 
 ## Completed Plan Tasks
