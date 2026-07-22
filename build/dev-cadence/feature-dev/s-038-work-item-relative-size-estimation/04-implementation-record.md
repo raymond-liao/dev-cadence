@@ -5,6 +5,7 @@
 - Implementation Base SHA: `fff7fb4e7e5b23931738e496bbf20448f247d239`
 - Final Implementation SHA: `e54882f22d32968f2e1dbb51de2072e92ba4b221`
 - Release candidate branch: `codex/s019-s038-release-candidate`
+- Final Review: `approved` after final remediation.
 
 ## Completed Plan Tasks
 

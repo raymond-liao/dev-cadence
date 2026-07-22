@@ -7,7 +7,7 @@
 - Repository: `dev-cadence`
 - Branch: `codex/s019-s038-release-candidate`
 - Started At: `2026-07-22T09:49:47+0800`
-- Current Stage: 🔄 `in_progress` - System Testing
+- Current Stage: 🔄 `in_progress` - Business Acceptance
 - Overall Status: 🔄 `in_progress`
 - Work Item: [S-019 最终验证版本绑定](../../../../../docs/stories/S-019-final-verification-revision-binding.md)
 - Work Item Type: `Story`
@@ -38,7 +38,7 @@
 | Technical Solution | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/02-technical-solution.md` | `d94013385392b62d036507e3c6ab8c6c70529e9cdf18891f82ea212b55846008` |
 | Implementation Plan | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/03-implementation-plan.md` | `1fc2e00ddb087fdb885d90ca7a48b161219f7a80159e1c391e6bd84f4fbf18da` |
 | Development Implementation | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/04-implementation-record.md` | `a7fa15730a0e23f6d7ac51d0bc0071ddf3931395ff2bcf45818d1821fb056e2a` |
-| System Testing | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `e61443ba38588caac40ccc6107b97bb77f0c0a35a888f3e1543318a0d9d92978` |
+| System Testing | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `bdc036c25253697ef59d2af06241463b81a410da398bccde2ea98115e0e4c39f` |
 
 ## Stage Table
 
@@ -48,13 +48,13 @@
 | Technical Solution | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/02-technical-solution.md` | `confirmed: user approved on 2026-07-22` | `981c63c` | Shared validator approach confirmed. |
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `3a00ed7` | Remediation review is approved; Final Implementation SHA remains `a17b144`. |
-| System Testing | `in_progress` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `pending` | `pending` | Re-run final verification after delivery-unit lifecycle evidence is declared. |
+| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `confirmed: verification decision ready` | `7dbf400` | Final candidate binding passed with the declared delivery-unit lifecycle scope. |
 | Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md` | `pending` | `pending` | Requires a fixed user decision after System Testing. |
 
 ## Verification Summary
 
-🔄 `in_progress` - remediation checks passed; final verification is being re-run against the declared delivery unit.
+✅ `ready` - full candidate checks and final verification passed; awaiting Business Acceptance.
 
 ## Residual Risks
 
-- The final candidate must be rebound after the S-038 acceptance checkpoint and before S-019 Business Acceptance.
+- No blocking verification risk remains. S-019 Business Acceptance is still required before Completion.
