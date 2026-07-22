@@ -22,6 +22,14 @@
 - Creation HEAD SHA: `7b255188a16d95b91cc691e219da9f9ba2401d51`
 - Evidence Source: `git worktree list --porcelain`
 
+## Final Verification Delivery Unit
+
+- Delivery Unit Run Directory: `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding`
+- Delivery Unit Run Directory: `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation`
+- Delivery Unit Work Item Path: `docs/stories/S-019-final-verification-revision-binding.md`
+- Delivery Unit Work Item Path: `docs/stories/S-038-work-item-relative-size-estimation.md`
+- Delivery Unit Lifecycle Writeback Path: `docs/backlog.md`
+
 ## Confirmed Stage Record Identities
 
 | Stage | Record Path | SHA-256 |
