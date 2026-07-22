@@ -48,4 +48,4 @@ None.
 
 ## Final Follow-Up Actions
 
-The candidate was merged locally into `main` by `21cca69a3da93f790da9e22bc5f8696bc346cb21`. After fresh main-branch verification, the user selected Accept. The S-038 card and Backlog row moved to Done. No push or Pull Request was created. The owned original task worktree and branch were verified clean and merged before their authorized cleanup.
+The candidate was merged locally into `main` by `21cca69a3da93f790da9e22bc5f8696bc346cb21`. After fresh main-branch verification, the user selected Accept. The S-038 card and Backlog row moved to Done. No push or Pull Request was created. The ownership verifier returned `owned`; `.worktrees/s-038-work-item-relative-size-estimation` was removed and `codex/s-038-work-item-relative-size-estimation` was deleted after clean-and-merged checks.

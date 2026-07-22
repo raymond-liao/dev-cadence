@@ -78,5 +78,6 @@
 - Delivery Candidate: `codex/s019-s038-release-candidate` at `7a091029e7992f8470226f5954577580b8359c16`
 - Merge Commit: `21cca69a3da93f790da9e22bc5f8696bc346cb21`
 - Post-Merge Verification: full source checks and final verification passed on `main`.
-- Worktree Cleanup: authorized owned S-019 task worktree and branch are pending removal after terminal validation.
+- Worktree Cleanup: ownership verifier returned `owned`; `.worktrees/s-019-final-verification-revision-binding` was removed at `2026-07-22T14:52:24+0800`.
+- Task Branch Cleanup: `codex/s-019-final-verification-revision-binding` was deleted after merge reachability and clean-worktree checks.
 - Remote Integration: no push or Pull Request was created.
