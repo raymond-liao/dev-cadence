@@ -236,6 +236,8 @@ A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known roo
 
 Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version.
 
+When a substantive scope change makes the existing Size estimate stale, mark the card `Needs Size Re-estimation: yes` with a reason and return to `work-item-planning`. This workflow must not modify Size, Story Map, Backlog Summary, or the Size-estimation baseline.
+
 At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, and exact Backlog source and destination sections. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or repair result qualifies under `.dev-cadence/references/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
 ## Active Task Change Handling
