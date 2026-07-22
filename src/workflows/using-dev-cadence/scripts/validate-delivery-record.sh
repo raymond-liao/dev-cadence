@@ -95,6 +95,7 @@ terminal_stage_gap=""
 final_sha_value=""
 recorded_checkpoints=""
 final_verification_end_head=""
+base_sha_value=""
 
 if [[ $# -lt 1 || $# -gt 2 ]]; then
   fail "usage: validate-delivery-record.sh RUN_DIR [--terminal|--final-verification]"
@@ -177,15 +178,12 @@ extract_record_field() {
 validate_final_verification() {
   local start_head start_branch start_final_sha start_snapshot start_state start_head_canonical
   local end_head end_branch end_final_sha end_snapshot end_state end_head_canonical
-  local current_branch current_snapshot current_state
+  local current_branch current_snapshot current_state snapshot_base_sha
 
   [[ -n "$implementation_record_path" && -f "$implementation_record_path" ]] ||
     fail "final verification requires implementation record evidence"
   [[ -n "$verification_record_path" && -f "$verification_record_path" ]] ||
     fail "final verification requires verification record evidence"
-  [[ "$final_sha_value" != "skipped: no tracked changes" ]] ||
-    fail "final verification requires a committed final implementation SHA"
-
   start_head="$(extract_record_field "$verification_record_path" "Verification Start HEAD")"
   start_branch="$(extract_record_field "$verification_record_path" "Verification Start Branch")"
   start_final_sha="$(extract_record_field "$verification_record_path" "Verification Start FINAL_IMPLEMENTATION_SHA")"
@@ -209,15 +207,24 @@ validate_final_verification() {
     "$start_final_sha" == "$end_final_sha" && "$start_snapshot" == "$end_snapshot" && \
     "$start_state" == "$end_state" ]] || fail "final verification start and end snapshots differ"
 
-  git -C "$repo_root_abs" rev-parse --verify "$end_final_sha^{commit}" >/dev/null 2>&1 ||
-    fail "final verification references unknown final implementation SHA"
+  snapshot_base_sha="$end_final_sha"
+  if [[ "$end_final_sha" == "skipped: no tracked changes" ]]; then
+    [[ "$final_sha_value" == "skipped: no tracked changes" ]] ||
+      fail "final verification final implementation SHA changed"
+    [[ -n "$base_sha_value" ]] ||
+      fail "final verification skipped candidate is missing Implementation Base SHA"
+    snapshot_base_sha="$base_sha_value"
+  else
+    git -C "$repo_root_abs" rev-parse --verify "$end_final_sha^{commit}" >/dev/null 2>&1 ||
+      fail "final verification references unknown final implementation SHA"
+  fi
   start_head_canonical="$(git -C "$repo_root_abs" rev-parse --verify "$start_head^{commit}" 2>/dev/null)" ||
     fail "final verification references unknown start HEAD"
   end_head_canonical="$(git -C "$repo_root_abs" rev-parse --verify "$end_head^{commit}" 2>/dev/null)" ||
     fail "final verification references unknown end HEAD"
   [[ "$start_head_canonical" == "$end_head_canonical" ]] || fail "final verification start and end snapshots differ"
   [[ "$end_final_sha" == "$final_sha_value" ]] || fail "final verification final implementation SHA changed"
-  git -C "$repo_root_abs" merge-base --is-ancestor "$end_final_sha" HEAD ||
+  git -C "$repo_root_abs" merge-base --is-ancestor "$snapshot_base_sha" HEAD ||
     fail "final verification final implementation SHA is not reachable"
   git -C "$repo_root_abs" merge-base --is-ancestor "$end_head_canonical" HEAD ||
     fail "final verification end HEAD is not reachable"
@@ -225,8 +232,8 @@ validate_final_verification() {
 
   current_branch="$(git -C "$repo_root_abs" branch --show-current)"
   [[ "$current_branch" == "$end_branch" ]] || fail "final verification branch changed"
-  current_snapshot="$(git -C "$repo_root_abs" diff --binary "$end_final_sha" -- . ":(exclude)$run_dir_rel" | git -C "$repo_root_abs" hash-object --stdin)"
-  if git -C "$repo_root_abs" diff --quiet "$end_final_sha" -- . ":(exclude)$run_dir_rel"; then
+  current_snapshot="$(git -C "$repo_root_abs" diff --binary "$snapshot_base_sha" -- . ":(exclude)$run_dir_rel" | git -C "$repo_root_abs" hash-object --stdin)"
+  if git -C "$repo_root_abs" diff --quiet "$snapshot_base_sha" -- . ":(exclude)$run_dir_rel"; then
     current_state="clean"
   else
     current_state="dirty"
@@ -278,12 +285,13 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
     checkpoint_is_allowed "$checkpoint_value" || fail "stage '$stage' has invalid checkpoint value '$checkpoint_value'"
   fi
 
-  if [[ "$artifact_path" != "pending" ]]; then
+  if [[ "$artifact_path" != "pending" && -f "$repo_root_abs/$artifact_path" ]]; then
     artifact_exists_in_stage_table=1
-    [[ -f "$repo_root_abs/$artifact_path" ]] || fail "artifact path does not exist: $artifact_path"
+  elif [[ "$status" == "confirmed" || "$status" == "in_progress" ]]; then
+    fail "artifact path does not exist: $artifact_path"
   fi
 
-  if [[ "$checkpoint_value" =~ ^[0-9a-f]{7,40}$ ]]; then
+  if [[ "$checkpoint_value" =~ ^[0-9a-f]{7,40}$ && -f "$repo_root_abs/$artifact_path" ]]; then
     git -C "$repo_root_abs" cat-file -e "$checkpoint_value:$artifact_path" 2>/dev/null ||
       fail "checkpoint tree is missing stage artifact: $checkpoint_value $artifact_path"
     recorded_checkpoints+=$'\n'"$checkpoint_value"
@@ -297,10 +305,10 @@ while IFS=$'\t' read -r raw_stage raw_status raw_artifact _raw_confirmation raw_
 
   case "$artifact_path" in
     */04-implementation-record.md|*/04-repair-record.md|*/04-refactor-record.md)
-      implementation_record_path="$repo_root_abs/$artifact_path"
+      [[ -f "$repo_root_abs/$artifact_path" ]] && implementation_record_path="$repo_root_abs/$artifact_path"
       ;;
     */05-system-test-report.md|*/05-regression-test-report.md)
-      verification_record_path="$repo_root_abs/$artifact_path"
+      [[ -f "$repo_root_abs/$artifact_path" ]] && verification_record_path="$repo_root_abs/$artifact_path"
       ;;
   esac
 done < <(
@@ -438,7 +446,7 @@ if [[ "$terminal_mode" -eq 1 && "$overall_status" == "abandoned" ]]; then
     "$run_dir_abs/07-manual-recovery-record.md"
 fi
 
-if [[ "$final_verification_mode" -eq 1 || ( "$terminal_mode" -eq 1 && "$final_sha_value" != "skipped: no tracked changes" ) ]]; then
+if [[ "$final_verification_mode" -eq 1 || "$terminal_mode" -eq 1 ]]; then
   validate_final_verification
 
   while IFS= read -r commit; do
@@ -453,7 +461,7 @@ if [[ "$final_verification_mode" -eq 1 || ( "$terminal_mode" -eq 1 && "$final_sh
           fail "final verification checkpoint changes outside run directory"
           ;;
       esac
-    done < <(git -C "$repo_root_abs" diff-tree --no-commit-id --name-only -r "$commit")
+    done < <(git -C "$repo_root_abs" diff --name-only "$commit^1" "$commit")
   done < <(git -C "$repo_root_abs" rev-list --first-parent "$final_verification_end_head..HEAD")
 fi
 

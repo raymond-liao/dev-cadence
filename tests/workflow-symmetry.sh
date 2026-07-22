@@ -125,7 +125,14 @@ assert_final_verification_contract() {
   printf '%s\n' "$verification_section" | rg -q -- 'other.*snapshot.*evidence-chain.*superseded.*final verification' ||
     fail "missing $label snapshot and evidence-chain final verification rollback"
   printf '%s\n' "$verification_section" | rg -F -q -- 'skipped: no tracked changes' ||
-    fail "missing $label no-tracked-changes final verification exception"
+    fail "missing $label no-tracked-changes final verification binding"
+  printf '%s\n' "$verification_section" | rg -q -- 'Implementation Base SHA.*snapshot|snapshot.*Implementation Base SHA' ||
+    fail "missing $label no-tracked-changes baseline snapshot rule"
+  if printf '%s\n' "$verification_section" | rg -q -- 'skipped: no tracked changes.*do not invoke.*--final-verification'; then
+    fail "$label still bypasses final verification for no-tracked-changes"
+  fi
+  printf '%s\n' "$verification_section" | rg -q -- 'first parent.*each.*post-verification commit|each.*post-verification commit.*first parent' ||
+    fail "missing $label first-parent checkpoint diff rule"
 }
 
 assert_code_review_report_reference() {

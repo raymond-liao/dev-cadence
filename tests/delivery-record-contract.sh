@@ -92,6 +92,7 @@ create_fixture() {
   local manual_recovery_path="$run_dir_rel/07-manual-recovery-record.md"
   local source_path="src/example.sh"
   local diag_sha solution_sha plan_sha implementation_sha implementation_record_sha verification_sha acceptance_sha borrowed_acceptance_sha unreachable_final_sha
+  local verification_candidate_sha verification_final_value merge_add_sha merge_restore_sha merge_bridge_sha
   local implementation_record_text verification_text artifact_for_manifest checkpoint_for_manifest base_sha base_line
   local verification_head verification_branch verification_snapshot verification_state
 
@@ -186,7 +187,7 @@ pending"
 
   base_sha="$implementation_sha"
 
-  if [[ "$scenario" == "valid-no-tracked-changes" || "$scenario" == "invalid-no-tracked-changes" || "$scenario" == "invalid-sdd-scratch" ]]; then
+  if [[ "$scenario" == *"no-tracked-changes"* || "$scenario" == "invalid-sdd-scratch" ]]; then
     base_sha="$(git -C "$repo" rev-parse --short HEAD)"
 
     if [[ "$scenario" == "invalid-no-tracked-changes" ]]; then
@@ -231,10 +232,17 @@ echo changed after skipped"
 echo candidate changed after verification"
   fi
 
+  verification_candidate_sha="$implementation_sha"
+  verification_final_value="$implementation_sha"
+  if [[ "$scenario" == *"no-tracked-changes"* || "$scenario" == "invalid-sdd-scratch" ]]; then
+    verification_candidate_sha="$base_sha"
+    verification_final_value="skipped: no tracked changes"
+  fi
+
   verification_head="$(git -C "$repo" rev-parse HEAD)"
   verification_branch="$(git -C "$repo" branch --show-current)"
-  verification_snapshot="$(git -C "$repo" diff --binary "$implementation_sha" -- . ":(exclude)$run_dir_rel" | git -C "$repo" hash-object --stdin)"
-  if git -C "$repo" diff --quiet "$implementation_sha" -- . ":(exclude)$run_dir_rel"; then
+  verification_snapshot="$(git -C "$repo" diff --binary "$verification_candidate_sha" -- . ":(exclude)$run_dir_rel" | git -C "$repo" hash-object --stdin)"
+  if git -C "$repo" diff --quiet "$verification_candidate_sha" -- . ":(exclude)$run_dir_rel"; then
     verification_state="clean"
   else
     verification_state="dirty"
@@ -246,12 +254,12 @@ echo candidate changed after verification"
 - Command: \`bash tests/delivery-record-contract.sh\`
 - Verification Start HEAD: \`$verification_head\`
 - Verification Start Branch: \`$verification_branch\`
-- Verification Start FINAL_IMPLEMENTATION_SHA: \`$implementation_sha\`
+- Verification Start FINAL_IMPLEMENTATION_SHA: \`$verification_final_value\`
 - Verification Start Tracked Snapshot: \`$verification_snapshot\`
 - Verification Start Tracked State: \`$verification_state\`
 - Verification End HEAD: \`$verification_head\`
 - Verification End Branch: \`$verification_branch\`
-- Verification End FINAL_IMPLEMENTATION_SHA: \`$implementation_sha\`
+- Verification End FINAL_IMPLEMENTATION_SHA: \`$verification_final_value\`
 - Verification End Tracked Snapshot: \`$verification_snapshot\`
 - Verification End Tracked State: \`$verification_state\`"
   if [[ "$scenario" == "invalid-missing-test-result" ]]; then
@@ -452,6 +460,38 @@ echo tracked snapshot changed"
     invalid-final-verification-unapproved-code-commit)
       commit_paths "$repo" "candidate code after verification" "$source_path" >/dev/null
       ;;
+    invalid-no-tracked-changes-final-verification-branch-changed)
+      git -C "$repo" checkout -q -b changed-no-tracked-branch
+      ;;
+    invalid-no-tracked-changes-final-verification-tracked-snapshot-changed)
+      write_file "$repo" "$source_path" "#!/usr/bin/env bash
+echo skipped candidate changed after verification"
+      ;;
+    invalid-final-verification-merge-checkpoint)
+      git -C "$repo" checkout -q -b merge-add-side
+      write_file "$repo" "src/merge-hidden.sh" "#!/usr/bin/env bash
+echo hidden"
+      commit_paths "$repo" "side adds hidden source" "src/merge-hidden.sh" >/dev/null
+      git -C "$repo" checkout -q "$verification_branch"
+      git -C "$repo" merge -q --no-ff merge-add-side -m "merge add side"
+      merge_add_sha="$(git -C "$repo" rev-parse --short HEAD)"
+
+      git -C "$repo" checkout -q -b merge-restore-side
+      git -C "$repo" rm -q "src/merge-hidden.sh"
+      git -C "$repo" commit -q -m "side restores source tree"
+      git -C "$repo" checkout -q "$verification_branch"
+      write_file "$repo" "$run_dir_rel/merge-bridge.md" "# Merge bridge"
+      merge_bridge_sha="$(commit_paths "$repo" "record merge bridge" "$run_dir_rel/merge-bridge.md")"
+      git -C "$repo" merge -q --no-ff merge-restore-side -m "merge restore side"
+      merge_restore_sha="$(git -C "$repo" rev-parse --short HEAD)"
+
+      sed -i.bak \
+        -e "s/\`$diag_sha\` | diagnosis captured/\`$merge_add_sha\` | diagnosis captured/" \
+        -e "s/\`$solution_sha\` | solution captured/\`$merge_bridge_sha\` | solution captured/" \
+        -e "s/\`$plan_sha\` | plan captured/\`$merge_restore_sha\` | plan captured/" \
+        "$repo/$run_dir_rel/manifest.md"
+      rm "$repo/$run_dir_rel/manifest.md.bak"
+      ;;
     invalid-final-verification-symbolic-head)
       sed -i.bak \
         -e 's/^- Verification Start HEAD:.*/- Verification Start HEAD: `HEAD`/' \
@@ -526,13 +566,18 @@ run_validator() {
 }
 
 create_in_progress_fixture() {
-  local scenario="in-progress-run"
+  local scenario="${1:-in-progress-run}"
   local repo
   repo="$(init_repo "$scenario")"
   local run_dir_rel="build/dev-cadence/feature-dev/${scenario}"
   local run_dir="$repo/$run_dir_rel"
-  local requirements_path="$run_dir_rel/01-requirements-record.md"
-  local requirements_sha
+  local requirements_path="$run_dir_rel/01-requirements.md"
+  local solution_path="$run_dir_rel/02-technical-solution.md"
+  local plan_path="$run_dir_rel/03-implementation-plan.md"
+  local implementation_path="$run_dir_rel/04-implementation-record.md"
+  local verification_path="$run_dir_rel/05-system-test-report.md"
+  local acceptance_path="$run_dir_rel/06-business-acceptance-record.md"
+  local requirements_sha solution_sha
 
   write_file "$repo" "$requirements_path" "# Requirements Record
 
@@ -540,6 +585,18 @@ create_in_progress_fixture() {
 - Scope: current run only."
   requirements_sha="$(commit_paths "$repo" "requirements" "$requirements_path")"
 
+  write_file "$repo" "$solution_path" "# Technical Solution
+
+- Status: \`confirmed\`
+- Boundary: current run only."
+  solution_sha="$(commit_paths "$repo" "solution" "$solution_path")"
+
+  if [[ "$scenario" != "in-progress-missing-current-artifact" ]]; then
+    write_file "$repo" "$plan_path" "# Implementation Plan
+
+- Status: \`in_progress\`
+- Method: test first."
+  fi
   write_file "$repo" "$run_dir_rel/manifest.md" "# Delivery Run Manifest
 
 - Workflow: \`feature-dev\`
@@ -550,8 +607,12 @@ create_in_progress_fixture() {
 
 | Stage | Status | Artifact Path | User Confirmation | Checkpoint Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Requirements | \`confirmed\` | \`$requirements_path\` | \`confirmed\` | \`$requirements_sha\` | requirements captured |
-| Implementation | \`pending\` | \`pending\` | \`pending\` | \`pending\` | implementation pending |"
+| Requirements Confirmation | \`confirmed\` | \`$requirements_path\` | \`confirmed\` | \`$requirements_sha\` | requirements captured |
+| Technical Solution | \`confirmed\` | \`$solution_path\` | \`confirmed\` | \`$solution_sha\` | solution captured |
+| Implementation Plan | \`in_progress\` | \`$plan_path\` | \`pending\` | \`pending\` | plan in progress |
+| Development Implementation | \`pending\` | \`$implementation_path\` | \`pending\` | \`pending\` | implementation pending |
+| System Testing | \`pending\` | \`$verification_path\` | \`pending\` | \`pending\` | testing pending |
+| Business Acceptance | \`pending\` | \`$acceptance_path\` | \`pending\` | \`pending\` | acceptance pending |"
 
   printf '%s\n' "$run_dir"
 }
@@ -559,12 +620,25 @@ create_in_progress_fixture() {
 in_progress_run="$(create_in_progress_fixture)"
 run_validator "$in_progress_run" || fail "in-progress manifest should validate structurally"
 
+in_progress_missing_artifact_run="$(create_in_progress_fixture "in-progress-missing-current-artifact")"
+if output="$(run_validator "$in_progress_missing_artifact_run" 2>&1)"; then
+  fail "in-progress stage with a missing current artifact should fail validation"
+fi
+assert_contains "FAIL: artifact path does not exist" "$output"
+
 valid_run="$(create_fixture "valid-run")"
 run_expect_success "$valid_run"
 expect_validator_success "$valid_run" --final-verification
 
 valid_no_tracked_changes_run="$(create_fixture "valid-no-tracked-changes")"
 run_expect_success "$valid_no_tracked_changes_run"
+expect_validator_success "$valid_no_tracked_changes_run" --final-verification
+
+skipped_branch_changed_run="$(create_fixture "invalid-no-tracked-changes-final-verification-branch-changed")"
+expect_validator_failure "$skipped_branch_changed_run" --final-verification "FAIL: final verification branch changed"
+
+skipped_snapshot_changed_run="$(create_fixture "invalid-no-tracked-changes-final-verification-tracked-snapshot-changed")"
+expect_validator_failure "$skipped_snapshot_changed_run" --final-verification "FAIL: final verification tracked snapshot changed"
 
 valid_abandoned_run="$(create_fixture "valid-abandoned")"
 run_expect_success "$valid_abandoned_run"
@@ -659,6 +733,9 @@ expect_validator_failure "$tracked_snapshot_changed_run" --final-verification "F
 
 unapproved_code_commit_run="$(create_fixture "invalid-final-verification-unapproved-code-commit")"
 expect_validator_failure "$unapproved_code_commit_run" --final-verification "FAIL: final verification contains unapproved commit after verification"
+
+merge_checkpoint_run="$(create_fixture "invalid-final-verification-merge-checkpoint")"
+expect_validator_failure "$merge_checkpoint_run" --final-verification "FAIL: final verification checkpoint changes outside run directory"
 
 symbolic_head_run="$(create_fixture "invalid-final-verification-symbolic-head")"
 expect_validator_failure "$symbolic_head_run" --final-verification "FAIL: final verification HEAD must be a full commit SHA"

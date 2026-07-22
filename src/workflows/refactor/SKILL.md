@@ -781,7 +781,7 @@ Coverage must be honest. If a protected behavior, contract, or structural goal i
 
 #### Final Verification Candidate Binding
 
-Immediately before final regression testing, record these fields in `05-regression-test-report.md`: `Verification Start HEAD`, `Verification Start Branch`, `Verification Start FINAL_IMPLEMENTATION_SHA`, `Verification Start Tracked Snapshot`, and `Verification Start Tracked State`. Immediately after the final test commands finish, record the corresponding `Verification End HEAD`, `Verification End Branch`, `Verification End FINAL_IMPLEMENTATION_SHA`, `Verification End Tracked Snapshot`, and `Verification End Tracked State` fields. Use full immutable commit SHAs for both HEAD fields, the current branch name, the final implementation SHA from `04-refactor-record.md`, the SHA-256 object ID of the binary tracked diff from that final implementation SHA while excluding only `build/dev-cadence/refactor/<refactor-slug>/`, and `clean` or `dirty` for tracked state. Start and end values must be identical.
+Immediately before final regression testing, record these fields in `05-regression-test-report.md`: `Verification Start HEAD`, `Verification Start Branch`, `Verification Start FINAL_IMPLEMENTATION_SHA`, `Verification Start Tracked Snapshot`, and `Verification Start Tracked State`. Immediately after the final test commands finish, record the corresponding `Verification End HEAD`, `Verification End Branch`, `Verification End FINAL_IMPLEMENTATION_SHA`, `Verification End Tracked Snapshot`, and `Verification End Tracked State` fields. Use full immutable commit SHAs for both HEAD fields, the current branch name, the final implementation SHA from `04-refactor-record.md`, the SHA-256 object ID of the binary tracked diff from that final implementation SHA while excluding only `build/dev-cadence/refactor/<refactor-slug>/`, and `clean` or `dirty` for tracked state. When `Final Refactor SHA` is `skipped: no tracked changes`, record that exact marker in both `FINAL_IMPLEMENTATION_SHA` fields and derive the tracked snapshot and state from the binary tracked diff against the `Implementation Base SHA` in `04-refactor-record.md`, with the same run-directory exclusion. Start and end values must be identical.
 
 After final testing and before Business Acceptance, run:
 
@@ -790,7 +790,7 @@ bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.s
   build/dev-cadence/refactor/<refactor-slug> --final-verification
 ```
 
-If the post-test `--final-verification` call fails because the final verification candidate changes, return to Refactor Implementation, repeat implementation review, and repeat Regression Verification before Business Acceptance. For any other snapshot or evidence-chain failure, mark affected verification evidence as `superseded`, return to final verification in Regression Verification, and rerun `--final-verification` before Business Acceptance. After `Verification End`, only first-parent commits recorded as manifest checkpoint commits that modify only the current run evidence directory are allowed before final revalidation. If `Final Refactor SHA` is `skipped: no tracked changes`, do not invoke `--final-verification`; preserve the existing terminal validation path.
+If the post-test `--final-verification` call fails because the final verification candidate changes, return to Refactor Implementation, repeat implementation review, and repeat Regression Verification before Business Acceptance. For any other snapshot or evidence-chain failure, mark affected verification evidence as `superseded`, return to final verification in Regression Verification, and rerun `--final-verification` before Business Acceptance. After `Verification End`, only first-parent commits recorded as manifest checkpoint commits that modify only the current run evidence directory are allowed before final revalidation. Diff each post-verification commit against its first parent so a merge commit cannot hide paths outside the current run evidence directory. A `skipped: no tracked changes` final value must use the same `--final-verification` call; it changes only the snapshot base, not this gate.
 
 ### Business Acceptance
 
@@ -855,7 +855,7 @@ When the run records remain after Completion, update `Final Follow-Up Actions` w
 
 After Business Acceptance is `accepted` or `accepted_with_risk`, invoke normal Completion. For `accepted_with_risk`, preserve the original decision and `Accepted Risk Register` through integration:
 
-Before entering the finishing flow, rerun the final-verification validator. If it fails, invalidate Business Acceptance evidence as `superseded`, return to Refactor Implementation, repeat implementation review and Regression Verification, and require Business Acceptance again. When `Final Refactor SHA` is `skipped: no tracked changes`, do not invoke `--final-verification`; preserve the existing terminal validation path.
+Before entering the finishing flow, rerun the final-verification validator, including when `Final Refactor SHA` is `skipped: no tracked changes`. If it fails, invalidate Business Acceptance evidence as `superseded`, return to Refactor Implementation, repeat implementation review and Regression Verification, and require Business Acceptance again.
 
 ```bash
 bash .dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh \
