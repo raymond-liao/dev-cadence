@@ -45,9 +45,7 @@ Relative Size requires an explicit Planning confirmation and is not a forecast o
 
 ready
 
-## Verification Result
-
-ready
+- Verification Result: `ready`
 
 ## Recommendation
 

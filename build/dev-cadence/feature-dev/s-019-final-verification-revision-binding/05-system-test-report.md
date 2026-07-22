@@ -58,9 +58,7 @@ The final verification snapshot intentionally includes the release-candidate imp
 
 ready
 
-## Verification Result
-
-ready
+- Verification Result: `ready`
 
 ## Recommendation
 
