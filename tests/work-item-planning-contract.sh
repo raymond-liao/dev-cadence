@@ -92,20 +92,6 @@ assert_section_not_literal() {
   [[ "$section" != *"$literal"* ]] || fail "unexpected $label between ${start_heading} and ${end_heading} in ${path#"$ROOT_DIR/"}"
 }
 
-assert_section_not_match() {
-  local label="$1"
-  local start_heading="$2"
-  local end_heading="$3"
-  local pattern="$4"
-  local path="$5"
-  local section
-
-  section="$(section_between_headings "$start_heading" "$end_heading" "$path")"
-  if rg --no-ignore -n "$pattern" <<<"$section" >/dev/null; then
-    fail "unexpected $label between ${start_heading} and ${end_heading} in ${path#"$ROOT_DIR/"}"
-  fi
-}
-
 assert_file "$SKILL"
 assert_literal \
   "description" \
@@ -181,11 +167,11 @@ assert_match "user size adjustment" 'user.*adjust.*item.*Size|adjust.*item.*Size
 assert_match "uncertain size preserved" '`\?`.*preserv|preserv.*`\?`' "$SKILL"
 assert_match "xl and uncertainty summary" '`XL`.*uncertain|uncertain.*`XL`' "$SKILL"
 assert_match "size atomic projection" 'atomically.*card.*Story Map.*Backlog.*Size Summary|card.*Story Map.*Backlog.*Size Summary.*atomic' "$SKILL"
-assert_section_not_match \
-  "relative size iteration plan authorization" \
+assert_section_not_literal \
+  "relative size iteration plan exclusion" \
   "## Relative Size Estimation" \
   "## Story Map Contract" \
-  'will enter an Iteration Plan' \
+  "Iteration Plan" \
   "$SKILL"
 assert_literal "backlog pending order preservation" 'Preserve the existing row order inside `待处理` unless the confirmed planning change explicitly updates that recommendation.' "$SKILL"
 assert_literal "backlog no duplicate card detail" 'Backlog rows must summarize cards only. Do not duplicate card body details, acceptance conditions, change logs, workflow-run evidence, or other card-only fields in the Backlog table.' "$SKILL"
