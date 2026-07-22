@@ -5,10 +5,10 @@
 - Workflow: `feature-dev`
 - Task Slug: `s-019-final-verification-revision-binding`
 - Repository: `dev-cadence`
-- Branch: `codex/s019-s038-release-candidate`
+- Branch: `main`
 - Started At: `2026-07-22T09:49:47+0800`
-- Current Stage: 🔄 `in_progress` - Completion
-- Overall Status: ✅ `accepted`
+- Current Stage: 🔄 `in_progress` - System Testing
+- Overall Status: 🔄 `in_progress`
 - Work Item: [S-019 最终验证版本绑定](../../../../../docs/stories/S-019-final-verification-revision-binding.md)
 - Work Item Type: `Story`
 - Work Item Version: `3`
@@ -48,18 +48,24 @@
 | Technical Solution | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/02-technical-solution.md` | `confirmed: user approved on 2026-07-22` | `981c63c` | Shared validator approach confirmed. |
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `3a00ed7` | Remediation review is approved; Final Implementation SHA remains `a17b144`. |
-| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `confirmed: verification decision ready` | `9940be4` | Final candidate binding passed with the declared delivery-unit lifecycle scope. |
-| Business Acceptance | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-22T14:03:06+0800` | `13b8522` | User selected Accept; awaiting a separate Completion action. |
+| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/05-system-test-report.md` | `confirmed: fresh final verification on main at 2026-07-22T14:16:17+0800` | `pending` | Fresh post-merge candidate binding is ready; checkpoint pending. |
+| Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md` | `superseded: prior acceptance bound to candidate branch` | `13b8522` | A new fixed-menu decision is required after post-merge verification. |
 
 ## Verification Summary
 
-✅ `accepted` - full candidate checks and final verification passed; Business Acceptance selected Accept and Completion remains unselected.
+🟢 `ready` - full candidate checks and fresh final verification on `main` passed; Business Acceptance must be selected again.
 
 ## Residual Risks
 
-- No blocking verification risk remains. Completion action is the remaining user decision.
+- No blocking verification risk remains. The local merge invalidated the prior branch-bound acceptance, so a new Business Acceptance decision is required.
 
 ## Business Acceptance Decision
 
-- Decision: ✅ `accepted` (`1. Accept`).
+- Previous Decision: ✅ `accepted` (`1. Accept`) - superseded by the local merge's branch change.
 - Record: `build/dev-cadence/feature-dev/s-019-final-verification-revision-binding/06-business-acceptance-record.md`.
+
+## Completion Revalidation
+
+- Previous Completion Action: local merge produced `21cca69a3da93f790da9e22bc5f8696bc346cb21` on `main`.
+- Invalidation: the prior final verification was bound to `codex/s019-s038-release-candidate`; the fresh System Testing record is bound to `main`.
+- Next Gate: Business Acceptance fixed menu must be selected again before lifecycle closure.

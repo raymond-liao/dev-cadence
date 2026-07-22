@@ -48,4 +48,4 @@ None.
 
 ## Final Follow-Up Actions
 
-Completion action has not been selected; no merge, pull request, push, branch deletion, or worktree cleanup has occurred.
+The user selected local merge and `21cca69a3da93f790da9e22bc5f8696bc346cb21` merged the candidate into `main`. That branch change superseded this acceptance's candidate-bound verification. No push, branch deletion, worktree cleanup, or lifecycle transition to Done occurred; a new Business Acceptance decision is required after the fresh System Testing evidence.

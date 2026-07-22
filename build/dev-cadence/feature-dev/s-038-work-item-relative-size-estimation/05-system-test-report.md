@@ -10,19 +10,19 @@
 ## Test Environment
 
 - Repository: `dev-cadence`
-- Branch: `codex/s019-s038-release-candidate`
-- Candidate HEAD: `b77ad8e747e068cb1a0d22a71f70be3ff982b14b`
+- Branch: `main`
+- Candidate HEAD: `21cca69a3da93f790da9e22bc5f8696bc346cb21`
 - Tools: Bash, Git, repository build and contract scripts.
 
 ## Final Verification Candidate Binding
 
-- Verification Start HEAD: `b77ad8e747e068cb1a0d22a71f70be3ff982b14b`
-- Verification Start Branch: `codex/s019-s038-release-candidate`
+- Verification Start HEAD: `21cca69a3da93f790da9e22bc5f8696bc346cb21`
+- Verification Start Branch: `main`
 - Verification Start FINAL_IMPLEMENTATION_SHA: `e54882f22d32968f2e1dbb51de2072e92ba4b221`
 - Verification Start Tracked Snapshot: `1adb4d3770b2ba4367bb47aa8ed6aff764bcb9ba`
 - Verification Start Tracked State: `dirty`
-- Verification End HEAD: `b77ad8e747e068cb1a0d22a71f70be3ff982b14b`
-- Verification End Branch: `codex/s019-s038-release-candidate`
+- Verification End HEAD: `21cca69a3da93f790da9e22bc5f8696bc346cb21`
+- Verification End Branch: `main`
 - Verification End FINAL_IMPLEMENTATION_SHA: `e54882f22d32968f2e1dbb51de2072e92ba4b221`
 - Verification End Tracked Snapshot: `1adb4d3770b2ba4367bb47aa8ed6aff764bcb9ba`
 - Verification End Tracked State: `dirty`
@@ -34,9 +34,9 @@
 | ST-01 | Planning Size contract | automated | `bash tests/work-item-planning-contract.sh` | passed | Relative enum, baseline, projection, and invalidation assertions passed. |
 | ST-02 | Ownership handoff | automated | `bash tests/work-item-analysis-contract.sh` | passed | Non-Planning workflows only mark re-estimation and route to Planning. |
 | ST-03 | Cross-workflow consistency | automated | `bash tests/workflow-symmetry.sh` | passed | Delivery rules remain symmetric. |
-| ST-04 | Package and regression contracts | automated | `bash scripts/build.sh && bash scripts/check-all.sh` | passed | Generated package and all repository contract checks passed. |
+| ST-04 | Package and regression contracts | automated | `bash scripts/build.sh`, `bash scripts/check-whitespace.sh`, and `bash tests/run-all.sh` | passed | Build and whitespace checks passed. The aggregate suite again stopped before its final summary, so every remaining sub-contract was rerun individually and passed. |
 | ST-05 | Source/package synchronization | inspection | `cmp` of Planning source and generated skill | passed | Relative Size rules are identical in `src` and `dist`. |
-| ST-06 | Candidate identity | automated | delivery-record validator `--final-verification` | passed | Start/end candidate identity and tracked snapshot matched with the declared shared delivery-unit lifecycle scope. |
+| ST-06 | Post-merge candidate identity | automated | delivery-record validator `--final-verification` | passed | Fresh start/end identity on `main` matched merge commit `21cca69`; tracked snapshot matched with the declared shared delivery-unit lifecycle scope. |
 
 ## Requirement Coverage
 
@@ -53,7 +53,7 @@ None.
 
 ## Residual Risks
 
-Relative Size requires an explicit Planning confirmation and is not a forecast or capacity measure. The shared delivery-unit manifest excludes only the two run directories, their cards, and `docs/backlog.md` lifecycle writeback from final snapshot comparison.
+Relative Size requires an explicit Planning confirmation and is not a forecast or capacity measure. The prior candidate-branch verification was superseded by the local merge; this fresh verification binds the accepted implementation to `main`. The shared delivery-unit manifest excludes only the two run directories, their cards, and `docs/backlog.md` lifecycle writeback from final snapshot comparison.
 
 ## Verification Decision
 
@@ -63,4 +63,4 @@ ready
 
 ## Recommendation
 
-S-038 can enter Business Acceptance after the shared candidate's S-019 final verification completes.
+S-038 requires a new Business Acceptance decision because the prior decision applied to the superseded candidate-branch verification.

@@ -5,10 +5,10 @@
 - Workflow: `feature-dev`
 - Task Slug: `s-038-work-item-relative-size-estimation`
 - Repository: `dev-cadence`
-- Branch: `codex/s019-s038-release-candidate`
+- Branch: `main`
 - Started At: `2026-07-22T09:56:06+0800`
-- Current Stage: 🔄 `in_progress` - Completion
-- Overall Status: ✅ `accepted`
+- Current Stage: 🔄 `in_progress` - System Testing
+- Overall Status: 🔄 `in_progress`
 - Work Item: [S-038 工作项相对 Size 估算](../../../../../docs/stories/S-038-work-item-relative-size-estimation.md)
 - Work Item Type: `Story`
 - Work Item Version: `1`
@@ -48,13 +48,19 @@
 | Technical Solution | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/02-technical-solution.md` | `confirmed: user approved on 2026-07-22` | `29937c9` | Planning-owned relative Size approach confirmed. |
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `152f62d` | Final implementation SHA is `e54882f`; final review is approved. |
-| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `confirmed: verification decision ready` | `dea15f5` | Final candidate binding passed with the declared delivery-unit lifecycle scope. |
-| Business Acceptance | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-22T13:45:39+0800` | `3a00ed7` | User selected Accept; awaiting a separate Completion action. |
+| System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `confirmed: fresh final verification on main at 2026-07-22T14:16:17+0800` | `pending` | Fresh post-merge candidate binding is ready; checkpoint pending. |
+| Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `superseded: prior acceptance bound to candidate branch` | `3a00ed7` | A new fixed-menu decision is required after post-merge verification. |
 
 ## Verification Summary
 
-✅ `accepted` - candidate checks passed and Business Acceptance selected Accept; awaiting Completion.
+🟢 `ready` - candidate checks and fresh final verification on `main` passed; Business Acceptance must be selected again.
 
 ## Residual Risks
 
-- Relative Size remains a planning signal, not duration, person-days, or capacity.
+- Relative Size remains a planning signal, not duration, person-days, or capacity. The local merge invalidated the prior branch-bound acceptance, so a new Business Acceptance decision is required.
+
+## Completion Revalidation
+
+- Previous Completion Action: local merge produced `21cca69a3da93f790da9e22bc5f8696bc346cb21` on `main`.
+- Invalidation: the prior final verification was bound to `codex/s019-s038-release-candidate`; the fresh System Testing record is bound to `main`.
+- Next Gate: Business Acceptance fixed menu must be selected again before lifecycle closure.
