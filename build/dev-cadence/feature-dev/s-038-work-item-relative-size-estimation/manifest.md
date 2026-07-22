@@ -7,8 +7,8 @@
 - Repository: `dev-cadence`
 - Branch: `codex/s019-s038-release-candidate`
 - Started At: `2026-07-22T09:56:06+0800`
-- Current Stage: 🔄 `in_progress` - Business Acceptance
-- Overall Status: 🔄 `in_progress`
+- Current Stage: 🔄 `in_progress` - Completion
+- Overall Status: ✅ `accepted`
 - Work Item: [S-038 工作项相对 Size 估算](../../../../../docs/stories/S-038-work-item-relative-size-estimation.md)
 - Work Item Type: `Story`
 - Work Item Version: `1`
@@ -41,11 +41,11 @@
 | Implementation Plan | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/03-implementation-plan.md` | `confirmed: user requested implementation on 2026-07-22` | `70ed4cd` | All plan steps are complete; shared package version is `0.33.0`. |
 | Development Implementation | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/04-implementation-record.md` | `confirmed: implementation authorized by confirmed plan` | `70ed4cd` | Final implementation SHA is `e54882f`. |
 | System Testing | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/05-system-test-report.md` | `confirmed: verification decision ready` | `dfa276f` | Shared release-candidate checks passed. |
-| Business Acceptance | `pending` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `pending` | `pending` | Requires a fixed user decision after System Testing. |
+| Business Acceptance | `confirmed` | `build/dev-cadence/feature-dev/s-038-work-item-relative-size-estimation/06-business-acceptance-record.md` | `accepted: Raymond Liao <raymond-liao@outlook.com> at 2026-07-22T13:45:39+0800` | `3a00ed7` | User selected Accept; awaiting a separate Completion action. |
 
 ## Verification Summary
 
-✅ `ready` - candidate checks passed; awaiting Business Acceptance.
+✅ `accepted` - candidate checks passed and Business Acceptance selected Accept; awaiting Completion.
 
 ## Residual Risks
 
