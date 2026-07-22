@@ -198,37 +198,33 @@ Milestone 使用独立表格放在 Story Map 主表之后，避免破坏 `Path x
 
 ## Size 估算
 
-Story Map 中的 Story 和 Task 必须使用统一的相对 Size：
+相对 Size 估算是 Work Item Planning 的条件能力。仅使用以下唯一枚举：
 
 ```text
 XS / S / M / L / XL / ?
 ```
 
-`?` 表示现有信息不足以形成可信估算。Size 表示相对工作量、复杂度和已知不确定性的综合判断，不表示工期。
+Size 表示相对工作量、复杂度和已知不确定性的综合判断；不得转换为人日、工期、团队容量或任何容量承诺。`?` 表示现有信息不足以形成可信估算，必须保留，不得为了完成规划而猜测为确定等级。
 
-估算必须由 Work Item Planning 完成，并遵循以下顺序：
+在适用的 Story Map 和卡片已经存在，或已包含在当前规划提案后，Work Item Planning 提出一个范围清楚、规模适中且具有代表性的基准候选，并说明选择理由。用户必须确认该卡片为 `M`，然后才可估算其他工作项。Story Map 记录基准工作项 ID、基准卡片 Version、选择理由和 `Needs Size Re-estimation: yes|no`；该标记是规划元数据，不是工作项状态。
+
+估算遵循以下边界：
 
 ```text
-形成 Story Map 和轻量工作项
--> 选择范围相对清楚、规模适中且有代表性的候选基准卡
--> 说明选择理由并由用户确认
--> 将基准卡固定为 M
--> 相对基准卡自动估算其余 Story 和 Task
--> 汇总并由用户确认
--> 写入 Story Map、卡片和 Backlog
+确认 M 基准
+-> 相对估算 Story Map 中的 Story 和必要 Task
+-> 在当前已确认 Planning 范围内估算独立 Task 和 Bug
+-> 汇总并等待 Planning Result Confirmation
+-> 原子写入卡片、Story Map 和 Backlog 的 Size 投影
 ```
 
-估算汇总必须展示：
+Bug 不进入 Story Map。Story Map 必须显示 Story 和必要 Task 的 Size、按 Path 和 Milestone 的分布，以及 `XL`、`?` 和显著不确定性的明确汇总。卡片记录每项已确认的 Size；卡片 Change Log 记录 Size 确认、失效和重新估算，但仅 Size 的变化不得递增卡片 Version。
 
-- 每张卡片的 Size；
-- 每个 Path 的 Size 分布；
-- 每个 Milestone 的 Size 分布；
-- 所有 `?` 和 `XL` 工作项；
-- 与基准卡相比存在明显不确定性的估算。
+Backlog 生命周期表继续严格使用 `ID | Title | Version | Status | Priority` 五列，不得增加 Size 列。适用的已估算卡片通过独立的 `Size Summary` 汇总，列严格为 `ID | Size | Needs Re-estimation`。相对 Size 估算作为规划结果的一部分，必须在 Planning Result Confirmation 后原子写入卡片 Size、Story Map 基准与分布及 Backlog `Size Summary`。
 
-不得为了完成估算而猜测 `?` 工作项。用户可以调整单张卡片 Size，也可以更换基准卡后重新估算。增量规划默认复用现有基准卡；基准卡被删除、Superseded 或范围实质变化时，必须重新选择并由用户确认。
+增量规划在基准卡仍存在、不是 `Superseded` 且其 Version 与 Story Map 基准快照一致时复用已确认基准。基准卡被删除、标记为 `Superseded` 或 Version 不再匹配快照时，基准失效；Planning 必须选择替代基准并请用户重新确认，之后才可估算或重新估算受影响工作项。用户也可以调整单项 Size 或选择替代基准，但结果仍需等待适用的 Planning Result Confirmation 才能写入。
 
-其他 workflow 发现范围变化可能导致 Size 失效时，只标记需要重新估算，不自行修改 Size。重新估算必须返回 Work Item Planning。仅 Size 变化不递增工作项定义版本，但必须同步 Story Map、卡片、Backlog 和相关 Change Log。
+其他 workflow 发现实质范围变化可能使既有估算失效时，只能在卡片标记 `Needs Size Re-estimation: yes` 并写明原因，然后返回 Work Item Planning；不得自行修改 Size、Story Map、Backlog `Size Summary` 或基准。该能力不创建或修改 Iteration Plan，也不进行 S-039 的容量校准。
 
 ## Iteration Plan（迭代计划）
 
