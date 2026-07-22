@@ -94,6 +94,7 @@ create_fixture() {
   local diag_sha solution_sha plan_sha implementation_sha implementation_record_sha verification_sha acceptance_sha borrowed_acceptance_sha unreachable_final_sha
   local verification_candidate_sha verification_final_value merge_add_sha merge_restore_sha merge_bridge_sha
   local post_verification_record_sha
+  local delivery_unit_manifest_section=""
   local implementation_record_text verification_text artifact_for_manifest checkpoint_for_manifest base_sha base_line
   local verification_head verification_branch verification_snapshot verification_state
 
@@ -289,6 +290,24 @@ The final-verification record synchronization is scoped to this run."
     post_verification_record_sha="$(commit_paths "$repo" "post-verification record checkpoint" "$run_dir_rel/post-verification-checkpoint.md")"
   fi
 
+  if [[ "$scenario" == "valid-final-verification-delivery-unit-writeback" ]]; then
+    write_file "$repo" "build/dev-cadence/feature-dev/delivery-unit-member/06-business-acceptance-record.md" "# Business Acceptance\n\n- User Decision: \`accepted\`"
+    write_file "$repo" "docs/stories/S-999-delivery-unit-member.md" "# S-999 Delivery Unit Member"
+    write_file "$repo" "docs/backlog.md" "# Backlog\n\nS-999 lifecycle writeback."
+    commit_paths "$repo" "delivery unit lifecycle writeback" \
+      "build/dev-cadence/feature-dev/delivery-unit-member/06-business-acceptance-record.md" \
+      "docs/stories/S-999-delivery-unit-member.md" \
+      "docs/backlog.md" >/dev/null
+    delivery_unit_manifest_section="
+
+## Final Verification Delivery Unit
+
+- Delivery Unit Run Directory: \`$run_dir_rel\`
+- Delivery Unit Run Directory: \`build/dev-cadence/feature-dev/delivery-unit-member\`
+- Delivery Unit Work Item Path: \`docs/stories/S-999-delivery-unit-member.md\`
+- Delivery Unit Lifecycle Writeback Path: \`docs/backlog.md\`"
+  fi
+
   write_file "$repo" "$acceptance_path" "# Business Acceptance
 
 - User Decision: \`accepted\`
@@ -325,7 +344,7 @@ The final-verification record synchronization is scoped to this run."
 | Repair Plan | \`confirmed\` | \`$plan_path\` | \`confirmed\` | \`$plan_sha\` | plan captured |
 | Repair Implementation | \`confirmed\` | \`$artifact_for_manifest\` | \`confirmed\` | \`$checkpoint_for_manifest\` | implementation captured |
 | Regression Verification | \`confirmed\` | \`$verification_path\` | \`confirmed\` | \`$verification_sha\` | test report captured |
-| Business Acceptance | \`confirmed\` | \`$acceptance_path\` | \`confirmed\` | \`$acceptance_sha\` | acceptance captured |"
+| Business Acceptance | \`confirmed\` | \`$acceptance_path\` | \`confirmed\` | \`$acceptance_sha\` | acceptance captured |$delivery_unit_manifest_section"
 
   case "$scenario" in
     invalid-terminal-stage)
@@ -653,6 +672,9 @@ expect_validator_success "$valid_run" --final-verification
 current_run_evidence_checkpoint_run="$(create_fixture "valid-final-verification-current-run-evidence-checkpoint")"
 expect_validator_success "$current_run_evidence_checkpoint_run" --final-verification
 
+delivery_unit_writeback_run="$(create_fixture "valid-final-verification-delivery-unit-writeback")"
+expect_validator_success "$delivery_unit_writeback_run" --final-verification
+
 valid_no_tracked_changes_run="$(create_fixture "valid-no-tracked-changes")"
 run_expect_success "$valid_no_tracked_changes_run"
 expect_validator_success "$valid_no_tracked_changes_run" --final-verification
@@ -755,10 +777,10 @@ tracked_snapshot_changed_run="$(create_fixture "invalid-final-verification-track
 expect_validator_failure "$tracked_snapshot_changed_run" --final-verification "FAIL: final verification tracked snapshot changed"
 
 unapproved_code_commit_run="$(create_fixture "invalid-final-verification-unapproved-code-commit")"
-expect_validator_failure "$unapproved_code_commit_run" --final-verification "FAIL: final verification checkpoint changes outside run directory"
+expect_validator_failure "$unapproved_code_commit_run" --final-verification "FAIL: final verification checkpoint changes outside delivery unit"
 
 merge_checkpoint_run="$(create_fixture "invalid-final-verification-merge-checkpoint")"
-expect_validator_failure "$merge_checkpoint_run" --final-verification "FAIL: final verification checkpoint changes outside run directory"
+expect_validator_failure "$merge_checkpoint_run" --final-verification "FAIL: final verification checkpoint changes outside delivery unit"
 
 symbolic_head_run="$(create_fixture "invalid-final-verification-symbolic-head")"
 expect_validator_failure "$symbolic_head_run" --final-verification "FAIL: final verification HEAD must be a full commit SHA"

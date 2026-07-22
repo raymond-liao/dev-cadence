@@ -96,6 +96,9 @@ final_sha_value=""
 recorded_checkpoints=""
 final_verification_end_head=""
 base_sha_value=""
+delivery_unit_run_directories=()
+delivery_unit_work_item_paths=()
+delivery_unit_lifecycle_paths=()
 
 if [[ $# -lt 1 || $# -gt 2 ]]; then
   fail "usage: validate-delivery-record.sh RUN_DIR [--terminal|--final-verification]"
@@ -142,6 +145,74 @@ case "$run_dir_abs" in
     ;;
 esac
 run_dir_rel="${run_dir_abs#"$repo_root_abs/"}"
+
+validate_delivery_unit_value() {
+  local kind="$1"
+  local value="$2"
+
+  case "$kind" in
+    run)
+      [[ "$value" =~ ^build/dev-cadence/(feature-dev|bug-fix|refactor)/[a-z0-9][a-z0-9-]*$ ]] ||
+        fail "final verification delivery unit has invalid run directory '$value'"
+      ;;
+    work_item)
+      [[ "$value" =~ ^docs/(stories|tasks|bugs)/[A-Z]-[0-9]{3}-[A-Za-z0-9-]+\.md$ ]] ||
+        fail "final verification delivery unit has invalid work item path '$value'"
+      ;;
+    lifecycle)
+      [[ "$value" == "docs/backlog.md" ]] ||
+        fail "final verification delivery unit has invalid lifecycle writeback path '$value'"
+      ;;
+  esac
+}
+
+while IFS= read -r value; do
+  validate_delivery_unit_value run "$value"
+  delivery_unit_run_directories+=("$value")
+done < <(rg -o --replace '$1' '^- Delivery Unit Run Directory: `([^`]+)`$' "$manifest_path")
+
+while IFS= read -r value; do
+  validate_delivery_unit_value work_item "$value"
+  delivery_unit_work_item_paths+=("$value")
+done < <(rg -o --replace '$1' '^- Delivery Unit Work Item Path: `([^`]+)`$' "$manifest_path")
+
+while IFS= read -r value; do
+  validate_delivery_unit_value lifecycle "$value"
+  delivery_unit_lifecycle_paths+=("$value")
+done < <(rg -o --replace '$1' '^- Delivery Unit Lifecycle Writeback Path: `([^`]+)`$' "$manifest_path")
+
+delivery_unit_path_is_allowed() {
+  local changed_path="$1"
+  local allowed_path
+
+  case "$changed_path" in
+    "$run_dir_rel"/*)
+      return 0
+      ;;
+  esac
+
+  for allowed_path in "${delivery_unit_run_directories[@]}"; do
+    case "$changed_path" in
+      "$allowed_path"/*)
+        return 0
+        ;;
+    esac
+  done
+
+  for allowed_path in "${delivery_unit_work_item_paths[@]}" "${delivery_unit_lifecycle_paths[@]}"; do
+    [[ "$changed_path" == "$allowed_path" ]] && return 0
+  done
+
+  return 1
+}
+
+final_verification_diff_pathspecs=(. ":(exclude)$run_dir_rel")
+for value in "${delivery_unit_run_directories[@]}"; do
+  final_verification_diff_pathspecs+=(":(exclude)$value")
+done
+for value in "${delivery_unit_work_item_paths[@]}" "${delivery_unit_lifecycle_paths[@]}"; do
+  final_verification_diff_pathspecs+=(":(exclude)$value")
+done
 
 valid_status() {
   case "$1" in
@@ -232,8 +303,8 @@ validate_final_verification() {
 
   current_branch="$(git -C "$repo_root_abs" branch --show-current)"
   [[ "$current_branch" == "$end_branch" ]] || fail "final verification branch changed"
-  current_snapshot="$(git -C "$repo_root_abs" diff --binary "$snapshot_base_sha" -- . ":(exclude)$run_dir_rel" | git -C "$repo_root_abs" hash-object --stdin)"
-  if git -C "$repo_root_abs" diff --quiet "$snapshot_base_sha" -- . ":(exclude)$run_dir_rel"; then
+  current_snapshot="$(git -C "$repo_root_abs" diff --binary "$snapshot_base_sha" -- "${final_verification_diff_pathspecs[@]}" | git -C "$repo_root_abs" hash-object --stdin)"
+  if git -C "$repo_root_abs" diff --quiet "$snapshot_base_sha" -- "${final_verification_diff_pathspecs[@]}"; then
     current_state="clean"
   else
     current_state="dirty"
@@ -441,13 +512,8 @@ if [[ "$final_verification_mode" -eq 1 || "$terminal_mode" -eq 1 ]]; then
     [[ -z "$commit" ]] && continue
     while IFS= read -r changed_path; do
       [[ -z "$changed_path" ]] && continue
-      case "$changed_path" in
-        "$run_dir_rel"/*)
-          ;;
-        *)
-          fail "final verification checkpoint changes outside run directory"
-          ;;
-      esac
+      delivery_unit_path_is_allowed "$changed_path" ||
+        fail "final verification checkpoint changes outside delivery unit"
     done < <(git -C "$repo_root_abs" diff --name-only "$commit^1" "$commit")
   done < <(git -C "$repo_root_abs" rev-list --first-parent "$final_verification_end_head..HEAD")
 fi

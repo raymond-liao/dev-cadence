@@ -120,6 +120,8 @@ assert_final_verification_contract() {
     fail "missing $label evidence checkpoint whitelist"
   printf '%s\n' "$verification_section" | rg -q -- 'may not self-reference.*rather than requiring its own hash' ||
     fail "missing $label self-registering checkpoint handling"
+  printf '%s\n' "$verification_section" | rg -q -- 'Final Verification Delivery Unit.*Delivery Unit Lifecycle Writeback Path' ||
+    fail "missing $label delivery unit lifecycle writeback contract"
   printf '%s\n' "$verification_section" | rg -q -- 'post-test.*--final-verification.*fails' ||
     fail "missing $label immediate final verification failure handling"
   printf '%s\n' "$verification_section" | rg -q -- "candidate.*$implementation_stage.*review.*verification" ||
