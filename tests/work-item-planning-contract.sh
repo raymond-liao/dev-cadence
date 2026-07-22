@@ -157,6 +157,42 @@ assert_literal "authoritative backlog path" "docs/backlog.md" "$SKILL"
 assert_literal "backlog ownership" 'Work Item Planning is the authoritative owner of Backlog structure, lifecycle sections, and planning-maintained ordering.' "$SKILL"
 assert_literal "backlog lifecycle sections" 'Use exactly these Backlog lifecycle sections in this order: `进行中`, `待处理`, `已完成`, `已关闭`.' "$SKILL"
 assert_literal "backlog five columns" 'Each Backlog lifecycle section must use exactly these columns: `ID | Title | Version | Status | Priority`.' "$SKILL"
+assert_match "relative size enum" 'XS.*S.*M.*L.*XL.*\\?' "$SKILL"
+assert_literal "size summary" 'Size Summary' "$SKILL"
+assert_match "confirmed M baseline" 'user.*confirm.*`M`.*baseline|`M`.*baseline.*user.*confirm' "$SKILL"
+assert_match "baseline candidate rationale" 'baseline candidate.*reason|candidate.*reason.*baseline' "$SKILL"
+assert_match "baseline reuse" 'reuse.*confirmed.*baseline|confirmed.*baseline.*reuse' "$SKILL"
+assert_match "baseline invalidation" 'baseline.*invalid.*reconfirm|invalid.*baseline.*reconfirm' "$SKILL"
+assert_match "user size adjustment" 'user.*adjust.*item.*Size|adjust.*item.*Size.*user' "$SKILL"
+assert_match "uncertain size preserved" '`\?`.*preserv|preserv.*`\?`' "$SKILL"
+assert_match "xl and uncertainty summary" '`XL`.*uncertain|uncertain.*`XL`' "$SKILL"
+assert_match "size atomic projection" 'atomically.*card.*Story Map.*Backlog.*Size Summary|card.*Story Map.*Backlog.*Size Summary.*atomic' "$SKILL"
+assert_literal \
+  "relative size named subset atomic unit" \
+  'For a relative-size proposal, a named item and its card `Size`, Story Map Size/baseline/distribution, and Backlog `Size Summary` projection are one indivisible confirmation unit.' \
+  "$SKILL"
+assert_literal \
+  "confirmed re-estimation clears invalidation" \
+  'After a re-estimation is confirmed, set `Needs Size Re-estimation: no` and remove its stale invalidation reason in every affected card, Story Map entry, and Backlog `Size Summary` row in the same atomic result.' \
+  "$SKILL"
+assert_literal \
+  "baseline remains M" \
+  'The active baseline card must remain `M`.' \
+  "$SKILL"
+assert_literal \
+  "baseline size adjustment replacement selection" \
+  'Treat an adjustment of the active baseline card Size as a replacement-baseline selection: do not write it as an individual adjustment; propose a replacement card at `M` and require explicit user reconfirmation before re-estimating affected items.' \
+  "$SKILL"
+assert_literal \
+  "baseline reuse validates current M size" \
+  'Reuse is valid only when that baseline card currently has Size `M`.' \
+  "$SKILL"
+assert_section_not_literal \
+  "relative size iteration plan exclusion" \
+  "## Relative Size Estimation" \
+  "## Story Map Contract" \
+  "Iteration Plan" \
+  "$SKILL"
 assert_literal "backlog pending order preservation" 'Preserve the existing row order inside `待处理` unless the confirmed planning change explicitly updates that recommendation.' "$SKILL"
 assert_literal "backlog no duplicate card detail" 'Backlog rows must summarize cards only. Do not duplicate card body details, acceptance conditions, change logs, workflow-run evidence, or other card-only fields in the Backlog table.' "$SKILL"
 assert_literal "backlog pending order authority" 'The row order in `待处理` is the sole authoritative suggested implementation order.' "$SKILL"

@@ -110,6 +110,9 @@ assert_match "user decides conflict outcome" 'user.*decide|must not automaticall
 
 assert_match "product boundary discovery" 'return to `discovery`|Discovery.*Feature identities|must not define or reinterpret Feature' "$SKILL"
 assert_match "planning boundary" 'return to `work-item-planning`|Story Map.*Milestone.*Backlog order|must not modify Size' "$SKILL"
+assert_literal "size re-estimation marker" 'Needs Size Re-estimation: yes' "$SKILL"
+assert_match "size re-estimation reason" 'Needs Size Re-estimation.*reason' "$SKILL"
+assert_match "size re-estimation planning handoff" 'Needs Size Re-estimation.*return to `work-item-planning`' "$SKILL"
 assert_match "delivery boundary" 'must not design technical solutions, modify code, run delivery testing, or perform business acceptance' "$SKILL"
 assert_match "bug-fix boundary" 'does not replace `bug-fix`|`bug-fix`.*root cause.*repair boundary' "$SKILL"
 

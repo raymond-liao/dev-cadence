@@ -115,6 +115,7 @@ If a Feature is missing, ambiguous, or needs a meaning or order change, return t
 - atomically write only the confirmed Story Map, milestone, card, and necessary Backlog changes after confirmation;
 - reuse existing cards when the business identity is the same;
 - check current card versions before writing and stop on version or fact conflicts.
+- conditionally perform relative-size estimation only after the applicable Story Map, cards, and Backlog exist or are included in the same confirmed planning proposal.
 
 ### ❌ Work Item Planning Must Not
 
@@ -124,7 +125,7 @@ If a Feature is missing, ambiguous, or needs a meaning or order change, return t
 - do not force a direct-intake request into a full Story Map redraw;
 - do not treat Story Map as an execution-status board or a workflow-run log;
 - do not silently create duplicate cards, duplicate IDs, or parallel planning assets;
-- do not implement standalone Work Item Analysis, standalone relative-size estimation, standalone iteration-capacity calibration, or unified Backlog redesign inside this skill.
+- do not implement standalone Work Item Analysis, standalone iteration-capacity calibration, or unified Backlog redesign inside this skill.
 
 ## Modes
 
@@ -175,6 +176,7 @@ Necessary clarification may ask only the questions needed to make the requested 
 
 Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged for both modes.
 The user may confirm only part of the proposal; unconfirmed parts must keep their current authoritative content.
+For a relative-size proposal, a named item and its card `Size`, Story Map Size/baseline/distribution, and Backlog `Size Summary` projection are one indivisible confirmation unit.
 
 ## Confirmation Gate Presentation
 
@@ -191,7 +193,7 @@ Then present the actual planning choices and their effects for the selected mode
 ### Portfolio Planning Confirmation Gates
 
 - At `Planning Inputs And Scope Confirmation`, confirm the named authoritative inputs and scope to advance to the structure proposal, or request changes and remain at the current stage with authoritative planning assets unchanged. This is the first formal confirmation gate for Portfolio Planning. If an input is missing or conflicted, keep the planning proposal blocked and return to `discovery` or request a user decision rather than guessing.
-- At `Planning Result Confirmation`, `confirm the full proposed result` atomically writes the affected Story Map, milestones, cards, and Backlog references. This is the second formal confirmation gate for Portfolio Planning. The user may also `confirm only the named subset`; only that subset is written and every unconfirmed asset keeps its current authoritative content. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the gate.
+- At `Planning Result Confirmation`, `confirm the full proposed result` atomically writes the affected Story Map, milestones, cards, and Backlog references. When the proposal includes relative-size estimation, atomically write the confirmed card Size fields, Story Map baseline and distribution, and Backlog `Size Summary` as the same planning result. This is the second formal confirmation gate for Portfolio Planning. The user may also `confirm only the named subset`; only that subset is written and every unconfirmed asset keeps its current authoritative content. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the gate.
 - When the proposal includes a milestone or MVP slice, show the explicit included work-item IDs and let the user confirm or change that slice. MVP becomes authoritative only when the user confirms it; it is not inferred from the proposal.
 - Every choice must state its effect on the next stage, asset writes, records, status, and whether re-confirmation is required.
 
@@ -204,6 +206,20 @@ Necessary Clarification is not a formal confirmation gate. It only resolves miss
 - At the same result gate, `confirm only the named subset` must not create an orphaned card or orphaned Backlog row. A named card and its necessary Backlog references are one indivisible confirmation unit; optional Story Map or Milestone references may remain unconfirmed. `Request changes and remain at the current stage` writes nothing, revises the same proposal, and repeats the result gate.
 
 Do not import the Delivery Workflow advance/revise menu as a replacement for these planning choices. Preserve Feature ownership, candidate or input selection, partial confirmation, MVP slicing, version-conflict handling, and handoff to a downstream delivery workflow. Do not apply this section to downstream terminal menus; Work Item Planning does not own those menus.
+
+## Relative Size Estimation
+
+Relative-size estimation is a conditional Planning capability. Use only the unique enum `XS | S | M | L | XL | ?`; it expresses relative effort, complexity, and known uncertainty, and must not be converted to person-days, duration, or team capacity.
+
+After the applicable Story Map and cards exist or are included in the current planning proposal, propose a baseline candidate with a reason that it has clear scope, moderate size, and representative characteristics. The user must confirm the selected baseline card as `M` before estimating other items. The active baseline card must remain `M`. Record the baseline work-item ID, baseline card Version, selection reason, and `Needs Size Re-estimation: yes|no` in the Story Map; this flag is planning metadata, not a work-item status.
+
+Estimate Story Map Stories and necessary Tasks relative to the confirmed baseline. Estimate independent Tasks and Bugs only when they are in the current confirmed Planning scope; Bugs remain outside the Story Map. When information is insufficient, preserve `?`; do not substitute a certain level to complete planning. The Story Map must show the Size for its Stories and necessary Tasks, Path and Milestone distributions, and an explicit summary of `XL`, `?`, and significant uncertainty.
+
+For incremental planning, reuse a confirmed baseline while its card exists, is not `Superseded`, and its Version matches the Story Map baseline snapshot. Reuse is valid only when that baseline card currently has Size `M`. When the baseline is deleted, `Superseded`, its Version no longer matches the snapshot, or its Size is no longer `M`, the baseline is invalid and Planning must select and ask the user to reconfirm a replacement baseline before estimating or re-estimating affected items.
+
+The user may adjust an individual item Size or select a replacement baseline; form the resulting re-estimation proposal and wait for the applicable Planning Result Confirmation before writing it. Treat an adjustment of the active baseline card Size as a replacement-baseline selection: do not write it as an individual adjustment; propose a replacement card at `M` and require explicit user reconfirmation before re-estimating affected items.
+
+Record each confirmed item Size in its card. Record Size confirmation, invalidation, and re-estimation in the card Change Log, but Size-only changes must not increment the card Version. After a re-estimation is confirmed, set `Needs Size Re-estimation: no` and remove its stale invalidation reason in every affected card, Story Map entry, and Backlog `Size Summary` row in the same atomic result. Keep each Backlog lifecycle table at exactly `ID | Title | Version | Status | Priority`; do not add a Size column. Instead, maintain a separate Backlog `Size Summary` with exactly `ID | Size | Needs Re-estimation` for the applicable estimated cards.
 
 ## Story Map Contract
 
@@ -286,7 +302,7 @@ Change Log
 
 `Relationships` is required. Dependencies, blockers, replacements, related items, and similar planning relationships must be recorded explicitly instead of being implied only by Story Map position or narrative text.
 
-When the planning scope already includes a confirmed size field, the card may also include `Size`. Do not invent a standalone size-estimation process here.
+When the planning scope includes relative-size estimation, the card must include `Size` and may include `Needs Size Re-estimation: yes|no` with a reason when invalidated.
 
 Task cards may include optional `Nature`, but `Nature` does not create a new card type or a different lifecycle model.
 
