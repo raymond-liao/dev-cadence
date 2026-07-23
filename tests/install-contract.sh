@@ -25,6 +25,7 @@ test -f "$TARGET_REPO/.dev-cadence/references/contracts/change-log.md" || fail "
 test -f "$TARGET_REPO/.dev-cadence/skills/git-commit/SKILL.md" || fail "first install did not create git-commit skill"
 test -f "$TARGET_REPO/.dev-cadence/references/document-conventions/SKILL.md" || fail "first install did not create document-conventions skill"
 test -f "$TARGET_REPO/.dev-cadence/skills/open-question-registry/SKILL.md" || fail "first install did not create open-question-registry skill"
+test -f "$TARGET_REPO/.dev-cadence/workflows/backlog/SKILL.md" || fail "first install did not create backlog workflow"
 test -f "$TARGET_REPO/.dev-cadence/workflows/work-item-analysis/SKILL.md" || fail "first install did not create work-item-analysis skill"
 test -f "$TARGET_REPO/.dev-cadence/workflows/using-dev-cadence/scripts/validate-delivery-record.sh" || fail "first install did not create delivery-record validator"
 test -f "$TARGET_REPO/.dev-cadence/workflows/feature-dev/scripts/validate-persistent-record-recovery.sh" || fail "first install did not create feature recovery validator"
@@ -38,7 +39,7 @@ cmp -s \
 cmp -s \
   "$ROOT_DIR/src/references/contracts/change-log.md" \
   "$TARGET_REPO/.dev-cadence/references/contracts/change-log.md" || fail "installed Change Log contract differs from source"
-for workflow in using-dev-cadence discovery architecture-design; do
+for workflow in using-dev-cadence backlog architecture-design; do
   test -f "$TARGET_REPO/.dev-cadence/workflows/$workflow/SKILL.md" ||
     fail "first install did not create $workflow workflow"
   cmp -s \
@@ -48,6 +49,8 @@ for workflow in using-dev-cadence discovery architecture-design; do
 done
 test ! -e "$TARGET_REPO/.dev-cadence/skills/using-dev-cadence" || fail "first install retained legacy workflow path"
 test ! -e "$TARGET_REPO/.dev-cadence/skills/contracts" || fail "first install retained legacy reference path"
+test ! -e "$TARGET_REPO/.dev-cadence/workflows/discovery" || fail "first install retained removed discovery workflow"
+test ! -e "$TARGET_REPO/.dev-cadence/workflows/work-item-planning" || fail "first install retained removed work-item-planning workflow"
 
 printf 'stale\n' > "$TARGET_REPO/.dev-cadence/stale-file"
 bash "$INSTALL_SCRIPT" "$TARGET_REPO"
@@ -77,7 +80,10 @@ cmp -s \
 cmp -s \
   "$ROOT_DIR/src/workflows/work-item-analysis/SKILL.md" \
   "$TARGET_REPO/.dev-cadence/workflows/work-item-analysis/SKILL.md" || fail "installed work-item-analysis skill differs from source"
-for workflow in using-dev-cadence discovery architecture-design; do
+cmp -s \
+  "$ROOT_DIR/src/workflows/backlog/SKILL.md" \
+  "$TARGET_REPO/.dev-cadence/workflows/backlog/SKILL.md" || fail "installed backlog workflow differs from source"
+for workflow in using-dev-cadence backlog architecture-design; do
   cmp -s \
     "$ROOT_DIR/src/workflows/$workflow/SKILL.md" \
     "$TARGET_REPO/.dev-cadence/workflows/$workflow/SKILL.md" ||
@@ -85,5 +91,7 @@ for workflow in using-dev-cadence discovery architecture-design; do
 done
 test ! -e "$TARGET_REPO/.dev-cadence/skills/using-dev-cadence" || fail "update retained legacy workflow path"
 test ! -e "$TARGET_REPO/.dev-cadence/skills/contracts" || fail "update retained legacy reference path"
+test ! -e "$TARGET_REPO/.dev-cadence/workflows/discovery" || fail "update retained removed discovery workflow"
+test ! -e "$TARGET_REPO/.dev-cadence/workflows/work-item-planning" || fail "update retained removed work-item-planning workflow"
 
 printf 'Install contract checks passed.\n'

@@ -4,7 +4,7 @@
 
 - ID：`T-002`
 - Version：`4`
-- Status：`Blocked`
+- Status：`Dropped`
 - Priority：`P2`
 - Change Type：Quality Engineering
 
@@ -60,7 +60,7 @@
 
 ## Open Questions
 
-- Q-022：哪些代表性路径足以覆盖升级兼容，而不会把测试固化为单一实现？
+- Q-022：`Invalid`。本任务随产品分析与产品组合规划能力移除而停止，不再需要为旧需求治理全链路选择代表性升级路径。
 
 ## 相关文档
 
@@ -82,3 +82,4 @@
 | 2 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 将 User Journey、Feature 和三资产产品设计基线纳入端到端验证范围。 | Discovery 已确认 Journey 和 Feature 的上游权威职责，完整治理链路必须验证其向规划与交付阶段的传递。 |
 | 3 | legacy: recorded-at precision unknown; original 2026-07-15 | legacy: recorded-by unknown | 将工作项分析、相对 Size、Iteration Plan、类型化启动门禁和共享卡片回写纳入端到端验证，并将状态更新为 Blocked。 | Planning 和 Analysis 的完整方案已经形成，最终验证必须覆盖从产品基线到分批交付的全部权威资产与路由边界。 |
 | 4 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 收敛为安装后代表性端到端验证，排除重复的穷尽局部契约测试。 | T-002 保持独立集成验证责任，同时避免成为所有 workflow 细节的重复测试容器。 |
+| 4 | 2026-07-23T20:19:37+0800 | Raymond Liao <raymond-liao@outlook.com> | 将任务状态更新为 Dropped，并将 Q-022 标记为 Invalid。 | 用户确认将产品分析和产品组合规划能力移出 Dev Cadence；本任务验证的旧产品设计到交付全链路已不再成立，当前实施入口契约由各 workflow 契约测试覆盖。 |

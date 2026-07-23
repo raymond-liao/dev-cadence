@@ -3,128 +3,76 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILL="$ROOT_DIR/src/workflows/work-item-analysis/SKILL.md"
-ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
+ENTRY="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
   exit 1
 }
 
-assert_file() {
-  test -f "$1" || fail "missing ${1#"$ROOT_DIR/"}"
-}
-
 assert_literal() {
-  local label="$1"
-  local literal="$2"
-  local path="$3"
-
+  local label="$1" literal="$2" path="$3"
   rg --no-ignore -F -n -- "$literal" "$path" >/dev/null ||
     fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
 assert_match() {
-  local label="$1"
-  local pattern="$2"
-  local path="$3"
-
+  local label="$1" pattern="$2" path="$3"
   rg --no-ignore -n "$pattern" "$path" >/dev/null ||
     fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
 assert_not_match() {
-  local label="$1"
-  local pattern="$2"
-  local path="$3"
-
+  local label="$1" pattern="$2" path="$3"
   if rg --no-ignore -n "$pattern" "$path" >/dev/null; then
     fail "unexpected $label in ${path#"$ROOT_DIR/"}"
   fi
 }
 
-assert_file "$SKILL"
-assert_literal \
-  "description" \
-  "description: Use when a user asks to analyze, clarify, or confirm Story, Task, or Bug definitions before downstream delivery work in a target project." \
-  "$SKILL"
-assert_literal "workflow heading" "# Work Item Analysis" "$SKILL"
+test -f "$SKILL" || fail "missing work-item-analysis workflow"
+assert_literal "description" "description: Use when a user asks to analyze, clarify, or confirm one existing Story, Task, or Bug definition before downstream delivery work." "$SKILL"
 assert_literal "asset declaration" "This is an Asset Workflow." "$SKILL"
 assert_match "no delivery records" 'must not create `build/dev-cadence/` run manifests?.*stage records?.*confirmation records?.*checkpoint commits?' "$SKILL"
-assert_match "docs-only asset scope" 'create or update only authoritative Story, Task, and Bug cards under `docs/`|authoritative Story, Task, and Bug cards under `docs/`' "$SKILL"
-assert_match "no delivery evidence copy" 'must not copy the Delivery Workflow record chain|Do not copy Delivery Workflow evidence into work-item assets' "$SKILL"
+assert_match "one card" 'analyze exactly one authoritative Story, Task, or Bug card|exactly one existing conforming card' "$SKILL"
+assert_literal "no batch" "- analyze a batch, the whole Backlog, or a portfolio;" "$SKILL"
+assert_literal "no card creation" "- create a missing card;" "$SKILL"
+assert_match "missing card handoff" 'no conforming authoritative card exists.*backlog/SKILL.md' "$SKILL"
+assert_match "nonconforming handoff" 'does not satisfy the structural card contract.*return it to Backlog' "$SKILL"
+assert_match "no normalization" 'Do not normalize or recreate it inside Work Item Analysis' "$SKILL"
 
-assert_literal \
-  "target repository output language config" \
-  'Before producing workflow guidance, in-conversation analysis proposals, user-facing analysis summaries, or durable work-item updates, read `.dev-cadence.yaml` from the target repository root.' \
-  "$SKILL"
-assert_literal "english output language" '- `output_language: en` uses English.' "$SKILL"
-assert_literal "simplified chinese output language" '- `output_language: zh-CN` uses Simplified Chinese.' "$SKILL"
-assert_literal "output language fallback" '- If the file or value is missing or unsupported, use English.' "$SKILL"
+assert_literal "sequence" "Necessary Clarification -> Work Item Definition Proposal -> Work Item Confirmation" "$SKILL"
+assert_literal "clarification boundary" "Necessary Clarification is not a formal confirmation gate." "$SKILL"
+assert_match "proposal remains uncommitted" 'Before Work Item Confirmation, leave authoritative assets unchanged' "$SKILL"
+assert_match "single card confirmation" 'confirmation applies to only this card.*must not change unrelated cards or Backlog order' "$SKILL"
 
-assert_match "single-item mode" '`single-item analysis`|single-item analysis' "$SKILL"
-assert_match "batch mode" '`batch analysis`|batch analysis' "$SKILL"
-assert_match "batch explicit selection" 'user explicitly selects|explicitly selected.*set|must not expand.*entire Backlog' "$SKILL"
-assert_match "analysis scope confirmation stage" 'Analysis Scope Confirmation' "$SKILL"
-assert_match "definition analysis stage" 'Work Item Definition Analysis' "$SKILL"
-assert_match "work item confirmation stage" 'Work Item Confirmation' "$SKILL"
+for field in role goal value scope 'observable system behavior' 'acceptance conditions' 'direct dependencies' 'Open Questions'; do
+  assert_match "Story field $field" "$field" "$SKILL"
+done
+assert_match "Story maturity" 'Story may become `Ready` only when.*user confirms the definition' "$SKILL"
+assert_literal "Story no product dependency" 'Story does not require a Feature, User Journey, PRD, Story Map position, or other product-analysis reference to become `Ready`.' "$SKILL"
+assert_literal "Story delivery gate" 'Story must reach `Ready` before entering `feature-dev`.' "$SKILL"
 
-assert_literal \
-  "conditional Feature traceability" \
-  'When a Story has a confirmed primary System Feature or Story Map placement, analysis must retain that traceability; an independent Story without a Feature reference may still become `Ready`.' \
-  "$SKILL"
-assert_match "story scope headings" 'included scope|excluded scope|in-scope|out-of-scope' "$SKILL"
-assert_literal "story ready gate" 'Story must reach `Ready` before entering `feature-dev`.' "$SKILL"
-assert_literal \
-  "story ready without Feature" \
-  'Story may become `Ready` only when the role, goal, value, scope, observable behavior, acceptance conditions, direct dependencies, and development-blocking open questions are explicit and the user has confirmed the work-item definition.' \
-  "$SKILL"
-assert_literal \
-  "missing Feature alone does not route Discovery" \
-  'A missing Feature reference or product-design baseline alone must not return Story analysis to `discovery`.' \
-  "$SKILL"
-assert_literal \
-  "Discovery requires product conclusion" \
-  'Return to `discovery` only when the Story requires a new or changed product-level conclusion, including a User Journey, Feature, PRD, or Business Architecture conclusion.' \
-  "$SKILL"
+assert_match "Task fields" 'goal and necessity|completion conditions|affected system or work-item area' "$SKILL"
+assert_literal "Task no Ready gate" 'Task does not need to reach `Ready` before a Delivery Workflow starts.' "$SKILL"
+assert_match "Bug fields" 'expected behavior|observed behavior|impact and severity|reproduction information' "$SKILL"
+assert_literal "Bug no root cause" 'Work Item Analysis must not investigate or confirm technical root cause, repair boundary, regression proof, or technical fix strategy.' "$SKILL"
+assert_literal "Bug direct route" 'A Bug may enter `bug-fix` without `Ready`, complete reproduction, or known root cause.' "$SKILL"
 
-assert_match "task fields" 'Task.*goal.*necessity.*scope.*completion conditions.*impact' "$SKILL"
-assert_literal "task no ready hard gate" 'Task does not need to reach `Ready` before a Delivery Workflow starts.' "$SKILL"
-assert_match "task nature optional" 'optional `Nature`|`Nature` is optional' "$SKILL"
+assert_match "conflict stop" 're-read the card Version and visible facts.*stop and form a new proposal' "$SKILL"
+assert_match "mechanical backlog sync" 'atomically synchronize only the matching Backlog row.*Status and Version' "$SKILL"
+assert_match "no backlog structure change" 'must not add, remove, move, or reorder Backlog rows' "$SKILL"
+assert_literal "maturity statuses only" 'Work Item Analysis may change Status only among the definition-maturity statuses `Draft`, `Ready`, and `Blocked`.' "$SKILL"
+assert_literal "maturity stays pending" 'These statuses all remain in the Backlog `待处理` section.' "$SKILL"
+assert_literal "forbidden lifecycle statuses" 'Work Item Analysis must not set `In Progress`, `Done`, `Superseded`, or `Dropped`.' "$SKILL"
+assert_match "pending-only status sync" 'allowed maturity Status or Version.*matching Backlog row.*in `待处理`' "$SKILL"
+assert_literal "Ready Story handoff" 'Ready Story -> `feature-dev`' "$SKILL"
+assert_literal "Bug handoff" 'Bug -> `bug-fix`' "$SKILL"
+assert_match "no automatic delivery" 'must not automatically claim or start a downstream workflow' "$SKILL"
 
-assert_match "bug fields" 'Bug.*expected behavior.*observed behavior.*impact.*environment.*reproduction' "$SKILL"
-assert_match "bug classification boundary" 'distinguish Bug, expected-behavior change, and insufficient information|expected-behavior change.*insufficient information' "$SKILL"
-assert_literal "bug no root cause analysis" 'Work Item Analysis must not investigate or confirm technical root cause.' "$SKILL"
-assert_literal "bug direct handoff" 'Bug may enter `bug-fix` without a `Ready` precondition and without a confirmed root cause.' "$SKILL"
+assert_literal "entry path" '.dev-cadence/workflows/work-item-analysis/SKILL.md' "$ENTRY"
+assert_match "entry exact one" 'exactly one existing Story, Task, or Bug definition' "$ENTRY"
+assert_not_match "removed planning route" 'work-item-planning' "$SKILL"
+assert_not_match "batch route" 'selected batch|batch analysis' "$SKILL"
+assert_not_match "personal paths" '/Users/|/private/tmp|/private/var|[A-Za-z]:\\Users\\' "$SKILL"
 
-assert_literal "card reuse" 'When an authoritative Story, Task, or Bug card already exists, Work Item Analysis must reuse it instead of creating a parallel card.' "$SKILL"
-assert_match "lightweight card creation" 'create a lightweight card and complete it in the same confirmed analysis|lightweight card.*same confirmed analysis' "$SKILL"
-assert_literal "missing-card backlog handoff" 'When Work Item Analysis creates a card that is not yet registered in `docs/backlog.md`, it must hand the card to `work-item-planning` for Backlog registration before downstream delivery.' "$SKILL"
-assert_literal "missing-card no order write" 'Work Item Analysis must not add, remove, or reorder Backlog rows while creating or analyzing a missing card.' "$SKILL"
-assert_literal "shared card conflict stop" 'When Work Item Analysis finds a Version or visible-fact conflict, it must stop and require a user decision before continuing.' "$SKILL"
-assert_literal "shared Change Log contract read" '.dev-cadence/references/contracts/change-log.md' "$SKILL"
-assert_literal "card Change Log follows shared contract" 'For every card Change Log, follow the shared Change Log contract.' "$SKILL"
-assert_match "substantive version increments" 'Increment the Version when confirmed changes alter the card'\''s goal, scope, expected behavior, acceptance or completion conditions, key dependencies, or requirement decisions' "$SKILL"
-assert_match "non substantive no increment" 'Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes' "$SKILL"
-assert_match "duplicate overlap dependency conflict" 'duplicate.*overlap.*dependenc.*conflict|dependenc.*duplicate.*overlap.*conflict' "$SKILL"
-assert_match "user decides conflict outcome" 'user.*decide|must not automatically delete, merge, or replace' "$SKILL"
-
-assert_match "product boundary discovery" 'return to `discovery`|Discovery.*Feature identities|must not define or reinterpret Feature' "$SKILL"
-assert_match "planning boundary" 'return to `work-item-planning`|Story Map.*Milestone.*Backlog order|must not modify Size' "$SKILL"
-assert_literal "size re-estimation marker" 'Needs Size Re-estimation: yes' "$SKILL"
-assert_match "size re-estimation reason" 'Needs Size Re-estimation.*reason' "$SKILL"
-assert_match "size re-estimation planning handoff" 'Needs Size Re-estimation.*return to `work-item-planning`' "$SKILL"
-assert_match "delivery boundary" 'must not design technical solutions, modify code, run delivery testing, or perform business acceptance' "$SKILL"
-assert_match "bug-fix boundary" 'does not replace `bug-fix`|`bug-fix`.*root cause.*repair boundary' "$SKILL"
-
-assert_match "proposal before confirmation" 'Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged' "$SKILL"
-assert_match "atomic confirmed write" 'atomically write only the confirmed card updates\.|atomically write only confirmed Story, Task, and Bug updates' "$SKILL"
-assert_match "partial confirmation" 'The user may confirm only part of the proposal|unconfirmed cards must keep their current authoritative content' "$SKILL"
-assert_match "downstream handoff" 'Ready Story -> `feature-dev`|Task -> `feature-dev` / `bug-fix` / `refactor`|Bug -> `bug-fix`' "$SKILL"
-assert_not_match "delivery build records" '04-code-review-report\.md|01-requirements\.md|02-technical-solution\.md|03-implementation-plan\.md|Business Acceptance' "$SKILL"
-assert_not_match "personal absolute paths" '/Users/|/private/tmp|/private/var|[A-Za-z]:\\Users\\' "$SKILL"
-
-assert_literal "entry route path" '.dev-cadence/workflows/work-item-analysis/SKILL.md' "$ENTRY_SKILL"
-assert_match "entry route row" 'analyze, clarify, or confirm one Story, Task, or Bug definition|selected batch of Story, Task, or Bug definitions' "$ENTRY_SKILL"
-assert_match "entry routing boundary" 'after analysis, hand confirmed work items to `feature-dev`, `bug-fix`, or `refactor`|does not replace downstream delivery workflows' "$ENTRY_SKILL"
-
-printf 'Work item analysis contract checks passed.\n'
+printf 'Work Item Analysis contract checks passed.\n'

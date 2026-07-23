@@ -19,8 +19,8 @@
 
 - 已有预期行为没有正常工作：使用 `bug-fix`。
 - 只改善内部结构且不主动改变外部可观察行为：使用 `refactor`。
-- 从模糊想法建立或更新 PRD：使用 `discovery`。
-- 从 PRD 拆分和维护 Feature、Story、Bug、Technical Task 与 Roadmap：使用 `work-item-planning`。
+- 创建、接收或登记 Story/Task 卡片：使用 `backlog`。
+- 详细分析一张尚未达到实施条件的 Story/Task：使用 `work-item-analysis`。
 
 ## 流程阶段
 
@@ -36,7 +36,7 @@
 ## 工作项与运行记录
 
 - 每次功能开发必须关联一个 `S-nnn` Story 或 `T-nnn` Technical Task 卡片。
-- `feature-dev` 不创建工作项卡片；入口没有找到对应卡片时，必须先进入 `work-item-planning` 的单项登记模式。
+- `feature-dev` 不创建或规范化工作项卡片；缺失或不合规卡片必须先进入 `backlog`。
 - 工作项卡片是长期需求定义；需求确认记录是本次运行使用的卡片版本和交付范围快照。
 - 需求确认记录必须引用工作项 ID、卡片路径和卡片版本，不完整复制卡片并形成第二份权威需求。
 - workflow 期间发现工作项需要实质升版时，先更新卡片及其 Change Log，再判断当前 run 应返回哪个阶段重新确认。
@@ -50,12 +50,12 @@
 - 系统测试关注整体系统是否满足已确认目标，不替代开发阶段应建立的自动化测试资产。
 - 阻塞性验证结果不能进入业务验收；返工必须回到最早受影响阶段。
 - 可工作的交付物可以是代码、配置、文档、脚本、模板、prompt、规则或其他项目资产。
-- 完成业务验收和 Completion 后，应将工作项状态及交付引用回写到卡片和 Roadmap。
+- 完成业务验收和 Completion 后，应将工作项状态及交付引用回写到卡片和 Backlog。
 
 ## 与其他 Workflow 的关系
 
 ```text
-discovery -> work-item-planning -> S / T card -> feature-dev
+backlog -> optional work-item-analysis -> S / T card -> feature-dev
 ```
 
-用户可以直接提出单项功能请求，但 `using-dev-cadence` 必须先检查卡片。没有卡片时先由 `work-item-planning` 创建和确认卡片，再进入 `feature-dev`。
+用户可以直接提出单项功能请求，但 `using-dev-cadence` 必须先检查卡片及其 Backlog 行。缺失或不合规卡片先由 `backlog` 创建和确认；未达到实施条件的 Story 再由 `work-item-analysis` 分析，之后才能进入 `feature-dev`。

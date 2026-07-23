@@ -19,7 +19,7 @@
 
 - 新增能力或主动改变预期行为：使用 `feature-dev`。
 - 修复已有行为偏差：使用 `bug-fix`。
-- 从 PRD 拆解和排序 Technical Task：使用 `work-item-planning`。
+- 创建、接收、登记或排序重构 Task：使用 `backlog`。
 
 ## 流程阶段
 
@@ -35,7 +35,7 @@
 ## 工作项与行为基线
 
 - 每次重构必须关联一个 `T-nnn` Technical Task 卡片。
-- `refactor` 不创建 Technical Task 卡片；入口没有找到对应卡片时，必须先进入 `work-item-planning` 的单项登记模式。
+- `refactor` 不创建或规范化 Task 卡片；缺失或不合规卡片必须先进入 `backlog`。
 - Technical Task 卡片保存长期技术目标、原因、范围、约束、完成条件、状态和 Change Log。
 - 需求确认记录保存本次运行使用的卡片版本、选定范围、明确排除项和用户确认。
 - 行为基线必须绑定到重构前的版本和可重复证据，不能用重构后的行为重新定义原始预期。
@@ -50,12 +50,12 @@
 - 开发实施包含结构调整及相应的单元测试、集成测试、契约测试、快照测试、检查脚本或检查清单。
 - 渐进迁移、兼容层或多调用方场景必须明确调用方范围、迁移批次、兼容策略和旧路径删除门禁。
 - 阻塞性验证结果不能进入业务验收；返工必须回到最早受影响阶段。
-- 完成业务验收和 Completion 后，应将 Technical Task 状态及交付引用回写到卡片和 Roadmap。
+- 完成业务验收和 Completion 后，应将 Task 状态及交付引用回写到卡片和 Backlog。
 
 ## 与其他 Workflow 的关系
 
 ```text
-work-item-planning -> T card -> refactor
+backlog -> optional work-item-analysis -> T card -> refactor
 ```
 
-用户可以直接提出重构请求，但 `using-dev-cadence` 必须先检查 Technical Task 卡片。没有卡片时先由 `work-item-planning` 创建和确认卡片，再进入 `refactor`。
+用户可以直接提出重构请求，但 `using-dev-cadence` 必须先检查 Task 卡片及其 Backlog 行。缺失或不合规卡片先由 `backlog` 创建和确认，再进入 `refactor`。

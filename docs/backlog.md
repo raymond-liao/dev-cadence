@@ -11,8 +11,6 @@
 |---|---|---:|---|---|
 | `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `2` | `Ready` | `P2` |
 | `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `4` | `Ready` | `P2` |
-| `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) | `1` | `Blocked` | `P1` |
-| `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) | `4` | `Blocked` | `P2` |
 | `T-005` | [最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) | `1` | `Ready` | `P2` |
 
 ## 已完成
@@ -82,6 +80,8 @@
 | `S-034` | [发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) — 当前没有已确认的发布、部署或生产交付目标，缺少可独立交付的当前用户结果。 | `1` | `Dropped` | `P3` |
 | `S-026` | Refactor 基线身份：用户确认不再推进；卡片已删除，Q-015 已标记为 Invalid。 | `-` | `Dropped` | `-` |
 | `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) — 用户确认不再将外部管理 detached HEAD 工作区作为 Dev Cadence 的独立交付目标。 | `2` | `Dropped` | `P1` |
+| `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) — 用户确认将产品分析和产品组合规划能力移出 Dev Cadence；Iteration Plan 与容量校准不再属于本项目范围。 | `1` | `Dropped` | `P1` |
+| `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) — 用户确认移除旧产品设计、规划到交付的治理链路；现有实施入口由各 workflow 契约测试覆盖。 | `4` | `Dropped` | `P2` |
 
 ## 评级说明
 
@@ -99,7 +99,7 @@
 | [S-001](stories/S-001-initial-discovery-prd-baseline.md) | - | [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-013](stories/S-013-simplify-discovery-process-records.md), [S-014](stories/S-014-user-journey-analysis.md) |
 | [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | [S-001](stories/S-001-initial-discovery-prd-baseline.md), [S-005](stories/S-005-open-question-registry.md), [S-006](stories/S-006-discovery-product-technical-content-boundary.md), [S-013](stories/S-013-simplify-discovery-process-records.md) | [S-014](stories/S-014-user-journey-analysis.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
 | [S-003](stories/S-003-implementation-design-freshness-gate.md) | - | [S-004](stories/S-004-failure-classification-stage-routing.md) |
-| [S-004](stories/S-004-failure-classification-stage-routing.md) | [S-003](stories/S-003-implementation-design-freshness-gate.md) | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
+| [S-004](stories/S-004-failure-classification-stage-routing.md) | [S-003](stories/S-003-implementation-design-freshness-gate.md) | - |
 | [S-005](stories/S-005-open-question-registry.md) | - | [S-006](stories/S-006-discovery-product-technical-content-boundary.md), [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-014](stories/S-014-user-journey-analysis.md) |
 | [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | [S-005](stories/S-005-open-question-registry.md) | [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md), [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-014](stories/S-014-user-journey-analysis.md) |
 | [S-007](stories/S-007-workflow-routing-examples.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | - |
@@ -110,11 +110,10 @@
 | [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | [S-013](stories/S-013-simplify-discovery-process-records.md), [S-011](stories/S-011-goal-driven-architecture-workflow.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
 | [S-013](stories/S-013-simplify-discovery-process-records.md) | [S-001](stories/S-001-initial-discovery-prd-baseline.md), [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-014](stories/S-014-user-journey-analysis.md) |
 | [S-014](stories/S-014-user-journey-analysis.md) | [S-001](stories/S-001-initial-discovery-prd-baseline.md), [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-005](stories/S-005-open-question-registry.md), [S-006](stories/S-006-discovery-product-technical-content-boundary.md), [S-013](stories/S-013-simplify-discovery-process-records.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
-| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md), [S-014](stories/S-014-user-journey-analysis.md), [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md), [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
-| [S-016](stories/S-016-unified-backlog-board.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-039](stories/S-039-iteration-plan-capacity-calibration.md), [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
+| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md), [S-014](stories/S-014-user-journey-analysis.md), [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md) |
+| [S-016](stories/S-016-unified-backlog-board.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
 | [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
-| [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-037](stories/S-037-work-item-analysis-workflow.md) | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md), [S-029](stories/S-029-feature-persistent-record-contract.md) |
-| [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) | [S-004](stories/S-004-failure-classification-stage-routing.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md), [S-039](stories/S-039-iteration-plan-capacity-calibration.md) | - |
+| [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-037](stories/S-037-work-item-analysis-workflow.md) | [S-029](stories/S-029-feature-persistent-record-contract.md) |
 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md) | - | - |
 | [S-019](stories/S-019-final-verification-revision-binding.md) | - | - |
 | [T-005](tasks/T-005-final-verification-carried-limitations.md) | - | - |
@@ -140,9 +139,8 @@
 | [T-003](tasks/T-003-executing-plans-pre-commit-review.md) | - | - |
 | [S-035](stories/S-035-refactor-test-sensitivity-check.md) | - | - |
 | [S-036](stories/S-036-minimal-verification-stage-gate.md) | - | - |
-| [S-037](stories/S-037-work-item-analysis-workflow.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md), [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
-| [S-038](stories/S-038-work-item-relative-size-estimation.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-039](stories/S-039-iteration-plan-capacity-calibration.md), [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
-| [S-039](stories/S-039-iteration-plan-capacity-calibration.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-038](stories/S-038-work-item-relative-size-estimation.md) | [T-002](tasks/T-002-requirements-governance-end-to-end-validation.md) |
+| [S-037](stories/S-037-work-item-analysis-workflow.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
+| [S-038](stories/S-038-work-item-relative-size-estimation.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | - |
 | [S-040](stories/S-040-open-question-registry-index-and-reference-contract.md) | [S-005](stories/S-005-open-question-registry.md), [S-010](stories/S-010-document-reference-links.md) | - |
 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | - |
 | [S-042](stories/S-042-dev-cadence-primary-subagent-delegation.md) | - | - |
@@ -151,7 +149,7 @@
 
 ## Ordering Version
 
-`11`
+`12`
 
 ## Ordering Change Log
 
@@ -168,3 +166,4 @@
 | 9 | 2026-07-21T14:52:12+0800 | Raymond Liao <raymond-liao@outlook.com> | 以 `T-005` 在原 `S-020` 的待处理位置替换该 Story，并保留相邻待处理项的相对顺序。 | 用户确认将过度复杂的风险追溯 Story 收敛为轻量 Task，排序优先级不变。 |
 | 10 | 2026-07-21T15:14:33+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 `T-005` 移至待处理末位，位于 `S-032` 之后，并保留其余待处理项的相对顺序。 | 用户确认 T-005 属于可省略或延期的审计增强，不应占用近期交付优先级。 |
 | 11 | 2026-07-21T15:44:39+08:00 | Raymond Liao <raymond-liao@outlook.com> | 从 `待处理` 移除 `S-026`；其原位置位于 `S-025` 之后、`S-027` 之前，二者在移除后保持相邻。 | 用户确认不再推进 Refactor 基线身份，删除卡片并将 Q-015 标记为 Invalid。 |
+| 12 | 2026-07-23T20:19:37+0800 | Raymond Liao <raymond-liao@outlook.com> | 从 `待处理` 移除 `S-039` 和 `T-002`，其余待处理项保持原相对顺序。 | 用户确认将产品分析和产品组合规划能力移出 Dev Cadence；两项旧规划链路工作不再继续实施，卡片保留并转入 `已关闭`。 |

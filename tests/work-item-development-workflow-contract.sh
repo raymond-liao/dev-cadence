@@ -231,7 +231,7 @@ assert_match "story analysis readiness route" 'Draft Story.*work-item-analysis.*
 assert_match "feature ready story gate" 'feature-dev.*confirmed.*Ready Story|Ready Story.*feature-dev.*confirmed' "$ENTRY_SKILL"
 assert_match "task non-unified gate" 'Task.*does not.*Ready|Task.*non-unified|Task.*非统一' "$ENTRY_SKILL"
 assert_match "bug diagnosis non-unified gate" 'Bug.*bug-fix.*without.*Ready|Bug.*非统一.*bug-fix' "$ENTRY_SKILL"
-assert_match "missing card intent routing" 'missing.*card.*work-item-planning.*work-item-analysis.*bug-fix|缺卡.*work-item-planning.*work-item-analysis.*bug-fix' "$ENTRY_SKILL"
+assert_match "missing card routing" 'missing.*card.*`backlog`|either is absent, route to `backlog`' "$ENTRY_SKILL"
 assert_match "no claim for analysis" 'analysis.*must not.*claim|分析.*不得.*领取' "$ENTRY_SKILL"
 assert_match "no duplicate claim" 'already.*`In Progress`.*must not.*claim|已经.*`In Progress`.*不得.*领取' "$ENTRY_SKILL"
 assert_match "no new claiming skill" 'must not create.*claim.*skill|不得新增.*领取.*skill' "$ENTRY_SKILL"

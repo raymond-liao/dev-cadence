@@ -4,7 +4,8 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONVENTIONS_SKILL="$ROOT_DIR/src/references/document-conventions/SKILL.md"
 ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
-DISCOVERY_SKILL="$ROOT_DIR/src/workflows/discovery/SKILL.md"
+BACKLOG_SKILL="$ROOT_DIR/src/workflows/backlog/SKILL.md"
+ANALYSIS_SKILL="$ROOT_DIR/src/workflows/work-item-analysis/SKILL.md"
 FEATURE_SKILL="$ROOT_DIR/src/workflows/feature-dev/SKILL.md"
 BUG_FIX_SKILL="$ROOT_DIR/src/workflows/bug-fix/SKILL.md"
 REFACTOR_SKILL="$ROOT_DIR/src/workflows/refactor/SKILL.md"
@@ -198,15 +199,15 @@ assert_match \
   "$ENTRY_SKILL"
 
 assert_literal "entry warning heading" "## ⚠️ Red Flags" "$ENTRY_SKILL"
-assert_literal "discovery required boundary" "### ✅ Discovery Must" "$DISCOVERY_SKILL"
-assert_literal "discovery forbidden boundary" "### ❌ Discovery Must Not" "$DISCOVERY_SKILL"
+assert_literal "Backlog conventions reference" ".dev-cadence/references/document-conventions/SKILL.md" "$BACKLOG_SKILL"
+assert_literal "Work Item Analysis conventions reference" ".dev-cadence/references/document-conventions/SKILL.md" "$ANALYSIS_SKILL"
 
 for skill in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
   assert_match "workflow warning heading" '^### ⚠️ .*Red Flags$' "$skill"
   assert_literal "ambiguous feedback heading" "### ❓ Ambiguous Acceptance Feedback" "$skill"
 done
 
-for skill in "$DISCOVERY_SKILL" "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
+for skill in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
   assert_match \
     "workflow applies shared status presentation" \
     'status summaries?.*document-conventions|document-conventions.*status summaries?|shared status.*mapping|status presentation.*shared' \
@@ -221,18 +222,12 @@ for skill in "$DISCOVERY_SKILL" "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKI
     "$skill"
 done
 
-assert_match \
-  "Discovery status surface" \
-  'user-facing status summar' \
-  "$DISCOVERY_SKILL"
-assert_match \
-  "Discovery checks existing Journey proposal references before Journey Confirmation" \
-  'Before User Journey Confirmation.*Journey proposal.*(local links|references).*targets already exist|Journey proposal.*(local links|references).*targets already exist.*before User Journey Confirmation' \
-  "$DISCOVERY_SKILL"
-assert_match \
-  "Discovery checks the three-asset combination before Product Design Confirmation" \
-  'Before Product Design Confirmation.*(three|all three).*product-design assets.*local links|(three|all three).*product-design assets.*local links.*before Product Design Confirmation' \
-  "$DISCOVERY_SKILL"
+for skill in "$BACKLOG_SKILL" "$ANALYSIS_SKILL"; do
+  assert_match \
+    "asset workflow uses repository-relative evidence" \
+    'repository-relative evidence paths' \
+    "$skill"
+done
 
 for skill in "$FEATURE_SKILL" "$BUG_FIX_SKILL" "$REFACTOR_SKILL"; do
   assert_match \

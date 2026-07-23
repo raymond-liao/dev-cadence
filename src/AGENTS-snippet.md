@@ -9,7 +9,7 @@ Do not rely on this file in place. It is only an installation snippet.
 ```markdown
 ## Dev Cadence
 
-Before responding to or acting on requests involving product discovery, product ideas, architecture design, requirements or work-item management, development, active-task follow-up, testing, verification, Dev Cadence-managed assets, or commit/checkpoint operations, read and follow:
+Before responding to or acting on requests involving work-item intake, Backlog maintenance, single-card requirements analysis, architecture design, development, active-task follow-up, testing, verification, Dev Cadence-managed assets, or commit/checkpoint operations, read and follow:
 
 `.dev-cadence/workflows/using-dev-cadence/SKILL.md`
 

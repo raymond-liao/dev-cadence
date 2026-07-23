@@ -1,16 +1,13 @@
 ---
 name: work-item-analysis
-description: Use when a user asks to analyze, clarify, or confirm Story, Task, or Bug definitions before downstream delivery work in a target project.
+description: Use when a user asks to analyze, clarify, or confirm one existing Story, Task, or Bug definition before downstream delivery work.
 ---
 
 # Work Item Analysis
 
-Use this skill when the user wants to analyze, clarify, or confirm one Story, Task, or Bug definition, or a user-selected batch of Story, Task, or Bug definitions, before downstream delivery work starts. This is an Asset Workflow.
+Use this workflow to analyze exactly one authoritative Story, Task, or Bug card before downstream delivery.
 
-Work Item Analysis must create or update only authoritative Story, Task, and Bug cards under `docs/`.
-It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, or checkpoint commits.
-It must not copy the Delivery Workflow record chain used by `feature-dev`, `bug-fix`, or `refactor`.
-Do not copy Delivery Workflow evidence into work-item assets.
+This is an Asset Workflow. It may update only the selected card and the matching mechanical status/Version summary in `docs/backlog.md`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or copies of Delivery Workflow evidence.
 
 Before reading, creating, or updating an owned asset Change Log, read and follow:
 
@@ -18,204 +15,191 @@ Before reading, creating, or updating an owned asset Change Log, read and follow
 .dev-cadence/references/contracts/change-log.md
 ```
 
-Before creating or updating cards, read and follow:
+Before updating a card, read and follow:
 
 ```text
 .dev-cadence/references/document-conventions/SKILL.md
 ```
 
+## Applicability
+
+Use Work Item Analysis when the user asks to analyze, clarify, or confirm one existing Story, Task, or Bug definition.
+
+Do not use it to:
+
+- analyze a batch, the whole Backlog, or a portfolio;
+- create a missing card;
+- admit a card into Backlog or change Backlog ordering;
+- perform product discovery, Feature definition, Story Map, Milestone, MVP, or portfolio planning;
+- investigate technical root cause, design a solution, implement code, test delivery, or perform business acceptance.
+
+When no conforming authoritative card exists, route to `.dev-cadence/workflows/backlog/SKILL.md`. Backlog owns the standard New Request path and determines whether a supplied card can be admitted without recreation.
+
 ## Configuration
 
-Before producing workflow guidance, in-conversation analysis proposals, user-facing analysis summaries, or durable work-item updates, read `.dev-cadence.yaml` from the target repository root.
+Before producing workflow guidance, in-conversation proposals, user-facing summaries, or card updates, read `.dev-cadence.yaml` from the target repository root.
 
-Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence` before producing any listed analysis output. In a linked worktree, verify that the propagated configuration is present before continuing.
+Apply the shared `Configuration Identity And Worktree Continuation` rules from `using-dev-cadence`. In a linked worktree, verify that propagated configuration is present before continuing.
 
 - `output_language: en` uses English.
 - `output_language: zh-CN` uses Simplified Chinese.
 - If the file or value is missing or unsupported, use English.
 
-Use the selected language for workflow guidance, in-conversation analysis proposals, user-facing analysis summaries, and durable work-item updates.
+Use the selected language consistently for proposals, summaries, and durable card updates.
 
-Do not read user configuration from the replaceable `.dev-cadence/` package.
+Do not read user configuration from the replaceable installed `.dev-cadence/` package.
 
-## Authoritative Assets
+## Authoritative Input
 
-Work Item Analysis may create or update only these durable work-item assets:
+The selected card must already exist at one authoritative repository-relative path:
 
-- Story cards: `docs/stories/S-nnn-<slug>.md`
-- Task cards: `docs/tasks/T-nnn-<slug>.md`
-- Bug cards: `docs/bugs/B-nnn-<slug>.md`
+- Story: `docs/stories/S-nnn-<slug>.md`
+- Task: `docs/tasks/T-nnn-<slug>.md`
+- Bug: `docs/bugs/B-nnn-<slug>.md`
 
-When an authoritative Story, Task, or Bug card already exists, Work Item Analysis must reuse it instead of creating a parallel card.
-When no authoritative card exists and the user wants Work Item Analysis rather than planning-only intake, it may create a lightweight card and complete it in the same confirmed analysis.
-When Work Item Analysis creates a card that is not yet registered in `docs/backlog.md`, it must hand the card to `work-item-planning` for Backlog registration before downstream delivery.
-Work Item Analysis must not add, remove, or reorder Backlog rows while creating or analyzing a missing card.
+Read the selected card and its matching `docs/backlog.md` row. Confirm the stable ID, type, path, Version, Status, Priority, and visible facts before forming a proposal.
 
-## Analysis Modes
+If the card does not satisfy the structural card contract, stop and return it to Backlog as a nonconforming intake. Do not normalize or recreate it inside Work Item Analysis.
 
-Work Item Analysis must support both `single-item analysis` and `batch analysis`.
+Work Item Analysis must reuse the selected card. It must not create a parallel card, change its stable ID, or silently merge it with another item.
 
-- `single-item analysis` handles one Story, Task, or Bug.
-- `batch analysis` handles only the user explicitly selected set of Story, Task, or Bug cards.
-- `batch analysis` must not expand to the entire Backlog unless the user explicitly selects that scope.
-- Shared context may be reused across the batch, but each card must keep its own ID, Version, Status, body, and Change Log.
+## Workflow Sequence
 
-## Workflow Stages
-
-Run the workflow in this sequence:
+Use this sequence:
 
 ```text
-Analysis Scope Confirmation -> Work Item Definition Analysis -> Work Item Confirmation
+Necessary Clarification -> Work Item Definition Proposal -> Work Item Confirmation
 ```
 
-### Analysis Scope Confirmation
+Necessary Clarification is not a formal confirmation gate. Ask only questions whose answers materially affect the selected card's goal, scope, expected behavior, completion conditions, dependencies, or delivery eligibility.
 
-Confirm:
+Before Work Item Confirmation, leave authoritative assets unchanged and present:
 
-- whether the request is `single-item analysis` or `batch analysis`;
-- the selected card or explicitly selected set;
-- the current authoritative card path, Version, and visible facts for each selected item;
-- the necessary product and planning inputs;
-- out-of-scope items, related work, and any requested non-scope.
+1. current analysis conclusion;
+2. selected card path, current Version, Status, and type;
+3. proposed goal, included scope, excluded scope, and type-specific conditions;
+4. proposed Version and Status effect;
+5. assumptions, dependencies, risks, and Open Questions;
+6. downstream route or reason the item remains blocked;
+7. repository-relative evidence paths.
 
-If the request needs product-level decisions, Story Map changes, Milestone changes, Size changes, Backlog reordering, diagnosis, or delivery implementation rather than work-item definition analysis, route to the correct workflow instead of forcing Work Item Analysis.
+At Work Item Confirmation:
 
-### Work Item Definition Analysis
-
-Analyze each selected work item according to its type. Distinguish confirmed facts, assumptions, unresolved questions, and user-proposed alternatives.
-
-For `batch analysis`, also inspect the selected set for duplicate scope, overlapping scope, dependencies, blockers, and conflicts. When overlap or conflict exists, present options and ask the user to decide; Work Item Analysis must not automatically delete, merge, or replace cards.
-
-### Work Item Confirmation
-
-Before confirmation, keep the complete proposal in the conversation and leave authoritative assets unchanged.
-Present the proposed card path, current Version, proposed Version, type, goal, scope, status change, open questions, dependencies, and next workflow for each selected item.
-The user may confirm only part of the proposal; unconfirmed cards must keep their current authoritative content.
-After confirmation, atomically write only the confirmed card updates.
+- `confirm the proposed definition` atomically updates the selected card and its matching Backlog Version/Status summary;
+- `request changes` leaves authoritative assets unchanged and revises the same proposal;
+- confirmation applies to only this card and must not change unrelated cards or Backlog order.
 
 ## Story Analysis
 
-Story analysis must cover role, goal, value, included scope, excluded scope, observable behavior, business rules, dependencies, open questions, and acceptance conditions. When a Story has a confirmed primary System Feature or Story Map placement, analysis must retain that traceability; an independent Story without a Feature reference may still become `Ready`.
+Story analysis must define:
 
-Story analysis must define, at minimum:
-
-- the user or business role;
-- the goal, scenario, and expected business value;
-- when present, the confirmed primary System Feature or Story Map traceability;
+- user or business role;
+- goal, scenario, and expected value;
 - included scope and excluded scope;
-- observable product behavior;
-- applicable business rules and constraints;
+- observable system behavior;
+- applicable rules and constraints;
 - acceptance conditions;
-- direct dependencies, open questions, and confirmed requirement decisions.
+- direct dependencies;
+- Open Questions and confirmed requirement decisions.
 
-Story must use the shared included-scope and excluded-scope heading semantics from `document-conventions`.
+Use the shared included-scope and excluded-scope heading semantics from `document-conventions`.
+
+A Story may become `Ready` only when the role, goal, value, scope, observable behavior, acceptance conditions, direct dependencies, and development-blocking Open Questions are explicit and the user confirms the definition.
+
+Story does not require a Feature, User Journey, PRD, Story Map position, or other product-analysis reference to become `Ready`.
 
 Story must reach `Ready` before entering `feature-dev`.
-Story may become `Ready` only when the role, goal, value, scope, observable behavior, acceptance conditions, direct dependencies, and development-blocking open questions are explicit and the user has confirmed the work-item definition.
-
-A missing Feature reference or product-design baseline alone must not return Story analysis to `discovery`. Return to `discovery` only when the Story requires a new or changed product-level conclusion, including a User Journey, Feature, PRD, or Business Architecture conclusion. Work Item Analysis must not define or reinterpret Feature identity.
 
 ## Task Analysis
 
-Task analysis must cover goal, necessity, scope, completion conditions, impact, constraints, dependencies, risks, open questions, and optional `Nature`.
+Task analysis must define:
 
-Task analysis must define, at minimum:
-
-- the goal and necessity;
+- goal and necessity;
 - included scope and excluded scope;
 - completion conditions;
-- related Feature, Story, or impact area;
-- constraints, dependencies, risks, and open questions;
-- optional `Nature`.
+- affected system or work-item area;
+- constraints, dependencies, risks, and Open Questions;
+- optional `Nature` when useful.
 
-Task does not need to reach `Ready` before a Delivery Workflow starts.
-`Nature` is optional.
+Task does not need to reach `Ready` before a Delivery Workflow starts. The selected Delivery Workflow must still confirm goal, scope, and completion conditions before changing code.
 
-If the request is actually a new user-visible or business-visible behavior definition, do not disguise it as a Task. Create or connect the correct Story and analyze it as a Story instead.
+If the request is actually new user-visible or system-visible behavior, do not disguise it as a Task. Return to Backlog to create or associate the correct Story.
 
 ## Bug Analysis
 
-Bug analysis must cover expected behavior, observed behavior, impact, environment, reproduction information, affected references, and the current evidence classification.
-
-Bug analysis must define, at minimum:
+Bug analysis must define:
 
 - expected behavior;
 - observed behavior;
 - impact and severity;
 - known environment;
 - reproduction information or equivalent failure evidence;
-- affected Feature, Story, or related work-item references;
-- whether the current evidence supports treating the item as a Bug, an expected-behavior change, or insufficient information.
+- affected system or related work-item references;
+- whether evidence currently supports Bug, expected-behavior change, or insufficient information.
 
-Work Item Analysis must distinguish Bug, expected-behavior change, and insufficient information.
-Work Item Analysis must not investigate or confirm technical root cause.
-Bug may enter `bug-fix` without a `Ready` precondition and without a confirmed root cause.
+Work Item Analysis must not investigate or confirm technical root cause, repair boundary, regression proof, or technical fix strategy. Those belong to `bug-fix`.
 
-Bug analysis may define what successful repair should restore from the user's perspective, but it must not claim a diagnosis, repair boundary, regression proof, or technical fix strategy. Those belong to `bug-fix`.
+A Bug may enter `bug-fix` without `Ready`, complete reproduction, or known root cause. Work Item Analysis may clarify the user-visible repair result without performing diagnosis.
 
-## Shared Card Rules
+If analysis shows the user intentionally wants changed expected behavior, return to Backlog to create or associate the correct Story instead of converting the Bug silently.
 
-Work-item cards are shared assets across workflows. Work Item Analysis may update detailed definitions such as the goal, scope, expected behavior, acceptance or completion conditions, dependencies, and requirement decisions.
+## Version, Status, And Conflicts
 
-Use stable IDs, the card's existing title when still correct, and the card's own Version and Change Log.
+Increment card Version when confirmed changes alter goal, scope, expected behavior, acceptance or completion conditions, key dependencies, or requirement decisions.
 
-Increment the Version when confirmed changes alter the card's goal, scope, expected behavior, acceptance or completion conditions, key dependencies, or requirement decisions.
-Do not increment the Version for spelling-only, formatting-only, link-only, execution-status-only, or size-only changes.
+Do not increment Version for spelling-only, formatting-only, link-only, execution-status-only, Priority-only, or Backlog-order-only changes.
 
-For every card Change Log, follow the shared Change Log contract.
+Follow the shared Change Log contract for every important definition or maturity event.
 
-When Work Item Analysis finds a Version or visible-fact conflict, it must stop and require a user decision before continuing.
+Immediately before writing, re-read the card Version and visible facts. If either changed since the proposal was formed, stop and form a new proposal. Never overwrite a newer card.
 
-Work Item Analysis must not modify Size, Story Map placement, Milestone membership, Iteration Plan content, Backlog Summary, the Size-estimation baseline, or Backlog order. When a substantive scope change makes the existing Size estimate stale, mark the card `Needs Size Re-estimation: yes` with a reason and return to `work-item-planning`.
+Work Item Analysis may change Status only among the definition-maturity statuses `Draft`, `Ready`, and `Blocked`. These statuses all remain in the Backlog `待处理` section. Story `Ready` must satisfy the Story maturity gate; Task and Bug do not acquire the Story `Ready` prerequisite.
 
-## Downstream Boundaries
+Work Item Analysis must not set `In Progress`, `Done`, `Superseded`, or `Dropped`. Route execution and terminal lifecycle changes to the owning Delivery Workflow or `backlog` instead.
 
-Work Item Analysis may read Discovery assets, planning assets, existing work-item cards, and delivery evidence when they are relevant inputs, but it must not overwrite confirmed facts from another workflow silently.
+When confirmation changes an allowed maturity Status or Version, atomically synchronize only the matching Backlog row's Status and Version in `待处理`. Work Item Analysis must not add, remove, move, or reorder Backlog rows and must not increment Backlog `Ordering Version`.
 
-Work Item Analysis must return to `discovery` when the selected item depends on a new or changed product-level conclusion.
-Work Item Analysis must return to `work-item-planning` when the selected item needs Story Map, Milestone, Size, Iteration Plan, or Backlog-order changes.
-Work Item Analysis does not replace `bug-fix` root cause analysis, repair-boundary definition, regression investigation, or repair verification.
-Work Item Analysis must not design technical solutions, modify code, run delivery testing, or perform business acceptance.
+## Workflow Boundaries
 
-## Confirmation Summary And Handoff
+Work Item Analysis owns detailed work-item definition facts. It does not own card admission, Backlog structure, ordering, lifecycle placement, technical delivery, or product analysis.
 
-The confirmation summary must state, for each confirmed item:
+When analysis discovers:
 
-- card path, current Version, and proposed Version;
-- type, goal, included scope, excluded scope, and key conditions;
-- status change, if any, and the reason;
-- unresolved questions, dependencies, overlaps, or conflicts;
-- required follow-up in `discovery` or `work-item-planning`, if any;
-- downstream workflow handoff.
+- a missing or nonconforming card: return to `backlog`;
+- a needed Backlog admission, Priority, relationship, or ordering change: return to `backlog` after the analysis decision is confirmed;
+- a Bug needing root-cause investigation: hand off to `bug-fix`;
+- a Story ready for implementation: hand off to `feature-dev` only on an explicit implementation request;
+- a Task ready for delivery: hand off to `feature-dev`, `bug-fix`, or `refactor` according to outcome;
+- a requirement that cannot be resolved within one work item: keep the blocking question explicit and stop instead of starting product analysis inside Dev Cadence.
 
-Default downstream handoff after confirmation:
+Default downstream routes are:
 
 - Ready Story -> `feature-dev`
 - Task -> `feature-dev` / `bug-fix` / `refactor`
 - Bug -> `bug-fix`
 
-Batch analysis must not automatically start downstream workflows for every confirmed card. The user still decides which confirmed items to deliver next.
+Work Item Analysis must not automatically claim or start a downstream workflow after confirmation. The user must explicitly request implementation, repair, or refactor work.
 
 ## Completion Check
 
-Before declaring the work-item analysis complete, verify:
+Before declaring analysis complete, verify:
 
-- the request was handled as `single-item analysis` or `batch analysis` without silent scope expansion;
-- every selected card has a proposal with the fields required by its type;
-- Story `Ready` decisions use the Story-only gate;
-- Task and Bug are not blocked by a copied Story `Ready` gate;
-- Bug analysis did not claim technical root cause or repair proof;
-- any duplicate, overlap, dependency, blocker, or conflict was surfaced for user choice;
-- only confirmed cards were written;
-- authoritative updates stay under `docs/`;
-- no delivery process records or copied delivery evidence were created.
+- exactly one existing conforming card was analyzed;
+- the proposal contains the type-specific required fields;
+- Story `Ready` uses only the Story maturity gate;
+- Task and Bug are not blocked by the Story `Ready` gate;
+- Bug analysis does not claim root cause or repair proof;
+- any Status change stays within `Draft`, `Ready`, and `Blocked`;
+- only the confirmed card and matching mechanical Backlog summary were updated;
+- no Backlog row was created, moved, removed, or reordered;
+- no product-analysis or Delivery Workflow asset was created.
 
-## ⚠️ Red Flags
+## Red Flags
 
 | Thought | Reality |
 | --- | --- |
-| "The card is light, so delivery can define it later." | Story definition and Story `Ready` belong in Work Item Analysis when the user asks for detailed work-item definition before delivery. |
-| "This looks like a bug, so I should diagnose it now." | Root cause, repair boundary, and regression proof belong to `bug-fix`, not Work Item Analysis. |
-| "Batch analysis can just sweep the whole Backlog." | The user must explicitly select the analysis set. |
-| "I can update the Story Map or Backlog order while I am here." | Planning structure changes belong to `work-item-planning`. |
-| "A Feature gap can be patched inside the Story." | Product-level identity and meaning belong to `discovery`. |
+| "I can analyze several related cards together." | This workflow analyzes exactly one card per run. |
+| "The supplied card is incomplete, so fix its format here." | Nonconforming intake belongs to `backlog` and the New Request path. |
+| "A Story needs a Feature before it can be Ready." | Story maturity depends on its own implementation definition, not product assets. |
+| "This Bug needs a root cause before handoff." | Root cause belongs to `bug-fix` diagnosis. |
+| "I can reorder Backlog while confirming the card." | Backlog ordering belongs to `backlog`. |

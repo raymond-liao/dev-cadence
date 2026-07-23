@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ENTRY_SKILL="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
+ENTRY="$ROOT_DIR/src/workflows/using-dev-cadence/SKILL.md"
 
 fail() {
   printf 'FAIL: %s\n' "$*" >&2
@@ -10,78 +10,51 @@ fail() {
 }
 
 assert_literal() {
-  local label="$1"
-  local literal="$2"
-
-  rg --no-ignore -F -n -- "$literal" "$ENTRY_SKILL" >/dev/null ||
-    fail "missing $label in ${ENTRY_SKILL#"$ROOT_DIR/"}"
-}
-
-assert_literal_in() {
-  local label="$1"
-  local literal="$2"
-  local path="$3"
-
+  local label="$1" literal="$2" path="${3:-$ENTRY}"
   rg --no-ignore -F -n -- "$literal" "$path" >/dev/null ||
     fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
 assert_match() {
-  local label="$1"
-  local pattern="$2"
-
-  rg --no-ignore -n "$pattern" "$ENTRY_SKILL" >/dev/null ||
-    fail "missing $label in ${ENTRY_SKILL#"$ROOT_DIR/"}"
+  local label="$1" pattern="$2" path="${3:-$ENTRY}"
+  rg --no-ignore -n "$pattern" "$path" >/dev/null ||
+    fail "missing $label in ${path#"$ROOT_DIR/"}"
 }
 
 assert_not_match() {
-  local label="$1"
-  local pattern="$2"
-  local path="$3"
-
+  local label="$1" pattern="$2" path="$3"
   if rg --no-ignore -n "$pattern" "$path" >/dev/null; then
     fail "unexpected $label in ${path#"$ROOT_DIR/"}"
   fi
 }
 
-assert_literal "two-stage routing section" "## Two-Stage Routing Decision"
-assert_match "candidate discovery stage" 'Stage 1.*candidate|candidate.*read.*skill'
-assert_match "selection stage" 'Stage 2.*select|select.*clarify.*handle.*normally'
-assert_match "one-percent is not automatic selection" '1%.*does not.*automatically|does not.*automatically.*workflow'
+assert_literal "two-stage routing" "## Two-Stage Routing Decision"
+assert_match "candidate reading" 'Stage 1.*Discover candidates'
+assert_match "selection" 'Stage 2.*Select the action'
+assert_match "one percent boundary" '1%.*does not automatically select or start'
+assert_match "intent routing" 'intended outcome.*not on isolated keywords'
 
-assert_literal "primary delegation heading" "## Primary Execution Delegation"
-assert_literal "dispatch before workflow loading" "Before reading a candidate workflow skill or exploring the repository, the user-facing main session must delegate the complete Dev Cadence request when the platform supports internal subagents."
-assert_literal "primary role" "A primary execution subagent is explicitly designated in the dispatch brief to execute the complete Dev Cadence request."
-assert_literal "ordinary role boundary" "An ordinary subtask agent must execute only its bounded brief; it must not select or restore a Dev Cadence workflow or recursively delegate the complete request."
-assert_not_match "stale ordinary subagent guard reference" '<SUBAGENT-STOP>' "$ENTRY_SKILL"
-assert_literal "continuous coverage" "The primary execution subagent must continuously perform all non-interactive work for every installed Dev Cadence workflow."
-assert_literal "return conditions" "Return control to the main session only for a user decision, a blocker that requires user-provided information, or task completion."
-assert_literal "return shape" "Return only the current conclusion, complete user options, the effect of each option, risks, and repository-relative evidence paths."
-assert_literal "asset draft boundary" "An Asset Workflow may keep an unconfirmed draft only in a system temporary or cache location clearly marked non-authoritative; do not modify the authoritative asset before its existing user confirmation."
-assert_literal "Git authorization boundary" "Existing explicit user authorization remains required for merge, PR, push, discard, and branch deletion."
-assert_literal "response recovery" "Return a user response to the original primary execution subagent when it remains available; otherwise designate a new primary execution subagent and restore from the existing file evidence."
-assert_literal "capability fallback" "When the platform does not support internal subagents, the main session must execute the existing workflow directly."
-
-for skill in discovery architecture-design; do
-  assert_literal_in \
-    "ordinary-subtask guard in $skill" \
-    "If you are an ordinary subtask agent and are not explicitly designated as the primary execution subagent for the complete Dev Cadence request, do not execute this workflow." \
-    "$ROOT_DIR/src/workflows/$skill/SKILL.md"
+for path in \
+  '.dev-cadence/workflows/backlog/SKILL.md' \
+  '.dev-cadence/workflows/work-item-analysis/SKILL.md' \
+  '.dev-cadence/workflows/architecture-design/SKILL.md' \
+  '.dev-cadence/workflows/feature-dev/SKILL.md' \
+  '.dev-cadence/workflows/bug-fix/SKILL.md' \
+  '.dev-cadence/workflows/refactor/SKILL.md'; do
+  assert_literal "available flow $path" "$path"
 done
 
 for category in \
-  'Initial Discovery' \
-  'Incremental Discovery' \
-  'Work Item Portfolio Planning' \
-  'Direct Work Item Intake' \
-  'Work Item Analysis' \
-  'Discovery Boundary' \
+  'New Work Item' \
+  'Conforming Existing Card' \
+  'Nonconforming Existing Card' \
+  'Single-card Analysis' \
+  'Product Analysis' \
+  'Architecture Design' \
   'Feature' \
   'Bug Fix' \
   'Refactor' \
-  'Delivery Handoff' \
-  'Ordinary Request'
-do
+  'Ordinary Request'; do
   assert_literal "representative category $category" "$category"
 done
 
@@ -89,41 +62,32 @@ for marker in '✅' '❌' '❓'; do
   assert_literal "routing marker $marker" "$marker"
 done
 
-assert_match "initial baseline route" 'first.*PRD|first.*product-design'
-assert_match "existing baseline boundary" 'existing.*PRD|existing.*product-design'
-assert_match "incremental route requires intent and candidate" 'intent.*(credible|trusted).*candidate|(credible|trusted).*candidate.*intent'
-assert_match "incremental representative route" 'Incremental Discovery.*Select `discovery`.*credible.*candidate|credible.*candidate.*Select `discovery`'
-assert_match "work item planning route" 'Work Item Portfolio Planning.*Select `work-item-planning`|Select `work-item-planning`.*Work Item Portfolio Planning'
-assert_match "direct work item intake route" 'Direct Work Item Intake.*Select `work-item-planning`|Select `work-item-planning`.*Direct Work Item Intake'
-assert_match "work item analysis route" 'Work Item Analysis.*Select `work-item-analysis`|Select `work-item-analysis`.*Work Item Analysis'
-assert_match "work item analysis batch route" 'selected batch of Story, Task, or Bug definitions|Story, Task, or Bug definition.*batch'
-assert_match "work item analysis boundary" 'detailed work-item definition analysis rather than portfolio planning or delivery execution|does not replace downstream delivery workflows'
-assert_literal \
-  "independent Story Feature boundary" \
-  'A missing Feature reference or product-design baseline alone does not select `discovery`; return to `discovery` only when the Story needs a new or changed product-level conclusion.'
-assert_literal \
-  "S-042 historical regression boundary" \
-  'S-042 remains a historical regression example of an independent Story and does not require a Feature reference to become `Ready`.'
-assert_match "work item planning asset boundary" 'work-item-planning.*Asset Workflow.*must not create Delivery run records|must not create Delivery run records.*work-item-planning'
-assert_match "work item discovery boundary" 'Discovery Boundary.*must not define or reinterpret|must not define or reinterpret.*Discovery Boundary'
-assert_match "work item repository state boundary" 'Do not auto-start `work-item-planning` merely because the repository already contains Story cards, Task cards, Bug cards, Backlog entries, or a Story Map; repository state alone does not trigger the workflow\.'
-assert_match "delivery handoff route" 'Delivery Handoff.*Select `feature-dev`, `bug-fix`, or `refactor`|Select `feature-dev`, `bug-fix`, or `refactor`.*Delivery Handoff'
-assert_match "Journey baseline route" 'User Journey.*Feature.*Select `discovery`|Select `discovery`.*User Journey.*Feature'
-assert_match "product Feature ownership" 'product.*Feature.*Discovery|Discovery.*product.*Feature'
-assert_match "implementation Feature boundary" 'implement.*Feature.*feature-dev|feature-dev.*implement.*Feature'
-assert_match "routing uses intent" 'Feature.*intent|intent.*Feature'
-assert_not_match "obsolete unsupported incremental route" 'incremental reconciliation, which is not currently supported|installed initial `discovery` flow.*existing product-design baseline' "$ENTRY_SKILL"
-assert_match "missing document does not trigger discovery" 'missing.*PRD.*does not|absence.*PRD.*does not'
-assert_match "bug route" 'already.*expected'
-assert_match "expected behavior change route" 'intentionally change.*expected behavior'
-assert_match "feature route" 'add.*behavior|new system-visible behavior'
-assert_match "behavior-preserving refactor route" 'without intentionally changing expected behavior'
-assert_match "repository state is insufficient" 'repository state.*does not.*trigger|does not.*trigger.*repository state'
-assert_match "one routing clarification question" 'one.*routing clarification question|one necessary.*clarification question'
-assert_match "examples are not keyword matching" 'not.*keyword|keywords.*not'
-assert_match "new workflow review rule" 'new workflow.*review|review.*new workflow'
+assert_match "new card route" 'New Work Item.*Select `backlog`'
+assert_match "conforming card route" 'Conforming Existing Card.*Select `backlog`.*do not recreate or reanalyze'
+assert_match "nonconforming card route" 'Nonconforming Existing Card.*Select `backlog`.*preserve the source.*New Request'
+assert_match "single card route" 'Single-card Analysis.*Select `work-item-analysis`.*only that card'
+assert_match "product analysis outside" 'Product Analysis.*No Dev Cadence workflow applies.*outside this package'
+assert_match "architecture explicit route" 'Architecture Design.*Select `architecture-design`'
+assert_match "architecture state boundary" 'Architecture Repository State.*Do not start `architecture-design`'
+assert_match "bug route" 'Bug Fix.*`bug-fix`'
+assert_match "mixed intent clarification" 'Mixed Intent.*Ask one necessary routing clarification question'
 
-for skill in discovery feature-dev bug-fix refactor work-item-planning work-item-analysis; do
+assert_match "backlog owns admission" '`backlog`.*work-item admission|work-item admission.*`backlog`'
+assert_match "analysis one card" '`work-item-analysis` only for exactly one existing conforming card'
+assert_match "conforming bypass" 'conforming existing card may bypass creation and Work Item Analysis'
+assert_match "backlog still required" 'must still enter Backlog before claim'
+assert_match "nonconforming new request" 'nonconforming supplied card is preserved and treated as New Request input'
+assert_match "missing card route" 'If either is absent, route to `backlog`'
+assert_match "delivery cannot repair card" 'Do not create or repair a card inside a Delivery Workflow'
+assert_match "ready Story route" 'Ready Story.*eligible.*`feature-dev`'
+assert_match "Task route" 'Task.*eligible.*Delivery request'
+assert_match "Bug route without Ready" 'Bug.*eligible.*`bug-fix` without.*Ready'
+
+assert_not_match "removed discovery flow" '\.dev-cadence/workflows/discovery/SKILL\.md' "$ENTRY"
+assert_not_match "removed planning flow" '\.dev-cadence/workflows/work-item-planning/SKILL\.md' "$ENTRY"
+assert_not_match "batch analysis" 'selected batch|batch analysis' "$ENTRY"
+
+for skill in backlog work-item-analysis architecture-design feature-dev bug-fix refactor; do
   assert_not_match \
     "duplicated routing matrix in $skill" \
     '^## Representative Routing Examples$' \

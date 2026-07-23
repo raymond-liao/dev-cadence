@@ -36,7 +36,7 @@ assert_no_process_summary() {
 
 assert_description \
   "src/workflows/using-dev-cadence/SKILL.md" \
-  "Use when a Dev Cadence-installed repository receives product discovery, architecture design, requirements, development work, active-task follow-up, testing, verification, or commit/checkpoint requests."
+  "Use when a Dev Cadence-installed repository receives work-item intake, single-card analysis, architecture design, development work, active-task follow-up, testing, verification, or commit/checkpoint requests."
 
 assert_description \
   "src/references/document-conventions/SKILL.md" \
@@ -47,16 +47,12 @@ assert_description \
   "Use when a user or another Dev Cadence skill needs to view, register, migrate, organize, or update the status of repository-level unresolved questions."
 
 assert_description \
-  "src/workflows/discovery/SKILL.md" \
-  "Use when a user wants to explore a product idea or update an existing product-design baseline in a target project."
-
-assert_description \
-  "src/workflows/work-item-planning/SKILL.md" \
-  "Use when a user asks to create, update, or review Story Map, milestone, or work-item planning assets in a target project."
+  "src/workflows/backlog/SKILL.md" \
+  "Use when a user asks to create or register a Story, Task, or Bug card, admit an existing card, or maintain the delivery Backlog without starting implementation."
 
 assert_description \
   "src/workflows/work-item-analysis/SKILL.md" \
-  "Use when a user asks to analyze, clarify, or confirm Story, Task, or Bug definitions before downstream delivery work in a target project."
+  "Use when a user asks to analyze, clarify, or confirm one existing Story, Task, or Bug definition before downstream delivery work."
 
 assert_description \
   "src/workflows/architecture-design/SKILL.md" \
@@ -81,8 +77,7 @@ assert_description \
 assert_no_process_summary "src/workflows/using-dev-cadence/SKILL.md"
 assert_no_process_summary "src/references/document-conventions/SKILL.md"
 assert_no_process_summary "src/skills/open-question-registry/SKILL.md"
-assert_no_process_summary "src/workflows/discovery/SKILL.md"
-assert_no_process_summary "src/workflows/work-item-planning/SKILL.md"
+assert_no_process_summary "src/workflows/backlog/SKILL.md"
 assert_no_process_summary "src/workflows/work-item-analysis/SKILL.md"
 assert_no_process_summary "src/workflows/architecture-design/SKILL.md"
 assert_no_process_summary "src/workflows/feature-dev/SKILL.md"

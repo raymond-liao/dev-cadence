@@ -3,8 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONTRACT="$ROOT_DIR/src/references/contracts/change-log.md"
-DISCOVERY="$ROOT_DIR/src/workflows/discovery/SKILL.md"
-PLANNING="$ROOT_DIR/src/workflows/work-item-planning/SKILL.md"
+BACKLOG_SKILL="$ROOT_DIR/src/workflows/backlog/SKILL.md"
 ANALYSIS="$ROOT_DIR/src/workflows/work-item-analysis/SKILL.md"
 BACKLOG="$ROOT_DIR/docs/backlog.md"
 REGISTRY="$ROOT_DIR/docs/open-questions.md"
@@ -312,7 +311,7 @@ PUBLIC_CONTRACT_LITERALS=(
   'Do not record approval metadata, approver identity, approval timestamp, commit hashes, workflow stage, workflow run metadata, or runtime status as Change Log fields.'
 )
 
-for consumer in "$DISCOVERY" "$PLANNING" "$ANALYSIS"; do
+for consumer in "$BACKLOG_SKILL" "$ANALYSIS"; do
   assert_literal "shared contract read" '.dev-cadence/references/contracts/change-log.md' "$consumer"
 
   for literal in "${PUBLIC_CONTRACT_LITERALS[@]}"; do

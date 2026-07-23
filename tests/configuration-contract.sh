@@ -46,7 +46,7 @@ for workflow in feature-dev bug-fix refactor; do
     "src/workflows/$workflow/SKILL.md"
 done
 
-for workflow in discovery architecture-design work-item-planning work-item-analysis; do
+for workflow in backlog architecture-design work-item-analysis; do
   assert_match "$workflow shared config reference" \
     'Configuration Identity And Worktree Continuation|configuration propagation' \
     "src/workflows/$workflow/SKILL.md"

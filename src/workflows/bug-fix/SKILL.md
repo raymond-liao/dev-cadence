@@ -230,13 +230,11 @@ Also ensure the manifest points to the latest stage record and checkpoint commit
 
 ## Work Item Card Integration
 
-Every `bug-fix` run must reuse one authoritative Bug card when one exists; direct Bug investigation may create or complete the Bug card under this workflow when no card exists. The first diagnosis record must capture the exact card path, `Bug` type, current card Version, visible Status, and the selected scope; it must reference the card rather than copy its body.
+Every `bug-fix` run must reuse one authoritative Bug card that has been admitted to `docs/backlog.md`. It must not create, normalize, or complete a missing card inside Bug Fix; missing or nonconforming cards return to `.dev-cadence/workflows/backlog/SKILL.md`. The first diagnosis record must capture the exact card path, `Bug` type, current card Version, visible Status, and the selected scope; it must reference the card rather than copy its body.
 
 A Bug may enter `bug-fix` without `Ready`, complete reproduction, or a known root cause. Diagnosis owns reproduction, root-cause evidence, and the repair boundary. A Feature request or intentional behavior change must route to `feature-dev`, not be hidden inside a Bug Fix.
 
 Before using card facts at any stage, check the current card Version and visible facts against the run record. A Version or visible-fact conflict must stop the run for a user decision. A substantive card revision uses Active Task Change Handling to return to the earliest affected stage; an execution-status-only change preserves the Version.
-
-When a substantive scope change makes the existing Size estimate stale, mark the card `Needs Size Re-estimation: yes` with a reason and return to `work-item-planning`. This workflow must not modify Size, Story Map, Backlog Summary, or the Size-estimation baseline.
 
 At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, and exact Backlog source and destination sections. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or repair result qualifies under `.dev-cadence/references/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 

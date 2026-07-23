@@ -11,7 +11,7 @@ This is an auxiliary document-authoring skill. It is not a business workflow and
 
 ## Applicability
 
-Read and follow this skill before creating or updating Dev Cadence-managed Markdown, including workflow records, product-design documents, work-item documents, reports, examples, and user-facing Markdown summaries.
+Read and follow this skill before creating or updating Dev Cadence-managed Markdown, including architecture assets, work-item documents, workflow records, reports, examples, and user-facing Markdown summaries.
 
 Do not use this skill to decide which business workflow applies, change workflow stages, or replace a workflow-specific document contract.
 

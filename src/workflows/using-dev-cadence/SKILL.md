@@ -1,6 +1,6 @@
 ---
 name: using-dev-cadence
-description: Use when a Dev Cadence-installed repository receives product discovery, architecture design, requirements, development work, active-task follow-up, testing, verification, or commit/checkpoint requests.
+description: Use when a Dev Cadence-installed repository receives work-item intake, single-card analysis, architecture design, development work, active-task follow-up, testing, verification, or commit/checkpoint requests.
 ---
 
 # Using Dev Cadence
@@ -17,15 +17,15 @@ IF A DEV CADENCE FLOW APPLIES TO THE TASK, YOU DO NOT HAVE A CHOICE. YOU MUST US
 This is not negotiable. You cannot rationalize your way out of this.
 </EXTREMELY-IMPORTANT>
 
-Use this skill before any product discovery, requirements, or development response or action in a repository with Dev Cadence installed.
+Use this skill before any work-item intake, requirements analysis, architecture design, development, testing, verification, or managed Git response or action in a repository with Dev Cadence installed.
 
-Dev Cadence flows are explicit business workflows. Do not force a request into a flow just because the request is related to software.
+Dev Cadence governs implementation work. It does not perform product discovery, PRD creation, User Journey analysis, Feature definition, Story Map, Milestone, MVP, or portfolio planning. Handle those requests outside Dev Cadence unless another installed system owns them.
 
 ## Primary Execution Delegation
 
 Before reading a candidate workflow skill or exploring the repository, the user-facing main session must delegate the complete Dev Cadence request when the platform supports internal subagents.
 
-A primary execution subagent is explicitly designated in the dispatch brief to execute the complete Dev Cadence request. It must read this entry skill, select or restore the workflow, and may dispatch ordinary bounded subtasks with the role boundary and any applicable Dev Cadence commit constraints.
+A primary execution subagent is explicitly designated in the dispatch brief to execute the complete Dev Cadence request. It must read this entry skill, select or restore the workflow, and may dispatch ordinary bounded subtasks with the role boundary and applicable commit constraints.
 
 An ordinary subtask agent must execute only its bounded brief; it must not select or restore a Dev Cadence workflow or recursively delegate the complete request.
 
@@ -33,27 +33,25 @@ The primary execution subagent must continuously perform all non-interactive wor
 
 Return control to the main session only for a user decision, a blocker that requires user-provided information, or task completion. Return only the current conclusion, complete user options, the effect of each option, risks, and repository-relative evidence paths. Do not return process logs, diffs, or intermediate reasoning.
 
-An Asset Workflow may keep an unconfirmed draft only in a system temporary or cache location clearly marked non-authoritative; do not modify the authoritative asset before its existing user confirmation. Do not promise that this temporary or cache content survives cleanup, machine changes, or runtime loss.
+An Asset Workflow may keep an unconfirmed draft only in a system temporary or cache location clearly marked non-authoritative. Do not modify an authoritative asset before its required user confirmation. Do not promise that temporary or cache content survives cleanup, machine changes, or runtime loss.
 
-Existing user confirmation, Business Acceptance, Completion, and Git authorization rules remain in force. Existing explicit user authorization remains required for merge, PR, push, discard, and branch deletion.
+Existing user confirmation, Business Acceptance, Completion, and Git authorization rules remain in force. Explicit user authorization remains required for merge, PR, push, discard, and branch deletion.
 
-Return a user response to the original primary execution subagent when it remains available; otherwise designate a new primary execution subagent and restore from the existing file evidence.
+Return a user response to the original primary execution subagent when it remains available; otherwise designate a new primary execution subagent and restore from existing file evidence.
 
-When the platform does not support internal subagents, the main session must execute the existing workflow directly.
+When the platform does not support internal subagents, the main session must execute the workflow directly.
 
 ## The Rule
 
-Check installed Dev Cadence flows BEFORE any development response or action, including clarifying questions, repository exploration, implementation, test execution, commits, or status claims.
+Check installed Dev Cadence flows before any covered response or action, including clarification questions, repository exploration, implementation, tests, commits, or status claims.
 
-If an installed flow applies, read that flow skill completely and follow it exactly. If the selected flow turns out wrong for the situation, stop and choose the correct installed flow or handle the request normally.
-
-If no installed flow applies, handle the request normally.
+If an installed flow applies, read it completely and follow it. If no installed flow applies, handle the request normally.
 
 ## Configuration Identity And Worktree Continuation
 
 Before any workflow produces user-facing guidance, documents, records, or summaries, resolve `.dev-cadence.yaml` from the target repository configuration source.
 
-When the current workspace is the primary checkout, use `.dev-cadence.yaml` at that checkout root. When the current workspace is a linked worktree, resolve the primary checkout's Git location with:
+When the current workspace is the primary checkout, use `.dev-cadence.yaml` at that checkout root. When the current workspace is a linked worktree, resolve the primary checkout with:
 
 ```bash
 COMMON_GIT_DIR="$(git rev-parse --path-format=absolute --git-common-dir)"
@@ -61,13 +59,13 @@ PRIMARY_ROOT="$(dirname "$COMMON_GIT_DIR")"
 CONFIG_SOURCE="$PRIMARY_ROOT/.dev-cadence.yaml"
 ```
 
-Use the following configuration precedence for a Delivery Workflow: the active run snapshot first, then the primary checkout configuration, then the current checkout configuration when it is the primary checkout, and finally the documented fallback.
+Use this precedence for a Delivery Workflow: active run snapshot, primary checkout configuration, current checkout configuration when it is the primary checkout, then documented fallback.
 
-When the primary checkout configuration exists and the current workspace is a different worktree, set `CONFIG_TARGET="$PWD/.dev-cadence.yaml"`. If `CONFIG_TARGET` is absent or differs from `CONFIG_SOURCE`, run `cp -f "$CONFIG_SOURCE" "$CONFIG_TARGET"`, then verify the result with `test -f "$CONFIG_TARGET" && cmp -s "$CONFIG_SOURCE" "$CONFIG_TARGET"`. A propagation failure must stop workflow output; use the active run snapshot if one exists, otherwise report the environment failure instead of silently selecting English. Do not copy the config into `.dev-cadence/` or commit it.
+When the primary configuration exists and the current workspace is a different worktree, set `CONFIG_TARGET="$PWD/.dev-cadence.yaml"`. If absent or different, run `cp -f "$CONFIG_SOURCE" "$CONFIG_TARGET"`, then verify `test -f "$CONFIG_TARGET" && cmp -s "$CONFIG_SOURCE" "$CONFIG_TARGET"`. Propagation failure must stop workflow output; use an active snapshot if one exists, otherwise report the environment failure. Do not copy config into `.dev-cadence/` or commit it.
 
-For an active Delivery Workflow, record the resolved `output_language`, configuration source identity as `target repository root/.dev-cadence.yaml`, and whether worktree propagation occurred in the manifest. A resumed run must use this snapshot before applying any other source or fallback rule.
+For an active Delivery Workflow, record resolved `output_language`, configuration identity as `target repository root/.dev-cadence.yaml`, and whether worktree propagation occurred in the manifest. A resumed run uses this snapshot first.
 
-If no valid config is available and no active snapshot exists, use English and make the fallback visible in the first user-visible summary by stating that the config was missing or unsupported and the default `en` was selected.
+If no valid config or snapshot exists, use English and make the fallback visible in the first user-visible summary by stating that the config was missing or unsupported and the default `en` was selected.
 
 Before creating or updating Dev Cadence-managed Markdown documents, records, reports, examples, or summaries, read and follow:
 
@@ -79,19 +77,23 @@ That shared skill owns common document presentation rules. Do not duplicate its 
 
 ## Shared Commit Capability
 
-After selecting or restoring a Dev Cadence workflow, or directly routing a Dev Cadence shared capability, use the installed shared commit capability for every commit managed by that context:
+After selecting or restoring a workflow or shared capability, use:
 
 ```text
 .dev-cadence/skills/git-commit/SKILL.md
 ```
 
-The owning Workflow or shared capability must determine commit timing and scope, run applicable checks, and stage exactly one commit unit before invoking `git-commit`. The shared capability must not select a workflow, stage files, run tests, or replace workflow records and evidence.
+for every managed commit. The owning context determines timing and scope, runs checks, and stages exactly one commit unit before invoking `git-commit`. The commit capability must not select a workflow, stage files, run tests, or replace workflow records.
+
+Use `.dev-cadence/skills/git-commit/SKILL.md` only for a commit managed by a Dev Cadence Workflow or shared capability.
 
 Do not invoke the installed `git-commit` for an ordinary repository commit that is not managed by a Dev Cadence workflow or shared capability. Handle that request through the target repository's ordinary Git rules.
 
-When dispatching a subagent that may create a commit, include `.dev-cadence/skills/git-commit/SKILL.md`, the owning Dev Cadence context, and the staged-only constraint in the subagent task brief. The `<ORDINARY-SUBAGENT-STOP>` routing boundary does not remove this dispatch responsibility.
+When dispatching a subagent that may create a commit, include `.dev-cadence/skills/git-commit/SKILL.md`, the owning Dev Cadence context, and the staged-only constraint in the subagent task brief.
 
-For repository-level unresolved-question maintenance, read and follow:
+## Shared Question Capability
+
+For repository-level unresolved-question maintenance, use:
 
 ```text
 .dev-cadence/skills/open-question-registry/SKILL.md
@@ -103,21 +105,19 @@ That shared capability owns Registry discovery, on-demand creation, entry fields
 
 | User request | Flow |
 | --- | --- |
-| Explore a product idea, create the first PRD or Business Architecture, update an existing product-design baseline, or create or maintain a product-level User Journey and its Feature Definitions through Discovery | `.dev-cadence/workflows/discovery/SKILL.md` |
-| Plan a portfolio from confirmed User Journey, PRD, and Business Architecture assets, maintain a Story Map, or register a single clear Story, Task, or Bug work item | `.dev-cadence/workflows/work-item-planning/SKILL.md` |
-| Analyze, clarify, or confirm one Story, Task, or Bug definition, or a selected batch of Story, Task, or Bug definitions, before downstream delivery work | `.dev-cadence/workflows/work-item-analysis/SKILL.md` |
+| Create one Story, Task, or Bug; register a conforming existing card; or maintain Backlog order or lifecycle | `.dev-cadence/workflows/backlog/SKILL.md` |
+| Analyze, clarify, or confirm exactly one existing Story, Task, or Bug definition | `.dev-cadence/workflows/work-item-analysis/SKILL.md` |
 | Explicitly design, propose, or review architecture for a stated goal | `.dev-cadence/workflows/architecture-design/SKILL.md` |
-| Add a new user-visible or system-visible feature | `.dev-cadence/workflows/feature-dev/SKILL.md` |
-| Change existing user-visible or system-visible feature behavior | `.dev-cadence/workflows/feature-dev/SKILL.md` |
-| Report a bug, error, failing test, regression, or unexpected behavior | `.dev-cadence/workflows/bug-fix/SKILL.md` |
-| Improve internal structure, modularity, maintainability, testability, or dependencies without intentionally changing expected behavior | `.dev-cadence/workflows/refactor/SKILL.md` |
+| Add or intentionally change user-visible or system-visible behavior | `.dev-cadence/workflows/feature-dev/SKILL.md` |
+| Repair existing expected behavior that is not working | `.dev-cadence/workflows/bug-fix/SKILL.md` |
+| Improve internal structure without intentionally changing expected behavior | `.dev-cadence/workflows/refactor/SKILL.md` |
 
 ## Workflow Record Models
 
 Every Dev Cadence workflow belongs to exactly one record model:
 
-- **Asset Workflow:** Discovery, Work Item Planning, Work Item Analysis, and Architecture Design.
-- **Delivery Workflow:** Feature Dev, Bug Fix, and Refactor.
+- **Asset Workflow:** Backlog, Work Item Analysis, Architecture Design.
+- **Delivery Workflow:** Feature Dev, Bug Fix, Refactor.
 
 Asset Workflows only create or update durable authoritative assets under `docs/`. They may use analysis steps and user confirmation gates in the current conversation, but they must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or other persistent copies of the workflow process.
 
@@ -129,11 +129,11 @@ When adding a new workflow, classify it as exactly one record model before defin
 
 ## Shared Asset Capabilities
 
-Open Question Registry maintenance is a shared asset capability, not a six-stage business workflow.
+Open Question Registry maintenance is a shared asset capability, not a business workflow.
 
-- When the user directly asks to view or maintain repository-level Open Questions, read `.dev-cadence/skills/open-question-registry/SKILL.md` and perform that bounded asset operation without starting feature-dev, bug-fix, refactor, or discovery solely for the maintenance request.
+- When the user directly asks to view or maintain repository-level Open Questions, read `.dev-cadence/skills/open-question-registry/SKILL.md` and perform that bounded asset operation without starting a Delivery Workflow or Backlog solely for the maintenance request.
 - When an active workflow finds a question that the current artifact cannot reasonably hold, reuse the Registry skill and then return to the active workflow.
-- If the request also asks to change product behavior, fix a defect, refactor code, or create the first product-design baseline, select the matching business workflow first; Registry maintenance remains a supporting operation within that workflow.
+- If the request also asks to admit work, change behavior, fix a defect, or refactor code, select the matching workflow first; Registry maintenance remains a supporting operation within that workflow.
 - The Registry and authoritative asset must be updated in the same operation when any active workflow performs a create, modify, migrate, or status change for an Open Question in a confirmed asset update. It must not advance the current confirmation gate with only one side updated.
 - A Delivery Workflow record under `build/` must not become the Registry's long-lived authoritative source. When no durable authority exists, the Registry temporarily owns the full body and the delivery record keeps the same `Q-nnn` plus a Registry link.
 - Do not promote an assumption, risk, or review finding to an Open Question unless the workflow explicitly identifies it as a question that must be tracked.
@@ -152,26 +152,21 @@ The 1% threshold is a candidate-reading rule. It does not automatically select o
 
 These examples are representative intent decisions, not a keyword-matching list. The decision and reason remain authoritative when wording varies.
 
-| Category | Representative request | Decision and reason |
+| Category | Representative request | Decision |
 | --- | --- | --- |
-| Initial Discovery | "I have an incomplete product idea; help me explore it and create our first PRD." | ✅ Select `discovery` because the user wants product exploration and the first product-design baseline. |
-| Incremental Discovery | "Update our existing PRD with the newly confirmed pricing model." | ✅ Select `discovery` when repository discovery also finds a credible product-design candidate; the skill then confirms the authoritative source before editing. If no credible candidate exists, do not silently switch to initial Discovery. |
-| Product Journey | "Define the checkout journey and the product capabilities it requires." | ✅ Select `discovery` to create or maintain the product-level User Journey and its Feature Definitions because Discovery owns that product-design baseline. |
-| Work Item Portfolio Planning | "Use our confirmed User Journey, PRD, and Business Architecture to plan the Story Map, Milestones, and next batch of Stories." | ✅ Select `work-item-planning` because the user wants portfolio planning based on confirmed product-design assets. `work-item-planning` is an Asset Workflow and must not create Delivery run records. |
-| Direct Work Item Intake | "Register a clear Bug card and attach it to the existing Backlog." | ✅ Select `work-item-planning` when the requested outcome is creating or maintaining a single clear Story, Task, or Bug card rather than implementing the change. |
-| Work Item Analysis | "Analyze, clarify, or confirm one Story, Task, or Bug definition, or a selected batch of Story, Task, or Bug definitions before implementation." | ✅ Select `work-item-analysis` because the user wants detailed work-item definition analysis rather than portfolio planning or delivery execution. After analysis, hand confirmed work items to `feature-dev`, `bug-fix`, or `refactor`; `work-item-analysis` does not replace downstream delivery workflows. |
-| Discovery Boundary | "The business meaning of this Feature is still unclear; define the Feature first, then split the Stories." | ✅ Select `discovery` because Discovery owns product-design baselines, User Journey, and Feature identity. `work-item-planning` only references confirmed Features and must not define or reinterpret them. |
-| Architecture Design | "Design the target architecture for our payment-event ingestion goal." | ✅ Select `architecture-design` because the user explicitly requests architecture for a stated goal. |
-| Architecture Repository State | "This repository has no architecture document." | ❌ Do not start `architecture-design` because repository state does not establish an architecture-design goal. |
-| Delivery Handoff | "These Stories are confirmed; start implementing the export command." | ✅ Select `feature-dev`, `bug-fix`, or `refactor` after the work item is confirmed and the user now wants delivery. `work-item-planning` prepares and hands off work items; it does not replace delivery workflows' implementation, diagnosis, or refactor records. |
-| Delivery Solution | "Add payment-event ingestion and design its implementation." | ✅ Select `feature-dev`; `architecture-design` does not replace the delivery workflow's task-scoped Technical Solution. |
-| Feature | "Please implement a Feature that adds an export command producing a JSON report." | ✅ Select `feature-dev` because the user wants new system-visible behavior. |
-| Bug Fix | "The export command is documented to include timestamps, but they are missing." | ✅ Select `bug-fix` because already expected behavior is not working. If the user instead asks to intentionally change expected behavior, select `feature-dev`. |
-| Refactor | "Extract the parser into smaller modules without intentionally changing expected behavior." | ✅ Select `refactor` because the requested outcome is behavior-preserving structural improvement. If the request also adds behavior, route that behavior change through `feature-dev` or clarify the primary outcome. |
-| Ordinary Request | "Explain what this configuration field means." | ❌ Handle normally because explanation alone does not request product discovery or a software change. |
-| Open Question Registry | "Show me the repository-level Open Questions and register this cross-document issue." | ✅ Use the shared `open-question-registry` capability because the requested outcome is bounded maintenance of the unresolved-question index, not a delivery workflow. |
-| Repository State Only | "This repository has no PRD." | ❌ Do not start Discovery from repository state alone. A missing PRD does not establish product-exploration intent. Existing code, work-item cards, or tests likewise do not trigger a workflow without a matching user goal. |
-| Ambiguous Mixed Intent | "Clean up this module and change how retries work." | ❓ Ask one necessary routing clarification question because the request mixes behavior-preserving cleanup and an expected-behavior change without identifying the primary outcome. |
+| New Work Item | "Register a Story for exporting reports." | ✅ Select `backlog` to create the card and its Backlog row. |
+| Conforming Existing Card | "This Ready Story already follows our card format; add it and implement it." | ✅ Select `backlog` to validate and register it before claim; do not recreate or reanalyze it. |
+| Nonconforming Existing Card | "Use this external ticket, but it does not match our card contract." | ✅ Select `backlog`, preserve the source, and use the standard New Request path. |
+| Single-card Analysis | "Clarify S-042 and determine whether it is Ready." | ✅ Select `work-item-analysis`; analyze only that card. |
+| Product Analysis | "Create a PRD, User Journey, and Story Map." | ❌ No Dev Cadence workflow applies; product analysis is outside this package. |
+| Architecture Design | "Design the target architecture for payment ingestion." | ✅ Select `architecture-design`. |
+| Architecture Repository State | "This repository has no architecture document." | ❌ Do not start `architecture-design`; repository state does not establish an architecture goal. |
+| Feature | "Implement an export command." | ✅ Ensure one admitted card exists, then select `feature-dev`. |
+| Bug Fix | "The export command omits timestamps." | ✅ Ensure one admitted Bug exists, then select `bug-fix`. |
+| Refactor | "Extract the parser without behavior change." | ✅ Ensure one admitted card exists, then select `refactor`. |
+| Ordinary Request | "Explain this configuration field." | ❌ Handle normally because explanation alone does not request implementation work. |
+| Open Question Registry | "Show me the repository-level Open Questions." | ✅ Use the shared `open-question-registry` capability. |
+| Mixed Intent | "Clean up retries and change their behavior." | ❓ Ask one necessary routing clarification question before selecting a Delivery Workflow. |
 
 Keep this entry selector as the single authority for cross-workflow routing examples. Individual workflow skills retain their own applicability, stop conditions, and necessary local Red Flags; they do not copy this complete matrix.
 
@@ -179,45 +174,35 @@ When adding a new workflow, review whether a representative request or adjacent 
 
 ## Flow Priority
 
-When multiple flows might apply, choose the process flow before any implementation or domain skill.
+Use `backlog` for work-item admission and Backlog maintenance. It owns card creation, existing-card contract validation, Backlog registration, Priority, planning relationships, lifecycle sections, and pending order. It does not perform detailed single-card analysis or delivery.
 
-Use `discovery` for broad product ideas, business problems, first-time product definition, first-time PRD or Business Architecture creation, or an explicit intent to update an existing product-design baseline when repository discovery finds a credible candidate. Incremental Discovery requires both update intent and a credible or trusted candidate; repository state alone does not trigger it. If update intent exists but no candidate is found, do not silently switch to initial Discovery.
-Creating or maintaining a product-level User Journey and its Feature Definitions selects `discovery`; Discovery owns that product-design baseline.
-Do not force a clear Feature, Bug, or Refactor request through Discovery. Direct development requests continue to their matching delivery workflow.
-Discovery owns both initial creation and confirmed incremental product-design updates. Read its skill before selecting a mode; do not infer authority from a file name alone.
-If the user wants to change Feature meaning, User Journey order, PRD conclusions, or Business Architecture content before planning work items, return to `discovery` instead of patching product-design facts inside `work-item-planning`.
+Use `work-item-analysis` only for exactly one existing conforming card. It owns detailed definition and Story `Ready` decisions, Task maturity clarification, and Bug intake clarification without technical root cause. It does not create missing cards or change Backlog order.
 
-Use `architecture-design` only when the user explicitly asks for architecture design, an architecture proposal, or an architecture review for a stated goal. Do not infer it from repository state, technical content, Discovery activity, or a delivery workflow's need for a local solution. The standalone asset may inform delivery work, but `architecture-design` does not replace Feature Dev's Technical Solution, Bug Fix's Repair Solution, or Refactor's Refactor Solution.
+A conforming existing card may bypass creation and Work Item Analysis only when `backlog` verifies its complete card contract and downstream maturity. It must still enter Backlog before claim. A nonconforming supplied card is preserved and treated as New Request input; do not normalize it in place.
 
-Use `work-item-planning` when the user wants an Asset Workflow that turns confirmed product-design assets into planning assets, such as Story Map, Milestone, or Story/Task/Bug cards, or when the user wants to register one clear work item without starting delivery. Do not auto-start `work-item-planning` merely because the repository already contains Story cards, Task cards, Bug cards, Backlog entries, or a Story Map; repository state alone does not trigger the workflow.
-`work-item-planning` owns planning assets and work-item registration, not Feature definition or delivery execution. Keep the full cross-workflow routing matrix only in this entry skill; do not copy the complete matrix into `.dev-cadence/workflows/work-item-planning/SKILL.md`.
-After a work item is confirmed and the user asks to implement, repair, or refactor it, hand off to `feature-dev`, `bug-fix`, or `refactor` according to the requested delivery outcome.
+Use `architecture-design` only when the user explicitly asks for Architecture Design, an architecture proposal, or an architecture review for a stated goal. Repository state does not establish that goal. The standalone asset may inform delivery work, but `architecture-design` does not replace Feature Dev's Technical Solution, Bug Fix's Repair Solution, or Refactor's Refactor Solution.
 
-Use `work-item-analysis` when the user wants an Asset Workflow that analyzes, clarifies, or confirms one Story, Task, or Bug definition, or a selected batch of Story, Task, or Bug definitions, before downstream delivery. `work-item-analysis` owns detailed work-item definition analysis, Story `Ready` decisions, Task maturity clarification, and Bug intake clarification without technical root cause analysis. It does not replace `work-item-planning` portfolio structure, Story Map or Backlog ordering, `discovery` product-level Feature definition, or downstream `feature-dev`, `bug-fix`, and `refactor` execution. After analysis, hand confirmed work items to `feature-dev`, `bug-fix`, or `refactor` according to the requested delivery outcome.
+Use `bug-fix` for broken existing expected behavior, `feature-dev` for new or intentionally changed behavior, and `refactor` to improve internal structure without intentionally changing expected behavior.
 
-A missing Feature reference or product-design baseline alone does not select `discovery`; return to `discovery` only when the Story needs a new or changed product-level conclusion. S-042 remains a historical regression example of an independent Story and does not require a Feature reference to become `Ready`.
-
-Use `bug-fix` when the existing expected behavior should already work and the user reports that it does not.
-Use `feature-dev` when the user asks to implement a Feature, add behavior, or intentionally change expected behavior.
-Use `refactor` when the user asks to improve internal structure without intentionally changing expected behavior.
-For Feature requests, intent determines the route: route by the requested outcome, not by the isolated word "Feature".
-If a request mixes two or more of a defect report, requested behavior change, and structural cleanup, ask which outcome is primary before choosing among `bug-fix`, `feature-dev`, and `refactor`. Do not require all three request types to be present before clarifying the flow.
+If a request mixes two or more of a defect report, requested behavior change, and structural cleanup, ask which outcome is primary before choosing among `bug-fix`, `feature-dev`, and `refactor`.
 
 ## Work Item Intake And Claiming
 
-Work-item claiming is an entry orchestration step owned by `using-dev-cadence`. It must reuse `work-item-planning`, `work-item-analysis`, and the existing Delivery Workflows; it must not create a new claiming workflow or shared claiming skill.
+Work-item claiming is an entry orchestration step owned by `using-dev-cadence`. It must reuse `backlog`, `work-item-analysis`, and the existing Delivery Workflows; it must not create a new claiming workflow or shared claiming skill.
 
-Only an explicit implementation, repair, or refactor request may claim a work item. Discussion, evaluation, work-item planning, card maintenance, ordinary status queries, and work-item analysis must not claim or change a card to `In Progress`.
+Only an explicit implementation, repair, or refactor request may claim a work item. Discussion, evaluation, Backlog maintenance, ordinary status queries, and Work Item Analysis must not claim or change a card to `In Progress`.
 
-When a user explicitly asks to continue implementation from `docs/backlog.md`, the row order in `待处理` is the sole authoritative selection order. If the first pending item cannot proceed, complete a confirmed planning reorder before selecting a later item; do not silently skip it.
+Before claim, verify that one conforming authoritative card and matching `docs/backlog.md` row exist. If either is absent, route to `backlog`. If a supplied card is nonconforming, route it to `backlog` and use the standard New Request path. Do not create or repair a card inside a Delivery Workflow.
 
-Before any claim write, use this ordered intake matrix: selection -> resolve its work-item type, visible status, and (for a Story) maturity -> determine eligibility -> claim only an eligible item. A `Draft Story` must enter `work-item-analysis` and must not be claimed or changed to `In Progress` before analysis and explicit user confirmation of `Ready Story`. A `Ready Story` that is user-confirmed is eligible to claim for an explicit implementation request and routes to `feature-dev`; `feature-dev` accepts only a user-confirmed `Ready Story`. A `Task` is eligible for its explicit implementation request and does not need to reach `Ready`; its Delivery Workflow confirms goal, scope, and completion conditions in the first stage. A `Bug` is eligible for a direct repair request without `Ready`, complete reproduction, or a known root cause; it may enter `bug-fix` without `Ready` because diagnosis owns those questions. Discussion, evaluation, planning, card maintenance, status queries, and work-item analysis are ineligible and must not claim.
+When a user explicitly asks to continue implementation from `docs/backlog.md`, the row order in `待处理` is the sole authoritative selection order. If the first pending item cannot proceed, complete a confirmed `backlog` reorder before selecting a later item; do not silently skip it.
 
-After the item is selected and before switching a task branch or creating a worktree, resolve and verify the authoritative base branch/ref configured for the target repository (this repository uses `main`); do not infer it from the primary checkout directory. Then claim it by atomically synchronizing the authoritative card and `docs/backlog.md` row to `In Progress` in that primary checkout regardless of `worktree.enabled`. A claim uses the current card Version for its Change Log important event and does not increment the card Version for an execution-status-only change. When the status transition is important, append that event according to `.dev-cadence/references/contracts/change-log.md`; a claim must be idempotent and must not append a duplicate Change Log event. A card already in `In Progress` must not be claimed again in the same request. Before either task workspace is created, write and record a verifiable claim commit containing the atomic card and Backlog claim, then verify that the recorded claim commit advances that exact authoritative base ref; this lifecycle handoff commit is neither a Repair Implementation commit nor a stage checkpoint commit and must not alter existing checkpoint gates.
+Before any claim write, use this ordered intake matrix: selection -> resolve its work-item type, visible status, and (for a Story) maturity -> determine eligibility -> claim only an eligible item. A `Draft Story` must enter `work-item-analysis` and must not be claimed or changed to `In Progress` before analysis and explicit user confirmation of `Ready Story`. A user-confirmed `Ready Story` is eligible to claim for an explicit implementation request and routes to `feature-dev`; `feature-dev` accepts only a user-confirmed `Ready Story`. A `Task` does not need `Ready` and is eligible for its explicit Delivery request; its Delivery Workflow confirms goal, scope, and completion conditions in the first stage. A `Bug` is eligible for a direct repair request without `Ready`, complete reproduction, or a known root cause; it may enter `bug-fix` without `Ready` because diagnosis owns those questions. Discussion, evaluation, Backlog maintenance, status queries, and Work Item Analysis are ineligible and must not claim.
 
-The workspace preparation must complete before the entry routes downstream. When `worktree.enabled: true`, perform the primary checkout claim write, persist the claim commit, verify that the claim commit advances the authoritative base ref, then immediately create or verify the task worktree from that claim commit. Handle the create-worktree path separately from the reuse-worktree path. Only when this run actually creates the worktree successfully, then validates the exact newly-created `git worktree list --porcelain` stanza, may the handoff say `Created By Current Run: yes`. Capture the repository-relative workspace path, full `refs/heads/...` branch ref, and creation HEAD SHA from that exact newly-created stanza before routing to the Delivery workflow. Reuse, externally managed workspace, disabled worktree, or any unprovable creation result must hand off `Created By Current Run: no`. Do not infer creation ownership from `worktree.enabled`, configured directory, workspace location, branch name, or a pre-existing worktree registration. When `worktree.enabled: false`, perform the primary checkout claim write, persist the claim commit, verify that the claim commit advances the authoritative base ref, then immediately prepare the dedicated task branch from that claim commit and must not create a worktree. Any failure of primary-checkout writing, claim persistence or commit, authoritative-base-ref advancement, workspace baseline, card Version, `In Progress` status, or matching Backlog row verification must stop: when `worktree.enabled: true`, do not create or verify a worktree and do not route downstream; when `worktree.enabled: false`, do not prepare a dedicated branch and do not route downstream. Verify in the selected workspace that the claimed card Version matches the authoritative card Version, along with `In Progress` status and the matching Backlog row, before routing any downstream Delivery Workflow. Do not begin Requirements, Solution, Plan, checkpoint, or implementation work before this handoff completes.
+After the item is selected and before switching a task branch or creating a worktree, resolve and verify the authoritative base branch/ref configured for the target repository; do not infer it from the primary checkout directory. Then claim it by atomically synchronizing the authoritative card and `docs/backlog.md` row to `In Progress` in that primary checkout regardless of `worktree.enabled`. A claim uses the current card Version for its Change Log important event and does not increment the card Version for an execution-status-only change. A claim must be idempotent and must not append a duplicate Change Log event. A card already `In Progress` must not be claimed again in the same request. Before either task workspace is created, write and record a verifiable claim commit containing the atomic card and Backlog claim, then verify that the recorded claim commit advances that exact authoritative base ref; this lifecycle handoff commit is neither an implementation commit nor a stage checkpoint commit.
 
-Pass this immutable creation-evidence handoff to the selected Delivery workflow:
+The workspace preparation must complete before the entry routes downstream. When `worktree.enabled: true`, perform the primary checkout claim write, persist the claim commit, verify that the claim commit advances the authoritative base ref, then immediately create or verify the task worktree from that claim commit. Handle the create-worktree path separately from the reuse-worktree path. Only when this run actually creates the worktree successfully, then validates the exact newly-created `git worktree list --porcelain` stanza, may the handoff say `Created By Current Run: yes`. Capture the repository-relative workspace path, full `refs/heads/...` branch ref, and creation HEAD SHA from that exact newly-created stanza before routing to the Delivery Workflow. Reuse, externally managed workspace, disabled worktree, or any unprovable creation result must hand off `Created By Current Run: no`. Do not infer creation ownership from `worktree.enabled`, configured directory, workspace location, branch name, or a pre-existing worktree registration. When `worktree.enabled: false`, perform the primary checkout claim write, persist the claim commit, verify that the claim commit advances the authoritative base ref, then immediately prepare the dedicated task branch from that claim commit and must not create a worktree. Any failure of primary-checkout writing, claim persistence or commit, authoritative-base-ref advancement, workspace baseline, card Version, `In Progress` status, or matching Backlog row verification must stop: when `worktree.enabled: true`, do not create or verify a worktree and do not route downstream; when `worktree.enabled: false`, do not prepare a dedicated branch and do not route downstream. Verify in the selected workspace that the claimed card Version matches the authoritative card Version, along with `In Progress` status and the matching Backlog row, before routing any downstream Delivery Workflow. Do not begin Requirements, Solution, Plan, checkpoint, or implementation work before this handoff completes.
+
+Pass this immutable creation-evidence handoff to the selected Delivery Workflow:
 
 ```text
 Created By Current Run: yes|no
@@ -229,59 +214,46 @@ Evidence Source: git worktree list --porcelain
 
 For `Created By Current Run: no`, use `not_applicable` for the ownership tuple values; do not reconstruct them from reuse state. This tuple must not authorize deletion. When a cleanup verifier rejects it as `not_owned`, follow deny semantics: return `discard_blocked` and retain the worktree, task branch, and active run records.
 
-Each Delivery workflow must preserve this immutable creation-evidence handoff separately from its Current-run Discard context. `Workspace Path` is created-worktree provenance only. For `Created By Current Run: no`, its `not_applicable` value must not populate or replace the Current-run Discard context's actual `Workspace path` classification.
+Each Delivery Workflow must preserve this immutable creation-evidence handoff separately from its Current-run Discard context. `Workspace Path` is created-worktree provenance only. For `Created By Current Run: no`, its `not_applicable` value must not populate or replace the Current-run Discard context's actual `Workspace path` classification.
 
 Claim the item before switching the task branch. Claim the item before creating the worktree. The card and Backlog must be updated atomically.
 
 Use the default Story route `Draft Story -> work-item-analysis -> Ready Story -> feature-dev`; the matrix above governs when a claim may occur along that route.
 
-When a requested implementation is missing a card, route by intent: planning or registration goes to `work-item-planning`, work-item definition analysis goes to `work-item-analysis`, and direct Bug investigation goes to `bug-fix` to create or complete its Bug card. Do not create a duplicate ID or parallel card when an authoritative card exists.
-
-The selected downstream Delivery Workflow must record the exact card path, work-item type, current Version, and selected scope in its first stage record. Card Version or visible-fact conflicts stop the run for a user decision; later substantive card revisions use Active Task Change Handling to return to the earliest affected stage. Delivery lifecycle writeback must preserve Backlog row order, remain idempotent, and never turn a Workflow's internal stage into a work-item status.
+The selected downstream Delivery Workflow must record the exact card path, work-item type, current Version, Status, and selected scope in its first stage record. Card Version or visible-fact conflicts stop the run for a user decision; later substantive card revisions use Active Task Change Handling to return to the earliest affected stage. Delivery lifecycle writeback must preserve unrelated pending order, remain atomic and idempotent, and never turn a Workflow's internal stage into a work-item status.
 
 ## Active Workflow Continuation
 
-Before choosing or starting a new Dev Cadence flow, identify its record model and check for an unfinished Dev Cadence workflow using the matching continuation source.
+Before choosing or starting a new Dev Cadence workflow, identify its record model and check for an unfinished Dev Cadence workflow using the matching continuation source.
 
-- For a Delivery Workflow, use the conversation and existing run manifest to restore the current task, confirmed records, stage, code identity, verification evidence, and integration state.
-- For an Asset Workflow, use the current conversation, user goal, and authoritative asset to identify whether the request continues the same asset change. Do not create a manifest or process record solely to make continuation possible.
+- Delivery Workflow: restore from conversation and run manifest.
+- Asset Workflow: restore from conversation, user goal, and authoritative asset without creating process records.
 
-If there is an unfinished workflow and the user's latest request is a change, clarification, product-design adjustment, implementation adjustment, test feedback, review feedback, or acceptance feedback for that same task, continue the current workflow run. Do not create a new workflow run, task slug, requirements document, solution document, diagnosis document, or repair solution document.
+If there is an unfinished workflow and the user's latest request is a change, clarification, work-item adjustment, implementation adjustment, test feedback, review feedback, or acceptance feedback for that same task, continue the current workflow run. Do not create a new workflow run, task slug, requirements document, solution document, diagnosis document, or repair solution document.
+
+If a request clearly exceeds the confirmed scope or repair boundary of the unfinished workflow, ask whether the user wants to expand the current task or start a separate task before creating records.
 
 If there is an unfinished Delivery Workflow and the user asks to commit, save, or checkpoint current changes, continue the current workflow run and read its Git Checkpoints rules. Commit the in-scope changes under the active workflow's Git rules, then continue from the same business stage; the commit does not confirm or complete the stage.
 
 If there is an unfinished Asset Workflow and the user asks to commit or save the asset changes, follow the target repository's ordinary Git rules and the user's request. Do not create a checkpoint record or add workflow metadata to the asset. The commit does not replace any user confirmation gate required by the Asset Workflow.
 
-If the request clearly exceeds the confirmed scope or repair boundary of the unfinished workflow, ask whether the user wants to expand the current task or start a separate task before creating any new workflow run or document.
-
-Only start a new Dev Cadence flow when there is no unfinished workflow for the current task, the user explicitly asks for a new task, or the user confirms that an out-of-scope request should be handled separately.
+Only start a new Dev Cadence workflow when there is no unfinished workflow for the current task, the user explicitly asks for a new task, or the user confirms that an out-of-scope request should be handled separately.
 
 ## Decision Rules
 
-1. If the request clearly matches an available flow, read that flow skill completely and follow it.
-2. If the request might match an available flow but is ambiguous, ask one concise clarification question before choosing.
-3. If the request does not match any available flow, do not use a Dev Cadence flow. Handle it as a normal request.
-
-Then announce the selected Dev Cadence flow and follow the flow skill exactly.
+1. If the request clearly matches an available workflow, read that workflow skill completely and follow it.
+2. If the request might match an available workflow but is ambiguous, ask one concise clarification question before choosing.
+3. If the request does not match any available workflow, handle it normally.
 
 ## ⚠️ Red Flags
 
-These thoughts mean STOP and check the installed Dev Cadence flows:
-
 | Thought | Reality |
 | --- | --- |
-| "This is just a small development task." | Small development tasks still need flow checking. |
-| "This is only a broad product idea, so no workflow applies." | Initial product discovery uses `discovery`. |
-| "The user wants an initial Business Architecture, so feature-dev is close enough." | First-time product-design baselines use `discovery`. |
-| "An existing PRD needs changes, so I can run the initial Discovery flow again." | S-001 must not overwrite or incrementally reconcile an existing product-design baseline. |
-| "I need to inspect files before deciding." | Flow checking comes before repository exploration. |
-| "This sounds related to features, so feature-dev applies." | `feature-dev` applies only to new features or changes to intended feature behavior. |
-| "The user reported a bug, so feature-dev can handle it." | Bug reports use `bug-fix` unless the user asks to change intended behavior. |
-| "The user asked for a fix, so I can patch it directly." | Bug fixes must go through `bug-fix` when that flow is installed. |
-| "The user said refactor, so feature-dev is close enough." | Behavior-preserving structural work uses `refactor`, not `feature-dev`. |
-| "This refactor can include a small behavior improvement." | Intentional behavior changes must use `feature-dev`, or the user must split the work. |
-| "There is no exact flow, but feature-dev is close enough." | Do not force requests into a mismatched Dev Cadence flow. |
-| "I can mention future flows as options." | Only mention installed flows. |
-| "The request is unclear, but I can choose a flow anyway." | Ask one concise clarification question before choosing. |
-| "There is an active workflow, but this sounds like a fresh request." | Check whether it belongs to the unfinished task before starting anything new. |
-| "The user asked to commit, so the active workflow is complete." | Commit the in-scope changes, then continue the unfinished workflow from its current stage. |
+| "This request needs a PRD first." | Product analysis is outside Dev Cadence; implementation admission depends on the card contract. |
+| "The external card exists, so claim it." | `backlog` must validate and register it before claim. |
+| "The card is close enough; normalize it." | Nonconforming cards use the standard New Request path. |
+| "Analyze the whole Backlog." | Work Item Analysis handles exactly one card. |
+| "A Bug can be created inside Bug Fix." | Missing cards route to `backlog` before Delivery. |
+| "Priority lets me skip the first pending row." | `待处理` row order is authoritative until a confirmed reorder. |
+| "This small change can skip the matching Delivery Workflow." | Installed workflows route by intended outcome, not perceived size. |
+| "The user asked to commit, so the active workflow is complete." | A commit preserves progress; it does not replace the current business-stage confirmation. |
