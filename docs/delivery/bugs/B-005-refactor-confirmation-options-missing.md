@@ -78,8 +78,6 @@
 ## 相关文档
 
 - [Backlog](../backlog.md)
-- [Discovery 流程](../../workflows/discovery.md)
-- [工作项规划流程](../../workflows/work-item-planning.md)
 - [架构设计流程](../../workflows/architecture-design.md)
 - [Feature Dev 流程](../../workflows/feature-dev.md)
 - [Bug Fix 流程](../../workflows/bug-fix.md)

@@ -46,6 +46,6 @@
 
 ## 假设与开放问题
 
-- 假设：已确认的 [Discovery 流程设计](../../../../docs/workflows/discovery.md) 是 S-014 的详细业务设计输入；Story Version 2 是范围与验收边界。
+- 假设：已确认的 `docs/workflows/discovery.md` 是 S-014 的详细业务设计输入；Story Version 2 是范围与验收边界。
 - 假设：Change Log 的详细字段沿用该已确认流程设计，不额外发明审批元数据。
 - Open Questions: None。

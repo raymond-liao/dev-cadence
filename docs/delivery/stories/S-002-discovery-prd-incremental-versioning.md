@@ -103,7 +103,6 @@
 
 ## 相关文档
 
-- [需求探索流程](../../workflows/discovery.md)
 - [S-001 首次 Discovery 与产品设计基线](S-001-initial-discovery-prd-baseline.md)
 - [S-005 全局 Open Question Registry](S-005-open-question-registry.md)
 - [S-006 Discovery 产品与技术内容边界](S-006-discovery-product-technical-content-boundary.md)

@@ -73,7 +73,6 @@
 
 ## 相关文档
 
-- [工作项规划流程](../../workflows/work-item-planning.md)
 - [S-015 工作项规划 Workflow 与工作项契约](S-015-work-item-planning-workflow-contract.md)
 - [S-016 统一 Backlog 看板](S-016-unified-backlog-board.md)
 - [S-037 工作项分析 Workflow](S-037-work-item-analysis-workflow.md)

@@ -76,7 +76,6 @@
 - [S-016 统一 Backlog 看板](../stories/S-016-unified-backlog-board.md)
 - [S-017 工作项卡片与开发 Workflow 接入](../stories/S-017-work-item-development-workflow-integration.md)
 - [B-007 当前可并行实施表混用卡片状态与流程入口资格](B-007-parallel-work-table-entry-qualification.md)
-- [工作项规划流程](../../workflows/work-item-planning.md)
 
 ## Change Log
 

@@ -66,7 +66,6 @@
 - [Backlog](../backlog.md)
 - [S-016 统一 Backlog 看板](../stories/S-016-unified-backlog-board.md)
 - [S-017 工作项卡片与开发 Workflow 接入](../stories/S-017-work-item-development-workflow-integration.md)
-- [工作项规划流程](../../workflows/work-item-planning.md)
 - [工作项分析流程](../../workflows/work-item-analysis.md)
 
 ## Relationships

@@ -85,7 +85,6 @@
 
 ## 相关文档
 
-- [需求探索流程](../../workflows/discovery.md)
 - [S-001 首次 Discovery 与产品设计基线](S-001-initial-discovery-prd-baseline.md)
 - [S-002 产品设计基线增量更新与版本治理](S-002-discovery-prd-incremental-versioning.md)
 - [S-005 全局 Open Question Registry](S-005-open-question-registry.md)

@@ -85,7 +85,6 @@ PRD、Business Architecture、Story、Technical Task 和技术方案都可能拥
 
 ## 相关文档
 
-- [需求探索流程](../../workflows/discovery.md)
 - [S-002 产品设计基线增量更新与版本治理](S-002-discovery-prd-incremental-versioning.md)
 - [Backlog](../backlog.md)
 
