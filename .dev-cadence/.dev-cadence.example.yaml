@@ -1,8 +1,0 @@
-# Dev Cadence Config
-
-# Allowed values: en, zh-CN
-output_language: en
-
-worktree:
-  enabled: false
-  directory: .worktrees
