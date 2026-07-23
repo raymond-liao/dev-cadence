@@ -2,7 +2,7 @@
 
 ## 需求来源
 
-- 权威工作项：[S-040 Open Question Registry 全量索引与引用契约](../../../../docs/stories/S-040-open-question-registry-index-and-reference-contract.md)
+- 权威工作项：[S-040 Open Question Registry 全量索引与引用契约](../../../../docs/delivery/stories/S-040-open-question-registry-index-and-reference-contract.md)
 - 工作项身份：`S-040` Version `1`，Status `Ready`，Priority `P1`
 - 实施授权：用户于 `2026-07-17` 明确要求实施 Backlog 中的第一张卡。
 - 附加授权：用户同时明确允许将“实施 Backlog 卡片时优先使用子代理节省主会话上下文”的协作规则更新到本仓库根 `AGENTS.md`。

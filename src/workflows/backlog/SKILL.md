@@ -7,7 +7,7 @@ description: Use when a user asks to create or register a Story, Task, or Bug ca
 
 Use this workflow to admit implementation work into Dev Cadence and maintain the authoritative delivery Backlog.
 
-This is an Asset Workflow. It creates or updates only authoritative Story, Task, and Bug cards plus `docs/backlog.md`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or copies of Delivery Workflow evidence.
+This is an Asset Workflow. It creates or updates only authoritative Story, Task, and Bug cards plus `docs/delivery/backlog.md`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or copies of Delivery Workflow evidence.
 
 Before reading, creating, or updating an owned asset Change Log, read and follow:
 
@@ -26,7 +26,7 @@ Before creating or updating cards or Backlog content, read and follow:
 Use Backlog when the user asks to:
 
 - create one Story, Task, or Bug card from a new request;
-- register an existing conforming Story, Task, or Bug card in `docs/backlog.md`;
+- register an existing conforming Story, Task, or Bug card in `docs/delivery/backlog.md`;
 - review whether an existing card satisfies the Dev Cadence card contract;
 - maintain card Priority, relationships, lifecycle placement, or recommended pending order;
 - drop, supersede, or replace a work item without starting implementation.
@@ -52,10 +52,10 @@ Do not read user configuration from the replaceable installed `.dev-cadence/` pa
 Backlog owns these asset locations:
 
 ```text
-docs/backlog.md
-docs/stories/S-nnn-<slug>.md
-docs/tasks/T-nnn-<slug>.md
-docs/bugs/B-nnn-<slug>.md
+docs/delivery/backlog.md
+docs/delivery/stories/S-nnn-<slug>.md
+docs/delivery/tasks/T-nnn-<slug>.md
+docs/delivery/bugs/B-nnn-<slug>.md
 ```
 
 Use repository-global stable IDs:
@@ -138,7 +138,7 @@ An existing card may bypass card creation and Work Item Analysis only when:
 - its type-specific content and maturity are sufficient for the requested downstream route; and
 - the user identifies it as the intended implementation item.
 
-For a conforming card that is not yet in `docs/backlog.md`, propose only the necessary Backlog registration. After confirmation, atomically register the existing card without rewriting it, and do not repeat Work Item Analysis.
+For a conforming card that is not yet in `docs/delivery/backlog.md`, propose only the necessary Backlog registration. After confirmation, atomically register the existing card without rewriting it, and do not repeat Work Item Analysis.
 
 Registration never bypasses Backlog. A card that is ready for implementation but absent from Backlog must enter Backlog before it can be claimed.
 
@@ -155,7 +155,7 @@ When an existing or externally supplied card fails this contract:
 
 The supplied card does not become an authoritative Dev Cadence card merely because it exists under `docs/`.
 
-If the supplied source already occupies a canonical-looking path under `docs/stories/`, `docs/tasks/`, or `docs/bugs/`, leave that file untouched and exclude it from Backlog. Allocate a fresh unused ID and path for the new Dev Cadence card. Do not rename, move, normalize, or replace the source as part of intake.
+If the supplied source already occupies a canonical-looking path under `docs/delivery/stories/`, `docs/delivery/tasks/`, or `docs/delivery/bugs/`, leave that file untouched and exclude it from Backlog. Allocate a fresh unused ID and path for the new Dev Cadence card. Do not rename, move, normalize, or replace the source as part of intake.
 
 ## Workflow Sequence
 
@@ -202,7 +202,7 @@ Follow the shared Change Log contract for every important card event. Backlog li
 The authoritative path is:
 
 ```text
-docs/backlog.md
+docs/delivery/backlog.md
 ```
 
 Use exactly these lifecycle sections in this order:

@@ -2,7 +2,7 @@
 
 - Workflow: `bug-fix`
 - Task Slug: `b-007-parallel-work-table-qualification`
-- Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/bugs/B-007-parallel-work-table-entry-qualification.md)
+- Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/delivery/bugs/B-007-parallel-work-table-entry-qualification.md)
 - Work Item Version: `2`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Workspace: `.worktrees/b-005-b-007-b-008-contract-closure`

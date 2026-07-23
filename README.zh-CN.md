@@ -30,7 +30,7 @@ Dev Cadence 拥有实施工作项和仓库内 Backlog：
 新需求或已有卡片
 -> Backlog 准入
 -> 必要时执行单卡需求分析
--> docs/backlog.md
+-> docs/delivery/backlog.md
 -> 认领
 -> feature-dev | bug-fix | refactor
 -> 方案、实施计划、实施、Review、验证和验收
@@ -49,7 +49,7 @@ Dev Cadence 拥有实施工作项和仓库内 Backlog：
 
 ### backlog
 
-创建 Story、Task 和 Bug 卡片，校验用户提供的卡片，登记合规卡片，并拥有 `docs/backlog.md` 的结构、生命周期分区和待处理建议顺序。
+创建 Story、Task 和 Bug 卡片，校验用户提供的卡片，登记合规卡片，并拥有 `docs/delivery/backlog.md` 的结构、生命周期分区和待处理建议顺序。
 
 Backlog 不执行产品分析、详细单卡分析、技术诊断、开发、测试或验收。
 
@@ -92,10 +92,11 @@ Story 是否达到 `Ready` 只取决于自身实施定义，不要求 PRD、Feat
 Asset Workflow 在 `docs/` 下维护长期权威资产：
 
 ```text
-docs/backlog.md
-docs/stories/S-nnn-<slug>.md
-docs/tasks/T-nnn-<slug>.md
-docs/bugs/B-nnn-<slug>.md
+docs/delivery/backlog.md
+docs/delivery/open-questions.md
+docs/delivery/stories/S-nnn-<slug>.md
+docs/delivery/tasks/T-nnn-<slug>.md
+docs/delivery/bugs/B-nnn-<slug>.md
 docs/architecture/<goal-slug>.md
 ```
 

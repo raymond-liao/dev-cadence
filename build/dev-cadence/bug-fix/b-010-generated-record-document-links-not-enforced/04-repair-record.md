@@ -1,7 +1,7 @@
 # B-010 修复记录
 
 - Workflow: `bug-fix`
-- Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/bugs/B-010-generated-record-document-links-not-enforced.md)
+- Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/delivery/bugs/B-010-generated-record-document-links-not-enforced.md)
 - Confirmed Repair Plan: [B-010 修复计划](03-repair-plan.md)
 - Implementation Base SHA: `391a5dc`
 - Final Repair SHA: `598cb9a`

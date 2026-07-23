@@ -27,7 +27,7 @@
 
 ## Work Item Identity And Claim
 
-- Card：[B-013 Story Ready 错误依赖 Feature 关联](../../../../docs/bugs/B-013-story-ready-feature-reference-required.md)
+- Card：[B-013 Story Ready 错误依赖 Feature 关联](../../../../docs/delivery/bugs/B-013-story-ready-feature-reference-required.md)
 - Work-item type：`Bug`
 - Card Version：`2`
 - Visible Status：`Done`

@@ -88,7 +88,7 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 
 ## 相关文档
 
-- [工作项规划流程](../workflows/work-item-planning.md)
+- [工作项规划流程](../../workflows/work-item-planning.md)
 - [S-015 工作项规划 Workflow 与工作项契约](S-015-work-item-planning-workflow-contract.md)
 - [S-017 工作项卡片与开发 Workflow 接入](S-017-work-item-development-workflow-integration.md)
 - [S-037 工作项分析 Workflow](S-037-work-item-analysis-workflow.md)

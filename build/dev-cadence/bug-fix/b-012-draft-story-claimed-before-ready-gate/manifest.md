@@ -27,7 +27,7 @@
 
 ## Work Item Lifecycle Writeback
 
-- Card: [B-012 Draft Story 在 Ready 门禁前被提前领取](../../../../docs/bugs/B-012-draft-story-claimed-before-ready-gate.md)
+- Card: [B-012 Draft Story 在 Ready 门禁前被提前领取](../../../../docs/delivery/bugs/B-012-draft-story-claimed-before-ready-gate.md)
 - Card type and version: `Bug`, Version `1`
 - Card status: `In Progress` -> `Done`
 - Backlog source: `docs/backlog.md` section `进行中`

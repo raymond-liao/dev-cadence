@@ -2,7 +2,7 @@
 
 ## 需求来源
 
-- [S-008 Skill 语义视觉规范](../../../../docs/stories/S-008-skill-semantic-visual-markers.md)，Version `2`
+- [S-008 Skill 语义视觉规范](../../../../docs/delivery/stories/S-008-skill-semantic-visual-markers.md)，Version `2`
 - 当前对话对适用范围的补充：语义 emoji 适用于 skill 中的正反例、成对边界、Red Flags 和其他高价值对比区块。
 
 ## 已确认范围

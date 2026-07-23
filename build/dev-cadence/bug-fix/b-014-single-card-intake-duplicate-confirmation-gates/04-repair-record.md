@@ -1,7 +1,7 @@
 # B-014 修复记录
 
 - Workflow: `bug-fix`
-- Work Item: [B-014 单项建卡被错误套用双确认门](../../../../docs/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md)
+- Work Item: [B-014 单项建卡被错误套用双确认门](../../../../docs/delivery/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md)
 - Confirmed Repair Plan: [B-014 修复计划](03-repair-plan.md)
 - Implementation Base SHA: `5a97b61`
 - Final Repair SHA: `be61691`

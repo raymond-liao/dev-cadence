@@ -7,7 +7,7 @@ description: Use when a user asks to analyze, clarify, or confirm one existing S
 
 Use this workflow to analyze exactly one authoritative Story, Task, or Bug card before downstream delivery.
 
-This is an Asset Workflow. It may update only the selected card and the matching mechanical status/Version summary in `docs/backlog.md`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or copies of Delivery Workflow evidence.
+This is an Asset Workflow. It may update only the selected card and the matching mechanical status/Version summary in `docs/delivery/backlog.md`. It must not create `build/dev-cadence/` run manifests, stage records, confirmation records, checkpoint commits, or copies of Delivery Workflow evidence.
 
 Before reading, creating, or updating an owned asset Change Log, read and follow:
 
@@ -53,11 +53,11 @@ Do not read user configuration from the replaceable installed `.dev-cadence/` pa
 
 The selected card must already exist at one authoritative repository-relative path:
 
-- Story: `docs/stories/S-nnn-<slug>.md`
-- Task: `docs/tasks/T-nnn-<slug>.md`
-- Bug: `docs/bugs/B-nnn-<slug>.md`
+- Story: `docs/delivery/stories/S-nnn-<slug>.md`
+- Task: `docs/delivery/tasks/T-nnn-<slug>.md`
+- Bug: `docs/delivery/bugs/B-nnn-<slug>.md`
 
-Read the selected card and its matching `docs/backlog.md` row. Confirm the stable ID, type, path, Version, Status, Priority, and visible facts before forming a proposal.
+Read the selected card and its matching `docs/delivery/backlog.md` row. Confirm the stable ID, type, path, Version, Status, Priority, and visible facts before forming a proposal.
 
 If the card does not satisfy the structural card contract, stop and return it to Backlog as a nonconforming intake. Do not normalize or recreate it inside Work Item Analysis.
 

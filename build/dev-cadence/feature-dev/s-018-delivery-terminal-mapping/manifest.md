@@ -43,12 +43,12 @@
 
 ## Work Item Identity
 
-- Card: [S-018 Delivery 终态映射与 Manual Recovery](../../../../docs/stories/S-018-business-acceptance-terminal-mapping.md) (`docs/stories/S-018-business-acceptance-terminal-mapping.md`)
+- Card: [S-018 Delivery 终态映射与 Manual Recovery](../../../../docs/delivery/stories/S-018-business-acceptance-terminal-mapping.md) (`docs/stories/S-018-business-acceptance-terminal-mapping.md`)
 - Work-item Type: `Story`
 - Card Version At Claim: `4`
 - Card Status At Claim: `In Progress`
 - Selected Scope: 明确三个 Delivery workflow 中 `accepted`、`rejected` 与 `accepted_with_risk` 的后续路径，保留风险责任；仅为已接受且正常 Completion 已被证明不可恢复阻断的 run 定义 manual recovery 与 `abandoned` 终态记录，并以对称契约测试验证。
-- Backlog Projection: [Backlog](../../../../docs/backlog.md) (`docs/backlog.md`), source `进行中`, destination `已完成`, Version `4`, Status `Done`
+- Backlog Projection: [Backlog](../../../../docs/delivery/backlog.md) (`docs/backlog.md`), source `进行中`, destination `已完成`, Version `4`, Status `Done`
 - Claim Checkpoint: `be7c945af634abab30a86f286ee3262e6352150e`
 
 ## Baseline

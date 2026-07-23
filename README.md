@@ -32,7 +32,7 @@ Dev Cadence owns implementation work items and a repository-local Backlog:
 new request or existing card
 -> backlog admission
 -> single-card analysis when needed
--> docs/backlog.md
+-> docs/delivery/backlog.md
 -> claim
 -> feature-dev | bug-fix | refactor
 -> solution, implementation plan, implementation, review, verification, acceptance
@@ -51,7 +51,7 @@ An existing card that fully satisfies the Dev Cadence card and maturity contract
 
 ### backlog
 
-Creates Story, Task, and Bug cards; validates supplied cards; registers conforming cards; and owns `docs/backlog.md` structure, lifecycle sections, and recommended pending order.
+Creates Story, Task, and Bug cards; validates supplied cards; registers conforming cards; and owns `docs/delivery/backlog.md` structure, lifecycle sections, and recommended pending order.
 
 Backlog does not perform product analysis, detailed single-card analysis, diagnosis, implementation, testing, or acceptance.
 
@@ -94,10 +94,11 @@ Refactor Scope -> Refactor Solution -> Refactor Plan -> Refactor Implementation 
 Asset Workflows maintain long-lived authoritative files under `docs/`:
 
 ```text
-docs/backlog.md
-docs/stories/S-nnn-<slug>.md
-docs/tasks/T-nnn-<slug>.md
-docs/bugs/B-nnn-<slug>.md
+docs/delivery/backlog.md
+docs/delivery/open-questions.md
+docs/delivery/stories/S-nnn-<slug>.md
+docs/delivery/tasks/T-nnn-<slug>.md
+docs/delivery/bugs/B-nnn-<slug>.md
 docs/architecture/<goal-slug>.md
 ```
 

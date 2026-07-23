@@ -24,7 +24,7 @@
 - 规定 Feature、Story、Bug 和 Task 卡使用固定的 `✅` / `❌` 语义标识，标题文字遵守 `output_language` 或文档既有语言；当前 `zh-CN` 仓库使用 `## ✅ 范围` 和 `## ❌ 非范围`。
 - 明确 `✅` 表示包含或适用于当前工作项，`❌` 表示明确排除或不适用于当前工作项，不表示内容质量判断。
 - 标识只放在章节标题，不要求给范围和非范围中的普通列表条目逐项添加 emoji。
-- 批量更新 `docs/stories/` 下现有 Story 卡和 `docs/tasks/` 下现有 Task 卡的范围与非范围标题。
+- 批量更新 `docs/delivery/stories/` 下现有 Story 卡和 `docs/delivery/tasks/` 下现有 Task 卡的范围与非范围标题。
 - 更新已存在的工作项模板、示例或工作项契约，使后续 Feature、Story、Bug 和 Task 自动使用统一标题。
 - 保持标题文字存在，不能只用 emoji 表达章节含义。
 - 共享规则使用语言中性的标题占位符和 `Thought` / `Reality` Red Flags 表，不枚举具体人类语言或把当前仓库的标题文字提升为跨仓库契约。
@@ -45,7 +45,7 @@
 
 1. `document-conventions` 明确要求 Feature、Story、Bug 和 Task 工作项卡片使用本地化的 `✅` included-scope 和 `❌` excluded-scope 标题，不把任何具体人类语言的标题写成共享契约。
 2. 共享规则明确说明两个标识分别表示当前工作项的包含范围和明确排除范围，不表达质量或验收判断。
-3. `docs/stories/` 和 `docs/tasks/` 下所有现有工作项卡片使用统一的范围章节标题。
+3. `docs/delivery/stories/` 和 `docs/delivery/tasks/` 下所有现有工作项卡片使用统一的范围章节标题。
 4. 普通范围与非范围列表条目不会被机械添加重复 emoji。
 5. 工作项正文、业务边界、状态、优先级、依赖和验收标准不会因标题迁移发生语义变化。
 6. 后续 Feature、Story、Bug 和 Task 模板、示例或工作项契约要求生成相同标题。

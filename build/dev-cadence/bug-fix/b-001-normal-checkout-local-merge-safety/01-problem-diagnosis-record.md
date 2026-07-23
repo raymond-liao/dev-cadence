@@ -8,7 +8,7 @@
 
 ## 诊断来源
 
-- [B-001 普通 Checkout 本地 Merge 安全性](../../../../docs/bugs/B-001-normal-checkout-local-merge-safety.md) Version `1`
+- [B-001 普通 Checkout 本地 Merge 安全性](../../../../docs/delivery/bugs/B-001-normal-checkout-local-merge-safety.md) Version `1`
 - `.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md`
 - 基线检查：`bash scripts/check-all.sh`，结果为通过
 - 隔离临时 Git 仓库中的最小行为复现

@@ -16,7 +16,7 @@
 
 ## Work Item
 
-- Card: [S-041 Change Log 共享契约与历史记录治理](../../../../docs/stories/S-041-change-log-contract-and-history-governance.md)
+- Card: [S-041 Change Log 共享契约与历史记录治理](../../../../docs/delivery/stories/S-041-change-log-contract-and-history-governance.md)
 - Card path: `docs/stories/S-041-change-log-contract-and-history-governance.md`
 - Work-item type: `Story`
 - Card Version: `3`

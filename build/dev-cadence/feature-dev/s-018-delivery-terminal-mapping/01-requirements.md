@@ -2,12 +2,12 @@
 
 ## 工作项身份
 
-- 工作项：[S-018 Delivery 终态映射与 Manual Recovery](../../../../docs/stories/S-018-business-acceptance-terminal-mapping.md) (`docs/stories/S-018-business-acceptance-terminal-mapping.md`)
+- 工作项：[S-018 Delivery 终态映射与 Manual Recovery](../../../../docs/delivery/stories/S-018-business-acceptance-terminal-mapping.md) (`docs/stories/S-018-business-acceptance-terminal-mapping.md`)
 - 工作项类型：`Story`
 - 工作项 Version：`4`
 - 当前 Status：`In Progress`
 - selected scope：为 `feature-dev`、`bug-fix` 和 `refactor` 建立一致、可审计的业务验收终态与例外 manual recovery 路径，并扩展对应记录验证和契约测试。
-- Backlog 投影：[Backlog](../../../../docs/backlog.md) (`docs/backlog.md`)，`进行中`，Version `4`，Status `In Progress`。
+- Backlog 投影：[Backlog](../../../../docs/delivery/backlog.md) (`docs/backlog.md`)，`进行中`，Version `4`，Status `In Progress`。
 
 ## 目标
 

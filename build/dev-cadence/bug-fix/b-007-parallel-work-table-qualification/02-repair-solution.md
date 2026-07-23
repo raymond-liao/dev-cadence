@@ -1,7 +1,7 @@
 # B-007 修复方案
 
 - Status: `confirmed`
-- Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/bugs/B-007-parallel-work-table-entry-qualification.md)
+- Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/delivery/bugs/B-007-parallel-work-table-entry-qualification.md)
 - Diagnosis Source: [B-007 问题诊断记录](01-problem-diagnosis-record.md)
 - Decision Authority: `delegated continuation authority from user instruction`
 

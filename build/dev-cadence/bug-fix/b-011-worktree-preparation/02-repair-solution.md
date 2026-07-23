@@ -3,7 +3,7 @@
 - 状态：🔄 `in_progress`
 - 记录时间：`2026-07-19T16:48:26+0800`
 - 已确认诊断：[B-011 问题诊断记录](01-problem-diagnosis-record.md)
-- 工作项：[B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/bugs/B-011-worktree-preparation-delayed-after-claim.md)
+- 工作项：[B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/delivery/bugs/B-011-worktree-preparation-delayed-after-claim.md)
 
 ## 要修复的根因
 

@@ -30,7 +30,7 @@ Do not use this skill to answer a question, confirm a decision, create a Feature
 The canonical Registry path is:
 
 ```text
-docs/open-questions.md
+docs/delivery/open-questions.md
 ```
 
 Before creating that file, search the repository for an existing candidate Registry or repository-level unresolved-question document. Inspect filenames, headings, links, and document responsibility rather than matching one exact name.
@@ -41,9 +41,9 @@ If multiple candidates exist, ownership is ambiguous, or the canonical path alre
 
 ## On-Demand Creation
 
-Create `docs/open-questions.md` only when the first real question must be registered and no existing candidate Registry owns the responsibility.
+Create `docs/delivery/open-questions.md` only when the first real question must be registered and no existing candidate Registry owns the responsibility.
 
-Do not create an empty Registry during installation, workflow startup, repository inspection, or a run that has no question to register. Installation must not create or overwrite `docs/open-questions.md`.
+Do not create an empty Registry during installation, workflow startup, repository inspection, or a run that has no question to register. Installation must not create or overwrite `docs/delivery/open-questions.md`.
 
 When creating the Registry, include these sections:
 

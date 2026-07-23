@@ -1,7 +1,7 @@
 # B-005 问题诊断记录
 
 - Status: `in_progress`
-- Work Item: [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](../../../../docs/bugs/B-005-refactor-confirmation-options-missing.md)
+- Work Item: [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](../../../../docs/delivery/bugs/B-005-refactor-confirmation-options-missing.md)
 - Workflow: `bug-fix`
 - Diagnosis Branch: `codex/b-005-confirmation-gates`
 - Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`

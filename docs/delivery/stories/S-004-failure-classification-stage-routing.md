@@ -78,9 +78,9 @@
 ## 相关文档
 
 - [Backlog](../backlog.md)
-- [功能开发流程](../workflows/feature-dev.md)
-- [Bug 修复流程](../workflows/bug-fix.md)
-- [重构流程](../workflows/refactor.md)
+- [功能开发流程](../../workflows/feature-dev.md)
+- [Bug 修复流程](../../workflows/bug-fix.md)
+- [重构流程](../../workflows/refactor.md)
 
 ## Change Log
 

@@ -15,7 +15,7 @@
 
 ## Global Constraints
 
-- 只实现 [S-014 Version 2](../../../../docs/stories/S-014-user-journey-analysis.md) 的确认范围。
+- 只实现 [S-014 Version 2](../../../../docs/delivery/stories/S-014-user-journey-analysis.md) 的确认范围。
 - `src/skills/discovery/SKILL.md` 是 Discovery 执行行为权威来源；`docs/workflows/discovery.md` 是已确认业务设计输入但不替代 skill。
 - 不修改 `src/vendor/superpowers/**`、Open Question Registry 或相邻 Delivery workflow。
 - 不新增多 Journey 目录、根索引、拆分阈值、Story Map 或工作项规划行为。

@@ -1,7 +1,7 @@
 # B-010 修复方案
 
 - Workflow: `bug-fix`
-- Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/bugs/B-010-generated-record-document-links-not-enforced.md)
+- Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/delivery/bugs/B-010-generated-record-document-links-not-enforced.md)
 - Card Version: `1`
 - Diagnosis source: `build/dev-cadence/bug-fix/b-010-generated-record-document-links-not-enforced/01-problem-diagnosis-record.md`
 - Decision: ✅ `confirmed` - 方案 A：模板修正、对称性契约与双表示 fixture

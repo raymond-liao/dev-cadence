@@ -3,7 +3,7 @@
 ## Sources
 
 - Confirmed requirements: [01-requirements.md](01-requirements.md)
-- Work item: [S-004](../../../../docs/stories/S-004-failure-classification-stage-routing.md), version `1`
+- Work item: [S-004](../../../../docs/delivery/stories/S-004-failure-classification-stage-routing.md), version `1`
 - Existing rollback semantics: `src/skills/feature-dev/SKILL.md`, `src/skills/bug-fix/SKILL.md`, and `src/skills/refactor/SKILL.md`
 
 ## Codebase Exploration Findings

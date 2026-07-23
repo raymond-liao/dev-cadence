@@ -3,7 +3,7 @@
 ## 来源与确认
 
 - Confirmed Requirement: [需求确认](01-requirements.md)
-- Work Item: [S-014 Discovery User Journey 与 Feature 基线](../../../../docs/stories/S-014-user-journey-analysis.md)
+- Work Item: [S-014 Discovery User Journey 与 Feature 基线](../../../../docs/delivery/stories/S-014-user-journey-analysis.md)
 - Business Design: [Discovery 流程设计](../../../../docs/workflows/discovery.md)
 - Status: ✅ `confirmed`
 - Confirmation: delegated by the user's parallel implementation instruction on `2026-07-16`。

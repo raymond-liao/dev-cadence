@@ -2,7 +2,7 @@
 
 - Workflow: `feature-dev`
 - Task slug: `s-004-failure-classification-stage-routing`
-- Work item: [S-004 实施与测试失败分类和阶段返回](../../../../docs/stories/S-004-failure-classification-stage-routing.md)
+- Work item: [S-004 实施与测试失败分类和阶段返回](../../../../docs/delivery/stories/S-004-failure-classification-stage-routing.md)
 - Work item path: `docs/stories/S-004-failure-classification-stage-routing.md`
 - Work item version: `3`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)

@@ -2,12 +2,12 @@
 
 ## 工作项身份
 
-- 工作项：[S-030 Worktree 清理安全与证据](../../../../docs/stories/S-030-worktree-ownership-detection.md) (`docs/stories/S-030-worktree-ownership-detection.md`)
+- 工作项：[S-030 Worktree 清理安全与证据](../../../../docs/delivery/stories/S-030-worktree-ownership-detection.md) (`docs/stories/S-030-worktree-ownership-detection.md`)
 - 工作项类型：`Story`
 - 工作项 Version：`4`
 - 当前 Status：`In Progress`
 - selected scope：以当前运行 manifest 的创建证据与实时 Git worktree 身份一致性决定清理资格；覆盖配置的自定义 worktree 目录、正常 Completion 与 `whole-run discard`，排除运行记录归档和清理结果持久化。
-- Backlog 投影：[Backlog](../../../../docs/backlog.md) (`docs/backlog.md`)，`进行中`，Version `4`，Status `In Progress`。
+- Backlog 投影：[Backlog](../../../../docs/delivery/backlog.md) (`docs/backlog.md`)，`进行中`，Version `4`，Status `In Progress`。
 
 ## 目标
 
@@ -63,8 +63,8 @@
 
 ### 输入用途
 
-- [S-030 Worktree 清理安全与证据](../../../../docs/stories/S-030-worktree-ownership-detection.md)：Story Version `4`、Status `In Progress`；本次交付的权威需求来源与范围边界。
-- [Backlog](../../../../docs/backlog.md)：验证 S-030 位于 `进行中`、Version `4`、Status `In Progress`。
+- [S-030 Worktree 清理安全与证据](../../../../docs/delivery/stories/S-030-worktree-ownership-detection.md)：Story Version `4`、Status `In Progress`；本次交付的权威需求来源与范围边界。
+- [Backlog](../../../../docs/delivery/backlog.md)：验证 S-030 位于 `进行中`、Version `4`、Status `In Progress`。
 - `.dev-cadence.yaml`：固定 `output_language: zh-CN`、`worktree.enabled: true` 和 `worktree.directory: .worktrees`。
 - `.dev-cadence/vendor/superpowers/skills/finishing-a-development-branch/SKILL.md`：baseline commit `c340758`；提供现有 Completion 与 `whole-run discard` 清理行为，具体源修改归 Technical Solution 决定。
 

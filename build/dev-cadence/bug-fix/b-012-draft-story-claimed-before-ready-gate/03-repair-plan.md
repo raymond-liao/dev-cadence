@@ -1,7 +1,7 @@
 # B-012 修复计划
 
 - Workflow: `bug-fix`
-- Work Item: [B-012 Draft Story 在 Ready 门禁前被提前领取](../../../../docs/bugs/B-012-draft-story-claimed-before-ready-gate.md)
+- Work Item: [B-012 Draft Story 在 Ready 门禁前被提前领取](../../../../docs/delivery/bugs/B-012-draft-story-claimed-before-ready-gate.md)
 - Diagnosis: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/01-problem-diagnosis-record.md`
 - Repair Solution: `build/dev-cadence/bug-fix/b-012-draft-story-claimed-before-ready-gate/02-repair-solution.md`
 - Confirmed solution: 入口内建立有序领取资格矩阵（方案 B）

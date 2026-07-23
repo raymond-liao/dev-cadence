@@ -27,7 +27,7 @@
 
 ## Work Item Identity And Claim
 
-- Card：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
+- Card：[B-015 工作项领取未在 main 持久化](../../../../docs/delivery/bugs/B-015-work-item-claim-not-persisted-on-main.md)
 - Work-item type：`Bug`
 - Card Version：`4`
 - Visible Status：`In Progress`

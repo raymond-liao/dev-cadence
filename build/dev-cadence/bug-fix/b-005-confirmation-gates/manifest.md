@@ -2,7 +2,7 @@
 
 - Workflow: `bug-fix`
 - Task Slug: `b-005-confirmation-gates`
-- Work Item: [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](../../../../docs/bugs/B-005-refactor-confirmation-options-missing.md)
+- Work Item: [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](../../../../docs/delivery/bugs/B-005-refactor-confirmation-options-missing.md)
 - Work Item Version: `4`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Workspace: `.worktrees/b-005-b-007-b-008-contract-closure`

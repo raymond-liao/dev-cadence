@@ -4,7 +4,7 @@
 
 - 已确认需求：[需求确认](01-requirements.md)
 - 精确路径：`build/dev-cadence/feature-dev/s-010-document-reference-links/01-requirements.md`
-- 工作项：[S-010 文档引用快捷链接](../../../../docs/stories/S-010-document-reference-links.md)
+- 工作项：[S-010 文档引用快捷链接](../../../../docs/delivery/stories/S-010-document-reference-links.md)
 - 工作项版本：`3`
 - 本方案不改变 workflow 阶段、状态模型或 S-009 状态呈现。
 

@@ -18,7 +18,7 @@
 
 ## 已观察行为
 
-Bug Fix 流程可以完成实现、验证、业务验收和本地集成，但对应 Bug 在 `docs/backlog.md` 中仍保留 `Draft` 状态和“待处理”位置，需要人工修正。
+Bug Fix 流程可以完成实现、验证、业务验收和本地集成，但对应 Bug 在 `docs/delivery/backlog.md` 中仍保留 `Draft` 状态和“待处理”位置，需要人工修正。
 
 ## ✅ 范围
 
@@ -45,7 +45,7 @@ Bug Fix 流程可以完成实现、验证、业务验收和本地集成，但对
 
 ## 已知复现条件
 
-- 完成任一 Bug Fix 的业务验收与 Completion 集成后，检查 `docs/backlog.md` 中对应 Bug 条目。
+- 完成任一 Bug Fix 的业务验收与 Completion 集成后，检查 `docs/delivery/backlog.md` 中对应 Bug 条目。
 
 ## 依赖
 

@@ -15,7 +15,7 @@
 
 ## 工作项身份与领取
 
-- 卡片：[B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/bugs/B-011-worktree-preparation-delayed-after-claim.md)
+- 卡片：[B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/delivery/bugs/B-011-worktree-preparation-delayed-after-claim.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`1`
 - 可见状态：`Done`

@@ -2,9 +2,9 @@
 
 ## 来源与确认
 
-- Work Item: [S-014 Discovery User Journey 与 Feature 基线](../../../../docs/stories/S-014-user-journey-analysis.md)
+- Work Item: [S-014 Discovery User Journey 与 Feature 基线](../../../../docs/delivery/stories/S-014-user-journey-analysis.md)
 - Work Item Version: `2`
-- Backlog: [当前可并行实施表](../../../../docs/backlog.md#当前可并行实施表)
+- Backlog: [当前可并行实施表](../../../../docs/delivery/backlog.md#当前可并行实施表)
 - Status: ✅ `confirmed`
 - Confirmation: 用户于 `2026-07-16` 明确要求按照 Backlog 并行实施表开始完成后续任务，授权本任务在已是 Ready 且无 Open Questions 的前提下连续完成 Requirements、Technical Solution 和 Implementation Plan 阶段。
 - Business Acceptance 不在该授权内，仍需用户选择固定验收选项。

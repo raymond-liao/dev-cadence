@@ -27,7 +27,7 @@
 
 ## Work Item Lifecycle Writeback
 
-- Card: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/bugs/B-010-generated-record-document-links-not-enforced.md)
+- Card: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/delivery/bugs/B-010-generated-record-document-links-not-enforced.md)
 - Card type and version: `Bug`, Version `1`
 - Card status: `In Progress` -> `Done`
 - Backlog source: `docs/backlog.md` section `进行中`

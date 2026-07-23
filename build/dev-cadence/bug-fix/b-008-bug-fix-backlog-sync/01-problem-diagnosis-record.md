@@ -1,7 +1,7 @@
 # B-008 问题诊断记录
 
 - Status: `in_progress`
-- Work Item: [B-008 Bug Fix 完成后未更新 Backlog](../../../../docs/bugs/B-008-bug-fix-completion-does-not-update-backlog.md)
+- Work Item: [B-008 Bug Fix 完成后未更新 Backlog](../../../../docs/delivery/bugs/B-008-bug-fix-completion-does-not-update-backlog.md)
 - Workflow: `bug-fix`
 - Diagnosis Branch: `codex/b-008-bug-fix-backlog-sync`
 - Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`

@@ -1,7 +1,7 @@
 # B-012 问题诊断记录
 
 - Workflow: `bug-fix`
-- Work Item: [B-012 Draft Story 在 Ready 门禁前被提前领取](../../../../docs/bugs/B-012-draft-story-claimed-before-ready-gate.md)
+- Work Item: [B-012 Draft Story 在 Ready 门禁前被提前领取](../../../../docs/delivery/bugs/B-012-draft-story-claimed-before-ready-gate.md)
 - Card path: `docs/bugs/B-012-draft-story-claimed-before-ready-gate.md`
 - Work-item type: `Bug`
 - Card Version: `1`

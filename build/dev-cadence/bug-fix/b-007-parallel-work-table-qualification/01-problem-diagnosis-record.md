@@ -1,7 +1,7 @@
 # B-007 问题诊断记录
 
 - Status: `in_progress`
-- Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/bugs/B-007-parallel-work-table-entry-qualification.md)
+- Work Item: [B-007 当前可并行实施表混用卡片状态与流程入口资格](../../../../docs/delivery/bugs/B-007-parallel-work-table-entry-qualification.md)
 - Workflow: `bug-fix`
 - Diagnosis Branch: `codex/b-007-parallel-work-table-qualification`
 - Diagnosis Baseline: `ec0ee0c6b6dc07c30537c9fd1789c3af4165f6f3`

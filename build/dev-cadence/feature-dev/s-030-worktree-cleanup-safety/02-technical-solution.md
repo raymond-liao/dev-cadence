@@ -7,7 +7,7 @@
 - Requirements SHA-256: `0aa18011bb6845e285c1303adeb30284abc63520ec94aa9bce3a0ea093e1a5d3`
 - Requirements Checkpoint: `2aa3e65`
 - User Confirmation Commit: `4b75a4e`
-- Work Item: [S-030 Worktree 清理安全与证据](../../../../docs/stories/S-030-worktree-ownership-detection.md), Version `4`, Status `In Progress`
+- Work Item: [S-030 Worktree 清理安全与证据](../../../../docs/delivery/stories/S-030-worktree-ownership-detection.md), Version `4`, Status `In Progress`
 
 ## 当前结论
 

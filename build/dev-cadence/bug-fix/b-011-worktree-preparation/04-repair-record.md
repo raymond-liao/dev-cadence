@@ -1,7 +1,7 @@
 # B-011 修复实施记录
 
 - Workflow: `bug-fix`
-- Work Item: [B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/bugs/B-011-worktree-preparation-delayed-after-claim.md)
+- Work Item: [B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/delivery/bugs/B-011-worktree-preparation-delayed-after-claim.md)
 - Confirmed Repair Plan: [B-011 修复计划](03-repair-plan.md)
 - Implementation Base SHA: `a89aee8f8184833b696f5717a06fe1a48f707426`
 - Final Implementation SHA: `d182b65c52dd06b75374720de55dee96efefb314`

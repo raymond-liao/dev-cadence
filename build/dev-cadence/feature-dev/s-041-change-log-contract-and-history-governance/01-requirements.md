@@ -3,7 +3,7 @@
 ## 状态
 
 - 当前状态：✅ `confirmed`
-- 权威需求来源：[S-041 Change Log 共享契约与历史记录治理](../../../../docs/stories/S-041-change-log-contract-and-history-governance.md)
+- 权威需求来源：[S-041 Change Log 共享契约与历史记录治理](../../../../docs/delivery/stories/S-041-change-log-contract-and-history-governance.md)
 
 ## 工作项身份
 

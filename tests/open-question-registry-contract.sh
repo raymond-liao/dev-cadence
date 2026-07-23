@@ -50,7 +50,7 @@ assert_multiline_match() {
 
 assert_file "$REGISTRY_SKILL"
 assert_not_match "legacy remove lifecycle description" 'description:.*remove repository-level unresolved questions' "$REGISTRY_SKILL"
-assert_literal "registry target path" 'docs/open-questions.md' "$REGISTRY_SKILL"
+assert_literal "registry target path" 'docs/delivery/open-questions.md' "$REGISTRY_SKILL"
 assert_match "on-demand creation" 'only when.*first.*question|first.*registration.*create|create.*only when.*question' "$REGISTRY_SKILL"
 assert_match "no install creation" 'install.*must not.*create|do not create.*during install' "$REGISTRY_SKILL"
 assert_match "candidate discovery" 'candidate.*registry|existing.*question.*document|competing.*index' "$REGISTRY_SKILL"

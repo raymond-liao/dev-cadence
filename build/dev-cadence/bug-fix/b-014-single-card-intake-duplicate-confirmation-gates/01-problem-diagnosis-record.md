@@ -1,7 +1,7 @@
 # B-014 问题诊断记录
 
 - Workflow: `bug-fix`
-- Work Item: [B-014 单项建卡被错误套用双确认门](../../../../docs/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md)
+- Work Item: [B-014 单项建卡被错误套用双确认门](../../../../docs/delivery/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md)
 - Card path: `docs/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md`
 - Work-item type: `Bug`
 - Card Version: `1`

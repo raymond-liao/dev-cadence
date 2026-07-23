@@ -13,7 +13,7 @@
 
 ## 工作项
 
-- Story：[S-008 Skill 语义视觉规范](../../../../docs/stories/S-008-skill-semantic-visual-markers.md)
+- Story：[S-008 Skill 语义视觉规范](../../../../docs/delivery/stories/S-008-skill-semantic-visual-markers.md)
 - Story Version：`5`
 
 ## 阶段状态

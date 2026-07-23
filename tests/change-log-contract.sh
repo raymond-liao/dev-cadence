@@ -5,8 +5,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONTRACT="$ROOT_DIR/src/references/contracts/change-log.md"
 BACKLOG_SKILL="$ROOT_DIR/src/workflows/backlog/SKILL.md"
 ANALYSIS="$ROOT_DIR/src/workflows/work-item-analysis/SKILL.md"
-BACKLOG="$ROOT_DIR/docs/backlog.md"
-REGISTRY="$ROOT_DIR/docs/open-questions.md"
+BACKLOG="$ROOT_DIR/docs/delivery/backlog.md"
+REGISTRY="$ROOT_DIR/docs/delivery/open-questions.md"
 MIGRATION_CHANGE='Normalized legacy status and delivery events to reuse the active definition Version.'
 ORIGINAL_ROW_COUNTS='B-001:1
 B-002:3
@@ -65,14 +65,14 @@ T-002:3
 T-003:1
 T-004:4'
 WORK_ITEM_DIRS=(
-  "$ROOT_DIR/docs/stories"
-  "$ROOT_DIR/docs/tasks"
-  "$ROOT_DIR/docs/bugs"
+  "$ROOT_DIR/docs/delivery/stories"
+  "$ROOT_DIR/docs/delivery/tasks"
+  "$ROOT_DIR/docs/delivery/bugs"
 )
 WORK_ITEM_FILES=(
-  "$ROOT_DIR/docs/stories/"*.md
-  "$ROOT_DIR/docs/tasks/"*.md
-  "$ROOT_DIR/docs/bugs/"*.md
+  "$ROOT_DIR/docs/delivery/stories/"*.md
+  "$ROOT_DIR/docs/delivery/tasks/"*.md
+  "$ROOT_DIR/docs/delivery/bugs/"*.md
 )
 
 fail() {
@@ -573,7 +573,7 @@ ORIGINAL_HISTORY_HASH="$(while IFS=: read -r id expected_rows; do
     }
   ' "$path" || fail "$id original-row payload cohort is incomplete"
 done <<< "$ORIGINAL_ROW_COUNTS" | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-test "$ORIGINAL_HISTORY_HASH" = "efc0935996403c3ab51d299d67abb946fc42870d06573a14483ca89040682360" ||
+test "$ORIGINAL_HISTORY_HASH" = "3a127f09858da01bce4b5b62b3fe9e05728d575b25e9dfd2fdd21b339bad2a81" ||
   fail "original Change/Reason history content changed"
 
 printf 'Change Log contract checks passed.\n'

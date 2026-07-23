@@ -1,7 +1,7 @@
 # B-005 修复方案
 
 - Status: `confirmed`
-- Work Item: [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](../../../../docs/bugs/B-005-refactor-confirmation-options-missing.md)
+- Work Item: [B-005 已安装 Workflow 用户确认门摘要、选项与结果语义不完整](../../../../docs/delivery/bugs/B-005-refactor-confirmation-options-missing.md)
 - Diagnosis Source: [B-005 问题诊断记录](01-problem-diagnosis-record.md)
 - Decision Authority: `delegated continuation authority from user instruction`
 

@@ -96,7 +96,7 @@
 
 ## 相关文档
 
-- [工作项规划流程](../workflows/work-item-planning.md)
+- [工作项规划流程](../../workflows/work-item-planning.md)
 - [S-002 产品设计基线增量更新与版本治理](S-002-discovery-prd-incremental-versioning.md)
 - [S-012 Asset 与 Delivery Workflow 记录边界](S-012-asset-delivery-workflow-record-boundary.md)
 - [S-014 Discovery User Journey 与 Feature 基线](S-014-user-journey-analysis.md)

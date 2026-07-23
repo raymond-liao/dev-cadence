@@ -3,7 +3,7 @@
 ## 已确认需求来源
 
 - [需求确认](01-requirements.md)
-- [S-008 Skill 语义视觉规范](../../../../docs/stories/S-008-skill-semantic-visual-markers.md)，Version `2`
+- [S-008 Skill 语义视觉规范](../../../../docs/delivery/stories/S-008-skill-semantic-visual-markers.md)，Version `2`
 
 ## 推荐方案
 

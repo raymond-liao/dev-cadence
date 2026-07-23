@@ -75,7 +75,7 @@
 
 - [`S-017 工作项卡片与开发 Workflow 接入`](../stories/S-017-work-item-development-workflow-integration.md)
 - [`T-003 Executing-Plans 实施提交前审查`](T-003-executing-plans-pre-commit-review.md)
-- [`工作项规划流程`](../workflows/work-item-planning.md)
+- [`工作项规划流程`](../../workflows/work-item-planning.md)
 - [`Backlog`](../backlog.md)
 
 ## Change Log

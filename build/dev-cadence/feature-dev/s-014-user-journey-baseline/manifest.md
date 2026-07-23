@@ -2,7 +2,7 @@
 
 - Workflow: `feature-dev`
 - Task Slug: `s-014-user-journey-baseline`
-- Work Item: [S-014 Discovery User Journey 与 Feature 基线](../../../../docs/stories/S-014-user-journey-analysis.md)
+- Work Item: [S-014 Discovery User Journey 与 Feature 基线](../../../../docs/delivery/stories/S-014-user-journey-analysis.md)
 - Work Item Path: `docs/stories/S-014-user-journey-analysis.md`
 - Work Item Version: `4`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)

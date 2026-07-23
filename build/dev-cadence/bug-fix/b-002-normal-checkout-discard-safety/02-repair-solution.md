@@ -3,7 +3,7 @@
 ## Stage Status
 
 - Status: ✅ `confirmed`
-- Work item: [B-002 Delivery Workflow Discard 整体运行删除安全性](../../../../docs/bugs/B-002-normal-checkout-discard-safety.md)
+- Work item: [B-002 Delivery Workflow Discard 整体运行删除安全性](../../../../docs/delivery/bugs/B-002-normal-checkout-discard-safety.md)
 - Diagnosis source: `build/dev-cadence/bug-fix/b-002-normal-checkout-discard-safety/01-problem-diagnosis-record.md`
 - Card version: `2`
 - Branch: `codex/b-002-normal-checkout-discard-safety`

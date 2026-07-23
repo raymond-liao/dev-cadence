@@ -9,7 +9,7 @@
 - Started At: `2026-07-22T09:56:06+0800`
 - Current Stage: Completion
 - Overall Status: ✅ `integrated`
-- Work Item: [S-038 工作项相对 Size 估算](../../../../../docs/stories/S-038-work-item-relative-size-estimation.md)
+- Work Item: [S-038 工作项相对 Size 估算](../../../../docs/delivery/stories/S-038-work-item-relative-size-estimation.md)
 - Work Item Type: `Story`
 - Work Item Version: `1`
 - Work Item Status: `Done`

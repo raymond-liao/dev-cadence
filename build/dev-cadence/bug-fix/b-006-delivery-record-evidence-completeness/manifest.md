@@ -2,7 +2,7 @@
 
 - Workflow: `bug-fix`
 - Task Slug: `b-006-delivery-record-evidence-completeness`
-- Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/bugs/B-006-delivery-record-evidence-completeness.md)
+- Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/delivery/bugs/B-006-delivery-record-evidence-completeness.md)
 - Work Item Version: `1`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Workspace: `.worktrees/b-006-delivery-record-evidence-completeness` (`removed after local merge`)

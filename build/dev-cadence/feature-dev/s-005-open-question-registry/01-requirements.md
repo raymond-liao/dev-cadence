@@ -2,9 +2,9 @@
 
 ## 需求来源
 
-- 工作项：[S-005 全局 Open Question Registry](../../../../docs/stories/S-005-open-question-registry.md)
+- 工作项：[S-005 全局 Open Question Registry](../../../../docs/delivery/stories/S-005-open-question-registry.md)
 - 版本：`2`
-- 排序依据：[Backlog](../../../../docs/backlog.md) 中第一个 Ready 工作项。
+- 排序依据：[Backlog](../../../../docs/delivery/backlog.md) 中第一个 Ready 工作项。
 
 ## ✅ 确认范围
 

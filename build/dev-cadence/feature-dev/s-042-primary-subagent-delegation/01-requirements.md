@@ -2,7 +2,7 @@
 
 ## 输入
 
-- Work item：[S-042 Dev Cadence 全流程主执行子代理委派](../../../../docs/stories/S-042-dev-cadence-primary-subagent-delegation.md) (`docs/stories/S-042-dev-cadence-primary-subagent-delegation.md`)，Version `1`，Status `In Progress`。
+- Work item：[S-042 Dev Cadence 全流程主执行子代理委派](../../../../docs/delivery/stories/S-042-dev-cadence-primary-subagent-delegation.md) (`docs/stories/S-042-dev-cadence-primary-subagent-delegation.md`)，Version `1`，Status `In Progress`。
 - 用户请求：开始处理 S-042。
 
 ## 当前结论

@@ -292,20 +292,20 @@ The final-verification record synchronization is scoped to this run."
 
   if [[ "$scenario" == "valid-final-verification-delivery-unit-writeback" ]]; then
     write_file "$repo" "build/dev-cadence/feature-dev/delivery-unit-member/06-business-acceptance-record.md" "# Business Acceptance\n\n- User Decision: \`accepted\`"
-    write_file "$repo" "docs/stories/S-999-delivery-unit-member.md" "# S-999 Delivery Unit Member"
-    write_file "$repo" "docs/backlog.md" "# Backlog\n\nS-999 lifecycle writeback."
+    write_file "$repo" "docs/delivery/stories/S-999-delivery-unit-member.md" "# S-999 Delivery Unit Member"
+    write_file "$repo" "docs/delivery/backlog.md" "# Backlog\n\nS-999 lifecycle writeback."
     commit_paths "$repo" "delivery unit lifecycle writeback" \
       "build/dev-cadence/feature-dev/delivery-unit-member/06-business-acceptance-record.md" \
-      "docs/stories/S-999-delivery-unit-member.md" \
-      "docs/backlog.md" >/dev/null
+      "docs/delivery/stories/S-999-delivery-unit-member.md" \
+      "docs/delivery/backlog.md" >/dev/null
     delivery_unit_manifest_section="
 
 ## Final Verification Delivery Unit
 
 - Delivery Unit Run Directory: \`$run_dir_rel\`
 - Delivery Unit Run Directory: \`build/dev-cadence/feature-dev/delivery-unit-member\`
-- Delivery Unit Work Item Path: \`docs/stories/S-999-delivery-unit-member.md\`
-- Delivery Unit Lifecycle Writeback Path: \`docs/backlog.md\`"
+- Delivery Unit Work Item Path: \`docs/delivery/stories/S-999-delivery-unit-member.md\`
+- Delivery Unit Lifecycle Writeback Path: \`docs/delivery/backlog.md\`"
   fi
 
   write_file "$repo" "$acceptance_path" "# Business Acceptance

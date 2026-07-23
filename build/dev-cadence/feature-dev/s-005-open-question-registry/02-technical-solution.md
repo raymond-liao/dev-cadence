@@ -3,7 +3,7 @@
 ## 输入与边界
 
 - 已确认需求：[需求确认](01-requirements.md)
-- 工作项：[S-005 全局 Open Question Registry](../../../../docs/stories/S-005-open-question-registry.md)
+- 工作项：[S-005 全局 Open Question Registry](../../../../docs/delivery/stories/S-005-open-question-registry.md)
 - 工作项版本：`2`
 
 ## Codebase Exploration Findings

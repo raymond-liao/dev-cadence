@@ -63,7 +63,7 @@ Backlog 当前只保存排序结果和通用评级维度，没有要求 Work Ite
 3. 共享契约不被 `document-conventions`、入口 Skill 或各 workflow 重复复制成另一套完整规则。
 4. 定义变化使用递增后的新 Version 记录；状态转换、交付结果等非升版重要事件使用事件发生时的当前 Version 记录，重复 Version 不会被机械判定为错误。
 5. 纯拼写、格式或不改变责任关系的链接修正不要求写入 Change Log；是否记录其他非升版事件必须由共享契约给出可执行边界。
-6. Registry 规则、模板和实际 `docs/open-questions.md` 保持无 Change Log。
+6. Registry 规则、模板和实际 `docs/delivery/open-questions.md` 保持无 Change Log。
 7. 现有 Story、Task、Bug Change Log 的重复 Version 语义、倒序记录、旧表头和纯执行状态升版得到治理；历史重要事件不因格式迁移或 Version 重复而被删除。
 8. 缺少历史作者、准确时间或时间精度的记录不会被静默推断；标准五列表格使用统一 legacy 未知标识，并明确区分可确认的原始事实和迁移信息。
 9. source、dist、安装包和契约验证保持同步，并覆盖共享契约读取、升版与非升版事件、legacy 迁移和其他关键 Change Log 不变量。

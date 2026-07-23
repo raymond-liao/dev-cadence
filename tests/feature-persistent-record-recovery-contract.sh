@@ -62,7 +62,7 @@ write_requirements() {
 
   write_file "$repo" "$path" "# Requirements
 
-- 工作项: \`docs/stories/S-029.md\`
+- 工作项: \`docs/delivery/stories/S-029.md\`
 - 工作项类型: \`Story\`
 - 工作项 Version: \`4\`
 - 当前 Status: \`In Progress\`
@@ -98,8 +98,8 @@ $acceptance
 
 | Path | SHA-256 |
 | --- | --- |
-| docs/stories/S-029.md | $card_sha |
-| docs/backlog.md | $backlog_sha |"
+| docs/delivery/stories/S-029.md | $card_sha |
+| docs/delivery/backlog.md | $backlog_sha |"
 }
 
 write_solution() {
@@ -214,11 +214,11 @@ create_fixture() {
   run_path="build/dev-cadence/feature-dev/$scenario"
   requirements_path="$run_path/01-requirements.md"
   solution_path="$run_path/02-technical-solution.md"
-  write_file "$repo" docs/stories/S-029.md "# S-029\n\n- Status: In Progress"
-  write_file "$repo" docs/backlog.md "# Backlog\n\n- S-029"
-  commit_paths "$repo" inputs docs/stories/S-029.md docs/backlog.md >/dev/null
-  card_sha="$(sha256_file "$repo/docs/stories/S-029.md")"
-  backlog_sha="$(sha256_file "$repo/docs/backlog.md")"
+  write_file "$repo" docs/delivery/stories/S-029.md "# S-029\n\n- Status: In Progress"
+  write_file "$repo" docs/delivery/backlog.md "# Backlog\n\n- S-029"
+  commit_paths "$repo" inputs docs/delivery/stories/S-029.md docs/delivery/backlog.md >/dev/null
+  card_sha="$(sha256_file "$repo/docs/delivery/stories/S-029.md")"
+  backlog_sha="$(sha256_file "$repo/docs/delivery/backlog.md")"
 
   write_requirements "$repo" "$requirements_path" "$card_sha" "$backlog_sha" yes
   requirements_sha="$(sha256_file "$repo/$requirements_path")"
@@ -254,10 +254,10 @@ create_fixture() {
       rm "$repo/$run_path/manifest.md.bak"
       ;;
     work-item-drift)
-      write_file "$repo" docs/stories/S-029.md "# S-029\n\n- Status: Done"
+      write_file "$repo" docs/delivery/stories/S-029.md "# S-029\n\n- Status: Done"
       ;;
     dependency-drift)
-      write_file "$repo" docs/backlog.md "# Backlog\n\n- moved"
+      write_file "$repo" docs/delivery/backlog.md "# Backlog\n\n- moved"
       ;;
     solution-before-requirements)
       sed -i.bak 's/| Requirements Confirmation | `confirmed`/| Requirements Confirmation | `pending`/' "$repo/$run_path/manifest.md"

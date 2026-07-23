@@ -4,7 +4,7 @@
 - 记录时间：`2026-07-19T19:12:59+0800`
 - 最近确认：`2026-07-19T19:19:20+0800`，选项 1：确认当前诊断并进入 Repair Solution。
 - 最近更新：`2026-07-19T19:32:28+0800`，用户选择扩大 B-015 范围，覆盖 `worktree.enabled: true` 和 `false` 两条路径。
-- 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
+- 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/delivery/bugs/B-015-work-item-claim-not-persisted-on-main.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`4`
 - 卡片可见状态：`In Progress`

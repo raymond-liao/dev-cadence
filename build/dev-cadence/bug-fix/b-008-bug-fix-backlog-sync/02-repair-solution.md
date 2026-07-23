@@ -1,7 +1,7 @@
 # B-008 修复方案
 
 - Status: `confirmed`
-- Work Item: [B-008 Bug Fix 完成后未更新 Backlog](../../../../docs/bugs/B-008-bug-fix-completion-does-not-update-backlog.md)
+- Work Item: [B-008 Bug Fix 完成后未更新 Backlog](../../../../docs/delivery/bugs/B-008-bug-fix-completion-does-not-update-backlog.md)
 - Diagnosis Source: [B-008 问题诊断记录](01-problem-diagnosis-record.md)
 - Decision Authority: `delegated continuation authority from user instruction`
 

@@ -66,7 +66,7 @@ output_language: zh-CN
 ## 相关文档
 
 - [Backlog](../backlog.md)
-- [Bug 修复流程](../workflows/bug-fix.md)
+- [Bug 修复流程](../../workflows/bug-fix.md)
 
 ## Change Log
 

@@ -41,10 +41,10 @@ assert_literal "asset declaration" "This is an Asset Workflow." "$SKILL"
 assert_match "no delivery records" 'must not create `build/dev-cadence/` run manifests?.*stage records?.*confirmation records?.*checkpoint commits?' "$SKILL"
 
 for path in \
-  'docs/backlog.md' \
-  'docs/stories/S-nnn-<slug>.md' \
-  'docs/tasks/T-nnn-<slug>.md' \
-  'docs/bugs/B-nnn-<slug>.md'; do
+  'docs/delivery/backlog.md' \
+  'docs/delivery/stories/S-nnn-<slug>.md' \
+  'docs/delivery/tasks/T-nnn-<slug>.md' \
+  'docs/delivery/bugs/B-nnn-<slug>.md'; do
   assert_literal "owned path $path" "$path" "$SKILL"
 done
 

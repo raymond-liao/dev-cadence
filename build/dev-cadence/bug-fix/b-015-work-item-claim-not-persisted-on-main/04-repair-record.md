@@ -17,7 +17,7 @@
 
 ## Scope And Entry Gates
 
-- 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
+- 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/delivery/bugs/B-015-work-item-claim-not-persisted-on-main.md)
 - 修复范围：使 `worktree.enabled: true` 与 `worktree.enabled: false` 都从已解析并验证的权威 base ref（本仓库为 `main`）上的持久化领取提交创建任务 workspace。
 - 主 checkout 领取提交：`0e5d69e73f6bf760ff954ba15119ad9c429571be`。该提交原子地将 B-015 卡片和 `docs/backlog.md` 行同步为 `In Progress`；任务 worktree 从该提交创建。
 - 实施前门禁：领取写入、主 checkout 领取提交和 workspace 基线验证均先完成；Repair Plan 已确认并形成 checkpoint `e6c7361` 后才开始 Task 1--4 的实现。未在上述门禁完成前开始实现、需求、方案、计划或 checkpoint 工作。

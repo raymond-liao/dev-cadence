@@ -156,11 +156,11 @@ validate_delivery_unit_value() {
         fail "final verification delivery unit has invalid run directory '$value'"
       ;;
     work_item)
-      [[ "$value" =~ ^docs/(stories|tasks|bugs)/[A-Z]-[0-9]{3}-[A-Za-z0-9-]+\.md$ ]] ||
+      [[ "$value" =~ ^docs/delivery/(stories|tasks|bugs)/[A-Z]-[0-9]{3}-[A-Za-z0-9-]+\.md$ ]] ||
         fail "final verification delivery unit has invalid work item path '$value'"
       ;;
     lifecycle)
-      [[ "$value" == "docs/backlog.md" ]] ||
+      [[ "$value" == "docs/delivery/backlog.md" ]] ||
         fail "final verification delivery unit has invalid lifecycle writeback path '$value'"
       ;;
   esac

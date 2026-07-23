@@ -3,7 +3,7 @@
 - 状态：🔄 `in_progress`
 - 记录时间：`2026-07-19T16:36:08+0800`
 - 最近更新：`2026-07-19T16:45:01+0800`
-- 工作项：[B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/bugs/B-011-worktree-preparation-delayed-after-claim.md)
+- 工作项：[B-011 领卡后未立即准备配置要求的 worktree](../../../../docs/delivery/bugs/B-011-worktree-preparation-delayed-after-claim.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`1`
 - 卡片可见状态：`In Progress`

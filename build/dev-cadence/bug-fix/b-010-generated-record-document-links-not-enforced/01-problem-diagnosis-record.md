@@ -1,7 +1,7 @@
 # B-010 问题诊断记录
 
 - Workflow: `bug-fix`
-- Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/bugs/B-010-generated-record-document-links-not-enforced.md)
+- Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/delivery/bugs/B-010-generated-record-document-links-not-enforced.md)
 - Card path: `docs/bugs/B-010-generated-record-document-links-not-enforced.md`
 - Work-item type: `Bug`
 - Card Version: `1`

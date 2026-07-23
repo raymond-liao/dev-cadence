@@ -2,10 +2,10 @@
 
 ## 需求来源
 
-- 工作项：[S-017 工作项卡片与开发 Workflow 接入](../../../../docs/stories/S-017-work-item-development-workflow-integration.md)
+- 工作项：[S-017 工作项卡片与开发 Workflow 接入](../../../../docs/delivery/stories/S-017-work-item-development-workflow-integration.md)
 - 工作项版本：`5`
 - 当前卡片状态：`In Progress`
-- Backlog：[统一 Backlog](../../../../docs/backlog.md)
+- Backlog：[统一 Backlog](../../../../docs/delivery/backlog.md)
 - 交付流程：`feature-dev`
 
 ## ✅ 确认范围

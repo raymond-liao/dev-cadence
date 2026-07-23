@@ -27,7 +27,7 @@
 
 ## Work Item Lifecycle Writeback
 
-- Card: [B-014 单项建卡被错误套用双确认门](../../../../docs/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md)
+- Card: [B-014 单项建卡被错误套用双确认门](../../../../docs/delivery/bugs/B-014-single-card-intake-duplicate-confirmation-gates.md)
 - Card type and version: `Bug`, Version `1`
 - Card status: `In Progress` -> `Done`
 - Backlog source: `docs/backlog.md` section `进行中`

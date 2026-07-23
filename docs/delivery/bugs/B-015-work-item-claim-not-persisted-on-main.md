@@ -14,7 +14,7 @@
 
 ## 期望行为
 
-当显式实施请求选定一个工作项时，无论 `worktree.enabled` 为 `true` 还是 `false`，入口都必须先在 `main` 原子更新卡片和 `docs/backlog.md`，并持久化该领取状态；随后任务 worktree 或专用任务 branch 必须以该持久化状态为基线创建。主 checkout 中的卡片与 Backlog 不得继续显示该项为 `Draft` 或“待处理”。
+当显式实施请求选定一个工作项时，无论 `worktree.enabled` 为 `true` 还是 `false`，入口都必须先在 `main` 原子更新卡片和 `docs/delivery/backlog.md`，并持久化该领取状态；随后任务 worktree 或专用任务 branch 必须以该持久化状态为基线创建。主 checkout 中的卡片与 Backlog 不得继续显示该项为 `Draft` 或“待处理”。
 
 ## 已观察行为
 
@@ -45,7 +45,7 @@
 ## 已知复现条件
 
 - 配置 `worktree.enabled: true` 或 `false`。
-- 从 `docs/backlog.md` 明确要求开始实施一个工作项。
+- 从 `docs/delivery/backlog.md` 明确要求开始实施一个工作项。
 - `true` 路径：入口创建任务 worktree，领取卡片与 Backlog 的写入发生在任务 worktree 中，返回 `main` 检查时工作项仍显示为未领取。
 - `false` 路径：入口在主 checkout 产生未提交领取变更后切换到专用任务 branch，并在该 branch 提交领取变更；重新检出 `main` 时工作项仍可能显示为未领取。该路径当前是追加调查确认的可构造契约复现，尚无独立历史运行记录。
 

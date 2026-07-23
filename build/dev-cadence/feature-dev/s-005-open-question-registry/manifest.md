@@ -2,7 +2,7 @@
 
 - Workflow: `feature-dev`
 - Task slug: `s-005-open-question-registry`
-- Work item: [S-005 全局 Open Question Registry](../../../../docs/stories/S-005-open-question-registry.md)
+- Work item: [S-005 全局 Open Question Registry](../../../../docs/delivery/stories/S-005-open-question-registry.md)
 - Work item path: `docs/stories/S-005-open-question-registry.md`
 - Work item version: `2`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)

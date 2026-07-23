@@ -33,12 +33,12 @@
 
 ## Work Item Identity
 
-- Card: [S-030 Worktree 清理安全与证据](../../../../docs/stories/S-030-worktree-ownership-detection.md) (`docs/stories/S-030-worktree-ownership-detection.md`)
+- Card: [S-030 Worktree 清理安全与证据](../../../../docs/delivery/stories/S-030-worktree-ownership-detection.md) (`docs/stories/S-030-worktree-ownership-detection.md`)
 - Work-item Type: `Story`
 - Card Version At Claim: `4`
 - Card Status At Claim: `In Progress`
 - Selected Scope: 以当前运行 manifest 的创建证据与实时 Git worktree 身份一致性决定清理资格；覆盖配置的自定义 worktree 目录、正常 Completion 与 `whole-run discard`，排除运行记录归档和清理结果持久化。
-- Backlog Projection: [Backlog](../../../../docs/backlog.md) (`docs/backlog.md`), source `待处理`, destination `进行中`, Version `4`, Status `In Progress`
+- Backlog Projection: [Backlog](../../../../docs/delivery/backlog.md) (`docs/backlog.md`), source `待处理`, destination `进行中`, Version `4`, Status `In Progress`
 - Claim Checkpoint: `c340758c5ffa6dd6673c0667e094c64e6155f774`
 
 ## Baseline

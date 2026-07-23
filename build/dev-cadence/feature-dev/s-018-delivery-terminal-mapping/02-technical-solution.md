@@ -4,7 +4,7 @@
 
 - 已确认需求来源: `build/dev-cadence/feature-dev/s-018-delivery-terminal-mapping/01-requirements.md` ([S-018 需求确认](01-requirements.md))
 - Requirements SHA-256: `4348982eabe9414956c9edb92cc62926a0b30eef07b4f3fd785c50fd3470c16e`
-- 工作项：[S-018 Delivery 终态映射与 Manual Recovery](../../../../docs/stories/S-018-business-acceptance-terminal-mapping.md) (`docs/stories/S-018-business-acceptance-terminal-mapping.md`)，Version `4`，Status `In Progress`。
+- 工作项：[S-018 Delivery 终态映射与 Manual Recovery](../../../../docs/delivery/stories/S-018-business-acceptance-terminal-mapping.md) (`docs/stories/S-018-business-acceptance-terminal-mapping.md`)，Version `4`，Status `In Progress`。
 
 ## Codebase Exploration Findings
 

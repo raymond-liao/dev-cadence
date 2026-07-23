@@ -3,7 +3,7 @@
 ## 已确认需求来源
 
 - [S-042 需求确认记录](01-requirements.md) (`build/dev-cadence/feature-dev/s-042-primary-subagent-delegation/01-requirements.md`)，已于 `2026-07-20T09:41:17+08:00` 确认。
-- [S-042 Dev Cadence 全流程主执行子代理委派](../../../../docs/stories/S-042-dev-cadence-primary-subagent-delegation.md) (`docs/stories/S-042-dev-cadence-primary-subagent-delegation.md`)，Version `1`。
+- [S-042 Dev Cadence 全流程主执行子代理委派](../../../../docs/delivery/stories/S-042-dev-cadence-primary-subagent-delegation.md) (`docs/stories/S-042-dev-cadence-primary-subagent-delegation.md`)，Version `1`。
 
 ## 代码库探索发现
 

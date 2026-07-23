@@ -3,7 +3,7 @@
 ## 需求来源
 
 - Confirmed requirements: [S017 需求确认](01-requirements.md)
-- Work item: [S017 工作项卡片与开发 Workflow 接入](../../../../docs/stories/S-017-work-item-development-workflow-integration.md), Version `5`
+- Work item: [S017 工作项卡片与开发 Workflow 接入](../../../../docs/delivery/stories/S-017-work-item-development-workflow-integration.md), Version `5`
 - Baseline: `8315c1e0e5bb6df037cd3865618fe5303da391ba`
 
 ## Codebase Exploration Findings

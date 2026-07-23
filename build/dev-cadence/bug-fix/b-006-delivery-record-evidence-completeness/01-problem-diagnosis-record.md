@@ -1,7 +1,7 @@
 # B-006 问题诊断记录
 
 - Status: `confirmed`
-- Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/bugs/B-006-delivery-record-evidence-completeness.md)
+- Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/delivery/bugs/B-006-delivery-record-evidence-completeness.md)
 - Workflow: `bug-fix`
 - Diagnosis Branch: `codex/b-006-delivery-record-evidence-completeness`
 - Diagnosis Baseline: `9834d2ee4c3536196e7844bfc697ed724088a7ea`

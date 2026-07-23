@@ -2,10 +2,10 @@
 
 ## 需求来源
 
-- 工作项：[S-010 文档引用快捷链接](../../../../docs/stories/S-010-document-reference-links.md)
+- 工作项：[S-010 文档引用快捷链接](../../../../docs/delivery/stories/S-010-document-reference-links.md)
 - 工作项路径：`docs/stories/S-010-document-reference-links.md`
 - 工作项版本：`3`
-- Backlog：[当前可并行实施表](../../../../docs/backlog.md#当前可并行实施表)
+- Backlog：[当前可并行实施表](../../../../docs/delivery/backlog.md#当前可并行实施表)
 
 ## ✅ 确认范围
 

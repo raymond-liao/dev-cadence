@@ -49,7 +49,7 @@
 
 ## 已知复现条件
 
-- 打开 `docs/backlog.md` 的“当前可并行实施表”。
+- 打开 `docs/delivery/backlog.md` 的“当前可并行实施表”。
 - 观察表中 `Draft` 工作项与“不能直接进入实施”的统一说明。
 - 对比 Work Item Planning 中允许 Bug 在非 `Ready` 状态进入 `bug-fix` 的规则。
 
@@ -66,8 +66,8 @@
 - [Backlog](../backlog.md)
 - [S-016 统一 Backlog 看板](../stories/S-016-unified-backlog-board.md)
 - [S-017 工作项卡片与开发 Workflow 接入](../stories/S-017-work-item-development-workflow-integration.md)
-- [工作项规划流程](../workflows/work-item-planning.md)
-- [工作项分析流程](../workflows/work-item-analysis.md)
+- [工作项规划流程](../../workflows/work-item-planning.md)
+- [工作项分析流程](../../workflows/work-item-analysis.md)
 
 ## Relationships
 

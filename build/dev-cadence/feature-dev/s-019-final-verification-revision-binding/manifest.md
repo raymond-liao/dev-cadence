@@ -9,7 +9,7 @@
 - Started At: `2026-07-22T09:49:47+0800`
 - Current Stage: Completion
 - Overall Status: ✅ `integrated`
-- Work Item: [S-019 最终验证版本绑定](../../../../../docs/stories/S-019-final-verification-revision-binding.md)
+- Work Item: [S-019 最终验证版本绑定](../../../../docs/delivery/stories/S-019-final-verification-revision-binding.md)
 - Work Item Type: `Story`
 - Work Item Version: `3`
 - Work Item Status: `Done`

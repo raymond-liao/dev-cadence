@@ -3,7 +3,7 @@
 ## Stage Status
 
 - Status: ✅ `confirmed`
-- Work item: [B-002 Delivery Workflow Discard 整体运行删除安全性](../../../../docs/bugs/B-002-normal-checkout-discard-safety.md)
+- Work item: [B-002 Delivery Workflow Discard 整体运行删除安全性](../../../../docs/delivery/bugs/B-002-normal-checkout-discard-safety.md)
 - Card version: `2`
 - Card status: `Draft`
 - Diagnosis refreshed at: `2026-07-17T18:42:34+0800`

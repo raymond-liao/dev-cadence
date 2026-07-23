@@ -1,7 +1,7 @@
 # B-009 Repair Plan
 
 - Workflow: `bug-fix`
-- Work Item: [B-009 待处理排序与并行视图职责不一致](../../../../docs/bugs/B-009-pending-order-parallel-view-authority.md)
+- Work Item: [B-009 待处理排序与并行视图职责不一致](../../../../docs/delivery/bugs/B-009-pending-order-parallel-view-authority.md)
 - Status: 🔄 `in_progress`
 - Implementation base SHA: `6e18954624df1df45f9afd9141191b002605b724`
 - Implementation branch: `codex/fix-b009-pending-order-authority`

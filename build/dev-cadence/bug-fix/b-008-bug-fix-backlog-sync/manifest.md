@@ -2,7 +2,7 @@
 
 - Workflow: `bug-fix`
 - Task Slug: `b-008-bug-fix-backlog-sync`
-- Work Item: [B-008 Bug Fix 完成后未更新 Backlog](../../../../docs/bugs/B-008-bug-fix-completion-does-not-update-backlog.md)
+- Work Item: [B-008 Bug Fix 完成后未更新 Backlog](../../../../docs/delivery/bugs/B-008-bug-fix-completion-does-not-update-backlog.md)
 - Work Item Version: `2`
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)
 - Workspace: `.worktrees/b-005-b-007-b-008-contract-closure`

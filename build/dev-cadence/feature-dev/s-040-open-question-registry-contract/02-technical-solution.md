@@ -3,7 +3,7 @@
 ## 确认的需求来源
 
 - [S-040 需求确认](01-requirements.md)
-- [S-040 Open Question Registry 全量索引与引用契约](../../../../docs/stories/S-040-open-question-registry-index-and-reference-contract.md)
+- [S-040 Open Question Registry 全量索引与引用契约](../../../../docs/delivery/stories/S-040-open-question-registry-index-and-reference-contract.md)
 
 ## Codebase Exploration Findings
 

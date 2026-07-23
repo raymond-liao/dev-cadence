@@ -13,7 +13,7 @@
 
 ## 工作项输入
 
-- Card：[S-042 Dev Cadence 全流程主执行子代理委派](../../../../docs/stories/S-042-dev-cadence-primary-subagent-delegation.md) (`docs/stories/S-042-dev-cadence-primary-subagent-delegation.md`)
+- Card：[S-042 Dev Cadence 全流程主执行子代理委派](../../../../docs/delivery/stories/S-042-dev-cadence-primary-subagent-delegation.md) (`docs/stories/S-042-dev-cadence-primary-subagent-delegation.md`)
 - Work-item type：`Story`
 - Card Version：`1`
 - Visible Status：`Done`

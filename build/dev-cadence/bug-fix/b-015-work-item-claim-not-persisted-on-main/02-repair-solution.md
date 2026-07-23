@@ -3,7 +3,7 @@
 - 状态：✅ `confirmed`
 - 记录时间：`2026-07-19T19:19:20+0800`
 - 最近更新：`2026-07-19T19:41:25+0800`，用户选择选项 1，确认当前方案并进入 Repair Plan。
-- 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/bugs/B-015-work-item-claim-not-persisted-on-main.md)
+- 工作项：[B-015 工作项领取未在 main 持久化](../../../../docs/delivery/bugs/B-015-work-item-claim-not-persisted-on-main.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`4`
 - 诊断来源：[B-015 问题诊断记录](01-problem-diagnosis-record.md)

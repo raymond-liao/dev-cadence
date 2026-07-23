@@ -2,11 +2,11 @@
 
 ## 需求来源
 
-- 工作项：[S-004 实施与测试失败分类和阶段返回](../../../../docs/stories/S-004-failure-classification-stage-routing.md)
+- 工作项：[S-004 实施与测试失败分类和阶段返回](../../../../docs/delivery/stories/S-004-failure-classification-stage-routing.md)
 - 工作项路径：`docs/stories/S-004-failure-classification-stage-routing.md`
 - 工作项版本：`1`
-- 前置工作：[S-003 实施前方案新鲜度门禁](../../../../docs/stories/S-003-implementation-design-freshness-gate.md)
-- Backlog：[当前可并行实施表](../../../../docs/backlog.md#当前可并行实施表)
+- 前置工作：[S-003 实施前方案新鲜度门禁](../../../../docs/delivery/stories/S-003-implementation-design-freshness-gate.md)
+- Backlog：[当前可并行实施表](../../../../docs/delivery/backlog.md#当前可并行实施表)
 
 ## ✅ 确认范围
 

@@ -2,7 +2,7 @@
 
 ## 工作项身份
 
-- Work Item: [S-038 工作项相对 Size 估算](../../../../../docs/stories/S-038-work-item-relative-size-estimation.md)
+- Work Item: [S-038 工作项相对 Size 估算](../../../../docs/delivery/stories/S-038-work-item-relative-size-estimation.md)
 - Work Item Type: `Story`
 - Work Item Version: `1`
 - Current Status: 🔄 `in_progress`

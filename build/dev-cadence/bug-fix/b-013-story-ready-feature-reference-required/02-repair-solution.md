@@ -4,7 +4,7 @@
 - 记录时间：`2026-07-19T21:36:44+0800`
 - 最近确认：`2026-07-19T21:40:58+0800`，选项 1：确认方案并进入 Repair Plan。
 - 前置诊断：[B-013 问题诊断记录](01-problem-diagnosis-record.md)
-- 工作项：[B-013 Story Ready 错误依赖 Feature 关联](../../../../docs/bugs/B-013-story-ready-feature-reference-required.md)
+- 工作项：[B-013 Story Ready 错误依赖 Feature 关联](../../../../docs/delivery/bugs/B-013-story-ready-feature-reference-required.md)
 
 ## 根因
 

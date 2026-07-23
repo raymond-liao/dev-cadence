@@ -25,12 +25,12 @@
 
 ## Work Item Identity
 
-- Card: [S-029 Feature 持久化记录契约](../../../../docs/stories/S-029-feature-persistent-record-contract.md) (`docs/stories/S-029-feature-persistent-record-contract.md`)
+- Card: [S-029 Feature 持久化记录契约](../../../../docs/delivery/stories/S-029-feature-persistent-record-contract.md) (`docs/stories/S-029-feature-persistent-record-contract.md`)
 - Work-item Type: `Story`
 - Card Version At Claim: `4`
 - Card Status At Claim: `In Progress`; current status: `Done`
 - Selected Scope: 已确认 Requirements 和 Technical Solution 的最小可恢复字段、manifest 的记录路径与 SHA-256 身份、连续确认阶段恢复、失效回退和可执行契约测试。
-- Backlog Projection: [Backlog](../../../../docs/backlog.md) (`docs/backlog.md`), initial source `待处理`, claim destination `进行中`, Completion destination `已完成`, Version `4`, Status `Done`
+- Backlog Projection: [Backlog](../../../../docs/delivery/backlog.md) (`docs/backlog.md`), initial source `待处理`, claim destination `进行中`, Completion destination `已完成`, Version `4`, Status `Done`
 - Claim Checkpoint: `e31db56b88aabdf6854bbc8454101d24e01a852a`
 
 ## Baseline

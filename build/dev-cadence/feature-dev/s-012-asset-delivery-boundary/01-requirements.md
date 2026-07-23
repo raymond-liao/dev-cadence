@@ -1,7 +1,7 @@
 # Requirements Confirmation
 
 - Status: ✅ `confirmed`
-- Source: [S-012 Asset 与 Delivery Workflow 记录边界](../../../../docs/stories/S-012-asset-delivery-workflow-record-boundary.md)
+- Source: [S-012 Asset 与 Delivery Workflow 记录边界](../../../../docs/delivery/stories/S-012-asset-delivery-workflow-record-boundary.md)
 - Confirmation basis: 2026-07-14 batch execution authorization; Story Version 1 is Ready with no Open Questions.
 
 ## Confirmed Scope

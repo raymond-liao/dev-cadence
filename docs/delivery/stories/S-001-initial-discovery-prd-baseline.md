@@ -70,7 +70,7 @@
 
 ## 相关文档
 
-- [需求探索流程](../workflows/discovery.md)
+- [需求探索流程](../../workflows/discovery.md)
 - [Backlog](../backlog.md)
 
 ## Change Log

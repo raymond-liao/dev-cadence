@@ -2,7 +2,7 @@
 
 - Workflow: `feature-dev`
 - Task slug: `s-010-document-reference-links`
-- Work item: [S-010 文档引用快捷链接](../../../../docs/stories/S-010-document-reference-links.md)
+- Work item: [S-010 文档引用快捷链接](../../../../docs/delivery/stories/S-010-document-reference-links.md)
 - Work item path: `docs/stories/S-010-document-reference-links.md`
 - Work item version: `5` (delivery scope confirmed from Version `3`; Versions `4` and `5` record workflow status transitions)
 - Repository: `dev-cadence` (`git@github.com:raymond-liao/dev-cadence.git`)

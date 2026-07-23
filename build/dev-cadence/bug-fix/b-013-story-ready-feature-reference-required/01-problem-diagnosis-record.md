@@ -3,7 +3,7 @@
 - 状态：✅ `confirmed`
 - 记录时间：`2026-07-19T21:30:32+0800`
 - 最近确认：`2026-07-19T21:34:40+0800`，选项 1：确认当前诊断并进入 Repair Solution。
-- 工作项：[B-013 Story Ready 错误依赖 Feature 关联](../../../../docs/bugs/B-013-story-ready-feature-reference-required.md)
+- 工作项：[B-013 Story Ready 错误依赖 Feature 关联](../../../../docs/delivery/bugs/B-013-story-ready-feature-reference-required.md)
 - 工作项类型：`Bug`
 - 卡片 Version：`2`
 - 卡片可见状态：`In Progress`

@@ -1,7 +1,7 @@
 # B-006 修复方案
 
 - Status: `confirmed`
-- Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/bugs/B-006-delivery-record-evidence-completeness.md)
+- Work Item: [B-006 Delivery 记录证据完整性](../../../../docs/delivery/bugs/B-006-delivery-record-evidence-completeness.md)
 - Diagnosis Source: `build/dev-cadence/bug-fix/b-006-delivery-record-evidence-completeness/01-problem-diagnosis-record.md`
 - Workflow: `bug-fix`
 - Repair Branch: `codex/b-006-delivery-record-evidence-completeness`

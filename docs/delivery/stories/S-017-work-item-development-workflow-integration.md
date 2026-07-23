@@ -19,7 +19,7 @@
 ## ✅ 范围
 
 - 更新 `using-dev-cadence`，根据用户目标、工作项类型、现有卡片和成熟度选择 Work Item Planning、Work Item Analysis 或 Delivery Workflow。
-- 当用户明确要求按 `docs/backlog.md` 继续实施时，由 `using-dev-cadence` 以“待处理”行顺序为权威，在路由下游 workflow 前选择第一张可推进的工作项；“当前可并行实施表”只辅助识别依赖和并行关系，不形成另一套领取顺序。
+- 当用户明确要求按 `docs/delivery/backlog.md` 继续实施时，由 `using-dev-cadence` 以“待处理”行顺序为权威，在路由下游 workflow 前选择第一张可推进的工作项；“当前可并行实施表”只辅助识别依赖和并行关系，不形成另一套领取顺序。
 - 工作项被选中后、切换任务分支或创建 worktree 前，必须将卡片状态更新为 `In Progress`，并将对应 Backlog 行移动到“进行中”；卡片与 Backlog 必须保持一致。
 - 工作项领取属于 `using-dev-cadence` 的入口编排步骤。规则较长时可拆为该 skill 按需读取的 supporting reference；除非满足仓库 Skill 准入原则，否则不新增 workflow skill 或共享能力 skill。
 - 只有明确的实施请求可以触发工作项领取；方案讨论、卡片维护、工作项分析、普通状态查询或仅评估是否建卡不得把工作项更新为 `In Progress`。
@@ -73,7 +73,7 @@
 
 ## 相关文档
 
-- [工作项规划流程](../workflows/work-item-planning.md)
+- [工作项规划流程](../../workflows/work-item-planning.md)
 - [S-015 工作项规划 Workflow 与工作项契约](S-015-work-item-planning-workflow-contract.md)
 - [S-016 统一 Backlog 看板](S-016-unified-backlog-board.md)
 - [S-037 工作项分析 Workflow](S-037-work-item-analysis-workflow.md)

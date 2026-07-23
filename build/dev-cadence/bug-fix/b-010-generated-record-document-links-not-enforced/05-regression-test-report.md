@@ -1,7 +1,7 @@
 # B-010 回归测试报告
 
 - Workflow: `bug-fix`
-- Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/bugs/B-010-generated-record-document-links-not-enforced.md)
+- Work Item: [B-010 Generated Records Do Not Enforce Navigational Document Links](../../../../docs/delivery/bugs/B-010-generated-record-document-links-not-enforced.md)
 - Repair Record: [B-010 修复记录](04-repair-record.md)
 - Status: ✅ `confirmed`
 

@@ -83,7 +83,7 @@ assert_primary_checkout_claim_baseline_fixture() {
   primary_dir="$fixture_dir/primary"
   worktree_dir="$fixture_dir/task-worktree"
   card_path="docs/cards/T-001.md"
-  backlog_path="docs/backlog.md"
+  backlog_path="docs/delivery/backlog.md"
   # RETURN traps can be bypassed by fail's exit or errexit. Capture this
   # fixture's resolved path in an EXIT trap so every shell termination cleans it.
   trap "rm -rf -- $(printf '%q' "$fixture_dir")" EXIT
@@ -91,7 +91,7 @@ assert_primary_checkout_claim_baseline_fixture() {
   git -C "$fixture_dir" init --initial-branch=main primary >/dev/null
   git -C "$primary_dir" config user.email 'contract@example.test'
   git -C "$primary_dir" config user.name 'Workflow Contract'
-  mkdir -p "$primary_dir/docs/cards"
+  mkdir -p "$primary_dir/docs/cards" "$primary_dir/docs/delivery"
   printf 'Status: Draft\n' >"$primary_dir/$card_path"
   printf '| T-001 | Draft | pending |\n' >"$primary_dir/$backlog_path"
   git -C "$primary_dir" add "$card_path" "$backlog_path"

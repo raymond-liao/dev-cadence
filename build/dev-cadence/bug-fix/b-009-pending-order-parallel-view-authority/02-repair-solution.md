@@ -1,7 +1,7 @@
 # B-009 Repair Solution
 
 - Workflow: `bug-fix`
-- Work Item: [B-009 待处理排序与并行视图职责不一致](../../../../docs/bugs/B-009-pending-order-parallel-view-authority.md)
+- Work Item: [B-009 待处理排序与并行视图职责不一致](../../../../docs/delivery/bugs/B-009-pending-order-parallel-view-authority.md)
 - Status: ✅ `confirmed`
 - Confirmed scope source: 本次委派输入中的 B-009 范围确认
 
