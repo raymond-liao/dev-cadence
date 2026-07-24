@@ -43,6 +43,8 @@ assert_not_match() {
 
 assert_file "Finishing skill" "$FINISHING_SKILL"
 assert_literal "feature branch snapshot" 'FEATURE_BRANCH=$(git branch --show-current)' "$FINISHING_SKILL"
+assert_literal "worktree path capture" 'WORKTREE_PATH=$(git rev-parse --show-toplevel)' "$FINISHING_SKILL"
+assert_literal "cleanup uses captured workspace identity" 'cleanup must use the `GIT_DIR`, `GIT_COMMON`, and `WORKTREE_PATH` values captured in Step 2' "$FINISHING_SKILL"
 assert_literal "base branch selection" 'BASE_BRANCH=main' "$FINISHING_SKILL"
 assert_literal "base branch existence check" 'git show-ref --verify --quiet refs/heads/main' "$FINISHING_SKILL"
 assert_literal "expected feature SHA snapshot" 'EXPECTED_FEATURE_SHA=$(git rev-parse "$FEATURE_BRANCH")' "$FINISHING_SKILL"
