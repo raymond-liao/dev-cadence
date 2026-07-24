@@ -238,6 +238,16 @@ Before using card facts at any stage, check the current card Version and visible
 
 At start, rework, Business Acceptance, and Completion, lifecycle writeback must record the card status, repair result/reference, and exact Backlog source and destination sections. A lifecycle writeback uses the current card Version and does not increment it; its Change Log records an important event when a status transition or repair result qualifies under `.dev-cadence/references/contracts/change-log.md`. The same lifecycle event must not duplicate the Change Log entry. Card and Backlog lifecycle writes must be atomic and idempotent, preserve unrelated pending-row order, and keep Workflow stage names separate from work-item statuses. The workflow must not mark the card `Done` for an unaccepted, unintegrated, kept-branch, cancelled-discard, or blocked-discard result.
 
+## Bug Proof Evidence
+
+After Problem Diagnosis establishes an independently verifiable defect claim, create one stable proof ID for that claim in `01-problem-diagnosis-record.md`. The proof ID derives from the authoritative Bug card ID and uses the format `B-nnn-P-nn`. A Bug may have `1..n` proof IDs, but each independently verifiable defect claim has exactly one stable proof ID.
+
+Proof IDs identify defect claims, not individual evidence items. Do not create a proof ID for each command, commit, Changed Files entry, test case, or repeated execution. When one item of evidence supports multiple independent claims, explicitly reference every relevant proof ID.
+
+The stage that produces evidence owns its body. Every stage record must link to the manifest Proof Index and retain only its own source evidence; it must not copy diagnosis, plan, implementation, or verification evidence from another stage.
+
+The manifest maintains a short `Proof Index` only. For every proof ID, use a stable Markdown heading anchor and navigation links to the diagnosis, plan, repair, and regression records. The Proof Index contains only navigation links and does not copy evidence body.
+
 ## Active Task Change Handling
 
 Until Business Acceptance and Completion are finished, treat user requests about the same bug fix as changes to the current workflow run.
@@ -298,6 +308,8 @@ Clarify and investigate the reported problem. Before moving on, explicitly prese
 - root cause hypothesis, evidence, and confidence;
 - open questions or assumptions.
 
+For every independently verifiable defect claim whose boundary is established, create its proof ID in `01-problem-diagnosis-record.md`. When the bug is reproducible, record RED evidence under that same proof ID. When RED cannot be obtained directly, mark RED as unavailable and record alternative causal evidence, the reason, and the limitation under the same proof ID. Do not fabricate RED or describe unavailable RED as executed evidence.
+
 Do not propose or implement a fix until the root cause investigation has enough evidence.
 
 At the end of this stage, write or update:
@@ -357,6 +369,8 @@ The plan must include:
 - supporting unit, integration, frontend, API, script, or manual checks needed for the repaired behavior;
 - regression checks derived from the Repair Solution impact scope;
 - completion conditions for Repair Implementation.
+
+For each proof ID, `03-repair-plan.md` must reference the same proof ID and record planned RED/GREEN checks. The plan links the manifest Proof Index and does not duplicate diagnosis evidence.
 
 Before detailed task steps, the plan must include a `Task Overview` section that lets the user quickly scan the planned repair tasks without reading every step.
 
@@ -565,6 +579,8 @@ The repair record must include:
 - skipped checks with reasons;
 - repair notes and known residual risks.
 
+For each proof ID, `04-repair-record.md` must reference the same proof ID and record actual repair evidence, the associated implementation commit, and Changed Files. The repair record links the manifest Proof Index and does not duplicate evidence owned by diagnosis, the plan, or regression verification.
+
 Completed plan task evidence must be kept in sync with the plan. Mark completed repair-plan steps as `- [x]`. If the plan file cannot be updated, record the completed step numbers and the reason the checklist could not be updated in the repair record.
 
 Code review evidence must be traceable and high signal. Write the detailed review report to:
@@ -695,6 +711,8 @@ The regression test report must use this structure:
 - `Residual Risks`: remaining risks after testing. If none, write `None`.
 - `Verification Decision`: exactly one of `ready`, `ready_with_risk`, or `not_ready`, determined by the Verification Decision Gate.
 - `Recommendation`: whether the fix can enter Business Acceptance.
+
+For each proof ID, `05-regression-test-report.md` must reference the same proof ID and record related `RV-*` test cases, Coverage, and the verification conclusion. A reproducible claim's RED and GREEN evidence must use the same proof ID. The regression report links the manifest Proof Index and does not duplicate evidence owned by diagnosis, the plan, or the repair record.
 
 Coverage must be honest. If the original symptom, root cause, repair acceptance point, or affected area is not verified by an executed test or check, list it as `skipped`, `not covered`, or `accepted risk` in `Bug Fix Coverage` or `Impact Scope Coverage`; do not only mention it in `Residual Risks`.
 

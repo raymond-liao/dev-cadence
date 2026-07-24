@@ -9,14 +9,14 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `2` | `Ready` | `P2` |
-| `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `4` | `Ready` | `P2` |
 | `T-005` | [最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) | `1` | `Ready` | `P2` |
 
 ## 已完成
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
+| `S-025` | [Bug RED/GREEN 证据](stories/S-025-bug-red-green-evidence.md) | `2` | `Done` | `P2` |
+| `S-027` | [Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md) | `4` | `Done` | `P2` |
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Done` | `P2` |
 | `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `4` | `Done` | `P1` |
 | `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `4` | `Done` | `P0` |

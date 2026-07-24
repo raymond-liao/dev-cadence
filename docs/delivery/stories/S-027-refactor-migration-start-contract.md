@@ -4,7 +4,7 @@
 
 - ID：`S-027`
 - Version：`4`
-- Status：`Ready`
+- Status：`Done`
 - Priority：`P2`
 - Change Type：Feature
 
@@ -78,3 +78,5 @@
 | 2 | 2026-07-19T20:05:58+0800 | Raymond Liao <raymond-liao@outlook.com> | 吸收 S-028，覆盖迁移启动到旧路径删除的完整生命周期。 | 两卡围绕同一迁移清单、兼容边界和删除证据；旧路径门禁不能脱离迁移状态独立交付。 |
 | 3 | 2026-07-19T20:23:56+0800 | Raymond Liao <raymond-liao@outlook.com> | 补全公共 API 兼容性和 Refactor 行为不变边界。 | 确保吸收 S-028 后不会扩大旧路径删除契约的权限。 |
 | 4 | 2026-07-21T17:28:14+0800 | Raymond Liao <raymond-liao@outlook.com> | 确认条件化迁移契约、既有记录链所有权和旧路径删除门禁，并将 Story 标记为 Ready。 | 用户确认触发边界、Q-016 的记录位置、可执行验收条件及以 Feature Dev 交付新增 workflow 行为。 |
+| 4 | 2026-07-24T15:18:05+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 In Progress。 | 用户明确请求开始实施 S-027。 |
+| 4 | 2026-07-24T15:21:03+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Done。 | 实现已集成；完整契约、安装和分发同步验证通过。 |

@@ -4,7 +4,7 @@
 
 - ID：`S-025`
 - Version：`2`
-- Status：`Ready`
+- Status：`Done`
 - Priority：`P2`
 - Change Type：Feature
 
@@ -68,3 +68,5 @@
 | 1 | legacy: recorded-at precision unknown; original 2026-07-14 | legacy: recorded-by unknown | 创建 Bug RED/GREEN 证据 Story。 | 建立修复前失败与修复后通过之间的稳定追溯链。 |
 | 2 | 2026-07-21T15:21:48+0800 | Raymond Liao <raymond-liao@outlook.com> | 明确 proof ID 粒度、格式、跨阶段证据位置和 manifest Proof Index 契约。 | 使每个可独立验证的缺陷主张都能稳定追溯 RED/替代证据、修复改动和最终验证。 |
 | 2 | 2026-07-21T15:21:48+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Ready。 | 用户已确认 Story 定义、范围、验收标准和 Q-014 决策。 |
+| 2 | 2026-07-24T15:18:05+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 In Progress。 | 用户明确请求开始实施 S-025。 |
+| 2 | 2026-07-24T15:21:03+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Done。 | 实现已集成；完整契约、安装和分发同步验证通过。 |

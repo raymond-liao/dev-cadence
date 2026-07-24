@@ -388,6 +388,10 @@ Define the technical solution for the confirmed refactor. Before moving on, expl
 - rollback or recovery points;
 - risks and user decisions needed.
 
+When a refactor requires phased migration, keeps a compatibility layer or old path, or cannot atomically switch multiple known callers, the migration contract applies. In `02-refactor-solution.md`, record the initial caller inventory, compatibility policy, migration batches, and outstanding migration scope. Do not create a separate migration inventory because this solution record owns the initial scope.
+
+For a simple, single-caller, or atomic refactor, record why the migration contract is not applicable in `02-refactor-solution.md`. Do not create a caller inventory or other migration record when it is not applicable.
+
 The Behavior Baseline definition must exist before Refactor Implementation begins. Executable baseline evidence must be established before the first structural edit. If coverage is insufficient and cannot be improved before structural edits, record the gap as an explicit risk and ask the user to confirm the risk before planning implementation.
 
 At the end of this stage, write or update:
@@ -643,6 +647,8 @@ The refactor record must include:
 - skipped checks with reasons;
 - refactor notes and known residual risks.
 
+When the migration contract applies, `04-refactor-record.md` must maintain each caller's source, target path or adapter, migration batch, and current status: `pending`, `migrated`, `blocked`, or `not_applicable`. After each completed migration batch, update every affected caller and the remaining migration scope. Do not describe a `blocked` caller as migrated.
+
 Completed plan task evidence must be kept in sync with the plan. Mark completed refactor-plan steps as `- [x]`. If the plan file cannot be updated, record the completed step numbers and the reason the checklist could not be updated in the refactor record.
 
 Code review evidence must be traceable and high signal. Write the detailed review report to:
@@ -778,6 +784,14 @@ The regression test report must use this structure:
 - `Recommendation`: whether the refactor can enter Business Acceptance.
 
 Coverage must be honest. If a protected behavior, contract, or structural goal is not verified by an executed test or check, list it as `skipped`, `not covered`, `partially met`, `not met`, or `accepted risk`; do not only mention it in `Residual Risks`.
+
+#### Old-Path Deletion Gate
+
+Before deleting an old path, `05-regression-test-report.md` must record: the remaining-reference check and its result; every known caller's final migration status; the explicit decision to retain or delete each adapter; and repeatable deletion-safety evidence.
+
+Delete an old path only when the remaining-reference check finds no unaddressed references, every known caller is `migrated` or `not_applicable`, each adapter retention or deletion decision is explicit, and the deletion-safety evidence is repeatable. `ready_with_risk` does not waive any of these deletion conditions.
+
+When any deletion condition is missing, or any caller is `pending` or `blocked`, do not delete the old path. Retain the old path or compatibility layer and record the blocking reason in the regression test report.
 
 #### Final Verification Candidate Binding
 

@@ -202,6 +202,55 @@ assert_workflow_evidence_contract() {
   assert_literal "$label accepted residual risks field" '`Accepted Residual Risks`' "$path"
 }
 
+assert_refactor_migration_contract() {
+  local solution_section implementation_section verification_section
+
+  solution_section="$(awk '
+    $0 == "### Refactor Solution" { capture = 1 }
+    capture && $0 != "### Refactor Solution" && /^### / { exit }
+    capture { print }
+  ' "$REFACTOR_SKILL")"
+  implementation_section="$(awk '
+    $0 == "### Refactor Implementation" { capture = 1 }
+    capture && $0 != "### Refactor Implementation" && /^### / { exit }
+    capture { print }
+  ' "$REFACTOR_SKILL")"
+  verification_section="$(awk '
+    $0 == "### Regression Verification" { capture = 1 }
+    capture && $0 != "### Regression Verification" && /^### / { exit }
+    capture { print }
+  ' "$REFACTOR_SKILL")"
+
+  for pattern in \
+    'phased migration.*compatibility layer.*old path.*multiple known callers' \
+    'initial caller inventory.*compatibility policy.*migration batches.*outstanding migration scope' \
+    'Do not create a separate migration inventory' \
+    'simple, single-caller, or atomic refactor.*not applicable' \
+    'Do not create a caller inventory.*not applicable'; do
+    printf '%s\n' "$solution_section" | rg -q -- "$pattern" ||
+      fail "missing refactor migration solution contract '$pattern'"
+  done
+
+  for pattern in \
+    'each caller.*source.*target path or adapter.*migration batch' \
+    '`pending`, `migrated`, `blocked`, or `not_applicable`' \
+    'each completed migration batch.*affected caller.*remaining migration scope' \
+    'Do not describe a `blocked` caller as migrated'; do
+    printf '%s\n' "$implementation_section" | rg -q -- "$pattern" ||
+      fail "missing refactor migration implementation contract '$pattern'"
+  done
+
+  for pattern in \
+    'Old-Path Deletion Gate' \
+    'remaining-reference check.*every known caller.*adapter.*repeatable deletion-safety evidence' \
+    'only when.*no unaddressed references.*`migrated` or `not_applicable`.*adapter.*repeatable' \
+    '`ready_with_risk` does not waive' \
+    'pending.*blocked.*do not delete the old path.*Retain the old path or compatibility layer.*blocking reason'; do
+    printf '%s\n' "$verification_section" | rg -q -- "$pattern" ||
+      fail "missing refactor old-path deletion contract '$pattern'"
+  done
+}
+
 assert_consolidated_brainstorming_confirmation() {
   local label="$1"
   local path="$2"
@@ -831,6 +880,7 @@ assert_workflow_evidence_contract \
   '`Structural Goal Coverage`' \
   '`Accepted Refactor Sources`' \
   '`Regression Test Report Source`'
+assert_refactor_migration_contract
 
 assert_workflows "business acceptance numbered options" "fixed numbered options" "fixed numbered options" "fixed numbered options"
 assert_workflows "business acceptance feedback table" "### ❓ Ambiguous Acceptance Feedback" "### ❓ Ambiguous Acceptance Feedback" "### ❓ Ambiguous Acceptance Feedback"
