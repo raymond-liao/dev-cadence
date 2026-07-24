@@ -23,7 +23,7 @@ Use this skill when:
 - an active workflow finds an unresolved question that its current artifact cannot reasonably hold and losing the question would create delivery risk;
 - an unresolved question must move from temporary Registry ownership to a durable authoritative document.
 
-Do not use this skill to answer a question, confirm a decision, create a Feature, Story, Bug, or Technical Task, or replace the local `Open Questions` section in a PRD, Business Architecture, work item, design, or other authoritative document.
+Do not use this skill to answer a question, confirm a decision, create a Story, Bug, or Technical Task, or replace the local `Open Questions` section in a Dev Cadence-owned work item, architecture document, delivery design, stage record, or other authoritative delivery asset.
 
 ## Registry Discovery
 
@@ -79,7 +79,9 @@ The Registry must not contain a Change Log.
 
 There must be one full-body source. Do not keep two full bodies that require synchronization.
 
-PRD, Business Architecture, User Journey, and other authoritative documents continue to maintain their own in-scope `Open Questions`. Every local question must also be indexed in the Registry under the same stable `Q-nnn` ID; the Registry does not replace or empty those local sections.
+Dev Cadence-owned authoritative assets, such as work-item cards, architecture documents, delivery designs, and stage records, continue to maintain their own in-scope `Open Questions`. Every such local question must also be indexed in the Registry under the same stable `Q-nnn` ID; the Registry does not replace or empty those local sections.
+
+Do not inspect, index, update, or migrate Open Questions from PRDs, Business Architecture, User Journeys, Features, Story Maps, or other product-analysis assets. Those assets remain outside Dev Cadence even when they exist in the target repository.
 
 ## Migration
 
@@ -100,7 +102,19 @@ When a question becomes `Resolved`, `Rejected`, `Invalid`, or `Superseded`:
 2. After the conclusion is written, change the Registry entry to the terminal status.
 3. A terminal entry remains in Questions, and its Registry-owned detail remains only when no durable authority owns the body.
 
-Do not remove terminal entries from Questions. The status and authoritative source must preserve their final location and outcome.
+By default, do not remove terminal entries from Questions. The status and authoritative source must preserve their final location and outcome.
+
+## Explicit Historical Pruning
+
+An explicit historical-pruning operation is the only exception to terminal retention. Apply it only when all of these conditions hold:
+
+- the user explicitly requests historical pruning and confirms the affected `Q-nnn` IDs;
+- every affected entry is already terminal; an `Open` entry must never be pruned;
+- each affected question belongs to a deleted, retired, or out-of-scope Dev Cadence delivery asset;
+- at least one higher-numbered ID remains after pruning, so the Registry's maximum assigned ID and ID high-water mark do not decrease; the current maximum ID must never be pruned;
+- the same atomic update removes the Questions row, removes the matching Question Details entry, and repairs active references without changing unrelated entries.
+
+Pruning does not make an ID reusable. New IDs still increment from the preserved maximum. Report the deleted IDs, the references repaired, and that Git history is the recovery path.
 
 ## Updating Existing Registries
 
@@ -120,6 +134,7 @@ After a Registry operation, report:
 
 - whether the Registry was created or an existing candidate was used;
 - affected global IDs;
+- any explicitly pruned IDs and their Git recovery path;
 - whether each affected question is indexed or temporarily Registry-owned;
 - authoritative source, status, and final location changes;
 - validation performed, including duplicate-body and local-link checks.
@@ -130,6 +145,6 @@ After a Registry operation, report:
 | --- | --- |
 | "Create the standard file now so it is ready later." | Creation is on demand. No real question means no Registry file. |
 | "Copy the whole question into the index for convenience." | An assigned question has one full body in its authoritative source. |
-| "Remove resolved questions from the table for clarity." | Retain terminal questions in the Registry; Open-first ordering keeps active work visible. |
+| "Remove resolved questions from the table for clarity." | Retain terminal questions by default. Pruning requires an explicit user-confirmed historical cleanup and must preserve the ID high-water mark. |
 | "This filename looks close enough; replace it." | Candidate ownership must be inspected. Ambiguity blocks writes. |
 | "Registering the question means I should create a work item." | Registry maintenance does not create delivery work items automatically. |

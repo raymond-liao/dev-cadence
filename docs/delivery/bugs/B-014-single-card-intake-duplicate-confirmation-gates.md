@@ -63,7 +63,7 @@ Planning Inputs And Scope Confirmation
 
 ## Relationships
 
-- Affects：[S-015 工作项规划 Workflow 与工作项契约](../stories/S-015-work-item-planning-workflow-contract.md)。
+- Affects：Backlog 单项建卡确认行为；历史来源卡 `S-015` 已删除。
 - Related：[S-042 Dev Cadence 全流程主执行子代理委派](../stories/S-042-dev-cadence-primary-subagent-delegation.md)。
 - Related：[B-013 Story Ready 错误依赖 Feature 关联](B-013-story-ready-feature-reference-required.md)。
 - Blocks：无。
@@ -78,7 +78,6 @@ Planning Inputs And Scope Confirmation
 
 ## 相关文档
 
-- [S-015 工作项规划 Workflow 与工作项契约](../stories/S-015-work-item-planning-workflow-contract.md)
 - [S-042 Dev Cadence 全流程主执行子代理委派](../stories/S-042-dev-cadence-primary-subagent-delegation.md)
 - [B-013 Story Ready 错误依赖 Feature 关联](B-013-story-ready-feature-reference-required.md)
 - [Backlog](../backlog.md)

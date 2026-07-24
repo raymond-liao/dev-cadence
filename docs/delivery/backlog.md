@@ -18,7 +18,6 @@
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
 | `S-019` | [最终验证版本绑定](stories/S-019-final-verification-revision-binding.md) | `3` | `Done` | `P2` |
-| `S-038` | [工作项相对 Size 估算](stories/S-038-work-item-relative-size-estimation.md) | `1` | `Done` | `P1` |
 | `S-018` | [Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md) | `4` | `Done` | `P1` |
 | `S-030` | [Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md) | `4` | `Done` | `P0` |
 | `S-029` | [Feature 持久化记录契约](stories/S-029-feature-persistent-record-contract.md) | `4` | `Done` | `P3` |
@@ -43,7 +42,6 @@
 | `S-037` | [工作项分析 Workflow](stories/S-037-work-item-analysis-workflow.md) | `1` | `Done` | `P1` |
 | `S-016` | [统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `5` | `Done` | `P1` |
 | `S-040` | [Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md) | `1` | `Done` | `P1` |
-| `S-015` | [工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md) | `4` | `Done` | `P1` |
 | `S-011` | [目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md) | `2` | `Done` | `P1` |
 | `S-012` | [Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md) | `2` | `Done` | `P1` |
 | `S-005` | [全局 Open Question Registry](stories/S-005-open-question-registry.md) | `2` | `Done` | `P1` |
@@ -72,7 +70,7 @@
 | `S-031` | 保存 Worktree 运行记录：曾并入 S-030，原卡已删除。 | `1` | `Superseded` | `P0` |
 | `S-033` | Worktree 清理结果记录：曾并入 S-030，原卡已删除。 | `1` | `Superseded` | `P1` |
 | `S-034` | 发布与生产交付能力规划：缺少当前交付目标，原卡已删除。 | `1` | `Dropped` | `P3` |
-| `S-026` | Refactor 基线身份：用户确认不再推进；卡片已删除，Q-015 已标记为 Invalid。 | `-` | `Dropped` | `-` |
+| `S-026` | Refactor 基线身份：用户确认不再推进，原卡已删除。 | `-` | `Dropped` | `-` |
 | `S-032` | Detached HEAD Finishing：不再作为独立交付目标，原卡已删除。 | `2` | `Dropped` | `P1` |
 | `S-039` | Iteration Plan 与容量校准：已移出项目范围，原卡已删除。 | `1` | `Dropped` | `P1` |
 | `T-002` | 需求治理端到端验证与安装契约：旧治理链路已移除，原卡已删除。 | `4` | `Dropped` | `P2` |
@@ -98,11 +96,10 @@
 | [S-009](stories/S-009-generated-status-presentation.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | [S-010](stories/S-010-document-reference-links.md) |
 | [S-010](stories/S-010-document-reference-links.md) | [S-009](stories/S-009-generated-status-presentation.md) | - |
 | [S-011](stories/S-011-goal-driven-architecture-workflow.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md), [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | - |
-| [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | - | [S-011](stories/S-011-goal-driven-architecture-workflow.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
-| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md), [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md) |
-| [S-016](stories/S-016-unified-backlog-board.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
-| [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
-| [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-037](stories/S-037-work-item-analysis-workflow.md) | [S-029](stories/S-029-feature-persistent-record-contract.md) |
+| [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | - | [S-011](stories/S-011-goal-driven-architecture-workflow.md) |
+| [S-016](stories/S-016-unified-backlog-board.md) | - | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
+| [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | - |
+| [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-037](stories/S-037-work-item-analysis-workflow.md) | [S-029](stories/S-029-feature-persistent-record-contract.md) |
 | [S-018](stories/S-018-business-acceptance-terminal-mapping.md) | - | - |
 | [S-019](stories/S-019-final-verification-revision-binding.md) | - | - |
 | [T-005](tasks/T-005-final-verification-carried-limitations.md) | - | - |
@@ -127,8 +124,7 @@
 | [T-003](tasks/T-003-executing-plans-pre-commit-review.md) | - | - |
 | [S-035](stories/S-035-refactor-test-sensitivity-check.md) | - | - |
 | [S-036](stories/S-036-minimal-verification-stage-gate.md) | - | - |
-| [S-037](stories/S-037-work-item-analysis-workflow.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
-| [S-038](stories/S-038-work-item-relative-size-estimation.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | - |
+| [S-037](stories/S-037-work-item-analysis-workflow.md) | - | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
 | [S-040](stories/S-040-open-question-registry-index-and-reference-contract.md) | [S-005](stories/S-005-open-question-registry.md), [S-010](stories/S-010-document-reference-links.md) | - |
 | [S-041](stories/S-041-change-log-contract-and-history-governance.md) | - | - |
 | [S-042](stories/S-042-dev-cadence-primary-subagent-delegation.md) | - | - |

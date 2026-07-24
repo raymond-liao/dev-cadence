@@ -29,7 +29,6 @@ S-009:3
 S-010:5
 S-011:5
 S-012:5
-S-015:9
 S-016:5
 S-017:5
 S-018:1
@@ -41,7 +40,6 @@ S-030:1
 S-035:1
 S-036:2
 S-037:2
-S-038:1
 S-040:2
 S-041:3
 T-001:3
@@ -303,7 +301,7 @@ for consumer in "$BACKLOG_SKILL" "$ANALYSIS"; do
 done
 
 CARD_COUNT="$(find "${WORK_ITEM_DIRS[@]}" -maxdepth 1 -name '*.md' -print | wc -l | tr -d ' ')"
-test "$CARD_COUNT" = "44" || fail "expected 44 current work-item cards, found $CARD_COUNT"
+test "$CARD_COUNT" = "42" || fail "expected 42 current work-item cards, found $CARD_COUNT"
 
 if rg -n '^\| Version \| Date \| Change \| Reason \|' "${WORK_ITEM_DIRS[@]}"; then
   fail "legacy four-column Change Log remains"
@@ -311,7 +309,7 @@ fi
 
 STANDARD_HEADER_COUNT="$(rg -l '^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|' \
   "${WORK_ITEM_DIRS[@]}" | wc -l | tr -d ' ')"
-test "$STANDARD_HEADER_COUNT" = "44" ||
+test "$STANDARD_HEADER_COUNT" = "42" ||
   fail "not every current work-item card uses the standard schema"
 
 if rg -n '^\| [0-9]+ \| [0-9]{4}-[0-9]{2}-[0-9]{2} \|' "${WORK_ITEM_DIRS[@]}"; then
@@ -363,12 +361,12 @@ ORIGINAL_METADATA="$(while IFS=: read -r id expected_rows; do
   ' "$path" || fail "$id has fewer than $expected_rows original rows"
 done <<< "$ORIGINAL_ROW_COUNTS")"
 
-test "$(printf '%s\n' "$ORIGINAL_METADATA" | wc -l | tr -d ' ')" = "106" ||
-  fail "explicit original-row cohort is not 106 rows"
+test "$(printf '%s\n' "$ORIGINAL_METADATA" | wc -l | tr -d ' ')" = "96" ||
+  fail "explicit original-row cohort is not 96 rows"
 
 ORIGINAL_METADATA_HASH="$(printf '%s\n' "$ORIGINAL_METADATA" |
   LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-test "$ORIGINAL_METADATA_HASH" = "196da5b1a5f90ef0a102a38f286e7f306223301df9319ef561cabeef3d65855f" ||
+test "$ORIGINAL_METADATA_HASH" = "457fc09eee913fb51a328c1a48bb39705ab8dcf1a12892258e16057029ac1a4b" ||
   fail "original Recorded At/Recorded By migration metadata changed: $ORIGINAL_METADATA_HASH"
 
 printf '%s\n' "$ORIGINAL_METADATA" | awk -F'\t' '
@@ -391,16 +389,16 @@ printf '%s\n' "$ORIGINAL_METADATA" | awk -F'\t' '
     }
   }
   END {
-    if (precision_unknown != 92) {
-      printf "legacy precision-unknown count is %d, expected 92\n", precision_unknown > "/dev/stderr"
+    if (precision_unknown != 82) {
+      printf "legacy precision-unknown count is %d, expected 82\n", precision_unknown > "/dev/stderr"
       invalid = 1
     }
     if (date_unknown != 0) {
       printf "legacy recorded-at-unknown count is %d, expected 0\n", date_unknown > "/dev/stderr"
       invalid = 1
     }
-    if (author_unknown != 91) {
-      printf "legacy recorded-by-unknown count is %d, expected 91\n", author_unknown > "/dev/stderr"
+    if (author_unknown != 81) {
+      printf "legacy recorded-by-unknown count is %d, expected 81\n", author_unknown > "/dev/stderr"
       invalid = 1
     }
     exit invalid
@@ -439,7 +437,6 @@ assert_normalized_card S-009 3 2 '1,2,3' '1,2,2'
 assert_normalized_card S-010 5 3 '1,2,3,4,5' '1,2,3,3,3'
 assert_normalized_card S-011 5 2 '1,2,3,4,5' '1,2,2,2,2'
 assert_normalized_card S-012 5 2 '1,2,3,4,5' '1,1,2,2,2'
-assert_normalized_card S-015 7 4 '1,2,3,4,5,6,7,7,7' '1,2,2,3,4,4,4,4,4'
 assert_normalized_card T-001 3 2 '1,2,3' '1,2,2'
 
 MIGRATION_CARD_IDS="$(rg -l -F "$MIGRATION_CHANGE" "${WORK_ITEM_DIRS[@]}" |
@@ -453,21 +450,20 @@ S-009
 S-010
 S-011
 S-012
-S-015
 T-001'
-test "$(printf '%s\n' "$MIGRATION_CARD_IDS" | wc -l | tr -d ' ')" = "11" ||
-  fail "expected exactly 11 migration-event cards"
+test "$(printf '%s\n' "$MIGRATION_CARD_IDS" | wc -l | tr -d ' ')" = "10" ||
+  fail "expected exactly 10 migration-event cards"
 test "$MIGRATION_CARD_IDS" = "$EXPECTED_MIGRATION_CARD_IDS" ||
   fail "migration-event card set differs from the explicit normalization set"
 MIGRATION_EVENT_COUNT="$(rg -o -F "$MIGRATION_CHANGE" "${WORK_ITEM_DIRS[@]}" |
   wc -l | tr -d ' ')"
-test "$MIGRATION_EVENT_COUNT" = "11" ||
-  fail "expected exactly 11 migration events, found $MIGRATION_EVENT_COUNT"
+test "$MIGRATION_EVENT_COUNT" = "10" ||
+  fail "expected exactly 10 migration events, found $MIGRATION_EVENT_COUNT"
 
 MIGRATION_SUFFIX_COUNT="$(rg -o 'Legacy migration: original Version [0-9]+; normalized to Version [0-9]+\.' \
   "${WORK_ITEM_DIRS[@]}" | wc -l | tr -d ' ')"
-test "$MIGRATION_SUFFIX_COUNT" = "27" ||
-  fail "expected exactly 27 normalized-row migration suffixes, found $MIGRATION_SUFFIX_COUNT"
+test "$MIGRATION_SUFFIX_COUNT" = "20" ||
+  fail "expected exactly 20 normalized-row migration suffixes, found $MIGRATION_SUFFIX_COUNT"
 
 assert_history_versions B-005 '1,2,3,4,4'
 assert_history_versions B-007 '1,2,2'
@@ -494,7 +490,7 @@ assert_history_signatures T-004 \
   'legacy: recorded-at precision unknown; original 2026-07-17 || 将 `git-commit` 收敛为由 `using-dev-cadence` 集中路由的内部共享能力。' \
   'legacy: recorded-at precision unknown; original 2026-07-17 || 将调用边界扩展为所有已安装 Workflow 和入口路由的 shared capability，并固化提交信息规则。'
 
-for id in B-008 B-009 S-015 S-016 S-040; do
+for id in B-008 B-009 S-016 S-040; do
   path="$(card_path "$id")"
   versions="$(history_versions "$path" | tr ',' '\n')"
   duplicate="$(printf '%s\n' "$versions" | LC_ALL=C sort | uniq -d | head -1)"
@@ -503,8 +499,8 @@ done
 
 ORIGINAL_HISTORY_COUNT="$(printf '%s\n' "$ORIGINAL_ROW_COUNTS" |
   awk -F: '{ count += $2 } END { print count }')"
-test "$ORIGINAL_HISTORY_COUNT" = "106" ||
-  fail "explicit original-row cohort is $ORIGINAL_HISTORY_COUNT rows, expected 106"
+test "$ORIGINAL_HISTORY_COUNT" = "96" ||
+  fail "explicit original-row cohort is $ORIGINAL_HISTORY_COUNT rows, expected 96"
 
 ORIGINAL_HISTORY_HASH="$(while IFS=: read -r id expected_rows; do
   path="$(card_path "$id")"
@@ -532,7 +528,7 @@ ORIGINAL_HISTORY_HASH="$(while IFS=: read -r id expected_rows; do
     }
   ' "$path" || fail "$id original-row payload cohort is incomplete"
 done <<< "$ORIGINAL_ROW_COUNTS" | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-test "$ORIGINAL_HISTORY_HASH" = "a945b0c8816608c9eb94d6d83c563c17e38718df07b404ba6c73f40bf96fbc5e" ||
+test "$ORIGINAL_HISTORY_HASH" = "fa4e90835bb86327074e083dd52fdc31dfed26d470fea4ac364abc90f6fc5cee" ||
   fail "original Change/Reason history content changed: $ORIGINAL_HISTORY_HASH"
 
 printf 'Change Log contract checks passed.\n'

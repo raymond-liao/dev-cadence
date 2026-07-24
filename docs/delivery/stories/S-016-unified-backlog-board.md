@@ -72,14 +72,12 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 
 ## Story Relationships
 
-- Depends On：`S-015` 工作项规划 Workflow 与工作项契约。
 - Precedes：`S-017` 工作项卡片与开发 Workflow 接入。
 - Related：`S-037` 工作项分析 Workflow。
-- Related：`S-038` 工作项相对 Size 估算。
 
 ## 依赖
 
-- `S-015` 工作项规划 Workflow 与工作项契约。
+- 无。
 
 ## Open Questions
 
@@ -87,10 +85,8 @@ Backlog 只表达工作项级生命周期。进入实施后的需求确认、方
 
 ## 相关文档
 
-- [S-015 工作项规划 Workflow 与工作项契约](S-015-work-item-planning-workflow-contract.md)
 - [S-017 工作项卡片与开发 Workflow 接入](S-017-work-item-development-workflow-integration.md)
 - [S-037 工作项分析 Workflow](S-037-work-item-analysis-workflow.md)
-- [S-038 工作项相对 Size 估算](S-038-work-item-relative-size-estimation.md)
 - [Backlog](../backlog.md)
 
 ## Change Log

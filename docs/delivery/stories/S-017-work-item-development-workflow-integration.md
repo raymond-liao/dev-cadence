@@ -56,13 +56,11 @@
 
 ## Story Relationships
 
-- Follows：`S-015` 工作项规划 Workflow 与工作项契约。
 - Follows：`S-016` 统一 Backlog 看板。
 - Follows：`S-037` 工作项分析 Workflow。
 
 ## 依赖
 
-- `S-015` 工作项规划 Workflow 与工作项契约。
 - `S-016` 统一 Backlog 看板。
 - `S-037` 工作项分析 Workflow。
 
@@ -72,7 +70,6 @@
 
 ## 相关文档
 
-- [S-015 工作项规划 Workflow 与工作项契约](S-015-work-item-planning-workflow-contract.md)
 - [S-016 统一 Backlog 看板](S-016-unified-backlog-board.md)
 - [S-037 工作项分析 Workflow](S-037-work-item-analysis-workflow.md)
 - [B-009 待处理排序与并行视图职责不一致](../bugs/B-009-pending-order-parallel-view-authority.md)

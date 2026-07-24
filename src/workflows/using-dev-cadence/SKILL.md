@@ -101,6 +101,8 @@ For repository-level unresolved-question maintenance, use:
 
 That shared capability owns Registry discovery, on-demand creation, entry fields, single-body ownership, migration, terminal retention, and no-Change-Log rules. Do not duplicate its complete lifecycle contract in this entry skill or individual business workflows.
 
+Registry maintenance covers only Dev Cadence-owned delivery and architecture assets; it does not authorize reading or modifying product-analysis assets.
+
 ## Available Flows
 
 | User request | Flow |
