@@ -21,6 +21,7 @@ tmp/
 .superpowers/
 
 # Local Dev Cadence work artifacts and research workspaces
+/build/
 /specs/
 /research/
 .dev-cadence.yaml

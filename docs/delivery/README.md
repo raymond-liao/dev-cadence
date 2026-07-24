@@ -19,5 +19,5 @@
 
 - workflow 的可执行规则以 [`src/workflows/`](../../src/workflows/) 为权威来源。
 - 跨 workflow 契约以 [`src/references/`](../../src/references/) 为权威来源。
-- workflow 运行记录和交付证据保存在 [`build/dev-cadence/`](../../build/dev-cadence/)。
+- workflow 运行记录和交付证据由目标仓库在其本地 `build/dev-cadence/` 下维护；本源码仓库不保留副本。
 - 产品分析资产不属于 Dev Cadence；外部需求只有在满足本项目工作项要求后才进入 Backlog 和实施流程。

@@ -7,7 +7,7 @@
 - Status：`Done`
 - Priority：`P0`
 - Change Type：Feature
-- Delivery Result：已本地合并到 `main`，提交 `46394774b3278e2af160a102931d4676642502bf`；交付证据见 `build/dev-cadence/feature-dev/s-030-worktree-cleanup-safety/06-business-acceptance-record.md`。
+- Delivery Result：已本地合并到 `main`，提交 `46394774b3278e2af160a102931d4676642502bf`。
 
 ## 目标
 

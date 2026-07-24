@@ -102,13 +102,13 @@ docs/delivery/bugs/B-nnn-<slug>.md
 docs/architecture/<goal-slug>.md
 ```
 
-Delivery Workflows maintain recoverable evidence under:
+In the target repository, Delivery Workflows maintain recoverable evidence under:
 
 ```text
 build/dev-cadence/<workflow>/<task-slug>/
 ```
 
-Delivery records include the active manifest, confirmed inputs, task-scoped solution, implementation plan, implementation evidence, code review, system verification, business acceptance, Git integration, and cleanup evidence. They are not stored inside the installed `.dev-cadence` package.
+Delivery records include the active manifest, confirmed inputs, task-scoped solution, implementation plan, implementation evidence, code review, system verification, business acceptance, Git integration, and cleanup evidence. They belong to the target repository and are not stored inside the installed `.dev-cadence` package or this source repository.
 
 ## Configuration
 

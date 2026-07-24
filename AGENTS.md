@@ -18,7 +18,7 @@
 - `src/vendor/superpowers/`：固定版本的 vendored Superpowers 副本。
 - `dist/.dev-cadence/`：由 `bash scripts/build.sh` 生成的分发包，默认不要直接编辑。
 - `scripts/install.sh`：构建并替换目标仓库中的 `.dev-cadence` 安装包。
-- `build/`：Dev Cadence 工作流运行记录和短期执行产物。
+- `build/`：本地临时运行记录和短期执行产物；不作为源码仓库资产保留或提交。
 - `docs/delivery/`：本仓库的 Backlog、Open Question Registry 以及 Story、Task、Bug 工作项卡片。
 - `docs/`：业务流程说明和设计资料；不要用它替代 workflow skill 的执行规则。
 
@@ -113,7 +113,7 @@
 
 ## 记录与路径规则
 
-- Dev Cadence 运行记录应使用仓库相对路径，不应持久化本机绝对路径。
+- 目标仓库中的 Dev Cadence 运行记录应使用仓库相对路径，不应持久化本机绝对路径；本源码仓库不保留这些运行记录。
 - 仓库身份优先使用仓库名、origin URL、分支和 commit hash 表达。
 - 工作区在主 checkout 时可记录为 `.` 或 `target repository root`。
 - 项目内 worktree 应记录为 `.worktrees/<branch-or-task-slug>` 或 `worktrees/<branch-or-task-slug>`。
@@ -138,3 +138,4 @@
 - 不要在未确认适用范围时把规则同时扩散到 feature-dev 和 bug-fix。
 - 不要为了修 demo 个例而绕过 workflow skill 的规则源。
 - 不要提交 `.dev-cadence.yaml`、`.env`、临时日志、服务 PID、个人路径或密钥。
+- 不要提交 `build/` 下的本地运行记录或执行产物。

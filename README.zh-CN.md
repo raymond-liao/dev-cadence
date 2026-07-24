@@ -100,13 +100,13 @@ docs/delivery/bugs/B-nnn-<slug>.md
 docs/architecture/<goal-slug>.md
 ```
 
-Delivery Workflow 在以下位置维护可恢复证据：
+在目标仓库中，Delivery Workflow 在以下位置维护可恢复证据：
 
 ```text
 build/dev-cadence/<workflow>/<task-slug>/
 ```
 
-交付记录包括活动 manifest、确认输入、任务级方案、实施计划、实施证据、Code Review、系统验证、业务验收、Git 集成和清理证据。这些记录不存放在安装后的 `.dev-cadence` 包中。
+交付记录包括活动 manifest、确认输入、任务级方案、实施计划、实施证据、Code Review、系统验证、业务验收、Git 集成和清理证据。它们属于目标仓库，不存放在安装后的 `.dev-cadence` 包或本源码仓库中。
 
 ## 配置
 
