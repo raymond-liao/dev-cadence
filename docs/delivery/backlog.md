@@ -44,12 +44,8 @@
 | `S-016` | [统一 Backlog 看板](stories/S-016-unified-backlog-board.md) | `5` | `Done` | `P1` |
 | `S-040` | [Open Question Registry 全量索引与引用契约](stories/S-040-open-question-registry-index-and-reference-contract.md) | `1` | `Done` | `P1` |
 | `S-015` | [工作项规划 Workflow 与工作项契约](stories/S-015-work-item-planning-workflow-contract.md) | `4` | `Done` | `P1` |
-| `S-014` | [Discovery User Journey 与 Feature 基线](stories/S-014-user-journey-analysis.md) | `2` | `Done` | `P1` |
-| `S-002` | [产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md) | `8` | `Done` | `P1` |
-| `S-013` | [Discovery 过程记录简化](stories/S-013-simplify-discovery-process-records.md) | `3` | `Done` | `P1` |
 | `S-011` | [目标驱动的架构设计 Workflow](stories/S-011-goal-driven-architecture-workflow.md) | `2` | `Done` | `P1` |
 | `S-012` | [Asset 与 Delivery Workflow 记录边界](stories/S-012-asset-delivery-workflow-record-boundary.md) | `2` | `Done` | `P1` |
-| `S-006` | [Discovery 产品与技术内容边界](stories/S-006-discovery-product-technical-content-boundary.md) | `1` | `Done` | `P1` |
 | `S-005` | [全局 Open Question Registry](stories/S-005-open-question-registry.md) | `2` | `Done` | `P1` |
 | `S-004` | [实施与测试失败分类和阶段返回](stories/S-004-failure-classification-stage-routing.md) | `1` | `Done` | `P2` |
 | `S-010` | [文档引用快捷链接](stories/S-010-document-reference-links.md) | `3` | `Done` | `P1` |
@@ -58,7 +54,6 @@
 | `S-009` | [生成文档状态呈现](stories/S-009-generated-status-presentation.md) | `2` | `Done` | `P1` |
 | `T-001` | [工作项范围章节语义标识](tasks/T-001-work-item-scope-semantic-markers.md) | `2` | `Done` | `P2` |
 | `S-008` | [Skill 语义视觉规范](stories/S-008-skill-semantic-visual-markers.md) | `3` | `Done` | `P1` |
-| `S-001` | [首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md) | `4` | `Done` | `P1` |
 | `T-003` | [Executing-Plans 实施提交前审查](tasks/T-003-executing-plans-pre-commit-review.md) | `1` | `Done` | `P1` |
 | `S-035` | [Refactor 测试敏感性检查](stories/S-035-refactor-test-sensitivity-check.md) | `1` | `Done` | `P2` |
 | `S-036` | [最小验证阶段门禁](stories/S-036-minimal-verification-stage-gate.md) | `2` | `Done` | `P2` |
@@ -68,20 +63,19 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `-` | 实现 Discovery workflow 和 PRD 契约：原任务已拆分为 [S-001 首次 Discovery 与产品设计基线](stories/S-001-initial-discovery-prd-baseline.md) 和 [S-002 产品设计基线增量更新与版本治理](stories/S-002-discovery-prd-incremental-versioning.md)。该条目的 Superseded 状态只说明任务被拆分；S-001 的实际完成状态以 Story 和运行记录为准。 | `-` | `Superseded` | `-` |
-| `S-021` | [验证风险传递到 Business Acceptance](stories/S-021-verification-risk-to-business-acceptance.md) — 历史上已并入 S-020，现由 [T-005 最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) 承接最小必要范围。 | `1` | `Superseded` | `P2` |
-| `S-020` | [实施、验证与 Business Acceptance 风险追溯](stories/S-020-implementation-review-risk-to-verification.md) — 已由 [T-005 最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) 替代；新 Task 只保留 `ready_with_risk` 的带入限制呈现与验收引用。 | `3` | `Superseded` | `P2` |
-| `S-022` | [Bug `not-a-bug` 终态](stories/S-022-bug-not-a-bug-terminal-state.md) — 后续 [S-024 Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) 已停止；本卡不恢复为独立交付项。 | `1` | `Dropped` | `P1` |
-| `S-024` | [Bug 诊断门禁](stories/S-024-bug-diagnosis-gate.md) — 用户确认停止该工作项，不再进入 Ready 或交付。 | `3` | `Dropped` | `P2` |
-| `S-023` | [Manual Recovery 终态](stories/S-023-manual-recovery-terminal-state.md) — 已并入 [S-018 Delivery 终态映射与 Manual Recovery](stories/S-018-business-acceptance-terminal-mapping.md)；manual recovery 与正常验收共同定义 Delivery 终态。 | `1` | `Superseded` | `P1` |
-| `S-028` | [Refactor 旧路径删除门禁](stories/S-028-refactor-legacy-path-removal-gate.md) — 已并入 [S-027 Refactor 迁移与旧路径删除契约](stories/S-027-refactor-migration-start-contract.md)；删除门禁依赖同一迁移清单和迁移状态。 | `1` | `Superseded` | `P2` |
-| `S-031` | [保存 Worktree 运行记录](stories/S-031-preserve-worktree-run-records.md) — 已并入 [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md)；记录保存是 worktree 清理的前置安全条件。 | `1` | `Superseded` | `P0` |
-| `S-033` | [Worktree 清理结果记录](stories/S-033-worktree-cleanup-result-recording.md) — 已并入 [S-030 Worktree 清理安全与证据](stories/S-030-worktree-ownership-detection.md)；清理结果与所有权、记录保存属于同一 Completion 操作。 | `1` | `Superseded` | `P1` |
-| `S-034` | [发布与生产交付能力规划](stories/S-034-release-and-production-delivery-capability.md) — 当前没有已确认的发布、部署或生产交付目标，缺少可独立交付的当前用户结果。 | `1` | `Dropped` | `P3` |
+| `S-021` | 验证风险传递到 Business Acceptance：由 T-005 承接最小必要范围，原卡已删除。 | `1` | `Superseded` | `P2` |
+| `S-020` | 实施、验证与 Business Acceptance 风险追溯：由 T-005 替代，原卡已删除。 | `3` | `Superseded` | `P2` |
+| `S-022` | Bug `not-a-bug` 终态：相关诊断门禁已停止，原卡已删除。 | `1` | `Dropped` | `P1` |
+| `S-024` | Bug 诊断门禁：用户确认停止，原卡已删除。 | `3` | `Dropped` | `P2` |
+| `S-023` | Manual Recovery 终态：已并入 S-018，原卡已删除。 | `1` | `Superseded` | `P1` |
+| `S-028` | Refactor 旧路径删除门禁：已并入 S-027，原卡已删除。 | `1` | `Superseded` | `P2` |
+| `S-031` | 保存 Worktree 运行记录：曾并入 S-030，原卡已删除。 | `1` | `Superseded` | `P0` |
+| `S-033` | Worktree 清理结果记录：曾并入 S-030，原卡已删除。 | `1` | `Superseded` | `P1` |
+| `S-034` | 发布与生产交付能力规划：缺少当前交付目标，原卡已删除。 | `1` | `Dropped` | `P3` |
 | `S-026` | Refactor 基线身份：用户确认不再推进；卡片已删除，Q-015 已标记为 Invalid。 | `-` | `Dropped` | `-` |
-| `S-032` | [Detached HEAD Finishing](stories/S-032-detached-head-finishing.md) — 用户确认不再将外部管理 detached HEAD 工作区作为 Dev Cadence 的独立交付目标。 | `2` | `Dropped` | `P1` |
-| `S-039` | [Iteration Plan 与容量校准](stories/S-039-iteration-plan-capacity-calibration.md) — 用户确认将产品分析和产品组合规划能力移出 Dev Cadence；Iteration Plan 与容量校准不再属于本项目范围。 | `1` | `Dropped` | `P1` |
-| `T-002` | [需求治理端到端验证与安装契约](tasks/T-002-requirements-governance-end-to-end-validation.md) — 用户确认移除旧产品设计、规划到交付的治理链路；现有实施入口由各 workflow 契约测试覆盖。 | `4` | `Dropped` | `P2` |
+| `S-032` | Detached HEAD Finishing：不再作为独立交付目标，原卡已删除。 | `2` | `Dropped` | `P1` |
+| `S-039` | Iteration Plan 与容量校准：已移出项目范围，原卡已删除。 | `1` | `Dropped` | `P1` |
+| `T-002` | 需求治理端到端验证与安装契约：旧治理链路已移除，原卡已删除。 | `4` | `Dropped` | `P2` |
 
 ## 评级说明
 
@@ -96,21 +90,16 @@
 
 | Work Item | Depends On | Blocks |
 |---|---|---|
-| [S-001](stories/S-001-initial-discovery-prd-baseline.md) | - | [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-013](stories/S-013-simplify-discovery-process-records.md), [S-014](stories/S-014-user-journey-analysis.md) |
-| [S-002](stories/S-002-discovery-prd-incremental-versioning.md) | [S-001](stories/S-001-initial-discovery-prd-baseline.md), [S-005](stories/S-005-open-question-registry.md), [S-006](stories/S-006-discovery-product-technical-content-boundary.md), [S-013](stories/S-013-simplify-discovery-process-records.md) | [S-014](stories/S-014-user-journey-analysis.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
 | [S-003](stories/S-003-implementation-design-freshness-gate.md) | - | [S-004](stories/S-004-failure-classification-stage-routing.md) |
 | [S-004](stories/S-004-failure-classification-stage-routing.md) | [S-003](stories/S-003-implementation-design-freshness-gate.md) | - |
-| [S-005](stories/S-005-open-question-registry.md) | - | [S-006](stories/S-006-discovery-product-technical-content-boundary.md), [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-014](stories/S-014-user-journey-analysis.md) |
-| [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | [S-005](stories/S-005-open-question-registry.md) | [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md), [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-014](stories/S-014-user-journey-analysis.md) |
+| [S-005](stories/S-005-open-question-registry.md) | - | - |
 | [S-007](stories/S-007-workflow-routing-examples.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | - |
 | [S-008](stories/S-008-skill-semantic-visual-markers.md) | - | [S-007](stories/S-007-workflow-routing-examples.md), [S-009](stories/S-009-generated-status-presentation.md), [S-011](stories/S-011-goal-driven-architecture-workflow.md), [T-001](tasks/T-001-work-item-scope-semantic-markers.md) |
 | [S-009](stories/S-009-generated-status-presentation.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | [S-010](stories/S-010-document-reference-links.md) |
 | [S-010](stories/S-010-document-reference-links.md) | [S-009](stories/S-009-generated-status-presentation.md) | - |
 | [S-011](stories/S-011-goal-driven-architecture-workflow.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md), [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | - |
-| [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | [S-006](stories/S-006-discovery-product-technical-content-boundary.md) | [S-013](stories/S-013-simplify-discovery-process-records.md), [S-011](stories/S-011-goal-driven-architecture-workflow.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
-| [S-013](stories/S-013-simplify-discovery-process-records.md) | [S-001](stories/S-001-initial-discovery-prd-baseline.md), [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-014](stories/S-014-user-journey-analysis.md) |
-| [S-014](stories/S-014-user-journey-analysis.md) | [S-001](stories/S-001-initial-discovery-prd-baseline.md), [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-005](stories/S-005-open-question-registry.md), [S-006](stories/S-006-discovery-product-technical-content-boundary.md), [S-013](stories/S-013-simplify-discovery-process-records.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
-| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-002](stories/S-002-discovery-prd-incremental-versioning.md), [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md), [S-014](stories/S-014-user-journey-analysis.md), [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md) |
+| [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md) | - | [S-011](stories/S-011-goal-driven-architecture-workflow.md), [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
+| [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-012](stories/S-012-asset-delivery-workflow-record-boundary.md), [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-016](stories/S-016-unified-backlog-board.md), [S-017](stories/S-017-work-item-development-workflow-integration.md), [S-037](stories/S-037-work-item-analysis-workflow.md), [S-038](stories/S-038-work-item-relative-size-estimation.md) |
 | [S-016](stories/S-016-unified-backlog-board.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) |
 | [T-001](tasks/T-001-work-item-scope-semantic-markers.md) | [S-008](stories/S-008-skill-semantic-visual-markers.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md) |
 | [S-017](stories/S-017-work-item-development-workflow-integration.md) | [S-015](stories/S-015-work-item-planning-workflow-contract.md), [S-016](stories/S-016-unified-backlog-board.md), [S-037](stories/S-037-work-item-analysis-workflow.md) | [S-029](stories/S-029-feature-persistent-record-contract.md) |
@@ -135,7 +124,6 @@
 | [S-027](stories/S-027-refactor-migration-start-contract.md) | - | - |
 | [S-029](stories/S-029-feature-persistent-record-contract.md) | [S-017](stories/S-017-work-item-development-workflow-integration.md) | - |
 | [S-030](stories/S-030-worktree-ownership-detection.md) | - | - |
-| [S-032](stories/S-032-detached-head-finishing.md) | - | - |
 | [T-003](tasks/T-003-executing-plans-pre-commit-review.md) | - | - |
 | [S-035](stories/S-035-refactor-test-sensitivity-check.md) | - | - |
 | [S-036](stories/S-036-minimal-verification-stage-gate.md) | - | - |

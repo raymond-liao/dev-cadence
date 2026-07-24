@@ -63,20 +63,15 @@
 
 ## Story Relationships
 
-- Follows：`S-006` Discovery 产品与技术内容边界。
-- Precedes：`S-013` Discovery 过程记录简化。
-- Precedes：`S-002` 产品设计基线增量更新与版本治理。
 - Precedes：`S-011` 目标驱动的架构设计 Workflow。
 - Precedes：Work Item Planning workflow。
 
 ## 依赖
 
-- `S-006` Discovery 产品与技术内容边界。
 
 ## 后续工作
 
-- S-013 按本 Story 的 Asset Workflow 契约简化现有 Discovery。
-- S-002、S-011 和 Work Item Planning 在实现时直接采用 Asset Workflow 契约。
+- S-011 和后续 Asset Workflow 直接采用本 Story 的记录模型。
 - 后续新增交付 workflow 时，单独评估其是否需要完整 Delivery 证据链。
 
 ## Open Questions
@@ -85,8 +80,6 @@
 
 ## 相关文档
 
-- [S-002 产品设计基线增量更新与版本治理](S-002-discovery-prd-incremental-versioning.md)
-- [S-006 Discovery 产品与技术内容边界](S-006-discovery-product-technical-content-boundary.md)
 - [S-011 目标驱动的架构设计 Workflow](S-011-goal-driven-architecture-workflow.md)
 - [Backlog](../backlog.md)
 

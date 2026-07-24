@@ -58,7 +58,7 @@
 
 ## 历史关系
 
-- [S-031 保存 Worktree 运行记录](S-031-preserve-worktree-run-records.md) 和 [S-033 Worktree 清理结果记录](S-033-worktree-cleanup-result-recording.md) 曾合并至本卡。当前已确认范围明确排除记录保存和清理结果记录，不实现这两项职责。
+- 历史工作项 `S-031` 和 `S-033` 曾合并至本卡。当前已确认范围明确排除记录保存和清理结果记录，不实现这两项职责；两张来源卡已删除。
 
 ## 依赖
 

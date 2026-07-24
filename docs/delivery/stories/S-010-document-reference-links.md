@@ -88,7 +88,7 @@
 
 ## 后续工作
 
-- S-005、S-006、S-002 和 Work Item Planning 创建的新文档直接使用本 Story 的链接契约。
+- Open Question Registry、Backlog 和工作项 workflow 创建的新文档直接使用本 Story 的链接契约。
 - 后续新增 workflow 必须区分可导航文档引用与仅作为数据保存的精确路径。
 
 ## Open Questions

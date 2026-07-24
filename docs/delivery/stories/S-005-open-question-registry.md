@@ -66,7 +66,6 @@ PRD、Business Architecture、Story、Technical Task 和技术方案都可能拥
 
 ## Story Relationships
 
-- Precedes：`S-002` 产品设计基线增量更新与版本治理。
 - Related：Work Item Planning workflow、工作项卡片与现有开发 workflow 接入任务。
 
 ## 依赖
@@ -75,7 +74,6 @@ PRD、Business Architecture、Story、Technical Task 和技术方案都可能拥
 
 ## 后续工作
 
-- `S-002` 在产品设计增量更新时复用 Registry，登记无法由 PRD 或 Business Architecture 承载的问题。
 - Work Item Planning 在创建或更新工作项时迁移、关联或登记相关问题。
 - 开发 workflow 在需求确认和技术方案阶段读取相关问题，并按权威归属更新状态。
 
@@ -85,7 +83,6 @@ PRD、Business Architecture、Story、Technical Task 和技术方案都可能拥
 
 ## 相关文档
 
-- [S-002 产品设计基线增量更新与版本治理](S-002-discovery-prd-incremental-versioning.md)
 - [Backlog](../backlog.md)
 
 ## Change Log

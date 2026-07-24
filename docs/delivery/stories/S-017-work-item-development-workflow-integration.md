@@ -59,7 +59,6 @@
 - Follows：`S-015` 工作项规划 Workflow 与工作项契约。
 - Follows：`S-016` 统一 Backlog 看板。
 - Follows：`S-037` 工作项分析 Workflow。
-- Precedes：`T-002` 需求治理端到端验证与安装契约。
 
 ## 依赖
 
@@ -77,7 +76,6 @@
 - [S-016 统一 Backlog 看板](S-016-unified-backlog-board.md)
 - [S-037 工作项分析 Workflow](S-037-work-item-analysis-workflow.md)
 - [B-009 待处理排序与并行视图职责不一致](../bugs/B-009-pending-order-parallel-view-authority.md)
-- [T-002 需求治理端到端验证与安装契约](../tasks/T-002-requirements-governance-end-to-end-validation.md)
 - [Backlog](../backlog.md)
 
 ## Change Log

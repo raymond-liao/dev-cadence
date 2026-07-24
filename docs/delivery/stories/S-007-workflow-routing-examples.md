@@ -44,7 +44,7 @@
 - 不为每个 workflow 建立重复的完整 Trigger Contract 或示例矩阵。
 - 不通过大量关键词枚举替代语义判断。
 - 不在本 Story 中实现新的业务 workflow。
-- 不在本 Story 中实现 S-002 增量 Discovery 或 S-005 Open Question Registry。
+- 不在本 Story 中实现产品分析或 S-005 Open Question Registry。
 
 ## 验收标准
 
@@ -62,7 +62,6 @@
 
 - Follows：`S-008` Skill 语义视觉规范。
 - Precedes：`S-005` 全局 Open Question Registry。
-- Related：`S-002` 产品设计基线增量更新与版本治理、`S-006` Discovery 产品与技术内容边界。
 
 ## 依赖
 
@@ -71,7 +70,6 @@
 ## 后续工作
 
 - S-005 在入口中增加 Registry 的直接请求路由时，沿用本 Story 的集中路由和代表性示例规则。
-- S-002 实现后，将增量 Discovery 的当前占位边界更新为可执行路由。
 
 ## Open Questions
 
@@ -79,9 +77,7 @@
 
 ## 相关文档
 
-- [S-002 产品设计基线增量更新与版本治理](S-002-discovery-prd-incremental-versioning.md)
 - [S-005 全局 Open Question Registry](S-005-open-question-registry.md)
-- [S-006 Discovery 产品与技术内容边界](S-006-discovery-product-technical-content-boundary.md)
 - [Backlog](../backlog.md)
 
 ## Change Log

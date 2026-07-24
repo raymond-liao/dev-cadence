@@ -72,7 +72,6 @@
 
 - Follows：`S-012` Asset 与 Delivery Workflow 记录边界。
 - Related：Feature Dev、Bug Fix 和 Refactor 的 Solution 阶段。
-- Related：`S-006` Discovery 产品与技术内容边界。
 
 ## 依赖
 
@@ -91,8 +90,6 @@
 
 ## 相关文档
 
-- [S-001 首次 Discovery 与产品设计基线](S-001-initial-discovery-prd-baseline.md)
-- [S-006 Discovery 产品与技术内容边界](S-006-discovery-product-technical-content-boundary.md)
 - [S-008 Skill 语义视觉规范](S-008-skill-semantic-visual-markers.md)
 - [S-012 Asset 与 Delivery Workflow 记录边界](S-012-asset-delivery-workflow-record-boundary.md)
 - [Backlog](../backlog.md)

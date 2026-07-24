@@ -42,8 +42,7 @@
 
 ## Task Relationships
 
-- Supersedes：[S-020 实施、验证与 Business Acceptance 风险追溯](../stories/S-020-implementation-review-risk-to-verification.md)。
-- Continues：已由 S-020 吸收的 [S-021 验证风险传递到 Business Acceptance](../stories/S-021-verification-risk-to-business-acceptance.md) 的最小必要范围。
+- Supersedes：历史工作项 `S-020` 和 `S-021` 的风险追溯范围；两张来源卡已删除。
 - Related：[S-018 Delivery 终态映射与 Manual Recovery](../stories/S-018-business-acceptance-terminal-mapping.md)。
 
 ## 依赖
@@ -58,7 +57,6 @@
 
 - [Backlog](../backlog.md)
 - [S-018 Delivery 终态映射与 Manual Recovery](../stories/S-018-business-acceptance-terminal-mapping.md)
-- [S-021 验证风险传递到 Business Acceptance](../stories/S-021-verification-risk-to-business-acceptance.md)
 
 ## Change Log
 

@@ -52,7 +52,7 @@
 
 ## Story Relationships
 
-- Supersedes：[S-028 Refactor 旧路径删除门禁](S-028-refactor-legacy-path-removal-gate.md)。
+- Supersedes：历史工作项 `S-028` Refactor 旧路径删除门禁；来源卡已删除。
 
 ## 依赖
 

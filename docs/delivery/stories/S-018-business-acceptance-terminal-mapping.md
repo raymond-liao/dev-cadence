@@ -63,7 +63,7 @@
 
 ## Story Relationships
 
-- Supersedes：[S-023 Manual Recovery 终态](S-023-manual-recovery-terminal-state.md)。
+- Supersedes：历史工作项 `S-023` Manual Recovery 终态；来源卡已删除。
 
 ## 依赖
 

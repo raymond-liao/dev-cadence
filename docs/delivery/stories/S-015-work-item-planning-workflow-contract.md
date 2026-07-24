@@ -52,7 +52,7 @@
 - 不把 Story Map 当作工作项执行状态看板或 workflow 运行记录。
 - 不在本 Story 中实现统一 Backlog 看板的具体结构；该能力由 S-016 负责。
 - 不在本 Story 中实现完整的相对 Size 估算流程；该能力由 S-038 负责。
-- 不在本 Story 中实现 Iteration Plan 和容量校准；该能力由 S-039 负责。
+- 不在本 Story 中实现 Iteration Plan 和容量校准。
 - 不在本 Story 中实现 Work Item Analysis；该能力由 S-037 负责。
 - 不在本 Story 中实现工作项卡片与现有交付 workflow 的完整状态和交付引用回写。
 - 不为新增 Story Map 向所有既有 workflow 增加禁止编辑条款。
@@ -74,19 +74,14 @@
 
 ## Story Relationships
 
-- Follows：`S-002` 产品设计基线增量更新与版本治理。
-- Follows：`S-014` Discovery User Journey 与 Feature 基线。
 - Follows：`S-012` Asset 与 Delivery Workflow 记录边界。
 - Precedes：`S-016` 统一 Backlog 看板。
 - Precedes：`S-037` 工作项分析 Workflow。
 - Precedes：`S-038` 工作项相对 Size 估算。
 - Precedes：`S-017` 工作项卡片与开发 Workflow 接入。
-- Depends On：`S-014` Discovery User Journey 与 Feature 基线。
 
 ## 依赖
 
-- `S-002` 产品设计基线增量更新与版本治理。
-- `S-014` Discovery User Journey 与 Feature 基线。
 - `S-012` Asset 与 Delivery Workflow 记录边界。
 - `T-001` 工作项范围章节语义标识。
 
@@ -96,13 +91,10 @@
 
 ## 相关文档
 
-- [S-002 产品设计基线增量更新与版本治理](S-002-discovery-prd-incremental-versioning.md)
 - [S-012 Asset 与 Delivery Workflow 记录边界](S-012-asset-delivery-workflow-record-boundary.md)
-- [S-014 Discovery User Journey 与 Feature 基线](S-014-user-journey-analysis.md)
 - [S-016 统一 Backlog 看板](S-016-unified-backlog-board.md)
 - [S-037 工作项分析 Workflow](S-037-work-item-analysis-workflow.md)
 - [S-038 工作项相对 Size 估算](S-038-work-item-relative-size-estimation.md)
-- [S-039 Iteration Plan 与容量校准](S-039-iteration-plan-capacity-calibration.md)
 - [T-001 工作项范围章节语义标识](../tasks/T-001-work-item-scope-semantic-markers.md)
 - [Backlog](../backlog.md)
 

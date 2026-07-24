@@ -20,48 +20,31 @@ B-009:3
 B-010:1
 B-011:1
 B-012:1
-S-001:6
-S-002:11
 S-003:2
 S-004:3
 S-005:3
-S-006:4
 S-007:4
 S-008:6
 S-009:3
 S-010:5
 S-011:5
 S-012:5
-S-013:5
-S-014:5
 S-015:9
 S-016:5
 S-017:5
 S-018:1
 S-019:1
-S-020:1
-S-021:1
-S-022:1
-S-023:1
-S-024:1
 S-025:1
 S-027:1
-S-028:1
 S-029:1
 S-030:1
-S-031:1
-S-032:1
-S-033:1
-S-034:1
 S-035:1
 S-036:2
 S-037:2
 S-038:1
-S-039:1
 S-040:2
 S-041:3
 T-001:3
-T-002:3
 T-003:1
 T-004:4'
 WORK_ITEM_DIRS=(
@@ -320,7 +303,7 @@ for consumer in "$BACKLOG_SKILL" "$ANALYSIS"; do
 done
 
 CARD_COUNT="$(find "${WORK_ITEM_DIRS[@]}" -maxdepth 1 -name '*.md' -print | wc -l | tr -d ' ')"
-test "$CARD_COUNT" = "61" || fail "expected 61 current work-item cards, found $CARD_COUNT"
+test "$CARD_COUNT" = "44" || fail "expected 44 current work-item cards, found $CARD_COUNT"
 
 if rg -n '^\| Version \| Date \| Change \| Reason \|' "${WORK_ITEM_DIRS[@]}"; then
   fail "legacy four-column Change Log remains"
@@ -328,7 +311,7 @@ fi
 
 STANDARD_HEADER_COUNT="$(rg -l '^\| Version \| Recorded At \| Recorded By \| Change \| Reason \|' \
   "${WORK_ITEM_DIRS[@]}" | wc -l | tr -d ' ')"
-test "$STANDARD_HEADER_COUNT" = "61" ||
+test "$STANDARD_HEADER_COUNT" = "44" ||
   fail "not every current work-item card uses the standard schema"
 
 if rg -n '^\| [0-9]+ \| [0-9]{4}-[0-9]{2}-[0-9]{2} \|' "${WORK_ITEM_DIRS[@]}"; then
@@ -380,13 +363,13 @@ ORIGINAL_METADATA="$(while IFS=: read -r id expected_rows; do
   ' "$path" || fail "$id has fewer than $expected_rows original rows"
 done <<< "$ORIGINAL_ROW_COUNTS")"
 
-test "$(printf '%s\n' "$ORIGINAL_METADATA" | wc -l | tr -d ' ')" = "151" ||
-  fail "explicit original-row cohort is not 151 rows"
+test "$(printf '%s\n' "$ORIGINAL_METADATA" | wc -l | tr -d ' ')" = "106" ||
+  fail "explicit original-row cohort is not 106 rows"
 
 ORIGINAL_METADATA_HASH="$(printf '%s\n' "$ORIGINAL_METADATA" |
   LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-test "$ORIGINAL_METADATA_HASH" = "07ff1b3016ad92460bb6dd3a1f68a2573f15f5ffdf37f9bcf344a8bb02d7ecb8" ||
-  fail "original Recorded At/Recorded By migration metadata changed"
+test "$ORIGINAL_METADATA_HASH" = "196da5b1a5f90ef0a102a38f286e7f306223301df9319ef561cabeef3d65855f" ||
+  fail "original Recorded At/Recorded By migration metadata changed: $ORIGINAL_METADATA_HASH"
 
 printf '%s\n' "$ORIGINAL_METADATA" | awk -F'\t' '
   $2 ~ /^legacy: recorded-at/ {
@@ -408,16 +391,16 @@ printf '%s\n' "$ORIGINAL_METADATA" | awk -F'\t' '
     }
   }
   END {
-    if (precision_unknown != 137) {
-      printf "legacy precision-unknown count is %d, expected 137\n", precision_unknown > "/dev/stderr"
+    if (precision_unknown != 92) {
+      printf "legacy precision-unknown count is %d, expected 92\n", precision_unknown > "/dev/stderr"
       invalid = 1
     }
     if (date_unknown != 0) {
       printf "legacy recorded-at-unknown count is %d, expected 0\n", date_unknown > "/dev/stderr"
       invalid = 1
     }
-    if (author_unknown != 136) {
-      printf "legacy recorded-by-unknown count is %d, expected 136\n", author_unknown > "/dev/stderr"
+    if (author_unknown != 91) {
+      printf "legacy recorded-by-unknown count is %d, expected 91\n", author_unknown > "/dev/stderr"
       invalid = 1
     }
     exit invalid
@@ -447,60 +430,48 @@ while IFS= read -r card; do
     fail "$id Backlog Version is $backlog_version, expected $version"
 done < <(find "${WORK_ITEM_DIRS[@]}" -maxdepth 1 -name '*.md' -print | LC_ALL=C sort)
 
-assert_normalized_card S-001 6 4 '1,2,3,4,5,6' '1,2,3,3,4,4'
-assert_normalized_card S-002 11 8 '1,2,3,4,5,6,7,8,9,10,11' '1,2,3,4,4,5,6,7,7,8,8'
 assert_normalized_card S-003 2 1 '1,2' '1,1'
 assert_normalized_card S-004 3 1 '1,2,3' '1,1,1'
 assert_normalized_card S-005 3 2 '1,2,3' '1,2,2'
-assert_normalized_card S-006 4 1 '1,2,3,4' '1,1,1,1'
 assert_normalized_card S-007 4 3 '1,2,3,4' '1,2,3,3'
 assert_normalized_card S-008 6 3 '1,2,3,4,5,6' '1,2,2,2,3,3'
 assert_normalized_card S-009 3 2 '1,2,3' '1,2,2'
 assert_normalized_card S-010 5 3 '1,2,3,4,5' '1,2,3,3,3'
 assert_normalized_card S-011 5 2 '1,2,3,4,5' '1,2,2,2,2'
 assert_normalized_card S-012 5 2 '1,2,3,4,5' '1,1,2,2,2'
-assert_normalized_card S-013 5 3 '1,2,3,4,5' '1,1,2,3,3'
-assert_normalized_card S-014 5 2 '1,2,3,4,5' '1,2,2,2,2'
 assert_normalized_card S-015 7 4 '1,2,3,4,5,6,7,7,7' '1,2,2,3,4,4,4,4,4'
 assert_normalized_card T-001 3 2 '1,2,3' '1,2,2'
 
 MIGRATION_CARD_IDS="$(rg -l -F "$MIGRATION_CHANGE" "${WORK_ITEM_DIRS[@]}" |
   sed -E 's#.*/((S|T|B)-[0-9]+)-[^/]+\.md#\1#' | LC_ALL=C sort)"
-EXPECTED_MIGRATION_CARD_IDS='S-001
-S-002
-S-003
+EXPECTED_MIGRATION_CARD_IDS='S-003
 S-004
 S-005
-S-006
 S-007
 S-008
 S-009
 S-010
 S-011
 S-012
-S-013
-S-014
 S-015
 T-001'
-test "$(printf '%s\n' "$MIGRATION_CARD_IDS" | wc -l | tr -d ' ')" = "16" ||
-  fail "expected exactly 16 migration-event cards"
+test "$(printf '%s\n' "$MIGRATION_CARD_IDS" | wc -l | tr -d ' ')" = "11" ||
+  fail "expected exactly 11 migration-event cards"
 test "$MIGRATION_CARD_IDS" = "$EXPECTED_MIGRATION_CARD_IDS" ||
   fail "migration-event card set differs from the explicit normalization set"
 MIGRATION_EVENT_COUNT="$(rg -o -F "$MIGRATION_CHANGE" "${WORK_ITEM_DIRS[@]}" |
   wc -l | tr -d ' ')"
-test "$MIGRATION_EVENT_COUNT" = "16" ||
-  fail "expected exactly 16 migration events, found $MIGRATION_EVENT_COUNT"
+test "$MIGRATION_EVENT_COUNT" = "11" ||
+  fail "expected exactly 11 migration events, found $MIGRATION_EVENT_COUNT"
 
 MIGRATION_SUFFIX_COUNT="$(rg -o 'Legacy migration: original Version [0-9]+; normalized to Version [0-9]+\.' \
   "${WORK_ITEM_DIRS[@]}" | wc -l | tr -d ' ')"
-test "$MIGRATION_SUFFIX_COUNT" = "47" ||
-  fail "expected exactly 47 normalized-row migration suffixes, found $MIGRATION_SUFFIX_COUNT"
+test "$MIGRATION_SUFFIX_COUNT" = "27" ||
+  fail "expected exactly 27 normalized-row migration suffixes, found $MIGRATION_SUFFIX_COUNT"
 
 assert_history_versions B-005 '1,2,3,4,4'
 assert_history_versions B-007 '1,2,2'
 assert_history_versions B-008 '1,2,2'
-assert_history_versions S-013 '1,1,2,3,3,3'
-assert_history_versions S-014 '1,2,2,2,2,2'
 assert_history_versions T-004 '1,2,3,4'
 
 assert_history_signatures B-005 \
@@ -517,18 +488,6 @@ assert_history_signatures B-008 \
   '2026-07-18T06:54:19+0800 || 创建 Bug 卡片。' \
   '2026-07-18T19:29:42+0800 || 将完成同步明确为成功 merge 后的 Bug 卡片与 Backlog 原子写回，并补充交付引用、执行 Change Log、冲突和幂等要求。' \
   '2026-07-18T20:43:37+0800 || 完成当前卡片与 Backlog 写回补强交付并将状态更新为 `Done`。'
-assert_history_signatures S-013 \
-  'legacy: recorded-at precision unknown; original 2026-07-14 || 创建 Discovery 过程记录简化 Story。' \
-  'legacy: recorded-at precision unknown; original 2026-07-14 || 完成 Discovery 过程记录简化并更新契约、说明与分发版本。' \
-  'legacy: recorded-at precision unknown; original 2026-07-14 || 修正首次基线启动门禁、技术输入支撑资产边界和 Business Acceptance 状态。' \
-  'legacy: recorded-at precision unknown; original 2026-07-15 || 澄清双主产出验收标准中的支撑性共享资产例外。' \
-  'legacy: recorded-at precision unknown; original 2026-07-15 || 记录 Business Acceptance 并将状态更新为 Done。'
-assert_history_signatures S-014 \
-  'legacy: recorded-at precision unknown; original 2026-07-14 || 创建 User Journey 分析卡片。' \
-  'legacy: recorded-at precision unknown; original 2026-07-15 || 将卡片重定义为 Discovery 内的 User Journey 与 Feature 基线增强，并更新优先级、依赖和验收范围。' \
-  'legacy: recorded-at precision unknown; original 2026-07-16 || 三资产两门契约已实现并验证，完成 User Journey 与 Feature 基线交付。' \
-  'legacy: recorded-at precision unknown; original 2026-07-16 || 实施与系统验证已完成，等待 Business Acceptance 后再进入 Done。' \
-  'legacy: recorded-at precision unknown; original 2026-07-16 || 记录 Business Acceptance 并将状态更新为 Done。'
 assert_history_signatures T-004 \
   'legacy: recorded-at precision unknown; original 2026-07-17 || 创建 Git 提交 skill 接入任务。' \
   'legacy: recorded-at precision unknown; original 2026-07-17 || 明确 Workflow 与 `git-commit` 的职责边界、pre-staged 调用顺序及适用提交类型。' \
@@ -544,8 +503,8 @@ done
 
 ORIGINAL_HISTORY_COUNT="$(printf '%s\n' "$ORIGINAL_ROW_COUNTS" |
   awk -F: '{ count += $2 } END { print count }')"
-test "$ORIGINAL_HISTORY_COUNT" = "151" ||
-  fail "explicit original-row cohort is $ORIGINAL_HISTORY_COUNT rows, expected 151"
+test "$ORIGINAL_HISTORY_COUNT" = "106" ||
+  fail "explicit original-row cohort is $ORIGINAL_HISTORY_COUNT rows, expected 106"
 
 ORIGINAL_HISTORY_HASH="$(while IFS=: read -r id expected_rows; do
   path="$(card_path "$id")"
@@ -573,7 +532,7 @@ ORIGINAL_HISTORY_HASH="$(while IFS=: read -r id expected_rows; do
     }
   ' "$path" || fail "$id original-row payload cohort is incomplete"
 done <<< "$ORIGINAL_ROW_COUNTS" | LC_ALL=C sort | shasum -a 256 | awk '{print $1}')"
-test "$ORIGINAL_HISTORY_HASH" = "3a127f09858da01bce4b5b62b3fe9e05728d575b25e9dfd2fdd21b339bad2a81" ||
-  fail "original Change/Reason history content changed"
+test "$ORIGINAL_HISTORY_HASH" = "a945b0c8816608c9eb94d6d83c563c17e38718df07b404ba6c73f40bf96fbc5e" ||
+  fail "original Change/Reason history content changed: $ORIGINAL_HISTORY_HASH"
 
 printf 'Change Log contract checks passed.\n'
