@@ -892,10 +892,14 @@ assert_workflows "decision timestamp" "Decision At" "Decision At" "Decision At"
 assert_workflows "final follow-up actions" "Final Follow-Up Actions" "Final Follow-Up Actions" "Final Follow-Up Actions"
 assert_workflows "accepted decision enters Completion" \
   'accepted.*normal Completion' 'accepted.*normal Completion' 'accepted.*normal Completion'
-assert_workflows "risk acceptance preserves responsibility" \
-  'accepted_with_risk.*Risk ID.*description.*owner' \
-  'accepted_with_risk.*Risk ID.*description.*owner' \
-  'accepted_with_risk.*Risk ID.*description.*owner'
+assert_workflows "carried limitations are conditional and attributable" \
+  'Carried Limitations.*Source Reference.*Verification Conclusion.*Residual Impact.*ready_with_risk' \
+  'Carried Limitations.*Source Reference.*Verification Conclusion.*Residual Impact.*ready_with_risk' \
+  'Carried Limitations.*Source Reference.*Verification Conclusion.*Residual Impact.*ready_with_risk'
+assert_workflows "risk acceptance references carried limitations" \
+  'accepted_with_risk.*carried limitation.*handling.*owner.*follow-up' \
+  'accepted_with_risk.*carried limitation.*handling.*owner.*follow-up' \
+  'accepted_with_risk.*carried limitation.*handling.*owner.*follow-up'
 assert_workflows "rejection returns to earliest stage" \
   'rejected.*earliest affected stage.*in_progress.*must not enter Completion' \
   'rejected.*earliest affected stage.*in_progress.*must not enter Completion' \
@@ -907,17 +911,17 @@ assert_workflows "manual recovery eligibility" \
 assert_workflows "manual recovery record" \
   '07-manual-recovery-record\.md' '07-manual-recovery-record\.md' '07-manual-recovery-record\.md'
 assert_workflows "risk acceptance enters Completion" \
-  'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration' \
-  'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration' \
-  'accepted_with_risk.*normal Completion.*preserve.*Accepted Risk Register.*integration'
+  'accepted_with_risk.*normal Completion.*preserve.*Accepted Carried Limitations.*integration' \
+  'accepted_with_risk.*normal Completion.*preserve.*Accepted Carried Limitations.*integration' \
+  'accepted_with_risk.*normal Completion.*preserve.*Accepted Carried Limitations.*integration'
 assert_workflows "only merge maps to integrated" \
   'Only an actual `merge` result may set.*Overall Status.*`integrated`' \
   'Only an actual `merge` result may set.*Overall Status.*`integrated`' \
   'Only an actual `merge` result may set.*Overall Status.*`integrated`'
 assert_workflows "pull request and keep preserve acceptance status" \
-  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Risk Register' \
-  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Risk Register' \
-  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Risk Register'
+  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Carried Limitations' \
+  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Carried Limitations' \
+  '`pull request` or `keep` result must preserve.*Overall Status.*`accepted`.*`accepted_with_risk`.*Accepted Carried Limitations'
 
 for blocking_category in git branch worktree permission external_environment; do
   assert_workflows "manual recovery blocker category $blocking_category" \

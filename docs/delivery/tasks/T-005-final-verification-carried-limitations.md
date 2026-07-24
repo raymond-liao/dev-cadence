@@ -4,7 +4,7 @@
 
 - ID：`T-005`
 - Version：`1`
-- Status：`Ready`
+- Status：`Done`
 - Priority：`P2`
 - Change Type：Workflow Governance
 - Nature：Technical
@@ -64,3 +64,5 @@
 |---:|---|---|---|---|
 | 1 | 2026-07-21T14:52:12+0800 | Raymond Liao <raymond-liao@outlook.com> | 将 S-020 转换为最终验证带入限制呈现 Task，并采用最小追溯方案。 | 用户确认不引入独立风险管理模型，只在 `ready_with_risk` 时呈现可被 Business Acceptance 引用的限制。 |
 | 1 | 2026-07-21T15:06:35+0800 | Raymond Liao <raymond-liao@outlook.com> | 将任务状态从 `Draft` 更新为 `Ready`。 | 用户确认该任务的目标、范围、完成条件和关系已足以进入交付准备状态。 |
+| 1 | 2026-07-24T15:40:00+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 In Progress。 | 用户明确请求继续实施最后的待处理任务。 |
+| 1 | 2026-07-24T15:45:00+0800 | Raymond Liao <raymond-liao@outlook.com> | 状态更新为 Done。 | 实现已集成；完整契约、安装和分发同步验证通过。 |

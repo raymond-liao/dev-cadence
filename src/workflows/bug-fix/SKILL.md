@@ -709,6 +709,7 @@ The regression test report must use this structure:
 - `Impact Scope Coverage`: map each affected area from the Repair Solution to test case IDs and an explicit status: `covered`, `skipped`, `not covered`, or `accepted risk`.
 - `Failed Or Skipped Checks`: failures and skipped checks with reasons. If none, write `None`.
 - `Residual Risks`: remaining risks after testing. If none, write `None`.
+- `Carried Limitations`: use a table with `Source Reference`, `Verification Conclusion`, and `Residual Impact` when `Verification Decision` is `ready_with_risk`; otherwise write `None`. Do not create a risk ID, registry, or new lifecycle for these entries.
 - `Verification Decision`: exactly one of `ready`, `ready_with_risk`, or `not_ready`, determined by the Verification Decision Gate.
 - `Recommendation`: whether the fix can enter Business Acceptance.
 
@@ -742,6 +743,7 @@ Delegated continuation must not create, imply, or select a Business Acceptance o
 - summarize the confirmed problem;
 - summarize the root cause and repair result;
 - summarize regression evidence and residual risks;
+- when the verification decision is `ready_with_risk`, summarize every carried limitation;
 - ask the user to choose a business acceptance decision from fixed numbered options:
   1. Accept
   2. Reject
@@ -750,7 +752,7 @@ Delegated continuation must not create, imply, or select a Business Acceptance o
 - map the user's selected number or exact option text to the normalized decision, then record the decision, decision maker, exact decision time with timezone, and accepted residual risks.
 
 - Map `Accept` to `accepted`, record it, set the manifest overall status to `accepted`, and enter normal Completion.
-- Map `Accept with residual risk` to `accepted_with_risk`; require a table of stable Risk ID, description, and owner before entering normal Completion, and preserve that table after integration.
+- Map `Accept with residual risk` to `accepted_with_risk`; require the acceptance record to reference each user-accepted carried limitation and record its handling, owner, or follow-up action before entering normal Completion.
 - For `Reject`, require a rejection reason. When it identifies the earliest affected stage, record `rejected`, set that stage to `in_progress`, set later affected stages to `pending`, mark invalidated evidence `superseded`, and return there. When it does not identify a stage, remain in Business Acceptance and request clarification.
 - `rejected` returns to the earliest affected stage, which becomes `in_progress`, and must not enter Completion, report success, or set `integrated`.
 
@@ -783,7 +785,7 @@ The business acceptance record must use this structure:
 - `Decision At`: exact decision timestamp with timezone, preferably ISO 8601 with offset.
 - `Accepted Result`: brief business summary of what was accepted.
 - `Accepted Residual Risks`: residual risks accepted by the user, if any.
-- `Accepted Risk Register`: a table with `Risk ID`, `Description`, and `Owner`; use `None` when the decision is not `accepted_with_risk`.
+- `Accepted Carried Limitations`: a table with `Limitation Reference`, `Source Reference`, `Verification Conclusion`, `Residual Impact`, and `Handling, Owner, Or Follow-Up`; use `None` when the decision is not `accepted_with_risk`. Every accepted entry must reference a Carried Limitations row from the regression test report; do not imply acceptance of an unreferenced limitation.
 - `Rejection Reason and Return Target`: the rejection reason and earliest affected stage, or `None` when the decision is not `rejected`.
 - `Final Follow-Up Actions`: final follow-up actions, if any.
 
@@ -791,7 +793,7 @@ When the run records remain after Completion, update `Final Follow-Up Actions` w
 
 ## Completion
 
-After Business Acceptance is `accepted` or `accepted_with_risk`, invoke normal Completion. For `accepted_with_risk`, preserve the original decision and `Accepted Risk Register` through integration:
+After Business Acceptance is `accepted` or `accepted_with_risk`, invoke normal Completion. For `accepted_with_risk`, preserve the original decision and `Accepted Carried Limitations` through integration:
 
 Before entering the finishing flow, rerun the final-verification validator, including when `Final Repair SHA` is `skipped: no tracked changes`. If it fails, invalidate Business Acceptance evidence as `superseded`, return to Repair Implementation, repeat implementation review and Regression Verification, and require Business Acceptance again.
 
@@ -808,7 +810,7 @@ The Completion menu must be presented to the user with every option actually sup
 
 Pass this Dev Cadence context into the finishing flow:
 
-- Business Acceptance has already been recorded as `accepted` or `accepted_with_risk`; preserve the original decision and `Accepted Risk Register` through integration.
+- Business Acceptance has already been recorded as `accepted` or `accepted_with_risk`; preserve the original decision and `Accepted Carried Limitations` through integration.
 - The business acceptance record has been written or updated.
 - Ignored Dev Cadence run records under `build/dev-cadence/` may remain on disk after merge.
 - Do not push unless the user explicitly asks.
@@ -823,7 +825,7 @@ Handle the normalized finishing result:
 - `discard_cancelled` or `discard_blocked`: retain the current run and its records, report the reason, and remain in Completion without claiming a terminal result.
 - merge, pull request, or keep: update the manifest and Business Acceptance record with the final integration result, then complete the existing terminal-record readiness checklist.
 
-Only an actual `merge` result may set manifest `Overall Status` to `integrated`. A `pull request` or `keep` result must preserve the original Business Acceptance decision as manifest `Overall Status` (`accepted` or `accepted_with_risk`) and preserve the `Accepted Risk Register`.
+Only an actual `merge` result may set manifest `Overall Status` to `integrated`. A `pull request` or `keep` result must preserve the original Business Acceptance decision as manifest `Overall Status` (`accepted` or `accepted_with_risk`) and preserve the `Accepted Carried Limitations`.
 
 ### Manual Recovery
 

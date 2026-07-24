@@ -9,7 +9,7 @@
 
 | ID | Title | Version | Status | Priority |
 |---|---|---:|---|---|
-| `T-005` | [最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) | `1` | `Ready` | `P2` |
+| `T-005` | [最终验证带入限制呈现](tasks/T-005-final-verification-carried-limitations.md) | `1` | `Done` | `P2` |
 
 ## 已完成
 
